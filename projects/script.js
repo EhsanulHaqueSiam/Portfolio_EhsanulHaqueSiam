@@ -20,7 +20,7 @@ $(document).ready(function () {
 document.addEventListener('visibilitychange',
     function () {
         if (document.visibilityState === "visible") {
-            document.title = "Projects | Portfolio Jigar Sable";
+            document.title = "Projects | Portfolio Ehsanul Haque";
             $("#favicon").attr("href", "/assets/images/favicon.png");
         }
         else {
@@ -69,7 +69,7 @@ function showProjects(projects) {
     // VanillaTilt.init(document.querySelectorAll(".tilt"), {
     //     max: 20,
     // });
-    // // vanilla tilt.js  
+    // // vanilla tilt.js
 
     // /* ===== SCROLL REVEAL ANIMATION ===== */
     // const srtop = ScrollReveal({

@@ -27,7 +27,7 @@ const srtop = ScrollReveal({
 
 /* SCROLL EXPERIENCE */
 srtop.reveal('.experience .timeline',{delay: 400});
-srtop.reveal('.experience .timeline .container',{interval: 400}); 
+srtop.reveal('.experience .timeline .container',{interval: 400});
 
 
 // Start of Tawk.to Live Chat
@@ -65,7 +65,7 @@ document.onkeydown = function(e) {
 document.addEventListener('visibilitychange',
 function(){
     if(document.visibilityState === "visible"){
-        document.title = "Experience | Portfolio Jigar Sable";
+        document.title = "Experience | Portfolio Ehsanul Haque";
         $("#favicon").attr("href","/assets/images/favicon.png");
     }
     else {
