@@ -39,7 +39,7 @@ $(document).ready(function () {
 
     // <!-- emailjs to mail contact form data -->
     $("#contact-form").submit(function (event) {
-        emailjs.init("user_TTDmetQLYgWCLzHTDgqxm");
+        emailjs.init("user_#############");
 
         emailjs.sendForm('contact_service', 'template_contact', '#contact-form')
             .then(function (response) {
@@ -59,7 +59,7 @@ $(document).ready(function () {
 document.addEventListener('visibilitychange',
     function () {
         if (document.visibilityState === "visible") {
-            document.title = "Portfolio | Jigar Sable";
+            document.title = "Portfolio | Ehsanul Haque";
             $("#favicon").attr("href", "assets/images/favicon.png");
         }
         else {
@@ -71,7 +71,7 @@ document.addEventListener('visibilitychange',
 
 // <!-- typed js effect starts -->
 var typed = new Typed(".typing-text", {
-    strings: ["frontend development", "backend development", "web designing", "android development", "web development"],
+    strings: ["Android development", "Game development", "Backend development", "Frontend development", "Web development"],
     loop: true,
     typeSpeed: 50,
     backSpeed: 25,
@@ -85,6 +85,7 @@ async function fetchData(type = "skills") {
         response = await fetch("skills.json")
         :
         response = await fetch("./projects/projects.json")
+        response = await fetch("./achievements/achievements.json")
     const data = await response.json();
     return data;
 }
@@ -146,6 +147,48 @@ function showProjects(projects) {
 
 }
 
+function showAchievements(achievements) {
+    let achievementsContainer = document.querySelector("#award .box-container");
+    let achievementHTML = "";
+    achievements.slice(0, 10).filter(achievement => achievement.category != "android").forEach(achievement => {
+        achievementHTML += `
+        <div class="box tilt">
+      <img draggable="false" src="/assets/images/achievements/${achievement.image}.png" alt="project" />
+      <div class="content">
+        <div class="tag">
+        <h3>${achievement.name}</h3>
+        </div>
+        <div class="desc">
+          <p>${achievement.desc}</p>
+          <div class="btns">
+            <a href="${achievement.links.view}" class="btn" target="_blank"><i class="fas fa-eye"></i> View</a>
+            <a href="${achievement.links.code}" class="btn" target="_blank">Code <i class="fas fa-code"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>`
+    });
+    achievementsContainer.innerHTML = achievementHTML;
+
+    // <!-- tilt js effect starts -->
+    VanillaTilt.init(document.querySelectorAll(".tilt"), {
+        max: 15,
+    });
+    // <!-- tilt js effect ends -->
+
+    /* ===== SCROLL REVEAL ANIMATION ===== */
+    const srtop = ScrollReveal({
+        origin: 'top',
+        distance: '80px',
+        duration: 1000,
+        reset: true
+    });
+
+    /* SCROLL PROJECTS */
+    srtop.reveal('.award .box', { interval: 200 });
+
+}
+
 fetchData().then(data => {
     showSkills(data);
 });
@@ -153,6 +196,11 @@ fetchData().then(data => {
 fetchData("projects").then(data => {
     showProjects(data);
 });
+
+fetchData("achievements").then(data => {
+    showAchievements(data);
+});
+
 
 // <!-- tilt js effect starts -->
 VanillaTilt.init(document.querySelectorAll(".tilt"), {
@@ -220,7 +268,6 @@ srtop.reveal('.home .image', { delay: 400 });
 srtop.reveal('.home .linkedin', { interval: 600 });
 srtop.reveal('.home .github', { interval: 800 });
 srtop.reveal('.home .twitter', { interval: 1000 });
-srtop.reveal('.home .telegram', { interval: 600 });
 srtop.reveal('.home .instagram', { interval: 600 });
 srtop.reveal('.home .dev', { interval: 600 });
 
@@ -241,6 +288,8 @@ srtop.reveal('.education .box', { interval: 200 });
 
 /* SCROLL PROJECTS */
 srtop.reveal('.work .box', { interval: 200 });
+
+srtop.reveal('.award .box', { interval: 200 });
 
 /* SCROLL EXPERIENCE */
 srtop.reveal('.experience .timeline', { delay: 400 });
