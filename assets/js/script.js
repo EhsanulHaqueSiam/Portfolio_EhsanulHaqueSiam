@@ -80,12 +80,16 @@ var typed = new Typed(".typing-text", {
 // <!-- typed js effect ends -->
 
 async function fetchData(type = "skills") {
-    let response
-    type === "skills" ?
-        response = await fetch("skills.json")
-        :
-        response = await fetch("./projects/projects.json")
-        response = await fetch("./achievements/achievements.json")
+    let response;
+    if (type === "skills") {
+        response = await fetch("skills.json");
+    } else if (type === "projects") {
+        response = await fetch("./projects/projects.json");
+    } else if (type === "achievements") {
+        response = await fetch("./achievements/achievements.json");
+    } else {
+        throw new Error("Invalid data type specified");
+    }
     const data = await response.json();
     return data;
 }
