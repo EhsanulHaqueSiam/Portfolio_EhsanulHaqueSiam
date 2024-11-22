@@ -91,9 +91,7 @@ document.addEventListener("DOMContentLoaded", () => {
     strings: [
       "Android development",
       "Game development",
-      "Backend development",
-      "Frontend development",
-      "Web development",
+      "Backend development"
     ],
     loop: true,
     typeSpeed: 50,
