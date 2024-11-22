@@ -1,7 +1,7 @@
 [
   {
     "name": "Pharmacy Management System",
-    "desc": "A comprehensive desktop application developed using C# and .NET Framework. This system features a user-friendly GUI for managing pharmacy operations, including medicine inventory, customer details, and sales transactions. The project focuses on robust database connectivity for seamless data management. It also includes an OTP (One-Time Password) verification system for secure login and critical actions. Ideal for small to medium-sized pharmacies.",
+    "desc": "Built with C# and .NET, this desktop app features a GUI for pharmacy management, secure OTP login, and robust database integration for inventory and sales tracking.",
     "image": "pharmacymanagement",
     "category": "csharp",
     "links": {
@@ -11,7 +11,7 @@
   },
   {
     "name": "Hotel Management System",
-    "desc": "A Java-based desktop application designed for efficient hotel management. This project implements a GUI to handle bookings, customer records, and room assignments. A lightweight text file database is used for storing and retrieving information, making it easy to deploy without external database dependencies. The system demonstrates effective implementation of Java features for data handling and user interaction.",
+    "desc": "Java-based GUI application for handling bookings and customer records using a lightweight text file database, showcasing core Java programming skills.",
     "image": "hotelmanagement",
     "category": "java",
     "links": {
@@ -21,7 +21,7 @@
   },
   {
     "name": "Student Management System",
-    "desc": "A powerful system for managing student information and academic sessions. This project supports both online and offline database configurations, enabling flexibility in data storage and retrieval. It includes features for creating and managing relational databases, handling user sessions, and ensuring efficient SQL-based operations. Perfect for schools, colleges, or any institution managing student data.",
+    "desc": "A database-driven project managing student data with SQL. Supports online/offline databases and session handling for efficient academic data management.",
     "image": "studentmanagement",
     "category": "database",
     "links": {
@@ -31,7 +31,7 @@
   },
   {
     "name": "BDNewsPaperScraper",
-    "desc": "A web scraping project built using Scrapy, a Python-based framework. This system focuses on extracting news articles and updates from Bangladeshi newspapers, automating the data collection process. The scraper efficiently collects and structures data for further analysis or integration with other applications. It's designed to handle diverse formats and ensure accurate extraction from dynamic web pages.",
+    "desc": "Python Scrapy project for automating news extraction from Bangladeshi websites. Efficient data structuring for analysis and integration.",
     "image": "saas",
     "category": "web_scraping",
     "links": {
@@ -41,7 +41,7 @@
   },
   {
     "name": "Portfolio",
-    "desc": "A personal portfolio website designed to showcase projects, skills, and achievements. This site is built using HTML, CSS, and jQuery, ensuring a responsive and visually appealing layout. Hosted on Netlify for fast and reliable access, the portfolio features smooth navigation, interactive elements, and clean code. It's designed to create a professional online presence and demonstrate web development skills.",
+    "desc": "A responsive portfolio website built with HTML, CSS, and jQuery, hosted on Netlify to showcase projects and skills with professional design.",
     "image": "portfolioweb",
     "category": "web",
     "links": {
