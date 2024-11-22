@@ -1,37 +1,37 @@
 [
   {
     "name": "AIUB CS FEST 2024",
-    "desc": "1st Runners up on app showcasing",
+    "desc": "Achieved 1st Runners up in the app showcasing category at AIUB CS FEST 2024, demonstrating innovative use of technology.",
     "image": "aiubcsfest2024cert",
     "category": "certificate"
   },
   {
     "name": "AIUB CS FEST Crest",
-    "desc": "1st Runners up Crest for app showcasing",
+    "desc": "Received the 1st Runners up Crest for outstanding performance in app showcasing at AIUB CS FEST 2024",
     "image": "awardcsfest2024",
     "category": "award"
   },
   {
     "name": "South Asian Climate Conference 2024",
-    "desc": "Certificate for South Asian Climate Conference",
+    "desc": "Recognized with a certificate for participation in the South Asian Climate Conference 2024, contributing insights into climate-related issues.",
     "image": "cpecertificate",
     "category": "certificate"
   },
   {
     "name": "CPE Conference Presentation",
-    "desc": "Presentation for South Asian Climate Conference",
+    "desc": "Presented at the South Asian Climate Conference 2024, sharing research and findings on climate challenges and solutions.",
     "image": "cpepresentation",
     "category": "presentation"
   },
   {
     "name": "CPE Conference Presentation Online",
-    "desc": "CPE Conference Presentation Online",
+    "desc": "Delivered an online presentation at the South Asian Climate Conference 2024, addressing global climate concerns and strategies.",
     "image": "cpepresentation2",
     "category": "presentation"
   },
   {
     "name": "AIUB CS FEST Ceremony",
-    "desc": "AIUB CS FEST closing Ceremony",
+    "desc": "Attended the AIUB CS FEST 2024 closing ceremony, celebrating achievements in technology and innovation.",
     "image": "csfestceramoney",
     "category": "ceremony"
   }

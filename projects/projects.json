@@ -1,162 +1,52 @@
 [
   {
-    "name": "Instagram MERN",
-    "desc": "Full-Stack Instagram clone built using MERN stack and realtime chat with the help of socket.iO",
-    "image": "instagrammern",
-    "category": "mern",
+    "name": "Pharmacy Management System",
+    "desc": "A comprehensive desktop application developed using C# and .NET Framework. This system features a user-friendly GUI for managing pharmacy operations, including medicine inventory, customer details, and sales transactions. The project focuses on robust database connectivity for seamless data management. It also includes an OTP (One-Time Password) verification system for secure login and critical actions. Ideal for small to medium-sized pharmacies.",
+    "image": "pharmacymanagement",
+    "category": "csharp",
     "links": {
-      "view": "https://instagramernstack.herokuapp.com/",
-      "code": "https://github.com/EhsanulHaqueSiam/instagram-mern"
+      "view": "https://github.com/EhsanulHaqueSiam/PharmacyManagementSystem",
+      "code": "https://github.com/EhsanulHaqueSiam/PharmacyManagementSystem"
     }
   },
   {
-    "name": "Flipkart MERN",
-    "desc": "Full-Stack Flipkart with Admin Dashboard and Paytm Payment Gateway. MERN Stack WebApp, ready to use for business.",
-    "image": "flipkartmern",
-    "category": "mern",
+    "name": "Hotel Management System",
+    "desc": "A Java-based desktop application designed for efficient hotel management. This project implements a GUI to handle bookings, customer records, and room assignments. A lightweight text file database is used for storing and retrieving information, making it easy to deploy without external database dependencies. The system demonstrates effective implementation of Java features for data handling and user interaction.",
+    "image": "hotelmanagement",
+    "category": "java",
     "links": {
-      "view": "https://flipkartwebs.herokuapp.com/",
-      "code": "https://github.com/EhsanulHaqueSiam/flipkart-mern"
+      "view": "https://github.com/EhsanulHaqueSiam/HotelManagementSystem",
+      "code": "https://github.com/EhsanulHaqueSiam/HotelManagementSystem"
     }
   },
   {
-    "name": "ResumeGen",
-    "desc": "ReactJS Basic Resume Generator which will generate customized resume in few minutes on your requirements.",
-    "image": "resumegen",
-    "category": "mern",
+    "name": "Student Management System",
+    "desc": "A powerful system for managing student information and academic sessions. This project supports both online and offline database configurations, enabling flexibility in data storage and retrieval. It includes features for creating and managing relational databases, handling user sessions, and ensuring efficient SQL-based operations. Perfect for schools, colleges, or any institution managing student data.",
+    "image": "studentmanagement",
+    "category": "database",
     "links": {
-      "view": "https://resumegenx.netlify.app/",
-      "code": "https://github.com/EhsanulHaqueSiam/resumegen"
+      "view": "https://github.com/EhsanulHaqueSiam/StudentManagementSystem",
+      "code": "https://github.com/EhsanulHaqueSiam/StudentManagementSystem"
     }
   },
   {
-    "name": "React-Projects",
-    "desc": "Full-Stack project dashboard which is collection of projects built on the React library.",
-    "image": "reactprojects",
-    "category": "mern",
+    "name": "BDNewsPaperScraper",
+    "desc": "A web scraping project built using Scrapy, a Python-based framework. This system focuses on extracting news articles and updates from Bangladeshi newspapers, automating the data collection process. The scraper efficiently collects and structures data for further analysis or integration with other applications. It's designed to handle diverse formats and ensure accurate extraction from dynamic web pages.",
+    "image": "saas",
+    "category": "web_scraping",
     "links": {
-      "view": "https://reactjsprojects.herokuapp.com/",
-      "code": "https://github.com/EhsanulHaqueSiam/React-Projects"
+      "view": "https://github.com/EhsanulHaqueSiam/BDNewsPaperScraper",
+      "code": "https://github.com/EhsanulHaqueSiam/BDNewsPaperScraper"
     }
   },
   {
-    "name": "Flipkart PHP",
-    "desc": "Full-Stack Flipkart Clone Using LAMP Stack. With all major features and OTP authentication and Cashfree payment gateway.",
-    "image": "flipkartphp",
-    "category": "lamp",
+    "name": "Portfolio",
+    "desc": "A personal portfolio website designed to showcase projects, skills, and achievements. This site is built using HTML, CSS, and jQuery, ensuring a responsive and visually appealing layout. Hosted on Netlify for fast and reliable access, the portfolio features smooth navigation, interactive elements, and clean code. It's designed to create a professional online presence and demonstrate web development skills.",
+    "image": "portfolioweb",
+    "category": "web",
     "links": {
-      "view": "https://github.com/EhsanulHaqueSiam/Flipkart-Clone-PHP",
-      "code": "https://github.com/EhsanulHaqueSiam/Flipkart-Clone-PHP"
-    }
-  },
-  {
-    "name": "Web UI Clones",
-    "desc": "Flipkart, YouTube, Instagram, Sololearn web UI clones using tailwindCSS.",
-    "image": "webuiclones",
-    "category": "mern",
-    "links": {
-      "view": "https://github.com/EhsanulHaqueSiam/web-ui-clones",
-      "code": "https://github.com/EhsanulHaqueSiam/web-ui-clones"
-    }
-  },
-  {
-    "name": "Crypto Tracker",
-    "desc": "Crypto Tracker built using ReactJS and Chakra UI. Supports dark mode. API used coingecko.",
-    "image": "cryptotracker",
-    "category": "mern",
-    "links": {
-      "view": "https://crypto-tracker-react-project.netlify.app/",
-      "code": "https://github.com/EhsanulHaqueSiam/React-Projects/tree/main/crypto-tracker"
-    }
-  },
-  {
-    "name": "Hulu Website",
-    "desc": "Hulu website built using NextJS and tailwindCSS. API used TMDB, deployed on vercel.",
-    "image": "hulu",
-    "category": "mern",
-    "links": {
-      "view": "https://hulu-clone-Ehsanul-Haque.vercel.app/",
-      "code": "https://github.com/EhsanulHaqueSiam/React-Projects/tree/main/hulu-clone"
-    }
-  },
-  {
-    "name": "Composey Website",
-    "desc": "Simple landing page website built using HTML, CSS, JavaScript and some JavaScript Libraries.",
-    "image": "composey",
-    "category": "basicweb",
-    "links": {
-      "view": "https://composey.netlify.app/",
-      "code": "https://github.com/EhsanulHaqueSiam/LGMVIP-WebDev"
-    }
-  },
-  {
-    "name": "PHP Banking Website",
-    "desc": "Basic Banking System based on PHP and MySQL database. Made with HTML, CSS, JavaScript and backend with PHP.",
-    "image": "tsfbank",
-    "category": "lamp",
-    "links": {
-      "view": "https://tsfbank.rf.gd",
-      "code": "https://github.com/EhsanulHaqueSiam/TSF-Bank"
-    }
-  },
-  {
-    "name": "Bootstrap Portfolio",
-    "desc": "Portfolio built using HTML, CSS, Bootstrap, SASS and JavaScript. Customized Bootstrap using SCSS.",
-    "image": "bootstrapportfolio",
-    "category": "basicweb",
-    "links": {
-      "view": "#",
-      "code": "#"
-    }
-  },
-  {
-    "name": "Bootstrap Template",
-    "desc": "Basic website template built using HTML and Bootstrap.",
-    "image": "bootstraptemplate",
-    "category": "basicweb",
-    "links": {
-      "view": "#",
-      "code": "#"
-    }
-  },
-  {
-    "name": "Foodicious",
-    "desc": "Basic food website landing page built using HTML, CSS and JavaScript.",
-    "image": "foodicious",
-    "category": "basicweb",
-    "links": {
-      "view": "#",
-      "code": "#"
-    }
-  },
-  {
-    "name": "Food Website",
-    "desc": "Basic food website landing page built using HTML, CSS, SASS, Bootstrap and jQuery.",
-    "image": "foodwebsite",
-    "category": "basicweb",
-    "links": {
-      "view": "#",
-      "code": "#"
-    }
-  },
-  {
-    "name": "PHP PBL Portal",
-    "desc": "A simple portal in which students can submit their PBL projects and faculties can view by access admin panel.",
-    "image": "phppblform",
-    "category": "lamp",
-    "links": {
-      "view": "https://github.com/EhsanulHaqueSiam/PHP-Projects/tree/main/pblform#pbl-portal",
-      "code": "https://github.com/EhsanulHaqueSiam/PHP-Projects/tree/main/pblform"
-    }
-  },
-  {
-    "name": "Old Websites",
-    "desc": "Bestwebs & ColorCoder. Two Years old websites memories. Simple with basic features.",
-    "image": "oldsites",
-    "category": "basicweb",
-    "links": {
-      "view": "#",
-      "code": "#"
+      "view": "https://github.com/EhsanulHaqueSiam/Portfolio_EhsanulHaqueSiam",
+      "code": "https://github.com/EhsanulHaqueSiam/Portfolio_EhsanulHaqueSiam"
     }
   }
 ]
