@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const menu = document.querySelector("#menu");
   const navbar = document.querySelector(".navbar");
   const scrollTopBtn = document.querySelector("#scroll-top");
+  const scrollProgress = document.querySelector("#scroll-progress");
 
   // Menu toggle
   menu.addEventListener("click", () => {
@@ -16,6 +17,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const handleScroll = () => {
     menu.classList.remove("fa-times");
     navbar.classList.remove("nav-toggle");
+
+    // Scroll progress bar
+    if (scrollProgress) {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const scrollPercent = (scrollTop / docHeight) * 100;
+      scrollProgress.style.width = scrollPercent + "%";
+    }
 
     if (window.scrollY > 60) {
       scrollTopBtn.classList.add("active");
