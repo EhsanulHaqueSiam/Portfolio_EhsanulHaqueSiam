@@ -56,6 +56,7 @@ document.addEventListener("DOMContentLoaded", () => {
     .addEventListener("submit", async (e) => {
       e.preventDefault();
       try {
+        // TODO: Replace with your actual EmailJS user ID
         emailjs.init("user_#############");
         const response = await emailjs.sendForm(
           "contact_service",
@@ -106,36 +107,51 @@ document.addEventListener("DOMContentLoaded", () => {
       projects: "./projects/projects.json",
       achievements: "./achievements/achievements.json",
     };
-    const response = await fetch(urls[type]);
-    return response.json();
+    try {
+      const response = await fetch(urls[type]);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return response.json();
+    } catch (error) {
+      console.error(`Failed to fetch ${type}:`, error);
+      return [];
+    }
   };
 
   const renderSkills = async () => {
-    const skills = await fetchData("skills");
-    const skillsContainer = document.getElementById("skillsContainer");
-    skillsContainer.innerHTML = skills
-      .map(
-        (skill) => `
+    try {
+      const skills = await fetchData("skills");
+      const skillsContainer = document.getElementById("skillsContainer");
+      if (!skillsContainer || !skills.length) return;
+      skillsContainer.innerHTML = skills
+        .map(
+          (skill) => `
                 <div class="bar">
                     <div class="info">
                         <img src="${skill.icon}" alt="skill" />
                         <span>${skill.name}</span>
                     </div>
                 </div>`
-      )
-      .join("");
+        )
+        .join("");
+    } catch (error) {
+      console.error("Failed to render skills:", error);
+    }
   };
 
   const renderProjects = async () => {
-    const projects = await fetchData("projects");
-    const projectsContainer = document.querySelector("#work .box-container");
-    projectsContainer.innerHTML = projects
-      .filter((project) => project.category !== "android")
-      .slice(0, 10)
-      .map(
-        (project) => `
+    try {
+      const projects = await fetchData("projects");
+      const projectsContainer = document.querySelector("#work .box-container");
+      if (!projectsContainer || !projects.length) return;
+      projectsContainer.innerHTML = projects
+        .filter((project) => project.category !== "android")
+        .slice(0, 10)
+        .map(
+          (project) => `
                 <div class="box tilt">
-                    <img draggable="false" src="/assets/images/projects/${project.image}.png" alt="project" />
+                    <img draggable="false" src="/assets/images/projects/${project.image}.png" alt="${project.name}" />
                     <div class="content">
                         <div class="tag"><h3>${project.name}</h3></div>
                         <div class="desc">
@@ -147,25 +163,30 @@ document.addEventListener("DOMContentLoaded", () => {
                         </div>
                     </div>
                 </div>`
-      )
-      .join("");
+        )
+        .join("");
 
-    VanillaTilt.init(document.querySelectorAll(".tilt"), { max: 15 });
-    ScrollReveal().reveal(".work .box", { interval: 200 });
+      VanillaTilt.init(document.querySelectorAll(".tilt"), { max: 15 });
+      ScrollReveal().reveal(".work .box", { interval: 200 });
+    } catch (error) {
+      console.error("Failed to render projects:", error);
+    }
   };
 
   const renderAchievements = async () => {
-    const achievements = await fetchData("achievements");
-    const achievementsContainer = document.querySelector(
-      "#award .box-container"
-    );
-    achievementsContainer.innerHTML = achievements
-      .filter((achievement) => achievement.category !== "android")
-      .slice(0, 10)
-      .map(
-        (achievement) => `
+    try {
+      const achievements = await fetchData("achievements");
+      const achievementsContainer = document.querySelector(
+        "#award .box-container"
+      );
+      if (!achievementsContainer || !achievements.length) return;
+      achievementsContainer.innerHTML = achievements
+        .filter((achievement) => achievement.category !== "android")
+        .slice(0, 10)
+        .map(
+          (achievement) => `
                 <div class="box tilt">
-                    <img draggable="false" src="/assets/images/achievements/${achievement.image}.png" alt="achievement" />
+                    <img draggable="false" src="/assets/images/achievements/${achievement.image}.png" alt="${achievement.name}" />
                     <div class="content">
                         <div class="tag"><h3>${achievement.name}</h3></div>
                         <div class="desc">
@@ -173,11 +194,14 @@ document.addEventListener("DOMContentLoaded", () => {
                         </div>
                     </div>
                 </div>`
-      )
-      .join("");
+        )
+        .join("");
 
-    VanillaTilt.init(document.querySelectorAll(".tilt"), { max: 15 });
-    ScrollReveal().reveal(".award .box", { interval: 200 });
+      VanillaTilt.init(document.querySelectorAll(".tilt"), { max: 15 });
+      ScrollReveal().reveal(".award .box", { interval: 200 });
+    } catch (error) {
+      console.error("Failed to render achievements:", error);
+    }
   };
 
   renderSkills();
