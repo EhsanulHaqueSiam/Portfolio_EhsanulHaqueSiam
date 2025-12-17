@@ -107,8 +107,16 @@ header .navbar ul li a:hover {
 }
 
 @media (max-width: 768px) {
+
+    /* Ensure proper header flex layout on mobile */
+    header {
+        gap: 1rem;
+    }
+
     #menu {
         display: block;
+        order: 2;
+        flex-shrink: 0;
     }
 
     header .navbar {
