@@ -114,7 +114,7 @@ export const renderAchievements = async () => {
         const isAchievementsPage = window.location.pathname.includes("achievements");
         const filteredAchievements = isAchievementsPage
             ? achievements
-            : achievements.filter(a => a.showInHome !== false);
+            : achievements.filter(a => a.showInHome === true);
 
         // Render achievement boxes
         const displayAchievements = filteredAchievements

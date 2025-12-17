@@ -6,13 +6,5 @@
         "desc": "Showcased an innovative application and secured the 1st Runner-up position, demonstrating technical proficiency and presentation skills.",
         "alignment": "right",
         "showInHome": false
-    },
-    {
-        "company": "CodeAlpha",
-        "role": "Andriod App Development Intern",
-        "date": "Aug 2024 - Sep 2024",
-        "desc": "Collaborated with the development team to build and optimize Android applications, gaining hands-on experience in mobile software engineering.",
-        "alignment": "right",
-        "showInHome": true
     }
 ]

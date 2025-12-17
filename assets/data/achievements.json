@@ -40,14 +40,6 @@
     "showInHome": false
   },
   {
-    "name": "Certified Professional Data Engineer",
-    "desc": "Google Cloud Certified Professional Data Engineer.",
-    "images": [
-      "cpecertificate"
-    ],
-    "showInHome": true
-  },
-  {
     "name": "CPE Conference Presentation Online",
     "desc": "Delivered an online presentation at the South Asian Climate Conference 2024, addressing global climate concerns and strategies.",
     "images": [

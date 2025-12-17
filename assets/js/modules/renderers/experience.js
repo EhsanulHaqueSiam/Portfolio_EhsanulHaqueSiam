@@ -37,7 +37,15 @@ export const renderExperience = async () => {
 
         if (!container || !experience.length) return;
 
-        container.innerHTML = experience
+        // Filter experience based on current page
+        // Homepage: only show experience with showInHome === true
+        // Experience page: show all experience
+        const isExperiencePage = window.location.pathname.includes("experience");
+        const filteredExperience = isExperiencePage
+            ? experience
+            : experience.filter(exp => exp.showInHome === true);
+
+        container.innerHTML = filteredExperience
             .map(exp => generateExperienceHtml(exp))
             .join("");
 

@@ -117,7 +117,7 @@ export const renderPublications = async () => {
         const isPublicationsPage = window.location.pathname.includes("publications");
         const filteredPubs = isPublicationsPage
             ? publications
-            : publications.filter(pub => pub.showInHome !== false);
+            : publications.filter(pub => pub.showInHome === true);
 
         // Render publication boxes
         container.innerHTML = filteredPubs

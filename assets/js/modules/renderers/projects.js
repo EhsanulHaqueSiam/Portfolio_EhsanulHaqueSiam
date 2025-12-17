@@ -138,10 +138,12 @@ export const renderProjects = async () => {
         if (!projectsContainer || !projects.length) return;
 
         // Filter projects based on current page
+        // Homepage: only show projects with showInHome === true
+        // Projects page: show all projects
         const isProjectsPage = window.location.pathname.includes("projects");
         const filteredProjects = isProjectsPage
             ? projects
-            : projects.filter(p => p.showInHome !== false);
+            : projects.filter(p => p.showInHome === true);
 
         // Render project boxes
         const displayProjects = filteredProjects
