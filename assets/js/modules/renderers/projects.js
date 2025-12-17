@@ -182,48 +182,30 @@ export const renderProjects = async () => {
 
         if (!projectsContainer || !projects.length) return;
 
-        // Filter projects based on current page
-        // Homepage: only show projects with showInHome === true
-        // Projects page: show all projects
+        // Check if on projects page
         const isProjectsPage = window.location.pathname.includes("projects");
-        const filteredProjects = isProjectsPage
+
+        // Filter for homepage vs projects page
+        let displayProjects = isProjectsPage
             ? projects
             : projects.filter(p => p.showInHome === true);
 
-        // Render project boxes
-        const displayProjects = filteredProjects
-            .filter(project => project.category !== "android")
-            .slice(0, 10);
-
-        projectsContainer.innerHTML = displayProjects
-            .map((project, index) => generateProjectHtml(project, index))
-            .join("");
-
-        // Initialize hover sliders for multi-image projects
-        displayProjects.forEach((project, index) => {
-            const images = project.images || [project.image];
-            if (images.length > 1) {
-                const sliderEl = document.getElementById(`proj-slider-${index}`);
-                initHoverSlider(sliderEl);
-            }
-        });
-
-        // Initialize VanillaTilt
-        if (typeof VanillaTilt !== 'undefined') {
-            VanillaTilt.init(document.querySelectorAll(".tilt"), {
-                max: 15,
-                speed: 400,
-                glare: true,
-                "max-glare": 0.3
-            });
+        // Store original projects for filtering (projects page only)
+        if (isProjectsPage) {
+            window.allProjects = [...projects];
+            initProjectFilters(projectsContainer);
+        } else {
+            // Homepage: limit to 10
+            displayProjects = displayProjects.slice(0, 10);
         }
 
-        // Initialize ScrollReveal
-        if (typeof ScrollReveal !== 'undefined') {
-            ScrollReveal().reveal(".work .box", { interval: 100 });
-        }
+        // Render projects
+        renderProjectCards(projectsContainer, displayProjects);
 
-        // Attach gallery click handlers
+        // Initialize effects
+        initProjectEffects(projectsContainer, displayProjects);
+
+        // Attach gallery handlers
         attachGalleryHandlers(projectsContainer);
 
     } catch (error) {
@@ -233,4 +215,142 @@ export const renderProjects = async () => {
             container.innerHTML = `<p style="color:red;">Error: ${error.message}</p>`;
         }
     }
+};
+
+/**
+ * Render project cards to container
+ */
+const renderProjectCards = (container, projects) => {
+    if (projects.length === 0) {
+        container.innerHTML = `
+            <div class="no-results">
+                <i class="fas fa-search"></i>
+                <p>No projects found matching your criteria.</p>
+            </div>
+        `;
+        return;
+    }
+
+    container.innerHTML = projects
+        .map((project, index) => generateProjectHtml(project, index))
+        .join("");
+};
+
+/**
+ * Initialize project tilt and slider effects
+ */
+const initProjectEffects = (container, projects) => {
+    // Initialize hover sliders
+    projects.forEach((project, index) => {
+        const images = project.images || [project.image];
+        if (images.length > 1) {
+            const sliderEl = document.getElementById(`proj-slider-${index}`);
+            initHoverSlider(sliderEl);
+        }
+    });
+
+    // Initialize VanillaTilt
+    if (typeof VanillaTilt !== 'undefined') {
+        VanillaTilt.init(container.querySelectorAll(".tilt"), {
+            max: 15,
+            speed: 400,
+            glare: true,
+            "max-glare": 0.3
+        });
+    }
+
+    // Initialize ScrollReveal
+    if (typeof ScrollReveal !== 'undefined') {
+        ScrollReveal().reveal(".work .box", { interval: 100 });
+    }
+};
+
+/**
+ * Initialize project filters (search, category, sort, tags)
+ */
+const initProjectFilters = (container) => {
+    const searchInput = document.getElementById('project-search');
+    const categoryFilter = document.getElementById('category-filter');
+    const sortFilter = document.getElementById('sort-filter');
+    const tagsContainer = document.getElementById('tags-filter');
+
+    if (!searchInput) return; // Not on projects page
+
+    // Extract all unique tags from projects
+    const allTags = [...new Set(window.allProjects.flatMap(p => p.tags || []))];
+
+    // Render tag buttons
+    if (tagsContainer) {
+        tagsContainer.innerHTML = allTags.map(tag =>
+            `<button class="tag-btn" data-tag="${tag}">${tag}</button>`
+        ).join('');
+
+        // Tag click handlers
+        tagsContainer.querySelectorAll('.tag-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                btn.classList.toggle('active');
+                applyFilters(container);
+            });
+        });
+    }
+
+    // Search input handler with debounce
+    let searchTimeout;
+    searchInput.addEventListener('input', () => {
+        clearTimeout(searchTimeout);
+        searchTimeout = setTimeout(() => applyFilters(container), 300);
+    });
+
+    // Category filter handler
+    categoryFilter?.addEventListener('change', () => applyFilters(container));
+
+    // Sort filter handler
+    sortFilter?.addEventListener('change', () => applyFilters(container));
+};
+
+/**
+ * Apply all filters and re-render projects
+ */
+const applyFilters = (container) => {
+    const searchQuery = document.getElementById('project-search')?.value.toLowerCase() || '';
+    const categoryValue = document.getElementById('category-filter')?.value || 'all';
+    const sortValue = document.getElementById('sort-filter')?.value || 'default';
+    const activeTags = [...document.querySelectorAll('.tag-btn.active')].map(btn => btn.dataset.tag);
+
+    let filtered = [...window.allProjects];
+
+    // Search filter
+    if (searchQuery) {
+        filtered = filtered.filter(p =>
+            p.name.toLowerCase().includes(searchQuery) ||
+            p.desc.toLowerCase().includes(searchQuery) ||
+            (p.tags || []).some(tag => tag.toLowerCase().includes(searchQuery))
+        );
+    }
+
+    // Category filter
+    if (categoryValue !== 'all') {
+        filtered = filtered.filter(p =>
+            (p.categories || [p.category]).includes(categoryValue)
+        );
+    }
+
+    // Tags filter
+    if (activeTags.length > 0) {
+        filtered = filtered.filter(p =>
+            activeTags.every(tag => (p.tags || []).includes(tag))
+        );
+    }
+
+    // Sort
+    if (sortValue === 'name-asc') {
+        filtered.sort((a, b) => a.name.localeCompare(b.name));
+    } else if (sortValue === 'name-desc') {
+        filtered.sort((a, b) => b.name.localeCompare(a.name));
+    }
+
+    // Re-render
+    renderProjectCards(container, filtered);
+    initProjectEffects(container, filtered);
+    attachGalleryHandlers(container);
 };

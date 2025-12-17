@@ -10,7 +10,16 @@
       "bdnewspaperscraper.png"
     ],
     "showInHome": true,
-    "category": "web_scraping",
+    "categories": [
+      "web_scraping",
+      "automation"
+    ],
+    "tags": [
+      "Python",
+      "Scrapy",
+      "BeautifulSoup",
+      "NLP"
+    ],
     "links": {
       "view": "#",
       "code": "https://github.com/EhsanulHaqueSiam/BDNewsPaperScraper"
@@ -27,7 +36,16 @@
       "pharmacymanagement"
     ],
     "showInHome": true,
-    "category": "csharp",
+    "categories": [
+      "desktop_app",
+      "database"
+    ],
+    "tags": [
+      "C#",
+      "MSSQL",
+      "Guna UI",
+      ".NET"
+    ],
     "links": {
       "view": "#",
       "code": "https://github.com/EhsanulHaqueSiam/PharmacyManagementSystem"
@@ -44,7 +62,16 @@
       "studentmanagement"
     ],
     "showInHome": true,
-    "category": "database",
+    "categories": [
+      "desktop_app",
+      "database"
+    ],
+    "tags": [
+      "Java",
+      "MySQL",
+      "MVC",
+      "JDBC"
+    ],
     "links": {
       "view": "#",
       "code": "https://github.com/EhsanulHaqueSiam/StudentManagementSystem"
@@ -61,7 +88,16 @@
       "hotelmanagement"
     ],
     "showInHome": true,
-    "category": "java",
+    "categories": [
+      "desktop_app",
+      "database"
+    ],
+    "tags": [
+      "Java",
+      "MySQL",
+      "OOP",
+      "Swing"
+    ],
     "links": {
       "view": "#",
       "code": "https://github.com/EhsanulHaqueSiam/HotelManagementSystem"
@@ -78,7 +114,16 @@
       "portfolioweb"
     ],
     "showInHome": true,
-    "category": "web",
+    "categories": [
+      "web",
+      "frontend"
+    ],
+    "tags": [
+      "HTML",
+      "CSS",
+      "JavaScript",
+      "jQuery"
+    ],
     "links": {
       "view": "#",
       "code": "https://github.com/EhsanulHaqueSiam/Portfolio_EhsanulHaqueSiam"
@@ -97,7 +142,16 @@
       "gameproject3"
     ],
     "showInHome": true,
-    "category": "gamedev",
+    "categories": [
+      "gamedev",
+      "blockchain"
+    ],
+    "tags": [
+      "Unreal Engine 5",
+      "C++",
+      "Blueprints",
+      "Web3"
+    ],
     "links": {
       "view": "#",
       "code": "#"
@@ -110,8 +164,13 @@
     "images": [
       "gameproject2"
     ],
-    "showInHome": true,
-    "category": "gamedev",
+    "showInHome": false,
+    "categories": [
+      "gamedev"
+    ],
+    "tags": [
+      "Unreal Engine 5"
+    ],
     "links": {
       "view": "#",
       "code": "#"
@@ -124,8 +183,13 @@
     "images": [
       "gameproject3"
     ],
-    "showInHome": true,
-    "category": "gamedev",
+    "showInHome": false,
+    "categories": [
+      "gamedev"
+    ],
+    "tags": [
+      "Unreal Engine 5"
+    ],
     "links": {
       "view": "#",
       "code": "#"

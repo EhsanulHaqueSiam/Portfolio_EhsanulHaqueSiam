@@ -70,6 +70,161 @@
             background: var(--color-primary-light, #a855f7);
             border-color: transparent;
         }
+
+        /* Search and Filter Controls */
+        .projects-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding: 0 2rem;
+        }
+
+        .search-box {
+            position: relative;
+            flex: 1;
+            max-width: 40rem;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 1.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #7303a7;
+            font-size: 1.6rem;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 1.2rem 1.5rem 1.2rem 4.5rem;
+            border: 2px solid rgba(115, 3, 167, 0.2);
+            border-radius: 3rem;
+            font-size: 1.5rem;
+            background: rgba(255, 255, 255, 0.9);
+            transition: all 0.3s ease;
+        }
+
+        .search-box input:focus {
+            border-color: #7303a7;
+            box-shadow: 0 0 15px rgba(115, 3, 167, 0.2);
+            outline: none;
+        }
+
+        .filter-controls {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-controls select {
+            padding: 1.2rem 2rem;
+            border: 2px solid rgba(115, 3, 167, 0.2);
+            border-radius: 3rem;
+            font-size: 1.4rem;
+            background: rgba(255, 255, 255, 0.9);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 15rem;
+        }
+
+        .filter-controls select:focus {
+            border-color: #7303a7;
+            outline: none;
+        }
+
+        /* Tags Filter */
+        .tags-filter {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            justify-content: center;
+            margin-bottom: 2rem;
+            padding: 0 2rem;
+        }
+
+        .tag-btn {
+            padding: 0.6rem 1.4rem;
+            border: 1px solid rgba(115, 3, 167, 0.3);
+            border-radius: 2rem;
+            background: rgba(115, 3, 167, 0.05);
+            color: #7303a7;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .tag-btn:hover,
+        .tag-btn.active {
+            background: linear-gradient(135deg, #7303a7, #2506ad);
+            color: #fff;
+            border-color: transparent;
+        }
+
+        /* No Results State */
+        .no-results {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: #666;
+            font-size: 1.6rem;
+        }
+
+        .no-results i {
+            font-size: 4rem;
+            color: #7303a7;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        /* Dark Theme */
+        [data-theme="dark"] .search-box input {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.1);
+            color: #fff;
+        }
+
+        [data-theme="dark"] .search-box input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        [data-theme="dark"] .filter-controls select {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.1);
+            color: #fff;
+        }
+
+        [data-theme="dark"] .tag-btn {
+            background: rgba(184, 77, 255, 0.1);
+            border-color: rgba(184, 77, 255, 0.3);
+            color: #b84dff;
+        }
+
+        [data-theme="dark"] .tag-btn:hover,
+        [data-theme="dark"] .tag-btn.active {
+            background: linear-gradient(135deg, #b84dff, #4a00e0);
+        }
+
+        [data-theme="dark"] .no-results {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        @media (max-width: 768px) {
+            .projects-controls {
+                flex-direction: column;
+            }
+
+            .search-box {
+                max-width: 100%;
+                width: 100%;
+            }
+
+            .filter-controls {
+                width: 100%;
+                justify-content: center;
+            }
+        }
     </style>
 </head>
 
@@ -103,6 +258,37 @@
     <!-- projects section starts -->
     <section class="work" id="work">
         <h2 class="heading"><i class="fas fa-laptop-code"></i> All <span>Projects</span></h2>
+
+        <!-- Search and Filter Controls -->
+        <div class="projects-controls">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="project-search" placeholder="Search projects...">
+            </div>
+            <div class="filter-controls">
+                <select id="category-filter">
+                    <option value="all">All Categories</option>
+                    <option value="web">Web</option>
+                    <option value="frontend">Frontend</option>
+                    <option value="desktop_app">Desktop App</option>
+                    <option value="database">Database</option>
+                    <option value="gamedev">Game Dev</option>
+                    <option value="web_scraping">Web Scraping</option>
+                    <option value="automation">Automation</option>
+                    <option value="blockchain">Blockchain</option>
+                </select>
+                <select id="sort-filter">
+                    <option value="default">Default Order</option>
+                    <option value="name-asc">Name (A-Z)</option>
+                    <option value="name-desc">Name (Z-A)</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Tags Filter -->
+        <div class="tags-filter" id="tags-filter">
+            <!-- Tags will be loaded dynamically -->
+        </div>
 
         <div class="box-container">
             <!-- Loaded dynamically -->
