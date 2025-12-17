@@ -1,0 +1,101 @@
+[
+  {
+    "name": "BDNewsPaperScraper",
+    "desc": "Developed an optimized, cross-platform web scraping system using Python and Scrapy to collect and clean news articles from major Bangladeshi newspapers. Implemented high-performance batch runners.",
+    "images": [
+      "saas.png"
+    ],
+    "showInHome": true,
+    "category": "web_scraping",
+    "links": {
+      "view": "https://github.com/EhsanulHaqueSiam/BDNewsPaperScraper",
+      "code": "https://github.com/EhsanulHaqueSiam/BDNewsPaperScraper"
+    }
+  },
+  {
+    "name": "Pharmacy Management System",
+    "desc": "Developed a C#-based Pharmacy Management System with an MSSQL database and Guna UI framework, enabling efficient management of medicines, sales, inventory, and user records.",
+    "images": [
+      "pharmacymanagement"
+    ],
+    "category": "csharp",
+    "links": {
+      "view": "https://github.com/EhsanulHaqueSiam/PharmacyManagementSystem",
+      "code": "https://github.com/EhsanulHaqueSiam/PharmacyManagementSystem"
+    }
+  },
+  {
+    "name": "Student Management System",
+    "desc": "Developed a Java-based Student Management System using MySQL, implementing MVC architecture, DAO layer, connection pooling, and configuration management.",
+    "images": [
+      "studentmanagement"
+    ],
+    "category": "database",
+    "links": {
+      "view": "https://github.com/EhsanulHaqueSiam/StudentManagementSystem",
+      "code": "https://github.com/EhsanulHaqueSiam/StudentManagementSystem"
+    }
+  },
+  {
+    "name": "Hotel Management System",
+    "desc": "Developed a Java-based hotel management system applying object-oriented programming principles, featuring room management, check-in/check-out processes, user interfaces, and digital payment integration.",
+    "images": [
+      "hotelmanagement"
+    ],
+    "category": "java",
+    "links": {
+      "view": "https://github.com/EhsanulHaqueSiam/HotelManagementSystem",
+      "code": "https://github.com/EhsanulHaqueSiam/HotelManagementSystem"
+    }
+  },
+  {
+    "name": "Portfolio",
+    "desc": "A responsive portfolio website built with HTML, CSS, and jQuery, hosted on Netlify to showcase projects and skills with professional design.",
+    "images": [
+      "portfolioweb"
+    ],
+    "category": "web",
+    "links": {
+      "view": "https://github.com/EhsanulHaqueSiam/Portfolio_EhsanulHaqueSiam",
+      "code": "https://github.com/EhsanulHaqueSiam/Portfolio_EhsanulHaqueSiam"
+    }
+  },
+  {
+    "name": "Nitefeeder",
+    "desc": "A multiplayer racing game built in Unreal Engine 5, featuring cryptocurrency integration for in-game transactions and rewards.",
+    "images": [
+      "gameproject1",
+      "gameproject2",
+      "gameproject3"
+    ],
+    "category": "gamedev",
+    "links": {
+      "view": "#",
+      "code": "#"
+    }
+  },
+  {
+    "name": "Nitefeeder Gameplay",
+    "desc": "A multiplayer racing game built in Unreal Engine 5, featuring cryptocurrency integration for in-game transactions and rewards.",
+    "images": [
+      "gameproject2"
+    ],
+    "category": "gamedev",
+    "links": {
+      "view": "#",
+      "code": "#"
+    }
+  },
+  {
+    "name": "Nitefeeder Assets",
+    "desc": "A multiplayer racing game built in Unreal Engine 5, featuring cryptocurrency integration for in-game transactions and rewards.",
+    "images": [
+      "gameproject3"
+    ],
+    "category": "gamedev",
+    "links": {
+      "view": "#",
+      "code": "#"
+    }
+  }
+]

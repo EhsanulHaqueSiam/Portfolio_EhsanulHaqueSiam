@@ -2,37 +2,67 @@
   {
     "name": "AIUB CS FEST 2024",
     "desc": "Achieved 1st Runners up in the app showcasing category at AIUB CS FEST 2024, demonstrating innovative use of technology.",
-    "image": "aiubcsfest2024cert",
-    "category": "certificate"
+    "images": [
+      "aiubcsfest2024cert",
+      "awardcsfest2024",
+      "csfestceramoney"
+    ],
+    "category": "certificate",
+    "showInHome": true
   },
   {
     "name": "AIUB CS FEST Crest",
     "desc": "Received the 1st Runners up Crest for outstanding performance in app showcasing at AIUB CS FEST 2024",
-    "image": "awardcsfest2024",
-    "category": "award"
+    "images": [
+      "awardcsfest2024"
+    ],
+    "category": "award",
+    "showInHome": false
   },
   {
     "name": "South Asian Climate Conference 2024",
     "desc": "Recognized with a certificate for participation in the South Asian Climate Conference 2024, contributing insights into climate-related issues.",
-    "image": "cpecertificate",
-    "category": "certificate"
+    "images": [
+      "cpecertificate",
+      "cpepresentation",
+      "cpepresentation2"
+    ],
+    "category": "certificate",
+    "showInHome": true
   },
   {
     "name": "CPE Conference Presentation",
     "desc": "Presented at the South Asian Climate Conference 2024, sharing research and findings on climate challenges and solutions.",
-    "image": "cpepresentation",
-    "category": "presentation"
+    "images": [
+      "cpepresentation"
+    ],
+    "category": "presentation",
+    "showInHome": false
+  },
+  {
+    "name": "Certified Professional Data Engineer",
+    "desc": "Google Cloud Certified Professional Data Engineer.",
+    "images": [
+      "cpecertificate"
+    ],
+    "showInHome": true
   },
   {
     "name": "CPE Conference Presentation Online",
     "desc": "Delivered an online presentation at the South Asian Climate Conference 2024, addressing global climate concerns and strategies.",
-    "image": "cpepresentation2",
-    "category": "presentation"
+    "images": [
+      "cpepresentation2"
+    ],
+    "category": "presentation",
+    "showInHome": false
   },
   {
     "name": "AIUB CS FEST Ceremony",
     "desc": "Attended the AIUB CS FEST 2024 closing ceremony, celebrating achievements in technology and innovation.",
-    "image": "csfestceramoney",
-    "category": "ceremony"
+    "images": [
+      "csfestceramoney"
+    ],
+    "category": "ceremony",
+    "showInHome": false
   }
 ]
