@@ -1,0 +1,12 @@
+# https://ehsanulhaque.netlify.app/robots.txt
+
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://ehsanulhaque.netlify.app/sitemap.xml
+
+# Disallow admin paths if any
+Disallow: /admin/
+Disallow: /.git/
+Disallow: /.env
