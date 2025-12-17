@@ -18,8 +18,8 @@ export const fetchData = async (type = "skills") => {
     }
 
     try {
-        // Add cache-buster for skills to ensure fresh fetch after structure change
-        const cacheBuster = type === 'skills' ? `?v=${Date.now()}` : '';
+        // Add cache-buster to ensure fresh fetch
+        const cacheBuster = `?v=${Date.now()}`;
         const response = await fetch(`/assets/data/${type}.json${cacheBuster}`);
         if (!response.ok) {
             throw new Error(`Failed to fetch ${type} data`);
