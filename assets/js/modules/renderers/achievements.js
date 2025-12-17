@@ -7,7 +7,8 @@ import { fetchData, resolveImage } from '../data-fetcher.js';
 import { openGallery, createImageResolver } from '../gallery.js';
 
 /**
- * Initialize hover-based image slider for a container
+ * Initialize touch-friendly image slider for a container
+ * Supports both hover (desktop) and tap/swipe (mobile)
  * @param {HTMLElement} sliderEl - Slider container element
  */
 const initHoverSlider = (sliderEl) => {
@@ -15,16 +16,19 @@ const initHoverSlider = (sliderEl) => {
 
     let current = 0;
     let hoverInterval = null;
+    let touchStartX = 0;
+    const imgs = sliderEl.querySelectorAll('img');
+    if (imgs.length <= 1) return;
 
+    const navigate = (direction) => {
+        imgs[current].classList.remove('active');
+        current = (current + direction + imgs.length) % imgs.length;
+        imgs[current].classList.add('active');
+    };
+
+    // Desktop: Hover auto-slide
     sliderEl.addEventListener('mouseenter', () => {
-        hoverInterval = setInterval(() => {
-            const imgs = sliderEl.querySelectorAll('img');
-            if (imgs.length > 0) {
-                imgs[current].classList.remove('active');
-                current = (current + 1) % imgs.length;
-                imgs[current].classList.add('active');
-            }
-        }, 1200);
+        hoverInterval = setInterval(() => navigate(1), 1200);
     });
 
     sliderEl.addEventListener('mouseleave', () => {
@@ -33,6 +37,27 @@ const initHoverSlider = (sliderEl) => {
             hoverInterval = null;
         }
     });
+
+    // Mobile: Touch swipe support
+    sliderEl.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+        if (hoverInterval) {
+            clearInterval(hoverInterval);
+            hoverInterval = null;
+        }
+    }, { passive: true });
+
+    sliderEl.addEventListener('touchend', (e) => {
+        const diff = touchStartX - e.changedTouches[0].screenX;
+        if (Math.abs(diff) > 30) navigate(diff > 0 ? 1 : -1);
+    }, { passive: true });
+
+    // Mobile: Tap to advance
+    sliderEl.addEventListener('click', (e) => {
+        if (e.target.tagName !== 'A') navigate(1);
+    });
+
+    sliderEl.classList.add('swipeable');
 };
 
 /**
