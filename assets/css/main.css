@@ -11,9 +11,9 @@
 @import url("./base/animations.css");
 
 /* ==================== COMPONENTS ==================== */
-@import url("./components/navigation.css");
+@import url("./components/navigation.css?v=3.3");
 @import url("./components/lightbox.css");
-@import url("./components/theme-toggle.css");
+@import url("./components/theme-toggle.css?v=3.3");
 @import url("./components/cursor.css");
 @import url("./components/buttons.css");
 @import url("./components/toast.css");
