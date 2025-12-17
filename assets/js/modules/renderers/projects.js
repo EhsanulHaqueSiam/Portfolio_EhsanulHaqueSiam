@@ -284,7 +284,12 @@ const initProjectFilters = (container) => {
     const sortFilter = document.getElementById('sort-filter');
     const tagsContainer = document.getElementById('tags-filter');
 
-    if (!searchInput) return; // Not on projects page
+    console.log('🔍 Initializing project filters...', { searchInput, categoryFilter, sortFilter, tagsContainer });
+
+    if (!searchInput) {
+        console.warn('Search input not found - not on projects page');
+        return; // Not on projects page
+    }
 
     // Extract all unique tags from projects
     const allTags = [...new Set(window.allProjects.flatMap(p => p.tags || []))];
@@ -326,6 +331,8 @@ const applyFilters = (container) => {
     const categoryValue = document.getElementById('category-filter')?.value || 'all';
     const sortValue = document.getElementById('sort-filter')?.value || 'default';
     const activeTags = [...document.querySelectorAll('.tag-btn.active')].map(btn => btn.dataset.tag);
+
+    console.log('🔄 Applying filters:', { searchQuery, categoryValue, sortValue, activeTags });
 
     let filtered = [...window.allProjects];
 
