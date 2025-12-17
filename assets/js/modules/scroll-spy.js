@@ -3,6 +3,8 @@
  * Handles highlighting active navigation items based on scroll position
  */
 
+let scrollSpyTicking = false;
+
 /**
  * Initialize scroll spy functionality
  * Highlights active nav link based on current scroll position
@@ -29,7 +31,17 @@ export const initScrollSpy = () => {
         });
     };
 
-    window.addEventListener("scroll", updateActiveLink);
+    // Throttled scroll handler
+    window.addEventListener("scroll", () => {
+        if (!scrollSpyTicking) {
+            window.requestAnimationFrame(() => {
+                updateActiveLink();
+                scrollSpyTicking = false;
+            });
+            scrollSpyTicking = true;
+        }
+    }, { passive: true });
+
     window.addEventListener("load", updateActiveLink);
 };
 

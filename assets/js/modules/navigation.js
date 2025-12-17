@@ -4,6 +4,7 @@
  */
 
 let menu, navbar, scrollTopBtn, scrollProgress;
+let scrollTicking = false;
 
 /**
  * Initialize navigation elements
@@ -30,8 +31,16 @@ export const initNavigation = () => {
         }
     });
 
-    // Scroll event handler
-    window.addEventListener("scroll", handleScroll);
+    // Throttled scroll event handler using requestAnimationFrame
+    window.addEventListener("scroll", () => {
+        if (!scrollTicking) {
+            window.requestAnimationFrame(() => {
+                handleScroll();
+                scrollTicking = false;
+            });
+            scrollTicking = true;
+        }
+    }, { passive: true });
 
     // Scroll to top button
     if (scrollTopBtn) {

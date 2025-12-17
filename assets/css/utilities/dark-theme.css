@@ -3,12 +3,12 @@
 
 /* ========== GLOBAL ========== */
 [data-theme="dark"] body {
-    background: #0a0a1a;
-    color: #ffffff;
+    background: var(--bg-primary, #0f0f23);
+    color: var(--text-primary, #f0f0f5);
 }
 
 [data-theme="dark"] section {
-    background: #0a0a1a;
+    background: var(--bg-primary, #0f0f23);
 }
 
 /* ========== HEADER & NAVIGATION ========== */

@@ -10,17 +10,14 @@
 // This must happen synchronously before particles init
 (function applyThemeEarly() {
   const savedTheme = localStorage.getItem('portfolio-theme');
-  console.log('[Particles] Saved theme from localStorage:', savedTheme);
 
   if (savedTheme) {
     document.documentElement.setAttribute('data-theme', savedTheme);
-    console.log('[Particles] Applied theme:', savedTheme);
   } else {
     // Check system preference
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
     if (prefersDark) {
       document.documentElement.setAttribute('data-theme', 'dark');
-      console.log('[Particles] Applied system dark preference');
     }
   }
 })();
@@ -30,9 +27,7 @@
  */
 function getParticleColor() {
   const theme = document.documentElement.getAttribute('data-theme');
-  const color = theme === 'dark' ? '#ffffff' : '#000000';
-  console.log('[Particles] getParticleColor - theme:', theme, 'color:', color);
-  return color;
+  return theme === 'dark' ? '#ffffff' : '#000000';
 }
 
 /**
@@ -41,19 +36,12 @@ function getParticleColor() {
 function initParticles() {
   // Check if particles container exists
   const container = document.getElementById('particles-js');
-  if (!container) {
-    console.log('[Particles] No particles-js container found');
-    return;
-  }
+  if (!container) return;
 
   // Check if particlesJS is available
-  if (typeof particlesJS === 'undefined') {
-    console.log('[Particles] particlesJS library not loaded');
-    return;
-  }
+  if (typeof particlesJS === 'undefined') return;
 
   const particleColor = getParticleColor();
-  console.log('[Particles] Initializing with color:', particleColor);
 
   particlesJS(
     "particles-js",
@@ -174,19 +162,15 @@ function initParticles() {
       },
     }
   );
-
-  console.log('[Particles] Initialization complete');
 }
 
 // Wait for DOM ready, then initialize particles with a small delay
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', () => {
-    console.log('[Particles] DOM ready, waiting 50ms before init');
     setTimeout(initParticles, 50);
   });
 } else {
   // DOM already ready
-  console.log('[Particles] DOM already ready, waiting 50ms before init');
   setTimeout(initParticles, 50);
 }
 
@@ -194,7 +178,6 @@ if (document.readyState === 'loading') {
 const observer = new MutationObserver((mutations) => {
   mutations.forEach((mutation) => {
     if (mutation.type === 'attributes' && mutation.attributeName === 'data-theme') {
-      console.log('[Particles] Theme changed, reinitializing');
       // Clear existing particles and reinitialize
       const particlesContainer = document.getElementById('particles-js');
       if (particlesContainer) {
