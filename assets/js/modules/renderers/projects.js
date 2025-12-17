@@ -129,6 +129,13 @@ const generateProjectHtml = (project, index) => {
     const hasCodeLink = project.links?.code && project.links.code.trim() !== '' && project.links.code !== '#';
     const hasAnyLink = hasViewLink || hasCodeLink;
 
+    // Generate language tags HTML
+    const tagsHtml = project.tags && project.tags.length > 0 ? `
+        <div class="project-tags">
+            ${project.tags.map(tag => `<span class="lang-tag">${tag}</span>`).join('')}
+        </div>
+    ` : '';
+
     // Generate metrics badges HTML
     const metricsHtml = project.metrics && project.metrics.length > 0 ? `
         <div class="project-metrics">
@@ -161,7 +168,10 @@ const generateProjectHtml = (project, index) => {
         <div class="box tilt">
             ${imageHtml}
             <div class="content">
-                <div class="tag"><h3>${project.name}</h3></div>
+                <div class="tag">
+                    <h3>${project.name}</h3>
+                    ${tagsHtml}
+                </div>
                 <div class="desc">
                     <p>${project.desc}</p>
                     ${metricsHtml}

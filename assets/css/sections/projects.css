@@ -41,7 +41,8 @@
 }
 
 .work .box-container .box {
-    flex: 1 1 30rem;
+    flex: 0 1 30rem;
+    max-width: 45rem;
     border-radius: 1.5rem;
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
     position: relative;
@@ -124,13 +125,14 @@
 
 .work .box-container .box .content .tag {
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
     min-height: 4.5rem;
     width: 100%;
     padding: 0.8rem 1.5rem;
     background: linear-gradient(135deg, #7303a7, #2506ad);
+    gap: 0.5rem;
 }
 
 .work .box-container .box .content .tag h3 {
@@ -138,6 +140,25 @@
     font-weight: 700;
     color: #fff;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    margin: 0;
+}
+
+/* Project Language Tags */
+.work .box-container .box .content .tag .project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+}
+
+.work .box-container .box .content .tag .project-tags .lang-tag {
+    display: inline-block;
+    padding: 0.2rem 0.6rem;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 1rem;
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 500;
+    backdrop-filter: blur(4px);
 }
 
 .work .desc {
