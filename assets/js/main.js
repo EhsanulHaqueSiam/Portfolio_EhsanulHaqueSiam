@@ -28,8 +28,8 @@ import {
   renderProjects,
   renderAchievements,
   renderPublications,
-  renderExperience,
-  renderTestimonials
+  renderExperience
+  // renderTestimonials - commented out until testimonials section is ready
 } from './modules/renderers/index.js';
 
 // ==================== INITIALIZATION ====================
