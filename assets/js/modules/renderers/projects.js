@@ -192,8 +192,9 @@ export const renderProjects = async () => {
 
         if (!projectsContainer || !projects.length) return;
 
-        // Check if on projects page
-        const isProjectsPage = window.location.pathname.includes("projects");
+        // Check if on projects page by checking if search input exists
+        const searchInput = document.getElementById('project-search');
+        const isProjectsPage = !!searchInput;
 
         // Filter for homepage vs projects page
         let displayProjects = isProjectsPage
