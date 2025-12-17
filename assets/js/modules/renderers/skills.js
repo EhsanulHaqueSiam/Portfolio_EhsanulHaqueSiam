@@ -27,12 +27,15 @@ export const renderSkills = async () => {
 
         if (!skillsContainer) return;
 
-        // Handle both old array format and new category format
-        const categories = data.categories || data;
-
-        if (Array.isArray(categories) && !categories[0]?.skills) {
-            // Old format - render simple grid
-            skillsContainer.innerHTML = categories
+        // Check if new category format (has categories property)
+        if (data.categories && Array.isArray(data.categories)) {
+            renderCategorySkills(skillsContainer, data.categories);
+            animateSkillBars();
+            return;
+        }
+        // Old format - render simple grid
+        if (Array.isArray(data)) {
+            skillsContainer.innerHTML = data
                 .map(skill => `
                     <div class="bar">
                         <div class="info">
@@ -42,40 +45,7 @@ export const renderSkills = async () => {
                     </div>
                 `)
                 .join("");
-            return;
         }
-
-        // New category format
-        skillsContainer.innerHTML = categories
-            .map(category => `
-                <div class="skill-category">
-                    <div class="category-header">
-                        <i class="${category.icon}"></i>
-                        <h3>${category.name}</h3>
-                    </div>
-                    <div class="category-skills">
-                        ${category.skills.map(skill => {
-                const levelStyle = getLevelStyles(skill.level);
-                return `
-                                <div class="skill-item">
-                                    <div class="skill-info">
-                                        <img src="${skill.icon}" alt="${skill.name}" loading="lazy" />
-                                        <span class="skill-name">${skill.name}</span>
-                                        <span class="skill-level" data-level="${skill.level}">${levelStyle.label}</span>
-                                    </div>
-                                    <div class="skill-bar">
-                                        <div class="skill-progress" style="width: ${levelStyle.width}; background: linear-gradient(90deg, ${levelStyle.color}, ${levelStyle.color}88);"></div>
-                                    </div>
-                                </div>
-                            `;
-            }).join("")}
-                    </div>
-                </div>
-            `)
-            .join("");
-
-        // Animate skill bars on scroll
-        animateSkillBars();
     } catch (error) {
         console.error("Failed to render skills:", error);
         const container = document.getElementById("skillsContainer");
@@ -86,19 +56,41 @@ export const renderSkills = async () => {
 };
 
 /**
+ * Render category-based skills layout (compact design)
+ */
+const renderCategorySkills = (container, categories) => {
+    container.innerHTML = categories
+        .map(category => `
+            <div class="skill-category">
+                <div class="category-header">
+                    <i class="${category.icon}"></i>
+                    <h3>${category.name}</h3>
+                </div>
+                <div class="category-skills">
+                    ${category.skills.map(skill => {
+            const levelStyle = getLevelStyles(skill.level);
+            return `
+                            <div class="skill-item">
+                                <img src="${skill.icon}" alt="${skill.name}" loading="lazy" />
+                                <span class="skill-name">${skill.name}</span>
+                                <span class="skill-level" data-level="${skill.level}">${levelStyle.label}</span>
+                            </div>
+                        `;
+        }).join("")}
+                </div>
+            </div>
+        `)
+        .join("");
+};
+
+/**
  * Animate skill bars when they come into view
  */
 const animateSkillBars = () => {
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                const progressBars = entry.target.querySelectorAll('.skill-progress');
-                progressBars.forEach((bar, index) => {
-                    setTimeout(() => {
-                        bar.style.transform = 'scaleX(1)';
-                        bar.style.opacity = '1';
-                    }, index * 100);
-                });
+                entry.target.classList.add('animate-in');
                 observer.unobserve(entry.target);
             }
         });

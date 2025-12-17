@@ -7,27 +7,27 @@
         {
           "name": "TensorFlow",
           "level": "expert",
-          "icon": "https://img.icons8.com/color/48/tensorflow.png"
+          "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tensorflow/tensorflow-original.svg"
         },
         {
           "name": "PyTorch",
           "level": "advanced",
-          "icon": "https://img.icons8.com/color/48/pytorch.png"
+          "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pytorch/pytorch-original.svg"
         },
         {
           "name": "Machine Learning",
           "level": "expert",
-          "icon": "https://img.icons8.com/color/48/brain--v1.png"
+          "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/numpy/numpy-original.svg"
         },
         {
           "name": "LLMs & RAG",
           "level": "advanced",
-          "icon": "https://img.icons8.com/color/48/chatgpt.png"
+          "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/anaconda/anaconda-original.svg"
         },
         {
           "name": "Data Science",
           "level": "advanced",
-          "icon": "https://img.icons8.com/color/48/data-configuration.png"
+          "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pandas/pandas-original.svg"
         }
       ]
     },
@@ -38,27 +38,27 @@
         {
           "name": "Python",
           "level": "expert",
-          "icon": "https://img.icons8.com/color/48/python.png"
+          "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg"
         },
         {
           "name": "Java",
           "level": "expert",
-          "icon": "https://img.icons8.com/color/48/java-coffee-cup-logo.png"
+          "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg"
         },
         {
           "name": "C#",
           "level": "advanced",
-          "icon": "https://img.icons8.com/color/48/c-sharp-logo.png"
+          "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/csharp/csharp-original.svg"
         },
         {
           "name": "C++",
           "level": "intermediate",
-          "icon": "https://img.icons8.com/color/48/c-plus-plus-logo.png"
+          "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg"
         },
         {
           "name": "Kotlin",
           "level": "intermediate",
-          "icon": "https://img.icons8.com/color/48/kotlin.png"
+          "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kotlin/kotlin-original.svg"
         }
       ]
     },
@@ -69,27 +69,27 @@
         {
           "name": "PostgreSQL",
           "level": "advanced",
-          "icon": "https://img.icons8.com/color/48/postgreesql.png"
+          "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg"
         },
         {
           "name": "MongoDB",
           "level": "advanced",
-          "icon": "https://img.icons8.com/color/48/mongodb.png"
+          "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg"
         },
         {
           "name": "MySQL",
           "level": "advanced",
-          "icon": "https://img.icons8.com/color/48/mysql-logo.png"
+          "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg"
         },
         {
           "name": "REST APIs",
           "level": "expert",
-          "icon": "https://img.icons8.com/color/48/api.png"
+          "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg"
         },
         {
           "name": "FastAPI",
           "level": "advanced",
-          "icon": "https://img.icons8.com/color/48/fastapi.png"
+          "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg"
         }
       ]
     },
@@ -100,27 +100,27 @@
         {
           "name": "Git",
           "level": "expert",
-          "icon": "https://img.icons8.com/color/48/git.png"
+          "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg"
         },
         {
           "name": "Docker",
           "level": "intermediate",
-          "icon": "https://img.icons8.com/color/48/docker.png"
+          "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg"
         },
         {
           "name": "Android",
           "level": "advanced",
-          "icon": "https://img.icons8.com/color/48/android-os.png"
+          "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/android/android-original.svg"
         },
         {
           "name": "Unity",
           "level": "intermediate",
-          "icon": "https://img.icons8.com/color/48/unity.png"
+          "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/unity/unity-original.svg"
         },
         {
           "name": "Linux",
           "level": "advanced",
-          "icon": "https://img.icons8.com/color/48/linux.png"
+          "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg"
         }
       ]
     }
