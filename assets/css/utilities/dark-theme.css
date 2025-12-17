@@ -1,0 +1,277 @@
+/* ==================== DARK THEME OVERRIDES ==================== */
+/* Complete dark mode styling for all sections and components */
+
+/* ========== GLOBAL ========== */
+[data-theme="dark"] body {
+    background: #0a0a1a;
+    color: #ffffff;
+}
+
+[data-theme="dark"] section {
+    background: #0a0a1a;
+}
+
+/* ========== HEADER & NAVIGATION ========== */
+[data-theme="dark"] header {
+    background: rgba(10, 10, 26, 0.9);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] header .logo {
+    color: #ffffff;
+}
+
+[data-theme="dark"] header .navbar ul li a {
+    color: rgba(255, 255, 255, 0.85);
+}
+
+[data-theme="dark"] #menu {
+    color: #ffffff;
+}
+
+/* ========== HERO SECTION ========== */
+[data-theme="dark"] .home {
+    background: linear-gradient(135deg, #0a0a1a 0%, #1a1a2e 100%);
+}
+
+[data-theme="dark"] .home .content h2,
+[data-theme="dark"] .home .content p {
+    color: #ffffff;
+}
+
+/* ========== ABOUT SECTION ========== */
+[data-theme="dark"] .about {
+    background: #0a0a1a;
+}
+
+[data-theme="dark"] .about .content h3,
+[data-theme="dark"] .about .heading {
+    color: #ffffff;
+}
+
+[data-theme="dark"] .about .content p,
+[data-theme="dark"] .about .content .tag {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+[data-theme="dark"] .about .box-container .box p {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+[data-theme="dark"] .about .box-container .box p span {
+    color: var(--color-accent-gold);
+}
+
+/* ========== SKILLS SECTION ========== */
+[data-theme="dark"] .skills {
+    background: #12122a;
+}
+
+[data-theme="dark"] .skills .heading {
+    color: #ffffff;
+}
+
+[data-theme="dark"] .skill-category {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] .skill-category h3 {
+    color: #ffffff;
+}
+
+/* ========== EDUCATION SECTION ========== */
+[data-theme="dark"] .education {
+    background: #0a0a1a;
+}
+
+[data-theme="dark"] .education .heading,
+[data-theme="dark"] .education .qoute {
+    color: #ffffff;
+}
+
+[data-theme="dark"] .education .box {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] .education .box .content h3 {
+    color: #ffffff;
+}
+
+[data-theme="dark"] .education .box .content p,
+[data-theme="dark"] .education .box .content h4 {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* ========== PUBLICATIONS SECTION ========== */
+[data-theme="dark"] .publications {
+    background: #12122a;
+}
+
+[data-theme="dark"] .publications .heading {
+    color: #ffffff;
+}
+
+[data-theme="dark"] .publication-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] .publication-card h3,
+[data-theme="dark"] .publication-card .publication-title {
+    color: #ffffff;
+}
+
+[data-theme="dark"] .publication-card p,
+[data-theme="dark"] .publication-card .publication-authors,
+[data-theme="dark"] .publication-card .publication-venue {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* ========== PROJECTS/WORK SECTION ========== */
+[data-theme="dark"] .work {
+    background: #0a0a1a;
+}
+
+[data-theme="dark"] .work .heading {
+    color: #ffffff;
+}
+
+[data-theme="dark"] .work .box {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] .work .box .content h3,
+[data-theme="dark"] .work .box .tag h3 {
+    color: #ffffff;
+}
+
+[data-theme="dark"] .work .box .content p,
+[data-theme="dark"] .work .box .desc p {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* ========== AWARDS SECTION ========== */
+[data-theme="dark"] .award {
+    background: #12122a;
+}
+
+[data-theme="dark"] .award .heading {
+    color: #ffffff;
+}
+
+[data-theme="dark"] .award-card,
+[data-theme="dark"] .award .box {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] .award-card h3,
+[data-theme="dark"] .award .box h3 {
+    color: #ffffff;
+}
+
+[data-theme="dark"] .award-card p,
+[data-theme="dark"] .award .box p {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* ========== EXPERIENCE SECTION ========== */
+[data-theme="dark"] .experience {
+    background: #0a0a1a;
+}
+
+[data-theme="dark"] .experience .heading {
+    color: #ffffff;
+}
+
+[data-theme="dark"] .timeline-item {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] .timeline-item h3 {
+    color: #ffffff;
+}
+
+[data-theme="dark"] .timeline-item p,
+[data-theme="dark"] .timeline-item .company,
+[data-theme="dark"] .timeline-item .date {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* ========== VIDEO SECTION ========== */
+[data-theme="dark"] .video {
+    background: #12122a;
+}
+
+[data-theme="dark"] .video .heading {
+    color: #ffffff;
+}
+
+/* ========== CONTACT SECTION ========== */
+[data-theme="dark"] .contact {
+    background: #0a0a1a;
+}
+
+[data-theme="dark"] .contact .heading {
+    color: #ffffff;
+}
+
+[data-theme="dark"] .contact-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] .contact-card h3 {
+    color: #ffffff;
+}
+
+[data-theme="dark"] .contact-card p,
+[data-theme="dark"] .contact-intro {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* ========== FOOTER ========== */
+[data-theme="dark"] .footer {
+    background: #0a0a0a;
+}
+
+[data-theme="dark"] .footer .box h3 {
+    color: #ffffff;
+}
+
+[data-theme="dark"] .footer .box p,
+[data-theme="dark"] .footer .box a {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+[data-theme="dark"] .footer .box a:hover {
+    color: var(--color-accent-gold);
+}
+
+/* ========== BUTTONS ========== */
+[data-theme="dark"] .btn {
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* ========== SCROLL TOP BUTTON ========== */
+[data-theme="dark"] #scroll-top {
+    background: var(--color-primary-light);
+    color: #ffffff;
+}
+
+/* ========== CARDS GENERAL ========== */
+[data-theme="dark"] .box,
+[data-theme="dark"] .card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* ========== WAVE DIVIDER ========== */
+[data-theme="dark"] .wave-divider .shape-fill {
+    fill: #0a0a1a;
+}

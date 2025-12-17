@@ -48,12 +48,10 @@ const initPortfolio = async () => {
   initSmoothScrolling();
   initSmoothScroll();
 
-  // Initialize visual effects and animations
+  // Initialize visual effects and animations (before content load)
   initTypedText();
   initVisibilityHandler();
-  initScrollAnimations();
   initParallax();
-  initMicroInteractions();
 
   // Initialize form handling
   initContactForm();
@@ -74,6 +72,11 @@ const initPortfolio = async () => {
     renderPublications(),
     renderExperience()
   ]);
+
+  // Initialize micro-interactions AFTER content is loaded
+  // This ensures tilt effects apply to dynamically rendered cards
+  initScrollAnimations();
+  initMicroInteractions();
 
   console.log("✅ Portfolio initialization complete!");
 };
