@@ -3,7 +3,7 @@
     "name": "BDNewsPaperScraper",
     "desc": "Developed an optimized, cross-platform web scraping system using Python and Scrapy to collect and clean news articles from major Bangladeshi newspapers. Implemented high-performance batch runners.",
     "images": [
-      "saas.png"
+      "bdnewspaperscraper.png"
     ],
     "showInHome": true,
     "category": "web_scraping",
