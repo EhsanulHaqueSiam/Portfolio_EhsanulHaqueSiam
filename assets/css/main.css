@@ -13,10 +13,12 @@
 /* ==================== COMPONENTS ==================== */
 @import url("./components/navigation.css");
 @import url("./components/lightbox.css");
+@import url("./components/theme-toggle.css");
 
 /* ==================== UTILITIES ==================== */
 @import url("./utilities/loader.css");
 @import url("./utilities/scrollbar.css");
+@import url("./utilities/transitions.css");
 
 /* ==================== SECTIONS ==================== */
 @import url("./sections/hero.css");
@@ -44,7 +46,7 @@ section {
 /* Section headings with proper spacing */
 .heading {
   font-size: 3.5rem;
-  color: rgb(32, 32, 32);
+  color: var(--text-heading, rgb(32, 32, 32));
   font-weight: 800;
   text-align: center;
   padding-top: 2rem;

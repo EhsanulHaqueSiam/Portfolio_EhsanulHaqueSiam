@@ -11,13 +11,14 @@
 // Navigation and UI
 import { initNavigation } from './modules/navigation.js';
 import { initScrollSpy, initSmoothScrolling } from './modules/scroll-spy.js';
-import { initScrollAnimations, initParallax, initMicroInteractions, initSmoothScroll } from './modules/animations.js';
+import { initScrollAnimations, initParallax, initMicroInteractions, initSmoothScroll, initPageLoadAnimation } from './modules/animations.js';
 
 // Forms and Interaction
 import { initContactForm } from './modules/contact-form.js';
 import { initTypedText } from './modules/typed-text.js';
 import { initVisibilityHandler } from './modules/visibility.js';
 import { initDevToolsProtection } from './modules/dev-tools.js';
+import { initThemeToggle } from './modules/theme-toggle.js';
 
 // Content Renderers
 import {
@@ -36,6 +37,9 @@ import {
  */
 const initPortfolio = async () => {
   console.log("🚀 Initializing Portfolio...");
+
+  // Initialize theme first (before any rendering)
+  initThemeToggle();
 
   // Initialize navigation and scroll functionality
   initNavigation();

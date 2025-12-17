@@ -1,0 +1,63 @@
+/* ==================== THEME TOGGLE BUTTON ==================== */
+
+.theme-toggle {
+    position: relative;
+    width: 4.5rem;
+    height: 4.5rem;
+    border: none;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 1rem;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    overflow: hidden;
+}
+
+.theme-toggle:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.1);
+}
+
+.theme-toggle i {
+    font-size: 1.8rem;
+    color: var(--color-accent-gold);
+    transition: transform 0.5s ease, color 0.3s ease;
+}
+
+.theme-toggle:hover i {
+    transform: rotate(180deg);
+}
+
+/* Light theme specific styles */
+[data-theme="light"] .theme-toggle,
+:root:not([data-theme]) .theme-toggle {
+    background: rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] .theme-toggle:hover,
+:root:not([data-theme]) .theme-toggle:hover {
+    background: rgba(0, 0, 0, 0.15);
+}
+
+[data-theme="light"] .theme-toggle i,
+:root:not([data-theme]) .theme-toggle i {
+    color: var(--color-primary);
+}
+
+/* Mobile responsive */
+@media screen and (max-width: 768px) {
+    .theme-toggle {
+        width: 4rem;
+        height: 4rem;
+        margin-left: 0.5rem;
+    }
+
+    .theme-toggle i {
+        font-size: 1.6rem;
+    }
+}
