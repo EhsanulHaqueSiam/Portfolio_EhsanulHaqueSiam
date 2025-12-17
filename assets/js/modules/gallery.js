@@ -44,7 +44,64 @@ export const createGalleryLightbox = () => {
 
     // Keyboard navigation
     document.addEventListener('keydown', handleGalleryKeyboard);
+
+    // Touch swipe support for mobile
+    initTouchSwipe(lightbox);
 };
+
+/**
+ * Initialize touch swipe gestures for gallery navigation
+ * @param {HTMLElement} element - The gallery lightbox element
+ */
+const initTouchSwipe = (element) => {
+    let touchStartX = 0;
+    let touchStartY = 0;
+    let touchEndX = 0;
+    let touchEndY = 0;
+    const minSwipeDistance = 50; // Minimum distance for a swipe
+
+    const galleryImage = element.querySelector('.gallery-lightbox-image');
+    const galleryContent = element.querySelector('.gallery-lightbox-content');
+
+    // Handle touch start
+    const handleTouchStart = (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+        touchStartY = e.changedTouches[0].screenY;
+    };
+
+    // Handle touch end
+    const handleTouchEnd = (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        touchEndY = e.changedTouches[0].screenY;
+        handleSwipeGesture();
+    };
+
+    // Determine swipe direction and navigate
+    const handleSwipeGesture = () => {
+        const diffX = touchStartX - touchEndX;
+        const diffY = touchStartY - touchEndY;
+
+        // Only handle horizontal swipes (ignore vertical scrolls)
+        if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > minSwipeDistance) {
+            if (diffX > 0) {
+                // Swiped left - go to next image
+                navigateGallery(1);
+            } else {
+                // Swiped right - go to previous image
+                navigateGallery(-1);
+            }
+        }
+    };
+
+    // Add touch event listeners to the gallery content area
+    galleryContent.addEventListener('touchstart', handleTouchStart, { passive: true });
+    galleryContent.addEventListener('touchend', handleTouchEnd, { passive: true });
+
+    // Also add to the image specifically for better response
+    galleryImage.addEventListener('touchstart', handleTouchStart, { passive: true });
+    galleryImage.addEventListener('touchend', handleTouchEnd, { passive: true });
+};
+
 
 /**
  * Handle keyboard navigation in gallery
