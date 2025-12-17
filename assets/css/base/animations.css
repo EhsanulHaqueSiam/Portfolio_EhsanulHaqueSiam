@@ -278,3 +278,35 @@ html {
     animation: ripple 0.6s ease-out;
     pointer-events: none;
 }
+
+/* ==================== REDUCED MOTION SUPPORT ==================== */
+/* Respect user's motion preferences for accessibility */
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+
+    .typing-text::after {
+        animation: none;
+    }
+
+    .animate-on-scroll {
+        opacity: 1;
+        transform: none;
+    }
+
+    /* Disable parallax and float effects */
+    .tilt {
+        transform: none !important;
+    }
+
+    .wave-divider svg {
+        animation: none;
+    }
+}
