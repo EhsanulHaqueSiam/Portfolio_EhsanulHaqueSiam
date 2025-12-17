@@ -41,10 +41,12 @@
     color: rgb(238, 238, 238);
     padding: 0.3rem 0;
     display: block;
+    transition: color 0.3s ease, transform 0.3s ease;
 }
 
 .footer .box-container .box a:hover {
     color: #ffae00;
+    transform: translateX(5px);
 }
 
 .footer .box-container .box .share {
@@ -127,4 +129,58 @@
     .footer .box-container .box .share a {
         padding: 1.2rem;
     }
+}
+
+/* ==================== DARK THEME FOOTER ==================== */
+[data-theme="dark"] .footer {
+    background: linear-gradient(180deg, var(--bg-secondary, #12122a) 0%, var(--bg-primary, #0a0a1a) 100%);
+}
+
+/* No card styling - keep it clean and simple */
+[data-theme="dark"] .footer .box-container .box {
+    background: transparent;
+    border-radius: 0;
+    padding: 0;
+    border: none;
+    box-shadow: none;
+}
+
+[data-theme="dark"] .footer .box-container .box h3 {
+    color: var(--color-accent-gold, #ffd700);
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+[data-theme="dark"] .footer .box-container .box p {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+[data-theme="dark"] .footer .box-container .box p i {
+    color: var(--color-accent-light, #ffcc00);
+}
+
+[data-theme="dark"] .footer .box-container .box a {
+    color: rgba(255, 255, 255, 0.7);
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+[data-theme="dark"] .footer .box-container .box a:hover {
+    color: var(--color-accent-gold, #ffd700);
+    transform: translateX(5px);
+}
+
+[data-theme="dark"] .footer .box-container .box .share a {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] .footer .box-container .box .share a:hover {
+    background: linear-gradient(135deg, var(--color-accent-gold, #ffd700), var(--color-accent, #ff7b00));
+    border-color: transparent;
+    color: #000;
+}
+
+[data-theme="dark"] .footer .credit {
+    background: rgba(0, 0, 0, 0.3);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
 }

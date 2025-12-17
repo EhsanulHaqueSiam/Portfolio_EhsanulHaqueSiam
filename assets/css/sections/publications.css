@@ -198,3 +198,31 @@
         padding: 1rem;
     }
 }
+
+/* ==================== DARK THEME PUBLICATIONS ==================== */
+[data-theme="dark"] .publications {
+    background: linear-gradient(135deg, var(--bg-primary, #0a0a1a) 0%, var(--bg-secondary, #12122a) 50%, var(--bg-primary, #0a0a1a) 100%);
+}
+
+[data-theme="dark"] .publications .box-container .box {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .publications .box-container .box:hover {
+    box-shadow: 0 20px 40px rgba(184, 77, 255, 0.2);
+    border-color: rgba(184, 77, 255, 0.2);
+}
+
+[data-theme="dark"] .publications .box-container .box h3 {
+    color: #ffffff;
+}
+
+[data-theme="dark"] .publications .box-container .box p {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+[data-theme="dark"] .publications .box-container .box::after {
+    background: linear-gradient(90deg, var(--color-primary-light, #b84dff), var(--color-accent-gold, #ffd700));
+}

@@ -87,23 +87,23 @@
 
 /* ==================== DARK THEME ==================== */
 [data-theme="dark"] {
-    /* Override theme-specific variables */
-    --bg-primary: #0a0a1a;
-    --bg-secondary: #12122a;
-    --bg-card: rgba(255, 255, 255, 0.05);
-    --bg-glass: rgba(20, 20, 40, 0.8);
-    --text-primary: #ffffff;
-    --text-secondary: rgba(255, 255, 255, 0.7);
-    --text-heading: #ffffff;
-    --border-color: rgba(255, 255, 255, 0.1);
-    --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    /* Override theme-specific variables - using softer colors for less eye strain */
+    --bg-primary: #0f0f23;
+    --bg-secondary: #161635;
+    --bg-card: rgba(255, 255, 255, 0.04);
+    --bg-glass: rgba(22, 22, 53, 0.9);
+    --text-primary: #f0f0f5;
+    --text-secondary: rgba(240, 240, 245, 0.75);
+    --text-heading: #f5f5ff;
+    --border-color: rgba(255, 255, 255, 0.08);
+    --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
 
-    /* Enhanced accent colors for dark mode */
-    --color-primary-light: #b84dff;
-    --color-accent-light: #ffcc00;
+    /* Enhanced accent colors for dark mode - slightly muted for less harshness */
+    --color-primary-light: #a855f7;
+    --color-accent-light: #fbbf24;
 
-    /* Dark mode specific gradients */
-    --gradient-primary: linear-gradient(135deg, #9b4dca, #4a00e0);
+    /* Dark mode specific gradients - softer purple tones */
+    --gradient-primary: linear-gradient(135deg, #8b5cf6, #6366f1);
 }
 
 /* Theme transition for smooth switching */

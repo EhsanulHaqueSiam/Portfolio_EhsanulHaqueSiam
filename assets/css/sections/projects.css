@@ -225,3 +225,39 @@
 .work .viewall .btn:hover i {
     transform: translateX(5px);
 }
+
+/* ==================== DARK THEME PROJECTS ==================== */
+[data-theme="dark"] .work {
+    background: linear-gradient(135deg, var(--bg-primary, #0a0a1a) 0%, var(--bg-secondary, #12122a) 50%, var(--bg-primary, #0a0a1a) 100%);
+}
+
+[data-theme="dark"] .work::before {
+    background: radial-gradient(ellipse at center, rgba(184, 77, 255, 0.1) 0%, transparent 70%);
+}
+
+[data-theme="dark"] .work .box-container .box {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .work .box-container .box:hover {
+    box-shadow: 0 25px 50px rgba(184, 77, 255, 0.2);
+    border-color: rgba(184, 77, 255, 0.2);
+}
+
+[data-theme="dark"] .work .box-container .box::before {
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+}
+
+[data-theme="dark"] .work .box-container .box .content {
+    background: rgba(20, 20, 40, 0.95);
+}
+
+[data-theme="dark"] .work .desc p {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+[data-theme="dark"] .work .desc .btns .btn {
+    background: linear-gradient(135deg, var(--color-primary-light, #b84dff), #4a00e0);
+}

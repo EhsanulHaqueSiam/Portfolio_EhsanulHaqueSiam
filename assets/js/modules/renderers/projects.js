@@ -87,6 +87,32 @@ const generateProjectImageHtml = (project, index) => {
 const generateProjectHtml = (project, index) => {
     const imageHtml = generateProjectImageHtml(project, index);
 
+    // Check if links exist and are valid (not empty, not just "#")
+    const hasViewLink = project.links?.view && project.links.view.trim() !== '' && project.links.view !== '#';
+    const hasCodeLink = project.links?.code && project.links.code.trim() !== '' && project.links.code !== '#';
+    const hasAnyLink = hasViewLink || hasCodeLink;
+
+    // Generate buttons HTML only for valid links
+    const viewBtnHtml = hasViewLink ? `
+        <a href="${project.links.view}" class="btn" target="_blank">
+            <i class="fas fa-eye"></i> View
+        </a>
+    ` : '';
+
+    const codeBtnHtml = hasCodeLink ? `
+        <a href="${project.links.code}" class="btn" target="_blank">
+            Code <i class="fas fa-code"></i>
+        </a>
+    ` : '';
+
+    // Only show btns div if at least one button exists
+    const btnsHtml = hasAnyLink ? `
+        <div class="btns">
+            ${viewBtnHtml}
+            ${codeBtnHtml}
+        </div>
+    ` : '';
+
     return `
         <div class="box tilt">
             ${imageHtml}
@@ -94,14 +120,7 @@ const generateProjectHtml = (project, index) => {
                 <div class="tag"><h3>${project.name}</h3></div>
                 <div class="desc">
                     <p>${project.desc}</p>
-                    <div class="btns">
-                        <a href="${project.links.view}" class="btn" target="_blank">
-                            <i class="fas fa-eye"></i> View
-                        </a>
-                        <a href="${project.links.code}" class="btn" target="_blank">
-                            Code <i class="fas fa-code"></i>
-                        </a>
-                    </div>
+                    ${btnsHtml}
                 </div>
             </div>
         </div>

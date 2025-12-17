@@ -150,19 +150,29 @@ export const initMicroInteractions = () => {
         });
     });
 
-    // Tilt effect on project cards
-    document.querySelectorAll('.box, .publication-card, .award-card').forEach(card => {
-        card.addEventListener('mousemove', function (e) {
-            const rect = this.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            const centerX = rect.width / 2;
-            const centerY = rect.height / 2;
-            const rotateX = (y - centerY) / 20;
-            const rotateY = (centerX - x) / 20;
+    // Throttled tilt effect on project cards (reduced elements to prevent cursor lag)
+    // Only apply to specific cards, not all .box elements
+    document.querySelectorAll('.work .box, .publications .box-container .box, .award-card').forEach(card => {
+        let ticking = false;
 
-            this.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(10px)`;
-        });
+        card.addEventListener('mousemove', function (e) {
+            if (ticking) return;
+            ticking = true;
+
+            requestAnimationFrame(() => {
+                const rect = this.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                // Reduced rotation values for subtler, less laggy effect
+                const rotateX = (y - centerY) / 30;
+                const rotateY = (centerX - x) / 30;
+
+                this.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(5px)`;
+                ticking = false;
+            });
+        }, { passive: true });
 
         card.addEventListener('mouseleave', function () {
             this.style.transform = '';
@@ -170,7 +180,7 @@ export const initMicroInteractions = () => {
         });
 
         card.addEventListener('mouseenter', function () {
-            this.style.transition = 'transform 0.1s ease';
+            this.style.transition = 'transform 0.15s ease';
         });
     });
 

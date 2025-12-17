@@ -360,3 +360,56 @@
         font-size: 1.6rem;
     }
 }
+
+/* ==================== DARK THEME HERO ==================== */
+[data-theme="dark"] .home {
+    background: linear-gradient(135deg, var(--bg-primary, #0f0f23) 0%, var(--bg-secondary, #161635) 100%);
+}
+
+[data-theme="dark"] .home .content h2 {
+    color: #f5f5ff;
+}
+
+[data-theme="dark"] .home .content p {
+    color: rgba(255, 255, 255, 0.85);
+}
+
+[data-theme="dark"] .home .image img {
+    border-color: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+}
+
+/* Softer social icons for dark theme */
+[data-theme="dark"] .social-icons a {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #60a5fa;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+[data-theme="dark"] .social-icons a:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+    color: #fff;
+    border-color: rgba(96, 165, 250, 0.3);
+    box-shadow: 0 8px 25px rgba(96, 165, 250, 0.3);
+}
+
+[data-theme="dark"] .social-icons a.github:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 8px 25px rgba(255, 255, 255, 0.15);
+}
+
+[data-theme="dark"] .social-icons a.linkedin:hover {
+    background-color: rgba(0, 119, 181, 0.3);
+    box-shadow: 0 8px 25px rgba(0, 119, 181, 0.3);
+}
+
+[data-theme="dark"] .social-icons a.twitter:hover {
+    background-color: rgba(29, 161, 242, 0.3);
+    box-shadow: 0 8px 25px rgba(29, 161, 242, 0.3);
+}
+
+[data-theme="dark"] .social-icons a.instagram:hover {
+    background: linear-gradient(45deg, rgba(240, 148, 51, 0.3), rgba(230, 104, 60, 0.3), rgba(220, 39, 67, 0.3), rgba(204, 35, 102, 0.3), rgba(188, 24, 136, 0.3));
+    box-shadow: 0 8px 25px rgba(225, 48, 108, 0.3);
+}

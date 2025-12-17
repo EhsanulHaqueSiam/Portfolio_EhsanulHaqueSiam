@@ -138,3 +138,40 @@
         flex-wrap: wrap;
     }
 }
+
+/* ==================== DARK THEME EDUCATION ==================== */
+[data-theme="dark"] .education {
+    background: linear-gradient(180deg, var(--bg-primary, #0a0a1a) 0%, var(--bg-secondary, #12122a) 100%);
+}
+
+[data-theme="dark"] .education .qoute {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+[data-theme="dark"] .education .box-container .box {
+    background: rgba(255, 255, 255, 0.03);
+    border-left: 4px solid var(--color-primary-light, #b84dff);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+}
+
+[data-theme="dark"] .education .box-container .box:hover {
+    box-shadow: 0 20px 60px rgba(184, 77, 255, 0.2);
+    border-left-color: var(--color-accent-gold, #ffd700);
+}
+
+[data-theme="dark"] .education .box-container .box::after {
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+}
+
+[data-theme="dark"] .education .box-container .box .content h3 {
+    color: #ffffff;
+}
+
+[data-theme="dark"] .education .box-container .box .content p {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+[data-theme="dark"] .education h4 {
+    color: var(--color-accent-gold, #ffd700);
+}
