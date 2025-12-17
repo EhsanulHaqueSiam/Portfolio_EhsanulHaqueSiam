@@ -151,6 +151,22 @@
     animation-delay: 0.5s;
 }
 
+/* Text Reveal Animation (Heading) */
+.text-reveal-target {
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.8s cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+.text-reveal-target.revealed {
+    clip-path: inset(0 0 0 0);
+}
+
+/* Counter Animation */
+.counter {
+    display: inline-block;
+    font-variant-numeric: tabular-nums;
+}
+
 /* Scroll Animation Classes */
 .animate-on-scroll {
     opacity: 0;

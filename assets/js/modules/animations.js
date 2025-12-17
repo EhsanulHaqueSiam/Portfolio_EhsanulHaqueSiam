@@ -33,13 +33,14 @@ export const initSmoothScroll = () => {
 };
 
 /**
- * Initialize parallax effects
+ * Initialize parallax effects (multi-layer)
  */
 export const initParallax = () => {
     const particles = document.getElementById('particles-js');
     const heroImage = document.querySelector('.home .image img');
-
-    if (!particles && !heroImage) return;
+    const heroContent = document.querySelector('.home .content');
+    const skillsSection = document.querySelector('.skills');
+    const aboutImage = document.querySelector('.about .image img');
 
     let ticking = false;
 
@@ -47,15 +48,39 @@ export const initParallax = () => {
         if (!ticking) {
             window.requestAnimationFrame(() => {
                 const scrolled = window.pageYOffset;
+                const windowHeight = window.innerHeight;
 
-                // Parallax on particles (slower movement)
-                if (particles && scrolled < window.innerHeight) {
-                    particles.style.transform = `translateY(${scrolled * 0.3}px)`;
+                // Layer 1: Particles (slowest - creates depth)
+                if (particles && scrolled < windowHeight) {
+                    particles.style.transform = `translateY(${scrolled * 0.4}px)`;
                 }
 
-                // Parallax on hero image (subtle float)
-                if (heroImage && scrolled < window.innerHeight) {
-                    heroImage.style.transform = `translateY(${scrolled * 0.15}px)`;
+                // Layer 2: Hero image (medium speed)
+                if (heroImage && scrolled < windowHeight) {
+                    heroImage.style.transform = `translateY(${scrolled * 0.15}px) scale(${1 + scrolled * 0.0001})`;
+                }
+
+                // Layer 3: Hero content (subtle opposite direction)
+                if (heroContent && scrolled < windowHeight) {
+                    heroContent.style.transform = `translateY(${scrolled * -0.05}px)`;
+                }
+
+                // Section-specific parallax: Skills background
+                if (skillsSection) {
+                    const skillsTop = skillsSection.offsetTop;
+                    const skillsOffset = scrolled - skillsTop + windowHeight;
+                    if (skillsOffset > 0 && skillsOffset < skillsSection.offsetHeight + windowHeight) {
+                        skillsSection.style.backgroundPosition = `center ${skillsOffset * 0.1}px`;
+                    }
+                }
+
+                // About image parallax (subtle float)
+                if (aboutImage) {
+                    const aboutTop = aboutImage.closest('.about')?.offsetTop || 0;
+                    const aboutOffset = scrolled - aboutTop + windowHeight;
+                    if (aboutOffset > 0 && aboutOffset < windowHeight * 2) {
+                        aboutImage.style.transform = `translateY(${(aboutOffset - windowHeight) * 0.08}px)`;
+                    }
                 }
 
                 ticking = false;
@@ -65,6 +90,9 @@ export const initParallax = () => {
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
+
+    // Initial call to set positions
+    handleScroll();
 };
 
 /**
@@ -198,6 +226,88 @@ export const initPageLoadAnimation = () => {
 };
 
 /**
+ * Initialize text reveal animation for headings
+ */
+export const initTextReveal = () => {
+    const observerOptions = {
+        threshold: 0.3,
+        rootMargin: '0px 0px -100px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('revealed');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+
+    // Add reveal class to all headings
+    document.querySelectorAll('.heading').forEach(heading => {
+        heading.classList.add('text-reveal-target');
+        observer.observe(heading);
+    });
+};
+
+/**
+ * Animate a counter from 0 to target value
+ */
+const animateCounter = (element, target, duration = 2000) => {
+    const start = 0;
+    const startTime = performance.now();
+    const suffix = element.dataset.suffix || '';
+    const prefix = element.dataset.prefix || '';
+
+    const updateCounter = (currentTime) => {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+
+        // Easing function (ease-out)
+        const easeOut = 1 - Math.pow(1 - progress, 3);
+        const current = Math.floor(easeOut * target);
+
+        element.textContent = prefix + current.toLocaleString() + suffix;
+
+        if (progress < 1) {
+            requestAnimationFrame(updateCounter);
+        } else {
+            element.textContent = prefix + target.toLocaleString() + suffix;
+        }
+    };
+
+    requestAnimationFrame(updateCounter);
+};
+
+/**
+ * Initialize counter animations for statistics
+ */
+export const initCounterAnimations = () => {
+    const observerOptions = {
+        threshold: 0.5,
+        rootMargin: '0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const target = parseInt(entry.target.dataset.count, 10);
+                if (!isNaN(target)) {
+                    animateCounter(entry.target, target);
+                }
+                observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+
+    // Find all elements with data-count attribute
+    document.querySelectorAll('[data-count]').forEach(counter => {
+        counter.classList.add('counter');
+        observer.observe(counter);
+    });
+};
+
+/**
  * Initialize all animations
  */
 export const initAllAnimations = () => {
@@ -206,4 +316,6 @@ export const initAllAnimations = () => {
     initParallax();
     initScrollAnimations();
     initMicroInteractions();
+    initTextReveal();
+    initCounterAnimations();
 };

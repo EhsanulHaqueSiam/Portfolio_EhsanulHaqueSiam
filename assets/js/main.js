@@ -19,6 +19,7 @@ import { initTypedText } from './modules/typed-text.js';
 import { initVisibilityHandler } from './modules/visibility.js';
 import { initDevToolsProtection } from './modules/dev-tools.js';
 import { initThemeToggle } from './modules/theme-toggle.js';
+import { initCustomCursor } from './modules/cursor.js';
 
 // Content Renderers
 import {
@@ -59,6 +60,9 @@ const initPortfolio = async () => {
 
   // Initialize dev tools protection
   initDevToolsProtection();
+
+  // Initialize custom cursor (desktop only)
+  initCustomCursor();
 
   // Render dynamic content sections
   console.log("📄 Rendering content sections...");
