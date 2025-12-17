@@ -1,0 +1,200 @@
+/* ==================== PUBLICATIONS SECTION ==================== */
+
+.publications {
+    min-height: auto;
+    padding-bottom: 5rem;
+    background: linear-gradient(135deg, #f0f4ff 0%, #ffffff 50%, #f9f9ff 100%);
+}
+
+.publications .box-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3rem;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.publications .box-container .box {
+    flex: 1 1 35rem;
+    background: #fff;
+    border-radius: 1.5rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    max-width: 50rem;
+    border: 1px solid rgba(115, 3, 167, 0.05);
+}
+
+.publications .box-container .box:hover {
+    box-shadow: 0 20px 40px rgba(115, 3, 167, 0.15);
+    border-color: rgba(115, 3, 167, 0.2);
+}
+
+.publications .box-container .box .image {
+    height: 22rem;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Multi-Image Slider for Publications */
+.publications .box-container .box .image-slider {
+    height: 22rem;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.publications .box-container .box .image-slider img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
+
+.publications .box-container .box .image-slider img.active {
+    opacity: 1;
+}
+
+.publications .box-container .box .image img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.publications .box-container .box:hover .image img,
+.publications .box-container .box:hover .image-slider img {
+    transform: scale(1.1);
+}
+
+/* Gallery Expand Icon for Publications */
+.publications .box-container .box .gallery-expand-icon {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 4rem;
+    height: 4rem;
+    background: linear-gradient(135deg, rgba(115, 3, 167, 0.9), rgba(37, 6, 173, 0.9));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transform: scale(0.8);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 10;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(115, 3, 167, 0.4);
+}
+
+.publications .box-container .box .gallery-expand-icon i {
+    color: #fff;
+    font-size: 1.6rem;
+}
+
+.publications .box-container .box:hover .gallery-expand-icon {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.publications .box-container .box .gallery-expand-icon:hover {
+    background: linear-gradient(135deg, rgba(255, 123, 0, 0.95), rgba(255, 174, 0, 0.95));
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(255, 123, 0, 0.5);
+}
+
+.publications .viewall {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.publications .viewall .btn {
+    position: relative;
+    line-height: 0;
+    padding: 1.6rem 3rem;
+    border-radius: 0.5em;
+    transition: 0.5s;
+    color: rgb(255, 255, 255);
+    font-weight: 700;
+    border: 2px solid #fff;
+    box-shadow: 0px 5px 10px rgba(65, 84, 241, 0.4);
+    text-align: center;
+    background: #2506ad;
+}
+
+.publications .viewall .btn span {
+    font-weight: 600;
+    font-size: 1.7rem;
+    font-family: "Nunito", sans-serif;
+}
+
+.publications .viewall .btn i {
+    margin-left: 0.3rem;
+    font-size: 1.5rem;
+    transition: 0.3s;
+}
+
+.publications .viewall .btn:hover {
+    background: #fff;
+    color: #000;
+}
+
+.publications .viewall .btn:hover i {
+    transform: translateX(5px);
+}
+
+.publications .box-container .box .content {
+    padding: 2.5rem;
+    position: relative;
+}
+
+.publications .box-container .box h3 {
+    font-size: 2.2rem;
+    color: #0b2247;
+    font-weight: 800;
+    line-height: 1.3;
+    margin-bottom: 1.2rem;
+}
+
+.publications .box-container .box p {
+    font-size: 1.5rem;
+    color: #555;
+    margin-bottom: 0.8rem;
+    line-height: 1.6;
+}
+
+.publications .box-container .box h4 {
+    font-size: 1.4rem;
+    color: #fff;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    display: inline-block;
+    background: linear-gradient(135deg, #7303a7, #9b04e0);
+    padding: 0.6rem 1.2rem;
+    border-radius: 0.8rem;
+    margin-top: 0.5rem;
+}
+
+.publications .box-container .box::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 0.5rem;
+    background: linear-gradient(90deg, #7303a7, #ff7b00);
+}
+
+/* Responsive */
+@media screen and (max-width: 768px) {
+    .publications .box-container {
+        padding: 1rem;
+    }
+}

@@ -1,0 +1,57 @@
+/* ==================== SCROLLBAR & SCROLL UTILITIES ==================== */
+
+/* Custom Scrollbar */
+html::-webkit-scrollbar {
+    width: 0.8rem;
+}
+
+html::-webkit-scrollbar-track {
+    background: rgba(0, 0, 30, 0.1);
+}
+
+html::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #7303a7, #2506ad);
+    border-radius: 1rem;
+}
+
+html::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #9303d7, #3508dd);
+}
+
+/* Scroll Progress Bar */
+.scroll-progress {
+    position: fixed;
+    top: 6.5rem;
+    left: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #7303a7, #ff7b00, #ffd700);
+    width: 0%;
+    z-index: 9999;
+    transition: width 0.1s ease-out;
+    box-shadow: 0 0 10px rgba(115, 3, 167, 0.5);
+}
+
+/* Scroll to Top Button */
+#scroll-top {
+    position: fixed;
+    top: -140%;
+    right: 2rem;
+    padding: 1.2rem 1.6rem;
+    font-size: 2rem;
+    background: linear-gradient(135deg, #ffae00, #ff7b00);
+    color: #000;
+    border-radius: 50%;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1000;
+    box-shadow: 0 5px 20px rgba(255, 174, 0, 0.4);
+    cursor: pointer;
+}
+
+#scroll-top:hover {
+    transform: translateY(-5px) scale(1.1);
+    box-shadow: 0 10px 30px rgba(255, 174, 0, 0.6);
+}
+
+#scroll-top.active {
+    top: calc(100% - 12rem);
+}
