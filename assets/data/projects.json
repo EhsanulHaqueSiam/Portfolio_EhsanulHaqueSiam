@@ -18,7 +18,7 @@
     "images": [
       "pharmacymanagement"
     ],
-    "showInHome": false,
+    "showInHome": true,
     "category": "csharp",
     "links": {
       "view": "https://github.com/EhsanulHaqueSiam/PharmacyManagementSystem",
@@ -31,7 +31,7 @@
     "images": [
       "studentmanagement"
     ],
-    "showInHome": false,
+    "showInHome": true,
     "category": "database",
     "links": {
       "view": "https://github.com/EhsanulHaqueSiam/StudentManagementSystem",
@@ -44,7 +44,7 @@
     "images": [
       "hotelmanagement"
     ],
-    "showInHome": false,
+    "showInHome": true,
     "category": "java",
     "links": {
       "view": "https://github.com/EhsanulHaqueSiam/HotelManagementSystem",
@@ -57,7 +57,7 @@
     "images": [
       "portfolioweb"
     ],
-    "showInHome": false,
+    "showInHome": true,
     "category": "web",
     "links": {
       "view": "https://github.com/EhsanulHaqueSiam/Portfolio_EhsanulHaqueSiam",
@@ -72,7 +72,7 @@
       "gameproject2",
       "gameproject3"
     ],
-    "showInHome": false,
+    "showInHome": true,
     "category": "gamedev",
     "links": {
       "view": "#",
@@ -85,7 +85,7 @@
     "images": [
       "gameproject2"
     ],
-    "showInHome": false,
+    "showInHome": true,
     "category": "gamedev",
     "links": {
       "view": "#",
@@ -98,7 +98,7 @@
     "images": [
       "gameproject3"
     ],
-    "showInHome": false,
+    "showInHome": true,
     "category": "gamedev",
     "links": {
       "view": "#",

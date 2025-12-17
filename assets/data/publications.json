@@ -5,8 +5,7 @@
         "date": "Nov 2025 | Book Chapter (Taylor & Francis)",
         "desc": "Explores fine-tuning LLMs and domain-specific Medical BERT architectures for multi-label ADR classification on the PsyTAR dataset.",
         "images": [
-            "pub1.png",
-            "cpecertificate.png"
+            "pub1.png"
         ],
         "showInHome": true
     },
