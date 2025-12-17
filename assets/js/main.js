@@ -20,6 +20,7 @@ import { initVisibilityHandler } from './modules/visibility.js';
 import { initDevToolsProtection } from './modules/dev-tools.js';
 import { initThemeToggle } from './modules/theme-toggle.js';
 import { initCustomCursor } from './modules/cursor.js';
+import { initCopyToClipboard } from './modules/toast.js';
 
 // Content Renderers
 import {
@@ -77,6 +78,7 @@ const initPortfolio = async () => {
   // This ensures tilt effects apply to dynamically rendered cards
   initScrollAnimations();
   initMicroInteractions();
+  initCopyToClipboard();
 
   console.log("✅ Portfolio initialization complete!");
 };

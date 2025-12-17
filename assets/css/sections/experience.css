@@ -27,19 +27,28 @@
     isolation: isolate;
 }
 
-/* Center Timeline Line with Gradient */
+/* Center Timeline Line with Gradient and Draw Animation */
 .experience .timeline::after {
     content: "";
     position: absolute;
     width: 4px;
     background: linear-gradient(180deg, #7303a7, #ff7b00, #ffd700, #ff7b00, #7303a7);
     top: 0;
-    bottom: 0;
     left: 50%;
     margin-left: -2px;
     z-index: 1;
     border-radius: 2px;
     box-shadow: 0 0 20px rgba(115, 3, 167, 0.3);
+    /* Draw animation */
+    height: 0;
+    animation: drawTimeline 1.5s ease-out forwards;
+    animation-delay: 0.3s;
+}
+
+@keyframes drawTimeline {
+    to {
+        height: 100%;
+    }
 }
 
 .experience .container {
