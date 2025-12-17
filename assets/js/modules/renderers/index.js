@@ -8,3 +8,4 @@ export { renderProjects } from './projects.js';
 export { renderAchievements } from './achievements.js';
 export { renderPublications } from './publications.js';
 export { renderExperience } from './experience.js';
+export { renderTestimonials } from './testimonials.js';

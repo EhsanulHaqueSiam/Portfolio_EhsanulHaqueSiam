@@ -129,6 +129,13 @@ const generateProjectHtml = (project, index) => {
     const hasCodeLink = project.links?.code && project.links.code.trim() !== '' && project.links.code !== '#';
     const hasAnyLink = hasViewLink || hasCodeLink;
 
+    // Generate metrics badges HTML
+    const metricsHtml = project.metrics && project.metrics.length > 0 ? `
+        <div class="project-metrics">
+            ${project.metrics.map(metric => `<span class="metric-badge"><i class="fas fa-chart-line"></i> ${metric}</span>`).join('')}
+        </div>
+    ` : '';
+
     // Generate buttons HTML only for valid links
     const viewBtnHtml = hasViewLink ? `
         <a href="${project.links.view}" class="btn" target="_blank">
@@ -157,6 +164,7 @@ const generateProjectHtml = (project, index) => {
                 <div class="tag"><h3>${project.name}</h3></div>
                 <div class="desc">
                     <p>${project.desc}</p>
+                    ${metricsHtml}
                     ${btnsHtml}
                 </div>
             </div>

@@ -28,7 +28,8 @@ import {
   renderProjects,
   renderAchievements,
   renderPublications,
-  renderExperience
+  renderExperience,
+  renderTestimonials
 } from './modules/renderers/index.js';
 
 // ==================== INITIALIZATION ====================
@@ -71,7 +72,8 @@ const initPortfolio = async () => {
     renderProjects(),
     renderAchievements(),
     renderPublications(),
-    renderExperience()
+    renderExperience(),
+    renderTestimonials()
   ]);
 
   // Initialize micro-interactions AFTER content is loaded

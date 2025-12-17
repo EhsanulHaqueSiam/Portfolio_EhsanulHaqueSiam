@@ -167,6 +167,38 @@
     margin-top: 1rem;
 }
 
+/* Project Metrics Badges */
+.work .project-metrics {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 0.8rem 0;
+}
+
+.work .project-metrics .metric-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.4rem 0.8rem;
+    background: linear-gradient(135deg, rgba(115, 3, 167, 0.1), rgba(37, 6, 173, 0.1));
+    border: 1px solid rgba(115, 3, 167, 0.2);
+    border-radius: 2rem;
+    font-size: 1.1rem;
+    color: #7303a7;
+    font-weight: 500;
+}
+
+.work .project-metrics .metric-badge i {
+    font-size: 1rem;
+    color: #ff7b00;
+}
+
+[data-theme="dark"] .work .project-metrics .metric-badge {
+    background: linear-gradient(135deg, rgba(184, 77, 255, 0.15), rgba(74, 0, 224, 0.15));
+    border-color: rgba(184, 77, 255, 0.3);
+    color: #b84dff;
+}
+
 .work .desc .btns .btn {
     padding: 1rem 2rem;
     border-radius: 2rem;

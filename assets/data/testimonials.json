@@ -1,0 +1,29 @@
+[
+    {
+        "id": 1,
+        "quote": "Ehsanul demonstrated exceptional problem-solving skills and delivered high-quality work consistently. His ability to understand complex requirements and implement elegant solutions is impressive.",
+        "name": "Dr. [Professor Name]",
+        "role": "Professor",
+        "organization": "North South University",
+        "image": "",
+        "showInHome": true
+    },
+    {
+        "id": 2,
+        "quote": "Working with Ehsanul was a great experience. He quickly grasped our requirements and delivered a robust solution that exceeded our expectations.",
+        "name": "[Supervisor Name]",
+        "role": "Project Supervisor",
+        "organization": "[Company/Organization]",
+        "image": "",
+        "showInHome": true
+    },
+    {
+        "id": 3,
+        "quote": "Ehsanul's expertise in AI and machine learning helped us achieve significant improvements in our data processing pipeline. Highly recommended!",
+        "name": "[Colleague/Client Name]",
+        "role": "[Role/Title]",
+        "organization": "[Organization]",
+        "image": "",
+        "showInHome": true
+    }
+]

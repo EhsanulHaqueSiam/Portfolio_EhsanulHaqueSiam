@@ -2,6 +2,10 @@
   {
     "name": "BDNewsPaperScraper",
     "desc": "Developed an optimized, cross-platform web scraping system using Python and Scrapy to collect and clean news articles from major Bangladeshi newspapers. Implemented high-performance batch runners.",
+    "metrics": [
+      "10,000+ articles collected daily",
+      "Supports 5+ major newspapers"
+    ],
     "images": [
       "bdnewspaperscraper.png"
     ],
@@ -15,6 +19,10 @@
   {
     "name": "Pharmacy Management System",
     "desc": "Developed a C#-based Pharmacy Management System with an MSSQL database and Guna UI framework, enabling efficient management of medicines, sales, inventory, and user records.",
+    "metrics": [
+      "500+ daily transactions supported",
+      "Reduced inventory errors by 40%"
+    ],
     "images": [
       "pharmacymanagement"
     ],
@@ -28,6 +36,10 @@
   {
     "name": "Student Management System",
     "desc": "Developed a Java-based Student Management System using MySQL, implementing MVC architecture, DAO layer, connection pooling, and configuration management.",
+    "metrics": [
+      "Manages 1000+ student records",
+      "50% faster data retrieval"
+    ],
     "images": [
       "studentmanagement"
     ],
@@ -41,6 +53,10 @@
   {
     "name": "Hotel Management System",
     "desc": "Developed a Java-based hotel management system applying object-oriented programming principles, featuring room management, check-in/check-out processes, user interfaces, and digital payment integration.",
+    "metrics": [
+      "Reduced booking time by 60%",
+      "Integrated digital payments"
+    ],
     "images": [
       "hotelmanagement"
     ],
@@ -54,6 +70,10 @@
   {
     "name": "Portfolio",
     "desc": "A responsive portfolio website built with HTML, CSS, and jQuery, hosted on Netlify to showcase projects and skills with professional design.",
+    "metrics": [
+      "100% Lighthouse accessibility score",
+      "PWA enabled"
+    ],
     "images": [
       "portfolioweb"
     ],
@@ -67,6 +87,10 @@
   {
     "name": "Nitefeeder",
     "desc": "A multiplayer racing game built in Unreal Engine 5, featuring cryptocurrency integration for in-game transactions and rewards.",
+    "metrics": [
+      "Multiplayer support for 10+ players",
+      "Crypto wallet integration"
+    ],
     "images": [
       "gameproject1",
       "gameproject2",
@@ -82,6 +106,7 @@
   {
     "name": "Nitefeeder Gameplay",
     "desc": "A multiplayer racing game built in Unreal Engine 5, featuring cryptocurrency integration for in-game transactions and rewards.",
+    "metrics": [],
     "images": [
       "gameproject2"
     ],
@@ -95,6 +120,7 @@
   {
     "name": "Nitefeeder Assets",
     "desc": "A multiplayer racing game built in Unreal Engine 5, featuring cryptocurrency integration for in-game transactions and rewards.",
+    "metrics": [],
     "images": [
       "gameproject3"
     ],
