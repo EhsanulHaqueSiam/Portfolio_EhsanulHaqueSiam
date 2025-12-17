@@ -110,13 +110,15 @@ header .navbar ul li a:hover {
 
     /* Ensure proper header flex layout on mobile */
     header {
-        gap: 1rem;
+        padding: 1.5rem 5%;
+        gap: 1.5rem;
     }
 
     #menu {
         display: block;
         order: 2;
         flex-shrink: 0;
+        font-size: 2.5rem;
     }
 
     header .navbar {

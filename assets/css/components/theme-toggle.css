@@ -56,21 +56,23 @@
 /* Mobile responsive */
 @media screen and (max-width: 768px) {
     .theme-toggle {
-        position: static;
-        transform: none;
-        width: 4rem;
-        height: 4rem;
+        position: static !important;
+        transform: none !important;
+        right: auto !important;
+        top: auto !important;
+        width: 3.5rem;
+        height: 3.5rem;
         margin-left: auto;
-        margin-right: 0;
+        margin-right: 0.5rem;
         flex-shrink: 0;
         order: 1;
     }
 
     .theme-toggle:hover {
-        transform: scale(1.05);
+        transform: scale(1.05) !important;
     }
 
     .theme-toggle i {
-        font-size: 1.6rem;
+        font-size: 1.4rem;
     }
 }
