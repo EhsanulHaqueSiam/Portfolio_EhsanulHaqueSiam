@@ -72,8 +72,8 @@ const initPortfolio = async () => {
     renderProjects(),
     renderAchievements(),
     renderPublications(),
-    renderExperience(),
-    renderTestimonials()
+    renderExperience()
+    // renderTestimonials() // Uncomment when testimonials are ready
   ]);
 
   // Initialize micro-interactions AFTER content is loaded
