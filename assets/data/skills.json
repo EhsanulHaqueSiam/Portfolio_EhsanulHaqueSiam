@@ -1,50 +1,128 @@
-[
-  {
-    "name": "Java",
-    "icon": "https://img.icons8.com/color/48/000000/java-coffee-cup-logo.png"
-  },
-  {
-    "name": "Kotlin",
-    "icon": "https://img.icons8.com/color/48/000000/kotlin.png"
-  },
-  {
-    "name": "Python",
-    "icon": "https://img.icons8.com/color/48/000000/python.png"
-  },
-  {
-    "name": "C++",
-    "icon": "https://img.icons8.com/color/48/000000/c-plus-plus-logo.png"
-  },
-  {
-    "name": "C#",
-    "icon": "https://img.icons8.com/color/48/000000/c-sharp-logo.png"
-  },
-  {
-    "name": "MongoDB",
-    "icon": "https://img.icons8.com/color/48/000000/mongodb.png"
-  },
-  {
-    "name": "MySQL",
-    "icon": "https://img.icons8.com/color/48/000000/mysql-logo.png"
-  },
-  {
-    "name": "PostgreSQL",
-    "icon": "https://img.icons8.com/color/48/000000/postgreesql.png"
-  },
-  {
-    "name": "Machine Learning",
-    "icon": "https://img.icons8.com/color/48/brain--v1.png"
-  },
-  {
-    "name": "Data Science",
-    "icon": "https://img.icons8.com/color/48/000000/data-configuration.png"
-  },
-  {
-    "name": "Android",
-    "icon": "https://img.icons8.com/color/48/000000/android-os.png"
-  },
-  {
-    "name": "Unity",
-    "icon": "https://img.icons8.com/color/48/000000/unity.png"
-  }
-]
+{
+  "categories": [
+    {
+      "name": "AI & Machine Learning",
+      "icon": "fas fa-brain",
+      "skills": [
+        {
+          "name": "TensorFlow",
+          "level": "expert",
+          "icon": "https://img.icons8.com/color/48/tensorflow.png"
+        },
+        {
+          "name": "PyTorch",
+          "level": "advanced",
+          "icon": "https://img.icons8.com/color/48/pytorch.png"
+        },
+        {
+          "name": "Machine Learning",
+          "level": "expert",
+          "icon": "https://img.icons8.com/color/48/brain--v1.png"
+        },
+        {
+          "name": "LLMs & RAG",
+          "level": "advanced",
+          "icon": "https://img.icons8.com/color/48/chatgpt.png"
+        },
+        {
+          "name": "Data Science",
+          "level": "advanced",
+          "icon": "https://img.icons8.com/color/48/data-configuration.png"
+        }
+      ]
+    },
+    {
+      "name": "Programming Languages",
+      "icon": "fas fa-code",
+      "skills": [
+        {
+          "name": "Python",
+          "level": "expert",
+          "icon": "https://img.icons8.com/color/48/python.png"
+        },
+        {
+          "name": "Java",
+          "level": "expert",
+          "icon": "https://img.icons8.com/color/48/java-coffee-cup-logo.png"
+        },
+        {
+          "name": "C#",
+          "level": "advanced",
+          "icon": "https://img.icons8.com/color/48/c-sharp-logo.png"
+        },
+        {
+          "name": "C++",
+          "level": "intermediate",
+          "icon": "https://img.icons8.com/color/48/c-plus-plus-logo.png"
+        },
+        {
+          "name": "Kotlin",
+          "level": "intermediate",
+          "icon": "https://img.icons8.com/color/48/kotlin.png"
+        }
+      ]
+    },
+    {
+      "name": "Backend & Databases",
+      "icon": "fas fa-server",
+      "skills": [
+        {
+          "name": "PostgreSQL",
+          "level": "advanced",
+          "icon": "https://img.icons8.com/color/48/postgreesql.png"
+        },
+        {
+          "name": "MongoDB",
+          "level": "advanced",
+          "icon": "https://img.icons8.com/color/48/mongodb.png"
+        },
+        {
+          "name": "MySQL",
+          "level": "advanced",
+          "icon": "https://img.icons8.com/color/48/mysql-logo.png"
+        },
+        {
+          "name": "REST APIs",
+          "level": "expert",
+          "icon": "https://img.icons8.com/color/48/api.png"
+        },
+        {
+          "name": "FastAPI",
+          "level": "advanced",
+          "icon": "https://img.icons8.com/color/48/fastapi.png"
+        }
+      ]
+    },
+    {
+      "name": "Tools & Platforms",
+      "icon": "fas fa-tools",
+      "skills": [
+        {
+          "name": "Git",
+          "level": "expert",
+          "icon": "https://img.icons8.com/color/48/git.png"
+        },
+        {
+          "name": "Docker",
+          "level": "intermediate",
+          "icon": "https://img.icons8.com/color/48/docker.png"
+        },
+        {
+          "name": "Android",
+          "level": "advanced",
+          "icon": "https://img.icons8.com/color/48/android-os.png"
+        },
+        {
+          "name": "Unity",
+          "level": "intermediate",
+          "icon": "https://img.icons8.com/color/48/unity.png"
+        },
+        {
+          "name": "Linux",
+          "level": "advanced",
+          "icon": "https://img.icons8.com/color/48/linux.png"
+        }
+      ]
+    }
+  ]
+}

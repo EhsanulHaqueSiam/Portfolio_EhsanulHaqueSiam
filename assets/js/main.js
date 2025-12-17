@@ -11,7 +11,7 @@
 // Navigation and UI
 import { initNavigation } from './modules/navigation.js';
 import { initScrollSpy, initSmoothScrolling } from './modules/scroll-spy.js';
-import { initScrollAnimations } from './modules/animations.js';
+import { initScrollAnimations, initParallax, initMicroInteractions, initSmoothScroll } from './modules/animations.js';
 
 // Forms and Interaction
 import { initContactForm } from './modules/contact-form.js';
@@ -41,11 +41,14 @@ const initPortfolio = async () => {
   initNavigation();
   initScrollSpy();
   initSmoothScrolling();
+  initSmoothScroll();
 
   // Initialize visual effects and animations
   initTypedText();
   initVisibilityHandler();
   initScrollAnimations();
+  initParallax();
+  initMicroInteractions();
 
   // Initialize form handling
   initContactForm();
