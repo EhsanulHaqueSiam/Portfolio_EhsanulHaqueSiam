@@ -33,17 +33,22 @@
 
 /* ==================== ADDITIONAL GLOBAL STYLES ==================== */
 
-/* Section defaults */
+/* Section defaults - Flexible heights based on content */
 section {
-  min-height: 100vh;
-  padding: 2rem 9%;
+  /* Removed min-height: 100vh to prevent extra space */
+  padding: 4rem 9%;
+  scroll-margin-top: 6rem;
+  /* Offset for fixed header when scrolling to anchors */
 }
 
+/* Section headings with proper spacing */
 .heading {
   font-size: 3.5rem;
   color: rgb(32, 32, 32);
   font-weight: 800;
   text-align: center;
+  padding-top: 2rem;
+  margin-bottom: 3rem;
   animation: fadeInUp 0.8s ease-out;
 }
 
@@ -136,13 +141,75 @@ section {
 
 /* ==================== GLOBAL MEDIA QUERIES ==================== */
 
+/* Large tablets and small laptops */
+@media (max-width: 1200px) {
+  section {
+    padding: 4rem 6%;
+  }
+
+  .heading {
+    font-size: 3rem;
+  }
+}
+
+/* Tablets */
+@media (max-width: 991px) {
+  html {
+    font-size: 58%;
+  }
+
+  section {
+    padding: 3rem 5%;
+  }
+
+  .heading {
+    font-size: 2.8rem;
+    padding-top: 1.5rem;
+    margin-bottom: 2.5rem;
+  }
+}
+
+/* Small tablets and large phones */
+@media (max-width: 768px) {
+  html {
+    font-size: 56%;
+  }
+
+  section {
+    padding: 3rem 4%;
+  }
+
+  .heading {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+  }
+}
+
+/* Mobile phones */
 @media (max-width: 450px) {
   html {
-    font-size: 55%;
+    font-size: 52%;
   }
 
   body {
     padding-right: 0;
+  }
+
+  section {
+    padding: 2.5rem 3%;
+  }
+
+  .heading {
+    font-size: 2.2rem;
+    padding-top: 1rem;
+    margin-bottom: 1.5rem;
+  }
+}
+
+/* Very small screens */
+@media (max-width: 320px) {
+  html {
+    font-size: 48%;
   }
 
   section {

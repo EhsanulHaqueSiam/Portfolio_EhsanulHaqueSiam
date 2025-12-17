@@ -5,9 +5,16 @@
     display: flex;
     flex-wrap: wrap;
     gap: 1.5rem;
+    /* Use dynamic viewport height for better mobile support */
+    min-height: 100dvh;
     min-height: 100vh;
+    /* Fallback for browsers without dvh support */
+    height: auto;
+    /* Allow content to determine actual height */
     align-items: center;
     background: linear-gradient(135deg, #f5f7fa 0%, #e8eef5 100%);
+    padding: 2rem 9%;
+    box-sizing: border-box;
 }
 
 .home #particles-js {
@@ -42,6 +49,7 @@
 
 .home .image img {
     width: 70%;
+    max-width: 400px;
     margin-left: 6rem;
     border-radius: 50%;
     box-shadow: 0 10px 40px rgba(115, 3, 167, 0.25);
@@ -201,30 +209,60 @@
 
 /* ==================== HERO RESPONSIVE ==================== */
 
+/* Large tablets */
+@media (max-width: 1200px) {
+    .home .image img {
+        width: 65%;
+        margin-left: 3rem;
+    }
+}
+
+/* Tablets */
+@media (max-width: 991px) {
+    .home {
+        min-height: auto;
+        padding-top: 10rem;
+        padding-bottom: 4rem;
+    }
+
+    .home .image img {
+        width: 55%;
+        margin-left: 2rem;
+    }
+
+    .home .content h2,
+    .home .content h2 span {
+        font-size: 4rem;
+    }
+}
+
+/* Small tablets and large phones */
 @media (max-width: 768px) {
     .home {
-        padding-top: 8rem;
+        padding-top: 10rem;
+        padding-bottom: 3rem;
         flex-direction: column-reverse;
+        min-height: auto;
+        height: auto;
     }
 
     .home .image {
         text-align: center;
+        margin-bottom: 2rem;
     }
 
     .home .image img {
-        width: 60%;
+        width: 50%;
+        max-width: 280px;
         margin: 0 auto;
-        animation: float 4s ease-in-out infinite;
     }
 
     .home .content {
         text-align: center;
+        margin-top: 0;
     }
 
-    .home .content h2 {
-        font-size: 3.5rem;
-    }
-
+    .home .content h2,
     .home .content h2 span {
         font-size: 3.5rem;
     }
@@ -236,7 +274,7 @@
     }
 
     .socials {
-        margin-top: 5rem;
+        margin-top: 4rem;
         text-align: center;
     }
 
@@ -246,26 +284,48 @@
         flex-wrap: wrap;
         gap: 0.5rem;
     }
+
+    .socials .social-icons li {
+        margin-bottom: 0;
+    }
 }
 
+/* Mobile phones */
 @media (max-width: 450px) {
-    .home .content h2 {
-        font-size: 2.8rem;
+    .home {
+        padding-top: 9rem;
     }
 
+    .home .content h2,
     .home .content h2 span {
         font-size: 2.8rem;
     }
 
-    .home .content p {
-        font-size: 1.8rem;
-    }
-
+    .home .content p,
     .home .content p span {
         font-size: 1.8rem;
     }
 
     .home .image img {
-        width: 70%;
+        width: 60%;
+        max-width: 220px;
+    }
+
+    .socials {
+        margin-top: 3rem;
+    }
+}
+
+/* Very small screens */
+@media (max-width: 320px) {
+
+    .home .content h2,
+    .home .content h2 span {
+        font-size: 2.4rem;
+    }
+
+    .home .content p,
+    .home .content p span {
+        font-size: 1.6rem;
     }
 }
