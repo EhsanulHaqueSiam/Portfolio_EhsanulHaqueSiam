@@ -21,11 +21,18 @@ html {
     font-size: 62.5%;
     overflow-x: hidden;
     scroll-behavior: smooth;
+    /* iOS safe area support */
+    padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
 }
 
 body {
     background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
     font-family: "Poppins", "Inter", sans-serif;
+    /* Improve touch scrolling */
+    -webkit-overflow-scrolling: touch;
+    /* Prevent text size adjustment on orientation change */
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
 }
 
 /* Selection */

@@ -31,6 +31,16 @@ export const initNavigation = () => {
         }
     });
 
+    // Auto-close menu when a nav link is clicked
+    if (navbar) {
+        navbar.querySelectorAll("a").forEach((link) => {
+            link.addEventListener("click", () => {
+                menu?.classList.remove("fa-times");
+                navbar.classList.remove("nav-toggle");
+            });
+        });
+    }
+
     // Throttled scroll event handler using requestAnimationFrame
     window.addEventListener("scroll", () => {
         if (!scrollTicking) {

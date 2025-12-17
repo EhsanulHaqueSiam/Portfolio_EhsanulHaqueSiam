@@ -178,3 +178,44 @@
         transform: rotate(360deg);
     }
 }
+
+/* Mobile-optimized buttons */
+@media (max-width: 768px) {
+    .btn {
+        min-height: 4.4rem;
+        min-width: 4.4rem;
+        padding: 1rem 2rem;
+        font-size: 1.5rem;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    .btn:active {
+        transform: scale(0.95);
+        opacity: 0.9;
+    }
+
+    /* Disable hover effects on touch devices */
+    .btn::before {
+        display: none;
+    }
+
+    .btn:hover {
+        transform: none;
+    }
+
+    .btn:active {
+        transform: scale(0.95);
+    }
+
+    /* Project/Achievement card buttons */
+    .btns .btn {
+        min-height: 4rem;
+        padding: 0.8rem 1.5rem;
+    }
+
+    /* Social icons touch targets */
+    .social-icons a {
+        min-width: 4.4rem;
+        min-height: 4.4rem;
+    }
+}
