@@ -3,6 +3,9 @@
  * Handles fullscreen image gallery with navigation, thumbnails, and keyboard controls
  */
 
+// Re-export createImageResolver for convenience
+export { createImageResolver } from './data-fetcher.js';
+
 let currentGalleryImages = [];
 let currentGalleryIndex = 0;
 let lightboxElement = null;
