@@ -190,21 +190,7 @@ export const renderProjects = async () => {
         const projects = await fetchData("projects");
         const projectsContainer = document.querySelector("#work .box-container");
 
-        // DEBUG: Temporary logging
-        const debugDiv = document.createElement('div');
-        debugDiv.style.cssText = "background:black; color:lime; padding:10px; font-family:monospace; margin: 20px;";
-        const searchInput = document.getElementById('project-search');
-        debugDiv.innerHTML = `
-            <strong>Debug Info:</strong><br>
-            Projects: ${projects.length}<br>
-            Search Input Found: ${!!searchInput}<br>
-            Is Projects Page: ${!!searchInput}<br>
-            Container: ${!!projectsContainer}<br>
-            URL: ${window.location.href}
-        `;
-        if (projectsContainer) {
-            projectsContainer.before(debugDiv);
-        }
+
 
         if (!projectsContainer || !projects.length) return;
 
@@ -300,10 +286,10 @@ const initProjectFilters = (container) => {
     const sortFilter = document.getElementById('sort-filter');
     const tagsContainer = document.getElementById('tags-filter');
 
-    console.log('🔍 Initializing project filters...', { searchInput, categoryFilter, sortFilter, tagsContainer });
+
 
     if (!searchInput) {
-        console.warn('Search input not found - not on projects page');
+
         return; // Not on projects page
     }
 
@@ -348,7 +334,7 @@ const applyFilters = (container) => {
     const sortValue = document.getElementById('sort-filter')?.value || 'default';
     const activeTags = [...document.querySelectorAll('.tag-btn.active')].map(btn => btn.dataset.tag);
 
-    console.log('🔄 Applying filters:', { searchQuery, categoryValue, sortValue, activeTags });
+
 
     let filtered = [...window.allProjects];
 
