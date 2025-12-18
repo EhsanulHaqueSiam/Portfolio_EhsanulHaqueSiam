@@ -296,6 +296,21 @@ html:not([data-theme="dark"]) .work h2 {
     color: #202020;
 }
 
+/* Light theme View All button fix */
+:root:not([data-theme="dark"]) .work .viewall .btn,
+html:not([data-theme="dark"]) .work .viewall .btn {
+    color: #7303a7;
+    border-color: #7303a7;
+    background: transparent;
+}
+
+:root:not([data-theme="dark"]) .work .viewall .btn:hover,
+html:not([data-theme="dark"]) .work .viewall .btn:hover {
+    background: linear-gradient(135deg, #7303a7, #2506ad);
+    color: #fff;
+    border-color: transparent;
+}
+
 /* ==================== DARK THEME PROJECTS ==================== */
 [data-theme="dark"] .work {
     background: linear-gradient(135deg, var(--bg-primary, #0a0a1a) 0%, var(--bg-secondary, #12122a) 50%, var(--bg-primary, #0a0a1a) 100%);
