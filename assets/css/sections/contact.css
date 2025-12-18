@@ -316,3 +316,78 @@
         font-size: 1.2rem;
     }
 }
+
+/* ==================== LIGHT THEME CONTACT ==================== */
+[data-theme="light"] .contact {
+    background: linear-gradient(135deg, #f0f4fc 0%, #e5ecfb 50%, #f8f9ff 100%);
+}
+
+[data-theme="light"] .contact::before {
+    background: radial-gradient(ellipse at 30% 20%, rgba(115, 3, 167, 0.08) 0%, transparent 40%),
+        radial-gradient(ellipse at 70% 80%, rgba(37, 6, 173, 0.05) 0%, transparent 40%);
+}
+
+[data-theme="light"] .contact .heading {
+    color: #1a1a2e;
+}
+
+[data-theme="light"] .contact .heading span {
+    background: linear-gradient(135deg, #7303a7, #2506ad);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+[data-theme="light"] .contact .container {
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 25px 80px rgba(115, 3, 167, 0.1),
+        inset 0 0 0 1px rgba(115, 3, 167, 0.1);
+    border: 1px solid rgba(115, 3, 167, 0.08);
+}
+
+[data-theme="light"] .contact-intro {
+    color: #444;
+}
+
+[data-theme="light"] .contact-card {
+    background: linear-gradient(135deg, rgba(115, 3, 167, 0.03) 0%, rgba(115, 3, 167, 0.01) 100%);
+    border: 1px solid rgba(115, 3, 167, 0.1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="light"] .contact-card::before {
+    background: linear-gradient(90deg, transparent, rgba(115, 3, 167, 0.05), transparent);
+}
+
+[data-theme="light"] .contact-card:hover {
+    background: linear-gradient(135deg, rgba(115, 3, 167, 0.06) 0%, rgba(115, 3, 167, 0.02) 100%);
+    box-shadow: 0 12px 40px rgba(115, 3, 167, 0.1);
+}
+
+[data-theme="light"] .contact-info h3 {
+    color: #1a1a2e;
+}
+
+[data-theme="light"] .contact-info p {
+    color: #666;
+}
+
+[data-theme="light"] .contact-arrow {
+    color: rgba(115, 3, 167, 0.3);
+}
+
+[data-theme="light"] .contact-card:hover .contact-arrow {
+    color: #7303a7;
+}
+
+[data-theme="light"] .email-card:hover .contact-info h3 {
+    color: #7303a7;
+}
+
+[data-theme="light"] .whatsapp-card:hover .contact-info h3 {
+    color: #128C7E;
+}
+
+[data-theme="light"] .linkedin-card:hover .contact-info h3 {
+    color: #0077B5;
+}

@@ -5,6 +5,17 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Apply theme immediately to prevent flash -->
+    <script>
+        (function () {
+            var theme = localStorage.getItem('portfolio-theme');
+            if (theme) {
+                document.documentElement.setAttribute('data-theme', theme);
+            } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            }
+        })();
+    </script>
     <link rel="stylesheet" href="/assets/css/main.css?v=3.3">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
         integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
@@ -38,22 +49,35 @@
         }
 
         .back-btn .btn {
-            display: inline-block;
-            padding: .8rem 3rem;
-            background: rgb(32, 32, 32);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 1.2rem 3rem;
+            background: linear-gradient(135deg, #1a1a2e 0%, #2d2d44 100%);
             color: #fff;
-            border-radius: 5px;
+            border-radius: 0.8rem;
             font-size: 1.7rem;
             cursor: pointer;
-            transition: .2s;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             font-weight: 600;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .back-btn .btn i {
+            transition: transform 0.3s ease;
         }
 
         .back-btn .btn:hover {
-            background: rgb(115, 3, 167);
+            background: linear-gradient(135deg, #7303a7 0%, #9b00d9 100%);
             letter-spacing: 1px;
-            box-shadow: 0 8px 25px rgba(115, 3, 167, 0.4);
+            box-shadow: 0 10px 30px rgba(115, 3, 167, 0.4);
+            border-color: transparent;
+            transform: translateY(-2px);
+        }
+
+        .back-btn .btn:hover i {
+            transform: translateX(-5px);
         }
 
         /* Dark theme overrides */
@@ -165,7 +189,7 @@
     <script src="https://unpkg.com/scrollreveal"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
     <script src="/assets/js/app.js?v=2.2"></script>
-    <script type="module" src="/assets/js/main.js?v=3.5"></script>
+    <script type="module" src="/assets/js/main.js?v=3.7"></script>
 
 </body>
 

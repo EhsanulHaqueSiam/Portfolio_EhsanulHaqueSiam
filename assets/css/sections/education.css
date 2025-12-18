@@ -28,14 +28,16 @@
     flex-direction: row;
     width: 80%;
     border-radius: 1rem;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 10px 40px rgba(115, 3, 167, 0.12), 0 4px 15px rgba(0, 0, 0, 0.06);
     text-align: center;
     position: relative;
     margin-top: 2rem;
     overflow: hidden;
     transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-    background: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(5px);
+    border-left: 4px solid #7303a7;
+    border: 1px solid rgba(115, 3, 167, 0.08);
     border-left: 4px solid #7303a7;
 }
 

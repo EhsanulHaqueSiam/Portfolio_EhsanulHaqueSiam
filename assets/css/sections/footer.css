@@ -131,6 +131,58 @@
     }
 }
 
+/* ==================== LIGHT THEME FOOTER ==================== */
+[data-theme="light"] .footer {
+    background: linear-gradient(180deg, #f0f4fc 0%, #e5ecfb 100%);
+}
+
+[data-theme="light"] .footer .box-container .box h3 {
+    color: #1a1a2e;
+    font-weight: 600;
+}
+
+[data-theme="light"] .footer .box-container .box p {
+    color: #444;
+}
+
+[data-theme="light"] .footer .box-container .box p i {
+    color: #7303a7;
+}
+
+[data-theme="light"] .footer .box-container .box a {
+    color: #333;
+}
+
+[data-theme="light"] .footer .box-container .box a:hover {
+    color: #7303a7;
+}
+
+[data-theme="light"] .footer .box-container .box .share a {
+    background: rgba(115, 3, 167, 0.1);
+    border: 1px solid rgba(115, 3, 167, 0.2);
+    color: #7303a7;
+}
+
+[data-theme="light"] .footer .box-container .box .share a:hover {
+    background: linear-gradient(135deg, #7303a7, #2506ad);
+    border-color: transparent;
+    color: #fff;
+    box-shadow: 0 8px 25px rgba(115, 3, 167, 0.3);
+}
+
+[data-theme="light"] .footer .credit {
+    background: rgba(115, 3, 167, 0.05);
+    border-top: 1px solid rgba(115, 3, 167, 0.1);
+    color: #333;
+}
+
+[data-theme="light"] .footer .credit a {
+    background: linear-gradient(135deg, #7303a7, #2506ad);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
 /* ==================== DARK THEME FOOTER ==================== */
 [data-theme="dark"] .footer {
     background: linear-gradient(180deg, var(--bg-secondary, #12122a) 0%, var(--bg-primary, #0a0a1a) 100%);

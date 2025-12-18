@@ -159,9 +159,9 @@ export const renderAchievements = async () => {
             }
         });
 
-        // Initialize VanillaTilt
+        // Initialize VanillaTilt - only for elements in this container to prevent duplicates
         if (typeof VanillaTilt !== 'undefined') {
-            VanillaTilt.init(document.querySelectorAll(".tilt"), {
+            VanillaTilt.init(achievementsContainer.querySelectorAll(".tilt"), {
                 max: 15,
                 speed: 400,
                 glare: true,
@@ -169,9 +169,14 @@ export const renderAchievements = async () => {
             });
         }
 
-        // Initialize ScrollReveal
+        // Initialize ScrollReveal with reduced delay for faster card appearance
         if (typeof ScrollReveal !== 'undefined') {
-            ScrollReveal().reveal(".award .box", { interval: 100 });
+            ScrollReveal().reveal(achievementsContainer.querySelectorAll(".box"), {
+                interval: 50,
+                distance: '20px',
+                origin: 'bottom',
+                duration: 400
+            });
         }
 
         // Attach gallery click handlers

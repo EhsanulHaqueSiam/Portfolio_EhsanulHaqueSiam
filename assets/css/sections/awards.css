@@ -177,3 +177,57 @@
 .award .viewall .btn:hover i {
     transform: translateX(5px);
 }
+
+/* ==================== LIGHT THEME AWARDS ==================== */
+[data-theme="light"] .award {
+    background: linear-gradient(to bottom, #f0f4fc, #e5ecfb);
+}
+
+[data-theme="light"] .award h2 {
+    color: #1a1a2e;
+}
+
+[data-theme="light"] .award .heading span {
+    background: linear-gradient(135deg, #7303a7, #2506ad);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+[data-theme="light"] .award .box-container .box {
+    background: linear-gradient(145deg, #ffffff, #f8f9ff);
+    border: 1px solid rgba(115, 3, 167, 0.1);
+    box-shadow: 0 15px 35px rgba(115, 3, 167, 0.08);
+}
+
+[data-theme="light"] .award .box-container .box:hover {
+    box-shadow: 0 25px 50px rgba(115, 3, 167, 0.15), 0 0 0 1px rgba(115, 3, 167, 0.15);
+}
+
+[data-theme="light"] .award .box-container .box .content {
+    background: linear-gradient(180deg, #ffffff 0%, #f8f9ff 100%);
+}
+
+[data-theme="light"] .award .box-container .box .content .tag {
+    background: linear-gradient(135deg, #7303a7, #9b00d9);
+}
+
+[data-theme="light"] .award .box-container .box .content .tag h3 {
+    color: #fff;
+    text-shadow: none;
+}
+
+[data-theme="light"] .award .desc p {
+    color: #444;
+}
+
+[data-theme="light"] .award .viewall .btn {
+    color: #1a1a2e;
+    border: 2px solid #1a1a2e;
+    box-shadow: 0px 5px 10px rgba(115, 3, 167, 0.2);
+}
+
+[data-theme="light"] .award .viewall .btn:hover {
+    background: #1a1a2e;
+    color: #fff;
+}

@@ -188,6 +188,20 @@
     color: #ffffff;
 }
 
+/* Dark theme experience content cards */
+[data-theme="dark"] .experience .content .tag {
+    color: rgba(255, 255, 255, 0.95);
+}
+
+[data-theme="dark"] .experience .content .desc h3 {
+    color: #ffffff;
+}
+
+[data-theme="dark"] .experience .content .desc p {
+    color: rgba(255, 255, 255, 0.85);
+}
+
+/* Backwards compatible with timeline-item if used */
 [data-theme="dark"] .timeline-item {
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.1);

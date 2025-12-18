@@ -260,7 +260,7 @@ const initProjectEffects = (container, projects) => {
         }
     });
 
-    // Initialize VanillaTilt
+    // Initialize VanillaTilt - only for elements in this container to prevent duplicates
     if (typeof VanillaTilt !== 'undefined') {
         VanillaTilt.init(container.querySelectorAll(".tilt"), {
             max: 15,
@@ -270,9 +270,14 @@ const initProjectEffects = (container, projects) => {
         });
     }
 
-    // Initialize ScrollReveal
+    // Initialize ScrollReveal with reduced delay for faster card appearance
     if (typeof ScrollReveal !== 'undefined') {
-        ScrollReveal().reveal(".work .box", { interval: 100 });
+        ScrollReveal().reveal(container.querySelectorAll(".box"), {
+            interval: 50,
+            distance: '20px',
+            origin: 'bottom',
+            duration: 400
+        });
     }
 };
 

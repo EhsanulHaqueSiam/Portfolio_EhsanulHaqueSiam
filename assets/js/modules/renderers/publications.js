@@ -161,6 +161,19 @@ export const renderPublications = async () => {
         // Attach gallery click handlers
         attachGalleryHandlers(container);
 
+        // Initialize ScrollReveal with reduced delay for faster card appearance
+        if (typeof ScrollReveal !== 'undefined') {
+            ScrollReveal().reveal(container.querySelectorAll(".box"), {
+                origin: "bottom",
+                distance: "30px",
+                duration: 500,
+                delay: 50,
+                interval: 80, // Reduced from default for faster sequential reveal
+                easing: "ease-out",
+                reset: false
+            });
+        }
+
     } catch (error) {
         console.error("Failed to render publications:", error);
         const container = document.querySelector("#publications .box-container");

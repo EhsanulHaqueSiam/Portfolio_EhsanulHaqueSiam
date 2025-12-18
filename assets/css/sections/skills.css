@@ -299,3 +299,80 @@
         padding: 0.1rem 0.35rem;
     }
 }
+
+/* ==================== LIGHT THEME SKILLS ==================== */
+[data-theme="light"] .skills {
+    background: linear-gradient(135deg, #f0f4fc 0%, #e5ecfb 50%, #f8f9ff 100%);
+}
+
+[data-theme="light"] .skills::before {
+    background: radial-gradient(circle, rgba(115, 3, 167, 0.05) 0%, transparent 50%);
+}
+
+[data-theme="light"] .skills h2 {
+    color: #1a1a2e;
+}
+
+[data-theme="light"] .skills .heading span {
+    background: linear-gradient(135deg, #7303a7, #2506ad);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+[data-theme="light"] .skills .container {
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(115, 3, 167, 0.1);
+    box-shadow: 0 10px 40px rgba(115, 3, 167, 0.08);
+}
+
+[data-theme="light"] .skill-category {
+    background: rgba(115, 3, 167, 0.03);
+    border: 1px solid rgba(115, 3, 167, 0.08);
+}
+
+[data-theme="light"] .skill-category:hover {
+    border-color: rgba(115, 3, 167, 0.2);
+}
+
+[data-theme="light"] .category-header {
+    border-bottom: 1px solid rgba(115, 3, 167, 0.1);
+}
+
+[data-theme="light"] .category-header i {
+    color: #7303a7;
+}
+
+[data-theme="light"] .category-header h3 {
+    color: #1a1a2e;
+}
+
+[data-theme="light"] .skill-item {
+    background: rgba(115, 3, 167, 0.06);
+    border: 1px solid rgba(115, 3, 167, 0.1);
+}
+
+[data-theme="light"] .skill-item:hover {
+    background: rgba(115, 3, 167, 0.12);
+    border-color: rgba(115, 3, 167, 0.25);
+    box-shadow: 0 5px 15px rgba(115, 3, 167, 0.15);
+}
+
+[data-theme="light"] .skill-name {
+    color: #1a1a2e;
+}
+
+[data-theme="light"] .skill-level[data-level="expert"] {
+    background: rgba(115, 3, 167, 0.15);
+    color: #5a02a8;
+}
+
+[data-theme="light"] .skill-level[data-level="advanced"] {
+    background: rgba(37, 6, 173, 0.15);
+    color: #2506ad;
+}
+
+[data-theme="light"] .skill-level[data-level="intermediate"] {
+    background: rgba(255, 123, 0, 0.15);
+    color: #cc6200;
+}

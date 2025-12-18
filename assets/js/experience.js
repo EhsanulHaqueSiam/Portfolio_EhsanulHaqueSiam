@@ -51,7 +51,7 @@ const renderExperience = async () => {
       entries.forEach((entry, index) => {
         if (entry.isIntersecting) {
           const item = entry.target;
-          const delay = index * 150;
+          const delay = index * 50; // Reduced from 150ms for faster animation
           setTimeout(() => {
             if (item.classList.contains('left')) {
               item.classList.add('animate-left');
@@ -76,14 +76,14 @@ renderExperience();
 /* ===== SCROLL REVEAL ANIMATION ===== */
 const srtop = ScrollReveal({
   origin: "top",
-  distance: "80px",
-  duration: 800,
-  reset: true,
+  distance: "30px",
+  duration: 400,
+  reset: false,
 });
 
-/* SCROLL EXPERIENCE */
-srtop.reveal(".experience .timeline", { delay: 400 });
-srtop.reveal(".experience .timeline .container", { interval: 200 });
+/* SCROLL EXPERIENCE - Optimized for faster loading */
+srtop.reveal(".experience .timeline", { delay: 100 });
+srtop.reveal(".experience .timeline .container", { interval: 50 });
 
 /* Live Chat Widget Removed */
 
