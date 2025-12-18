@@ -43,14 +43,14 @@
 .work .box-container .box {
     width: 100%;
     border-radius: 1.5rem;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04);
     position: relative;
     overflow: hidden;
     height: auto;
     min-height: 34rem;
-    background: linear-gradient(145deg, #ffffff, #f5f7fa);
-    border: 1px solid rgba(255, 255, 255, 0.8);
-    transition: box-shadow 0.3s ease;
+    background: linear-gradient(145deg, #ffffff, #f8f9ff);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    transition: box-shadow 0.3s ease, transform 0.3s ease, border-color 0.3s ease;
     display: flex;
     flex-direction: column;
 }
@@ -73,7 +73,9 @@
 }
 
 .work .box-container .box:hover {
-    box-shadow: 0 25px 50px rgba(115, 3, 167, 0.25), 0 0 0 1px rgba(115, 3, 167, 0.1);
+    box-shadow: 0 20px 45px rgba(115, 3, 167, 0.18), 0 8px 20px rgba(0, 0, 0, 0.08);
+    transform: translateY(-4px) scale(1.01);
+    border-color: rgba(115, 3, 167, 0.15);
 }
 
 .work .box-container .box .image,
