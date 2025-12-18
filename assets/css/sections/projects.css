@@ -32,8 +32,8 @@
 }
 
 .work .box-container {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(30rem, 1fr));
     gap: 2rem;
     margin: 2rem;
     position: relative;
@@ -41,12 +41,12 @@
 }
 
 .work .box-container .box {
-    flex: 0 1 30rem;
-    max-width: 45rem;
+    width: 100%;
     border-radius: 1.5rem;
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
     position: relative;
     overflow: hidden;
+    height: auto;
     min-height: 34rem;
     background: linear-gradient(145deg, #ffffff, #f5f7fa);
     border: 1px solid rgba(255, 255, 255, 0.8);
@@ -78,11 +78,11 @@
 
 .work .box-container .box .image,
 .work .box-container .box .image-slider {
-    height: 55%;
-    min-height: 18rem;
+    height: 22rem;
     width: 100%;
     overflow: hidden;
     position: relative;
+    flex-shrink: 0;
 }
 
 /* Image Slider stacking for Projects */
@@ -277,6 +277,23 @@
 
 .work .viewall .btn:hover i {
     transform: translateX(5px);
+}
+
+/* ==================== LIGHT THEME PROJECTS ==================== */
+/* Override dark default background for light theme */
+:root:not([data-theme="dark"]) .work,
+html:not([data-theme="dark"]) .work {
+    background: linear-gradient(135deg, #f8f9ff 0%, #f0f2ff 50%, #f5f7fa 100%);
+}
+
+:root:not([data-theme="dark"]) .work::before,
+html:not([data-theme="dark"]) .work::before {
+    background: radial-gradient(ellipse at center, rgba(115, 3, 167, 0.05) 0%, transparent 70%);
+}
+
+:root:not([data-theme="dark"]) .work h2,
+html:not([data-theme="dark"]) .work h2 {
+    color: #202020;
 }
 
 /* ==================== DARK THEME PROJECTS ==================== */
