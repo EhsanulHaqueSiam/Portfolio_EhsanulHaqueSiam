@@ -162,6 +162,8 @@
             background: linear-gradient(135deg, #7303a7, #2506ad);
             color: #fff;
             border-color: transparent;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(115, 3, 167, 0.3);
         }
 
         /* No Results State */
@@ -202,14 +204,17 @@
         }
 
         [data-theme="dark"] .tag-btn {
-            background: rgba(184, 77, 255, 0.1);
-            border-color: rgba(184, 77, 255, 0.3);
-            color: #b84dff;
+            background: rgba(184, 77, 255, 0.2);
+            border-color: rgba(184, 77, 255, 0.5);
+            color: #e0b3ff;
         }
 
         [data-theme="dark"] .tag-btn:hover,
         [data-theme="dark"] .tag-btn.active {
             background: linear-gradient(135deg, #b84dff, #4a00e0);
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(184, 77, 255, 0.4);
         }
 
         [data-theme="dark"] .no-results {
