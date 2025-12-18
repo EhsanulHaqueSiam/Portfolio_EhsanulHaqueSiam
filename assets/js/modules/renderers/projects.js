@@ -189,12 +189,11 @@ export const renderProjects = async () => {
     try {
         const projects = await fetchData("projects");
         const projectsContainer = document.querySelector("#work .box-container");
-
-
+        const searchInput = document.getElementById('project-search');
 
         if (!projectsContainer || !projects.length) return;
 
-        // Check if on projects page by checking if search input exists
+        // Check if all necessary elements are present
         const isProjectsPage = !!searchInput;
 
         // Filter for homepage vs projects page
