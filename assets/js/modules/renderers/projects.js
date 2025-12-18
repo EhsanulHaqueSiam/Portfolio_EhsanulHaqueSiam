@@ -190,10 +190,25 @@ export const renderProjects = async () => {
         const projects = await fetchData("projects");
         const projectsContainer = document.querySelector("#work .box-container");
 
+        // DEBUG: Temporary logging
+        const debugDiv = document.createElement('div');
+        debugDiv.style.cssText = "background:black; color:lime; padding:10px; font-family:monospace; margin: 20px;";
+        const searchInput = document.getElementById('project-search');
+        debugDiv.innerHTML = `
+            <strong>Debug Info:</strong><br>
+            Projects: ${projects.length}<br>
+            Search Input Found: ${!!searchInput}<br>
+            Is Projects Page: ${!!searchInput}<br>
+            Container: ${!!projectsContainer}<br>
+            URL: ${window.location.href}
+        `;
+        if (projectsContainer) {
+            projectsContainer.before(debugDiv);
+        }
+
         if (!projectsContainer || !projects.length) return;
 
         // Check if on projects page by checking if search input exists
-        const searchInput = document.getElementById('project-search');
         const isProjectsPage = !!searchInput;
 
         // Filter for homepage vs projects page
