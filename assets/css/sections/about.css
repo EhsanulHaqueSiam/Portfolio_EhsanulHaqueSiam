@@ -123,6 +123,234 @@
     transform: translateX(5px);
 }
 
+/* ==================== ABOUT TEXT ANIMATIONS ==================== */
+
+/* Gradient Animated Name */
+.about-name {
+    background: linear-gradient(135deg,
+            #7303a7 0%,
+            #2506ad 25%,
+            #7303a7 50%,
+            #ff7b00 75%,
+            #7303a7 100%);
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradientFlow 4s ease infinite;
+    position: relative;
+    display: inline-block;
+    opacity: 0;
+    animation: fadeInName 0.8s ease-out forwards, gradientFlow 4s ease infinite 0.8s;
+}
+
+@keyframes fadeInName {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes gradientFlow {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Tag - Smooth fade-in (no layout shift) */
+.about-tag {
+    display: block;
+    position: relative;
+    opacity: 0;
+    animation: fadeInTag 0.8s ease-out 0.3s forwards, tagGlow 3s ease-in-out infinite 1.2s;
+    margin-top: 1rem;
+    min-height: 1.4em;
+    /* Reserve space to prevent layout shift */
+}
+
+@keyframes fadeInTag {
+    from {
+        opacity: 0;
+        transform: translateX(-15px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes tagGlow {
+
+    0%,
+    100% {
+        text-shadow: 0 0 8px rgba(115, 3, 167, 0.2);
+    }
+
+    50% {
+        text-shadow: 0 0 15px rgba(115, 3, 167, 0.4), 0 0 25px rgba(115, 3, 167, 0.2);
+    }
+}
+
+/* Subtle underline accent for tag */
+.about-tag::after {
+    content: "";
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #7303a7, #ff7b00, #7303a7);
+    background-size: 200% 100%;
+    animation: tagUnderlineGrow 0.8s ease-out 0.6s forwards, shimmerLine 2s ease-in-out infinite 1.4s;
+    border-radius: 2px;
+}
+
+@keyframes tagUnderlineGrow {
+    from {
+        width: 0;
+    }
+
+    to {
+        width: 100%;
+    }
+}
+
+@keyframes shimmerLine {
+    0% {
+        background-position: 200% 0;
+    }
+
+    100% {
+        background-position: -200% 0;
+    }
+}
+
+/* Description Fade In */
+.about-description {
+    opacity: 0;
+    animation: descriptionFadeIn 1s ease-out 0.5s forwards;
+}
+
+@keyframes descriptionFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Highlighted Keywords Animation */
+.highlight-word {
+    background: linear-gradient(135deg, #7303a7 0%, #2506ad 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 700;
+    position: relative;
+    display: inline;
+    transition: filter 0.3s ease;
+}
+
+.highlight-word::after {
+    content: "";
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #7303a7, #ff7b00);
+    transition: width 0.4s ease;
+}
+
+.highlight-word:hover::after {
+    width: 100%;
+}
+
+.highlight-word:hover {
+    filter: brightness(1.3) drop-shadow(0 0 8px rgba(115, 3, 167, 0.4));
+}
+
+/* Contact Info Animation */
+.about-contact-info {
+    opacity: 0;
+    animation: contactSlideIn 0.8s ease-out 1s forwards;
+}
+
+@keyframes contactSlideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Contact Label Icons */
+.contact-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #011aff;
+    font-weight: 600;
+}
+
+.contact-label i {
+    font-size: 1.2rem;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.contact-label:hover i {
+    transform: scale(1.15);
+    color: #7303a7;
+}
+
+/* Staggered Animation for Multiple Contact Items */
+.about-contact-info .box p:nth-child(1) {
+    animation-delay: 1s;
+}
+
+.about-contact-info .box p:nth-child(2) {
+    animation-delay: 1.2s;
+}
+
+.about-contact-info .box p {
+    opacity: 0;
+    animation: contactItemFade 0.6s ease-out forwards;
+}
+
+@keyframes contactItemFade {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 /* About Responsive */
 @media screen and (max-width: 600px) {
     .about .row .image {
@@ -194,4 +422,64 @@
 
 [data-theme="dark"] .about .row .content .box-container .box p span {
     color: var(--color-accent-gold, #ffd700);
+}
+
+/* Dark Theme Text Animations */
+[data-theme="dark"] .about-name {
+    background: linear-gradient(135deg,
+            #b84dff 0%,
+            #7c3aed 25%,
+            #b84dff 50%,
+            #ffd700 75%,
+            #b84dff 100%);
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    background-clip: text;
+}
+
+[data-theme="dark"] .about-tag {
+    color: #ffd700;
+}
+
+[data-theme="dark"] .about-tag::after {
+    background: linear-gradient(90deg, #b84dff, #ffd700, #b84dff);
+}
+
+/* Dark theme tag glow - override the animation to use dark colors */
+[data-theme="dark"] .about-tag {
+    animation: fadeInTag 0.8s ease-out 0.3s forwards, tagGlowDark 3s ease-in-out infinite 1.2s;
+}
+
+@keyframes tagGlowDark {
+
+    0%,
+    100% {
+        text-shadow: 0 0 8px rgba(184, 77, 255, 0.3);
+    }
+
+    50% {
+        text-shadow: 0 0 15px rgba(184, 77, 255, 0.5), 0 0 25px rgba(255, 215, 0, 0.3);
+    }
+}
+
+[data-theme="dark"] .highlight-word {
+    background: linear-gradient(135deg, #b84dff 0%, #ffd700 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+}
+
+[data-theme="dark"] .highlight-word::after {
+    background: linear-gradient(90deg, #b84dff, #ffd700);
+}
+
+[data-theme="dark"] .highlight-word:hover {
+    filter: brightness(1.3) drop-shadow(0 0 10px rgba(184, 77, 255, 0.5));
+}
+
+[data-theme="dark"] .contact-label {
+    color: #ffd700;
+}
+
+[data-theme="dark"] .contact-label:hover i {
+    color: #b84dff;
 }
