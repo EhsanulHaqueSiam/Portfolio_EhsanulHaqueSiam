@@ -1,6 +1,6 @@
 /**
  * Progressive Image Loading with Intersection Observer
- * Provides blur-up effect and smarter lazy loading
+ * Shows content immediately, images fade in smoothly
  */
 
 class ImageLazyLoader {
@@ -22,7 +22,7 @@ class ImageLazyLoader {
                     });
                 },
                 {
-                    rootMargin: '50px 0px', // Start loading 50px before visible
+                    rootMargin: '100px 0px', // Start loading 100px before visible
                     threshold: 0.01
                 }
             );
@@ -30,33 +30,22 @@ class ImageLazyLoader {
     }
 
     /**
-     * Load image with blur-up effect
+     * Load image with smooth fade-in (no blur to avoid hiding content)
      */
     loadImage(img) {
         const src = img.dataset.src || img.src;
 
         if (!src || src === '') return;
 
-        // Add loading class for animation
-        img.classList.add('img-loading');
-
         // Create new image to preload
         const tempImg = new Image();
 
         tempImg.onload = () => {
             img.src = src;
-            img.classList.remove('img-loading');
             img.classList.add('loaded');
-
-            // Trigger fade-in animation
-            requestAnimationFrame(() => {
-                img.style.opacity = '1';
-                img.style.filter = 'blur(0)';
-            });
         };
 
         tempImg.onerror = () => {
-            img.classList.remove('img-loading');
             img.classList.add('img-error');
             console.warn('Failed to load image:', src);
         };
@@ -75,11 +64,6 @@ class ImageLazyLoader {
         }
 
         images.forEach(img => {
-            // Set initial blur state
-            img.style.opacity = '0';
-            img.style.filter = 'blur(10px)';
-            img.style.transition = 'opacity 0.3s ease, filter 0.3s ease';
-
             this.imageObserver.observe(img);
         });
     }
@@ -89,7 +73,7 @@ class ImageLazyLoader {
      */
     static enhanceAll() {
         const loader = new ImageLazyLoader();
-        const lazyImages = document.querySelectorAll('img[loading="lazy"]');
+        const lazyImages = document.querySelectorAll('img[loading="lazy"]:not(.loaded)');
         loader.observe(lazyImages);
         return loader;
     }
@@ -138,7 +122,9 @@ class ResourcePrioritizer {
             if (rect.top < viewportHeight) {
                 // Above fold - load immediately with high priority
                 img.loading = 'eager';
-                img.fetchpriority = 'high';
+                if ('fetchPriority' in img) {
+                    img.fetchPriority = 'high';
+                }
             }
         });
     }
@@ -146,19 +132,44 @@ class ResourcePrioritizer {
 
 // Initialize on DOM ready
 document.addEventListener('DOMContentLoaded', () => {
-    // Enhance lazy images with Intersection Observer
-    ImageLazyLoader.enhanceAll();
+    // Prioritize above-fold images first
+    ResourcePrioritizer.prioritizeAboveFold();
 
     // Initialize link prefetching
     new LinkPrefetcher();
-
-    // Prioritize above-fold images
-    ResourcePrioritizer.prioritizeAboveFold();
 });
 
 // Re-run after dynamic content loads
 document.addEventListener('contentLoaded', () => {
     ImageLazyLoader.enhanceAll();
 });
+
+// Also run when new content is added
+const originalSetInnerHTML = Object.getOwnPropertyDescriptor(Element.prototype, 'innerHTML');
+if (originalSetInnerHTML) {
+    // Observe DOM changes for lazy loading new images
+    const mutationObserver = new MutationObserver((mutations) => {
+        let hasNewImages = false;
+        mutations.forEach(mutation => {
+            if (mutation.addedNodes.length) {
+                mutation.addedNodes.forEach(node => {
+                    if (node.nodeType === 1) {
+                        if (node.tagName === 'IMG' || node.querySelectorAll?.('img').length) {
+                            hasNewImages = true;
+                        }
+                    }
+                });
+            }
+        });
+        if (hasNewImages) {
+            ImageLazyLoader.enhanceAll();
+        }
+    });
+
+    mutationObserver.observe(document.body, {
+        childList: true,
+        subtree: true
+    });
+}
 
 export { ImageLazyLoader, LinkPrefetcher, ResourcePrioritizer };

@@ -74,62 +74,14 @@
     border-radius: 12px;
 }
 
-/* Image loading placeholder */
-.img-loading {
-    position: relative;
-    overflow: hidden;
-}
-
-.img-loading::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(90deg,
-            transparent 0%,
-            rgba(255, 255, 255, 0.1) 50%,
-            transparent 100%);
-    animation: img-shimmer 1.5s infinite;
-}
-
-@keyframes img-shimmer {
-    0% {
-        transform: translateX(-100%);
-    }
-
-    100% {
-        transform: translateX(100%);
-    }
-}
-
-/* Fade-in animation for loaded content */
-.fade-in {
-    animation: fadeIn 0.3s ease-out forwards;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Progressive image loading */
+/* Smooth fade-in for images when loaded - DOES NOT HIDE IMAGES */
 img {
     transition: opacity 0.3s ease-out;
 }
 
-img[loading="lazy"] {
-    opacity: 0;
-}
-
-img[loading="lazy"].loaded,
-img[loading="lazy"]:not([src=""]) {
-    opacity: 1;
+/* Only add fade effect after image loads */
+img.loaded {
+    opacity: 1 !important;
 }
 
 /* Content visibility optimization for off-screen content */
@@ -151,4 +103,10 @@ img[loading="lazy"]:not([src=""]) {
             rgba(80, 80, 80, 0.2) 75%);
     background-size: 200% 100%;
     animation: skeleton-loading 1.5s infinite ease-in-out;
+}
+
+/* Instant content display - no hiding */
+.box {
+    opacity: 1 !important;
+    visibility: visible !important;
 }
