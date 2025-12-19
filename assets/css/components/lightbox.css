@@ -168,35 +168,61 @@
 
 /* Responsive lightbox */
 @media (max-width: 768px) {
+    .gallery-lightbox-content {
+        max-width: 95%;
+        max-height: 90vh;
+        padding: 0 4rem;
+    }
+
     .gallery-lightbox-nav {
-        width: 4.4rem;
-        height: 4.4rem;
-        font-size: 1.6rem;
+        width: 4rem;
+        height: 6rem;
+        font-size: 1.8rem;
+        background: rgba(0, 0, 0, 0.4);
+        border-radius: 0.5rem;
     }
 
     .gallery-lightbox-nav.prev {
-        left: 1rem;
+        left: 0;
+        border-radius: 0 0.5rem 0.5rem 0;
     }
 
     .gallery-lightbox-nav.next {
-        right: 1rem;
+        right: 0;
+        border-radius: 0.5rem 0 0 0.5rem;
     }
 
     .gallery-lightbox-close {
-        top: -3.5rem;
-        width: 4.4rem;
-        height: 4.4rem;
-        font-size: 2rem;
+        position: fixed;
+        top: 1rem;
+        right: 1rem;
+        width: 4.5rem;
+        height: 4.5rem;
+        font-size: 2.5rem;
+        background: rgba(0, 0, 0, 0.6);
+        z-index: 10001;
+    }
+
+    .gallery-lightbox-image {
+        max-height: 70vh;
+        max-width: 100%;
     }
 
     .gallery-lightbox-thumbnails {
         gap: 0.5rem;
         padding: 0.8rem;
+        max-width: 90vw;
     }
 
     .gallery-lightbox-thumb {
         width: 5rem;
         height: 3.5rem;
+        min-width: 5rem;
+    }
+
+    .gallery-lightbox-counter {
+        font-size: 1.3rem;
+        padding: 0.6rem 1.5rem;
     }
 
     /* Swipe hint for mobile */
@@ -233,21 +259,14 @@
 
 @media (max-width: 480px) {
     .gallery-lightbox-content {
-        max-width: 95%;
-    }
-
-    .gallery-lightbox-nav.prev {
-        left: 0.5rem;
-    }
-
-    .gallery-lightbox-nav.next {
-        right: 0.5rem;
+        max-width: 100%;
+        padding: 0 3.5rem;
     }
 
     .gallery-lightbox-nav {
-        width: 4rem;
-        height: 4rem;
-        background: rgba(0, 0, 0, 0.7);
+        width: 3.5rem;
+        height: 5rem;
+        font-size: 1.5rem;
     }
 
     .gallery-lightbox-image {
@@ -256,7 +275,7 @@
 
     .gallery-lightbox-counter {
         font-size: 1.2rem;
-        padding: 0.6rem 1.5rem;
+        padding: 0.5rem 1.2rem;
     }
 
     .gallery-lightbox-thumbnails {

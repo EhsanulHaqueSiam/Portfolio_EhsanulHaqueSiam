@@ -40,7 +40,6 @@ export const initParallax = () => {
     const heroImage = document.querySelector('.home .image img');
     const heroContent = document.querySelector('.home .content');
     const skillsSection = document.querySelector('.skills');
-    const aboutImage = document.querySelector('.about .image img');
 
     let ticking = false;
 
@@ -74,14 +73,7 @@ export const initParallax = () => {
                     }
                 }
 
-                // About image parallax (subtle float)
-                if (aboutImage) {
-                    const aboutTop = aboutImage.closest('.about')?.offsetTop || 0;
-                    const aboutOffset = scrolled - aboutTop + windowHeight;
-                    if (aboutOffset > 0 && aboutOffset < windowHeight * 2) {
-                        aboutImage.style.transform = `translateY(${(aboutOffset - windowHeight) * 0.08}px)`;
-                    }
-                }
+                // About image parallax removed - now using VanillaTilt for 3D effect
 
                 ticking = false;
             });
@@ -150,9 +142,9 @@ export const initMicroInteractions = () => {
         });
     });
 
-    // Throttled tilt effect on project cards (reduced elements to prevent cursor lag)
-    // Only apply to specific cards, not all .box elements
-    document.querySelectorAll('.work .box, .publications .box-container .box, .award-card').forEach(card => {
+    // Throttled tilt effect on award cards only
+    // Note: .work .box and .publications .box use VanillaTilt instead
+    document.querySelectorAll('.award-card').forEach(card => {
         let ticking = false;
 
         card.addEventListener('mousemove', function (e) {
@@ -202,6 +194,50 @@ export const initMicroInteractions = () => {
     document.querySelectorAll('.navbar a').forEach(link => {
         link.classList.add('underline-hover');
     });
+
+    // Initialize VanillaTilt for about section image
+    const initAboutTilt = (retryCount = 0) => {
+        console.log(`🔍 initAboutTilt attempt ${retryCount}, VanillaTilt available:`, typeof VanillaTilt !== 'undefined');
+
+        if (typeof VanillaTilt !== 'undefined') {
+            // Specifically target the About section image (not the hero image which also has .tilt)
+            const aboutSection = document.querySelector('section.about, section#about');
+            const aboutImage = aboutSection ? aboutSection.querySelector('img.tilt') : null;
+
+            console.log(`🔍 About section found:`, !!aboutSection, 'About image found:', !!aboutImage);
+
+            if (aboutImage && !aboutImage.vanillaTilt) {
+                VanillaTilt.init(aboutImage, {
+                    max: 15,
+                    speed: 400,
+                    scale: 1.05,
+                    glare: true,
+                    "max-glare": 0.2,
+                    perspective: 1000
+                });
+                console.log('✅ VanillaTilt initialized on About image');
+            } else if (!aboutImage && retryCount < 10) {
+                // Retry if element not found yet (might be loading)
+                setTimeout(() => initAboutTilt(retryCount + 1), 200);
+            }
+        } else if (retryCount < 20) {
+            // Retry after a short delay if VanillaTilt isn't loaded yet
+            setTimeout(() => initAboutTilt(retryCount + 1), 100);
+        }
+    };
+    initAboutTilt();
+
+    // Hero image glow effect on hover (fallback for browsers without CSS :has() support)
+    const heroImage = document.querySelector('.home .image img');
+    const heroImageContainer = document.querySelector('.home .image');
+    if (heroImage && heroImageContainer) {
+        heroImage.addEventListener('mouseenter', () => {
+            heroImageContainer.classList.add('glow-active');
+        });
+        heroImage.addEventListener('mouseleave', () => {
+            heroImageContainer.classList.remove('glow-active');
+        });
+    }
 };
 
 /**

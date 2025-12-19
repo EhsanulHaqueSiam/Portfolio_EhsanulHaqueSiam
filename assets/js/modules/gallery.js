@@ -9,6 +9,8 @@ export { createImageResolver } from './data-fetcher.js';
 let currentGalleryImages = [];
 let currentGalleryIndex = 0;
 let lightboxElement = null;
+let keyboardListenerAdded = false;
+let thumbnailDelegationAdded = false;
 
 /**
  * Create the gallery lightbox DOM structure
@@ -42,8 +44,24 @@ export const createGalleryLightbox = () => {
         if (e.target === lightbox) closeGallery();
     });
 
-    // Keyboard navigation
-    document.addEventListener('keydown', handleGalleryKeyboard);
+    // Keyboard navigation - only add once to prevent memory leaks
+    if (!keyboardListenerAdded) {
+        document.addEventListener('keydown', handleGalleryKeyboard);
+        keyboardListenerAdded = true;
+    }
+
+    // Thumbnail click delegation - only add once to prevent memory leaks
+    if (!thumbnailDelegationAdded) {
+        const thumbnailContainer = lightbox.querySelector('.gallery-lightbox-thumbnails');
+        thumbnailContainer.addEventListener('click', (e) => {
+            const thumb = e.target.closest('.gallery-lightbox-thumb');
+            if (thumb && thumb.dataset.index !== undefined) {
+                currentGalleryIndex = parseInt(thumb.dataset.index);
+                updateGalleryDisplay();
+            }
+        });
+        thumbnailDelegationAdded = true;
+    }
 
     // Touch swipe support for mobile
     initTouchSwipe(lightbox);
@@ -185,20 +203,12 @@ const updateGalleryDisplay = () => {
     prevBtn.style.display = singleImage ? 'none' : 'flex';
     nextBtn.style.display = singleImage ? 'none' : 'flex';
 
-    // Update thumbnails
+    // Update thumbnails (click handled by event delegation - no new listeners needed)
     if (currentGalleryImages.length > 1) {
         thumbnailContainer.innerHTML = currentGalleryImages.map((img, idx) =>
             `<img src="${img}" class="gallery-lightbox-thumb ${idx === currentGalleryIndex ? 'active' : ''}" data-index="${idx}" alt="Thumbnail ${idx + 1}">`
         ).join('');
         thumbnailContainer.style.display = 'flex';
-
-        // Add click handlers to thumbnails
-        thumbnailContainer.querySelectorAll('.gallery-lightbox-thumb').forEach(thumb => {
-            thumb.addEventListener('click', () => {
-                currentGalleryIndex = parseInt(thumb.dataset.index);
-                updateGalleryDisplay();
-            });
-        });
     } else {
         thumbnailContainer.style.display = 'none';
     }

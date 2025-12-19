@@ -1,0 +1,73 @@
+/* ==================== HERO SOCIAL ICONS ==================== */
+/* Social media icons styling for hero section */
+
+.socials {
+    position: relative;
+    margin-top: 9rem;
+    animation: fadeInUp 1s ease-out 0.6s both;
+}
+
+.socials .social-icons {
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style: none;
+}
+
+.socials .social-icons li {
+    display: inline-block;
+    margin-bottom: 60px;
+}
+
+.social-icons a {
+    font-size: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #00d9ff;
+    background-color: #09011b;
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    margin-right: 12px;
+    border-radius: 50%;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.social-icons a i {
+    line-height: 1;
+}
+
+.social-icons a:active,
+.social-icons a:focus,
+.social-icons a:hover {
+    color: #fff;
+    background-color: #0685da;
+    transform: translateY(-5px) scale(1.1);
+    box-shadow: 0 8px 25px rgba(6, 133, 218, 0.4);
+}
+
+.social-icons a.github:hover {
+    background-color: #333;
+    box-shadow: 0 8px 25px rgba(51, 51, 51, 0.4);
+}
+
+.social-icons a.twitter:hover {
+    background-color: #1da1f2;
+    box-shadow: 0 8px 25px rgba(29, 161, 242, 0.4);
+}
+
+.social-icons a.linkedin:hover {
+    background-color: #0077b5;
+    box-shadow: 0 8px 25px rgba(0, 119, 181, 0.4);
+}
+
+.social-icons a.dev:hover {
+    background-color: #0a0a0a;
+    box-shadow: 0 8px 25px rgba(10, 10, 10, 0.4);
+}
+
+.social-icons a.instagram:hover {
+    background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+    box-shadow: 0 8px 25px rgba(225, 48, 108, 0.4);
+}

@@ -116,7 +116,7 @@ const generatePublicationHtml = (pub, index) => {
     const imageHtml = generatePublicationImageHtml(pub, index);
 
     return `
-        <div class="box">
+        <div class="box tilt">
             ${imageHtml}
             <div class="content">
                 <h3>${pub.title}</h3>
@@ -160,6 +160,16 @@ export const renderPublications = async () => {
 
         // Attach gallery click handlers
         attachGalleryHandlers(container);
+
+        // Initialize VanillaTilt - no glare since we use custom CSS swipe glare
+        if (typeof VanillaTilt !== 'undefined') {
+            VanillaTilt.init(container.querySelectorAll(".box"), {
+                max: 15,
+                speed: 400,
+                glare: false,
+                perspective: 1000
+            });
+        }
 
         // Initialize ScrollReveal with reduced delay for faster card appearance
         if (typeof ScrollReveal !== 'undefined') {

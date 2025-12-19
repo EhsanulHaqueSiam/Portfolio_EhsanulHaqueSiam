@@ -7,20 +7,21 @@
  */
 
 // ==================== MODULE IMPORTS ====================
+// Note: Version params ensure browser loads updated modules
 
 // Navigation and UI
-import { initNavigation } from './modules/navigation.js';
-import { initScrollSpy, initSmoothScrolling } from './modules/scroll-spy.js';
-import { initScrollAnimations, initParallax, initMicroInteractions, initSmoothScroll, initPageLoadAnimation } from './modules/animations.js';
+import { initNavigation } from './modules/navigation.js?v=4.0';
+import { initScrollSpy, initSmoothScrolling } from './modules/scroll-spy.js?v=4.0';
+import { initScrollAnimations, initParallax, initMicroInteractions, initSmoothScroll, initPageLoadAnimation } from './modules/animations.js?v=4.0';
 
 // Forms and Interaction
-import { initContactForm } from './modules/contact-form.js';
-import { initTypedText } from './modules/typed-text.js';
-import { initVisibilityHandler } from './modules/visibility.js';
-import { initDevToolsProtection } from './modules/dev-tools.js';
-import { initThemeToggle } from './modules/theme-toggle.js';
-import { initCustomCursor } from './modules/cursor.js';
-import { initCopyToClipboard } from './modules/toast.js';
+import { initContactForm } from './modules/contact-form.js?v=4.0';
+import { initTypedText } from './modules/typed-text.js?v=4.0';
+import { initVisibilityHandler } from './modules/visibility.js?v=4.0';
+import { initDevToolsProtection } from './modules/dev-tools.js?v=4.0';
+import { initThemeToggle } from './modules/theme-toggle.js?v=4.0';
+import { initCustomCursor } from './modules/cursor.js?v=4.0';
+import { initCopyToClipboard } from './modules/toast.js?v=4.0';
 
 // Content Renderers
 import {
@@ -30,10 +31,10 @@ import {
   renderPublications,
   renderExperience
   // renderTestimonials - commented out until testimonials section is ready
-} from './modules/renderers/index.js';
+} from './modules/renderers/index.js?v=4.0';
 
 // Performance Optimization
-import { ImageLazyLoader, LinkPrefetcher, ResourcePrioritizer } from './modules/performance.js';
+import { ImageLazyLoader, LinkPrefetcher, ResourcePrioritizer } from './modules/performance.js?v=4.0';
 
 // Register Service Worker for offline caching
 if ('serviceWorker' in navigator) {

@@ -10,11 +10,12 @@
  */
 export const initTypedText = (
     strings = [
-        "frontend development",
-        "backend development",
-        "web designing",
-        "android development",
-        "web development"
+        "AI & Machine Learning",
+        "LLM & Reinforcement Learning",
+        "Backend Development",
+        "Android Development",
+        "Game Development",
+        "Web Scraping & Automation"
     ],
     options = {}
 ) => {

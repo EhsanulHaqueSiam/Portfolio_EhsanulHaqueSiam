@@ -4,6 +4,7 @@
     min-height: auto;
     padding-bottom: 5rem;
     background: linear-gradient(135deg, #f0f4ff 0%, #ffffff 50%, #f9f9ff 100%);
+    overflow: visible;
 }
 
 .publications .box-container {
@@ -15,7 +16,7 @@
 }
 
 .publications .box-container .box {
-    flex: 1 1 35rem;
+    flex: 0 1 35rem;
     background: #fff;
     border-radius: 1.5rem;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);

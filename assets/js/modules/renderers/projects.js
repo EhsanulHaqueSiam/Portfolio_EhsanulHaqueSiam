@@ -260,13 +260,16 @@ const initProjectEffects = (container, projects) => {
         }
     });
 
-    // Initialize VanillaTilt - only for elements in this container to prevent duplicates
+    // Initialize VanillaTilt for project cards
     if (typeof VanillaTilt !== 'undefined') {
-        VanillaTilt.init(container.querySelectorAll(".tilt"), {
-            max: 15,
+        const tiltElements = container.querySelectorAll(".box");
+        console.log(`🎯 Initializing VanillaTilt on ${tiltElements.length} project cards`);
+        VanillaTilt.init(tiltElements, {
+            max: 12,
             speed: 400,
             glare: true,
-            "max-glare": 0.3
+            "max-glare": 0.25,
+            perspective: 1000
         });
     }
 

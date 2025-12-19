@@ -91,6 +91,70 @@
     transition: transform 0.3s ease;
 }
 
+/* ==================== VanillaTilt Glare Fix ==================== */
+/* Fix for glare sharp edges on cards with rounded corners */
+/* The glare element needs to inherit border-radius and fade at edges */
+
+.box .js-tilt-glare,
+.tilt .js-tilt-glare {
+    border-radius: inherit;
+    overflow: hidden;
+}
+
+.box .js-tilt-glare-inner,
+.tilt .js-tilt-glare-inner {
+    border-radius: inherit;
+    /* Use radial gradient mask to fade glare at corners */
+    -webkit-mask-image: radial-gradient(ellipse 90% 90% at center,
+            rgba(0, 0, 0, 1) 40%,
+            rgba(0, 0, 0, 0.7) 60%,
+            rgba(0, 0, 0, 0.3) 80%,
+            rgba(0, 0, 0, 0) 100%);
+    mask-image: radial-gradient(ellipse 90% 90% at center,
+            rgba(0, 0, 0, 1) 40%,
+            rgba(0, 0, 0, 0.7) 60%,
+            rgba(0, 0, 0, 0.3) 80%,
+            rgba(0, 0, 0, 0) 100%);
+}
+
+/* Ensure cards with tilt have proper 3D context for glare */
+.work .box-container .box,
+.award .box-container .box,
+.publications .box-container .box {
+    isolation: isolate;
+}
+
+/* ==================== Custom Swipe Glare for Publications ==================== */
+/* Glare swipes right on hover, swipes left on mouse leave */
+.publications .box-container .box {
+    position: relative;
+    overflow: hidden;
+}
+
+.publications .box-container .box::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(120deg,
+            transparent 0%,
+            transparent 30%,
+            rgba(255, 255, 255, 0.15) 45%,
+            rgba(255, 255, 255, 0.3) 50%,
+            rgba(255, 255, 255, 0.15) 55%,
+            transparent 70%,
+            transparent 100%);
+    z-index: 10;
+    pointer-events: none;
+    transition: left 0.5s ease-out;
+}
+
+.publications .box-container .box:hover::before {
+    left: 100%;
+}
+
 /* Magnetic Button Effect */
 .magnetic-btn {
     transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);

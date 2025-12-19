@@ -55,7 +55,7 @@
       "spotifysentiment"
     ],
     "category": "project",
-    "showInHome": false
+    "showInHome": true
   },
   {
     "name": "54+ Android Development Lessons",

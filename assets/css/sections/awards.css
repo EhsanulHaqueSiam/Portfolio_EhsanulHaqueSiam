@@ -2,6 +2,7 @@
 
 .award {
     background: linear-gradient(to bottom, #000031, #00002c);
+    overflow: visible;
 }
 
 .award h2 {
@@ -18,10 +19,13 @@
     flex-wrap: wrap;
     gap: 1.5rem;
     margin: 2rem;
+    padding: 1rem;
+    justify-content: center;
 }
 
 .award .box-container .box {
-    flex: 1 1 30rem;
+    flex: 0 1 30rem;
+    max-width: 40rem;
     border-radius: 1.5rem;
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
     position: relative;

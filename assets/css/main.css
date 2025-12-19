@@ -12,7 +12,7 @@
 
 /* ==================== COMPONENTS ==================== */
 @import url("./components/navigation.css?v=3.3");
-@import url("./components/lightbox.css");
+@import url("./components/lightbox.css?v=4.0");
 @import url("./components/theme-toggle.css?v=3.3");
 @import url("./components/cursor.css");
 @import url("./components/buttons.css");
@@ -21,21 +21,21 @@
 /* ==================== UTILITIES ==================== */
 @import url("./utilities/loader.css");
 @import url("./utilities/scrollbar.css");
-@import url("./utilities/transitions.css");
+@import url("./utilities/transitions.css?v=4.0");
 @import url("./utilities/dark-theme.css");
 
 /* ==================== MODULES ==================== */
 @import url("./modules/skeleton.css");
 
 /* ==================== SECTIONS ==================== */
-@import url("./sections/hero.css");
+@import url("./sections/hero.css?v=4.0");
 @import url("./sections/about.css");
 @import url("./sections/skills.css");
 @import url("./sections/education.css");
-@import url("./sections/publications.css");
+@import url("./sections/publications.css?v=4.0");
 @import url("./sections/projects.css");
 @import url("./sections/testimonials.css");
-@import url("./sections/awards.css");
+@import url("./sections/awards.css?v=4.0");
 @import url("./sections/experience.css");
 @import url("./sections/video.css");
 @import url("./sections/contact.css");
@@ -109,6 +109,19 @@ section {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+}
+
+/* Prevent text animation jitter */
+.heading span[data-hacker-text],
+.heading span[data-text] {
+  display: inline-block;
+  vertical-align: baseline;
+  /* Prevent layout shift during text replacement */
+  white-space: nowrap;
+  /* Use fixed font properties to prevent size changes */
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
 }
 
 /* Make card images clickable */

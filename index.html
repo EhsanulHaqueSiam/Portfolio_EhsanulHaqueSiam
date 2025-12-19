@@ -88,10 +88,10 @@
 
   <!-- Preload critical assets -->
   <link rel="preload" href="./assets/images/profile2.jpg" as="image">
-  <link rel="preload" href="./assets/css/main.css?v=3.5" as="style">
+  <link rel="preload" href="./assets/css/main.css?v=4.0" as="style">
 
   <!-- Custom CSS -->
-  <link rel="stylesheet" href="./assets/css/main.css?v=3.5" />
+  <link rel="stylesheet" href="./assets/css/main.css?v=4.0" />
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
     integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
@@ -139,7 +139,7 @@
       </div>
       <h2>
         Hi There,<br />
-        I'm Ehsanul <span>Haque</span>
+        I'm Ehsanul <span class="glitch-hover" data-text="Haque">Haque</span>
       </h2>
       <p>I am <span class="typing-text"></span></p>
       <div class="hero-buttons">
@@ -195,7 +195,7 @@
   <!-- About Section -->
   <section class="about" id="about">
     <h2 class="heading">
-      <i class="fas fa-user-alt"></i> About <span>Me</span>
+      <i class="fas fa-user-alt"></i> About <span data-hacker-text="scroll">Me</span>
     </h2>
     <div class="row">
       <div class="image">
@@ -231,7 +231,7 @@
   <!-- skills section starts -->
   <section class="skills" id="skills">
     <h2 class="heading">
-      <i class="fas fa-laptop-code"></i> Skills & <span>Abilities</span>
+      <i class="fas fa-laptop-code"></i> Skills & <span data-hacker-text="scroll">Abilities</span>
     </h2>
 
     <div class="container">
@@ -250,7 +250,7 @@
   <!-- education section starts -->
   <section class="education" id="education">
     <h1 class="heading">
-      <i class="fas fa-graduation-cap"></i> My <span>Education</span>
+      <i class="fas fa-graduation-cap"></i> My <span data-hacker-text="scroll">Education</span>
     </h1>
 
     <p class="qoute">
@@ -298,7 +298,7 @@
   <!-- publications section starts -->
   <section class="publications" id="publications">
     <h2 class="heading">
-      <i class="fas fa-book-open"></i> My <span>Publications</span>
+      <i class="fas fa-book-open"></i> My <span data-hacker-text="scroll">Publications</span>
     </h2>
 
     <div class="box-container">
@@ -316,7 +316,7 @@
   <!-- work project section starts -->
   <section class="work" id="work">
     <h2 class="heading">
-      <i class="fas fa-laptop-code"></i> Projects <span>Made</span>
+      <i class="fas fa-laptop-code"></i> Projects <span data-hacker-text="scroll">Made</span>
     </h2>
 
     <div class="box-container">
@@ -358,7 +358,7 @@
   <!-- Achievement section starts -->
   <section class="award" id="award">
     <h2 class="heading">
-      <i class="fas fa-trophy"></i> Awards & <span>Achievements</span>
+      <i class="fas fa-trophy"></i> Awards & <span data-hacker-text="scroll">Achievements</span>
     </h2>
 
     <div class="box-container"></div>
@@ -373,7 +373,7 @@
 
   <!-- experience section starts -->
   <section class="experience" id="experience">
-    <h2 class="heading"><i class="fas fa-briefcase"></i> Experience</h2>
+    <h2 class="heading"><i class="fas fa-briefcase"></i> <span data-hacker-text="scroll">Experience</span></h2>
 
     <div class="timeline">
       <!-- Experience will be loaded dynamically via script.js -->
@@ -390,7 +390,7 @@
   <!-- Example Section for Embedded Video -->
   <section class="video" id="video">
     <h2 class="heading">
-      <i class="fas fa-play-circle"></i><span> My Journey</span>
+      <i class="fas fa-play-circle"></i> My <span data-hacker-text="scroll">Journey</span>
     </h2>
     <div class="video-container">
       <iframe src="https://www.youtube.com/embed/Ulyy3Yf-zxc" title="YouTube Video Player" frameborder="0"
@@ -405,7 +405,7 @@
   <!-- contact section starts -->
   <section class="contact" id="contact">
     <h2 class="heading">
-      <i class="fas fa-headset"></i> Get in <span>Touch</span>
+      <i class="fas fa-headset"></i> Get in <span data-hacker-text="scroll">Touch</span>
     </h2>
 
     <div class="container">
@@ -531,7 +531,10 @@
 
   <!-- ==== ALL MAJOR JAVASCRIPT CDNS ENDS ==== -->
 
-  <script type="module" src="./assets/js/main.js?v=3.5"></script>
+  <!-- Text Effects -->
+  <script src="./assets/js/modules/text-effects.js?v=4.0"></script>
+
+  <script type="module" src="./assets/js/main.js?v=4.4"></script>
 </body>
 
 </html>

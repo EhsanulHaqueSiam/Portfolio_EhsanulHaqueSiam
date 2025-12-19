@@ -1,0 +1,152 @@
+/* ==================== HERO BASE ==================== */
+/* Core hero section structure, image, glow effect, and content */
+
+.home {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    /* Use dynamic viewport height for better mobile support */
+    min-height: 100dvh;
+    min-height: 100vh;
+    /* Fallback for browsers without dvh support */
+    height: auto;
+    /* Allow content to determine actual height */
+    align-items: center;
+    background: linear-gradient(135deg, #f5f7fa 0%, #e8eef5 100%);
+    padding: 2rem 9%;
+    box-sizing: border-box;
+}
+
+.home #particles-js {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+}
+
+.home::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+}
+
+.home .content {
+    margin-top: 2rem;
+    flex: 1 1 40rem;
+    padding-top: 1rem;
+    z-index: 1;
+    animation: fadeInUp 1s ease-out;
+}
+
+.home .image {
+    flex: 1 1 40rem;
+    z-index: 1;
+}
+
+/* Hero Image Container with Glow */
+.home .image {
+    position: relative;
+}
+
+/* Glow effect - minimal by default, expands on hover */
+.home .image::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: calc(35% + 6rem);
+    transform: translate(-50%, -50%);
+    width: 90%;
+    /* Smaller by default */
+    max-width: 420px;
+    aspect-ratio: 1;
+    background: radial-gradient(circle,
+            rgba(115, 3, 167, 0.7) 0%,
+            rgba(255, 123, 0, 0.5) 30%,
+            rgba(37, 6, 173, 0.35) 50%,
+            transparent 75%);
+    border-radius: 50%;
+    filter: blur(40px);
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.4;
+    /* Visible glow by default, intensifies on hover */
+    transition: opacity 0.4s ease, transform 0.4s ease, width 0.4s ease, max-width 0.4s ease;
+}
+
+/* Brighter and larger glow when hovering */
+.home .image.glow-active::before,
+.home .image:has(img:hover)::before {
+    opacity: 1;
+    width: 130%;
+    max-width: 550px;
+    animation: heroGlow 3s ease-in-out infinite alternate;
+}
+
+@keyframes heroGlow {
+    0% {
+        transform: translate(-50%, -50%) scale(1);
+    }
+
+    100% {
+        transform: translate(-50%, -50%) scale(1.15);
+    }
+}
+
+.home .image img {
+    position: relative;
+    z-index: 1;
+    width: 70%;
+    max-width: 400px;
+    margin-left: 6rem;
+    border-radius: 50%;
+    box-shadow: 0 10px 40px rgba(115, 3, 167, 0.25);
+    cursor: pointer;
+    animation: float 4s ease-in-out infinite;
+    border: 4px solid rgba(255, 255, 255, 0.8);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.home .image img:hover {
+    box-shadow: 0 15px 50px rgba(115, 3, 167, 0.35);
+    transform: scale(1.02);
+    animation-play-state: paused;
+}
+
+.home .content h2 {
+    font-size: 5rem;
+    font-weight: 800;
+    color: #002057;
+    animation: fadeInUp 0.8s ease-out;
+}
+
+.home .content h2 span {
+    font-size: 5rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #ff7b00, #ff5500);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.home .content p {
+    font-size: 2.5rem;
+    color: #000;
+    font-weight: 600;
+    padding: 1rem 0;
+    animation: fadeInUp 1s ease-out 0.2s both;
+}
+
+.home .content p span {
+    font-size: 2.5rem;
+    background: linear-gradient(135deg, #7303a7, #2506ad);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 700;
+    padding: 1rem 0;
+}
