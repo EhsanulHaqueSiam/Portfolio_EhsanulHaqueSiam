@@ -1,7 +1,7 @@
 [
   {
     "name": "AIUB CS FEST 2024 - 1st Runner Up",
-    "desc": "Achieved 1st Runner-Up in the App Showcase category at AIUB CS FEST 2024. Competed against 20+ teams, demonstrating innovative mobile application development and presentation skills to industry judges.",
+    "desc": "Achieved 1st Runner-Up in the App Showcase category at AIUB CS FEST 2024. Competed against 20+ teams, demonstrating innovative mobile application development and presentation skills.",
     "images": [
       "aiubcsfest2024cert",
       "awardcsfest2024",
@@ -11,26 +11,17 @@
     "showInHome": true
   },
   {
-    "name": "Published Research - Taylor & Francis",
-    "desc": "Published 'Beyond NER: Medical BERTs for Multi-Label ADR Classification' at IDAA 2025 (Taylor & Francis Book Chapter). Research on fine-tuning LLMs for healthcare AI applications.",
+    "name": "Published Research - Taylor & Francis (IDAA 2025)",
+    "desc": "Published 'Beyond NER: Medical BERTs for Multi-Label ADR Classification' at IDAA 2025 as a Taylor & Francis Book Chapter. Research on fine-tuning LLMs for healthcare AI.",
     "images": [
-      "pub1.png"
+      "pub1"
     ],
     "category": "publication",
     "showInHome": true
   },
   {
-    "name": "GitHub Open Source Contributor",
-    "desc": "Active open source contributor with 36+ GitHub stars and 26 repositories. Top project: StudentManagementSystem with 17 stars and comprehensive Wiki documentation.",
-    "images": [
-      "github"
-    ],
-    "category": "achievement",
-    "showInHome": true
-  },
-  {
     "name": "South Asian Climate Conference 2024",
-    "desc": "Recognized for participation and presentation at the South Asian Climate Conference 2024. Presented research on emerging climate issues with statistical analysis for the South Asian region.",
+    "desc": "Received certificate for participation and presentation at the 2nd South Asian Conference on Climate. Presented research on emerging climate issues with statistical analysis.",
     "images": [
       "cpecertificate",
       "cpepresentation",
@@ -40,19 +31,28 @@
     "showInHome": true
   },
   {
-    "name": "Sentiment Analysis - 85-90% Accuracy",
-    "desc": "Built NLP sentiment classifier analyzing 52,702 Spotify reviews achieving 85-90% classification accuracy using MultinomialNB and TF-IDF vectorization.",
+    "name": "GitHub Open Source - 36+ Stars",
+    "desc": "Active open source contributor with 36+ GitHub stars across 26 repositories. Top project: StudentManagementSystem with 17 stars and comprehensive Wiki documentation.",
     "images": [
-      "spotifysentiment"
+      "github"
+    ],
+    "category": "achievement",
+    "showInHome": true
+  },
+  {
+    "name": "Mario's Multiverse Adventure - Game Dev",
+    "desc": "Led team of 5 to develop 2D platformer with OpenGL for AIUB Computer Graphics course. Created 3 unique game levels with physics engine. YouTube demo available.",
+    "images": [
+      "mariogame"
     ],
     "category": "project",
     "showInHome": false
   },
   {
-    "name": "Mario's Multiverse Adventure - YouTube Demo",
-    "desc": "Led team of 5 to develop 2D platformer with OpenGL for AIUB Computer Graphics course. Created 3 unique game levels with physics engine and published YouTube gameplay demo.",
+    "name": "Spotify Sentiment Analysis - 85-90% Accuracy",
+    "desc": "Built NLP sentiment classifier analyzing 52,702 Spotify reviews achieving 85-90% classification accuracy using MultinomialNB and TF-IDF vectorization.",
     "images": [
-      "mariogame"
+      "spotifysentiment"
     ],
     "category": "project",
     "showInHome": false
@@ -64,15 +64,6 @@
       "androiddev"
     ],
     "category": "learning",
-    "showInHome": false
-  },
-  {
-    "name": "CPE Conference Presentation",
-    "desc": "Presented at the South Asian Climate Conference 2024, sharing research and findings on climate challenges and solutions.",
-    "images": [
-      "cpepresentation"
-    ],
-    "category": "presentation",
     "showInHome": false
   }
 ]
