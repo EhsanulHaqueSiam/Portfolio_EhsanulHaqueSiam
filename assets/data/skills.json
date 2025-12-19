@@ -5,24 +5,9 @@
       "icon": "fas fa-brain",
       "skills": [
         {
-          "name": "TensorFlow",
-          "level": "expert",
-          "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tensorflow/tensorflow-original.svg"
-        },
-        {
-          "name": "PyTorch",
-          "level": "advanced",
-          "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pytorch/pytorch-original.svg"
-        },
-        {
           "name": "Machine Learning",
-          "level": "expert",
-          "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/numpy/numpy-original.svg"
-        },
-        {
-          "name": "LLMs & RAG",
           "level": "advanced",
-          "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/anaconda/anaconda-original.svg"
+          "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/numpy/numpy-original.svg"
         },
         {
           "name": "NLP",
@@ -31,8 +16,23 @@
         },
         {
           "name": "Scikit-learn",
-          "level": "expert",
+          "level": "advanced",
           "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/scikitlearn/scikitlearn-original.svg"
+        },
+        {
+          "name": "TensorFlow",
+          "level": "intermediate",
+          "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tensorflow/tensorflow-original.svg"
+        },
+        {
+          "name": "PyTorch",
+          "level": "intermediate",
+          "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pytorch/pytorch-original.svg"
+        },
+        {
+          "name": "LLMs & BERT",
+          "level": "advanced",
+          "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/anaconda/anaconda-original.svg"
         },
         {
           "name": "Computer Vision",
@@ -46,19 +46,14 @@
       "icon": "fas fa-code",
       "skills": [
         {
-          "name": "Python",
-          "level": "expert",
-          "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg"
-        },
-        {
           "name": "Java",
           "level": "expert",
           "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg"
         },
         {
-          "name": "C#",
+          "name": "Python",
           "level": "advanced",
-          "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/csharp/csharp-original.svg"
+          "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg"
         },
         {
           "name": "C++",
@@ -71,9 +66,19 @@
           "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kotlin/kotlin-original.svg"
         },
         {
+          "name": "C#",
+          "level": "intermediate",
+          "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/csharp/csharp-original.svg"
+        },
+        {
           "name": "JavaScript",
           "level": "intermediate",
           "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"
+        },
+        {
+          "name": "SQL",
+          "level": "advanced",
+          "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg"
         }
       ]
     },
@@ -87,34 +92,34 @@
           "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg"
         },
         {
-          "name": "PostgreSQL",
-          "level": "advanced",
-          "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg"
-        },
-        {
-          "name": "MongoDB",
-          "level": "advanced",
-          "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg"
-        },
-        {
           "name": "SQLite",
-          "level": "expert",
-          "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sqlite/sqlite-original.svg"
-        },
-        {
-          "name": "REST APIs",
-          "level": "expert",
-          "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg"
-        },
-        {
-          "name": "FastAPI",
           "level": "advanced",
-          "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg"
+          "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sqlite/sqlite-original.svg"
         },
         {
           "name": "JDBC",
           "level": "expert",
           "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg"
+        },
+        {
+          "name": "SQL Server",
+          "level": "intermediate",
+          "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/microsoftsqlserver/microsoftsqlserver-original.svg"
+        },
+        {
+          "name": "REST APIs",
+          "level": "advanced",
+          "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg"
+        },
+        {
+          "name": "FastAPI",
+          "level": "intermediate",
+          "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg"
+        },
+        {
+          "name": "Database Design",
+          "level": "advanced",
+          "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg"
         }
       ]
     },
@@ -128,7 +133,7 @@
           "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/android/android-original.svg"
         },
         {
-          "name": "MVVM",
+          "name": "MVVM Architecture",
           "level": "advanced",
           "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/android/android-original.svg"
         },
@@ -143,8 +148,18 @@
           "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-original.svg"
         },
         {
-          "name": "Room DB",
+          "name": "Room Database",
           "level": "advanced",
+          "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/android/android-original.svg"
+        },
+        {
+          "name": "Hilt/Dagger",
+          "level": "intermediate",
+          "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/android/android-original.svg"
+        },
+        {
+          "name": "RxJava3",
+          "level": "intermediate",
           "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/android/android-original.svg"
         }
       ]
@@ -164,14 +179,40 @@
           "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg"
         },
         {
-          "name": "Unity",
+          "name": "Game Physics",
           "level": "intermediate",
-          "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/unity/unity-original.svg"
+          "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg"
         },
         {
           "name": "CMake",
           "level": "intermediate",
           "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cmake/cmake-original.svg"
+        },
+        {
+          "name": "GLM",
+          "level": "intermediate",
+          "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/opengl/opengl-original.svg"
+        }
+      ]
+    },
+    {
+      "name": "Web Scraping",
+      "icon": "fas fa-spider",
+      "skills": [
+        {
+          "name": "Scrapy",
+          "level": "advanced",
+          "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg"
+        },
+        {
+          "name": "XPath/CSS Selectors",
+          "level": "advanced",
+          "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg"
+        },
+        {
+          "name": "Data Cleaning",
+          "level": "advanced",
+          "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pandas/pandas-original.svg"
         }
       ]
     },
@@ -190,11 +231,6 @@
           "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg"
         },
         {
-          "name": "Docker",
-          "level": "intermediate",
-          "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg"
-        },
-        {
           "name": "Linux",
           "level": "advanced",
           "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg"
@@ -205,9 +241,14 @@
           "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/neovim/neovim-original.svg"
         },
         {
-          "name": "Scrapy",
+          "name": "Docker",
+          "level": "intermediate",
+          "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg"
+        },
+        {
+          "name": "Jupyter",
           "level": "advanced",
-          "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg"
+          "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jupyter/jupyter-original.svg"
         }
       ]
     }
