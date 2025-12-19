@@ -3,9 +3,9 @@
     "name": "Student Management System",
     "desc": "Enterprise-grade database management system with 17 GitHub stars. Features 3NF normalized schema, Singleton pattern with dynamic connection pooling (6-8ms queries), and comprehensive Wiki documentation with ER diagrams.",
     "metrics": [
-      "⭐ 17 GitHub Stars, 8 Forks",
+      "⭐ 17 Stars, 8 Forks",
       "6-8ms query performance",
-      "6 connection strategies benchmarked",
+      "6 entities normalized to 3NF",
       "4 Wiki documentation pages"
     ],
     "images": [
@@ -33,7 +33,7 @@
     "desc": "NLP sentiment classifier analyzing 52,702 Spotify user reviews with 85-90% accuracy using MultinomialNB. Complete ML pipeline with TF-IDF vectorization, text preprocessing, and Google Colab integration.",
     "metrics": [
       "52,702 reviews analyzed",
-      "85-90% classification accuracy",
+      "85-90% accuracy",
       "5,000+ TF-IDF features",
       "17-task ML pipeline"
     ],
@@ -63,8 +63,8 @@
     "metrics": [
       "3 unique game levels",
       "Team of 5 developers",
-      "YouTube demo available",
-      "⭐ 2 Stars, 4 Forks"
+      "⭐ 2 Stars, 4 Forks",
+      "YouTube demo available"
     ],
     "images": [
       "mariogame"
@@ -88,15 +88,15 @@
   },
   {
     "name": "BD NewsPaper Scraper",
-    "desc": "Enterprise-grade web scraping framework for 7 major Bangladeshi newspapers. Features date range filtering, Bengali date conversion, duplicate prevention, and cross-platform runners (Windows, Linux, macOS).",
+    "desc": "Enterprise-grade web scraping framework for 7 major Bangladeshi newspapers. Features date range filtering, Bengali date conversion, duplicate prevention, and cross-platform runners.",
     "metrics": [
-      "7 newspaper spiders",
-      "Cross-platform support",
-      "Bengali date conversion",
-      "⭐ 1 Star, 1 Fork"
+      "7 newspaper sources",
+      "⭐ 1 Star, 1 Fork",
+      "Cross-platform (Win/Linux/Mac)",
+      "Bengali date conversion"
     ],
     "images": [
-      "bdnewspaperscraper.png"
+      "bdnewspaperscraper"
     ],
     "showInHome": true,
     "categories": [
@@ -116,12 +116,12 @@
   },
   {
     "name": "Hotel Management System",
-    "desc": "Java Swing desktop application with 15 GitHub stars. Features complete room management, check-in/check-out processes, customer and employee management with event-driven GUI programming.",
+    "desc": "Java Swing desktop application with 15 GitHub stars. Features user/admin dashboards, room management, Bkash/Nagad payment integration, and interface-driven modular architecture.",
     "metrics": [
-      "⭐ 15 GitHub Stars, 1 Fork",
-      "Complete room management",
-      "Event-driven GUI",
-      "Digital payment ready"
+      "⭐ 15 Stars, 1 Fork",
+      "171 commits, 4 releases",
+      "Bkash/Nagad payments",
+      "User & Admin dashboards"
     ],
     "images": [
       "hotelmanagement"
@@ -147,9 +147,9 @@
     "desc": "Comprehensive Android learning repository with 54+ structured lessons from beginner to advanced. Covers MVVM architecture, Retrofit, Hilt, RxJava3, Room Database, Firebase, and Paging 3.",
     "metrics": [
       "54+ structured lessons",
-      "MVVM Architecture",
+      "MVVM + Retrofit + Hilt",
       "Firebase & Firestore",
-      "Beginner to Advanced"
+      "RxJava3 & Paging 3"
     ],
     "images": [
       "androiddev"
@@ -175,10 +175,10 @@
     "name": "Solar System Simulation",
     "desc": "3D solar system simulation using OpenGL featuring all planets, moons, real-time orbital animations, texture mapping, and interactive camera controls. Cross-platform with CMake.",
     "metrics": [
-      "Complete solar system",
-      "Real-time animations",
-      "Interactive controls",
-      "Cross-platform build"
+      "9 planets + moons",
+      "Real-time orbital rotation",
+      "Texture mapping",
+      "Interactive camera controls"
     ],
     "images": [
       "solarsystem"
@@ -205,9 +205,9 @@
     "desc": "C# .NET desktop application with Windows Forms and SQL Server. Features medicine management, sales tracking, inventory control, and user management with Guna UI framework.",
     "metrics": [
       "MIT License",
-      "2 Contributors",
+      "2 contributors",
       "SQL Server backend",
-      "Modern Guna UI"
+      "Guna UI framework"
     ],
     "images": [
       "pharmacymanagement"
@@ -260,7 +260,7 @@
     "name": "Kotlin Practice",
     "desc": "Kotlin learning repository covering fundamentals to advanced features including coroutines, delegation, collections, and Gradle build system with Kotlin DSL.",
     "metrics": [
-      "Coroutines implementation",
+      "Coroutines & Flows",
       "Property delegation",
       "Gradle Kotlin DSL",
       "Functional programming"
@@ -288,10 +288,10 @@
     "name": "Advent of Code 2024",
     "desc": "Algorithmic challenge solutions in Kotlin demonstrating functional programming patterns, list transformations, and sequence validation algorithms.",
     "metrics": [
-      "Kotlin 100%",
+      "100% Kotlin",
       "Functional style",
-      "Multiple solution versions",
-      "Clean code"
+      "Multiple solutions per day",
+      "Clean code patterns"
     ],
     "images": [
       "adventofcode"
@@ -345,7 +345,7 @@
     "metrics": [
       "PWA enabled",
       "Dark/Light themes",
-      "Scroll animations",
+      "ScrollReveal animations",
       "Netlify hosted"
     ],
     "images": [
