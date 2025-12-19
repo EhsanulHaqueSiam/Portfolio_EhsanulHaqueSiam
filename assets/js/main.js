@@ -32,6 +32,18 @@ import {
   // renderTestimonials - commented out until testimonials section is ready
 } from './modules/renderers/index.js';
 
+// Performance Optimization
+import { ImageLazyLoader, LinkPrefetcher, ResourcePrioritizer } from './modules/performance.js';
+
+// Register Service Worker for offline caching
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js')
+      .then(reg => console.log('✅ Service Worker registered:', reg.scope))
+      .catch(err => console.warn('⚠️ Service Worker registration failed:', err));
+  });
+}
+
 // ==================== INITIALIZATION ====================
 
 /**
