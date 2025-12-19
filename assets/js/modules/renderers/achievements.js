@@ -90,7 +90,7 @@ const generateAchievementImageHtml = (achievement, index) => {
         return `
             <div class="image-slider gallery-trigger" id="achieve-slider-${index}" data-images="${imagesJson}" data-type="achievements">
                 ${images.map((img, i) => `
-                    <img src="${resolveImage(img, 'achievements')}" class="${i === 0 ? 'active' : ''}" alt="${achievement.name}">
+                    <img src="${resolveImage(img, 'achievements')}" class="${i === 0 ? 'active' : ''}" alt="${achievement.name}" loading="lazy">
                 `).join('')}
             </div>
         `;
@@ -98,7 +98,7 @@ const generateAchievementImageHtml = (achievement, index) => {
 
     return `
         <div class="image gallery-trigger" data-images="${imagesJson}" data-type="achievements">
-            <img draggable="false" src="${resolveImage(images[0], 'achievements')}" alt="${achievement.name}" />
+            <img draggable="false" src="${resolveImage(images[0], 'achievements')}" alt="${achievement.name}" loading="lazy" />
         </div>
     `;
 };

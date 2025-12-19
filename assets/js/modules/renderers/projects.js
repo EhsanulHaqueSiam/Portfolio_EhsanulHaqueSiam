@@ -102,7 +102,7 @@ const generateProjectImageHtml = (project, index) => {
         return `
             <div class="image-slider gallery-trigger" id="proj-slider-${index}" data-images="${imagesJson}" data-type="projects">
                 ${images.map((img, i) => `
-                    <img src="${resolveImage(img, 'projects')}" class="${i === 0 ? 'active' : ''}" alt="${project.name}">
+                    <img src="${resolveImage(img, 'projects')}" class="${i === 0 ? 'active' : ''}" alt="${project.name}" loading="lazy">
                 `).join('')}
             </div>
         `;
@@ -110,7 +110,7 @@ const generateProjectImageHtml = (project, index) => {
 
     return `
         <div class="image gallery-trigger" data-images="${imagesJson}" data-type="projects">
-            <img draggable="false" src="${resolveImage(images[0], 'projects')}" alt="${project.name}" />
+            <img draggable="false" src="${resolveImage(images[0], 'projects')}" alt="${project.name}" loading="lazy" />
         </div>
     `;
 };

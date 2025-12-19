@@ -79,8 +79,19 @@
     })();
   </script>
 
+  <!-- Preconnect to external origins for faster loading -->
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+  <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+  <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+
+  <!-- Preload critical assets -->
+  <link rel="preload" href="./assets/images/profile2.jpg" as="image">
+  <link rel="preload" href="./assets/css/main.css?v=3.5" as="style">
+
   <!-- Custom CSS -->
-  <link rel="stylesheet" href="./assets/css/main.css?v=3.4" />
+  <link rel="stylesheet" href="./assets/css/main.css?v=3.5" />
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
     integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="

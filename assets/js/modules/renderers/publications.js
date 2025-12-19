@@ -90,7 +90,7 @@ const generatePublicationImageHtml = (pub, index) => {
         return `
             <div class="image-slider gallery-trigger" id="pub-slider-${index}" data-images="${imagesJson}" data-type="publications">
                 ${images.map((img, i) => `
-                    <img src="${resolveImage(img, 'publications')}" class="${i === 0 ? 'active' : ''}" alt="${pub.title}">
+                    <img src="${resolveImage(img, 'publications')}" class="${i === 0 ? 'active' : ''}" alt="${pub.title}" loading="lazy">
                 `).join('')}
                 <div class="gallery-expand-icon"><i class="fas fa-expand"></i></div>
             </div>
@@ -99,7 +99,7 @@ const generatePublicationImageHtml = (pub, index) => {
 
     return `
         <div class="image gallery-trigger" data-images="${imagesJson}" data-type="publications">
-            <img src="${resolveImage(images[0], 'publications')}" alt="${pub.title}" 
+            <img src="${resolveImage(images[0], 'publications')}" alt="${pub.title}" loading="lazy"
                  onerror="this.src='https://via.placeholder.com/400x250?text=Certificate+Coming+Soon'">
             <div class="gallery-expand-icon"><i class="fas fa-expand"></i></div>
         </div>

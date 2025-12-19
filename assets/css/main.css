@@ -24,6 +24,9 @@
 @import url("./utilities/transitions.css");
 @import url("./utilities/dark-theme.css");
 
+/* ==================== MODULES ==================== */
+@import url("./modules/skeleton.css");
+
 /* ==================== SECTIONS ==================== */
 @import url("./sections/hero.css");
 @import url("./sections/about.css");
