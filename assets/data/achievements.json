@@ -1,27 +1,36 @@
 [
   {
-    "name": "AIUB CS FEST 2024",
-    "desc": "Achieved 1st Runners up in the app showcasing category at AIUB CS FEST 2024, demonstrating innovative use of technology.",
+    "name": "AIUB CS FEST 2024 - 1st Runner Up",
+    "desc": "Achieved 1st Runner-Up in the App Showcase category at AIUB CS FEST 2024. Competed against 20+ teams, demonstrating innovative mobile application development and presentation skills to industry judges.",
     "images": [
       "aiubcsfest2024cert",
       "awardcsfest2024",
       "csfestceramoney"
     ],
-    "category": "certificate",
+    "category": "award",
     "showInHome": true
   },
   {
-    "name": "AIUB CS FEST Crest",
-    "desc": "Received the 1st Runners up Crest for outstanding performance in app showcasing at AIUB CS FEST 2024",
+    "name": "Published Research - Taylor & Francis",
+    "desc": "Published 'Beyond NER: Medical BERTs for Multi-Label ADR Classification' at IDAA 2025 (Taylor & Francis Book Chapter). Research on fine-tuning LLMs for healthcare AI applications.",
     "images": [
-      "awardcsfest2024"
+      "pub1.png"
     ],
-    "category": "award",
-    "showInHome": false
+    "category": "publication",
+    "showInHome": true
+  },
+  {
+    "name": "GitHub Open Source Contributor",
+    "desc": "Active open source contributor with 36+ GitHub stars and 26 repositories. Top project: StudentManagementSystem with 17 stars and comprehensive Wiki documentation.",
+    "images": [
+      "github"
+    ],
+    "category": "achievement",
+    "showInHome": true
   },
   {
     "name": "South Asian Climate Conference 2024",
-    "desc": "Recognized with a certificate for participation in the South Asian Climate Conference 2024, contributing insights into climate-related issues.",
+    "desc": "Recognized for participation and presentation at the South Asian Climate Conference 2024. Presented research on emerging climate issues with statistical analysis for the South Asian region.",
     "images": [
       "cpecertificate",
       "cpepresentation",
@@ -31,30 +40,39 @@
     "showInHome": true
   },
   {
+    "name": "Sentiment Analysis - 85-90% Accuracy",
+    "desc": "Built NLP sentiment classifier analyzing 52,702 Spotify reviews achieving 85-90% classification accuracy using MultinomialNB and TF-IDF vectorization.",
+    "images": [
+      "spotifysentiment"
+    ],
+    "category": "project",
+    "showInHome": false
+  },
+  {
+    "name": "Mario's Multiverse Adventure - YouTube Demo",
+    "desc": "Led team of 5 to develop 2D platformer with OpenGL for AIUB Computer Graphics course. Created 3 unique game levels with physics engine and published YouTube gameplay demo.",
+    "images": [
+      "mariogame"
+    ],
+    "category": "project",
+    "showInHome": false
+  },
+  {
+    "name": "54+ Android Development Lessons",
+    "desc": "Completed comprehensive Android development curriculum from beginner to advanced. Mastered MVVM architecture, Retrofit, Hilt, RxJava3, Room Database, and Firebase integration.",
+    "images": [
+      "androiddev"
+    ],
+    "category": "learning",
+    "showInHome": false
+  },
+  {
     "name": "CPE Conference Presentation",
     "desc": "Presented at the South Asian Climate Conference 2024, sharing research and findings on climate challenges and solutions.",
     "images": [
       "cpepresentation"
     ],
     "category": "presentation",
-    "showInHome": false
-  },
-  {
-    "name": "CPE Conference Presentation Online",
-    "desc": "Delivered an online presentation at the South Asian Climate Conference 2024, addressing global climate concerns and strategies.",
-    "images": [
-      "cpepresentation2"
-    ],
-    "category": "presentation",
-    "showInHome": false
-  },
-  {
-    "name": "AIUB CS FEST Ceremony",
-    "desc": "Attended the AIUB CS FEST 2024 closing ceremony, celebrating achievements in technology and innovation.",
-    "images": [
-      "csfestceramoney"
-    ],
-    "category": "ceremony",
     "showInHome": false
   }
 ]

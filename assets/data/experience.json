@@ -1,10 +1,42 @@
 [
     {
         "company": "AIUB CS Fest 2024",
-        "role": "App Showcase | 1st Runner up",
+        "role": "App Showcase | 1st Runner Up",
         "date": "Apr 2024",
-        "desc": "Showcased an innovative application and secured the 1st Runner-up position, demonstrating technical proficiency and presentation skills.",
+        "desc": "Secured 1st Runner-Up in the App Showcase category at AIUB CS FEST 2024. Competed against 20+ teams, demonstrating innovative mobile application development with technical proficiency and presentation skills to industry judges.",
         "alignment": "right",
         "showInHome": true
+    },
+    {
+        "company": "Taylor & Francis - IDAA 2025",
+        "role": "Published Researcher",
+        "date": "Nov 2025",
+        "desc": "Published research on Medical BERT architectures for multi-label Adverse Drug Reaction classification. Benchmarked domain-specific LLMs on PsyTAR dataset using PyTorch and Hugging Face Transformers.",
+        "alignment": "left",
+        "showInHome": true
+    },
+    {
+        "company": "South Asian Climate Conference",
+        "role": "Research Presenter",
+        "date": "Sep 2024",
+        "desc": "Presented research on emerging issues in changing climatic scenarios at the 2nd South Asian Conference. Conducted statistical analysis and data visualization on climate data trends for the South Asian region.",
+        "alignment": "right",
+        "showInHome": true
+    },
+    {
+        "company": "Open Source Developer",
+        "role": "GitHub - 36+ Stars, 26 Repositories",
+        "date": "2022 - Present",
+        "desc": "Active open source contributor with 26 repositories and 36+ GitHub stars. Top projects: StudentManagementSystem (⭐17), HotelManagementSystem (⭐15). Expertise in Java, Python, C++, and Android development.",
+        "alignment": "left",
+        "showInHome": true
+    },
+    {
+        "company": "AIUB Computer Graphics",
+        "role": "Team Lead - Mario Game Project",
+        "date": "Fall 2024",
+        "desc": "Led team of 5 developers to create 'Mario's Multiverse Adventure' - a 2D platformer with OpenGL, SFML audio, and SQLite. Features 3 unique levels, collision detection, and physics engine. YouTube demo available.",
+        "alignment": "right",
+        "showInHome": false
     }
 ]

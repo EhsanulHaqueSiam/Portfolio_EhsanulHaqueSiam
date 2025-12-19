@@ -1,62 +1,12 @@
 [
   {
-    "name": "BDNewsPaperScraper",
-    "desc": "Developed an optimized, cross-platform web scraping system using Python and Scrapy to collect and clean news articles from major Bangladeshi newspapers. Implemented high-performance batch runners.",
-    "metrics": [
-      "10,000+ articles collected daily",
-      "Supports 5+ major newspapers"
-    ],
-    "images": [
-      "bdnewspaperscraper.png"
-    ],
-    "showInHome": true,
-    "categories": [
-      "web_scraping",
-      "automation"
-    ],
-    "tags": [
-      "Python",
-      "Scrapy",
-      "BeautifulSoup",
-      "NLP"
-    ],
-    "links": {
-      "view": "#",
-      "code": "https://github.com/EhsanulHaqueSiam/BDNewsPaperScraper"
-    }
-  },
-  {
-    "name": "Pharmacy Management System",
-    "desc": "Developed a C#-based Pharmacy Management System with an MSSQL database and Guna UI framework, enabling efficient management of medicines, sales, inventory, and user records.",
-    "metrics": [
-      "500+ daily transactions supported",
-      "Reduced inventory errors by 40%"
-    ],
-    "images": [
-      "pharmacymanagement"
-    ],
-    "showInHome": true,
-    "categories": [
-      "desktop_app",
-      "database"
-    ],
-    "tags": [
-      "C#",
-      "MSSQL",
-      "Guna UI",
-      ".NET"
-    ],
-    "links": {
-      "view": "#",
-      "code": "https://github.com/EhsanulHaqueSiam/PharmacyManagementSystem"
-    }
-  },
-  {
     "name": "Student Management System",
-    "desc": "Developed a Java-based Student Management System using MySQL, implementing MVC architecture, DAO layer, connection pooling, and configuration management.",
+    "desc": "Enterprise-grade database management system with 17 GitHub stars. Features 3NF normalized schema, Singleton pattern with dynamic connection pooling (6-8ms queries), and comprehensive Wiki documentation with ER diagrams.",
     "metrics": [
-      "Manages 1000+ student records",
-      "50% faster data retrieval"
+      "⭐ 17 GitHub Stars, 8 Forks",
+      "6-8ms query performance",
+      "6 connection strategies benchmarked",
+      "4 Wiki documentation pages"
     ],
     "images": [
       "studentmanagement"
@@ -69,20 +19,109 @@
     "tags": [
       "Java",
       "MySQL",
-      "MVC",
-      "JDBC"
+      "JDBC",
+      "Design Patterns",
+      "3NF"
     ],
     "links": {
-      "view": "#",
+      "view": "https://github.com/EhsanulHaqueSiam/StudentManagementSystem/wiki",
       "code": "https://github.com/EhsanulHaqueSiam/StudentManagementSystem"
     }
   },
   {
-    "name": "Hotel Management System",
-    "desc": "Developed a Java-based hotel management system applying object-oriented programming principles, featuring room management, check-in/check-out processes, user interfaces, and digital payment integration.",
+    "name": "Spotify Sentiment Analysis",
+    "desc": "NLP sentiment classifier analyzing 52,702 Spotify user reviews with 85-90% accuracy using MultinomialNB. Complete ML pipeline with TF-IDF vectorization, text preprocessing, and Google Colab integration.",
     "metrics": [
-      "Reduced booking time by 60%",
-      "Integrated digital payments"
+      "52,702 reviews analyzed",
+      "85-90% classification accuracy",
+      "5,000+ TF-IDF features",
+      "17-task ML pipeline"
+    ],
+    "images": [
+      "spotifysentiment"
+    ],
+    "showInHome": true,
+    "categories": [
+      "machine_learning",
+      "nlp"
+    ],
+    "tags": [
+      "Python",
+      "scikit-learn",
+      "NLP",
+      "TF-IDF",
+      "Naive Bayes"
+    ],
+    "links": {
+      "view": "#",
+      "code": "https://github.com/EhsanulHaqueSiam/spotify-review-sentiment"
+    }
+  },
+  {
+    "name": "Mario's Multiverse Adventure",
+    "desc": "2D platformer game with 3 unique levels built for AIUB Computer Graphics course. Features OpenGL rendering, SFML audio, SQLite high scores, physics engine with collision detection. YouTube demo available.",
+    "metrics": [
+      "3 unique game levels",
+      "Team of 5 developers",
+      "YouTube demo available",
+      "⭐ 2 Stars, 4 Forks"
+    ],
+    "images": [
+      "mariogame"
+    ],
+    "showInHome": true,
+    "categories": [
+      "gamedev",
+      "graphics"
+    ],
+    "tags": [
+      "C++",
+      "OpenGL",
+      "SFML",
+      "SQLite",
+      "CMake"
+    ],
+    "links": {
+      "view": "https://www.youtube.com/watch?v=wK7qjTRkStg",
+      "code": "https://github.com/EhsanulHaqueSiam/MarioMultiverseAdventures"
+    }
+  },
+  {
+    "name": "BD NewsPaper Scraper",
+    "desc": "Enterprise-grade web scraping framework for 7 major Bangladeshi newspapers. Features date range filtering, Bengali date conversion, duplicate prevention, and cross-platform runners (Windows, Linux, macOS).",
+    "metrics": [
+      "7 newspaper spiders",
+      "Cross-platform support",
+      "Bengali date conversion",
+      "⭐ 1 Star, 1 Fork"
+    ],
+    "images": [
+      "bdnewspaperscraper.png"
+    ],
+    "showInHome": true,
+    "categories": [
+      "web_scraping",
+      "automation"
+    ],
+    "tags": [
+      "Python",
+      "Scrapy",
+      "SQLite",
+      "UV"
+    ],
+    "links": {
+      "view": "#",
+      "code": "https://github.com/EhsanulHaqueSiam/BDNewsPaperScraper"
+    }
+  },
+  {
+    "name": "Hotel Management System",
+    "desc": "Java Swing desktop application with 15 GitHub stars. Features complete room management, check-in/check-out processes, customer and employee management with event-driven GUI programming.",
+    "metrics": [
+      "⭐ 15 GitHub Stars, 1 Fork",
+      "Complete room management",
+      "Event-driven GUI",
+      "Digital payment ready"
     ],
     "images": [
       "hotelmanagement"
@@ -94,9 +133,9 @@
     ],
     "tags": [
       "Java",
-      "MySQL",
-      "OOP",
-      "Swing"
+      "Swing",
+      "File I/O",
+      "OOP"
     ],
     "links": {
       "view": "#",
@@ -104,16 +143,215 @@
     }
   },
   {
-    "name": "Portfolio",
-    "desc": "A responsive portfolio website built with HTML, CSS, and jQuery, hosted on Netlify to showcase projects and skills with professional design.",
+    "name": "Android Development Journey",
+    "desc": "Comprehensive Android learning repository with 54+ structured lessons from beginner to advanced. Covers MVVM architecture, Retrofit, Hilt, RxJava3, Room Database, Firebase, and Paging 3.",
     "metrics": [
-      "100% Lighthouse accessibility score",
-      "PWA enabled"
+      "54+ structured lessons",
+      "MVVM Architecture",
+      "Firebase & Firestore",
+      "Beginner to Advanced"
+    ],
+    "images": [
+      "androiddev"
+    ],
+    "showInHome": true,
+    "categories": [
+      "mobile",
+      "learning"
+    ],
+    "tags": [
+      "Java",
+      "Android",
+      "MVVM",
+      "Retrofit",
+      "Firebase"
+    ],
+    "links": {
+      "view": "#",
+      "code": "https://github.com/EhsanulHaqueSiam/AndroidDevJourney"
+    }
+  },
+  {
+    "name": "Solar System Simulation",
+    "desc": "3D solar system simulation using OpenGL featuring all planets, moons, real-time orbital animations, texture mapping, and interactive camera controls. Cross-platform with CMake.",
+    "metrics": [
+      "Complete solar system",
+      "Real-time animations",
+      "Interactive controls",
+      "Cross-platform build"
+    ],
+    "images": [
+      "solarsystem"
+    ],
+    "showInHome": false,
+    "categories": [
+      "graphics",
+      "simulation"
+    ],
+    "tags": [
+      "C++",
+      "OpenGL",
+      "GLUT",
+      "GLM",
+      "CMake"
+    ],
+    "links": {
+      "view": "#",
+      "code": "https://github.com/EhsanulHaqueSiam/SolarSystem"
+    }
+  },
+  {
+    "name": "Pharmacy Management System",
+    "desc": "C# .NET desktop application with Windows Forms and SQL Server. Features medicine management, sales tracking, inventory control, and user management with Guna UI framework.",
+    "metrics": [
+      "MIT License",
+      "2 Contributors",
+      "SQL Server backend",
+      "Modern Guna UI"
+    ],
+    "images": [
+      "pharmacymanagement"
+    ],
+    "showInHome": true,
+    "categories": [
+      "desktop_app",
+      "database"
+    ],
+    "tags": [
+      "C#",
+      ".NET",
+      "SQL Server",
+      "Guna UI"
+    ],
+    "links": {
+      "view": "#",
+      "code": "https://github.com/EhsanulHaqueSiam/PharmacyManagementSystem"
+    }
+  },
+  {
+    "name": "CVPR - Computer Vision",
+    "desc": "Computer Vision and Pattern Recognition project using Jupyter Notebook. Explores image processing, face detection, and CNN-based classification techniques.",
+    "metrics": [
+      "Face detection",
+      "CNN implementation",
+      "Image processing",
+      "Jupyter Notebook"
+    ],
+    "images": [
+      "cvpr"
+    ],
+    "showInHome": false,
+    "categories": [
+      "machine_learning",
+      "computer_vision"
+    ],
+    "tags": [
+      "Python",
+      "OpenCV",
+      "TensorFlow",
+      "CNN"
+    ],
+    "links": {
+      "view": "#",
+      "code": "https://github.com/EhsanulHaqueSiam/CVPR"
+    }
+  },
+  {
+    "name": "Kotlin Practice",
+    "desc": "Kotlin learning repository covering fundamentals to advanced features including coroutines, delegation, collections, and Gradle build system with Kotlin DSL.",
+    "metrics": [
+      "Coroutines implementation",
+      "Property delegation",
+      "Gradle Kotlin DSL",
+      "Functional programming"
+    ],
+    "images": [
+      "kotlinpractice"
+    ],
+    "showInHome": false,
+    "categories": [
+      "mobile",
+      "learning"
+    ],
+    "tags": [
+      "Kotlin",
+      "Coroutines",
+      "Gradle",
+      "Android"
+    ],
+    "links": {
+      "view": "#",
+      "code": "https://github.com/EhsanulHaqueSiam/KotlinPractice"
+    }
+  },
+  {
+    "name": "Advent of Code 2024",
+    "desc": "Algorithmic challenge solutions in Kotlin demonstrating functional programming patterns, list transformations, and sequence validation algorithms.",
+    "metrics": [
+      "Kotlin 100%",
+      "Functional style",
+      "Multiple solution versions",
+      "Clean code"
+    ],
+    "images": [
+      "adventofcode"
+    ],
+    "showInHome": false,
+    "categories": [
+      "algorithms",
+      "learning"
+    ],
+    "tags": [
+      "Kotlin",
+      "Algorithms",
+      "Functional Programming"
+    ],
+    "links": {
+      "view": "#",
+      "code": "https://github.com/EhsanulHaqueSiam/AdventOfCode2024"
+    }
+  },
+  {
+    "name": "Java Practice Repository",
+    "desc": "Advanced Java practice covering multithreading, network programming (TCP/UDP), collections, and concurrency patterns including Producer-Consumer and ReentrantLock.",
+    "metrics": [
+      "Multithreaded ATM project",
+      "TCP/UDP networking",
+      "Producer-Consumer pattern",
+      "ReentrantLock usage"
+    ],
+    "images": [
+      "javapractice"
+    ],
+    "showInHome": false,
+    "categories": [
+      "backend",
+      "learning"
+    ],
+    "tags": [
+      "Java",
+      "Multithreading",
+      "Networking",
+      "Concurrency"
+    ],
+    "links": {
+      "view": "#",
+      "code": "https://github.com/EhsanulHaqueSiam/Java-Practice-Repo"
+    }
+  },
+  {
+    "name": "Portfolio Website",
+    "desc": "Responsive portfolio website built with HTML, CSS, and JavaScript. Features dark/light theme, scroll animations, PWA support, and dynamic content loading from JSON.",
+    "metrics": [
+      "PWA enabled",
+      "Dark/Light themes",
+      "Scroll animations",
+      "Netlify hosted"
     ],
     "images": [
       "portfolioweb"
     ],
-    "showInHome": true,
+    "showInHome": false,
     "categories": [
       "web",
       "frontend"
@@ -125,74 +363,8 @@
       "jQuery"
     ],
     "links": {
-      "view": "#",
+      "view": "https://ehsanulhaquesiam.netlify.app/",
       "code": "https://github.com/EhsanulHaqueSiam/Portfolio_EhsanulHaqueSiam"
-    }
-  },
-  {
-    "name": "Nitefeeder",
-    "desc": "A multiplayer racing game built in Unreal Engine 5, featuring cryptocurrency integration for in-game transactions and rewards.",
-    "metrics": [
-      "Multiplayer support for 10+ players",
-      "Crypto wallet integration"
-    ],
-    "images": [
-      "gameproject1",
-      "gameproject2",
-      "gameproject3"
-    ],
-    "showInHome": true,
-    "categories": [
-      "gamedev",
-      "blockchain"
-    ],
-    "tags": [
-      "Unreal Engine 5",
-      "C++",
-      "Blueprints",
-      "Web3"
-    ],
-    "links": {
-      "view": "#",
-      "code": "#"
-    }
-  },
-  {
-    "name": "Nitefeeder Gameplay",
-    "desc": "A multiplayer racing game built in Unreal Engine 5, featuring cryptocurrency integration for in-game transactions and rewards.",
-    "metrics": [],
-    "images": [
-      "gameproject2"
-    ],
-    "showInHome": false,
-    "categories": [
-      "gamedev"
-    ],
-    "tags": [
-      "Unreal Engine 5"
-    ],
-    "links": {
-      "view": "#",
-      "code": "#"
-    }
-  },
-  {
-    "name": "Nitefeeder Assets",
-    "desc": "A multiplayer racing game built in Unreal Engine 5, featuring cryptocurrency integration for in-game transactions and rewards.",
-    "metrics": [],
-    "images": [
-      "gameproject3"
-    ],
-    "showInHome": false,
-    "categories": [
-      "gamedev"
-    ],
-    "tags": [
-      "Unreal Engine 5"
-    ],
-    "links": {
-      "view": "#",
-      "code": "#"
     }
   }
 ]
