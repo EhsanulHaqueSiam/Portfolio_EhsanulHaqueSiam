@@ -16,7 +16,7 @@ import { initScrollAnimations, initParallax, initMicroInteractions, initSmoothSc
 
 // Forms and Interaction
 import { initContactForm } from './modules/contact-form.js?v=4.0';
-import { initTypedText } from './modules/typed-text.js?v=5.0';
+import { initTypedText } from './modules/typed-text.js?v=6.0';
 import { initVisibilityHandler } from './modules/visibility.js?v=4.0';
 import { initDevToolsProtection } from './modules/dev-tools.js?v=4.0';
 import { initThemeToggle } from './modules/theme-toggle.js?v=4.0';

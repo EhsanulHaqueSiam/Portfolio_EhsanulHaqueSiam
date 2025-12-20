@@ -35,12 +35,12 @@ const waitForTyped = (maxWait = 5000) => {
  */
 export const initTypedText = async (
     strings = [
-        "AI & Machine Learning",
-        "LLM & Reinforcement Learning",
+        "AI \u0026amp; Machine Learning",
+        "LLM \u0026amp; Reinforcement Learning",
         "Backend Development",
         "Android Development",
         "Game Development",
-        "Web Scraping & Automation"
+        "Web Scraping \u0026amp; Automation"
     ],
     options = {}
 ) => {
