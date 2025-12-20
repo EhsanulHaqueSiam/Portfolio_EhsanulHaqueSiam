@@ -24,3 +24,6 @@ Disallow: /sw.js
 
 # Host directive for preferred domain
 Host: https://ehsanulhaquesiam.netlify.app
+
+# IndexNow API Key for instant indexing
+# Key file: https://ehsanulhaquesiam.netlify.app/ded5dc815154ded31d79c7241c97c77a.txt
