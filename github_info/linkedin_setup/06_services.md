@@ -1,181 +1,144 @@
 # 🛎️ Services Section
 
-Showcase what you can offer to potential clients or employers.
+LinkedIn Creator Services page setup for freelance/consulting work.
 
 ---
 
-## What is the Services Section?
+## LinkedIn Services Form Fields
 
-The Services section allows you to list specific services you can provide, making it easier for potential clients to find and hire you for freelance or consulting work.
-
----
-
-## ✅ Services to Add
-
-### 1. AI/ML Development
-**Service Name:** AI/ML Development & Consulting
-
-**Description:**
-```
-Building intelligent systems and machine learning solutions:
-
-🤖 Services Offered:
-• NLP & Text Classification systems
-• Sentiment Analysis pipelines
-• LLM fine-tuning (BERT, RoBERTa, etc.)
-• Computer Vision applications
-• ML model development and deployment
-
-📊 Track Record:
-• Published research on Medical BERTs (Taylor & Francis)
-• Built sentiment classifier with 85-90% accuracy on 52K+ reviews
-• Neural networks from scratch achieving 96% accuracy
-
-💻 Technologies: Python, TensorFlow, PyTorch, scikit-learn, Hugging Face
-
-Available for: Consulting, project-based work, long-term contracts
-```
+| Field | Your Value |
+|-------|------------|
+| **Work location** | Dhaka, Dhaka |
+| **Remote available** | ☑ Yes |
+| **Pricing** | Contact for pricing |
+| **Open Profile messaging** | ☑ Enable |
 
 ---
 
-### 2. Backend Development
-**Service Name:** Backend & Database Development
+## Services Provided (Select up to 10)
 
-**Description:**
-```
-Designing and building robust backend systems:
+### Category: Software Development
 
-🗄️ Services Offered:
-• Database design and optimization
-• API development (REST, FastAPI)
-• JDBC and connection management
-• Performance tuning and benchmarking
+| # | Service | Subcategory |
+|---|---------|-------------|
+| 1 | **Machine Learning** | Software Development |
+| 2 | **Application Development** | Software Development |
+| 3 | **Mobile Application Development** | Software Development |
+| 4 | **Backend Development** | Software Development |
+| 5 | **Data Engineering** | Software Development |
 
-📊 Track Record:
-• Designed 3NF-normalized databases with 6-8ms query performance
-• Benchmarked 6 different connection strategies
-• Created comprehensive documentation and ER diagrams
+### Category: Information Technology
 
-💻 Technologies: Java, Python, MySQL, PostgreSQL, MongoDB, SQLite
+| # | Service | Subcategory |
+|---|---------|-------------|
+| 6 | **Data Analysis** | Information Technology |
+| 7 | **Database Administration** | Information Technology |
 
-Available for: Database design, API development, system optimization
-```
+### Category: Writing
+
+| # | Service | Subcategory |
+|---|---------|-------------|
+| 8 | **Technical Writing** | Writing |
 
 ---
 
-### 3. Android App Development
-**Service Name:** Android Application Development
+## About Description (500 chars max)
 
-**Description:**
+**Character count: 489**
+
 ```
-Building modern Android applications with best practices:
+AI/ML Developer specializing in NLP, LLMs, and backend systems.
 
-📱 Services Offered:
-• Native Android app development
-• MVVM architecture implementation
-• API integration (Retrofit)
-• Firebase integration (Auth, Database, Cloud Messaging)
-• UI/UX implementation
+✅ Published researcher (Taylor & Francis - Medical NLP)
+✅ Award-winning app developer (AIUB CS Fest 1st Runner-Up)
+✅ 36+ GitHub stars across 26+ open source projects
 
-📊 Track Record:
-• Award-winning app (1st Runner-Up, AIUB CS Fest 2024)
-• Completed 54+ structured Android lessons
-• Experience with Room, Hilt, RxJava3, Paging 3
+Services:
+• Machine Learning & NLP solutions
+• Android app development
+• Backend & database design
+• Web scraping & automation
 
-💻 Technologies: Java, Kotlin, Android SDK, Firebase, Room, Retrofit
+Technologies: Python, Java, TensorFlow, PyTorch, Android SDK, MySQL
 
-Available for: App development, feature additions, app optimization
+Open to freelance projects, consulting, and collaborations.
 ```
 
 ---
 
-### 4. Web Scraping & Automation
-**Service Name:** Web Scraping & Data Extraction
+## Complete Service Details
 
-**Description:**
-```
-Automated data collection and processing solutions:
+### 1. Machine Learning (Software Development)
+**What you offer:**
+- NLP & Text Classification systems
+- Sentiment Analysis pipelines  
+- LLM fine-tuning (BERT, RoBERTa, BioBERT)
+- Computer Vision applications
+- ML model development and deployment
 
-🕷️ Services Offered:
-• Custom web scrapers development
-• Data extraction pipelines
-• Data cleaning and processing
-• Automated reporting systems
+### 2. Application Development (Software Development)
+**What you offer:**
+- Full-stack application development
+- Desktop applications
+- API integration
+- Database-driven applications
 
-📊 Track Record:
-• Built 7-source newspaper scraping framework
-• Implemented duplicate prevention and date filtering
-• Cross-platform support (Windows, Linux, macOS)
+### 3. Mobile Application Development (Software Development)
+**What you offer:**
+- Native Android app development
+- MVVM architecture implementation
+- Firebase integration
+- UI/UX implementation
+- App optimization
 
-💻 Technologies: Python, Scrapy, Beautiful Soup, Pandas, SQLite
+### 4. Backend Development (Software Development)
+**What you offer:**
+- Database design and optimization
+- REST API development
+- JDBC and connection management
+- Performance tuning
 
-Available for: Data extraction, automation scripts, ETL pipelines
-```
+### 5. Data Engineering (Software Development)
+**What you offer:**
+- Web scraping & data extraction
+- ETL pipelines
+- Data cleaning and processing
+- Automated reporting systems
 
----
+### 6. Data Analysis (Information Technology)
+**What you offer:**
+- Statistical analysis
+- Data visualization
+- Sentiment analysis on large datasets
+- Research data processing
 
-### 5. Technical Writing & Documentation
-**Service Name:** Technical Documentation
+### 7. Database Administration (Information Technology)
+**What you offer:**
+- Database design (3NF normalization)
+- Query optimization
+- MySQL, PostgreSQL, MongoDB, SQLite
+- Performance benchmarking
 
-**Description:**
-```
-Clear, comprehensive technical documentation:
-
-📝 Services Offered:
-• API documentation
-• Code documentation
-• GitHub Wiki pages
-• Technical tutorials
-• Research paper formatting
-
-📊 Track Record:
-• 4-page comprehensive Wiki for StudentManagementSystem
-• Published researcher (Taylor & Francis)
-• Documented 54+ Android lessons
-
-Available for: Documentation projects, technical writing, tutorials
-```
-
----
-
-## How to Add Services
-
-1. Go to your LinkedIn profile
-2. Click "Open to" below your profile photo
-3. Select "Providing services"
-4. Add each service with title and description
-5. Set pricing (optional - can say "Contact for quote")
-6. Enable/disable messaging for service inquiries
-
----
-
-## 💡 Services Section Tips
-
-### Pricing Options
-- **Free:** Contact for quote
-- **Hourly:** $X/hour
-- **Project-based:** Starting at $X
-
-### For Entry-Level/Students
-Keep pricing flexible or use "Contact for quote" to negotiate based on project scope.
-
-### Keywords
-Include searchable terms in descriptions:
-- Python developer, ML engineer, Android developer
-- Database design, API development
-- Web scraping, automation
+### 8. Technical Writing (Writing)
+**What you offer:**
+- API documentation
+- Code documentation
+- GitHub Wiki pages
+- Technical tutorials
+- Research paper formatting
 
 ---
 
 ## ✅ Services Checklist
 
-- [ ] AI/ML Development service added
-- [ ] Backend Development service added
-- [ ] Android App Development service added
-- [ ] Web Scraping service added
-- [ ] Technical Writing service added (optional)
-- [ ] Contact preferences set
+- [ ] Go to Profile → Open to → Providing services
+- [ ] Add 8 services from categories above
+- [ ] Copy About description (489 chars)
+- [ ] Set location: Dhaka, Dhaka
+- [ ] Enable: "I am available to work remotely"
+- [ ] Select: "Contact for pricing"
+- [ ] Enable: Open Profile messaging
 
 ---
 
-## ⏱️ Time Estimate: 10 minutes
+## ⏱️ Time Estimate: 5-10 minutes

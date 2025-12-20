@@ -25,7 +25,7 @@ Showcase your research publications - this is a major differentiator!
 
 **Publisher Type:** Taylor & Francis (Book Chapter)  
 
-**Publication Date:** November 2025 (or when published)  
+**Publication Date:** December 2025 (Dec 12-13)  
 
 **Publication URL:** [Add when available]  
 

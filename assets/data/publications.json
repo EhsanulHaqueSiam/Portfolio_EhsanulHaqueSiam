@@ -2,7 +2,7 @@
     {
         "title": "Beyond NER: A Comparative Benchmark of Medical BERTS for Multi-Label Adverse Drug Reaction Classification",
         "conference": "International Conference on Intelligent Data Analysis and Applications (IDAA 2025)",
-        "date": "Nov 2025 | Book Chapter (Taylor & Francis)",
+        "date": "Dec 2025 | Book Chapter (Taylor & Francis)",
         "desc": "Explores fine-tuning LLMs and domain-specific Medical BERT architectures for multi-label ADR classification on the PsyTAR dataset. Benchmarked BioBERT, PubMedBERT, and general BERT models.",
         "images": [
             "pub1.png"

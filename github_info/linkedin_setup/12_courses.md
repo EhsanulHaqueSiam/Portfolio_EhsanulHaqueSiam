@@ -19,9 +19,9 @@ Add relevant courses that support your expertise.
 
 ### Course 1: Machine Learning & AI
 
-**Course Name:** Machine Learning  
+**Course Name:** Artificial Intelligence  
 **Associated With:** American International University-Bangladesh  
-**Number/Code:** [Add if known]  
+**Course Code:** CSC 4227  
 
 **Description:**
 ```
@@ -43,6 +43,7 @@ Applied in: Spotify Sentiment Analysis (85-90% accuracy), CVPR projects (96% acc
 
 **Course Name:** Database Management Systems  
 **Associated With:** American International University-Bangladesh  
+**Course Code:** CSC 2211  
 
 **Description:**
 ```
@@ -64,6 +65,7 @@ Applied in: StudentManagementSystem (17⭐) with 3NF design and 6-8ms query perf
 
 **Course Name:** Computer Graphics  
 **Associated With:** American International University-Bangladesh  
+**Course Code:** CSC 3213  
 
 **Description:**
 ```
@@ -84,8 +86,9 @@ Team Lead: Coordinated 5-member team, delivered YouTube-demoed project
 
 ### Course 4: Data Structures & Algorithms
 
-**Course Name:** Data Structures and Algorithms  
+**Course Name:** Data Structures  
 **Associated With:** American International University-Bangladesh  
+**Course Code:** CSC 2107  
 
 **Description:**
 ```
@@ -107,6 +110,7 @@ Applied in: Advent of Code 2024 (Kotlin), DSA-practice repository, all projects
 
 **Course Name:** Software Engineering  
 **Associated With:** American International University-Bangladesh  
+**Course Code:** CSC 3215  
 
 **Description:**
 ```
@@ -126,8 +130,9 @@ Applied in: All team projects, documentation practices, GitHub Wiki pages
 
 ### Course 6: Object-Oriented Programming
 
-**Course Name:** Object-Oriented Programming  
+**Course Name:** Object Oriented Programming 1  
 **Associated With:** American International University-Bangladesh  
+**Course Code:** CSC 2109  
 
 **Description:**
 ```
@@ -182,6 +187,7 @@ Repository: github.com/EhsanulHaqueSiam/AndroidDevJourney
 
 **Course Name:** Computer Vision and Pattern Recognition  
 **Associated With:** American International University-Bangladesh  
+**Course Code:** CSC 4216  
 
 **Description:**
 ```

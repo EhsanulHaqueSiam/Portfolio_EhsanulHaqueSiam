@@ -44,39 +44,42 @@ Add all your educational background with activities and achievements.
 • Dean's List - Academic Excellence Award
 ```
 
-**Description (copy this exactly):**
+**Description (732 chars - copy this exactly):**
 ```
-Pursuing BSc in Computer Science and Engineering with focus on AI/ML and Software Development.
+BSc in CS&E with focus on AI/ML and Software Development.
 
-📊 Academic Highlights:
+📊 Highlights:
 • Published research in Taylor & Francis (IDAA 2025) - Medical NLP
-• 1st Runner-Up at AIUB CS Fest 2024 (App Showcase category)
+• 1st Runner-Up at AIUB CS Fest 2024 (App Showcase)
 • Dean's List Award for academic excellence
-• Completed 54+ Android development lessons independently
 
-🔬 Key Academic Projects:
-• Mario's Multiverse Adventure - OpenGL 2D game (Team lead, 5 members)
+🔬 Key Projects:
+• Mario's Multiverse Adventure - OpenGL 2D game (Team Lead)
 • Student Management System - 17 GitHub stars, 8 forks
-• Spotify Sentiment Analysis - ML classifier with 85-90% accuracy on 52K reviews
-• CVPR Projects - Neural network from scratch achieving 96% accuracy
+• Spotify Sentiment Analysis - 85-90% accuracy on 52K reviews
+• Neural Network from scratch - 96% accuracy
 
-📚 Relevant Coursework:
-• Data Structures & Algorithms
-• Database Management Systems
-• Computer Graphics & OpenGL
-• Machine Learning & AI
-• Software Engineering
-• Object-Oriented Programming
-• Computer Networks
-• Operating Systems
-• Web Technologies
+📚 Coursework:
+DSA • DBMS • Computer Graphics • ML/AI • Software Engineering • OOP • Computer Networks • OS • Web Technologies
 
-💻 Technical Focus Areas:
-• Artificial Intelligence & Machine Learning
-• Natural Language Processing
-• Backend Development & Database Design
-• Mobile App Development (Android)
-• Computer Graphics & Game Development
+💻 Focus Areas:
+AI/ML • NLP • Backend Development • Android • Computer Graphics
+```
+
+**Skills (add these to this education):**
+```
+Python, Machine Learning, Natural Language Processing, Java, TensorFlow, Android Development
+```
+
+**Media/Image (1st Runner-Up Award):**
+```
+Path: assets/images/achievements/awardcsfest2024.png
+Title: 1st Runner-Up - AIUB CS Fest 2024
+Description: Awarded 1st Runner-Up at AIUB CS Fest 2024 App Showcase for developing an innovative mobile application solution.
+
+Alt Path: assets/images/achievements/csfestceramoney.png
+Alt Title: Award Ceremony - CS Fest 2024
+Alt Description: Receiving the 1st Runner-Up award at AIUB Computer Science Festival 2024.
 ```
 
 ---
@@ -96,15 +99,28 @@ Pursuing BSc in Computer Science and Engineering with focus on AI/ML and Softwar
 • Mathematics Olympiad Participant
 ```
 
-**Description:**
+**Description (248 chars - copy this exactly):**
 ```
-Completed Higher Secondary education in Science stream with focus on Mathematics, Physics, and Chemistry.
+Completed HSC in Science stream with strong foundation for engineering studies.
 
-Foundation for engineering studies with strong emphasis on:
+📚 Core Subjects:
 • Advanced Mathematics
-• Physics
-• Chemistry
+• Physics & Chemistry
 • Information & Communication Technology (ICT)
+
+Built analytical thinking and problem-solving skills.
+```
+
+**Skills (add these to this education):**
+```
+Mathematics, Physics, Analytical Thinking, Problem Solving
+```
+
+**Media/Image:**
+```
+Path: assets/images/education/college.jpg
+Title: Govt Azizul Haque College, Bogura
+Description: Completed Higher Secondary Certificate (HSC) in Science stream, building strong analytical foundation for engineering studies.
 ```
 
 ---
@@ -118,11 +134,23 @@ Foundation for engineering studies with strong emphasis on:
 **End Date:** 2019  
 **Location:** Bogura, Bangladesh
 
-**Description:**
+**Description (168 chars - copy this exactly):**
 ```
-Completed secondary education in Science stream at one of the prominent schools in Bogura district.
+Completed SSC in Science at one of the top schools in Bogura district.
 
-Early exposure to programming and technology sparked interest in Computer Science.
+Early exposure to programming sparked my passion for Computer Science.
+```
+
+**Skills (add these to this education):**
+```
+Science, Mathematics, Critical Thinking
+```
+
+**Media/Image:**
+```
+Path: assets/images/education/school.jpg
+Title: Bogra Zilla School
+Description: One of the premier secondary schools in Bogura district where I completed my SSC in Science and discovered my passion for programming.
 ```
 
 ---

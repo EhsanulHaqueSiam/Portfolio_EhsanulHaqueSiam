@@ -73,7 +73,9 @@ Java | MySQL | JDBC | RDBMS | Singleton Pattern | Connection Pooling
 ### Project 2: Spotify Sentiment Analysis
 
 **Project Name:** Spotify Review Sentiment Analysis  
-**Start Date:** 2024  
+**Associated with:** AIUB - Machine Learning Coursework  
+**Start Date:** August 2024  
+**End Date:** October 2024  
 **Project URL:** https://github.com/EhsanulHaqueSiam/spotify-review-sentiment  
 
 **Description:**
@@ -164,7 +166,8 @@ C++ | OpenGL | GLUT | SFML | SQLite | CMake | GLM
 ### Project 4: BD Newspaper Scraper
 
 **Project Name:** BD NewsPaper Scraper  
-**Start Date:** 2024  
+**Start Date:** September 2024  
+**End Date:** November 2024  
 **Project URL:** https://github.com/EhsanulHaqueSiam/BDNewsPaperScraper  
 
 **Description:**
@@ -214,8 +217,9 @@ Python | Scrapy | SQLite | UV Package Manager
 ### Project 5: Android Development Journey
 
 **Project Name:** Android Development Learning Repository  
-**Start Date:** 2023  
-**End Date:** Present  
+**Start Date:** March 2023  
+**End Date:** Present (ongoing)  
+**Currently working:** ☑ Yes  
 **Project URL:** https://github.com/EhsanulHaqueSiam/AndroidDevJourney  
 
 **Description:**
@@ -267,8 +271,9 @@ Java | Android SDK | MVVM | Retrofit | Hilt | Firebase | Room | RxJava3
 ### Project 6: CVPR - Computer Vision Projects
 
 **Project Name:** Computer Vision & Pattern Recognition  
-**Associated with:** AIUB Academic Coursework  
-**Start Date:** 2024  
+**Associated with:** AIUB - CVPR Academic Course  
+**Start Date:** September 2024  
+**End Date:** December 2024  
 **Project URL:** https://github.com/EhsanulHaqueSiam/CVPR  
 
 **Description:**

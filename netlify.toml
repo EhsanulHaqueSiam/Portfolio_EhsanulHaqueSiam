@@ -39,6 +39,7 @@
     Cache-Control = "public, max-age=31536000, immutable"
 
 # Force revalidation for code and data - Aggressive no-cache for HTML
+# Added security headers for better SEO ranking
 [[headers]]
   for = "/**/*.html"
   [headers.values]
@@ -47,6 +48,10 @@
     Expires = "0"
     Netlify-CDN-Cache-Control = "no-store"
     Vary = "User-Agent"
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()"
 
 # Root index and subpages without .html extension
 [[headers]]
@@ -57,6 +62,10 @@
     Expires = "0"
     Netlify-CDN-Cache-Control = "no-store"
     Vary = "User-Agent"
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()"
 
 [[headers]]
   for = "/projects/"

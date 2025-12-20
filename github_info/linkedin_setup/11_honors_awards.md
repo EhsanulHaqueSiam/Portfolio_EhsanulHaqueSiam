@@ -53,9 +53,12 @@ Java | Android SDK | Firebase | REST APIs
 ```
 
 **Media to attach:**
-- `assets/images/achievements/aiubcsfest2024cert.png`
-- `assets/images/achievements/awardcsfest2024.png`
-- `assets/images/achievements/csfestceramoney.png`
+
+| File | Title | Description (max 500 chars) |
+|------|-------|-----------------------------|
+| `aiubcsfest2024cert.png` | 1st Runner-Up Certificate - AIUB CS Fest 2024 | Certificate for achieving 1st Runner-Up in App Showcase at AIUB CS FEST 2024. Competed against 20+ teams demonstrating mobile app development skills. |
+| `awardcsfest2024.png` | 1st Runner-Up Award - AIUB CS Fest 2024 | Award received for 1st Runner-Up in App Showcase category at AIUB CS FEST 2024. Recognized for innovation and technical implementation. |
+| `csfestceramoney.png` | Award Ceremony - AIUB CS Fest 2024 | Photo from the award ceremony at AIUB CS FEST 2024 where I received 1st Runner-Up recognition in the App Showcase category. |
 
 ---
 
@@ -117,9 +120,12 @@ Demonstrates:
 ```
 
 **Media to attach:**
-- `assets/images/achievements/cpecertificate.png`
-- `assets/images/achievements/cpepresentation.png`
-- `assets/images/achievements/cpepresentation2.png`
+
+| File | Title | Description (max 500 chars) |
+|------|-------|-----------------------------|
+| `cpecertificate.png` | Presenter Certificate - South Asian Climate Conference 2024 | Certificate of participation and presentation at the 2nd South Asian Conference on Climate, September 2024. Presented research on climate data analysis. |
+| `cpepresentation.png` | Research Presentation - Climate Conference | Photo from presenting research on "Unfolding Emerging Issues in the Context of Changing Climatic Scenario" at the 2nd South Asian Conference on Climate. |
+| `cpepresentation2.png` | Presentation Session - Climate Conference | Additional photo from the research presentation session at the 2nd South Asian Conference on Climate, showcasing statistical analysis findings. |
 
 ---
 

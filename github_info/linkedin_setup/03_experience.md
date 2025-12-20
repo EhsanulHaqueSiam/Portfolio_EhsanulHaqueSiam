@@ -29,51 +29,23 @@ Example: "Developed ML pipeline **analyzing 52,702 reviews** achieving **85-90% 
 
 ---
 
-### Experience 1: App Showcase Winner
+### Experience 1: Research Author
 
-**Title:** App Showcase Winner - 1st Runner Up  
-**Company:** AIUB CS Fest 2024  
-**Employment Type:** Competition  
-**Location:** Dhaka, Bangladesh  
-**Start Date:** April 2024  
-**End Date:** April 2024 (or leave as current if ongoing involvement)
+| Field | Value |
+|-------|-------|
+| **Title** | Research Author |
+| **Employment type** | Freelance |
+| **Company or organization** | Taylor & Francis |
+| **Currently working** | ☐ No |
+| **Start date** | September 2024 |
+| **End date** | February 2025 |
+| **Location** | Dhaka, Bangladesh |
+| **Location type** | Remote |
 
-**Description (copy this exactly):**
-```
-🏆 Secured 1st Runner-Up in the App Showcase category at AIUB CS FEST 2024
-
-Key Achievements:
-• Developed and demonstrated a fully functional mobile application to industry judges
-• Competed against 20+ teams from the university's CS department
-• Presented technical solution to a panel of industry professionals and academic judges
-• Recognized for innovation, technical implementation, and presentation skills
-
-📱 Technologies Used: Java, Android SDK, Firebase, REST APIs
-
-This achievement demonstrates my ability to:
-✓ Deliver complete projects under deadline pressure
-✓ Present technical solutions to non-technical audiences
-✓ Collaborate effectively in competitive environments
-✓ Build production-ready mobile applications
-```
-
-**Media to attach:** Award certificate, team photo from ceremony
-
----
-
-### Experience 2: Research Author
-
-**Title:** Research Author  
-**Company:** International Conference on Intelligent Data Analysis and Applications (IDAA 2025)  
-**Employment Type:** Contract (or "Self-employed" or "Research")  
-**Location:** Remote  
-**Start Date:** September 2024  
-**End Date:** February 2025 (or "Present" if ongoing)
-
-**Description (copy this exactly):**
+**Description (1,247 chars):**
 ```
 📄 Published research on Medical BERT architectures for Adverse Drug Reaction Classification
-   Publisher: Taylor & Francis (Book Chapter)
+Publisher: Taylor & Francis (Book Chapter - IDAA 2025)
 
 🔬 Research Contributions:
 • Benchmarked multiple domain-specific BERT variants (BioBERT, PubMedBERT, ClinicalBERT) on PsyTAR dataset
@@ -86,51 +58,38 @@ This achievement demonstrates my ability to:
 • Transformers architecture (BERT, RoBERTa, BioBERT, PubMedBERT)
 • Python, PyTorch, Hugging Face Transformers
 • Multi-label classification with class imbalance handling
-• Medical NLP and healthcare AI applications
 
 📊 Paper: "Beyond NER: A Comparative Benchmark of Medical BERTs for Multi-Label Adverse Drug Reaction Classification"
 ```
 
----
+**Skills (top 5):**
+1. Python
+2. Machine Learning
+3. Natural Language Processing (NLP)
+4. PyTorch
+5. Deep Learning
 
-### Experience 3: Conference Presenter
-
-**Title:** Research Presenter  
-**Company:** 2nd South Asian Conference on Climate  
-**Employment Type:** Conference Presentation  
-**Location:** Bangladesh  
-**Start Date:** September 2022  
-**End Date:** September 2022
-
-**Description:**
-```
-🎤 Presented research on climate data analysis at international academic conference
-
-Key Contributions:
-• Analyzed emerging climate trends for the South Asian region using statistical methods
-• Applied data visualization techniques to communicate findings effectively
-• Presented to international audience of researchers and academics
-• Co-authored presentation on changing climatic scenarios
-
-Skills Demonstrated:
-• Statistical analysis and data interpretation
-• Academic presentation and public speaking
-• Research methodology
-• Cross-cultural communication
-```
+**Media:**
+- Path: `assets/images/achievements/pub1.png`
+- Title: Published Research - Taylor & Francis
+- Description: Book chapter on Medical BERT architectures for ADR classification
 
 ---
 
-### Experience 4: Open Source Developer
+### Experience 2: Open Source Developer
 
-**Title:** Open Source Developer  
-**Company:** Self-employed (or skip company field)  
-**Employment Type:** Self-employed  
-**Location:** Remote  
-**Start Date:** 2023  
-**End Date:** Present
+| Field | Value |
+|-------|-------|
+| **Title** | Open Source Developer |
+| **Employment type** | Self-employed |
+| **Company or organization** | Self-employed |
+| **Currently working** | ☑ Yes |
+| **Start date** | January 2023 |
+| **End date** | Present |
+| **Location** | Dhaka, Bangladesh |
+| **Location type** | Remote |
 
-**Description:**
+**Description (742 chars):**
 ```
 💻 Maintaining 26+ open source repositories with 36+ GitHub stars
 
@@ -142,50 +101,52 @@ Skills Demonstrated:
 
 🔧 Key Projects Maintained:
 • StudentManagementSystem - Java + MySQL with 3NF database design
-• Spotify Sentiment Analysis - ML pipeline with 85-90% accuracy
+• Spotify Sentiment Analysis - ML pipeline with 85-90% accuracy on 52K reviews
 • BD Newspaper Scraper - 7-source web scraping framework
 • Mario's Multiverse Adventure - OpenGL 2D platformer game
-• Android Development Journey - 54+ structured learning lessons
 
-Technologies: Java, Python, C++, Kotlin, MySQL, SQLite, OpenGL
+Technologies: Java, Python, C++, MySQL, OpenGL
 
 🔗 github.com/EhsanulHaqueSiam
 ```
 
+**Skills (top 5):**
+1. Java
+2. Python
+3. Git
+4. MySQL
+5. Software Development
+
+**Media:**
+- Path: `assets/images/achievements/github.png`
+- Title: GitHub Profile - 36+ Stars
+- Description: Open source contributions across 26+ repositories
+
 ---
 
-### Experience 5: Android Developer (Self-Learning Path)
+## ⚠️ Entries Moved to Other Sections
 
-**Title:** Android Developer (Self-Taught)  
-**Company:** Self-employed  
-**Employment Type:** Self-employed  
-**Location:** Remote  
-**Start Date:** 2023  
-**End Date:** Present
+The following are **NOT valid for LinkedIn Experience** section:
 
-**Description:**
+| Entry | Move To | Reason |
+|-------|---------|--------|
+| **CS Fest 1st Runner-Up** | **Honors & Awards** section | Competition win, not work experience |
+| **Conference Presenter** | **Education → Activities** or **Publications** | Academic presentation, not employment |
+| **Android Developer (Self-Taught)** | **Education → Description** or **Projects** | Self-learning, not work |
+
+### Where to Add CS Fest Win:
+Go to **Profile → Add section → Recommended → Add honors & awards**
 ```
-📱 Completed comprehensive Android development curriculum with 54+ structured lessons
+Title: 1st Runner-Up - App Showcase
+Issuer: AIUB CS Fest 2024
+Issue Date: April 2024
+Description: Secured 1st Runner-Up in the App Showcase category, competing against 20+ teams with innovative mobile application.
+```
 
-📚 Learning Path Completed:
-• Beginner (Lessons 1-13): Android fundamentals, UI layouts, event handling
-• Intermediate (Lessons 14-39): RecyclerView, Navigation, Data Storage
-• Advanced (Lessons 40-54+): MVVM, Retrofit, Hilt, Room, RxJava3, Firebase
-
-🏆 Practical Applications:
-• Built CS Fest winning app using learned skills
-• Created reusable learning repository for other developers
-• Integrated modern Android architecture patterns
-
-Technologies Mastered:
-• Java, Android SDK, XML Layouts
-• MVVM Architecture (ViewModel, LiveData, Repository)
-• Networking: Retrofit, OkHttp
-• Dependency Injection: Hilt/Dagger
-• Reactive Programming: RxJava3
-• Persistence: Room Database, SharedPreferences
-• Cloud: Firebase Realtime DB, Firestore, FCM
-• Pagination: Paging 3 library
+### Where to Add Conference Presentation:
+Add to your **AIUB Education entry → Activities & Societies**
+```
+• Research Presenter - 2nd South Asian Conference on Climate (2022)
 ```
 
 ---

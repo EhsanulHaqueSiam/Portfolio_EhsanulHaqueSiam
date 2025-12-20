@@ -123,6 +123,129 @@ You may not have formal certifications yet, but here are valuable ones to pursue
 
 ## 🏆 Your Current Credentials
 
+### 1. IDAA 2025 - Conference Paper Acceptance
+
+| Field | Value |
+|-------|-------|
+| **Name** | Conference Paper Acceptance - IDAA 2025 |
+| **Issuing Organization** | International Conference on Intelligent Data Analysis and Applications (IDAA 2025) |
+| **Issue Date** | December 2025 |
+| **Expiration Date** | No Expiration |
+| **Credential ID** | 10689 |
+| **Credential URL** | [Add Taylor & Francis URL when published] |
+| **Skills** | Machine Learning, Natural Language Processing (NLP), BERT, TensorFlow, Research, Python |
+
+**Description for LinkedIn:**
+```
+Paper accepted for publication as a Taylor & Francis Book Chapter.
+
+"Beyond NER: A Comparative Benchmark of Medical BERTs for Multi-Label Adverse Drug Reaction Classification"
+
+• Fine-tuned domain-specific Medical BERT architectures (BioBERT, PubMedBERT)
+• Multi-label ADR classification on PsyTAR dataset
+• Benchmarked general vs. medical BERT models for healthcare NLP
+```
+
+**Media to Upload:**
+- **File:** `assets/images/publications/pub1.png`
+- **Title:** IDAA 2025 Paper Acceptance - Taylor & Francis
+- **Description:** Paper acceptance confirmation for "Beyond NER: A Comparative Benchmark of Medical BERTs for Multi-Label Adverse Drug Reaction Classification" - Published as a book chapter by Taylor & Francis at the International Conference on Intelligent Data Analysis and Applications (IDAA 2025), December 12-13, 2025. Paper ID: 10689.
+
+---
+
+### 2. South Asian Climate Conference - Presenter Certificate
+
+| Field | Value |
+|-------|-------|
+| **Name** | Conference Presenter Certificate |
+| **Issuing Organization** | 2nd South Asian Conference on Climate |
+| **Issue Date** | September 2024 |
+| **Expiration Date** | No Expiration |
+| **Credential ID** | [Leave blank] |
+| **Credential URL** | [Leave blank - no online verification] |
+| **Skills** | Data Analysis, Statistical Analysis, Research, Presentation Skills, Microsoft Excel |
+
+**Description for LinkedIn:**
+```
+Presented research on emerging climate issues at the 2nd South Asian Conference on Climate.
+
+"Unfolding Emerging Issues in the Context of Changing Climatic Scenario"
+
+• Conducted statistical analysis on climate data trends
+• Presented findings to regional climate researchers
+• Enhanced data interpretation and analytical skills
+```
+
+**Media to Upload:**
+- **File:** `assets/images/achievements/cpecertificate.png`
+- **Title:** Conference Presenter Certificate - South Asian Climate Conference 2024
+- **Description:** Certificate of participation and presentation at the 2nd South Asian Conference on Climate, September 2024. Presented research on "Unfolding Emerging Issues in the Context of Changing Climatic Scenario" - Statistical analysis of climate data trends in the South Asian region.
+
+---
+
+> **💡 Note:** The Climate Conference certificate is valid even without an online URL. LinkedIn allows certificates without verification links. The photo of your certificate serves as proof.
+
+---
+
+### 3. AIUB CS Fest 2024 - 1st Runner-Up Certificate
+
+| Field | Value |
+|-------|-------|
+| **Name** | 1st Runner-Up Certificate - App Showcase, AIUB CS Fest 2024 |
+| **Issuing Organization** | American International University-Bangladesh (AIUB) |
+| **Issue Date** | April 2024 |
+| **Expiration Date** | No Expiration |
+| **Credential ID** | [Leave blank] |
+| **Credential URL** | [Leave blank] |
+| **Skills** | Android Development, Mobile Application Development, Java, Presentation Skills, Team Collaboration |
+
+**Description for LinkedIn:**
+```
+Received certificate for achieving 1st Runner-Up in the App Showcase category at AIUB CS FEST 2024.
+
+• Competed against 20+ teams in mobile application development
+• Demonstrated innovative app development and presentation skills
+• Recognized for excellence by industry judges
+```
+
+**Media to Upload:**
+- **File:** `assets/images/achievements/aiubcsfest2024cert.png`
+- **Title:** 1st Runner-Up Certificate - AIUB CS Fest 2024 App Showcase
+- **Description:** Certificate for achieving 1st Runner-Up in the App Showcase category at AIUB CS FEST 2024. Competed against 20+ teams, demonstrating innovative mobile application development and presentation skills at the flagship technology event of American International University-Bangladesh.
+
+---
+
+### 4. AIUB CS Fest 2024 - 1st Runner-Up Award
+
+| Field | Value |
+|-------|-------|
+| **Name** | 1st Runner-Up Award - App Showcase, AIUB CS Fest 2024 |
+| **Issuing Organization** | American International University-Bangladesh (AIUB) |
+| **Issue Date** | April 2024 |
+| **Expiration Date** | No Expiration |
+| **Credential ID** | [Leave blank] |
+| **Credential URL** | [Leave blank] |
+| **Skills** | Android Development, Mobile Application Development, Java, Problem Solving, Team Leadership |
+
+**Description for LinkedIn:**
+```
+Received award for achieving 1st Runner-Up in the App Showcase category at AIUB CS FEST 2024.
+
+• Competed against 20+ teams from the university
+• Demonstrated innovative mobile application development
+• Showcased technical proficiency and presentation skills to industry judges
+• Recognized for excellence in app development and user experience design
+```
+
+**Media to Upload:**
+- **File:** `assets/images/achievements/awardcsfest2024.png`
+- **Title:** 1st Runner-Up Award - AIUB CS Fest 2024 App Showcase
+- **Description:** Award for achieving 1st Runner-Up in the App Showcase category at AIUB CS FEST 2024. Competed against 20+ teams, demonstrating innovative mobile application development and presentation skills to industry judges.
+
+---
+
+
+
 Based on your profile, you can add these as informal certifications:
 
 ### Android Development Completion
