@@ -21,7 +21,13 @@ export const initTypedText = (
 ) => {
     const element = document.querySelector(".typing-text");
 
-    if (typeof Typed === 'undefined' || !element) return;
+    // Access Typed from window object since it's loaded as a global script
+    const TypedJS = window.Typed;
+
+    if (typeof TypedJS === 'undefined' || !element) {
+        console.warn('Typed.js not loaded or element not found');
+        return;
+    }
 
     const defaultOptions = {
         strings,
@@ -29,8 +35,10 @@ export const initTypedText = (
         typeSpeed: 30,
         backSpeed: 15,
         backDelay: 1200,
+        startDelay: 500,
+        smartBackspace: true,
         ...options
     };
 
-    return new Typed(".typing-text", defaultOptions);
+    return new TypedJS(".typing-text", defaultOptions);
 };
