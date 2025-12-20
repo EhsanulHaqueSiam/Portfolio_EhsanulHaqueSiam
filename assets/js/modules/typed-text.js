@@ -50,6 +50,16 @@ export const initTypedText = async (
         return;
     }
 
+    // Guard against double initialization
+    if (element._typed) {
+        console.warn('Typed.js already initialized on element, destroying previous instance');
+        element._typed.destroy();
+        delete element._typed;
+    }
+
+    // Clear any existing content to prevent conflicts
+    element.textContent = '';
+
     // Wait for Typed.js to load
     const isLoaded = await waitForTyped();
     if (!isLoaded) {

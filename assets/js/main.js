@@ -64,7 +64,7 @@ const initPortfolio = async () => {
   initSmoothScroll();
 
   // Initialize visual effects and animations (before content load)
-  initTypedText();
+  await initTypedText(); // Must await to prevent timing conflicts
   initVisibilityHandler();
   initParallax();
 
