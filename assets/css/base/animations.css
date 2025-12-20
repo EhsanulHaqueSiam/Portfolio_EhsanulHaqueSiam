@@ -149,14 +149,18 @@
 
 /* ==================== ANIMATION UTILITIES ==================== */
 
-/* Typing Cursor */
-.typing-text::after {
-    content: "|";
-    display: inline-block;
-    color: #7303a7;
+/* Typed.js Cursor Styling */
+.typed-cursor {
+    color: var(--primary-color, #7303a7);
     font-weight: 700;
-    animation: blink 0.8s ease-in-out infinite;
-    margin-left: 2px;
+    font-size: inherit;
+    opacity: 1;
+    animation: blink 0.7s ease-in-out infinite !important;
+}
+
+/* Ensure typing text container doesn't add extra cursor */
+.typing-text {
+    display: inline;
 }
 
 /* Card Shine Effect */
@@ -302,8 +306,10 @@ html {
         scroll-behavior: auto !important;
     }
 
-    .typing-text::after {
-        animation: none;
+    /* Keep typed cursor visible (static) for accessibility */
+    .typed-cursor {
+        animation: none !important;
+        opacity: 1 !important;
     }
 
     .animate-on-scroll {
