@@ -60,14 +60,19 @@ export const initTypedText = async (
     const defaultOptions = {
         strings,
         loop: true,
-        loopCount: Infinity,
-        typeSpeed: 30,
-        backSpeed: 15,
-        backDelay: 1200,
-        startDelay: 500,
+        typeSpeed: 50,
+        backSpeed: 30,
+        backDelay: 2000,
+        startDelay: 1000,
         smartBackspace: true,
         showCursor: true,
         cursorChar: '|',
+        fadeOut: false,
+        fadeOutClass: 'typed-fade-out',
+        fadeOutDelay: 500,
+        onStringTyped: (arrayPos) => {
+            console.log(`Typed string ${arrayPos + 1}/${strings.length}`);
+        },
         ...options
     };
 
