@@ -148,6 +148,15 @@ Simply upload all files to any static hosting service.
 
 This project is open source and available under the [MIT License](LICENSE).
 
+### ⭐ Attribution
+
+If you use this template for your portfolio:
+1. **Keep the credit link** in the footer (appreciated but not required)
+2. **Star this repository** ⭐ to show your support
+3. **Add a backlink** to [ehsanulhaquesiam.netlify.app](https://ehsanulhaquesiam.netlify.app/) (helps others find the template!)
+
+Your support helps me create more open-source projects! 🚀
+
 ---
 
 ## 📬 Contact
