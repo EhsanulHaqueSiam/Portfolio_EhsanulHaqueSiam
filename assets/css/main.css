@@ -8,7 +8,7 @@
 /* ==================== BASE ==================== */
 @import url("./base/variables.css");
 @import url("./base/reset.css");
-@import url("./base/animations.css");
+@import url("./base/animations.css?v=4.1");
 
 /* ==================== COMPONENTS ==================== */
 @import url("./components/navigation.css?v=3.3");
