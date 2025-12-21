@@ -47,11 +47,33 @@
     z-index: 1;
 }
 
-/* Category Grid - 2x2 layout */
+/* Category Grid - Bento Layout */
 .skills .container .row {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 2rem;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: auto auto;
+    gap: 1.5rem;
+}
+
+/* Bento Card Size Variations */
+.skill-category {
+    grid-column: span 2;
+}
+
+/* First category - Featured large card */
+.skill-category:first-child {
+    grid-column: span 2;
+    grid-row: span 2;
+}
+
+/* Third category - Full width */
+.skill-category:nth-child(3) {
+    grid-column: span 2;
+}
+
+/* Fourth category - Takes remaining space */
+.skill-category:nth-child(4) {
+    grid-column: span 2;
 }
 
 /* Skill Category Card */
@@ -60,14 +82,53 @@
     border-radius: 1.2rem;
     padding: 1.5rem;
     border: 1px solid rgba(255, 255, 255, 0.08);
-    transition: all 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Featured card styling (first card) */
+.skill-category:first-child {
+    background: linear-gradient(135deg, rgba(115, 3, 167, 0.3) 0%, rgba(37, 6, 173, 0.2) 100%);
+    border-color: rgba(115, 3, 167, 0.3);
+    padding: 2rem;
+}
+
+.skill-category:first-child .category-header i {
+    font-size: 2.2rem;
+    background: linear-gradient(135deg, #ffd700, #ff7b00);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.skill-category:first-child .category-header h3 {
+    font-size: 1.8rem;
+}
+
+.skill-category:first-child .skill-item {
+    padding: 0.9rem 1.4rem;
+}
+
+/* Decorative gradient overlay for featured card */
+.skill-category:first-child::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(255, 174, 0, 0.1) 0%, transparent 60%);
+    pointer-events: none;
 }
 
 .skill-category:hover {
     border-color: rgba(255, 174, 0, 0.3);
-    transform: translateY(-3px);
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
 }
 
+/* GSAP-style micro-interactions for category headers */
 .category-header {
     display: flex;
     align-items: center;
@@ -75,11 +136,64 @@
     margin-bottom: 1.2rem;
     padding-bottom: 0.8rem;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    cursor: pointer;
+    position: relative;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    /* Spring easing */
+}
+
+/* Animated underline that expands on hover */
+.category-header::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #ffd700, #ff7b00);
+    transition: width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    border-radius: 2px;
+    box-shadow: 0 0 10px rgba(255, 174, 0, 0.5);
+}
+
+.category-header:hover::after {
+    width: 100%;
 }
 
 .category-header i {
     font-size: 1.6rem;
     color: #ffae00;
+    display: inline-block;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.category-header:hover i {
+    transform: rotate(15deg) scale(1.2);
+    text-shadow: 0 0 20px rgba(255, 174, 0, 0.6);
+    animation: categoryIconBounce 0.6s ease-in-out;
+}
+
+/* Spring bounce animation for category icons */
+@keyframes categoryIconBounce {
+    0% {
+        transform: rotate(0deg) scale(1);
+    }
+
+    25% {
+        transform: rotate(20deg) scale(1.3);
+    }
+
+    50% {
+        transform: rotate(10deg) scale(1.15);
+    }
+
+    75% {
+        transform: rotate(18deg) scale(1.25);
+    }
+
+    100% {
+        transform: rotate(15deg) scale(1.2);
+    }
 }
 
 .category-header h3 {
@@ -87,6 +201,19 @@
     font-weight: 600;
     color: #fff;
     margin: 0;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    background: linear-gradient(135deg, #fff, #fff);
+    -webkit-background-clip: text;
+    background-clip: text;
+}
+
+.category-header:hover h3 {
+    background: linear-gradient(135deg, #ffd700, #ffae00);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    transform: translateX(5px);
+    text-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
 }
 
 /* Skills as compact chips */
@@ -233,7 +360,26 @@
     }
 }
 
-/* Skills Responsive */
+/* Skills Responsive - Tablet */
+@media screen and (max-width: 1024px) {
+    .skills .container .row {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .skill-category,
+    .skill-category:first-child,
+    .skill-category:nth-child(3),
+    .skill-category:nth-child(4) {
+        grid-column: span 1;
+        grid-row: span 1;
+    }
+
+    .skill-category:first-child {
+        grid-column: span 2;
+    }
+}
+
+/* Skills Responsive - Mobile */
 @media screen and (max-width: 768px) {
     .skills {
         padding: 4rem 5%;
@@ -246,6 +392,26 @@
     .skills .container .row {
         grid-template-columns: 1fr;
         gap: 1.5rem;
+    }
+
+    .skill-category,
+    .skill-category:first-child,
+    .skill-category:nth-child(3),
+    .skill-category:nth-child(4) {
+        grid-column: span 1;
+        grid-row: span 1;
+    }
+
+    .skill-category:first-child {
+        padding: 1.5rem;
+    }
+
+    .skill-category:first-child .category-header h3 {
+        font-size: 1.4rem;
+    }
+
+    .skill-category:first-child .category-header i {
+        font-size: 1.8rem;
     }
 
     .skill-category {

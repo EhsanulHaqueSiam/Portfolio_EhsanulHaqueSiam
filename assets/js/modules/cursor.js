@@ -23,13 +23,28 @@ let magneticRect = null;
 
 // Particle trail state
 let particleCount = 0;
-const MAX_PARTICLES = 20;
+const MAX_PARTICLES = 30;
 let lastParticleTime = 0;
-const PARTICLE_THROTTLE = 30; // ms between particles
+const PARTICLE_THROTTLE = 20; // ms between particles (faster = more particles)
 
 // Scroll state
 let isScrolling = false;
 let scrollTimeout = null;
+
+// Section-based color theming
+let currentSection = 'home';
+const sectionColors = {
+    'home': { primary: '#9303d7', accent: '#ffd700' },
+    'about': { primary: '#2506ad', accent: '#ff7b00' },
+    'skills': { primary: '#7303a7', accent: '#ffae00' },
+    'education': { primary: '#4a00e0', accent: '#ffd700' },
+    'publications': { primary: '#6b21a8', accent: '#f59e0b' },
+    'work': { primary: '#7c3aed', accent: '#ff7b00' },
+    'award': { primary: '#a855f7', accent: '#fbbf24' },
+    'experience': { primary: '#8b5cf6', accent: '#f97316' },
+    'video': { primary: '#6366f1', accent: '#fcd34d' },
+    'contact': { primary: '#ff7b00', accent: '#7303a7' }
+};
 
 /**
  * Create cursor elements
@@ -118,9 +133,47 @@ const createClickRipple = (x, y) => {
 };
 
 /**
- * Create particle at position
+ * Detect which section the cursor is currently over
  */
-const createParticle = (x, y) => {
+const detectCurrentSection = (x, y) => {
+    const sections = document.querySelectorAll('section[id]');
+    for (const section of sections) {
+        const rect = section.getBoundingClientRect();
+        if (y >= rect.top && y <= rect.bottom) {
+            const newSection = section.getAttribute('id');
+            if (newSection !== currentSection) {
+                currentSection = newSection;
+                updateCursorColors();
+            }
+            return;
+        }
+    }
+};
+
+/**
+ * Update cursor colors based on current section
+ */
+const updateCursorColors = () => {
+    const colors = sectionColors[currentSection] || sectionColors['home'];
+
+    // Update CSS custom properties on cursor elements
+    if (cursor) {
+        cursor.style.setProperty('--section-primary', colors.primary);
+        cursor.style.setProperty('--section-accent', colors.accent);
+    }
+    if (cursorDot) {
+        cursorDot.style.setProperty('--section-primary', colors.primary);
+        cursorDot.style.setProperty('--section-accent', colors.accent);
+    }
+
+    // Also add section class for CSS-based styling
+    document.body.setAttribute('data-cursor-section', currentSection);
+};
+
+/**
+ * Create particle at position with section-based colors
+ */
+const createParticle = (x, y, velocityX = 0, velocityY = 0) => {
     if (particleCount >= MAX_PARTICLES) return;
 
     const now = Date.now();
@@ -130,15 +183,25 @@ const createParticle = (x, y) => {
     const particle = document.createElement('div');
     particle.className = 'cursor-particle';
 
-    // Random offset for natural spread
-    const offsetX = (Math.random() - 0.5) * 20;
-    const offsetY = (Math.random() - 0.5) * 20;
+    // Get section colors
+    const colors = sectionColors[currentSection] || sectionColors['home'];
+
+    // Alternate between primary and accent colors
+    const useAccent = particleCount % 2 === 0;
+    const color = useAccent ? colors.accent : colors.primary;
+
+    particle.style.backgroundColor = color;
+    particle.style.boxShadow = `0 0 10px ${color}`;
+
+    // Position with slight offset based on movement direction
+    const offsetX = (Math.random() - 0.5) * 15 - velocityX * 0.5;
+    const offsetY = (Math.random() - 0.5) * 15 - velocityY * 0.5;
 
     particle.style.left = `${x + offsetX}px`;
     particle.style.top = `${y + offsetY}px`;
 
     // Random size variation
-    const size = 4 + Math.random() * 4;
+    const size = 3 + Math.random() * 5;
     particle.style.width = `${size}px`;
     particle.style.height = `${size}px`;
 
@@ -203,15 +266,17 @@ const handleMouseMove = (e) => {
         cursorVisible = true;
     }
 
-    // Calculate movement speed for particle trail
-    const speed = Math.sqrt(
-        Math.pow(mouseX - prevMouseX, 2) +
-        Math.pow(mouseY - prevMouseY, 2)
-    );
+    // Detect which section we're in for color theming
+    detectCurrentSection(mouseX, mouseY);
 
-    // Create particles on fast movement (but not during magnetic hover)
-    if (speed > 15 && !isMagnetic && !isScrolling) {
-        createParticle(mouseX, mouseY);
+    // Calculate velocity for particle trail direction
+    const velocityX = mouseX - prevMouseX;
+    const velocityY = mouseY - prevMouseY;
+    const speed = Math.sqrt(velocityX * velocityX + velocityY * velocityY);
+
+    // Create particles on movement (lower threshold = more particles)
+    if (speed > 8 && !isMagnetic && !isScrolling) {
+        createParticle(mouseX, mouseY, velocityX, velocityY);
     }
 };
 
@@ -352,7 +417,7 @@ const handleScroll = () => {
         isScrolling = false;
         cursor?.classList.remove('cursor-scrolling');
         cursorDot?.classList.remove('cursor-scrolling');
-    }, 150);
+    }, 80); // Reduced from 150ms for faster ring appearance
 };
 
 /**

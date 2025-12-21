@@ -609,7 +609,11 @@ header .navbar ul li a:hover {
 }
 
 #scroll-top.active {
-  top: calc(100% - 12rem);
+  top: auto;
+  bottom: 8rem;
+  /* Standard position */
+  /* Well above achievements button at 8rem */
+  /* Above achievements button */
 }
 
 /* scroll top ends */

@@ -11,25 +11,38 @@
 @import url("./base/animations.css?v=4.1");
 
 /* ==================== COMPONENTS ==================== */
-@import url("./components/navigation.css?v=3.3");
+@import url("./components/navigation.css?v=4.5");
 @import url("./components/lightbox.css?v=4.0");
 @import url("./components/theme-toggle.css?v=3.3");
 @import url("./components/cursor.css");
 @import url("./components/buttons.css");
 @import url("./components/toast.css");
+@import url("./components/section-indicator.css?v=5.1");
+@import url("./components/timezone-map.css");
+@import url("./components/libraries.css");
+@import url("./components/glassmorphism.css");
+@import url("./components/command-palette.css");
+@import url("./components/micro-interactions.css");
+@import url("./components/kinetic-typography.css");
+@import url("./components/gamification.css?v=5.0");
+@import url("./components/special-effects.css");
+@import url("./components/page-transitions.css");
+@import url("./components/ai-showcase.css");
+@import url("./components/case-study.css");
 
 /* ==================== UTILITIES ==================== */
 @import url("./utilities/loader.css");
-@import url("./utilities/scrollbar.css");
+@import url("./utilities/scrollbar.css?v=5.1");
 @import url("./utilities/transitions.css?v=4.0");
 @import url("./utilities/dark-theme.css");
+@import url("./utilities/accessibility.css");
 
 /* ==================== MODULES ==================== */
 @import url("./modules/skeleton.css");
 
 /* ==================== SECTIONS ==================== */
 @import url("./sections/hero.css?v=4.0");
-@import url("./sections/about.css");
+@import url("./sections/about.css?v=4.7");
 @import url("./sections/skills.css");
 @import url("./sections/education.css");
 @import url("./sections/publications.css?v=4.0");
@@ -37,7 +50,7 @@
 @import url("./sections/testimonials.css");
 @import url("./sections/awards.css?v=4.0");
 @import url("./sections/experience.css");
-@import url("./sections/video.css");
+@import url("./sections/video.css?v=5.0");
 @import url("./sections/contact.css");
 @import url("./sections/footer.css");
 

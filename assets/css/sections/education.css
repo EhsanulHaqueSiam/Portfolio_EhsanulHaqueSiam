@@ -5,6 +5,7 @@
     min-height: 80vh;
 }
 
+/* GSAP-style micro-interactions for education quote */
 .education .qoute {
     font-size: 1.5rem;
     text-align: center;
@@ -13,6 +14,71 @@
     margin-top: 0.5rem;
     color: #555;
     font-style: italic;
+    cursor: default;
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    padding: 1rem 2rem;
+    transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    /* Spring easing */
+    border-radius: 1rem;
+}
+
+.education .qoute::before {
+    content: '"';
+    position: absolute;
+    left: 0;
+    top: -0.5rem;
+    font-size: 4rem;
+    font-family: Georgia, serif;
+    color: rgba(115, 3, 167, 0.15);
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    opacity: 0;
+    transform: translateX(-20px);
+}
+
+.education .qoute::after {
+    content: '"';
+    position: absolute;
+    right: 0;
+    bottom: -1.5rem;
+    font-size: 4rem;
+    font-family: Georgia, serif;
+    color: rgba(115, 3, 167, 0.15);
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    opacity: 0;
+    transform: translateX(20px);
+}
+
+.education .qoute:hover {
+    transform: scale(1.03) translateY(-3px);
+    color: #7303a7;
+    background: linear-gradient(135deg, rgba(115, 3, 167, 0.05) 0%, rgba(255, 123, 0, 0.03) 100%);
+    text-shadow: 0 2px 20px rgba(115, 3, 167, 0.15);
+}
+
+.education .qoute:hover::before,
+.education .qoute:hover::after {
+    opacity: 1;
+    transform: translateX(0);
+    color: rgba(115, 3, 167, 0.25);
+}
+
+/* Premium floating animation */
+@keyframes quoteFloat {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-5px);
+    }
+}
+
+.education .qoute:hover {
+    animation: quoteFloat 3s ease-in-out infinite;
 }
 
 .education .box-container {
@@ -148,6 +214,22 @@
 
 [data-theme="dark"] .education .qoute {
     color: rgba(255, 255, 255, 0.6);
+}
+
+[data-theme="dark"] .education .qoute::before,
+[data-theme="dark"] .education .qoute::after {
+    color: rgba(184, 77, 255, 0.15);
+}
+
+[data-theme="dark"] .education .qoute:hover {
+    color: var(--color-accent-gold, #ffd700);
+    background: linear-gradient(135deg, rgba(184, 77, 255, 0.08) 0%, rgba(255, 215, 0, 0.05) 100%);
+    text-shadow: 0 2px 20px rgba(255, 215, 0, 0.2);
+}
+
+[data-theme="dark"] .education .qoute:hover::before,
+[data-theme="dark"] .education .qoute:hover::after {
+    color: rgba(184, 77, 255, 0.4);
 }
 
 [data-theme="dark"] .education .box-container .box {

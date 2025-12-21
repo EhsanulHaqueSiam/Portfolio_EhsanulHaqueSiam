@@ -112,9 +112,9 @@ export const initScrollAnimations = () => {
         });
     }, observerOptions);
 
-    // Observe elements for animation
+    // Observe elements for animation - EXCLUDE about section boxes
     const animateElements = document.querySelectorAll(
-        '.skill-category, .box, .timeline-item, .contact-card, .publication-card, .award-card'
+        '.skill-category, #work .box, #publications .box, #award .box, #education .box, .timeline-item, .contact-card, .publication-card, .award-card'
     );
 
     animateElements.forEach(el => {
@@ -208,11 +208,11 @@ export const initMicroInteractions = () => {
 
             if (aboutImage && !aboutImage.vanillaTilt) {
                 VanillaTilt.init(aboutImage, {
-                    max: 15,
+                    max: 10,
                     speed: 400,
-                    scale: 1.05,
+                    scale: 1, // NO SCALE to avoid layout shift
                     glare: true,
-                    "max-glare": 0.2,
+                    "max-glare": 0.15,
                     perspective: 1000
                 });
                 console.log('✅ VanillaTilt initialized on About image');

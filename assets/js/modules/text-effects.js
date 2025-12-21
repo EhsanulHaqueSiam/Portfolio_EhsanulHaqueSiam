@@ -48,10 +48,7 @@ class HackerTextEffect {
         const totalIterations = letters.length;
         const incrementPerFrame = totalIterations / (duration / scrambleSpeed);
 
-        // Immediately set initial scrambled state (don't clear - prevents jitter)
-        element.textContent = letters
-            .map(letter => letter === ' ' ? ' ' : this.characters[Math.floor(Math.random() * this.characters.length)])
-            .join('');
+        // Don't pre-scramble - keep original text visible until animation starts
 
         // Create interval for animation
         const interval = setInterval(() => {
@@ -137,33 +134,29 @@ class HackerTextEffect {
             self.applyHoverEffect(element);
         });
 
-        // Elements that animate on scroll into view AND replay on hover
+        // Elements that animate on scroll into view (animates ONLY ONCE)
         document.querySelectorAll('[data-hacker-text="scroll"]').forEach(element => {
             element.setAttribute('data-text', element.textContent);
             self.observeElement(element);
-            // Add hover replay functionality
-            self.applyHoverEffect(element);
+            // NOTE: No hover replay for scroll elements to keep headings readable
         });
     }
 
     /**
      * Use Intersection Observer to trigger animation on scroll
-     * Replays animation each time element scrolls into view
+     * Animates ONLY ONCE when element first scrolls into view
      * @param {HTMLElement} element - Element to observe
      */
     observeElement(element) {
         const self = this;
-        let wasIntersecting = false;
 
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                if (entry.isIntersecting && !wasIntersecting) {
-                    // Element just came into view - animate it
+                if (entry.isIntersecting) {
+                    // Element came into view - animate it ONCE
                     self.animate(element);
-                    wasIntersecting = true;
-                } else if (!entry.isIntersecting) {
-                    // Element left view - reset flag so it can animate again
-                    wasIntersecting = false;
+                    // Stop observing to prevent re-animation
+                    observer.unobserve(element);
                 }
             });
         }, { threshold: 0.5 });

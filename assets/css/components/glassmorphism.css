@@ -1,0 +1,278 @@
+/* ==================== GLASSMORPHISM EFFECTS ==================== */
+/* Enhanced glass morphism styles with backdrop blur and gradient borders */
+
+/* ========== GLASS CARD BASE ========== */
+.glass-card {
+    background: var(--bg-glass);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 1.5rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.glass-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(135deg,
+            rgba(255, 255, 255, 0.4) 0%,
+            rgba(255, 255, 255, 0.1) 50%,
+            rgba(255, 255, 255, 0.2) 100%);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    opacity: 0.6;
+    transition: opacity 0.3s ease;
+}
+
+.glass-card:hover::before {
+    opacity: 1;
+}
+
+/* ========== GRADIENT BORDER UTILITY ========== */
+.gradient-border {
+    position: relative;
+    background: transparent;
+}
+
+.gradient-border::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 2px;
+    background: linear-gradient(135deg,
+            var(--color-primary, #7303a7) 0%,
+            var(--color-accent, #ff7b00) 50%,
+            var(--color-accent-gold, #ffd700) 100%);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.gradient-border:hover::before {
+    opacity: 1;
+}
+
+/* ========== SECTION CARDS GLASSMORPHISM ========== */
+/* Publications Cards */
+.publications .box-container .box {
+    background: var(--bg-glass);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+/* Awards Cards */
+.award .box-container .box {
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+/* Projects Cards */
+.work .box-container .box {
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+/* Education Cards */
+.education .box-container .box {
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+/* Testimonial Cards */
+.testimonial-card {
+    background: var(--bg-glass);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+/* ========== GRADIENT BORDER EFFECTS ON HOVER ========== */
+.publications .box-container .box,
+.award .box-container .box,
+.work .box-container .box,
+.education .box-container .box,
+.testimonial-card {
+    position: relative;
+}
+
+.publications .box-container .box::after,
+.work .box-container .box::after {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    padding: 2px;
+    background: linear-gradient(135deg,
+            rgba(115, 3, 167, 0.8) 0%,
+            rgba(255, 123, 0, 0.8) 50%,
+            rgba(255, 215, 0, 0.8) 100%);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    z-index: -1;
+}
+
+.publications .box-container .box:hover::after,
+.work .box-container .box:hover::after {
+    opacity: 1;
+}
+
+/* ========== DARK THEME GLASSMORPHISM ========== */
+[data-theme="dark"] .glass-card {
+    background: var(--bg-glass);
+    border-color: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .glass-card::before {
+    background: linear-gradient(135deg,
+            rgba(139, 92, 246, 0.3) 0%,
+            rgba(255, 255, 255, 0.05) 50%,
+            rgba(236, 72, 153, 0.2) 100%);
+}
+
+[data-theme="dark"] .publications .box-container .box,
+[data-theme="dark"] .work .box-container .box,
+[data-theme="dark"] .award .box-container .box,
+[data-theme="dark"] .education .box-container .box {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Dark mode gradient border with neon colors */
+[data-theme="dark"] .publications .box-container .box::after,
+[data-theme="dark"] .work .box-container .box::after {
+    background: linear-gradient(135deg,
+            rgba(139, 92, 246, 0.9) 0%,
+            rgba(236, 72, 153, 0.9) 50%,
+            rgba(34, 211, 238, 0.9) 100%);
+}
+
+[data-theme="dark"] .testimonial-card {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* ========== SKILLS SECTION ENHANCED GLASS ========== */
+.skills .container {
+    background: var(--bg-glass);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.skill-category {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    position: relative;
+}
+
+.skill-category::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(135deg,
+            rgba(255, 255, 255, 0.3) 0%,
+            rgba(255, 255, 255, 0.1) 100%);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.skill-category:hover::before {
+    opacity: 1;
+}
+
+/* ========== CONTACT SECTION GLASS ========== */
+.contact .container {
+    background: var(--bg-glass);
+}
+
+.contact-card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+}
+
+.contact-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(135deg,
+            rgba(255, 123, 0, 0.4) 0%,
+            rgba(255, 215, 0, 0.3) 100%);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.contact-card:hover::before {
+    opacity: 1;
+}
+
+/* ========== ABOUT SECTION GLASS CONTENT ========== */
+.about .row .content {
+    background: var(--bg-glass);
+}
+
+/* Light theme adjustments */
+[data-theme="light"] .publications .box-container .box,
+[data-theme="light"] .work .box-container .box,
+[data-theme="light"] .education .box-container .box {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+[data-theme="light"] .testimonial-card {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+/* ========== FROSTED GLASS EFFECT ========== */
+.frosted-glass {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+[data-theme="dark"] .frosted-glass {
+    background: rgba(13, 17, 23, 0.7);
+    border-color: rgba(255, 255, 255, 0.1);
+}

@@ -1,0 +1,149 @@
+/* ==================== PAGE TRANSITIONS ==================== */
+/* Barba.js compatible transition styles */
+
+/* ========== TRANSITION WRAPPER ========== */
+/* Wrap your main content in [data-barba="wrapper"] and [data-barba="container"] */
+[data-barba="container"] {
+    will-change: opacity, transform;
+}
+
+/* ========== FADE TRANSITION ========== */
+.transition-fade {
+    opacity: 1;
+    transition: opacity 0.4s ease-in-out;
+}
+
+.transition-fade.is-leaving {
+    opacity: 0;
+}
+
+.transition-fade.is-entering {
+    opacity: 0;
+}
+
+/* ========== SLIDE TRANSITION ========== */
+.transition-slide {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.transition-slide.is-leaving {
+    opacity: 0;
+    transform: translateY(-20px);
+}
+
+.transition-slide.is-entering {
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+/* ========== CLIP TRANSITION ========== */
+.transition-clip {
+    clip-path: inset(0 0 0 0);
+    transition: clip-path 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.transition-clip.is-leaving {
+    clip-path: inset(0 0 100% 0);
+}
+
+.transition-clip.is-entering {
+    clip-path: inset(100% 0 0 0);
+}
+
+/* ========== TRANSITION OVERLAY ========== */
+.page-transition-overlay {
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(135deg, var(--color-primary, #7303a7), var(--color-secondary, #2506ad));
+    z-index: 99999;
+    transform: scaleY(0);
+    transform-origin: bottom;
+    transition: transform 0.5s cubic-bezier(0.7, 0, 0.3, 1);
+}
+
+.page-transition-overlay.is-visible {
+    transform: scaleY(1);
+}
+
+.page-transition-overlay.is-hiding {
+    transform-origin: top;
+    transform: scaleY(0);
+}
+
+/* Overlay logo/spinner */
+.page-transition-overlay::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60px;
+    height: 60px;
+    border: 4px solid rgba(255, 255, 255, 0.2);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: transitionSpin 0.8s linear infinite;
+    opacity: 0;
+    transition: opacity 0.3s ease 0.2s;
+}
+
+.page-transition-overlay.is-visible::before {
+    opacity: 1;
+}
+
+@keyframes transitionSpin {
+    to {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+/* ========== LOADING BAR ========== */
+.page-loading-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--color-primary, #7303a7), var(--color-accent, #ff7b00));
+    z-index: 999999;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+}
+
+.page-loading-bar.is-loading {
+    transform: scaleX(0.7);
+    transition: transform 2s cubic-bezier(0.1, 0.05, 0.1, 1);
+}
+
+.page-loading-bar.is-complete {
+    transform: scaleX(1);
+    transition: transform 0.2s ease;
+}
+
+.page-loading-bar.is-hiding {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+/* ========== DARK THEME ========== */
+[data-theme="dark"] .page-transition-overlay {
+    background: linear-gradient(135deg, #161b22, #0d1117);
+}
+
+[data-theme="dark"] .page-loading-bar {
+    background: linear-gradient(90deg, var(--color-neon-purple, #a78bfa), var(--color-neon-cyan, #22d3ee));
+}
+
+/* ========== REDUCED MOTION ========== */
+@media (prefers-reduced-motion: reduce) {
+
+    .transition-fade,
+    .transition-slide,
+    .transition-clip,
+    .page-transition-overlay,
+    .page-loading-bar {
+        transition: none !important;
+    }
+}

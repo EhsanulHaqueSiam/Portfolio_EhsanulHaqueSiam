@@ -1,0 +1,537 @@
+/* ==================== GAMIFICATION STYLES ==================== */
+/* Easter eggs, achievements, and interactive elements */
+
+/* ========== ACHIEVEMENT TOAST ========== */
+.achievement-toast {
+    position: fixed;
+    top: 8rem;
+    /* Below navbar */
+    right: 2rem;
+    background-color: #5a029e;
+    /* Solid fallback */
+    background: linear-gradient(135deg, #7303a7, #2506ad) !important;
+    color: #fff !important;
+    padding: 1.5rem 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 10px 40px rgba(115, 3, 167, 0.4);
+    z-index: 100000;
+    transform: translateX(120%);
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    max-width: 350px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.achievement-toast.show {
+    transform: translateX(0);
+}
+
+.achievement-toast-content strong {
+    display: block;
+    font-size: 1.6rem;
+    margin-bottom: 0.3rem;
+    color: #fff !important;
+}
+
+.achievement-toast-content p {
+    font-size: 1.3rem;
+    opacity: 0.9;
+    margin: 0;
+    color: #fff !important;
+}
+
+/* ========== NOTYF NOTIFICATION OVERRIDES ========== */
+/* Override Notyf library styles to ensure visible achievement toasts */
+.notyf__toast {
+    background-color: #5a029e !important;
+    background: linear-gradient(135deg, #7303a7, #2506ad) !important;
+    box-shadow: 0 10px 40px rgba(115, 3, 167, 0.5) !important;
+    border-radius: 1rem !important;
+    padding: 1rem 1.5rem !important;
+}
+
+.notyf__toast--achievement {
+    background-color: #5a029e !important;
+    background: linear-gradient(135deg, #7303a7, #2506ad) !important;
+}
+
+.notyf__message {
+    color: #fff !important;
+    font-size: 1.2rem !important;
+}
+
+.notyf__message strong {
+    display: block;
+    font-size: 1.4rem !important;
+    margin-bottom: 0.3rem;
+    color: #fff !important;
+}
+
+.notyf__ripple {
+    display: none !important;
+    /* Hide the ripple effect that might cause transparency */
+}
+
+/* ========== ACHIEVEMENTS BUTTON ========== */
+.achievements-button {
+    position: fixed;
+    bottom: 8rem;
+    left: 2rem;
+    /* Moved to bottom-left */
+    width: 5rem;
+    height: 5rem;
+    background: linear-gradient(135deg, #ffd700, #ff7b00);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(255, 123, 0, 0.4);
+    z-index: 1000;
+    transition: all 0.3s ease;
+}
+
+.achievements-button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 30px rgba(255, 123, 0, 0.5);
+}
+
+.achievements-button i {
+    font-size: 2rem;
+    color: #1a1a2e;
+}
+
+.achievements-button .achievement-count {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: #7303a7;
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: 700;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ========== ACHIEVEMENTS MODAL ========== */
+.achievements-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+    z-index: 99998;
+    /* Below cursor (99999) */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.achievements-modal-content {
+    background: var(--bg-secondary, #fff);
+    border-radius: 1.5rem;
+    padding: 2.5rem;
+    max-width: 500px;
+    width: 100%;
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 25px 80px rgba(0, 0, 0, 0.3);
+}
+
+.achievements-modal h2 {
+    font-size: 2.5rem;
+    color: var(--text-primary, #1a1a2e);
+    margin-bottom: 0.5rem;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.achievements-progress {
+    text-align: center;
+    font-size: 1.4rem;
+    color: var(--text-secondary, #666);
+    margin-bottom: 1.5rem;
+    flex-shrink: 0;
+}
+
+.achievements-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    /* Make this the scrollable container */
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-right: 0.5rem;
+    /* Custom scrollbar styling */
+    scrollbar-width: thin;
+    scrollbar-color: rgba(115, 3, 167, 0.4) transparent;
+}
+
+.achievements-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.achievements-list::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.achievements-list::-webkit-scrollbar-thumb {
+    background: rgba(115, 3, 167, 0.4);
+    border-radius: 3px;
+}
+
+.achievements-list::-webkit-scrollbar-thumb:hover {
+    background: rgba(115, 3, 167, 0.6);
+}
+
+.achievement-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: rgba(115, 3, 167, 0.05);
+    border-radius: 1rem;
+    border: 1px solid rgba(115, 3, 167, 0.1);
+    transition: all 0.3s ease;
+}
+
+.achievement-item.locked {
+    opacity: 0.5;
+    filter: grayscale(1);
+}
+
+.achievement-item.unlocked {
+    background: linear-gradient(135deg, rgba(115, 3, 167, 0.1), rgba(255, 123, 0, 0.1));
+    border-color: rgba(255, 123, 0, 0.3);
+}
+
+/* Next achievement to unlock - grayed but visible as hint */
+.achievement-item.next-unlock {
+    opacity: 0.7;
+    filter: grayscale(0.6);
+    border-color: rgba(115, 3, 167, 0.2);
+    border-style: dashed;
+}
+
+.achievement-item.next-unlock .grayed {
+    opacity: 0.6;
+}
+
+.achievement-item.next-unlock .hint {
+    font-style: italic;
+    color: var(--text-secondary, #888);
+}
+
+.achievement-icon {
+    font-size: 2.5rem;
+    flex-shrink: 0;
+}
+
+.achievement-info strong {
+    display: block;
+    font-size: 1.5rem;
+    color: var(--text-primary, #1a1a2e);
+}
+
+.achievement-info p {
+    font-size: 1.2rem;
+    color: var(--text-secondary, #666);
+    margin: 0;
+}
+
+.achievements-hint {
+    text-align: center;
+    font-size: 1.2rem;
+    color: var(--text-secondary, #666);
+    opacity: 0.8;
+}
+
+.achievements-close {
+    display: block;
+    width: 100%;
+    padding: 1rem;
+    background: linear-gradient(135deg, #7303a7, #2506ad);
+    color: #fff;
+    border: none;
+    border-radius: 0.8rem;
+    font-size: 1.5rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.achievements-close:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(115, 3, 167, 0.4);
+}
+
+/* ========== MINI-GAME TRIGGER ========== */
+.mini-game-trigger {
+    position: fixed;
+    bottom: 15rem;
+    left: 2rem;
+    /* Changed from right to left to avoid overlap with section indicator */
+    width: 4.5rem;
+    height: 4.5rem;
+    background: linear-gradient(135deg, #22d3ee, #6366f1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 2rem;
+    box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
+    z-index: 1000;
+    opacity: 0;
+    transform: scale(0);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    animation: pulseGlow 2s ease-in-out infinite;
+}
+
+.mini-game-trigger.visible {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.mini-game-trigger:hover {
+    transform: scale(1.15);
+}
+
+@keyframes pulseGlow {
+
+    0%,
+    100% {
+        box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
+    }
+
+    50% {
+        box-shadow: 0 4px 30px rgba(99, 102, 241, 0.7);
+    }
+}
+
+/* ========== MINI-GAME OVERLAY ========== */
+.mini-game-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.9);
+    z-index: 99990;
+    /* Below custom cursor (99999) but above most content */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: auto !important;
+    /* Override custom cursor */
+}
+
+.mini-game-overlay * {
+    cursor: auto !important;
+    /* Ensure all children have visible cursor */
+}
+
+.mini-game-arena {
+    cursor: crosshair !important;
+    /* Crosshair for aiming */
+}
+
+.mini-game-target {
+    cursor: pointer !important;
+    /* Pointer on targets */
+}
+
+.mini-game-container {
+    background: var(--bg-secondary, #1a1a2e);
+    border-radius: 1.5rem;
+    padding: 2rem;
+    text-align: center;
+    max-width: 500px;
+    width: 90%;
+}
+
+.mini-game-container h3 {
+    font-size: 2.5rem;
+    color: #fff;
+    margin-bottom: 0.5rem;
+}
+
+.mini-game-container p {
+    font-size: 1.4rem;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 1.5rem;
+}
+
+.mini-game-arena {
+    position: relative;
+    width: 100%;
+    height: 300px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 1rem;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 1rem;
+    overflow: hidden;
+}
+
+.mini-game-target {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, #ff7b00, #ffd700);
+    border-radius: 50%;
+    cursor: pointer;
+    animation: targetPop 0.3s ease;
+    transition: transform 0.1s ease;
+}
+
+.mini-game-target:hover {
+    transform: scale(1.1);
+}
+
+.mini-game-target::before {
+    content: "";
+    position: absolute;
+    inset: 8px;
+    background: linear-gradient(135deg, #7303a7, #2506ad);
+    border-radius: 50%;
+}
+
+.mini-game-target::after {
+    content: "";
+    position: absolute;
+    inset: 18px;
+    background: #fff;
+    border-radius: 50%;
+}
+
+@keyframes targetPop {
+    0% {
+        transform: scale(0);
+    }
+
+    70% {
+        transform: scale(1.2);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.mini-game-time {
+    font-size: 1.6rem;
+    color: #fff;
+}
+
+.mini-game-time span {
+    color: #ffd700;
+    font-weight: 700;
+}
+
+.mini-game-close {
+    padding: 0.8rem 2rem;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 0.5rem;
+    cursor: pointer !important;
+    font-size: 1.3rem;
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 99991;
+    /* Ensure it's clickable above overlay */
+}
+
+.mini-game-close:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.mini-game-result {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: #fff;
+}
+
+.mini-game-result h2 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.mini-game-result p {
+    font-size: 1.8rem;
+}
+
+.mini-game-bonus {
+    color: #22d3ee;
+    animation: flash 0.5s ease infinite alternate;
+}
+
+@keyframes flash {
+    0% {
+        opacity: 0.7;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+/* ========== KONAMI CODE RAINBOW MODE ========== */
+.rainbow-mode {
+    animation: rainbowBg 2s ease infinite;
+}
+
+@keyframes rainbowBg {
+    0% {
+        filter: hue-rotate(0deg);
+    }
+
+    100% {
+        filter: hue-rotate(360deg);
+    }
+}
+
+/* ========== DARK THEME ========== */
+[data-theme="dark"] .achievements-modal-content {
+    background: #161b22;
+}
+
+[data-theme="dark"] .achievement-item.unlocked {
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.15), rgba(236, 72, 153, 0.1));
+    border-color: rgba(139, 92, 246, 0.3);
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 768px) {
+    .achievements-button {
+        bottom: 7rem;
+        right: 1rem;
+        width: 4.5rem;
+        height: 4.5rem;
+    }
+
+    .mini-game-trigger {
+        bottom: 13rem;
+        left: 1rem;
+        /* Changed from right to left */
+        width: 4rem;
+        height: 4rem;
+    }
+
+    .achievement-toast {
+        right: 1rem;
+        left: 1rem;
+        max-width: none;
+    }
+
+    .mini-game-arena {
+        height: 250px;
+    }
+}

@@ -97,6 +97,12 @@
     height: 100%;
     border-radius: 1.5rem;
     border: none;
+    /* Prevent scroll hijacking - only enable pointer when intentionally hovering */
+    pointer-events: none;
+}
+
+.video-container:hover iframe {
+    pointer-events: auto;
 }
 
 .video .icon {
@@ -121,6 +127,119 @@
     }
 
     .video-container iframe {
+        border-radius: 0.8rem;
+    }
+}
+
+/* ==================== CLICK-TO-PLAY OVERLAY ==================== */
+
+.video-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 1.5rem;
+    overflow: hidden;
+    z-index: 2;
+}
+
+.video-thumbnail {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease, filter 0.3s ease;
+}
+
+.video-overlay:hover .video-thumbnail {
+    transform: scale(1.05);
+    filter: brightness(0.7);
+}
+
+.video-play-btn {
+    position: relative;
+    z-index: 3;
+    width: 90px;
+    height: 90px;
+    border: none;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(115, 3, 167, 0.95), rgba(255, 123, 0, 0.95));
+    color: #fff;
+    font-size: 2.4rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow:
+        0 10px 40px rgba(115, 3, 167, 0.5),
+        0 0 0 0 rgba(255, 255, 255, 0.3);
+    animation: playBtnPulse 2s ease-in-out infinite;
+}
+
+.video-play-btn i {
+    margin-left: 5px;
+    /* Offset for visual centering of play icon */
+}
+
+.video-play-btn:hover {
+    transform: scale(1.1);
+    box-shadow:
+        0 15px 50px rgba(115, 3, 167, 0.6),
+        0 0 0 15px rgba(255, 255, 255, 0.1);
+}
+
+@keyframes playBtnPulse {
+
+    0%,
+    100% {
+        box-shadow:
+            0 10px 40px rgba(115, 3, 167, 0.5),
+            0 0 0 0 rgba(255, 255, 255, 0.3);
+    }
+
+    50% {
+        box-shadow:
+            0 10px 40px rgba(115, 3, 167, 0.5),
+            0 0 0 20px rgba(255, 255, 255, 0);
+    }
+}
+
+/* Hide overlay when video is playing */
+.video-overlay.hidden {
+    display: none;
+}
+
+/* Iframe when visible */
+.video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 1.5rem;
+    border: none;
+    z-index: 1;
+}
+
+/* Responsive adjustments for play button */
+@media (max-width: 768px) {
+    .video-play-btn {
+        width: 70px;
+        height: 70px;
+        font-size: 2rem;
+    }
+
+    .video-thumbnail {
+        border-radius: 0.8rem;
+    }
+
+    .video-overlay {
         border-radius: 0.8rem;
     }
 }

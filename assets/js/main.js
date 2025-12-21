@@ -12,6 +12,9 @@
 // Navigation and UI
 import { initNavigation } from './modules/navigation.js?v=4.0';
 import { initScrollSpy, initSmoothScrolling } from './modules/scroll-spy.js?v=4.0';
+import { initSectionIndicator } from './modules/section-indicator.js?v=1.0';
+import { initTimezoneClock } from './modules/timezone-clock.js?v=1.0';
+import { initAllLibraries } from './modules/libraries.js?v=1.0';
 import { initScrollAnimations, initParallax, initMicroInteractions, initSmoothScroll, initPageLoadAnimation } from './modules/animations.js?v=4.0';
 
 // Forms and Interaction
@@ -62,6 +65,8 @@ const initPortfolio = async () => {
   initScrollSpy();
   initSmoothScrolling();
   initSmoothScroll();
+  initSectionIndicator(); // Enhanced section progress indicator
+  initTimezoneClock(); // Dhaka timezone clock
 
   // Initialize visual effects and animations (before content load)
   await initTypedText(); // Must await to prevent timing conflicts
@@ -95,7 +100,46 @@ const initPortfolio = async () => {
   initMicroInteractions();
   initCopyToClipboard();
 
+  // Initialize UI enhancement libraries (AOS, GLightbox, Tippy, etc.)
+  initAllLibraries();
+
+  // Initialize video click-to-play functionality
+  initVideoPlayer();
+
   console.log("✅ Portfolio initialization complete!");
+};
+
+/**
+ * Initialize video click-to-play functionality
+ * Prevents scroll hijacking by only loading iframe when user clicks
+ */
+const initVideoPlayer = () => {
+  const videoOverlay = document.getElementById('video-overlay');
+  const videoContainer = document.getElementById('video-container');
+
+  if (!videoOverlay || !videoContainer) return;
+
+  const playButton = videoOverlay.querySelector('.video-play-btn');
+
+  const loadVideo = () => {
+    // Hide the overlay
+    videoOverlay.classList.add('hidden');
+
+    // Create and inject the iframe
+    const iframe = document.createElement('iframe');
+    iframe.src = 'https://www.youtube.com/embed/Ulyy3Yf-zxc?autoplay=1&rel=0';
+    iframe.title = 'YouTube Video Player';
+    iframe.frameBorder = '0';
+    iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+    iframe.allowFullscreen = true;
+
+    videoContainer.appendChild(iframe);
+
+    console.log('✅ Video player loaded');
+  };
+
+  // Handle click on overlay or play button
+  videoOverlay.addEventListener('click', loadVideo);
 };
 
 // ==================== DOCUMENT READY ====================
