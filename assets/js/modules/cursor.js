@@ -1,7 +1,7 @@
 /**
  * Custom Cursor Module
  * Creates a smooth following cursor with interactive states
- * Uses CSS-based hover detection for better performance
+ * Features premium magnetic button effect with morphing cursor
  */
 
 let cursor = null;
@@ -12,6 +12,11 @@ let mouseY = 0;
 let endX = 0;
 let endY = 0;
 let animationId = null;
+
+// Magnetic effect state
+let isMagnetic = false;
+let magneticTarget = null;
+let magneticRect = null;
 
 /**
  * Create cursor elements
@@ -34,21 +39,67 @@ const createCursor = () => {
 };
 
 /**
+ * Check if element is a magnetic button
+ */
+const isMagneticElement = (element) => {
+    if (!element) return false;
+    return element.closest('.social-icons a, .btn, .contact-card, .tag-btn, .share a, [role="button"], button, .theme-toggle');
+};
+
+/**
+ * Get button properties for morphing
+ */
+const getButtonProps = (element) => {
+    const rect = element.getBoundingClientRect();
+    const computedStyle = window.getComputedStyle(element);
+    const borderRadius = computedStyle.borderRadius;
+    
+    // Determine if it's a circular button (social icons)
+    const isCircular = element.closest('.social-icons a, .share a');
+    
+    return {
+        rect,
+        width: rect.width,
+        height: rect.height,
+        centerX: rect.left + rect.width / 2,
+        centerY: rect.top + rect.height / 2,
+        borderRadius: isCircular ? '50%' : borderRadius,
+        isCircular
+    };
+};
+
+/**
  * Animate cursor to follow mouse with smooth delay
+ * Includes magnetic effect for buttons
  */
 const animateCursor = () => {
     if (!cursor || !cursorDot) return;
 
+    let targetX = mouseX;
+    let targetY = mouseY;
+
+    // Apply magnetic effect - cursor follows button center with slight offset
+    if (isMagnetic && magneticRect) {
+        const magnetStrength = 0.4; // How much the cursor is pulled toward center
+        targetX = mouseX + (magneticRect.centerX - mouseX) * magnetStrength;
+        targetY = mouseY + (magneticRect.centerY - mouseY) * magnetStrength;
+    }
+
     // Smooth easing for outer ring
-    endX += (mouseX - endX) * 0.15;
-    endY += (mouseY - endY) * 0.15;
+    endX += (targetX - endX) * 0.15;
+    endY += (targetY - endY) * 0.15;
 
     cursor.style.left = `${endX}px`;
     cursor.style.top = `${endY}px`;
 
-    // Dot follows immediately
-    cursorDot.style.left = `${mouseX}px`;
-    cursorDot.style.top = `${mouseY}px`;
+    // Dot follows immediately (or also has slight magnetic pull)
+    if (isMagnetic && magneticRect) {
+        cursorDot.style.left = `${targetX}px`;
+        cursorDot.style.top = `${targetY}px`;
+    } else {
+        cursorDot.style.left = `${mouseX}px`;
+        cursorDot.style.top = `${mouseY}px`;
+    }
 
     animationId = requestAnimationFrame(animateCursor);
 };
@@ -74,6 +125,9 @@ const handleMouseLeave = () => {
     cursor?.classList.remove('visible');
     cursorDot?.classList.remove('visible');
     cursorVisible = false;
+    
+    // Reset magnetic state
+    resetMagneticState();
 };
 
 const handleMouseEnter = () => {
@@ -83,19 +137,68 @@ const handleMouseEnter = () => {
 };
 
 /**
+ * Reset magnetic cursor state
+ */
+const resetMagneticState = () => {
+    isMagnetic = false;
+    magneticTarget = null;
+    magneticRect = null;
+    
+    cursor?.classList.remove('cursor-magnetic');
+    cursorDot?.classList.remove('cursor-magnetic');
+    
+    // Reset custom properties
+    if (cursor) {
+        cursor.style.removeProperty('--btn-width');
+        cursor.style.removeProperty('--btn-height');
+        cursor.style.removeProperty('--btn-radius');
+    }
+};
+
+/**
+ * Apply magnetic effect to cursor
+ */
+const applyMagneticEffect = (element) => {
+    const props = getButtonProps(element);
+    
+    isMagnetic = true;
+    magneticTarget = element;
+    magneticRect = props;
+    
+    cursor?.classList.add('cursor-magnetic');
+    cursorDot?.classList.add('cursor-magnetic');
+    
+    // Set CSS custom properties for dynamic sizing
+    if (cursor) {
+        // Add padding to cursor size (slightly larger than button)
+        const padding = props.isCircular ? 12 : 16;
+        cursor.style.setProperty('--btn-width', `${props.width + padding}px`);
+        cursor.style.setProperty('--btn-height', `${props.height + padding}px`);
+        cursor.style.setProperty('--btn-radius', props.borderRadius);
+    }
+};
+
+/**
  * Handle hover state using event delegation (single listener on document)
  * This prevents memory leaks from accumulating listeners
  */
 const handleHoverState = (e) => {
     const target = e.target;
 
-    // Check if hovering over interactive elements
-    const isInteractive = target.closest('a, button, .btn, input, textarea, .social-icons a, .theme-toggle, [role="button"]');
+    // Check if hovering over magnetic (interactive) elements
+    const magneticElement = isMagneticElement(target);
 
-    if (isInteractive) {
+    if (magneticElement) {
+        const element = target.closest('.social-icons a, .btn, .contact-card, .tag-btn, .share a, [role="button"], button, .theme-toggle');
+        
+        if (element && element !== magneticTarget) {
+            applyMagneticEffect(element);
+        }
+        
         cursor?.classList.add('cursor-hover');
         cursorDot?.classList.add('cursor-hover');
     } else {
+        resetMagneticState();
         cursor?.classList.remove('cursor-hover');
         cursorDot?.classList.remove('cursor-hover');
     }
@@ -138,4 +241,3 @@ export const initCustomCursor = () => {
         cursorVisible = true;
     });
 };
-

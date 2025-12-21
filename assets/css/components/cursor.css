@@ -18,8 +18,14 @@
     z-index: 99999;
     transform: translate(-50%, -50%);
     opacity: 0;
-    will-change: transform, left, top;
-    /* Avoid mix-blend-mode for performance */
+    will-change: transform, left, top, width, height, border-radius;
+    transition: 
+        width 0.35s cubic-bezier(0.23, 1, 0.32, 1),
+        height 0.35s cubic-bezier(0.23, 1, 0.32, 1),
+        border-radius 0.35s cubic-bezier(0.23, 1, 0.32, 1),
+        background 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease;
 }
 
 .cursor-ring.visible {
@@ -38,6 +44,10 @@
     transform: translate(-50%, -50%);
     opacity: 0;
     will-change: transform, left, top;
+    transition: 
+        width 0.25s ease,
+        height 0.25s ease,
+        opacity 0.25s ease;
 }
 
 .cursor-dot.visible {
@@ -56,6 +66,64 @@
     width: 4px;
     height: 4px;
     background: var(--color-primary-light, #9303d7);
+}
+
+/* ==================== MAGNETIC CURSOR EFFECT ==================== */
+/* Premium effect: cursor morphs to hug/fill button shape */
+
+.cursor-ring.cursor-magnetic {
+    /* Use CSS custom properties for dynamic sizing */
+    width: var(--btn-width, 60px);
+    height: var(--btn-height, 60px);
+    border-radius: var(--btn-radius, 50%);
+    
+    /* Premium glow effect */
+    border-color: rgba(255, 215, 0, 0.6);
+    background: rgba(255, 215, 0, 0.08);
+    box-shadow: 
+        0 0 20px rgba(255, 215, 0, 0.15),
+        inset 0 0 15px rgba(255, 215, 0, 0.05);
+    
+    /* Slightly faster transition for snappy feel */
+    transition: 
+        width 0.3s cubic-bezier(0.23, 1, 0.32, 1),
+        height 0.3s cubic-bezier(0.23, 1, 0.32, 1),
+        border-radius 0.3s cubic-bezier(0.23, 1, 0.32, 1),
+        background 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.cursor-dot.cursor-magnetic {
+    /* Dot becomes smaller and more subtle */
+    width: 6px;
+    height: 6px;
+    opacity: 0.7;
+    background: var(--color-accent-gold, #ffd700);
+}
+
+/* ==================== DARK THEME MAGNETIC EFFECT ==================== */
+
+[data-theme="dark"] .cursor-ring {
+    border-color: var(--color-accent-gold, #ffd700);
+}
+
+[data-theme="dark"] .cursor-ring.cursor-hover {
+    border-color: var(--color-primary-light, #b84dff);
+    background: rgba(184, 77, 255, 0.1);
+}
+
+[data-theme="dark"] .cursor-ring.cursor-magnetic {
+    border-color: rgba(184, 77, 255, 0.7);
+    background: rgba(184, 77, 255, 0.1);
+    box-shadow: 
+        0 0 25px rgba(184, 77, 255, 0.2),
+        0 0 50px rgba(184, 77, 255, 0.1),
+        inset 0 0 20px rgba(184, 77, 255, 0.08);
+}
+
+[data-theme="dark"] .cursor-dot.cursor-magnetic {
+    background: var(--color-primary-light, #b84dff);
 }
 
 /* Text hover state - horizontal line */
@@ -84,14 +152,4 @@
     .custom-cursor-enabled * {
         cursor: auto !important;
     }
-}
-
-/* Dark theme adjustments */
-[data-theme="dark"] .cursor-ring {
-    border-color: var(--color-accent-gold, #ffd700);
-}
-
-[data-theme="dark"] .cursor-ring.cursor-hover {
-    border-color: var(--color-primary-light, #b84dff);
-    background: rgba(184, 77, 255, 0.1);
 }
