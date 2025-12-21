@@ -2,6 +2,7 @@
  * Custom Cursor Module
  * Creates a smooth following cursor with interactive states
  * Features premium magnetic button effect with morphing cursor
+ * Includes particle trails, click ripples, and contextual cursor states
  */
 
 let cursor = null;
@@ -9,6 +10,8 @@ let cursorDot = null;
 let cursorVisible = true;
 let mouseX = 0;
 let mouseY = 0;
+let prevMouseX = 0;
+let prevMouseY = 0;
 let endX = 0;
 let endY = 0;
 let animationId = null;
@@ -17,6 +20,16 @@ let animationId = null;
 let isMagnetic = false;
 let magneticTarget = null;
 let magneticRect = null;
+
+// Particle trail state
+let particleCount = 0;
+const MAX_PARTICLES = 20;
+let lastParticleTime = 0;
+const PARTICLE_THROTTLE = 30; // ms between particles
+
+// Scroll state
+let isScrolling = false;
+let scrollTimeout = null;
 
 /**
  * Create cursor elements
@@ -47,16 +60,36 @@ const isMagneticElement = (element) => {
 };
 
 /**
+ * Check if element is an image/gallery item
+ * Excludes hero section image and education section images which are not viewable
+ */
+const isViewableElement = (element) => {
+    if (!element) return false;
+    // Exclude hero and education section images - they are not lightbox/viewable
+    if (element.closest('.home .image, #home .image, .education .image, #education .image')) return false;
+    return element.closest('.image, .image-slider, [data-lightbox], .gallery-item, .project-image');
+};
+
+/**
+ * Check if element is an external link
+ */
+const isExternalLink = (element) => {
+    if (!element) return false;
+    const link = element.closest('a[target="_blank"], a[href^="http"]:not([href*="' + window.location.hostname + '"])');
+    return link && !isMagneticElement(element);
+};
+
+/**
  * Get button properties for morphing
  */
 const getButtonProps = (element) => {
     const rect = element.getBoundingClientRect();
     const computedStyle = window.getComputedStyle(element);
     const borderRadius = computedStyle.borderRadius;
-    
+
     // Determine if it's a circular button (social icons)
     const isCircular = element.closest('.social-icons a, .share a');
-    
+
     return {
         rect,
         width: rect.width,
@@ -66,6 +99,57 @@ const getButtonProps = (element) => {
         borderRadius: isCircular ? '50%' : borderRadius,
         isCircular
     };
+};
+
+/**
+ * Create click ripple effect
+ */
+const createClickRipple = (x, y) => {
+    const ripple = document.createElement('div');
+    ripple.className = 'cursor-click-ripple';
+    ripple.style.left = `${x}px`;
+    ripple.style.top = `${y}px`;
+    document.body.appendChild(ripple);
+
+    // Remove after animation
+    ripple.addEventListener('animationend', () => {
+        ripple.remove();
+    });
+};
+
+/**
+ * Create particle at position
+ */
+const createParticle = (x, y) => {
+    if (particleCount >= MAX_PARTICLES) return;
+
+    const now = Date.now();
+    if (now - lastParticleTime < PARTICLE_THROTTLE) return;
+    lastParticleTime = now;
+
+    const particle = document.createElement('div');
+    particle.className = 'cursor-particle';
+
+    // Random offset for natural spread
+    const offsetX = (Math.random() - 0.5) * 20;
+    const offsetY = (Math.random() - 0.5) * 20;
+
+    particle.style.left = `${x + offsetX}px`;
+    particle.style.top = `${y + offsetY}px`;
+
+    // Random size variation
+    const size = 4 + Math.random() * 4;
+    particle.style.width = `${size}px`;
+    particle.style.height = `${size}px`;
+
+    document.body.appendChild(particle);
+    particleCount++;
+
+    // Remove after animation
+    particle.addEventListener('animationend', () => {
+        particle.remove();
+        particleCount--;
+    });
 };
 
 /**
@@ -105,9 +189,11 @@ const animateCursor = () => {
 };
 
 /**
- * Handle mouse position updates
+ * Handle mouse position updates with particle trail
  */
 const handleMouseMove = (e) => {
+    prevMouseX = mouseX;
+    prevMouseY = mouseY;
     mouseX = e.clientX;
     mouseY = e.clientY;
 
@@ -115,6 +201,17 @@ const handleMouseMove = (e) => {
         cursor?.classList.add('visible');
         cursorDot?.classList.add('visible');
         cursorVisible = true;
+    }
+
+    // Calculate movement speed for particle trail
+    const speed = Math.sqrt(
+        Math.pow(mouseX - prevMouseX, 2) +
+        Math.pow(mouseY - prevMouseY, 2)
+    );
+
+    // Create particles on fast movement (but not during magnetic hover)
+    if (speed > 15 && !isMagnetic && !isScrolling) {
+        createParticle(mouseX, mouseY);
     }
 };
 
@@ -125,7 +222,7 @@ const handleMouseLeave = () => {
     cursor?.classList.remove('visible');
     cursorDot?.classList.remove('visible');
     cursorVisible = false;
-    
+
     // Reset magnetic state
     resetMagneticState();
 };
@@ -143,10 +240,10 @@ const resetMagneticState = () => {
     isMagnetic = false;
     magneticTarget = null;
     magneticRect = null;
-    
+
     cursor?.classList.remove('cursor-magnetic');
     cursorDot?.classList.remove('cursor-magnetic');
-    
+
     // Reset custom properties
     if (cursor) {
         cursor.style.removeProperty('--btn-width');
@@ -160,14 +257,14 @@ const resetMagneticState = () => {
  */
 const applyMagneticEffect = (element) => {
     const props = getButtonProps(element);
-    
+
     isMagnetic = true;
     magneticTarget = element;
     magneticRect = props;
-    
+
     cursor?.classList.add('cursor-magnetic');
     cursorDot?.classList.add('cursor-magnetic');
-    
+
     // Set CSS custom properties for dynamic sizing
     if (cursor) {
         // Add padding to cursor size (slightly larger than button)
@@ -185,23 +282,91 @@ const applyMagneticEffect = (element) => {
 const handleHoverState = (e) => {
     const target = e.target;
 
+    // Reset all special states first
+    cursor?.classList.remove('cursor-hover', 'cursor-view', 'cursor-link', 'cursor-focus');
+    cursorDot?.classList.remove('cursor-hover', 'cursor-view', 'cursor-link');
+
+    // Check if hovering over viewable elements (images/gallery)
+    if (isViewableElement(target)) {
+        resetMagneticState();
+        cursor?.classList.add('cursor-view');
+        cursorDot?.classList.add('cursor-view');
+        return;
+    }
+
+    // Check if hovering over external links
+    if (isExternalLink(target)) {
+        resetMagneticState();
+        cursor?.classList.add('cursor-link');
+        cursorDot?.classList.add('cursor-link');
+        return;
+    }
+
     // Check if hovering over magnetic (interactive) elements
     const magneticElement = isMagneticElement(target);
 
     if (magneticElement) {
         const element = target.closest('.social-icons a, .btn, .contact-card, .tag-btn, .share a, [role="button"], button, .theme-toggle');
-        
+
         if (element && element !== magneticTarget) {
             applyMagneticEffect(element);
         }
-        
-        cursor?.classList.add('cursor-hover');
+
+        cursor?.classList.add('cursor-hover', 'cursor-focus');
         cursorDot?.classList.add('cursor-hover');
     } else {
         resetMagneticState();
-        cursor?.classList.remove('cursor-hover');
-        cursorDot?.classList.remove('cursor-hover');
     }
+};
+
+/**
+ * Handle click events for ripple effect
+ */
+const handleClick = (e) => {
+    createClickRipple(e.clientX, e.clientY);
+
+    // Brief click animation on cursor
+    cursor?.classList.add('clicking');
+    setTimeout(() => {
+        cursor?.classList.remove('clicking');
+    }, 150);
+};
+
+/**
+ * Handle scroll events for cursor state
+ */
+const handleScroll = () => {
+    if (!isScrolling) {
+        isScrolling = true;
+        cursor?.classList.add('cursor-scrolling');
+        cursorDot?.classList.add('cursor-scrolling');
+    }
+
+    // Clear existing timeout
+    if (scrollTimeout) {
+        clearTimeout(scrollTimeout);
+    }
+
+    // Reset scrolling state after scroll ends
+    scrollTimeout = setTimeout(() => {
+        isScrolling = false;
+        cursor?.classList.remove('cursor-scrolling');
+        cursorDot?.classList.remove('cursor-scrolling');
+    }, 150);
+};
+
+/**
+ * Handle mouse down for drag state
+ */
+const handleMouseDown = (e) => {
+    // Only apply dragging state if not clicking a button
+    if (!isMagneticElement(e.target)) {
+        cursor?.classList.add('cursor-dragging');
+    }
+};
+
+const handleMouseUp = () => {
+    cursor?.classList.remove('cursor-dragging');
 };
 
 /**
@@ -221,6 +386,16 @@ export const initCustomCursor = () => {
 
     // Use event delegation for hover states - single listener instead of many
     document.addEventListener('mouseover', handleHoverState, { passive: true });
+
+    // Click ripple effect
+    document.addEventListener('click', handleClick);
+
+    // Scroll detection for cursor state
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    // Drag/mousedown states
+    document.addEventListener('mousedown', handleMouseDown);
+    document.addEventListener('mouseup', handleMouseUp);
 
     // Hide default cursor
     document.body.style.cursor = 'none';
