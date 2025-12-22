@@ -62,35 +62,47 @@ Java | Android SDK | Firebase | REST APIs
 
 ---
 
-### Award 2: Dean's List Award
+### Award 2: Dean's List Awards (3x Academic Excellence)
 
-**Title:** Dean's Award for Academic Excellence  
+**Title:** Dean's List Award - Academic Excellence (3x)  
 **Issuer:** American International University-Bangladesh (AIUB)  
 **Associated With:** AIUB  
-**Issue Date:** [Add your semester, e.g., Fall 2023]  
+**Issue Date:** December 2024  
 
-**Description:**
+**Description (copy exactly):**
 ```
-🏅 Recognized on Dean's List for outstanding academic performance in Computer Science and Engineering.
+🏅 Received 3 Dean's List Awards for exceptional academic performance in Computer Science & Engineering
 
 ━━━━━━━━━━━━━━━━━━━━━━━━
-📊 CRITERIA
+📊 AWARD DETAILS
 ━━━━━━━━━━━━━━━━━━━━━━━━
-• Achieved high CGPA (3.75+ on 4.0 scale)
-• Maintained consistent academic excellence
-• Recognized among top performers in the department
+• CGPA 3.95 — Fall 2023-24 (Highest Achievement)
+• CGPA 3.89 — Spring 2023-24
+• CGPA 3.75+ — Fall 2023-24
 
 ━━━━━━━━━━━━━━━━━━━━━━━━
-🎯 SIGNIFICANCE
+🎯 CRITERIA MET
 ━━━━━━━━━━━━━━━━━━━━━━━━
-Demonstrates:
-✓ Strong work ethic and discipline
-✓ Ability to balance multiple courses effectively
-✓ Commitment to academic excellence
-✓ Foundation for research and technical work
+✓ Maintained CGPA above 3.75 on 4.0 scale across multiple semesters
+✓ Recognized among top academic performers in CSE department
+✓ Consistent excellence while managing research & project work
+
+━━━━━━━━━━━━━━━━━━━━━━━━
+💡 SIGNIFICANCE
+━━━━━━━━━━━━━━━━━━━━━━━━
+Demonstrates strong work ethic, ability to balance academics with research publications, and commitment to excellence in Computer Science & Engineering.
+
+📜 Certificates received directly from the Dean
 ```
 
-**Media:** `assets/images/achievements/deans_award.jpg` (verify if exists)
+**Media to attach:**
+
+| File | Title | Description (max 500 chars) |
+|------|-------|----------------------------|
+| `deans-award-fall-2023-24.webp` | Dean's List Certificate - Above 3.75 CGPA | Dean's List Award certificate for maintaining CGPA above 3.75 during Fall 2023-24 semester at AIUB. |
+| `deans-award-spring-2023-24.webp` | Dean's List Certificate - 3.89 CGPA | Dean's List Award certificate for achieving 3.89 CGPA during Spring 2023-24 semester at AIUB. |
+| `receiving-deans-awards-1.webp` | Receiving Dean's Awards Ceremony | Photo receiving 3 Dean's List Awards directly from the Dean at AIUB for academic excellence. |
+| `receiving-deans-awards-2.webp` | Dean's Awards Ceremony - Group Photo | Photo from the award ceremony receiving recognition for 3 Dean's List Awards at AIUB. |
 
 ---
 
