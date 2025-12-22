@@ -1,5 +1,17 @@
 [
   {
+    "name": "Dean's List Awards - 3x Academic Excellence",
+    "desc": "Received 3 Dean's List Awards for maintaining exceptional academic performance: CGPA 3.95 (Fall 2023-24), CGPA 3.89 (Spring 2023-24), and CGPA above 3.75 (Fall 2023-24). Recognized for consistent academic excellence at AIUB.",
+    "images": [
+      "deans-award-fall-2023-24.webp",
+      "deans-award-spring-2023-24.webp",
+      "receiving-deans-awards-1.webp",
+      "receiving-deans-awards-2.webp"
+    ],
+    "category": "award",
+    "showInHome": true
+  },
+  {
     "name": "AIUB CS FEST 2024 - 1st Runner Up",
     "desc": "Achieved 1st Runner-Up in the App Showcase category at AIUB CS FEST 2024. Competed against 20+ teams, demonstrating innovative mobile application development and presentation skills.",
     "images": [
