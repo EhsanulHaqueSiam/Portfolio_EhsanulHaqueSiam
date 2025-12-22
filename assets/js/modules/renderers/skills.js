@@ -70,7 +70,7 @@ const renderCategorySkills = (container, categories) => {
                     ${category.skills.map(skill => {
             const levelStyle = getLevelStyles(skill.level);
             return `
-                            <div class="skill-item">
+                            <div class="skill-item" data-skill="${skill.name} - ${levelStyle.label}" aria-label="${skill.name}, ${levelStyle.label} proficiency">
                                 <img src="${skill.icon}" alt="${skill.name}" loading="lazy" />
                                 <span class="skill-name">${skill.name}</span>
                                 <span class="skill-level" data-level="${skill.level}">${levelStyle.label}</span>
