@@ -186,6 +186,42 @@
     margin-top: 0.5rem;
 }
 
+/* View Paper Button */
+.publications .box-container .box .btn-view-paper {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-top: 1.5rem;
+    padding: 1rem 1.8rem;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #fff;
+    background: linear-gradient(135deg, #dc2626, #ef4444);
+    border-radius: 1rem;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 15px rgba(220, 38, 38, 0.3);
+}
+
+.publications .box-container .box .btn-view-paper:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(220, 38, 38, 0.4);
+    background: linear-gradient(135deg, #b91c1c, #dc2626);
+}
+
+.publications .box-container .box .btn-view-paper i {
+    font-size: 1.3rem;
+}
+
+[data-theme="dark"] .publications .box-container .box .btn-view-paper {
+    background: linear-gradient(135deg, #ef4444, #f87171);
+    box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+}
+
+[data-theme="dark"] .publications .box-container .box .btn-view-paper:hover {
+    box-shadow: 0 8px 25px rgba(239, 68, 68, 0.5);
+}
+
 .publications .box-container .box::after {
     content: "";
     position: absolute;

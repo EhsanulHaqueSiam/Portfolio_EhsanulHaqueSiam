@@ -2,36 +2,55 @@
 /* Essential accessibility styles for WCAG 2.1 compliance */
 
 /* ========== SKIP LINK ========== */
+/* Accessible skip link - only visible on keyboard Tab focus */
 .skip-link {
-    position: fixed !important;
-    top: 0 !important;
-    left: 50% !important;
-    transform: translate(-50%, -100%) !important;
-    z-index: 100000 !important;
-    padding: 1rem 2rem;
-    background: var(--color-primary, #7303a7);
+    position: fixed;
+    top: 1rem;
+    left: 50%;
+    transform: translateX(-50%) translateY(-150%);
+    /* Hidden above viewport */
+    z-index: 100001;
+    /* Above navbar */
+    padding: 1.2rem 2.5rem;
+    /* Match website theme - purple gradient with orange glow */
+    background: linear-gradient(135deg, #a855f7, #7c3aed);
     color: #fff !important;
     font-size: 1.4rem;
     font-weight: 600;
-    border-radius: 0 0 0.8rem 0.8rem;
+    letter-spacing: 0.5px;
+    border-radius: 5rem;
+    /* Pill shape */
     text-decoration: none;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-    transition: transform 0.3s ease, opacity 0.3s ease !important;
-    /* Hidden by default */
-    opacity: 0 !important;
-    visibility: hidden !important;
-    pointer-events: none !important;
+    /* Orange accent glow */
+    box-shadow:
+        0 5px 20px rgba(255, 174, 0, 0.4),
+        0 4px 15px rgba(168, 85, 247, 0.3);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+        box-shadow 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    /* Ensure it's not visible until focused */
+    opacity: 0;
+    pointer-events: none;
 }
 
 .skip-link:focus,
 .skip-link:focus-visible {
-    transform: translate(-50%, 0) !important;
-    outline: 3px solid #fff;
-    outline-offset: 2px;
-    /* Visible when focused */
-    opacity: 1 !important;
-    visibility: visible !important;
-    pointer-events: auto !important;
+    /* Slide into view when focused via keyboard */
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+    outline: none;
+    box-shadow:
+        0 8px 30px rgba(255, 174, 0, 0.5),
+        0 6px 20px rgba(168, 85, 247, 0.4),
+        0 0 0 3px rgba(255, 255, 255, 0.3);
+}
+
+.skip-link:hover {
+    transform: translateX(-50%) scale(1.05);
+    box-shadow:
+        0 10px 35px rgba(255, 174, 0, 0.6),
+        0 8px 25px rgba(168, 85, 247, 0.5);
 }
 
 /* ========== FOCUS INDICATORS ========== */
@@ -106,8 +125,10 @@ header .navbar a:focus-visible {
 }
 
 [data-theme="dark"] .skip-link {
-    background: var(--color-neon-purple, #a78bfa);
-    color: #0d1117;
+    /* Same gradient works in dark mode - maintains consistency */
+    background: linear-gradient(135deg, #a855f7, #8b5cf6);
+    color: #fff !important;
+    border-color: rgba(255, 255, 255, 0.15);
 }
 
 /* ========== REDUCED MOTION ========== */
@@ -194,7 +215,7 @@ header .navbar a:focus-visible {
     }
 
     /* Underline links for better visibility - but exclude UI controls */
-    a:not(.section-indicator__dot):not(#scroll-top):not(.footer-social-link):not(.btn):not(.social-icons a):not(.navbar a):not(.logo):not(.viewall a):not(.resumebtn a) {
+    a:not(.section-indicator__dot):not(#scroll-top):not(.footer-social-link):not(.btn):not(.social-icons a):not(.navbar a):not(.logo):not(.viewall a):not(.resumebtn a):not(.scroll-indicator) {
         text-decoration: underline !important;
     }
 
@@ -206,7 +227,8 @@ header .navbar a:focus-visible {
     .social-icons a,
     .navbar a,
     .viewall a,
-    .resumebtn a {
+    .resumebtn a,
+    .scroll-indicator {
         text-decoration: none !important;
         border-bottom: none !important;
     }

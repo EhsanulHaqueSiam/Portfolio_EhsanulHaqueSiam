@@ -3,7 +3,7 @@
  * Handles rendering experience timeline section
  */
 
-import { fetchData } from '../data-fetcher.js';
+import { fetchData } from '/assets/js/modules/data-fetcher.js';
 
 /**
  * Generate HTML for a single experience item

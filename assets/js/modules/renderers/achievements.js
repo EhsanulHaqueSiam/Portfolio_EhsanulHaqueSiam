@@ -3,7 +3,7 @@
  * Handles rendering achievements/awards section with image sliders and gallery
  */
 
-import { fetchData, resolveImage } from '../data-fetcher.js';
+import { fetchData, resolveImage } from '/assets/js/modules/data-fetcher.js';
 import { openGallery, createImageResolver } from '../gallery.js';
 
 /**

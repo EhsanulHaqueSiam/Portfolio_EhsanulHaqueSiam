@@ -84,9 +84,17 @@
     flex-direction: column;
     align-items: center;
     gap: 0.8rem;
-    text-decoration: none;
+    text-decoration: none !important;
+    border-bottom: none !important;
     z-index: 10;
     animation: fadeIn 1.5s ease-out 1s both;
+}
+
+.scroll-indicator:hover,
+.scroll-indicator:focus,
+.scroll-indicator:active {
+    text-decoration: none !important;
+    border-bottom: none !important;
 }
 
 .scroll-text {

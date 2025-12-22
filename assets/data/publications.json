@@ -7,7 +7,8 @@
         "images": [
             "pub1.png"
         ],
-        "showInHome": true
+        "showInHome": true,
+        "paperLink": "https://example.com/paper-placeholder"
     },
     {
         "title": "Unfolding Emerging Issues in the Context of Changing Climatic Scenario",
@@ -17,6 +18,7 @@
         "images": [
             "cpecertificate.png"
         ],
-        "showInHome": true
+        "showInHome": true,
+        "paperLink": null
     }
 ]

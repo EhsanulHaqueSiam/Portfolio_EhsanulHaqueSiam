@@ -3,7 +3,7 @@
  * Handles rendering skills section with categories and proficiency levels
  */
 
-import { fetchData } from '../data-fetcher.js';
+import { fetchData } from '/assets/js/modules/data-fetcher.js';
 
 /**
  * Get level bar width and color based on proficiency

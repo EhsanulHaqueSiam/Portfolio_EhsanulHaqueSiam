@@ -32,14 +32,13 @@ const initParallaxElements = () => {
 
     gsap.registerPlugin(ScrollTrigger);
 
-    // Section headings - elegant slide and fade
+    // Section headings - elegant slide (no opacity fade to prevent flicker)
     document.querySelectorAll('.heading').forEach(heading => {
         gsap.fromTo(heading,
-            { y: 60, opacity: 0 },
+            { y: 30 },
             {
                 y: 0,
-                opacity: 1,
-                duration: 1,
+                duration: 0.8,
                 ease: "power3.out",
                 scrollTrigger: {
                     trigger: heading,
@@ -51,22 +50,20 @@ const initParallaxElements = () => {
         );
     });
 
-    // Cards and boxes - staggered reveal with 3D (exclude about section boxes which have different styling)
+    // Cards and boxes - staggered reveal with 3D (no opacity to prevent flicker)
     document.querySelectorAll('#work .box, #publications .box, #award .box, #education .box, .skill-category, .github-stat-card').forEach((box, index) => {
         gsap.fromTo(box,
             {
-                y: 80,
-                opacity: 0,
-                rotationX: 5,
+                y: 40,
+                rotationX: 3,
                 transformPerspective: 1000
             },
             {
                 y: 0,
-                opacity: 1,
                 rotationX: 0,
-                duration: 0.8,
+                duration: 0.6,
                 ease: "power3.out",
-                delay: (index % 4) * 0.1,
+                delay: (index % 4) * 0.08,
                 scrollTrigger: {
                     trigger: box,
                     start: "top 90%",
@@ -172,37 +169,27 @@ const initScrollamaPremium = () => {
             const sectionId = response.element.getAttribute('id');
             const theme = sectionThemes[sectionId] || sectionThemes['home'];
 
-            // Premium section enter animation
-            if (window.gsap) {
-                // Animate section content with premium timing
-                gsap.fromTo(response.element,
-                    { opacity: 0.7 },
-                    {
-                        opacity: 1,
-                        duration: 0.5,
-                        ease: "power2.out"
-                    }
-                );
+            // Premium section enter - just add class, no opacity animation to prevent flicker
+            response.element.classList.add('section-active');
 
-                // Update CSS custom properties for theme colors
-                document.documentElement.style.setProperty('--current-section-primary', theme.primary);
-                document.documentElement.style.setProperty('--current-section-accent', theme.accent);
+            // Update CSS custom properties for theme colors
+            document.documentElement.style.setProperty('--current-section-primary', theme.primary);
+            document.documentElement.style.setProperty('--current-section-accent', theme.accent);
 
-                // Animate section indicator with premium effect
-                const activeDot = document.querySelector(`.section-indicator__dot[data-section="${sectionId}"]`);
-                if (activeDot) {
-                    const pulse = activeDot.querySelector('.section-indicator__pulse');
-                    if (pulse) {
-                        gsap.fromTo(pulse,
-                            { scale: 0.5, opacity: 1 },
-                            {
-                                scale: 2,
-                                opacity: 0,
-                                duration: 0.8,
-                                ease: "power2.out"
-                            }
-                        );
-                    }
+            // Animate section indicator with premium effect
+            const activeDot = document.querySelector(`.section-indicator__dot[data-section="${sectionId}"]`);
+            if (activeDot) {
+                const pulse = activeDot.querySelector('.section-indicator__pulse');
+                if (pulse) {
+                    gsap.fromTo(pulse,
+                        { scale: 0.5, opacity: 1 },
+                        {
+                            scale: 2,
+                            opacity: 0,
+                            duration: 0.8,
+                            ease: "power2.out"
+                        }
+                    );
                 }
             }
 
@@ -216,14 +203,8 @@ const initScrollamaPremium = () => {
         })
         .onStepExit(response => {
             response.element.classList.remove('section-in-view');
-
-            if (window.gsap) {
-                gsap.to(response.element, {
-                    opacity: 0.85,
-                    duration: 0.3,
-                    ease: "power2.out"
-                });
-            }
+            response.element.classList.remove('section-active');
+            // No opacity animation to prevent flicker
         })
         .onStepProgress(response => {
             const progress = response.progress;
@@ -317,13 +298,13 @@ const addPremiumStyles = () => {
         /* Smooth card reveal - only for specific sections */
         #work .box, #publications .box, #education .box, #award .box,
         .skill-category, .github-stat-card {
-            will-change: transform, opacity;
+            will-change: transform;
             transform-style: preserve-3d;
         }
 
         /* Premium image reveal - exclude about images */
         section img:not(.tilt) {
-            will-change: transform, opacity;
+            will-change: transform;
         }
 
         /* Locomotive-style text reveal line */

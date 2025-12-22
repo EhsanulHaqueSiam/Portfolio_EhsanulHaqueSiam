@@ -1,10 +1,36 @@
 /**
  * Data Fetcher Module
  * Handles fetching JSON data and resolving image paths
+ * Now with WebP optimization support
  */
 
 // Cache for fetched data
 const dataCache = {};
+
+// WebP support detection (cached)
+let webpSupport = null;
+
+/**
+ * Check if browser supports WebP
+ * @returns {Promise<boolean>}
+ */
+const checkWebPSupport = async () => {
+    if (webpSupport !== null) return webpSupport;
+
+    return new Promise((resolve) => {
+        const webP = new Image();
+        webP.onload = webP.onerror = () => {
+            webpSupport = webP.height === 2;
+            resolve(webpSupport);
+        };
+        webP.src = 'data:image/webp;base64,UklGRjoAAABXRUJQVlA4IC4AAACyAgCdASoCAAIALmk0mk0iIiIiIgBoSygABc6WWgAA/veff/0PP8bA//LwYAAA';
+    });
+};
+
+// Initialize WebP check on load
+if (typeof window !== 'undefined') {
+    checkWebPSupport();
+}
 
 /**
  * Fetch JSON data from the assets/data directory
@@ -35,9 +61,10 @@ export const fetchData = async (type = "skills") => {
 
 /**
  * Resolve image path based on type
+ * Automatically uses WebP version if browser supports it
  * @param {string} img - Image filename or path
  * @param {string} type - Type of content (projects, achievements, publications)
- * @returns {string} - Full image path
+ * @returns {string} - Full image path (WebP if supported)
  */
 export const resolveImage = (img, type) => {
     // If already a full path or URL, return as-is
@@ -58,7 +85,14 @@ export const resolveImage = (img, type) => {
     };
 
     const dir = dirMap[type] || 'projects';
-    return `/assets/images/${dir}/${filename}`;
+    const basePath = `/assets/images/${dir}/${filename}`;
+
+    // If WebP is supported and file isn't already WebP/SVG, use WebP version
+    if (webpSupport && !filename.endsWith('.webp') && !filename.endsWith('.svg')) {
+        return basePath.replace(/\.(png|jpg|jpeg|PNG|JPG|JPEG)$/i, '.webp');
+    }
+
+    return basePath;
 };
 
 /**
@@ -69,3 +103,9 @@ export const resolveImage = (img, type) => {
 export const createImageResolver = (type) => {
     return (img) => resolveImage(img, type);
 };
+
+/**
+ * Get WebP support status
+ * @returns {boolean|null} - true if supported, false if not, null if unknown
+ */
+export const getWebPSupport = () => webpSupport;

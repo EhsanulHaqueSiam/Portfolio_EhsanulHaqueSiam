@@ -26,6 +26,45 @@
     "links": {
       "view": "https://github.com/EhsanulHaqueSiam/StudentManagementSystem/wiki",
       "code": "https://github.com/EhsanulHaqueSiam/StudentManagementSystem"
+    },
+    "caseStudy": {
+      "problem": "University administration struggled with scattered excel sheets and slow manual data retrieval, leading to administrative bottlenecks.",
+      "solution": "Built a centralized Java Swing application with a normalized MySQL database, implementing the Singleton pattern for efficient connection management.",
+      "process": [
+        {
+          "title": "Database Normalization",
+          "desc": "Redesigned schema to 3NF, eliminating data redundancy and improving integrity.",
+          "icon": "fas fa-database"
+        },
+        {
+          "title": "Performance Tuning",
+          "desc": "Implemented connection pooling to reduce query latency from 50ms to ~7ms.",
+          "icon": "fas fa-tachometer-alt"
+        },
+        {
+          "title": "UX Design",
+          "desc": "Created intuitive dashboards for both Admins and Students using Guna UI.",
+          "icon": "fas fa-paint-brush"
+        }
+      ],
+      "results": [
+        {
+          "label": "Query Speed",
+          "value": "7ms"
+        },
+        {
+          "label": "Data Integrity",
+          "value": "100%"
+        },
+        {
+          "label": "User Adoption",
+          "value": "45+"
+        }
+      ],
+      "comparison": {
+        "before": "assets/images/projects/sms-1.png",
+        "after": "assets/images/projects/sms-2.png"
+      }
     }
   },
   {
@@ -84,6 +123,41 @@
     "links": {
       "view": "https://www.youtube.com/watch?v=wK7qjTRkStg",
       "code": "https://github.com/EhsanulHaqueSiam/MarioMultiverseAdventures"
+    },
+    "caseStudy": {
+      "problem": "Computer Graphics courses require practical application of theoretical concepts like rendering, physics, and linear algebra in a real-time environment.",
+      "solution": "Developed a 2D platformer game engine from scratch using OpenGL and C++, demonstrating core graphics programming and game development principles.",
+      "process": [
+        {
+          "title": "OpenGL Rendering",
+          "desc": "Built a custom rendering engine using OpenGL, GLUT, and GLEW to handle textures, sprites, and animations.",
+          "icon": "fas fa-cube"
+        },
+        {
+          "title": "Physics Engine",
+          "desc": "Implemented collision detection and basic physics mechanics for character movement and environmental interaction.",
+          "icon": "fas fa-atom"
+        },
+        {
+          "title": "Cross-Platform Build",
+          "desc": "Configured CMake and vcpkg to ensure the project builds and runs consistently on Windows and Linux.",
+          "icon": "fas fa-cogs"
+        }
+      ],
+      "results": [
+        {
+          "label": "Levels",
+          "value": "3"
+        },
+        {
+          "label": "Forks",
+          "value": "4"
+        },
+        {
+          "label": "Stars",
+          "value": "2"
+        }
+      ]
     }
   },
   {
@@ -112,6 +186,41 @@
     "links": {
       "view": "#",
       "code": "https://github.com/EhsanulHaqueSiam/BDNewsPaperScraper"
+    },
+    "caseStudy": {
+      "problem": "Aggregating news from multiple disparate sources with varying structures and formats is difficult, making comprehensive analysis challenging.",
+      "solution": "Built an advanced news scraping framework for 7 major Bangladeshi newspapers using Python and Scrapy, featuring intelligent extraction and centralized storage.",
+      "process": [
+        {
+          "title": "Unified Spiders",
+          "desc": "Developed 7 custom spiders to direct news from different sources into a single, consistent format.",
+          "icon": "fas fa-spider"
+        },
+        {
+          "title": "Smart Extraction",
+          "desc": "Implemented intelligent fallback logic and Bengali date conversion for accurate data parsing.",
+          "icon": "fas fa-brain"
+        },
+        {
+          "title": "Cross-Platform Runners",
+          "desc": "Created batch and shell scripts to ensure robust execution across Windows, Linux, and macOS.",
+          "icon": "fas fa-terminal"
+        }
+      ],
+      "results": [
+        {
+          "label": "Sources",
+          "value": "7"
+        },
+        {
+          "label": "License",
+          "value": "MIT"
+        },
+        {
+          "label": "Export",
+          "value": "CSV/Excel"
+        }
+      ]
     }
   },
   {
@@ -140,6 +249,45 @@
     "links": {
       "view": "#",
       "code": "https://github.com/EhsanulHaqueSiam/HotelManagementSystem"
+    },
+    "caseStudy": {
+      "problem": "Manual hotel operations (booking, check-in/out) are slow, error-prone, and lack secure payment integration.",
+      "solution": "Developed a comprehensive Java Swing desktop application with secure user authentication, room management dashboards, and integrated local payment gateways.",
+      "process": [
+        {
+          "title": "Modular Architecture",
+          "desc": "Adhered to interface-driven design principles to ensure maintainability and scalability.",
+          "icon": "fas fa-project-diagram"
+        },
+        {
+          "title": "Payment Integration",
+          "desc": "Integrated local payment methods (Bkash, Nagad) for seamless financial transactions.",
+          "icon": "fas fa-credit-card"
+        },
+        {
+          "title": "Security Implementation",
+          "desc": "Built a secure authentication system with signup, login, and password recovery functionality.",
+          "icon": "fas fa-lock"
+        }
+      ],
+      "results": [
+        {
+          "label": "Commits",
+          "value": "171"
+        },
+        {
+          "label": "Releases",
+          "value": "4"
+        },
+        {
+          "label": "Stars",
+          "value": "15"
+        }
+      ],
+      "comparison": {
+        "before": "assets/images/projects/hotelmanagement.png",
+        "after": "assets/images/projects/hotelmanagement.png"
+      }
     }
   },
   {

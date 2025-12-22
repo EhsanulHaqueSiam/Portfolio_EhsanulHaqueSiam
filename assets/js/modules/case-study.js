@@ -1,355 +1,292 @@
 /**
- * Case Study Module
- * Interactive before/after sliders and case study templates
+ * Interactive Case Study Module
+ * Handles modal display, data population, and slider interactions
  */
 
-const CaseStudy = (function () {
-    /**
-     * Initialize all case study components
-     */
-    function init() {
-        initBeforeAfterSliders();
-        initMetricCounters();
-        console.log('✅ Case Study components initialized');
+import { resolveImage } from '/assets/js/modules/data-fetcher.js';
+
+let modal = null;
+let currentProject = null;
+
+/**
+ * Initialize Case Study Modal structure
+ */
+const initModal = () => {
+    if (document.getElementById('case-study-modal')) {
+        modal = document.getElementById('case-study-modal');
+        return;
     }
 
-    /**
-     * Initialize before/after comparison sliders
-     */
-    function initBeforeAfterSliders() {
-        const sliders = document.querySelectorAll('.before-after-slider');
+    modal = document.createElement('div');
+    modal.id = 'case-study-modal';
+    modal.className = 'case-study-modal';
+    modal.innerHTML = `
+        <div class="case-study-content">
+            <button class="close-modal" aria-label="Close Case Study">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="cs-header" id="cs-header">
+                <h2 id="cs-title">Project Title</h2>
+                <div class="cs-tags" id="cs-tags"></div>
+            </div>
+            <div class="cs-body">
+                <!-- Problem & Solution -->
+                <section class="cs-section cs-problem-solution">
+                    <div class="cs-card">
+                        <h3><i class="fas fa-exclamation-circle"></i> The Problem</h3>
+                        <p id="cs-problem">Loading...</p>
+                    </div>
+                    <div class="cs-card">
+                        <h3><i class="fas fa-check-circle"></i> The Solution</h3>
+                        <p id="cs-solution">Loading...</p>
+                    </div>
+                </section>
 
-        sliders.forEach(slider => {
-            const handle = slider.querySelector('.before-after-slider-handle');
-            const beforeContainer = slider.querySelector('.before-after-before');
+                <!-- Comparison Slider (Optional) -->
+                <section class="cs-section" id="cs-comparison-section" style="display:none;">
+                    <h3><i class="fas fa-sliders-h"></i> Transformation</h3>
+                    <div class="cs-comparison-container" id="cs-comparison-container">
+                        <img src="" alt="After" class="cs-comparison-image" id="cs-img-after">
+                        <span class="cs-label after">After</span>
+                        
+                        <div class="cs-comparison-overlay" id="cs-overlay">
+                            <img src="" alt="Before" id="cs-img-before">
+                            <span class="cs-label before">Before</span>
+                        </div>
+                        
+                        <div class="cs-comparison-slider" id="cs-slider">
+                            <div class="cs-slider-handle">
+                                <i class="fas fa-arrows-alt-h"></i>
+                            </div>
+                        </div>
+                    </div>
+                </section>
 
-            if (!handle || !beforeContainer) return;
+                <!-- Process -->
+                <section class="cs-section">
+                    <h3><i class="fas fa-cogs"></i> The Process</h3>
+                    <div class="cs-process-grid" id="cs-process">
+                        <!-- Process steps injected here -->
+                    </div>
+                </section>
 
-            let isDragging = false;
+                <!-- Results -->
+                <section class="cs-section">
+                    <h3><i class="fas fa-chart-line"></i> Results & Impact</h3>
+                    <div class="cs-results-grid" id="cs-results">
+                        <!-- Results injected here -->
+                    </div>
+                </section>
+            </div>
+        </div>
+    `;
 
-            // Mouse events
-            handle.addEventListener('mousedown', startDrag);
-            document.addEventListener('mousemove', drag);
-            document.addEventListener('mouseup', stopDrag);
+    document.body.appendChild(modal);
 
-            // Touch events
-            handle.addEventListener('touchstart', startDrag, { passive: true });
-            document.addEventListener('touchmove', drag, { passive: true });
-            document.addEventListener('touchend', stopDrag);
+    // Event Listeners
+    modal.querySelector('.close-modal').addEventListener('click', closeCaseStudy);
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeCaseStudy();
+    });
 
-            // Click on slider to move handle
-            slider.addEventListener('click', (e) => {
-                if (e.target === handle) return;
-                updateSliderPosition(e);
-            });
+    // Close on Escape
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('active')) {
+            closeCaseStudy();
+        }
+    });
 
-            function startDrag(e) {
-                isDragging = true;
-                slider.style.cursor = 'ew-resize';
-            }
+    // ROBUST scroll isolation - always prevent wheel on modal backdrop, manually scroll content
+    modal.addEventListener('wheel', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
 
-            function stopDrag() {
-                isDragging = false;
-                slider.style.cursor = '';
-            }
+        const content = modal.querySelector('.case-study-content');
+        if (content) {
+            // Manually scroll the content element
+            content.scrollTop += e.deltaY;
+        }
+    }, { passive: false });
 
-            function drag(e) {
-                if (!isDragging) return;
-                updateSliderPosition(e);
-            }
+    // Also prevent touch scrolling from bleeding through
+    modal.addEventListener('touchmove', (e) => {
+        const content = modal.querySelector('.case-study-content');
+        if (content && !content.contains(e.target)) {
+            e.preventDefault();
+        }
+    }, { passive: false });
+};
 
-            function updateSliderPosition(e) {
-                const rect = slider.getBoundingClientRect();
-                let x;
+/**
+ * Open Case Study for a generic project object
+ */
+export const openCaseStudy = (project) => {
+    if (!modal) initModal();
+    if (!project.caseStudy) return;
 
-                if (e.type.includes('touch')) {
-                    x = e.touches[0].clientX - rect.left;
-                } else {
-                    x = e.clientX - rect.left;
-                }
+    currentProject = project;
 
-                // Clamp between 0 and width
-                const percentage = Math.max(0, Math.min(100, (x / rect.width) * 100));
+    // Reset scroll position
+    const content = modal.querySelector('.case-study-content');
+    if (content) content.scrollTop = 0;
 
-                handle.style.left = `${percentage}%`;
-                beforeContainer.style.width = `${percentage}%`;
+    // Populate Data
+    document.getElementById('cs-title').textContent = project.name;
+    document.getElementById('cs-problem').textContent = project.caseStudy.problem;
+    document.getElementById('cs-solution').textContent = project.caseStudy.solution;
+
+    // Process Steps
+    const processContainer = document.getElementById('cs-process');
+    processContainer.innerHTML = project.caseStudy.process.map(step => `
+        <div class="cs-process-step">
+            <div class="cs-process-icon"><i class="${step.icon}"></i></div>
+            <h4>${step.title}</h4>
+            <p>${step.desc}</p>
+        </div>
+    `).join('');
+
+    // Results
+    const resultsContainer = document.getElementById('cs-results');
+    resultsContainer.innerHTML = project.caseStudy.results.map(res => `
+        <div class="cs-metric">
+            <span class="cs-metric-value">${res.value}</span>
+            <span class="cs-metric-label">${res.label}</span>
+        </div>
+    `).join('');
+
+    // Comparison Slider
+    const comparisonSection = document.getElementById('cs-comparison-section');
+    if (project.caseStudy.comparison) {
+        comparisonSection.style.display = 'block';
+        const imgBefore = document.getElementById('cs-img-before');
+        const imgAfter = document.getElementById('cs-img-after');
+
+        // Use resolveImage if appropriate, assuming paths are relative assets
+        imgBefore.src = project.caseStudy.comparison.before;
+        imgAfter.src = project.caseStudy.comparison.after;
+
+        initComparisonLogic();
+    } else {
+        comparisonSection.style.display = 'none';
+    }
+
+    // Show Modal
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden'; // Prevent background scroll
+
+    // GSAP entrance animations
+    if (typeof gsap !== 'undefined') {
+        const tl = gsap.timeline();
+
+        // Content container entrance
+        tl.fromTo(content,
+            { scale: 0.9, opacity: 0, y: 30 },
+            { scale: 1, opacity: 1, y: 0, duration: 0.4, ease: 'back.out(1.2)' }
+        );
+
+        // Header slide in
+        tl.fromTo('.cs-header',
+            { opacity: 0, y: -20 },
+            { opacity: 1, y: 0, duration: 0.3, ease: 'power2.out' },
+            '-=0.2'
+        );
+
+        // Cards stagger
+        tl.fromTo('.cs-card',
+            { opacity: 0, y: 20, scale: 0.95 },
+            { opacity: 1, y: 0, scale: 1, duration: 0.35, stagger: 0.1, ease: 'power2.out' },
+            '-=0.1'
+        );
+
+        // Process steps stagger
+        tl.fromTo('.cs-process-step',
+            { opacity: 0, y: 15 },
+            { opacity: 1, y: 0, duration: 0.3, stagger: 0.08, ease: 'power2.out' },
+            '-=0.2'
+        );
+
+        // Metrics with count-up effect
+        tl.fromTo('.cs-metric',
+            { opacity: 0, scale: 0.8 },
+            { opacity: 1, scale: 1, duration: 0.3, stagger: 0.1, ease: 'back.out(1.5)' },
+            '-=0.2'
+        );
+    }
+};
+
+/**
+ * Close Case Study Modal
+ */
+const closeCaseStudy = () => {
+    if (!modal) return;
+
+    // GSAP exit animation
+    if (typeof gsap !== 'undefined') {
+        const content = modal.querySelector('.case-study-content');
+        gsap.to(content, {
+            scale: 0.9,
+            opacity: 0,
+            y: 20,
+            duration: 0.25,
+            ease: 'power2.in',
+            onComplete: () => {
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
+                // Reset for next open
+                gsap.set(content, { clearProps: 'all' });
             }
         });
+    } else {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+};
+
+/**
+ * Initialize Slider Logic (Drag and Touch)
+ */
+const initComparisonLogic = () => {
+    const container = document.getElementById('cs-comparison-container');
+    const overlay = document.getElementById('cs-overlay');
+    const slider = document.getElementById('cs-slider');
+    const imgBefore = document.getElementById('cs-img-before');
+
+    let isDragging = false;
+
+    const moveSlider = (x) => {
+        const rect = container.getBoundingClientRect();
+        let percentage = ((x - rect.left) / rect.width) * 100;
+
+        // Clamp between 0 and 100
+        percentage = Math.max(0, Math.min(100, percentage));
+
+        overlay.style.width = `${percentage}%`;
+        slider.style.left = `${percentage}%`;
+
+        // Fix image width in overlay to prevent squishing
+        imgBefore.style.width = `${container.offsetWidth}px`;
     }
 
-    /**
-     * Animate metric counters on scroll
-     */
-    function initMetricCounters() {
-        const metricValues = document.querySelectorAll('.metric-card-value[data-value]');
+    // Mouse Events
+    slider.addEventListener('mousedown', () => isDragging = true);
+    window.addEventListener('mouseup', () => isDragging = false);
+    container.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+        moveSlider(e.clientX);
+    });
 
-        if (metricValues.length === 0) return;
+    // Touch Events
+    slider.addEventListener('touchstart', () => isDragging = true, { passive: true });
+    window.addEventListener('touchend', () => isDragging = false);
+    container.addEventListener('touchmove', (e) => {
+        if (!isDragging) return;
+        moveSlider(e.touches[0].clientX);
+    }, { passive: true });
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    animateMetric(entry.target);
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.5 });
+    // Ensure overlay image matches container width on resize
+    window.addEventListener('resize', () => {
+        imgBefore.style.width = `${container.offsetWidth}px`;
+    });
+};
 
-        metricValues.forEach(el => observer.observe(el));
-    }
-
-    /**
-     * Animate a single metric value
-     */
-    function animateMetric(element) {
-        const finalValue = parseFloat(element.dataset.value);
-        const suffix = element.dataset.suffix || '';
-        const prefix = element.dataset.prefix || '';
-        const decimals = (element.dataset.decimals !== undefined) ? parseInt(element.dataset.decimals) : 0;
-        const duration = 2000;
-        const start = performance.now();
-
-        function update(currentTime) {
-            const elapsed = currentTime - start;
-            const progress = Math.min(elapsed / duration, 1);
-
-            // Ease out cubic
-            const easeProgress = 1 - Math.pow(1 - progress, 3);
-            const currentValue = finalValue * easeProgress;
-
-            element.textContent = prefix + currentValue.toFixed(decimals) + suffix;
-
-            if (progress < 1) {
-                requestAnimationFrame(update);
-            }
-        }
-
-        requestAnimationFrame(update);
-    }
-
-    /**
-     * Create a case study HTML template
-     */
-    function createCaseStudyHTML(data) {
-        return `
-            <article class="case-study" data-aos="fade-up">
-                <!-- Header -->
-                <div class="case-study-header">
-                    <div class="case-study-icon">
-                        <i class="${data.icon || 'fas fa-project-diagram'}"></i>
-                    </div>
-                    <div class="case-study-title-section">
-                        <h3 class="case-study-title">${data.title}</h3>
-                        <p class="case-study-subtitle">${data.subtitle || ''}</p>
-                        <div class="case-study-tags">
-                            ${data.tags.map(tag => `<span class="case-study-tag">${tag}</span>`).join('')}
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Process Flow -->
-                <div class="process-flow">
-                    <div class="process-step">
-                        <div class="process-step-icon"><i class="fas fa-exclamation-triangle"></i></div>
-                        <span class="process-step-label">Problem</span>
-                        <span class="process-step-desc">${data.problem.short || 'Challenge identified'}</span>
-                    </div>
-                    <span class="process-arrow"><i class="fas fa-arrow-right"></i></span>
-                    <div class="process-step">
-                        <div class="process-step-icon"><i class="fas fa-cogs"></i></div>
-                        <span class="process-step-label">Process</span>
-                        <span class="process-step-desc">${data.process.short || 'Solution developed'}</span>
-                    </div>
-                    <span class="process-arrow"><i class="fas fa-arrow-right"></i></span>
-                    <div class="process-step">
-                        <div class="process-step-icon"><i class="fas fa-check-circle"></i></div>
-                        <span class="process-step-label">Solution</span>
-                        <span class="process-step-desc">${data.solution.short || 'Results delivered'}</span>
-                    </div>
-                </div>
-
-                <!-- Problem Section -->
-                <section class="case-study-section">
-                    <h4 class="case-study-section-title">
-                        <i class="fas fa-bullseye"></i> Problem Statement
-                    </h4>
-                    <p>${data.problem.description}</p>
-                </section>
-
-                ${data.beforeAfter ? `
-                <!-- Before/After Comparison -->
-                <section class="case-study-section">
-                    <h4 class="case-study-section-title">
-                        <i class="fas fa-exchange-alt"></i> Before & After
-                    </h4>
-                    <div class="before-after-slider">
-                        <img src="${data.beforeAfter.after}" alt="After" />
-                        <div class="before-after-before">
-                            <img src="${data.beforeAfter.before}" alt="Before" />
-                        </div>
-                        <div class="before-after-slider-handle"></div>
-                        <span class="before-after-label before">Before</span>
-                        <span class="before-after-label after">After</span>
-                    </div>
-                </section>
-                ` : ''}
-
-                <!-- Solution Section -->
-                <section class="case-study-section">
-                    <h4 class="case-study-section-title">
-                        <i class="fas fa-lightbulb"></i> Solution Approach
-                    </h4>
-                    <p>${data.solution.description}</p>
-                </section>
-
-                <!-- Metrics -->
-                <section class="case-study-section">
-                    <h4 class="case-study-section-title">
-                        <i class="fas fa-chart-line"></i> Results & Metrics
-                    </h4>
-                    <div class="metrics-grid">
-                        ${data.metrics.map(metric => `
-                            <div class="metric-card">
-                                <div class="metric-card-icon"><i class="${metric.icon || 'fas fa-chart-bar'}"></i></div>
-                                <div class="metric-card-value" data-value="${metric.value}" data-suffix="${metric.suffix || ''}" data-prefix="${metric.prefix || ''}" data-decimals="${metric.decimals || 0}">
-                                    ${metric.prefix || ''}0${metric.suffix || ''}
-                                </div>
-                                <div class="metric-card-label">${metric.label}</div>
-                                ${metric.change ? `
-                                    <span class="metric-card-change ${metric.changeType || 'positive'}">
-                                        <i class="fas fa-${metric.changeType === 'negative' ? 'arrow-down' : 'arrow-up'}"></i>
-                                        ${metric.change}
-                                    </span>
-                                ` : ''}
-                            </div>
-                        `).join('')}
-                    </div>
-                </section>
-
-                ${data.learnings ? `
-                <!-- Key Learnings -->
-                <div class="learnings-box">
-                    <h4><i class="fas fa-graduation-cap"></i> Key Learnings</h4>
-                    <ul>
-                        ${data.learnings.map(learning => `<li>${learning}</li>`).join('')}
-                    </ul>
-                </div>
-                ` : ''}
-
-                <!-- Actions -->
-                <div class="case-study-actions">
-                    ${data.links?.github ? `<a href="${data.links.github}" class="btn btn-secondary" target="_blank"><i class="fab fa-github"></i> View Code</a>` : ''}
-                    ${data.links?.demo ? `<a href="${data.links.demo}" class="btn btn-primary" target="_blank"><i class="fas fa-external-link-alt"></i> Live Demo</a>` : ''}
-                    ${data.links?.paper ? `<a href="${data.links.paper}" class="btn btn-secondary" target="_blank"><i class="fas fa-file-alt"></i> Read Paper</a>` : ''}
-                </div>
-            </article>
-        `;
-    }
-
-    /**
-     * Sample case study data
-     */
-    const sampleCaseStudies = [
-        {
-            title: 'LLM Fine-Tuning Pipeline',
-            subtitle: 'Domain-Specific Language Model Optimization',
-            icon: 'fas fa-robot',
-            tags: ['NLP', 'LLaMA 2', 'QLoRA', 'PyTorch'],
-            problem: {
-                short: 'Generic LLM responses',
-                description: 'Generic large language models lacked domain-specific knowledge for technical documentation, resulting in inaccurate responses and poor user experience for specialized queries.'
-            },
-            process: {
-                short: 'QLoRA fine-tuning',
-                description: 'Implemented a custom fine-tuning pipeline using QLoRA with 4-bit quantization to efficiently adapt the base model while maintaining quality.'
-            },
-            solution: {
-                short: '94% accuracy',
-                description: 'Created a specialized fine-tuning workflow with custom datasets, progressive training, and comprehensive evaluation metrics. The final model showed significant improvement in domain-specific tasks.'
-            },
-            metrics: [
-                { label: 'Accuracy', value: 94.2, suffix: '%', decimals: 1, icon: 'fas fa-bullseye', change: '+12%', changeType: 'positive' },
-                { label: 'Latency', value: 45, suffix: 'ms', icon: 'fas fa-tachometer-alt', change: '-35%', changeType: 'positive' },
-                { label: 'Training Time', value: 4, suffix: ' hrs', icon: 'fas fa-clock' },
-                { label: 'Model Size', value: 7, suffix: 'B', icon: 'fas fa-microchip' }
-            ],
-            learnings: [
-                'QLoRA significantly reduces memory requirements without sacrificing quality',
-                'Data quality matters more than quantity for fine-tuning',
-                'Progressive training with curriculum learning improves convergence'
-            ],
-            links: {
-                github: 'https://github.com/EhsanulHaqueSiam',
-                demo: '#'
-            }
-        },
-        {
-            title: 'RL Trading Agent',
-            subtitle: 'Deep Reinforcement Learning for Algorithmic Trading',
-            icon: 'fas fa-chart-line',
-            tags: ['Reinforcement Learning', 'PPO', 'Finance', 'PyTorch'],
-            problem: {
-                short: 'Manual trading bias',
-                description: 'Traditional trading strategies were affected by emotional bias and couldn\'t adapt to rapidly changing market conditions in real-time.'
-            },
-            process: {
-                short: 'PPO agent training',
-                description: 'Developed a custom trading environment with realistic market simulation and trained a PPO agent with specialized reward shaping.'
-            },
-            solution: {
-                short: '2.1 Sharpe ratio',
-                description: 'Built a robust RL trading agent that consistently outperforms baseline strategies across various market conditions, with proper risk management built into the reward function.'
-            },
-            metrics: [
-                { label: 'Sharpe Ratio', value: 2.1, decimals: 1, icon: 'fas fa-chart-bar', change: '+0.8', changeType: 'positive' },
-                { label: 'Win Rate', value: 67, suffix: '%', icon: 'fas fa-trophy' },
-                { label: 'Max Drawdown', value: 8, suffix: '%', icon: 'fas fa-arrow-down', changeType: 'positive' },
-                { label: 'Trades/Day', value: 12, icon: 'fas fa-exchange-alt' }
-            ],
-            learnings: [
-                'Reward shaping is critical for stable training in financial environments',
-                'Proper position sizing prevents catastrophic losses',
-                'Ensemble of agents provides more robust performance'
-            ],
-            links: {
-                github: 'https://github.com/EhsanulHaqueSiam',
-                paper: '#'
-            }
-        }
-    ];
-
-    /**
-     * Render case studies to a container
-     */
-    function renderCaseStudies(containerId, data = sampleCaseStudies) {
-        const container = document.getElementById(containerId);
-        if (!container) return;
-
-        container.innerHTML = data.map(study => createCaseStudyHTML(study)).join('');
-
-        // Re-initialize sliders
-        initBeforeAfterSliders();
-        initMetricCounters();
-
-        // Refresh AOS
-        if (typeof AOS !== 'undefined') {
-            AOS.refresh();
-        }
-    }
-
-    // Public API
-    return {
-        init,
-        createCaseStudyHTML,
-        renderCaseStudies,
-        initBeforeAfterSliders,
-        sampleCaseStudies
-    };
-})();
-
-// Initialize when DOM is ready
-document.addEventListener('DOMContentLoaded', () => {
-    CaseStudy.init();
-});
-
-// Export for global use
-window.CaseStudy = CaseStudy;
+document.addEventListener('DOMContentLoaded', initModal);

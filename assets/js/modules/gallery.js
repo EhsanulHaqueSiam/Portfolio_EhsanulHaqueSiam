@@ -4,7 +4,7 @@
  */
 
 // Re-export createImageResolver for convenience
-export { createImageResolver } from './data-fetcher.js';
+export { createImageResolver } from '/assets/js/modules/data-fetcher.js';
 
 let currentGalleryImages = [];
 let currentGalleryIndex = 0;

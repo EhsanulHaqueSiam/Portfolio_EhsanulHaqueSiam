@@ -1,13 +1,66 @@
 # Netlify configuration file
 # https://docs.netlify.com/configure-builds/file-based-configuration/
+# Comprehensive optimization using ALL Netlify features
 
-# Build settings
+# ============================================
+# Build Settings
+# ============================================
 [build]
   publish = "."
-  command = "echo 'Static site - no build required'"
+  command = "npm run build"
 
-# Headers for better caching and security
-# Cache images - Recursive for all image types
+[build.environment]
+  NODE_VERSION = "20"
+
+# ============================================
+# Asset Optimization (Netlify automatically applies these)
+# - Brotli/Gzip compression (automatic for all text assets)
+# - CSS minification
+# - JS minification
+# - Image CDN with auto WebP conversion
+# ============================================
+
+# Enable Post Processing (CSS/JS minification, etc.)
+[build.processing]
+  skip_processing = false
+
+[build.processing.css]
+  bundle = true
+  minify = true
+
+[build.processing.js]
+  bundle = true
+  minify = true
+
+[build.processing.html]
+  pretty_urls = true
+
+[build.processing.images]
+  compress = true
+
+# ============================================
+# Netlify Image CDN
+# ============================================
+[images]
+  remote_images_allowed = [".*"]
+
+# ============================================
+# Performance Headers - Static Assets
+# ============================================
+
+# Security headers for all pages
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "SAMEORIGIN"
+    X-XSS-Protection = "1; mode=block"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()"
+    # Enable HTTP/2 Server Push hints
+    Link = "</dist/main.css>; rel=preload; as=style"
+
+# Long-term cache for images (1 year, immutable)
 [[headers]]
   for = "/**/*.jpg"
   [headers.values]
@@ -38,99 +91,108 @@
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 
-# Force revalidation for code and data - Aggressive no-cache for HTML
-# Added security headers for better SEO ranking
+[[headers]]
+  for = "/**/*.ico"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Fonts - long cache
+[[headers]]
+  for = "/**/*.woff2"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+    Access-Control-Allow-Origin = "*"
+
+[[headers]]
+  for = "/**/*.woff"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+    Access-Control-Allow-Origin = "*"
+
+[[headers]]
+  for = "/**/*.ttf"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Bundled dist assets - long cache
+[[headers]]
+  for = "/dist/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Source JS/CSS - short cache with stale-while-revalidate
+[[headers]]
+  for = "/assets/**/*.js"
+  [headers.values]
+    Cache-Control = "public, max-age=3600, stale-while-revalidate=86400"
+
+[[headers]]
+  for = "/assets/**/*.css"
+  [headers.values]
+    Cache-Control = "public, max-age=3600, stale-while-revalidate=86400"
+
+# HTML - no cache, always fresh
 [[headers]]
   for = "/**/*.html"
   [headers.values]
-    Cache-Control = "no-cache, no-store, must-revalidate"
-    Pragma = "no-cache"
-    Expires = "0"
-    Netlify-CDN-Cache-Control = "no-store"
-    Vary = "User-Agent"
-    X-Frame-Options = "SAMEORIGIN"
-    X-Content-Type-Options = "nosniff"
-    Referrer-Policy = "strict-origin-when-cross-origin"
-    Permissions-Policy = "accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()"
+    Cache-Control = "public, max-age=0, must-revalidate"
 
-# Root index and subpages without .html extension
 [[headers]]
   for = "/"
   [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+# JSON data - short cache
+[[headers]]
+  for = "/**/*.json"
+  [headers.values]
+    Cache-Control = "public, max-age=300, stale-while-revalidate=600"
+
+# Service Worker - no cache
+[[headers]]
+  for = "/sw.js"
+  [headers.values]
     Cache-Control = "no-cache, no-store, must-revalidate"
-    Pragma = "no-cache"
-    Expires = "0"
-    Netlify-CDN-Cache-Control = "no-store"
-    Vary = "User-Agent"
-    X-Frame-Options = "SAMEORIGIN"
-    X-Content-Type-Options = "nosniff"
-    Referrer-Policy = "strict-origin-when-cross-origin"
-    Permissions-Policy = "accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()"
+
+# ============================================
+# Preload Critical Assets (HTTP/2 Server Push)
+# ============================================
+[[headers]]
+  for = "/"
+  [headers.values]
+    Link = '''
+      </dist/main.css>; rel=preload; as=style,
+      </assets/images/profile2-hero.webp>; rel=preload; as=image; type=image/webp,
+      <https://fonts.googleapis.com>; rel=preconnect; crossorigin,
+      <https://cdnjs.cloudflare.com>; rel=preconnect; crossorigin
+    '''
 
 [[headers]]
   for = "/projects/"
   [headers.values]
-    Cache-Control = "no-cache, no-store, must-revalidate"
-    Pragma = "no-cache"
-    Expires = "0"
-    Netlify-CDN-Cache-Control = "no-store"
-    Vary = "User-Agent"
-
-[[headers]]
-  for = "/achievements/"
-  [headers.values]
-    Cache-Control = "no-cache, no-store, must-revalidate"
-    Pragma = "no-cache"
-    Expires = "0"
-    Netlify-CDN-Cache-Control = "no-store"
-    Vary = "User-Agent"
-
-[[headers]]
-  for = "/experience/"
-  [headers.values]
-    Cache-Control = "no-cache, no-store, must-revalidate"
-    Pragma = "no-cache"
-    Expires = "0"
-    Netlify-CDN-Cache-Control = "no-store"
-    Vary = "User-Agent"
+    Link = '''
+      </dist/main.css>; rel=preload; as=style,
+      <https://fonts.googleapis.com>; rel=preconnect; crossorigin
+    '''
 
 [[headers]]
   for = "/publications/"
   [headers.values]
-    Cache-Control = "no-cache, no-store, must-revalidate"
-    Pragma = "no-cache"
-    Expires = "0"
-    Netlify-CDN-Cache-Control = "no-store"
-    Vary = "User-Agent"
+    Link = "</dist/main.css>; rel=preload; as=style"
 
 [[headers]]
-  for = "/**/*.js"
+  for = "/achievements/"
   [headers.values]
-    Cache-Control = "no-cache, no-store, must-revalidate"
-    Pragma = "no-cache"
-    Expires = "0"
-    Netlify-CDN-Cache-Control = "no-store"
-    Vary = "User-Agent"
+    Link = "</dist/main.css>; rel=preload; as=style"
 
 [[headers]]
-  for = "/**/*.css"
+  for = "/experience/"
   [headers.values]
-    Cache-Control = "no-cache, no-store, must-revalidate"
-    Pragma = "no-cache"
-    Expires = "0"
-    Netlify-CDN-Cache-Control = "no-store"
-    Vary = "User-Agent"
+    Link = "</dist/main.css>; rel=preload; as=style"
 
-[[headers]]
-  for = "/**/*.json"
-  [headers.values]
-    Cache-Control = "no-cache, no-store, must-revalidate"
-    Pragma = "no-cache"
-    Expires = "0"
-    Netlify-CDN-Cache-Control = "no-store"
-    Vary = "User-Agent"
-
-# Redirects for clean URLs
+# ============================================
+# Clean URL Redirects
+# ============================================
 [[redirects]]
   from = "/experience"
   to = "/experience/"
@@ -150,3 +212,22 @@
   from = "/achievements"
   to = "/achievements/"
   status = 301
+
+# ============================================
+# SPA-style fallback (optional - for client-side routing)
+# ============================================
+# [[redirects]]
+#   from = "/*"
+#   to = "/index.html"
+#   status = 200
+
+# ============================================
+# Plugins
+# ============================================
+# Lighthouse CI (optional - enable in Netlify UI)
+# [[plugins]]
+#   package = "@netlify/plugin-lighthouse"
+
+# Sitemap generation (if needed)
+# [[plugins]]
+#   package = "@netlify/plugin-sitemap"

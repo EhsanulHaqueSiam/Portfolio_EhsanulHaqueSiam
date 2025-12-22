@@ -3,8 +3,9 @@
  * Handles rendering projects section with image sliders and gallery
  */
 
-import { fetchData, resolveImage } from '../data-fetcher.js';
+import { fetchData, resolveImage } from '/assets/js/modules/data-fetcher.js';
 import { openGallery, createImageResolver } from '../gallery.js';
+import { openCaseStudy } from '../case-study.js';
 
 /**
  * Initialize touch-friendly image slider for a container
@@ -121,8 +122,10 @@ const generateProjectImageHtml = (project, index) => {
  * @param {number} index - Project index
  * @returns {string} - HTML string for project box
  */
-const generateProjectHtml = (project, index) => {
+const generateProjectHtml = (project, index, originalIndex) => {
     const imageHtml = generateProjectImageHtml(project, index);
+    // Use originalIndex for case study lookup, fallback to index if not provided
+    const csIndex = originalIndex !== undefined ? originalIndex : index;
 
     // Check if links exist and are valid (not empty, not just "#")
     const hasViewLink = project.links?.view && project.links.view.trim() !== '' && project.links.view !== '#';
@@ -150,6 +153,12 @@ const generateProjectHtml = (project, index) => {
         </a>
     ` : '';
 
+    const caseStudyBtnHtml = project.caseStudy ? `
+        <button class="btn-case-study" onclick="window.handleCaseStudyClick(${csIndex})">
+            <i class="fas fa-book-open"></i> Study
+        </button>
+    ` : '';
+
     const codeBtnHtml = hasCodeLink ? `
         <a href="${project.links.code}" class="btn" target="_blank">
             Code <i class="fas fa-code"></i>
@@ -161,6 +170,7 @@ const generateProjectHtml = (project, index) => {
         <div class="btns">
             ${viewBtnHtml}
             ${codeBtnHtml}
+            ${caseStudyBtnHtml}
         </div>
     ` : '';
 
@@ -193,6 +203,9 @@ export const renderProjects = async () => {
 
         if (!projectsContainer || !projects.length) return;
 
+        // CRITICAL: Always set window.allProjects so case study works on all pages
+        window.allProjects = [...projects];
+
         // Check if all necessary elements are present
         const isProjectsPage = !!searchInput;
 
@@ -203,15 +216,14 @@ export const renderProjects = async () => {
 
         // Store original projects for filtering (projects page only)
         if (isProjectsPage) {
-            window.allProjects = [...projects];
             initProjectFilters(projectsContainer);
         } else {
             // Homepage: limit to 10
             displayProjects = displayProjects.slice(0, 10);
         }
 
-        // Render projects
-        renderProjectCards(projectsContainer, displayProjects);
+        // Render projects - pass original projects array for correct index lookup
+        renderProjectCards(projectsContainer, displayProjects, projects);
 
         // Initialize effects
         initProjectEffects(projectsContainer, displayProjects);
@@ -226,12 +238,23 @@ export const renderProjects = async () => {
             container.innerHTML = `<p style="color:red;">Error: ${error.message}</p>`;
         }
     }
+
+    // Expose handler globally for the onclick attribute
+    window.handleCaseStudyClick = (index) => {
+        const project = window.allProjects ? window.allProjects[index] : null;
+
+        if (!project) {
+            console.warn("Project data not found for index:", index);
+            return;
+        }
+        openCaseStudy(project);
+    };
 };
 
 /**
  * Render project cards to container
  */
-const renderProjectCards = (container, projects) => {
+const renderProjectCards = (container, projects, allProjectsRef = null) => {
     if (projects.length === 0) {
         container.innerHTML = `
             <div class="no-results">
@@ -242,8 +265,15 @@ const renderProjectCards = (container, projects) => {
         return;
     }
 
+    // Use allProjectsRef or window.allProjects to find the original index
+    const sourceArray = allProjectsRef || window.allProjects || projects;
+
     container.innerHTML = projects
-        .map((project, index) => generateProjectHtml(project, index))
+        .map((project, displayIndex) => {
+            // Find the project's original index in the full list
+            const originalIndex = sourceArray.findIndex(p => p.name === project.name);
+            return generateProjectHtml(project, displayIndex, originalIndex !== -1 ? originalIndex : displayIndex);
+        })
         .join("");
 };
 

@@ -1,0 +1,21 @@
+{
+    "name": "portfolio-ehsanulhaquesiam",
+    "version": "1.0.0",
+    "description": "Ehsanul Haque - AI Developer & Full-Stack Engineer Portfolio",
+    "private": true,
+    "scripts": {
+        "build:images": "node scripts/optimize-images.js",
+        "build:css": "node scripts/bundle-css.js",
+        "build:js": "node scripts/bundle-js.js",
+        "build:copy": "node scripts/copy-assets.js",
+        "build": "npm run build:images && npm run build:css && npm run build:js && npm run build:copy",
+        "dev": "npx live-server --port=8080",
+        "lighthouse": "npx lighthouse http://127.0.0.1:8080/ --output=html --output-path=./lighthouse-report.html --chrome-flags='--headless --no-sandbox'"
+    },
+    "devDependencies": {
+        "esbuild": "^0.24.2",
+        "sharp": "^0.33.5"
+    },
+    "author": "Ehsanul Haque",
+    "license": "MIT"
+}

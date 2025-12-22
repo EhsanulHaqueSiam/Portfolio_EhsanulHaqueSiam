@@ -87,7 +87,7 @@
     }
     </script>
 
-    <link rel="stylesheet" href="/assets/css/main.css?v=5.1">
+    <link rel="stylesheet" href="/assets/css/main.css?v=5.2">
 
     <!-- AOS.js -->
     <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
@@ -104,11 +104,14 @@
     <link rel="stylesheet" href="https://unpkg.com/atropos@2/atropos.min.css" />
     <!-- Notyf -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css" />
+    <!-- Case Study CSS -->
+    <link rel="stylesheet" href="/assets/css/components/case-study.css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
         integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link id='favicon' rel="shortcut icon" href="/assets/images/favicon.png" type="image/x-png">
+    <link id="favicon" rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>" />
     <link rel="apple-touch-icon" href="/assets/images/favicon.png">
     <link rel="manifest" href="/manifest.json">
 
@@ -126,33 +129,47 @@
         }
 
         .back-btn .btn {
-            display: inline-block;
-            padding: .8rem 3rem;
-            background: rgb(32, 32, 32);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 1.2rem 3rem;
+            background: linear-gradient(135deg, #1a1a2e 0%, #2d2d44 100%);
             color: #fff;
-            border-radius: 5px;
+            border-radius: 0.8rem;
             font-size: 1.7rem;
             cursor: pointer;
-            transition: .2s;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             font-weight: 600;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .back-btn .btn i {
+            transition: transform 0.3s ease;
         }
 
         .back-btn .btn:hover {
-            background: rgb(115, 3, 167);
+            background: linear-gradient(135deg, #7303a7 0%, #9b00d9 100%);
             letter-spacing: 1px;
-            box-shadow: 0 8px 25px rgba(115, 3, 167, 0.4);
+            box-shadow: 0 10px 30px rgba(115, 3, 167, 0.4);
+            border-color: transparent;
+            transform: translateY(-2px);
+        }
+
+        .back-btn .btn:hover i {
+            transform: translateX(-5px);
         }
 
 
 
         [data-theme="dark"] .back-btn .btn {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            /* Keep the gradient in dark mode too */
+            background: linear-gradient(135deg, #1a1a2e 0%, #2d2d44 100%);
+            border: 1px solid rgba(255, 255, 255, 0.15);
         }
 
         [data-theme="dark"] .back-btn .btn:hover {
-            background: var(--color-primary-light, #a855f7);
+            background: linear-gradient(135deg, #7303a7 0%, #9b00d9 100%);
             border-color: transparent;
         }
 
@@ -382,6 +399,9 @@
 </head>
 
 <body oncontextmenu="return false">
+    <!-- Skip Link for Accessibility -->
+    <a href="#work" class="skip-link">Skip to main content</a>
+
     <!-- Force Update: Debugging Netlify Sync -->
     <!-- Toast Notifications Container -->
     <div class="toast-container" id="toast-container"></div>
@@ -572,12 +592,12 @@
     <!-- Notyf -->
     <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
 
-    <script src="/assets/js/app.js?v=2.3"></script>
+    <script src="/assets/js/app.js?v=2.2"></script>
     <script src="/assets/js/modules/text-effects.js?v=4.0"></script>
     <script src="/assets/js/modules/gamification.js?v=5.0"></script>
     <script src="/assets/js/modules/command-palette.js?v=5.0"></script>
     <script src="/assets/js/modules/micro-interactions.js"></script>
-    <script type="module" src="/assets/js/main.js?v=6.0"></script>
+    <script type="module" src="/assets/js/main.js?v=8.0"></script>
 
 </body>
 

@@ -208,14 +208,28 @@ export const initMicroInteractions = () => {
 
             if (aboutImage && !aboutImage.vanillaTilt) {
                 VanillaTilt.init(aboutImage, {
-                    max: 10,
+                    max: 15,
                     speed: 400,
-                    scale: 1, // NO SCALE to avoid layout shift
+                    scale: 1.02, // Subtle scale on hover
                     glare: true,
-                    "max-glare": 0.15,
-                    perspective: 1000
+                    "max-glare": 0.2,
+                    perspective: 1000,
+                    reset: true, // Ensure tilt resets when mouse leaves
+                    gyroscope: false // Disable gyroscope to prevent conflicts
                 });
                 console.log('✅ VanillaTilt initialized on About image');
+
+                // Add scroll listener to reset tilt when scrolling away
+                let scrollTimeout;
+                window.addEventListener('scroll', () => {
+                    if (aboutImage.vanillaTilt) {
+                        clearTimeout(scrollTimeout);
+                        scrollTimeout = setTimeout(() => {
+                            // Force reset the tilt state
+                            aboutImage.vanillaTilt.reset();
+                        }, 150);
+                    }
+                }, { passive: true });
             } else if (!aboutImage && retryCount < 10) {
                 // Retry if element not found yet (might be loading)
                 setTimeout(() => initAboutTilt(retryCount + 1), 200);

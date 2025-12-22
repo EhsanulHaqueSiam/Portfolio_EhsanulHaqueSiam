@@ -10,12 +10,12 @@
 
 /* ========== LINK ANIMATIONS ========== */
 /* Underline slide effect - exclude UI controls and buttons */
-a:not(.btn):not(.social-icons a):not(.navbar a):not(.logo):not(.section-indicator__dot):not(#scroll-top):not(.footer-social-link):not(.viewall a):not(.resumebtn a):not(.github-stat-card a) {
+a:not(.btn):not(.social-icons a):not(.navbar a):not(.logo):not(.section-indicator__dot):not(#scroll-top):not(.footer-social-link):not(.viewall a):not(.resumebtn a):not(.github-stat-card a):not(.scroll-indicator) {
     position: relative;
     text-decoration: none;
 }
 
-a:not(.btn):not(.social-icons a):not(.navbar a):not(.logo):not(.section-indicator__dot):not(#scroll-top):not(.footer-social-link):not(.viewall a):not(.resumebtn a):not(.github-stat-card a)::after {
+a:not(.btn):not(.social-icons a):not(.navbar a):not(.logo):not(.section-indicator__dot):not(#scroll-top):not(.footer-social-link):not(.viewall a):not(.resumebtn a):not(.github-stat-card a):not(.scroll-indicator)::after {
     content: "";
     position: absolute;
     bottom: -2px;
@@ -26,7 +26,7 @@ a:not(.btn):not(.social-icons a):not(.navbar a):not(.logo):not(.section-indicato
     transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-a:not(.btn):not(.social-icons a):not(.navbar a):not(.logo):not(.section-indicator__dot):not(#scroll-top):not(.footer-social-link):not(.viewall a):not(.resumebtn a):not(.github-stat-card a):hover::after {
+a:not(.btn):not(.social-icons a):not(.navbar a):not(.logo):not(.section-indicator__dot):not(#scroll-top):not(.footer-social-link):not(.viewall a):not(.resumebtn a):not(.github-stat-card a):not(.scroll-indicator):hover::after {
     width: 100%;
 }
 

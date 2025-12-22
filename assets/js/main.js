@@ -16,6 +16,7 @@ import { initSectionIndicator } from './modules/section-indicator.js?v=1.0';
 import { initTimezoneClock } from './modules/timezone-clock.js?v=1.0';
 import { initAllLibraries } from './modules/libraries.js?v=1.0';
 import { initScrollAnimations, initParallax, initMicroInteractions, initSmoothScroll, initPageLoadAnimation } from './modules/animations.js?v=4.0';
+import { initGSAPMicroInteractions } from '/assets/js/modules/gsap-micro-interactions.js?v=2.0';
 
 // Forms and Interaction
 import { initContactForm } from './modules/contact-form.js?v=4.0';
@@ -102,6 +103,9 @@ const initPortfolio = async () => {
 
   // Initialize UI enhancement libraries (AOS, GLightbox, Tippy, etc.)
   initAllLibraries();
+
+  // Initialize GSAP micro-interactions (after libraries to ensure GSAP is loaded)
+  initGSAPMicroInteractions();
 
   // Initialize video click-to-play functionality
   initVideoPlayer();

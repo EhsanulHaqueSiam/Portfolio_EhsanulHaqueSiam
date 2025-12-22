@@ -3,7 +3,7 @@
  * Handles rendering publications section with image sliders and gallery
  */
 
-import { fetchData, resolveImage } from '../data-fetcher.js';
+import { fetchData, resolveImage } from '/assets/js/modules/data-fetcher.js';
 import { openGallery, createImageResolver } from '../gallery.js';
 
 /**
@@ -115,6 +115,14 @@ const generatePublicationImageHtml = (pub, index) => {
 const generatePublicationHtml = (pub, index) => {
     const imageHtml = generatePublicationImageHtml(pub, index);
 
+    // Only show paper button if paperLink exists and is not empty/null/#
+    const hasPaperLink = pub.paperLink && pub.paperLink !== '#' && pub.paperLink !== null;
+    const paperButtonHtml = hasPaperLink ? `
+        <a href="${pub.paperLink}" target="_blank" rel="noopener noreferrer" class="btn-view-paper">
+            <i class="fas fa-file-pdf"></i> View Paper
+        </a>
+    ` : '';
+
     return `
         <div class="box tilt">
             ${imageHtml}
@@ -123,6 +131,7 @@ const generatePublicationHtml = (pub, index) => {
                 <p>${pub.conference}</p>
                 <h4>${pub.date}</h4>
                 <p style="margin-top: 1rem; font-size: 1.3rem;">${pub.desc}</p>
+                ${paperButtonHtml}
             </div>
         </div>
     `;

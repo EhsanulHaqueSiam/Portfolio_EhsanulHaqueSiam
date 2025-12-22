@@ -3,7 +3,7 @@
  * Handles rendering testimonials section with carousel/cards
  */
 
-import { fetchData } from '../data-fetcher.js';
+import { fetchData } from '/assets/js/modules/data-fetcher.js';
 
 /**
  * Render testimonials section
