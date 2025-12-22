@@ -44,10 +44,14 @@ class HackerTextEffect {
         // Store original text
         element.setAttribute('data-text', text);
 
-        // CRITICAL: Lock the element's width to prevent layout shifts during animation
-        const computedWidth = element.getBoundingClientRect().width;
-        element.style.minWidth = `${computedWidth}px`;
+        // CRITICAL: Lock the element's dimensions to prevent layout shifts during animation
+        const rect = element.getBoundingClientRect();
         element.style.display = 'inline-block';
+        element.style.minWidth = `${rect.width}px`;
+        element.style.minHeight = `${rect.height}px`;
+        element.style.verticalAlign = 'top';
+        // CSS containment prevents this element's layout changes from affecting ancestors
+        element.style.contain = 'layout style';
 
         let iteration = 0;
         const letters = text.split('');
@@ -81,8 +85,10 @@ class HackerTextEffect {
                 this.activeIntervals.delete(element);
                 // Ensure final text is correct
                 element.textContent = text;
-                // Release the locked width after animation completes
+                // Release all locked styles after animation completes
                 element.style.minWidth = '';
+                element.style.minHeight = '';
+                element.style.contain = '';
             }
         }, scrambleSpeed);
 
