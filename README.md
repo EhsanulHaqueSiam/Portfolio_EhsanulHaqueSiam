@@ -125,11 +125,54 @@ Portfolio_EhsanulHaqueSiam/
 ## 📦 Deployment
 
 ### Netlify (Recommended)
-1. Push to GitHub
-2. Connect repository to Netlify
-3. Deploy automatically on push
 
-### Manual
+This project uses Netlify with **automatic image optimization**. When you push to GitHub:
+
+1. **Git Push Workflow**
+   ```bash
+   git add -A
+   git commit -m "your commit message"
+   git push
+   ```
+
+2. **Netlify Auto-Build Process**
+   
+   On every push, Netlify automatically:
+   - Runs `npm run build` which includes:
+     - **`build:images`** - Converts all PNG/JPG images to optimized WebP format using Sharp
+     - **`build:css`** - Bundles and minifies CSS
+     - **`build:js`** - Bundles and minifies JavaScript
+   - Applies Brotli/Gzip compression for all text assets
+   - Serves images via Image CDN with caching
+
+3. **Image Optimization Details**
+   - All images in `assets/images/` are auto-converted to WebP
+   - Large images (>500KB) get extra compression
+   - Max width: 1200px (resized if larger)
+   - WebP quality: 80% (normal) / 70% (large files)
+   - Original files are kept as fallbacks
+
+### Adding New Images
+
+Simply add your images (PNG, JPG, JPEG) to `assets/images/` and push:
+```bash
+# Add new images to the appropriate folder
+cp my-image.png assets/images/achievements/
+
+# Push to trigger auto-conversion
+git add -A && git commit -m "feat: add new image" && git push
+```
+
+The WebP version will be automatically generated during the Netlify build.
+
+### Manual Build (Local)
+
+To generate WebP images locally before pushing:
+```bash
+npm run build:images
+```
+
+### Manual Deployment
 Simply upload all files to any static hosting service.
 
 ---
