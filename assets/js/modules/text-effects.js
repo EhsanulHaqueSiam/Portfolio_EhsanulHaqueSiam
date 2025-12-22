@@ -6,7 +6,8 @@
 
 class HackerTextEffect {
     constructor(options = {}) {
-        this.characters = options.characters || 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%&*<>[]{}';
+        // Use only uppercase letters for consistent width (avoid symbols that vary in width)
+        this.characters = options.characters || 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
         this.duration = options.duration || 1500; // Total animation duration in ms
         this.staggerDelay = options.staggerDelay || 50; // Delay between each character reveal
         this.scrambleSpeed = options.scrambleSpeed || 30; // Speed of scramble animation
@@ -43,6 +44,11 @@ class HackerTextEffect {
         // Store original text
         element.setAttribute('data-text', text);
 
+        // CRITICAL: Lock the element's width to prevent layout shifts during animation
+        const computedWidth = element.getBoundingClientRect().width;
+        element.style.minWidth = `${computedWidth}px`;
+        element.style.display = 'inline-block';
+
         let iteration = 0;
         const letters = text.split('');
         const totalIterations = letters.length;
@@ -75,6 +81,8 @@ class HackerTextEffect {
                 this.activeIntervals.delete(element);
                 // Ensure final text is correct
                 element.textContent = text;
+                // Release the locked width after animation completes
+                element.style.minWidth = '';
             }
         }, scrambleSpeed);
 
