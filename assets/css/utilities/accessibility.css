@@ -173,6 +173,21 @@ header .navbar a:focus-visible {
     }
 }
 
+/* ========== MOBILE PERFORMANCE ========== */
+/* Disable heavy animations on mobile for battery and scroll performance */
+@media (max-width: 768px) {
+
+    #particles-js,
+    #tsparticles {
+        display: none !important;
+    }
+
+    /* Reduce parallax on mobile */
+    [data-rellax-speed] {
+        transform: none !important;
+    }
+}
+
 /* ========== SCREEN READER ONLY ========== */
 .sr-only {
     position: absolute;

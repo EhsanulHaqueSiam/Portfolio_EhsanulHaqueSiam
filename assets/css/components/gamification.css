@@ -510,19 +510,11 @@
 
 /* ========== RESPONSIVE ========== */
 @media (max-width: 768px) {
-    .achievements-button {
-        bottom: 7rem;
-        right: 1rem;
-        width: 4.5rem;
-        height: 4.5rem;
-    }
 
+    /* Hide floating icons on mobile to prevent content overlap */
+    .achievements-button,
     .mini-game-trigger {
-        bottom: 13rem;
-        left: 1rem;
-        /* Changed from right to left */
-        width: 4rem;
-        height: 4rem;
+        display: none !important;
     }
 
     .achievement-toast {

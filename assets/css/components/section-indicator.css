@@ -149,7 +149,7 @@
     /* Below dot-inner */
 }
 
-/* Tooltip */
+/* Tooltip - Semi-visible by default for better discoverability */
 .section-indicator__tooltip {
     position: absolute;
     right: calc(100% + 1rem);
@@ -160,9 +160,10 @@
     font-size: 0.85rem;
     font-weight: 500;
     white-space: nowrap;
-    opacity: 0;
-    visibility: hidden;
-    transform: translateX(10px);
+    /* Semi-visible by default for discoverability */
+    opacity: 0.4;
+    visibility: visible;
+    transform: translateX(0);
     transition: all 0.3s ease;
     pointer-events: none;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
@@ -179,9 +180,9 @@
     border-left-color: var(--card-bg, rgba(20, 20, 40, 0.95));
 }
 
+/* Full visibility on hover */
 .section-indicator__dot:hover .section-indicator__tooltip {
     opacity: 1;
-    visibility: visible;
     transform: translateX(0);
 }
 

@@ -159,27 +159,94 @@ class HackerTextEffect {
     /**
      * Use Intersection Observer to trigger animation on scroll
      * Animates ONLY ONCE when element first scrolls into view
+     * GUARANTEES completion even if user scrolls past quickly
      * @param {HTMLElement} element - Element to observe
      */
     observeElement(element) {
         const self = this;
 
+        // Store original text immediately as fallback
+        const originalText = element.textContent;
+        element.setAttribute('data-text', originalText);
+
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     // Element came into view - animate it ONCE
-                    self.animate(element);
+                    self.animateWithGuaranteedCompletion(element);
                     // Stop observing to prevent re-animation
                     observer.unobserve(element);
                 }
             });
-        }, { threshold: 0.5 });
+        }, { threshold: 0.3 }); // Lower threshold to trigger earlier
 
         observer.observe(element);
 
         // Track observer for cleanup
         if (!this.observers) this.observers = [];
         this.observers.push(observer);
+    }
+
+    /**
+     * Animate with GUARANTEED completion
+     * Uses requestAnimationFrame and ensures final text is always set
+     * @param {HTMLElement} element - Element to animate
+     */
+    animateWithGuaranteedCompletion(element) {
+        const self = this;
+        const text = element.getAttribute('data-text') || element.textContent;
+        const duration = 800; // Faster animation for better UX
+        const scrambleSpeed = this.scrambleSpeed || 30;
+
+        // Store original text
+        element.setAttribute('data-text', text);
+
+        // Lock dimensions
+        const rect = element.getBoundingClientRect();
+        element.style.display = 'inline-block';
+        element.style.minWidth = `${rect.width}px`;
+        element.style.minHeight = `${rect.height}px`;
+        element.style.verticalAlign = 'top';
+        element.style.contain = 'layout style';
+
+        let iteration = 0;
+        const letters = text.split('');
+        const totalIterations = letters.length;
+        const incrementPerFrame = totalIterations / (duration / scrambleSpeed);
+
+        // Safety timeout - GUARANTEE text is correct after max duration
+        const safetyTimeout = setTimeout(() => {
+            self.clearAnimation(element);
+            element.textContent = text;
+            element.style.minWidth = '';
+            element.style.minHeight = '';
+            element.style.contain = '';
+        }, duration + 500);
+
+        const interval = setInterval(() => {
+            element.textContent = letters
+                .map((letter, index) => {
+                    if (index < iteration) return letter;
+                    if (letter === ' ') return ' ';
+                    return this.characters[Math.floor(Math.random() * this.characters.length)];
+                })
+                .join('');
+
+            iteration += incrementPerFrame;
+
+            if (iteration >= totalIterations) {
+                clearInterval(interval);
+                clearTimeout(safetyTimeout);
+                self.activeIntervals.delete(element);
+                // GUARANTEE final text is correct
+                element.textContent = text;
+                element.style.minWidth = '';
+                element.style.minHeight = '';
+                element.style.contain = '';
+            }
+        }, scrambleSpeed);
+
+        this.activeIntervals.set(element, interval);
     }
 
     /**
