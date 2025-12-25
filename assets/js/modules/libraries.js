@@ -689,8 +689,8 @@ export const setupLazysizes = () => {
         img.classList.add('lazyload');
     });
 
-    // Convert regular images to lazy
-    document.querySelectorAll('img:not(.lazyload):not([data-src])').forEach((img) => {
+    // Convert regular images to lazy (skip images marked for eager loading)
+    document.querySelectorAll('img:not(.lazyload):not([data-src]):not([loading="eager"])').forEach((img) => {
         if (img.src && !img.src.includes('data:')) {
             img.setAttribute('data-src', img.src);
             img.classList.add('lazyload');
