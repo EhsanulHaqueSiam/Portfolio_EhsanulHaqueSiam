@@ -148,6 +148,9 @@ export const initPristine = () => {
 export const initLenis = () => {
     if (typeof Lenis === 'undefined') return null;
 
+    // Disable CSS smooth scroll when using Lenis (they conflict)
+    document.documentElement.style.scrollBehavior = 'auto';
+
     const lenis = new Lenis({
         duration: 1.2,
         easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -157,6 +160,9 @@ export const initLenis = () => {
         smoothTouch: false,
         touchMultiplier: 2
     });
+
+    // Expose globally for other modules
+    window.lenis = lenis;
 
     // Animation loop
     function raf(time) {

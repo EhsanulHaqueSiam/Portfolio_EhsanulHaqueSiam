@@ -87,28 +87,39 @@
     animation-duration: 18s;
 }
 
+/* 5th orb - Teal/Cyan accent for richer depth */
+.aurora-orb--5 {
+    width: 350px;
+    height: 350px;
+    background: radial-gradient(circle, rgba(0, 200, 180, 0.35) 0%, transparent 70%);
+    bottom: 30%;
+    right: 25%;
+    animation-delay: -8s;
+    animation-duration: 24s;
+}
+
 /* Floating animation for orbs */
 @keyframes auroraFloat {
 
     0%,
     100% {
         transform: translate(0, 0) scale(1);
-        opacity: 0.4;
+        opacity: 0.45;
     }
 
     25% {
         transform: translate(50px, -30px) scale(1.1);
-        opacity: 0.6;
+        opacity: 0.65;
     }
 
     50% {
         transform: translate(-30px, 50px) scale(0.95);
-        opacity: 0.5;
+        opacity: 0.55;
     }
 
     75% {
         transform: translate(-50px, -20px) scale(1.05);
-        opacity: 0.55;
+        opacity: 0.6;
     }
 }
 

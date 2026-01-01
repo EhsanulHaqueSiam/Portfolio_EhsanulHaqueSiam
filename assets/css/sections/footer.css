@@ -248,11 +248,18 @@
 .footer-copyright i {
     color: #ff4757;
     animation: pound 0.5s ease-in-out infinite alternate;
+    filter: drop-shadow(0 0 4px rgba(255, 71, 87, 0.6));
+    transition: filter 0.3s ease;
+}
+
+.footer-copyright:hover i {
+    filter: drop-shadow(0 0 8px rgba(255, 71, 87, 0.9));
 }
 
 @keyframes pound {
     to {
         transform: scale(1.2);
+        filter: drop-shadow(0 0 6px rgba(255, 71, 87, 0.8));
     }
 }
 
