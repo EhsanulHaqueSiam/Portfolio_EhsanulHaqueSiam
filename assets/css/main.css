@@ -28,6 +28,9 @@
 @import url("./components/special-effects.css");
 @import url("./components/page-transitions.css");
 @import url("./components/ai-showcase.css");
+@import url("./components/aurora-background.css");
+@import url("./components/liquid-chrome.css");
+@import url("./components/stagger-reveal.css");
 @import url("./components/case-study.css");
 
 /* ==================== UTILITIES ==================== */

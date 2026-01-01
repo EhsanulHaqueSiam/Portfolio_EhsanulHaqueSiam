@@ -1,0 +1,184 @@
+/* ==================== AURORA GRADIENT BACKGROUNDS ==================== */
+/**
+ * Animated mesh gradient backgrounds for a modern 2025 look.
+ * Creates flowing, organic color transitions.
+ */
+
+/* Aurora Background Container */
+.aurora-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+/* Base gradient layer */
+.aurora-bg::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--bg-primary, #0f0f23);
+    z-index: -1;
+}
+
+/* Animated gradient orbs */
+.aurora-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.5;
+    animation: auroraFloat 20s ease-in-out infinite;
+    will-change: transform, opacity;
+}
+
+.aurora-orb--1 {
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(115, 3, 167, 0.6) 0%, transparent 70%);
+    top: -10%;
+    left: -10%;
+    animation-delay: 0s;
+    animation-duration: 25s;
+}
+
+.aurora-orb--2 {
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(255, 123, 0, 0.5) 0%, transparent 70%);
+    top: 50%;
+    right: -15%;
+    animation-delay: -5s;
+    animation-duration: 22s;
+}
+
+.aurora-orb--3 {
+    width: 700px;
+    height: 700px;
+    background: radial-gradient(circle, rgba(170, 90, 179, 0.4) 0%, transparent 70%);
+    bottom: -20%;
+    left: 30%;
+    animation-delay: -10s;
+    animation-duration: 28s;
+}
+
+.aurora-orb--4 {
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(229, 141, 108, 0.45) 0%, transparent 70%);
+    top: 20%;
+    left: 60%;
+    animation-delay: -15s;
+    animation-duration: 18s;
+}
+
+/* Floating animation for orbs */
+@keyframes auroraFloat {
+
+    0%,
+    100% {
+        transform: translate(0, 0) scale(1);
+        opacity: 0.4;
+    }
+
+    25% {
+        transform: translate(50px, -30px) scale(1.1);
+        opacity: 0.6;
+    }
+
+    50% {
+        transform: translate(-30px, 50px) scale(0.95);
+        opacity: 0.5;
+    }
+
+    75% {
+        transform: translate(-50px, -20px) scale(1.05);
+        opacity: 0.55;
+    }
+}
+
+/* Gradient mesh overlay for additional depth */
+.aurora-mesh {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background:
+        radial-gradient(ellipse at 20% 80%, rgba(115, 3, 167, 0.15) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 20%, rgba(255, 123, 0, 0.12) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 50%, rgba(170, 90, 179, 0.08) 0%, transparent 60%);
+    animation: meshShift 30s ease-in-out infinite alternate;
+    pointer-events: none;
+}
+
+@keyframes meshShift {
+    0% {
+        opacity: 0.8;
+        transform: scale(1) rotate(0deg);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1.1) rotate(3deg);
+    }
+}
+
+/* Light theme adjustments */
+[data-theme="light"] .aurora-orb {
+    filter: blur(100px);
+    opacity: 0.25;
+}
+
+[data-theme="light"] .aurora-orb--1 {
+    background: radial-gradient(circle, rgba(115, 3, 167, 0.3) 0%, transparent 70%);
+}
+
+[data-theme="light"] .aurora-orb--2 {
+    background: radial-gradient(circle, rgba(255, 123, 0, 0.25) 0%, transparent 70%);
+}
+
+[data-theme="light"] .aurora-orb--3 {
+    background: radial-gradient(circle, rgba(170, 90, 179, 0.2) 0%, transparent 70%);
+}
+
+[data-theme="light"] .aurora-orb--4 {
+    background: radial-gradient(circle, rgba(229, 141, 108, 0.22) 0%, transparent 70%);
+}
+
+[data-theme="light"] .aurora-mesh {
+    opacity: 0.5;
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+
+    .aurora-orb,
+    .aurora-mesh {
+        animation: none;
+    }
+
+    .aurora-orb {
+        opacity: 0.3;
+    }
+}
+
+/* Mobile optimization - reduce complexity */
+@media (max-width: 768px) {
+    .aurora-orb {
+        filter: blur(60px);
+        opacity: 0.35;
+    }
+
+    .aurora-orb--3,
+    .aurora-orb--4 {
+        display: none;
+        /* Hide extra orbs on mobile for performance */
+    }
+}
