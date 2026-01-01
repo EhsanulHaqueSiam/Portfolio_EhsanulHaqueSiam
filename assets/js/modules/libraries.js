@@ -703,7 +703,110 @@ export const setupLazysizes = () => {
 };
 
 /**
+ * Phase 1: Critical Libraries - Run immediately for core UX
+ * These are essential for the page to feel interactive
+ */
+export const initCriticalLibraries = () => {
+    console.log('🚀 Initializing critical libraries...');
+
+    // Add AOS attributes dynamically
+    addAOSAttributes();
+
+    // Add Hover.css classes
+    addHoverClasses();
+
+    // Core scroll and animation libraries
+    try { initAOS(); } catch (e) { console.warn('AOS init failed:', e); }
+    try { initLenis(); } catch (e) { console.warn('Lenis init failed:', e); }
+    try { initHeadroom(); } catch (e) { console.warn('Headroom init failed:', e); }
+    try { setupLazysizes(); } catch (e) { console.warn('lazysizes setup failed:', e); }
+
+    console.log('✅ Critical libraries initialized');
+};
+
+/**
+ * Phase 2: Deferred Libraries - Run after page is interactive
+ * These enhance the experience but aren't needed immediately
+ */
+export const initDeferredLibraries = () => {
+    console.log('⏳ Initializing deferred libraries...');
+
+    // UI Enhancement libraries
+    try { initTippy(); } catch (e) { console.warn('Tippy init failed:', e); }
+    try { initSplitting(); } catch (e) { console.warn('Splitting init failed:', e); }
+    try { initCountUp(); } catch (e) { console.warn('CountUp init failed:', e); }
+    try { initNotyf(); } catch (e) { console.warn('Notyf init failed:', e); }
+    try { initClipboard(); } catch (e) { console.warn('clipboard.js init failed:', e); }
+    try { initRellax(); } catch (e) { console.warn('Rellax init failed:', e); }
+    try { initAnimeHero(); } catch (e) { console.warn('Anime.js init failed:', e); }
+
+    console.log('✅ Deferred libraries initialized');
+};
+
+/**
+ * Phase 3: Lazy Libraries - Initialize only when section is visible
+ * Uses IntersectionObserver for optimal performance
+ */
+export const setupLazyLibraries = () => {
+    if (!('IntersectionObserver' in window)) {
+        // Fallback: initialize all immediately
+        initAllLazyLibraries();
+        return;
+    }
+
+    const lazyObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const sectionId = entry.target.id;
+
+                switch (sectionId) {
+                    case 'work':
+                    case 'projects':
+                        try { initGLightbox(); } catch (e) { console.warn('GLightbox init failed:', e); }
+                        break;
+                    case 'about':
+                        try { initAtropos(); } catch (e) { console.warn('Atropos init failed:', e); }
+                        break;
+                    case 'contact':
+                        try { initPristine(); } catch (e) { console.warn('Pristine init failed:', e); }
+                        break;
+                    case 'skills':
+                        try { initProgressBars(); } catch (e) { console.warn('ProgressBar init failed:', e); }
+                        break;
+                }
+
+                lazyObserver.unobserve(entry.target);
+            }
+        });
+    }, { rootMargin: '100px' });
+
+    // Observe main sections for lazy initialization
+    ['work', 'about', 'contact', 'skills', 'projects'].forEach(id => {
+        const section = document.getElementById(id);
+        if (section) lazyObserver.observe(section);
+    });
+
+    // Setup form confetti (contact form dependent)
+    try { setupFormConfetti(); } catch (e) { console.warn('Form confetti setup failed:', e); }
+
+    console.log('✅ Lazy library observers set up');
+};
+
+/**
+ * Fallback: Initialize all lazy libraries at once
+ */
+const initAllLazyLibraries = () => {
+    try { initGLightbox(); } catch (e) { console.warn('GLightbox init failed:', e); }
+    try { initAtropos(); } catch (e) { console.warn('Atropos init failed:', e); }
+    try { initPristine(); } catch (e) { console.warn('Pristine init failed:', e); }
+    try { initProgressBars(); } catch (e) { console.warn('ProgressBar init failed:', e); }
+    try { initPlyr(); } catch (e) { console.warn('Plyr init failed:', e); }
+    try { setupFormConfetti(); } catch (e) { console.warn('Form confetti setup failed:', e); }
+};
+
+/**
  * Initialize all libraries (Phase 1 + Phase 2 + Phase 3)
+ * @deprecated Use phased initialization instead: initCriticalLibraries, initDeferredLibraries, setupLazyLibraries
  */
 export const initAllLibraries = () => {
     console.log('🚀 Initializing UI Enhancement Libraries...');

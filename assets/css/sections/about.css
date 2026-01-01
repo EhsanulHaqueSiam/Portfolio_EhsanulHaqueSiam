@@ -660,6 +660,26 @@
     display: block;
 }
 
+/* Snake SVG - Make white/empty tiles match theme background */
+.github-contribution-graph img,
+.github-contribution-graph picture img {
+    /* Light theme: invert slightly to soften white tiles */
+    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.1));
+}
+
+/* Dark theme: Make white tiles transparent using mix-blend-mode */
+[data-theme="dark"] .github-contribution-graph {
+    background: transparent;
+}
+
+[data-theme="dark"] .github-contribution-graph img,
+[data-theme="dark"] .github-contribution-graph picture img {
+    /* Multiply blends white tiles with the dark background, making them dark */
+    mix-blend-mode: screen;
+    filter: invert(1) hue-rotate(180deg) drop-shadow(0 2px 8px rgba(184, 77, 255, 0.2));
+    opacity: 0.9;
+}
+
 /* Dark Theme GitHub Stats */
 [data-theme="dark"] .github-stat-card {
     background: rgba(22, 27, 34, 0.9);

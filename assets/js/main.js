@@ -14,7 +14,7 @@ import { initNavigation } from './modules/navigation.js?v=4.0';
 import { initScrollSpy, initSmoothScrolling } from './modules/scroll-spy.js?v=4.0';
 import { initSectionIndicator } from './modules/section-indicator.js?v=1.0';
 import { initTimezoneClock } from './modules/timezone-clock.js?v=1.0';
-import { initAllLibraries } from './modules/libraries.js?v=1.0';
+import { initCriticalLibraries, initDeferredLibraries, setupLazyLibraries } from './modules/libraries.js?v=2.0';
 import { initScrollAnimations, initParallax, initMicroInteractions, initSmoothScroll, initPageLoadAnimation } from './modules/animations.js?v=4.0';
 import { initGSAPMicroInteractions } from '/assets/js/modules/gsap-micro-interactions.js?v=2.0';
 
@@ -26,6 +26,9 @@ import { initDevToolsProtection } from './modules/dev-tools.js?v=4.0';
 import { initThemeToggle } from './modules/theme-toggle.js?v=4.0';
 import { initCustomCursor } from './modules/cursor.js?v=4.0';
 import { initCopyToClipboard } from './modules/toast.js?v=4.0';
+
+// Lazy CSS Loading
+import { initLazyCSS, preloadDeferredCSS } from './modules/lazy-css-loader.js?v=1.0';
 
 // Content Renderers
 import {
@@ -52,8 +55,27 @@ if ('serviceWorker' in navigator) {
 // ==================== INITIALIZATION ====================
 
 /**
+ * Enable aurora animation and hide page loader
+ * Called after critical initialization is complete
+ */
+const enableAuroraAndHideLoader = () => {
+  // Enable aurora animations
+  document.body.classList.add('aurora-ready');
+
+  // Hide page loader with smooth fade
+  const loader = document.querySelector('.page-loader');
+  if (loader) {
+    loader.classList.add('loaded');
+    // Remove from DOM after transition
+    setTimeout(() => loader.remove(), 600);
+  }
+
+  console.log('✨ Aurora animations enabled, page loader hidden');
+};
+
+/**
  * Initialize the entire portfolio application
- * This function orchestrates all module initialization
+ * Uses phased initialization for optimal perceived performance
  */
 const initPortfolio = async () => {
   console.log("🚀 Initializing Portfolio...");
@@ -83,29 +105,54 @@ const initPortfolio = async () => {
   // Initialize custom cursor (desktop only)
   initCustomCursor();
 
-  // Render dynamic content sections
+  // Phase 1: Initialize critical libraries immediately
+  initCriticalLibraries();
+
+  // Enable aurora animations and hide loader IMMEDIATELY
+  // Don't wait for content renderers - they load in background
+  enableAuroraAndHideLoader();
+
+  // Render dynamic content sections (non-blocking)
+  // External APIs may fail, but page is already visible
   console.log("📄 Rendering content sections...");
 
-  await Promise.all([
+  Promise.all([
     renderSkills(),
     renderProjects(),
     renderAchievements(),
     renderPublications(),
     renderExperience()
     // renderTestimonials() // Uncomment when testimonials are ready
-  ]);
-
-  // Initialize micro-interactions AFTER content is loaded
-  // This ensures tilt effects apply to dynamically rendered cards
-  initScrollAnimations();
-  initMicroInteractions();
-  initCopyToClipboard();
-
-  // Initialize UI enhancement libraries (AOS, GLightbox, Tippy, etc.)
-  initAllLibraries();
+  ]).then(() => {
+    console.log("✅ All content sections rendered");
+    // Initialize micro-interactions AFTER content is loaded
+    // This ensures tilt effects apply to dynamically rendered cards
+    initScrollAnimations();
+    initMicroInteractions();
+    initCopyToClipboard();
+  }).catch(err => {
+    console.warn("⚠️ Some content sections failed to render:", err);
+    // Still initialize interactions for whatever loaded
+    initScrollAnimations();
+    initMicroInteractions();
+    initCopyToClipboard();
+  });
 
   // Initialize GSAP micro-interactions (after libraries to ensure GSAP is loaded)
   initGSAPMicroInteractions();
+
+  // Setup lazy CSS loading
+  initLazyCSS();
+
+  // Phase 2: Deferred libraries - run when browser is idle
+  const scheduleDeferred = window.requestIdleCallback || ((cb) => setTimeout(cb, 150));
+  scheduleDeferred(() => {
+    initDeferredLibraries();
+    preloadDeferredCSS();
+  });
+
+  // Phase 3: Setup lazy library initialization
+  setupLazyLibraries();
 
   // Initialize video click-to-play functionality
   initVideoPlayer();

@@ -32,10 +32,19 @@
 .aurora-orb {
     position: absolute;
     border-radius: 50%;
-    filter: blur(80px);
+    filter: blur(60px);
     opacity: 0.5;
     animation: auroraFloat 20s ease-in-out infinite;
     will-change: transform, opacity;
+    /* Start paused for smoother initial load */
+    animation-play-state: paused;
+    transition: opacity 0.8s ease-out;
+}
+
+/* Enable aurora animations after page is interactive */
+.aurora-ready .aurora-orb,
+.aurora-ready .aurora-mesh {
+    animation-play-state: running;
 }
 
 .aurora-orb--1 {
@@ -115,6 +124,7 @@
         radial-gradient(ellipse at 80% 20%, rgba(255, 123, 0, 0.12) 0%, transparent 50%),
         radial-gradient(ellipse at 50% 50%, rgba(170, 90, 179, 0.08) 0%, transparent 60%);
     animation: meshShift 30s ease-in-out infinite alternate;
+    animation-play-state: paused;
     pointer-events: none;
 }
 
