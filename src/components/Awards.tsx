@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { awards, getAchievementImage } from '../data/content';
 import { SplitText } from './ui/SplitText';
 import { MagneticHover } from './ui/ImageDistortion';
+import { OptimizedImage } from './ui/OptimizedImage';
 
 export function Awards() {
   const [selectedAward, setSelectedAward] = useState<number | null>(null);
@@ -54,12 +55,11 @@ export function Awards() {
                   {/* Image background */}
                   <div className={`relative ${index === 0 ? 'aspect-[4/3] sm:aspect-[16/10]' : 'aspect-[4/3]'} overflow-hidden`}>
                     {award.images[0] && (
-                      <img
+                      <OptimizedImage
                         src={getAchievementImage(award.images[0])}
                         alt={award.name}
-                        loading="lazy"
-                        decoding="async"
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                        fill
+                        className="transition-transform duration-700 group-hover:scale-110"
                       />
                     )}
                     {/* Gradient overlay */}
@@ -165,12 +165,11 @@ export function Awards() {
                       transition={{ delay: i * 0.1 }}
                       className="aspect-video rounded-xl overflow-hidden bg-space-700"
                     >
-                      <img
+                      <OptimizedImage
                         src={getAchievementImage(img)}
                         alt={`${awards[selectedAward].name} - ${i + 1}`}
-                        loading="lazy"
-                        decoding="async"
-                        className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                        fill
+                        className="hover:scale-105 transition-transform duration-500"
                       />
                     </motion.div>
                   ))}
