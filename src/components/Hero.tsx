@@ -4,6 +4,7 @@ import { profile, profileHeroImage } from '../data/content';
 import { SplitText, RevealText } from './ui/SplitText';
 import { MagneticHover } from './ui/ImageDistortion';
 import { Marquee } from './ui/Marquee';
+import { OptimizedImage } from './ui/OptimizedImage';
 
 export function Hero() {
   const containerRef = useRef<HTMLElement>(null);
@@ -34,26 +35,26 @@ export function Hero() {
       <div className="sticky top-0 h-screen flex flex-col justify-center overflow-hidden">
         {/* Animated gradient mesh background */}
         <div className="absolute inset-0 pointer-events-none">
-          {/* Primary gradient orb */}
+          {/* Primary gradient orb - reduced blur from 80px to 40px for performance */}
           <motion.div
-            className="absolute w-[800px] h-[800px] rounded-full"
+            className="absolute w-[800px] h-[800px] rounded-full will-change-transform"
             style={{
               y: springY1,
               rotate,
               background: 'radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, transparent 70%)',
-              filter: 'blur(80px)',
+              filter: 'blur(40px)',
               top: '10%',
               right: '-10%',
             }}
           />
 
-          {/* Secondary gradient orb */}
+          {/* Secondary gradient orb - reduced blur from 80px to 40px */}
           <motion.div
-            className="absolute w-[600px] h-[600px] rounded-full"
+            className="absolute w-[600px] h-[600px] rounded-full will-change-transform"
             style={{
               y: springY2,
               background: 'radial-gradient(circle, rgba(245, 158, 11, 0.1) 0%, transparent 70%)',
-              filter: 'blur(80px)',
+              filter: 'blur(40px)',
               bottom: '0%',
               left: '-5%',
             }}
@@ -71,23 +72,26 @@ export function Hero() {
             }}
           />
 
-          {/* Decorative shapes */}
+          {/* Decorative shapes - staggered start delays for performance */}
           <motion.div
-            className="absolute top-[20%] left-[10%] w-24 h-24 border border-violet-500/20 rounded-2xl"
+            className="absolute top-[20%] left-[10%] w-24 h-24 border border-violet-500/20 rounded-2xl will-change-transform"
             style={{ y: y3, rotate }}
-            animate={{ rotate: [0, 90, 0] }}
-            transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
+            initial={{ opacity: 0 }}
+            animate={{ rotate: [0, 90, 0], opacity: 1 }}
+            transition={{ duration: 20, repeat: Infinity, ease: 'linear', delay: 0.5 }}
           />
           <motion.div
-            className="absolute bottom-[30%] right-[15%] w-16 h-16 bg-gradient-to-br from-amber-500/10 to-transparent rounded-full"
+            className="absolute bottom-[30%] right-[15%] w-16 h-16 bg-gradient-to-br from-amber-500/10 to-transparent rounded-full will-change-transform"
             style={{ y: y1 }}
-            animate={{ scale: [1, 1.2, 1] }}
-            transition={{ duration: 4, repeat: Infinity }}
+            initial={{ opacity: 0 }}
+            animate={{ scale: [1, 1.2, 1], opacity: 1 }}
+            transition={{ duration: 4, repeat: Infinity, delay: 1 }}
           />
           <motion.div
             className="absolute top-[40%] right-[8%] w-2 h-2 bg-violet-500 rounded-full"
+            initial={{ opacity: 0 }}
             animate={{ opacity: [0.2, 1, 0.2] }}
-            transition={{ duration: 2, repeat: Infinity }}
+            transition={{ duration: 2, repeat: Infinity, delay: 1.5 }}
           />
 
           {/* Floating profile image - hidden on mobile */}
@@ -99,8 +103,8 @@ export function Hero() {
             transition={{ duration: 1, delay: 1 }}
           >
             <div className="relative">
-              {/* Glow backdrop */}
-              <div className="absolute inset-0 bg-gradient-to-br from-violet-500/30 to-amber-500/20 rounded-[2rem] blur-3xl scale-110" />
+              {/* Glow backdrop - reduced blur */}
+              <div className="absolute inset-0 bg-gradient-to-br from-violet-500/30 to-amber-500/20 rounded-[2rem] blur-2xl scale-110" />
 
               {/* Image container */}
               <motion.div
@@ -108,29 +112,31 @@ export function Hero() {
                 animate={{ y: [0, -10, 0] }}
                 transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
               >
-                <img
+                <OptimizedImage
                   src={profileHeroImage}
                   alt={profile.name}
-                  loading="eager"
-                  decoding="async"
-                  fetchPriority="high"
-                  className="w-full h-full object-cover"
+                  priority
+                  width={256}
+                  height={320}
+                  className="w-full h-full"
                 />
                 {/* Gradient overlays */}
                 <div className="absolute inset-0 bg-gradient-to-t from-space-900/60 via-transparent to-transparent" />
                 <div className="absolute inset-0 bg-gradient-to-br from-violet-500/10 to-transparent mix-blend-overlay" />
               </motion.div>
 
-              {/* Decorative elements around image */}
+              {/* Decorative elements around image - staggered for performance */}
               <motion.div
-                className="absolute -top-4 -right-4 w-8 h-8 border-t-2 border-r-2 border-violet-500/50 rounded-tr-xl"
+                className="absolute -top-4 -right-4 w-8 h-8 border-t-2 border-r-2 border-violet-500/50 rounded-tr-xl will-change-opacity"
+                initial={{ opacity: 0 }}
                 animate={{ opacity: [0.5, 1, 0.5] }}
-                transition={{ duration: 3, repeat: Infinity }}
+                transition={{ duration: 3, repeat: Infinity, delay: 2 }}
               />
               <motion.div
-                className="absolute -bottom-4 -left-4 w-8 h-8 border-b-2 border-l-2 border-amber-500/50 rounded-bl-xl"
+                className="absolute -bottom-4 -left-4 w-8 h-8 border-b-2 border-l-2 border-amber-500/50 rounded-bl-xl will-change-opacity"
+                initial={{ opacity: 0 }}
                 animate={{ opacity: [0.5, 1, 0.5] }}
-                transition={{ duration: 3, repeat: Infinity, delay: 1.5 }}
+                transition={{ duration: 3, repeat: Infinity, delay: 2.5 }}
               />
             </div>
           </motion.div>

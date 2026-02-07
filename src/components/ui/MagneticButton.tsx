@@ -1,4 +1,4 @@
-import { useRef, ReactNode } from 'react';
+import { useRef, ReactNode, memo, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { useMagneticEffect } from '../../hooks/useMousePosition';
 
@@ -13,7 +13,7 @@ interface MagneticButtonProps {
   rel?: string;
 }
 
-export function MagneticButton({
+export const MagneticButton = memo(function MagneticButton({
   children,
   className = '',
   href,
@@ -27,6 +27,10 @@ export function MagneticButton({
   const { offset, isHovered } = useMagneticEffect(ref, strength);
 
   const Component = as === 'a' ? motion.a : motion.button;
+
+  const handleClick = useCallback(() => {
+    onClick?.();
+  }, [onClick]);
 
   return (
     <motion.div
@@ -45,7 +49,7 @@ export function MagneticButton({
     >
       <Component
         href={href}
-        onClick={onClick}
+        onClick={handleClick}
         target={target}
         rel={rel}
         className={`relative overflow-hidden ${className}`}
@@ -67,4 +71,4 @@ export function MagneticButton({
       </Component>
     </motion.div>
   );
-}
+});

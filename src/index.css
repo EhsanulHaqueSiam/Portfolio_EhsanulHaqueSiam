@@ -24,9 +24,13 @@
     -webkit-tap-highlight-color: rgba(139, 92, 246, 0.1);
   }
 
-  /* Hide default cursor on desktop */
+  /* Hide default cursor on desktop - optimized selector to reduce repaints */
   @media (hover: hover) and (pointer: fine) {
-    * {
+    html, body {
+      cursor: none !important;
+    }
+
+    a, button, input, textarea, select, [role="button"] {
       cursor: none !important;
     }
   }
@@ -84,11 +88,12 @@
    ============================================ */
 
 @layer components {
-  /* Gradient text - animated */
+  /* Gradient text - animated with GPU hint */
   .gradient-text {
     @apply bg-gradient-to-r from-violet-400 via-violet-500 to-amber-400 bg-clip-text text-transparent;
     background-size: 200% auto;
     animation: gradient-flow 4s ease infinite;
+    will-change: background-position;
   }
 
   @keyframes gradient-flow {
@@ -96,9 +101,9 @@
     50% { background-position: 200% center; }
   }
 
-  /* Glass card */
+  /* Glass card - reduced blur for performance */
   .card-glass {
-    @apply bg-space-800/40 backdrop-blur-xl border border-white/[0.08] rounded-3xl;
+    @apply bg-space-800/40 backdrop-blur-md border border-white/[0.08] rounded-3xl;
     transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
@@ -436,7 +441,7 @@
   100% { background-position: 200% 0; }
 }
 
-/* Grain texture (for premium feel) */
+/* Grain texture (for premium feel) with GPU hint */
 .grain::before {
   content: '';
   position: fixed;
@@ -448,6 +453,7 @@
   opacity: 0.02;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
   z-index: 9999;
+  will-change: transform;
 }
 
 /* Liquid button effect */
@@ -492,8 +498,29 @@
   -webkit-text-fill-color: transparent;
 }
 
-/* Glassmorphism blur levels */
+/* Glassmorphism blur levels - optimized for performance */
 .blur-glass-sm { backdrop-filter: blur(8px); }
-.blur-glass { backdrop-filter: blur(16px); }
-.blur-glass-lg { backdrop-filter: blur(24px); }
-.blur-glass-xl { backdrop-filter: blur(40px); }
+.blur-glass { backdrop-filter: blur(12px); }
+.blur-glass-lg { backdrop-filter: blur(16px); }
+.blur-glass-xl { backdrop-filter: blur(24px); }
+
+/* GPU-accelerated animation classes */
+.will-change-transform {
+  will-change: transform;
+}
+
+.will-change-opacity {
+  will-change: opacity;
+}
+
+/* Optimized shimmer animation */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.animate-shimmer {
+  animation: shimmer 2s infinite linear;
+  background-size: 200% 100%;
+  will-change: background-position;
+}

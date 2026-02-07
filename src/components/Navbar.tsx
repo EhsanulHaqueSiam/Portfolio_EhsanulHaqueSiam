@@ -19,24 +19,25 @@ export function Navbar() {
     setIsScrolled(latest > 50);
   });
 
+  // Use IntersectionObserver instead of scroll events for better performance
   useEffect(() => {
-    const handleScroll = () => {
-      // Find active section
-      const sections = navItems.map((item) => item.href.slice(1));
-      for (const section of sections.reverse()) {
-        const element = document.getElementById(section);
-        if (element) {
-          const rect = element.getBoundingClientRect();
-          if (rect.top <= 150) {
-            setActiveSection(section);
-            break;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
           }
-        }
-      }
-    };
+        });
+      },
+      { rootMargin: '-50% 0px -50% 0px' }
+    );
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    navItems.forEach(({ href }) => {
+      const section = document.querySelector(href);
+      if (section) observer.observe(section);
+    });
+
+    return () => observer.disconnect();
   }, []);
 
   return (
