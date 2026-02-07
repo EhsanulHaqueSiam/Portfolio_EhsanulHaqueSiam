@@ -161,13 +161,13 @@
     }
   },
   {
-    "name": "BD NewsPaper Scraper",
-    "desc": "Enterprise-grade web scraping framework for 7 major Bangladeshi newspapers. Features date range filtering, Bengali date conversion, duplicate prevention, and cross-platform runners.",
+    "name": "BD News Scraper & Analytics",
+    "desc": "Production-grade data engineering platform scraping 74+ Bangladeshi news sources daily. Features automated GitHub Actions pipelines, daily Kaggle dataset updates, ML-powered analytics (sentiment analysis, topic clustering, breaking news detection), and enterprise infrastructure with Docker/Kubernetes deployment.",
     "metrics": [
-      "7 newspaper sources",
-      "⭐ 1 Star, 1 Fork",
-      "Cross-platform (Win/Linux/Mac)",
-      "Bengali date conversion"
+      "74+ news sources (EN/BN)",
+      "Daily Kaggle dataset updates",
+      "GitHub Actions automation",
+      "ML analytics pipeline"
     ],
     "images": [
       "bdnewspaperscraper"
@@ -175,50 +175,63 @@
     "showInHome": true,
     "categories": [
       "web_scraping",
+      "machine_learning",
       "automation"
     ],
     "tags": [
       "Python",
       "Scrapy",
-      "SQLite",
-      "UV"
+      "FastAPI",
+      "Docker",
+      "GitHub Actions",
+      "Kaggle",
+      "scikit-learn"
     ],
     "links": {
-      "view": "#",
+      "view": "https://www.kaggle.com/datasets/ehsanulhaquesiam/bangladesh-news-articles",
       "code": "https://github.com/EhsanulHaqueSiam/BDNewsPaperScraper"
     },
     "caseStudy": {
-      "problem": "Aggregating news from multiple disparate sources with varying structures and formats is difficult, making comprehensive analysis challenging.",
-      "solution": "Built an advanced news scraping framework for 7 major Bangladeshi newspapers using Python and Scrapy, featuring intelligent extraction and centralized storage.",
+      "problem": "Bangladesh lacks a comprehensive, up-to-date news dataset for research and NLP applications, with no automated pipeline for continuous data collection and analysis.",
+      "solution": "Built a production-grade news aggregation platform with 74+ spiders, automated daily scraping via GitHub Actions, ML-powered analytics, and public Kaggle dataset for the research community.",
       "process": [
         {
-          "title": "Unified Spiders",
-          "desc": "Developed 7 custom spiders to direct news from different sources into a single, consistent format.",
+          "title": "Enterprise Scraping",
+          "desc": "Developed 82 spider files with Playwright integration, Cloudflare bypass, rotating proxies, and smart fallback architecture.",
           "icon": "fas fa-spider"
         },
         {
-          "title": "Smart Extraction",
-          "desc": "Implemented intelligent fallback logic and Bengali date conversion for accurate data parsing.",
+          "title": "ML Analytics Pipeline",
+          "desc": "Implemented sentiment analysis, TF-IDF topic clustering, breaking news detection via spike analysis, and duplicate detection.",
           "icon": "fas fa-brain"
         },
         {
-          "title": "Cross-Platform Runners",
-          "desc": "Created batch and shell scripts to ensure robust execution across Windows, Linux, and macOS.",
-          "icon": "fas fa-terminal"
+          "title": "Automated Infrastructure",
+          "desc": "GitHub Actions daily scraping at 12:00 PM BDT, auto-upload to Kaggle, Docker/Kubernetes deployment, multi-format exports.",
+          "icon": "fas fa-robot"
+        },
+        {
+          "title": "API & Dashboards",
+          "desc": "FastAPI REST + GraphQL endpoints, Streamlit dashboards, Leaflet.js geo-visualization, real-time notifications (Telegram/Slack/Discord).",
+          "icon": "fas fa-chart-line"
         }
       ],
       "results": [
         {
           "label": "Sources",
-          "value": "7"
+          "value": "74+"
         },
         {
-          "label": "License",
-          "value": "MIT"
+          "label": "Spiders",
+          "value": "82"
         },
         {
-          "label": "Export",
-          "value": "CSV/Excel"
+          "label": "Daily Auto",
+          "value": "✓"
+        },
+        {
+          "label": "Kaggle",
+          "value": "Live"
         }
       ]
     }
