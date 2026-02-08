@@ -3,7 +3,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { featuredPublications, getPublicationImage } from '../data/content';
 import { SplitText } from './ui/SplitText';
 import { MagneticHover } from './ui/ImageDistortion';
-import { OptimizedImage } from './ui/OptimizedImage';
 
 export function Publications() {
   const [expandedPub, setExpandedPub] = useState<number | null>(null);
@@ -54,11 +53,12 @@ export function Publications() {
                     <div className="lg:col-span-2 relative overflow-hidden">
                       <div className="aspect-[4/3] lg:aspect-auto lg:h-full min-h-[250px] bg-gradient-to-br from-violet-500/10 to-amber-500/5">
                         {pub.images && pub.images[0] && (
-                          <OptimizedImage
+                          <img
                             src={getPublicationImage(pub.images[0])}
                             alt={pub.title}
-                            fill
-                            className="transition-transform duration-700 group-hover:scale-105"
+                            loading="lazy"
+                            decoding="async"
+                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                           />
                         )}
                         {/* Gradient overlay */}
@@ -153,13 +153,13 @@ export function Publications() {
                         className="overflow-hidden border-t border-white/5"
                       >
                         <div className="p-6 bg-space-900/50">
-                          <div className="w-full max-w-4xl mx-auto rounded-2xl shadow-2xl shadow-violet-500/10 overflow-hidden">
-                            <OptimizedImage
-                              src={getPublicationImage(pub.images[0])}
-                              alt={pub.title}
-                              aspectRatio="16/9"
-                            />
-                          </div>
+                          <img
+                            src={getPublicationImage(pub.images[0])}
+                            alt={pub.title}
+                            loading="lazy"
+                            decoding="async"
+                            className="w-full max-w-4xl mx-auto rounded-2xl shadow-2xl shadow-violet-500/10"
+                          />
                         </div>
                       </motion.div>
                     )}

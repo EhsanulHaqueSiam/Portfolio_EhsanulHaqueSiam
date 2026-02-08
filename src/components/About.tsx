@@ -15,14 +15,14 @@ export function About() {
   const y = useTransform(scrollYProgress, [0, 1], [100, -100]);
 
   return (
-    <section id="about" ref={containerRef} className="py-32 px-6 md:px-12 lg:px-24 relative overflow-hidden">
+    <section id="about" ref={containerRef} className="py-16 sm:py-24 md:py-32 px-4 sm:px-6 md:px-12 lg:px-24 relative overflow-hidden">
       {/* Section header */}
-      <div className="max-w-7xl mx-auto mb-20">
-        <div className="flex items-center gap-4 mb-8">
-          <span className="text-violet-500 font-mono text-sm">01</span>
+      <div className="max-w-7xl mx-auto mb-10 sm:mb-16 md:mb-20">
+        <div className="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-8">
+          <span className="text-violet-500 font-mono text-xs sm:text-sm">01</span>
           <div className="h-px flex-1 bg-gradient-to-r from-violet-500/50 to-transparent" />
         </div>
-        <h2 className="text-5xl md:text-7xl lg:text-8xl font-display font-bold">
+        <h2 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-display font-bold">
           <SplitText animation="blur" stagger={0.03}>
             About Me
           </SplitText>
@@ -221,16 +221,16 @@ export function About() {
       </div>
 
       {/* Bottom marquee */}
-      <div className="mt-12 sm:mt-20 -mx-6 md:-mx-12 lg:-mx-24">
-        <Marquee speed={40} direction="right" className="text-5xl sm:text-8xl font-display font-bold text-white/[0.02] py-4">
-          <span className="mx-6 sm:mx-12">PROBLEM SOLVER</span>
-          <span className="mx-6 sm:mx-12">•</span>
-          <span className="mx-6 sm:mx-12">RESEARCHER</span>
-          <span className="mx-6 sm:mx-12">•</span>
-          <span className="mx-6 sm:mx-12">BUILDER</span>
-          <span className="mx-6 sm:mx-12">•</span>
-          <span className="mx-6 sm:mx-12">LEARNER</span>
-          <span className="mx-6 sm:mx-12">•</span>
+      <div className="mt-10 sm:mt-16 md:mt-20 -mx-4 sm:-mx-6 md:-mx-12 lg:-mx-24">
+        <Marquee speed={30} direction="right" className="text-4xl sm:text-6xl md:text-8xl font-display font-bold text-white/[0.02] py-3 sm:py-4">
+          <span className="mx-4 sm:mx-8 md:mx-12">PROBLEM SOLVER</span>
+          <span className="mx-4 sm:mx-8 md:mx-12">•</span>
+          <span className="mx-4 sm:mx-8 md:mx-12">RESEARCHER</span>
+          <span className="mx-4 sm:mx-8 md:mx-12">•</span>
+          <span className="mx-4 sm:mx-8 md:mx-12">BUILDER</span>
+          <span className="mx-4 sm:mx-8 md:mx-12">•</span>
+          <span className="mx-4 sm:mx-8 md:mx-12">LEARNER</span>
+          <span className="mx-4 sm:mx-8 md:mx-12">•</span>
         </Marquee>
       </div>
     </section>

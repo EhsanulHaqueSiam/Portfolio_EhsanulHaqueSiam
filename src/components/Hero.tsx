@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 import { profile, profileHeroImage } from '../data/content';
 import { SplitText, RevealText } from './ui/SplitText';
@@ -8,18 +8,28 @@ import { OptimizedImage } from './ui/OptimizedImage';
 
 export function Hero() {
   const containerRef = useRef<HTMLElement>(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Detect mobile for simplified animations
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ['start start', 'end start'],
   });
 
-  // Parallax transforms
-  const y1 = useTransform(scrollYProgress, [0, 1], [0, 300]);
-  const y2 = useTransform(scrollYProgress, [0, 1], [0, -200]);
-  const y3 = useTransform(scrollYProgress, [0, 1], [0, 150]);
-  const scale = useTransform(scrollYProgress, [0, 0.5], [1, 0.8]);
+  // Reduced parallax on mobile for better performance
+  const y1 = useTransform(scrollYProgress, [0, 1], [0, isMobile ? 100 : 300]);
+  const y2 = useTransform(scrollYProgress, [0, 1], [0, isMobile ? -50 : -200]);
+  const y3 = useTransform(scrollYProgress, [0, 1], [0, isMobile ? 50 : 150]);
+  const scale = useTransform(scrollYProgress, [0, 0.5], [1, isMobile ? 0.95 : 0.8]);
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
-  const rotate = useTransform(scrollYProgress, [0, 1], [0, 15]);
+  const rotate = useTransform(scrollYProgress, [0, 1], [0, isMobile ? 5 : 15]);
 
   // Smooth spring for mouse parallax
   const springConfig = { stiffness: 100, damping: 30 };
@@ -29,34 +39,34 @@ export function Hero() {
   return (
     <section
       ref={containerRef}
-      className="relative min-h-[200vh]"
+      className="relative min-h-[150vh] md:min-h-[200vh]"
     >
       {/* Sticky hero content */}
-      <div className="sticky top-0 h-screen flex flex-col justify-center overflow-hidden">
+      <div className="sticky top-0 min-h-screen md:h-screen flex flex-col justify-center overflow-hidden py-20 md:py-0">
         {/* Animated gradient mesh background */}
         <div className="absolute inset-0 pointer-events-none">
-          {/* Primary gradient orb - reduced blur from 80px to 40px for performance */}
+          {/* Primary gradient orb - smaller on mobile for performance */}
           <motion.div
-            className="absolute w-[800px] h-[800px] rounded-full will-change-transform"
+            className="absolute w-[300px] h-[300px] md:w-[600px] md:h-[600px] lg:w-[800px] lg:h-[800px] rounded-full will-change-transform"
             style={{
-              y: springY1,
-              rotate,
+              y: isMobile ? 0 : springY1,
+              rotate: isMobile ? 0 : rotate,
               background: 'radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, transparent 70%)',
-              filter: 'blur(40px)',
-              top: '10%',
-              right: '-10%',
+              filter: isMobile ? 'blur(30px)' : 'blur(40px)',
+              top: '5%',
+              right: '-15%',
             }}
           />
 
-          {/* Secondary gradient orb - reduced blur from 80px to 40px */}
+          {/* Secondary gradient orb - smaller on mobile */}
           <motion.div
-            className="absolute w-[600px] h-[600px] rounded-full will-change-transform"
+            className="absolute w-[250px] h-[250px] md:w-[400px] md:h-[400px] lg:w-[600px] lg:h-[600px] rounded-full will-change-transform"
             style={{
-              y: springY2,
+              y: isMobile ? 0 : springY2,
               background: 'radial-gradient(circle, rgba(245, 158, 11, 0.1) 0%, transparent 70%)',
-              filter: 'blur(40px)',
-              bottom: '0%',
-              left: '-5%',
+              filter: isMobile ? 'blur(30px)' : 'blur(40px)',
+              bottom: '5%',
+              left: '-10%',
             }}
           />
 
@@ -72,23 +82,23 @@ export function Hero() {
             }}
           />
 
-          {/* Decorative shapes - staggered start delays for performance */}
+          {/* Decorative shapes - hidden on mobile for performance */}
           <motion.div
-            className="absolute top-[20%] left-[10%] w-24 h-24 border border-violet-500/20 rounded-2xl will-change-transform"
+            className="hidden md:block absolute top-[20%] left-[10%] w-16 h-16 md:w-24 md:h-24 border border-violet-500/20 rounded-2xl will-change-transform"
             style={{ y: y3, rotate }}
             initial={{ opacity: 0 }}
             animate={{ rotate: [0, 90, 0], opacity: 1 }}
             transition={{ duration: 20, repeat: Infinity, ease: 'linear', delay: 0.5 }}
           />
           <motion.div
-            className="absolute bottom-[30%] right-[15%] w-16 h-16 bg-gradient-to-br from-amber-500/10 to-transparent rounded-full will-change-transform"
+            className="hidden md:block absolute bottom-[30%] right-[15%] w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-amber-500/10 to-transparent rounded-full will-change-transform"
             style={{ y: y1 }}
             initial={{ opacity: 0 }}
             animate={{ scale: [1, 1.2, 1], opacity: 1 }}
             transition={{ duration: 4, repeat: Infinity, delay: 1 }}
           />
           <motion.div
-            className="absolute top-[40%] right-[8%] w-2 h-2 bg-violet-500 rounded-full"
+            className="hidden md:block absolute top-[40%] right-[8%] w-2 h-2 bg-violet-500 rounded-full"
             initial={{ opacity: 0 }}
             animate={{ opacity: [0.2, 1, 0.2] }}
             transition={{ duration: 2, repeat: Infinity, delay: 1.5 }}
@@ -144,25 +154,25 @@ export function Hero() {
 
         {/* Main content */}
         <motion.div
-          className="relative z-10 px-6 md:px-12 lg:px-24"
-          style={{ scale, opacity }}
+          className="relative z-10 px-4 sm:px-6 md:px-12 lg:px-24"
+          style={{ scale: isMobile ? 1 : scale, opacity }}
         >
           {/* Eyebrow text */}
           <motion.div
-            className="mb-8"
+            className="mb-4 sm:mb-8"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-violet-500/30 bg-violet-500/5 text-violet-400 text-sm font-mono">
-              <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+            <span className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full border border-violet-500/30 bg-violet-500/5 text-violet-400 text-xs sm:text-sm font-mono">
+              <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-green-500 animate-pulse" />
               {profile.available ? 'Available for opportunities' : 'Currently busy'}
             </span>
           </motion.div>
 
-          {/* Giant name - main headline */}
-          <div className="mb-6">
-            <h1 className="text-[clamp(3rem,15vw,12rem)] font-display font-bold leading-[0.85] tracking-[-0.03em]">
+          {/* Giant name - main headline - better mobile sizing */}
+          <div className="mb-4 sm:mb-6">
+            <h1 className="text-[clamp(2.5rem,12vw,12rem)] font-display font-bold leading-[0.9] tracking-[-0.03em]">
               <span className="block overflow-hidden">
                 <SplitText
                   animation="wave"
@@ -187,17 +197,17 @@ export function Hero() {
           </div>
 
           {/* Role/title with reveal effect */}
-          <div className="mb-12 overflow-hidden">
-            <RevealText delay={0.8} className="text-2xl md:text-4xl text-gray-400 font-light">
+          <div className="mb-6 sm:mb-12 overflow-hidden">
+            <RevealText delay={0.8} className="text-lg sm:text-2xl md:text-4xl text-gray-400 font-light">
               {profile.title}
             </RevealText>
           </div>
 
           {/* Description and CTA */}
-          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-12 max-w-5xl">
+          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 sm:gap-8 lg:gap-12 max-w-5xl">
             {/* Description */}
             <motion.p
-              className="text-lg md:text-xl text-gray-500 max-w-md leading-relaxed"
+              className="text-base sm:text-lg md:text-xl text-gray-500 max-w-md leading-relaxed"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 1 }}
@@ -214,15 +224,15 @@ export function Hero() {
 
             {/* CTA Buttons */}
             <motion.div
-              className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4"
+              className="flex flex-row flex-wrap gap-3"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 1.2 }}
             >
-              <MagneticHover strength={20}>
+              <MagneticHover strength={isMobile ? 0 : 20}>
                 <a
                   href="#projects"
-                  className="group relative inline-flex items-center justify-center gap-3 px-6 sm:px-8 py-3.5 sm:py-4 bg-white text-space-900 rounded-full font-medium overflow-hidden transition-transform hover:scale-105 text-sm sm:text-base min-h-[48px]"
+                  className="group relative inline-flex items-center justify-center gap-2 sm:gap-3 px-5 sm:px-8 py-3 sm:py-4 bg-white text-space-900 rounded-full font-medium overflow-hidden transition-transform active:scale-95 md:hover:scale-105 text-sm sm:text-base min-h-[44px]"
                 >
                   <span className="relative z-10">View Work</span>
                   <motion.span
@@ -239,38 +249,38 @@ export function Hero() {
                 </a>
               </MagneticHover>
 
-              <MagneticHover strength={20}>
+              <MagneticHover strength={isMobile ? 0 : 20}>
                 <a
                   href="#contact"
-                  className="inline-flex items-center justify-center gap-3 px-6 sm:px-8 py-3.5 sm:py-4 border border-white/20 text-white rounded-full font-medium hover:bg-white/5 hover:border-white/40 transition-all duration-300 text-sm sm:text-base min-h-[48px]"
+                  className="inline-flex items-center justify-center gap-2 sm:gap-3 px-5 sm:px-8 py-3 sm:py-4 border border-white/20 text-white rounded-full font-medium hover:bg-white/5 active:bg-white/10 hover:border-white/40 transition-all duration-300 text-sm sm:text-base min-h-[44px]"
                 >
                   Let's Talk
                 </a>
               </MagneticHover>
             </motion.div>
           </div>
+        </motion.div>
 
-          {/* Scroll indicator - centered on mobile, positioned right on desktop */}
-          <motion.div
-            className="absolute bottom-8 sm:bottom-12 left-1/2 sm:left-auto sm:right-6 md:right-12 lg:right-24 -translate-x-1/2 sm:translate-x-0"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.6 }}
-          >
-            <a href="#about" className="flex flex-col items-center gap-2 text-gray-500 hover:text-white transition-colors">
-              <span className="text-xs font-mono tracking-widest uppercase">Scroll</span>
+        {/* Scroll indicator - hidden on mobile, shown on larger screens */}
+        <motion.div
+          className="hidden sm:block absolute bottom-12 right-6 md:right-12 lg:right-24 z-10"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.6 }}
+        >
+          <a href="#about" className="flex flex-col items-center gap-2 text-gray-500 hover:text-white transition-colors">
+            <span className="text-xs font-mono tracking-widest uppercase">Scroll</span>
+            <motion.div
+              className="w-6 h-10 rounded-full border border-current flex items-start justify-center p-2"
+              initial={{ opacity: 0.5 }}
+            >
               <motion.div
-                className="w-6 h-10 rounded-full border border-current flex items-start justify-center p-2"
-                initial={{ opacity: 0.5 }}
-              >
-                <motion.div
-                  className="w-1 h-2 rounded-full bg-current"
-                  animate={{ y: [0, 12, 0] }}
-                  transition={{ duration: 1.5, repeat: Infinity }}
-                />
-              </motion.div>
-            </a>
-          </motion.div>
+                className="w-1 h-2 rounded-full bg-current"
+                animate={{ y: [0, 12, 0] }}
+                transition={{ duration: 1.5, repeat: Infinity }}
+              />
+            </motion.div>
+          </a>
         </motion.div>
 
         {/* Social links - fixed left side, hidden on mobile */}
@@ -311,16 +321,16 @@ export function Hero() {
       </div>
 
       {/* Marquee section after hero */}
-      <div className="absolute bottom-0 left-0 right-0 py-4 sm:py-8 bg-space-900/50 backdrop-blur-sm border-y border-white/5">
-        <Marquee speed={30} className="text-4xl sm:text-7xl md:text-9xl font-display font-bold text-white/[0.03]">
-          <span className="mx-4 sm:mx-8">AI ENGINEER</span>
-          <span className="mx-4 sm:mx-8">•</span>
-          <span className="mx-4 sm:mx-8">MACHINE LEARNING</span>
-          <span className="mx-4 sm:mx-8">•</span>
-          <span className="mx-4 sm:mx-8">SOFTWARE DEVELOPER</span>
-          <span className="mx-4 sm:mx-8">•</span>
-          <span className="mx-4 sm:mx-8">RESEARCHER</span>
-          <span className="mx-4 sm:mx-8">•</span>
+      <div className="absolute bottom-0 left-0 right-0 py-3 sm:py-6 md:py-8 bg-space-900/50 backdrop-blur-sm border-y border-white/5">
+        <Marquee speed={isMobile ? 20 : 30} className="text-3xl sm:text-5xl md:text-7xl lg:text-9xl font-display font-bold text-white/[0.03]">
+          <span className="mx-3 sm:mx-6 md:mx-8">AI ENGINEER</span>
+          <span className="mx-3 sm:mx-6 md:mx-8">•</span>
+          <span className="mx-3 sm:mx-6 md:mx-8">MACHINE LEARNING</span>
+          <span className="mx-3 sm:mx-6 md:mx-8">•</span>
+          <span className="mx-3 sm:mx-6 md:mx-8">SOFTWARE DEVELOPER</span>
+          <span className="mx-3 sm:mx-6 md:mx-8">•</span>
+          <span className="mx-3 sm:mx-6 md:mx-8">RESEARCHER</span>
+          <span className="mx-3 sm:mx-6 md:mx-8">•</span>
         </Marquee>
       </div>
     </section>

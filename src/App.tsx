@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
@@ -13,46 +13,84 @@ import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
 import { CustomCursor, ScrollProgress, SmoothScroll, NoiseOverlay } from './components/ui';
 import { profileImage, profileHeroImage, featuredProjects, getProjectImage } from './data/content';
+import { preloadImages } from './components/ui/OptimizedImage';
 
-// Preload critical images
+// Critical images that must load before showing the site
 const criticalImages = [
   profileHeroImage,
   profileImage,
   ...(featuredProjects[0]?.images[0] ? [getProjectImage(featuredProjects[0].images[0])] : []),
 ];
 
-// Add preload links to document head
+// Add preload links to document head for LCP optimization
 if (typeof document !== 'undefined') {
   criticalImages.forEach((src) => {
     const link = document.createElement('link');
     link.rel = 'preload';
     link.as = 'image';
     link.href = src;
-    link.type = 'image/webp';
+    // Try WebP format first
+    if (src.endsWith('.webp')) {
+      link.type = 'image/webp';
+    }
     document.head.appendChild(link);
   });
 }
 
-function LoadingScreen({ onComplete }: { onComplete: () => void }) {
+interface LoadingScreenProps {
+  onComplete: () => void;
+}
+
+function LoadingScreen({ onComplete }: LoadingScreenProps) {
   const [progress, setProgress] = useState(0);
+  const [loadingText, setLoadingText] = useState('Loading assets...');
 
   useEffect(() => {
-    let timeoutId: ReturnType<typeof setTimeout> | null = null;
+    let isMounted = true;
 
-    const timer = setInterval(() => {
-      setProgress((prev) => {
-        if (prev >= 100) {
-          clearInterval(timer);
-          timeoutId = setTimeout(onComplete, 500);
-          return 100;
+    const loadAssets = async () => {
+      try {
+        // Track progress as images load
+        await preloadImages(criticalImages, (loaded, total) => {
+          if (isMounted) {
+            const percent = Math.round((loaded / total) * 100);
+            setProgress(percent);
+
+            if (loaded === total) {
+              setLoadingText('Ready!');
+            } else {
+              setLoadingText(`Loading ${loaded}/${total} assets...`);
+            }
+          }
+        });
+
+        // Small delay after loading completes for smooth transition
+        if (isMounted) {
+          setTimeout(() => {
+            if (isMounted) {
+              onComplete();
+            }
+          }, 300);
         }
-        return prev + Math.random() * 15;
-      });
-    }, 100);
+      } catch (error) {
+        // If loading fails, complete anyway after a short delay
+        console.warn('Some assets failed to preload:', error);
+        if (isMounted) {
+          setProgress(100);
+          setLoadingText('Ready!');
+          setTimeout(() => {
+            if (isMounted) {
+              onComplete();
+            }
+          }, 300);
+        }
+      }
+    };
+
+    loadAssets();
 
     return () => {
-      clearInterval(timer);
-      if (timeoutId) clearTimeout(timeoutId);
+      isMounted = false;
     };
   }, [onComplete]);
 
@@ -82,8 +120,8 @@ function LoadingScreen({ onComplete }: { onComplete: () => void }) {
         <motion.div
           className="h-full bg-gradient-to-r from-violet-500 to-amber-500"
           initial={{ width: 0 }}
-          animate={{ width: `${Math.min(progress, 100)}%` }}
-          transition={{ duration: 0.1 }}
+          animate={{ width: `${progress}%` }}
+          transition={{ duration: 0.3, ease: 'easeOut' }}
         />
       </div>
 
@@ -94,7 +132,17 @@ function LoadingScreen({ onComplete }: { onComplete: () => void }) {
         animate={{ opacity: 1 }}
         transition={{ delay: 0.3 }}
       >
-        {Math.round(Math.min(progress, 100))}%
+        {progress}%
+      </motion.p>
+
+      {/* Loading status */}
+      <motion.p
+        className="mt-2 text-gray-600 font-mono text-xs"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.5 }}
+      >
+        {loadingText}
       </motion.p>
     </motion.div>
   );
@@ -103,11 +151,15 @@ function LoadingScreen({ onComplete }: { onComplete: () => void }) {
 function App() {
   const [isLoading, setIsLoading] = useState(true);
 
+  const handleLoadComplete = useCallback(() => {
+    setIsLoading(false);
+  }, []);
+
   return (
     <SmoothScroll>
       {/* Loading screen */}
       <AnimatePresence mode="wait">
-        {isLoading && <LoadingScreen onComplete={() => setIsLoading(false)} />}
+        {isLoading && <LoadingScreen onComplete={handleLoadComplete} />}
       </AnimatePresence>
 
       <div className="relative">
