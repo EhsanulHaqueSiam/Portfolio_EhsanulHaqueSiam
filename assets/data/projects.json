@@ -1,5 +1,60 @@
 [
   {
+    "name": "Indian Claypit",
+    "desc": "Premium restaurant website for an award-winning Indian cuisine establishment. Features elegant dark theme, online ordering system, menu browsing, catering services, happy hours section, event booking, and gallery. Built with modern web technologies for optimal performance and user experience.",
+    "metrics": [
+      "Online ordering system",
+      "50,000+ customers served",
+      "4.9★ rating (2,847 reviews)",
+      "Responsive dark theme"
+    ],
+    "images": [
+      "indianclaypit"
+    ],
+    "showInHome": true,
+    "categories": [
+      "web",
+      "frontend"
+    ],
+    "tags": [
+      "React",
+      "TypeScript",
+      "TailwindCSS",
+      "Framer Motion",
+      "E-commerce"
+    ],
+    "links": {
+      "view": "https://indianclaypit.com/"
+    }
+  },
+  {
+    "name": "BetaScript",
+    "desc": "Tech services agency website featuring Bangladesh-USA partnership. Clean, modern design with animated hero section, service showcases, and client testimonials. Built for a digital agency offering web development, design, and branding solutions.",
+    "metrics": [
+      "150+ Happy Clients",
+      "24h Response Time",
+      "100% Satisfaction Rate",
+      "BD-USA Partnership"
+    ],
+    "images": [
+      "betascript"
+    ],
+    "showInHome": true,
+    "categories": [
+      "web",
+      "frontend"
+    ],
+    "tags": [
+      "React",
+      "TypeScript",
+      "TailwindCSS",
+      "Framer Motion"
+    ],
+    "links": {
+      "view": "https://betascript.online/"
+    }
+  },
+  {
     "name": "Student Management System",
     "desc": "Enterprise-grade database management system with 17 GitHub stars. Features 3NF normalized schema, Singleton pattern with dynamic connection pooling (6-8ms queries), and comprehensive Wiki documentation with ER diagrams.",
     "metrics": [
