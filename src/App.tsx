@@ -11,6 +11,7 @@ import { Education } from './components/Education';
 import { Experience } from './components/Experience';
 import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
+import { SocialLinks } from './components/SocialLinks';
 import { CustomCursor, ScrollProgress, SmoothScroll, NoiseOverlay } from './components/ui';
 import { profileImage, profileHeroImage, featuredProjects, getProjectImage } from './data/content';
 import { preloadImages } from './components/ui/OptimizedImage';
@@ -171,6 +172,9 @@ function App() {
 
         {/* Scroll progress indicator */}
         <ScrollProgress />
+
+        {/* Social links - fixed position, outside main content flow */}
+        <SocialLinks />
 
         {/* Main content */}
         <motion.div

@@ -1,24 +1,10 @@
 # Dependencies
 node_modules/
-
-# Build output
-dist/
-
-# Claude
-.claude/
-
-# Lock files
 bun.lock
 package-lock.json
 
-# Test files
-test-results/
-playwright.config.ts
-
-# Non-WebP images (only use WebP)
-*.jpg
-*.jpeg
-*.png
+# Build output
+dist/
 
 # IDE
 .idea/
@@ -30,6 +16,18 @@ playwright.config.ts
 .DS_Store
 Thumbs.db
 
+# Test
+test-results/
+playwright-report/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
 # Logs
 *.log
 npm-debug.log*
+
+# Claude Code
+.claude/
