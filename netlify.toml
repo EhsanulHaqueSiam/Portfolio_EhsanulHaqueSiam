@@ -59,10 +59,19 @@
     Content-Type = "text/markdown; charset=utf-8"
 
 [[headers]]
+  for = "/llms-full.txt"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"
+    Content-Type = "text/markdown; charset=utf-8"
+
+[[headers]]
   for = "/site.webmanifest"
   [headers.values]
     Cache-Control = "public, max-age=604800"
     Content-Type = "application/manifest+json"
+
+# NOTE: Enable Netlify Prerender Extension via dashboard (Extensions > Prerender)
+# This serves fully-rendered HTML to bots/crawlers (Bing, social media, AI bots)
 
 # SPA fallback
 [[redirects]]
