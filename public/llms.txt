@@ -1,0 +1,106 @@
+# Ehsanul Haque Siam - AI Engineer & Software Developer
+
+> Personal portfolio of Ehsanul Haque Siam, an AI Engineer and Software Developer from Dhaka, Bangladesh. Computer Science student at AIUB, published researcher, and open source contributor.
+
+## About
+
+Ehsanul Haque Siam is an AI Engineer and Software Developer specializing in machine learning, natural language processing (NLP), and full-stack development. He is a Computer Science student at the American International University-Bangladesh (AIUB) where he has been recognized with 3 Dean's List awards for academic excellence (CGPA 3.95, 3.89, 3.75+).
+
+He has published research in medical AI — specifically "Beyond NER: A Comparative Benchmark of Medical BERTs for Multi-Label Adverse Drug Reaction Classification" at IDAA 2025, published as a Taylor & Francis Book Chapter. His work involves fine-tuning domain-specific BERT models (BioBERT, PubMedBERT) for healthcare applications.
+
+Contact: ehsanul.siamdev@gmail.com
+Location: Dhaka, Bangladesh
+Website: https://ehsanulhaquesiam.netlify.app/
+GitHub: https://github.com/EhsanulHaqueSiam
+LinkedIn: https://www.linkedin.com/in/EhsanulHaqueSiam/
+
+## Technical Skills
+
+### AI & Machine Learning
+- Machine Learning (Advanced), NLP (Advanced), Scikit-learn (Advanced)
+- TensorFlow (Intermediate), PyTorch (Intermediate)
+- LLMs & BERT (Advanced), Computer Vision (Intermediate)
+
+### Programming Languages
+- Java (Expert), Python (Advanced), C++ (Advanced)
+- Kotlin (Intermediate), C# (Intermediate), JavaScript (Intermediate), SQL (Advanced)
+
+### Backend & Databases
+- MySQL (Expert), SQLite (Advanced), JDBC (Expert), SQL Server (Intermediate)
+- REST APIs (Advanced), FastAPI (Intermediate), Database Design (Advanced)
+
+### Mobile Development
+- Android SDK (Advanced), MVVM Architecture (Advanced), Retrofit (Advanced)
+- Firebase (Advanced), Room Database (Advanced), Hilt/Dagger (Intermediate)
+
+### Graphics & Game Dev
+- OpenGL (Advanced), SFML (Intermediate), Game Physics (Intermediate), CMake (Intermediate)
+
+### Web Scraping & Data Engineering
+- Scrapy (Advanced), XPath/CSS Selectors (Advanced), Data Cleaning (Advanced)
+
+### Tools & Platforms
+- Git (Expert), GitHub (Expert), Linux (Advanced), Docker (Intermediate), Jupyter (Advanced)
+
+## Featured Projects
+
+### Indian Claypit - Restaurant Website
+Premium restaurant website with online ordering system, 50,000+ customers served, 4.9 star rating.
+Tech: React, TypeScript, TailwindCSS, Framer Motion
+URL: https://indianclaypit.com/
+
+### BetaScript - Tech Agency Website
+Tech services agency with Bangladesh-USA partnership, 150+ happy clients, 100% satisfaction rate.
+Tech: React, TypeScript, TailwindCSS, Framer Motion
+URL: https://betascript.online/
+
+### Student Management System
+Enterprise-grade database system with 17 GitHub stars, 6-8ms query performance, 3NF normalized schema.
+Tech: Java, MySQL, JDBC, Design Patterns
+GitHub: https://github.com/EhsanulHaqueSiam/StudentManagementSystem
+
+### Spotify Sentiment Analysis
+NLP sentiment classifier analyzing 52,702 Spotify reviews with 85-90% accuracy using MultinomialNB.
+Tech: Python, scikit-learn, NLP, TF-IDF, Naive Bayes
+GitHub: https://github.com/EhsanulHaqueSiam/spotify-review-sentiment
+
+### BD News Scraper & Analytics
+Production-grade data engineering platform scraping 74+ Bangladeshi news sources daily with ML analytics.
+Tech: Python, Scrapy, FastAPI, Docker, GitHub Actions
+GitHub: https://github.com/EhsanulHaqueSiam/BDNewsPaperScraper
+Kaggle: https://www.kaggle.com/datasets/ehsanulhaquesiam/bangladesh-news-articles
+
+### Mario's Multiverse Adventure
+2D platformer game with 3 levels, OpenGL rendering, physics engine, SFML audio.
+Tech: C++, OpenGL, SFML, SQLite, CMake
+GitHub: https://github.com/EhsanulHaqueSiam/MarioMultiverseAdventures
+
+### Hotel Management System
+Java Swing application with 15 GitHub stars, Bkash/Nagad payment integration, 171 commits.
+Tech: Java, Swing, File I/O, OOP
+GitHub: https://github.com/EhsanulHaqueSiam/HotelManagementSystem
+
+## Publications
+
+### Beyond NER: Medical BERTs for Multi-Label ADR Classification
+- Conference: International Conference on Intelligent Data Analysis and Applications (IDAA 2025)
+- Published: Dec 2025, Taylor & Francis Book Chapter
+- Topic: Fine-tuning LLMs and Medical BERT architectures for multi-label adverse drug reaction classification on PsyTAR dataset
+
+### Unfolding Emerging Issues in the Context of Changing Climatic Scenario
+- Conference: 2nd South Asian Conference on Climate
+- Date: Sep 2024
+- Topic: Statistical analysis of emerging issues under changing climatic scenarios
+
+## Awards & Achievements
+
+- 3x Dean's List Awards at AIUB (CGPA 3.95, 3.89, 3.75+)
+- 1st Runner Up - AIUB CS FEST 2024 (App Showcase category, competed against 20+ teams)
+- 36+ GitHub Stars across 26 open source repositories
+- Published researcher at Taylor & Francis
+
+## Education
+
+- B.Sc. in Computer Science - American International University-Bangladesh (AIUB)
+- 3x Dean's List honoree
+- Published researcher and CS Fest award winner

@@ -1,0 +1,102 @@
+# robots.txt for ehsanulhaquesiam.netlify.app
+# Ehsanul Haque Siam - AI Engineer & Software Developer Portfolio
+# Last updated: 2026-02-11
+
+# === Standard Search Engine Crawlers ===
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Yandex
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+# === AI Search Crawlers (for citations in AI answers) ===
+
+# OpenAI - ChatGPT Search (allow for AI search citations)
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+# OpenAI - Training crawler (allow for model knowledge)
+User-agent: GPTBot
+Allow: /
+
+# Google AI / Gemini
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Google-CloudVertexBot
+Allow: /
+
+# Anthropic / Claude
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+# Perplexity
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+# Apple
+User-agent: Applebot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+# Amazon
+User-agent: Amazonbot
+Allow: /
+
+# Meta / Facebook
+User-agent: FacebookBot
+Allow: /
+
+User-agent: Meta-ExternalAgent
+Allow: /
+
+# Microsoft
+User-agent: Bingbot
+Allow: /
+
+# Other AI crawlers
+User-agent: cohere-ai
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+User-agent: YouBot
+Allow: /
+
+User-agent: AI2Bot
+Allow: /
+
+# === Default: allow all other crawlers ===
+User-agent: *
+Allow: /
+
+# Block unnecessary paths
+Disallow: /assets/*.js.map
+Disallow: /assets/*.css.map
+
+# Sitemap location
+Sitemap: https://ehsanulhaquesiam.netlify.app/sitemap.xml

@@ -2,19 +2,6 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## Build & Development Commands
-
-```bash
-# Development
-bun run dev          # Start Vite dev server
-
-# Build
-bun run build        # TypeScript check + Vite production build
-bun run preview      # Preview production build locally
-```
-
-Uses Bun as package manager. The build outputs to `dist/` and deploys to Netlify.
-
 ## Git Push Process
 
 When pushing changes to the remote repository:
@@ -44,6 +31,19 @@ git add -A
 git commit -m "commit message here"
 git push
 ```
+
+## Build & Development Commands
+
+```bash
+# Development
+bun run dev          # Start Vite dev server
+
+# Build
+bun run build        # TypeScript check + Vite production build
+bun run preview      # Preview production build locally
+```
+
+Uses Bun as package manager. The build outputs to `dist/` and deploys to Netlify.
 
 ## Architecture Overview
 

@@ -1,0 +1,340 @@
+# Ehsanul Haque Siam - AI Engineer & Software Developer
+
+> Ehsanul Haque Siam is an AI Engineer and Software Developer from Dhaka, Bangladesh. He specializes in machine learning, natural language processing, and full-stack development. He is a Computer Science student at AIUB, a published researcher (Taylor & Francis), 3x Dean's List awardee, and has 36+ GitHub stars across 15+ projects.
+
+Website: https://ehsanulhaquesiam.netlify.app/
+Email: ehsanul.siamdev@gmail.com
+GitHub: https://github.com/EhsanulHaqueSiam
+LinkedIn: https://www.linkedin.com/in/EhsanulHaqueSiam/
+Kaggle: https://www.kaggle.com/ehsanulhaquesiam
+Location: Dhaka, Bangladesh
+
+---
+
+## About Ehsanul Haque Siam
+
+Ehsanul Haque Siam is an AI Engineer and Software Developer with a focus on building intelligent, high-performance systems. He is currently pursuing a B.Sc. in Computer Science at the American International University-Bangladesh (AIUB), where he has been recognized with 3 Dean's List awards for exceptional academic performance (CGPA 3.95, 3.89, and 3.75+).
+
+His professional interests span machine learning, natural language processing (NLP), deep learning, computer vision, full-stack web development, mobile development, game development, and data engineering. He has published research in medical AI, built production systems serving 50,000+ users, and contributed to open source with 36+ GitHub stars.
+
+### Key Statistics
+- 36+ GitHub Stars across 26 repositories
+- 15+ completed projects spanning AI, web, mobile, desktop, and game development
+- 2 published research papers/presentations
+- 3x Dean's List awards at AIUB
+- 1st Runner Up at AIUB CS FEST 2024
+
+---
+
+## Technical Skills (Complete List)
+
+### AI & Machine Learning
+| Skill | Proficiency Level |
+|-------|------------------|
+| Machine Learning | Advanced |
+| Natural Language Processing (NLP) | Advanced |
+| Scikit-learn | Advanced |
+| TensorFlow | Intermediate |
+| PyTorch | Intermediate |
+| LLMs & BERT (BioBERT, PubMedBERT) | Advanced |
+| Computer Vision (OpenCV, CNN) | Intermediate |
+
+### Programming Languages
+| Language | Proficiency Level |
+|----------|------------------|
+| Java | Expert |
+| Python | Advanced |
+| C++ | Advanced |
+| Kotlin | Intermediate |
+| C# | Intermediate |
+| JavaScript/TypeScript | Intermediate |
+| SQL | Advanced |
+
+### Backend & Databases
+| Technology | Proficiency Level |
+|-----------|------------------|
+| MySQL | Expert |
+| SQLite | Advanced |
+| JDBC | Expert |
+| SQL Server | Intermediate |
+| REST APIs | Advanced |
+| FastAPI | Intermediate |
+| Database Design (3NF, ER Modeling) | Advanced |
+
+### Mobile Development
+| Technology | Proficiency Level |
+|-----------|------------------|
+| Android SDK | Advanced |
+| MVVM Architecture | Advanced |
+| Retrofit (HTTP Client) | Advanced |
+| Firebase & Firestore | Advanced |
+| Room Database | Advanced |
+| Hilt/Dagger (Dependency Injection) | Intermediate |
+| RxJava3 (Reactive Programming) | Intermediate |
+
+### Graphics & Game Development
+| Technology | Proficiency Level |
+|-----------|------------------|
+| OpenGL | Advanced |
+| SFML (Audio/Graphics) | Intermediate |
+| Game Physics & Collision Detection | Intermediate |
+| CMake (Build System) | Intermediate |
+| GLM (Math Library) | Intermediate |
+
+### Web Scraping & Data Engineering
+| Technology | Proficiency Level |
+|-----------|------------------|
+| Scrapy | Advanced |
+| XPath/CSS Selectors | Advanced |
+| Data Cleaning (Pandas) | Advanced |
+| Playwright (Browser Automation) | Intermediate |
+
+### Web Development
+| Technology | Proficiency Level |
+|-----------|------------------|
+| React | Intermediate |
+| TypeScript | Intermediate |
+| TailwindCSS | Intermediate |
+| Framer Motion | Intermediate |
+| HTML5/CSS3 | Advanced |
+
+### Tools & Platforms
+| Tool | Proficiency Level |
+|------|------------------|
+| Git | Expert |
+| GitHub (Actions, CI/CD) | Expert |
+| Linux (Arch, Ubuntu) | Advanced |
+| Neovim | Advanced |
+| Docker | Intermediate |
+| Jupyter Notebook | Advanced |
+| Google Colab | Advanced |
+| Kaggle | Advanced |
+
+---
+
+## Projects (Complete Portfolio)
+
+### 1. Indian Claypit - Premium Restaurant Website
+- **Description:** Premium restaurant website for an award-winning Indian cuisine establishment. Features elegant dark theme, online ordering system, menu browsing, catering services, happy hours section, event booking, and gallery. Built with modern web technologies for optimal performance and user experience.
+- **Key Metrics:** Online ordering system | 50,000+ customers served | 4.9 star rating (2,847 reviews) | Responsive dark theme
+- **Technologies:** React, TypeScript, TailwindCSS, Framer Motion, E-commerce
+- **Live URL:** https://indianclaypit.com/
+- **Categories:** Web Development, Frontend
+
+### 2. BetaScript - Tech Services Agency Website
+- **Description:** Tech services agency website featuring Bangladesh-USA partnership. Clean, modern design with animated hero section, service showcases, and client testimonials. Built for a digital agency offering web development, design, and branding solutions.
+- **Key Metrics:** 150+ Happy Clients | 24h Response Time | 100% Satisfaction Rate | BD-USA Partnership
+- **Technologies:** React, TypeScript, TailwindCSS, Framer Motion
+- **Live URL:** https://betascript.online/
+- **Categories:** Web Development, Frontend
+
+### 3. Student Management System
+- **Description:** Enterprise-grade database management system with 17 GitHub stars. Features 3NF normalized schema, Singleton pattern with dynamic connection pooling achieving 6-8ms query performance, and comprehensive Wiki documentation with ER diagrams.
+- **Key Metrics:** 17 GitHub Stars, 8 Forks | 6-8ms query performance | 6 entities normalized to 3NF | 4 Wiki documentation pages
+- **Technologies:** Java, MySQL, JDBC, Design Patterns (Singleton), 3NF Normalization
+- **GitHub:** https://github.com/EhsanulHaqueSiam/StudentManagementSystem
+- **Wiki:** https://github.com/EhsanulHaqueSiam/StudentManagementSystem/wiki
+- **Categories:** Desktop Application, Database
+- **Case Study:**
+  - Problem: University administration struggled with scattered Excel sheets and slow manual data retrieval, leading to administrative bottlenecks.
+  - Solution: Built a centralized Java Swing application with a normalized MySQL database, implementing the Singleton pattern for efficient connection management.
+  - Process: (1) Database Normalization — Redesigned schema to 3NF, eliminating data redundancy. (2) Performance Tuning — Implemented connection pooling to reduce query latency from 50ms to ~7ms. (3) UX Design — Created intuitive dashboards for Admins and Students using Guna UI.
+  - Results: 7ms query speed | 100% data integrity | 45+ active users
+
+### 4. Spotify Sentiment Analysis
+- **Description:** NLP sentiment classifier analyzing 52,702 Spotify user reviews with 85-90% accuracy using MultinomialNB. Complete ML pipeline with TF-IDF vectorization, text preprocessing, and Google Colab integration.
+- **Key Metrics:** 52,702 reviews analyzed | 85-90% classification accuracy | 5,000+ TF-IDF features | 17-task ML pipeline
+- **Technologies:** Python, scikit-learn, NLP, TF-IDF Vectorization, Multinomial Naive Bayes
+- **GitHub:** https://github.com/EhsanulHaqueSiam/spotify-review-sentiment
+- **Categories:** Machine Learning, NLP
+
+### 5. Mario's Multiverse Adventure
+- **Description:** 2D platformer game with 3 unique levels built for AIUB Computer Graphics course. Features OpenGL rendering, SFML audio, SQLite high scores, physics engine with collision detection. YouTube demo available.
+- **Key Metrics:** 3 unique game levels | Team of 5 developers | 2 GitHub Stars, 4 Forks | YouTube demo available
+- **Technologies:** C++, OpenGL, SFML, SQLite, CMake
+- **GitHub:** https://github.com/EhsanulHaqueSiam/MarioMultiverseAdventures
+- **YouTube Demo:** https://www.youtube.com/watch?v=wK7qjTRkStg
+- **Categories:** Game Development, Graphics
+- **Case Study:**
+  - Problem: Computer Graphics courses require practical application of theoretical concepts like rendering, physics, and linear algebra.
+  - Solution: Developed a 2D platformer game engine from scratch using OpenGL and C++.
+  - Process: (1) OpenGL Rendering — Custom rendering engine with textures, sprites, animations. (2) Physics Engine — Collision detection and physics mechanics. (3) Cross-Platform Build — CMake and vcpkg for Windows/Linux.
+  - Results: 3 complete levels | 4 forks | 2 stars
+
+### 6. BD News Scraper & Analytics
+- **Description:** Production-grade data engineering platform scraping 74+ Bangladeshi news sources daily. Features automated GitHub Actions pipelines, daily Kaggle dataset updates, ML-powered analytics (sentiment analysis, topic clustering, breaking news detection), and enterprise infrastructure with Docker/Kubernetes deployment.
+- **Key Metrics:** 74+ news sources (EN/BN) | Daily Kaggle dataset updates | GitHub Actions automation | ML analytics pipeline
+- **Technologies:** Python, Scrapy, FastAPI, Docker, GitHub Actions, Kaggle, scikit-learn, Playwright, GraphQL, Streamlit
+- **GitHub:** https://github.com/EhsanulHaqueSiam/BDNewsPaperScraper
+- **Kaggle Dataset:** https://www.kaggle.com/datasets/ehsanulhaquesiam/bangladesh-news-articles
+- **Categories:** Web Scraping, Machine Learning, Data Engineering, Automation
+- **Case Study:**
+  - Problem: Bangladesh lacks a comprehensive, up-to-date news dataset for research and NLP applications.
+  - Solution: Built a production-grade news aggregation platform with 74+ spiders, automated daily scraping, ML-powered analytics, and public Kaggle dataset.
+  - Process: (1) Enterprise Scraping — 82 spider files with Playwright integration, Cloudflare bypass, rotating proxies. (2) ML Analytics — Sentiment analysis, TF-IDF topic clustering, breaking news detection. (3) Automated Infrastructure — GitHub Actions daily at 12:00 PM BDT, auto-upload to Kaggle. (4) API & Dashboards — FastAPI REST + GraphQL, Streamlit dashboards, Leaflet.js geo-visualization.
+  - Results: 74+ sources | 82 spiders | Daily automation | Live Kaggle dataset
+
+### 7. Hotel Management System
+- **Description:** Java Swing desktop application with 15 GitHub stars. Features user/admin dashboards, room management, Bkash/Nagad payment integration, and interface-driven modular architecture.
+- **Key Metrics:** 15 GitHub Stars, 1 Fork | 171 commits, 4 releases | Bkash/Nagad payments | User & Admin dashboards
+- **Technologies:** Java, Swing, File I/O, OOP, Interface-Driven Design
+- **GitHub:** https://github.com/EhsanulHaqueSiam/HotelManagementSystem
+- **Categories:** Desktop Application, Database
+- **Case Study:**
+  - Problem: Manual hotel operations (booking, check-in/out) are slow and error-prone.
+  - Solution: Comprehensive Java Swing desktop application with secure authentication, room management, and local payment gateways.
+  - Results: 171 commits | 4 releases | 15 GitHub stars
+
+### 8. Android Development Journey
+- **Description:** Comprehensive Android learning repository with 54+ structured lessons from beginner to advanced. Covers MVVM architecture, Retrofit, Hilt, RxJava3, Room Database, Firebase, and Paging 3.
+- **Key Metrics:** 54+ structured lessons | MVVM + Retrofit + Hilt | Firebase & Firestore | RxJava3 & Paging 3
+- **Technologies:** Java, Android, MVVM, Retrofit, Firebase, Room, Hilt, RxJava3
+- **GitHub:** https://github.com/EhsanulHaqueSiam/AndroidDevJourney
+- **Categories:** Mobile Development, Learning
+
+### 9. Pharmacy Management System
+- **Description:** C# .NET desktop application with Windows Forms and SQL Server. Features medicine management, sales tracking, inventory control, and user management with Guna UI framework.
+- **Key Metrics:** MIT License | 2 contributors | SQL Server backend | Guna UI framework
+- **Technologies:** C#, .NET, SQL Server, Windows Forms, Guna UI
+- **GitHub:** https://github.com/EhsanulHaqueSiam/PharmacyManagementSystem
+- **Categories:** Desktop Application, Database
+
+### 10. Solar System Simulation
+- **Description:** 3D solar system simulation using OpenGL featuring all planets, moons, real-time orbital animations, texture mapping, and interactive camera controls. Cross-platform with CMake.
+- **Technologies:** C++, OpenGL, GLUT, GLM, CMake
+- **GitHub:** https://github.com/EhsanulHaqueSiam/SolarSystem
+- **Categories:** Graphics, Simulation
+
+### 11. CVPR - Computer Vision
+- **Description:** Computer Vision and Pattern Recognition project using Jupyter Notebook. Explores image processing, face detection, and CNN-based classification techniques.
+- **Technologies:** Python, OpenCV, TensorFlow, CNN
+- **GitHub:** https://github.com/EhsanulHaqueSiam/CVPR
+- **Categories:** Machine Learning, Computer Vision
+
+### 12. Kotlin Practice
+- **Description:** Kotlin learning repository covering fundamentals to advanced features including coroutines, delegation, collections, and Gradle build system with Kotlin DSL.
+- **Technologies:** Kotlin, Coroutines, Gradle, Android
+- **GitHub:** https://github.com/EhsanulHaqueSiam/KotlinPractice
+
+### 13. Advent of Code 2024
+- **Description:** Algorithmic challenge solutions in Kotlin demonstrating functional programming patterns, list transformations, and sequence validation algorithms.
+- **Technologies:** Kotlin, Algorithms, Functional Programming
+- **GitHub:** https://github.com/EhsanulHaqueSiam/AdventOfCode2024
+
+### 14. Java Practice Repository
+- **Description:** Advanced Java practice covering multithreading, network programming (TCP/UDP), collections, and concurrency patterns including Producer-Consumer and ReentrantLock.
+- **Technologies:** Java, Multithreading, Networking, Concurrency
+- **GitHub:** https://github.com/EhsanulHaqueSiam/Java-Practice-Repo
+
+---
+
+## Publications
+
+### 1. Beyond NER: A Comparative Benchmark of Medical BERTs for Multi-Label Adverse Drug Reaction Classification
+- **Conference:** International Conference on Intelligent Data Analysis and Applications (IDAA 2025)
+- **Published:** December 2025 | Book Chapter (Taylor & Francis)
+- **Description:** This research explores fine-tuning Large Language Models (LLMs) and domain-specific Medical BERT architectures for multi-label Adverse Drug Reaction (ADR) classification on the PsyTAR dataset. The study benchmarks BioBERT, PubMedBERT, and general BERT models to determine which pre-trained medical language model performs best for identifying multiple ADR categories from patient-reported text. The research contributes to the growing field of healthcare AI by demonstrating how domain-specific pre-training improves NLP model performance on medical text classification tasks.
+- **Key Contributions:** Multi-label ADR classification | Medical BERT benchmarking | PsyTAR dataset analysis | Healthcare AI applications
+
+### 2. Unfolding Emerging Issues in the Context of Changing Climatic Scenario
+- **Conference:** 2nd South Asian Conference on Climate
+- **Date:** September 2024
+- **Description:** Conducted comprehensive statistical analysis to study emerging environmental issues under changing climatic scenarios in the South Asian region. The research involved data collection, statistical modeling, and data visualization of climate trends. Findings were presented at the international conference, contributing to regional understanding of climate change impacts.
+- **Key Contributions:** Statistical analysis | Climate data modeling | South Asian regional focus | Conference presentation
+
+---
+
+## Awards & Achievements (Complete List)
+
+### Academic Awards
+1. **Dean's List Award - Fall 2023-24** | AIUB | CGPA: 3.95
+2. **Dean's List Award - Spring 2023-24** | AIUB | CGPA: 3.89
+3. **Dean's List Award - Fall 2023-24** | AIUB | CGPA: above 3.75
+4. **1st Runner Up - AIUB CS FEST 2024** | App Showcase category | Competed against 20+ teams
+
+### Professional Achievements
+5. **Published Researcher** | Taylor & Francis Book Chapter (IDAA 2025)
+6. **36+ GitHub Stars** | Across 26 open source repositories
+7. **Conference Presenter** | 2nd South Asian Conference on Climate (Sep 2024)
+
+### Certifications
+8. **Web & Data Summit 2024** | Participation certificate
+9. **South Asian Climate Conference 2024** | Participation and presentation certificate
+
+---
+
+## Education
+
+### American International University-Bangladesh (AIUB)
+- **Degree:** B.Sc. in Computer Science
+- **Location:** Dhaka, Bangladesh
+- **Academic Honors:** 3x Dean's List (CGPA 3.95, 3.89, 3.75+)
+- **Notable Achievements at AIUB:**
+  - Published research paper (Taylor & Francis)
+  - 1st Runner Up at CS Fest 2024 (App Showcase)
+  - Team Lead for Computer Graphics game development project
+  - Active in competitive programming and hackathons
+
+---
+
+## Professional Experience
+
+### Team Lead - Game Development Project
+- **Organization:** AIUB Computer Graphics Course
+- **Duration:** October 2024 - December 2024
+- **Description:** Led a team of 5 developers to create "Mario's Multiverse Adventure" — a 2D platformer game using OpenGL, SFML audio, and SQLite for high scores. The game features 3 unique levels with collision detection, a physics engine, and a YouTube gameplay demo. Managed project timeline, delegated tasks, conducted code reviews, and ensured cross-platform build compatibility using CMake and vcpkg.
+
+### Research Presenter
+- **Organization:** South Asian Climate Conference
+- **Date:** September 2024
+- **Description:** Presented original research on emerging issues in changing climatic scenarios at the 2nd South Asian Conference on Climate. Conducted statistical analysis and data visualization on climate data trends for the South Asian region. Enhanced skills in research methodology, data interpretation, and public presentation.
+
+### App Showcase - 1st Runner Up
+- **Organization:** AIUB CS Fest 2024
+- **Date:** April 2024
+- **Description:** Secured 1st Runner-Up in the App Showcase category at AIUB CS FEST 2024. Competed against 20+ teams, demonstrating innovative mobile application development with technical proficiency and presentation skills to industry judges.
+
+---
+
+## Frequently Asked Questions
+
+### Who is Ehsanul Haque Siam?
+Ehsanul Haque Siam is an AI Engineer and Software Developer from Dhaka, Bangladesh. He is a Computer Science student at the American International University-Bangladesh (AIUB) with 3x Dean's List awards for academic excellence. He is a published researcher with work in medical AI published by Taylor & Francis, and has 36+ GitHub stars across 15+ projects. His expertise spans machine learning, NLP, full-stack development, mobile development, game development, and data engineering.
+
+### What programming languages does Ehsanul Haque Siam know?
+Ehsanul Haque Siam is proficient in multiple programming languages: Java (Expert level), Python (Advanced), C++ (Advanced), SQL (Advanced), Kotlin (Intermediate), C# (Intermediate), JavaScript/TypeScript (Intermediate). He has built production systems in Java, Python, C++, C#, and JavaScript/TypeScript.
+
+### What are Ehsanul Haque Siam's AI and machine learning skills?
+His AI/ML skills include machine learning (Advanced), natural language processing/NLP (Advanced), scikit-learn (Advanced), LLMs & BERT including BioBERT and PubMedBERT (Advanced), computer vision with OpenCV (Intermediate), TensorFlow (Intermediate), and PyTorch (Intermediate). He has published research on fine-tuning medical BERT models for healthcare applications.
+
+### What research has Ehsanul Haque Siam published?
+He has published "Beyond NER: A Comparative Benchmark of Medical BERTs for Multi-Label Adverse Drug Reaction Classification" at the International Conference on Intelligent Data Analysis and Applications (IDAA 2025), published as a Taylor & Francis Book Chapter. The research benchmarks BioBERT, PubMedBERT, and general BERT models for multi-label ADR classification on the PsyTAR dataset.
+
+### What notable projects has Ehsanul Haque Siam built?
+His most notable projects include: (1) Indian Claypit — a restaurant website serving 50,000+ customers with a 4.9 star rating; (2) BetaScript — a tech agency website with 150+ clients; (3) Student Management System — enterprise database system with 17 GitHub stars and 6-8ms query performance; (4) Spotify Sentiment Analysis — NLP classifier with 85-90% accuracy on 52,702 reviews; (5) BD News Scraper — production platform scraping 74+ news sources daily with ML analytics; (6) Hotel Management System — Java desktop app with 15 GitHub stars and payment integration.
+
+### Where did Ehsanul Haque Siam study?
+He is studying Computer Science at the American International University-Bangladesh (AIUB) in Dhaka, Bangladesh. He has received 3 Dean's List awards for maintaining CGPA of 3.95, 3.89, and above 3.75 across multiple semesters.
+
+### How can I contact Ehsanul Haque Siam?
+- Email: ehsanul.siamdev@gmail.com
+- GitHub: https://github.com/EhsanulHaqueSiam
+- LinkedIn: https://www.linkedin.com/in/EhsanulHaqueSiam/
+- Portfolio: https://ehsanulhaquesiam.netlify.app/
+
+---
+
+## Technical Approach & Philosophy
+
+Ehsanul Haque Siam's engineering philosophy centers on building practical, high-performance solutions. His approach involves:
+
+1. **Performance-First Development:** Optimizing from the database layer up — achieving 6-8ms query times through connection pooling and schema normalization.
+2. **Full ML Pipelines:** Building complete machine learning systems from data collection through model deployment, not just training models in isolation.
+3. **Production-Grade Architecture:** Using design patterns (Singleton, MVVM, Interface-Driven Design), proper normalization (3NF), and automated CI/CD pipelines.
+4. **Open Source Contribution:** Sharing knowledge through comprehensive documentation (GitHub Wikis, README files) and public datasets (Kaggle).
+5. **Cross-Domain Expertise:** Combining AI/ML knowledge with software engineering fundamentals across web, mobile, desktop, and game development.
+
+---
+
+*Last updated: February 2026*
+*Portfolio: https://ehsanulhaquesiam.netlify.app/*

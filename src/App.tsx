@@ -184,7 +184,7 @@ function App() {
           transition={{ duration: 0.8, delay: 0.2 }}
         >
           <Navbar />
-          <main>
+          <main id="main-content">
             <Hero />
             <About />
             <Skills />
