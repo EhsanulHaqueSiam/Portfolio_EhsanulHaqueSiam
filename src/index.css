@@ -8,7 +8,7 @@
 
 @layer base {
   html {
-    scroll-behavior: smooth;
+    /* scroll-behavior handled by Lenis - CSS smooth conflicts with Chrome */
     /* Safe area insets for notched devices */
     padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
   }
@@ -455,10 +455,7 @@
     }
   }
 
-  /* Smoother animations on mobile */
-  * {
-    scroll-behavior: smooth;
-  }
+  /* scroll-behavior handled by Lenis on desktop, native on mobile */
 
   /* Reduce heavy blur effects */
   .blur-glass-xl {
