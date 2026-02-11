@@ -58,6 +58,7 @@ export function Navbar() {
           {/* Logo */}
           <motion.a
             href="#"
+            aria-label="Go to top"
             className="text-2xl font-display font-bold gradient-text relative"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}

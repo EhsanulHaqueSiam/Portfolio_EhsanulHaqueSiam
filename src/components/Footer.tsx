@@ -17,11 +17,12 @@ export function Footer() {
           >
             <a
               href="#"
+              aria-label="Go to top"
               className="text-xl font-display font-bold gradient-text inline-block mb-2"
             >
               Siam
             </a>
-            <p className="text-gray-600 text-sm">
+            <p className="text-gray-500 text-sm">
               © {currentYear} {profile.name}. All rights reserved.
             </p>
           </motion.div>
@@ -106,7 +107,7 @@ export function Footer() {
 
         {/* Bottom decoration */}
         <div className="mt-8 pt-8 border-t border-white/5 text-center">
-          <p className="text-gray-600 text-xs font-mono">
+          <p className="text-gray-500 text-xs font-mono">
             {'<'} Built with React, TypeScript & Tailwind {'/>'}
           </p>
         </div>

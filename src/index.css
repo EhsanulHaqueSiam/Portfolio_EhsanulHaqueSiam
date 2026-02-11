@@ -467,22 +467,22 @@
   }
 }
 
-/* Premium loading shimmer */
+/* Premium loading shimmer - GPU composited with transform */
 .shimmer {
   @apply relative overflow-hidden;
+}
+
+.shimmer::after {
+  content: '';
+  @apply absolute inset-0;
   background: linear-gradient(
     90deg,
     rgba(255, 255, 255, 0) 0%,
     rgba(255, 255, 255, 0.05) 50%,
     rgba(255, 255, 255, 0) 100%
   );
-  background-size: 200% 100%;
   animation: shimmer 2s infinite;
-}
-
-@keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
+  will-change: transform;
 }
 
 /* Grain texture (for premium feel) with GPU hint */
@@ -557,14 +557,8 @@
   will-change: opacity;
 }
 
-/* Optimized shimmer animation */
-@keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
-}
-
+/* Shimmer uses Tailwind's transform-based keyframes from tailwind.config.js */
 .animate-shimmer {
   animation: shimmer 2s infinite linear;
-  background-size: 200% 100%;
-  will-change: background-position;
+  will-change: transform;
 }
