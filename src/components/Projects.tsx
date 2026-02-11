@@ -174,7 +174,7 @@ export function Projects() {
                   {activeCategory === category && (
                     <motion.div
                       layoutId="activeProjectCategory"
-                      className="absolute inset-0 bg-violet-500 rounded-full"
+                      className="absolute inset-0 bg-violet-600 rounded-full"
                       transition={{ type: 'spring', stiffness: 400, damping: 30 }}
                     />
                   )}
@@ -232,6 +232,7 @@ export function Projects() {
                             href={project.links.code}
                             target="_blank"
                             rel="noopener noreferrer"
+                            aria-label={`View ${project.name} source code on GitHub`}
                             className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-violet-500 transition-colors"
                             whileHover={{ scale: 1.1 }}
                             whileTap={{ scale: 0.9 }}
@@ -246,6 +247,7 @@ export function Projects() {
                             href={project.links.view}
                             target="_blank"
                             rel="noopener noreferrer"
+                            aria-label={`View ${project.name} live demo`}
                             className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-amber-500 transition-colors"
                             whileHover={{ scale: 1.1 }}
                             whileTap={{ scale: 0.9 }}
