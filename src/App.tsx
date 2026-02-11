@@ -65,13 +65,9 @@ function LoadingScreen({ onComplete }: LoadingScreenProps) {
           }
         });
 
-        // Small delay after loading completes for smooth transition
+        // Complete immediately after assets load
         if (isMounted) {
-          setTimeout(() => {
-            if (isMounted) {
-              onComplete();
-            }
-          }, 300);
+          onComplete();
         }
       } catch (error) {
         // If loading fails, complete anyway after a short delay
@@ -79,11 +75,7 @@ function LoadingScreen({ onComplete }: LoadingScreenProps) {
         if (isMounted) {
           setProgress(100);
           setLoadingText('Ready!');
-          setTimeout(() => {
-            if (isMounted) {
-              onComplete();
-            }
-          }, 300);
+          onComplete();
         }
       }
     };
@@ -99,7 +91,7 @@ function LoadingScreen({ onComplete }: LoadingScreenProps) {
     <motion.div
       className="fixed inset-0 z-[200] bg-space-900 flex flex-col items-center justify-center"
       exit={{ opacity: 0 }}
-      transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
     >
       {/* Logo */}
       <motion.div
@@ -181,7 +173,7 @@ function App() {
           className="relative z-10"
           initial={{ opacity: 0 }}
           animate={{ opacity: isLoading ? 0 : 1 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
+          transition={{ duration: 0.3 }}
         >
           <Navbar />
           <main id="main-content">

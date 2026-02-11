@@ -99,6 +99,9 @@ export function About() {
                         alt={profile.name}
                         loading="eager"
                         decoding="async"
+                        width={192}
+                        height={192}
+                        sizes="(max-width: 768px) 160px, 192px"
                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                       />
                       {/* Overlay gradient */}

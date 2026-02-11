@@ -68,6 +68,7 @@ export function Projects() {
                         alt={featuredProject.name}
                         priority
                         aspectRatio="16/9"
+                        sizes="(max-width: 1024px) 100vw, 50vw"
                         className="w-full h-full transition-transform duration-700 group-hover/image:scale-105"
                       />
                     )}

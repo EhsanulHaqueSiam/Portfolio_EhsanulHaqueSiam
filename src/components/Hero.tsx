@@ -162,7 +162,7 @@ export function Hero() {
             className="mb-4 sm:mb-8"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
+            transition={{ duration: 0.5 }}
           >
             <span className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full border border-violet-500/30 bg-violet-500/5 text-violet-400 text-xs sm:text-sm font-mono">
               <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-green-500 animate-pulse" />
@@ -206,11 +206,8 @@ export function Hero() {
           {/* Description and CTA */}
           <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 sm:gap-8 lg:gap-12 max-w-5xl">
             {/* Description */}
-            <motion.p
+            <p
               className="text-base sm:text-lg md:text-xl text-gray-500 max-w-md leading-relaxed"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 1 }}
             >
               {profile.tagline.split('AI').map((part, i) =>
                 i === 0 ? part : (
@@ -220,14 +217,14 @@ export function Hero() {
                   </span>
                 )
               )}
-            </motion.p>
+            </p>
 
             {/* CTA Buttons */}
             <motion.div
               className="flex flex-row flex-wrap gap-3"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 1.2 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
             >
               <MagneticHover strength={isMobile ? 0 : 20}>
                 <a
