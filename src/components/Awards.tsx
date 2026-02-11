@@ -12,15 +12,18 @@ export function Awards() {
   const isModalOpen = selectedAward !== null;
   const isLightboxOpen = lightboxIndex !== null;
 
-  // Lock body scroll when modal or lightbox is open
+  // Lock body scroll and stop Lenis when modal is open
   useEffect(() => {
     if (isModalOpen) {
       document.body.style.overflow = 'hidden';
+      window.dispatchEvent(new Event('lenis:stop'));
     } else {
       document.body.style.overflow = '';
+      window.dispatchEvent(new Event('lenis:start'));
     }
     return () => {
       document.body.style.overflow = '';
+      window.dispatchEvent(new Event('lenis:start'));
     };
   }, [isModalOpen]);
 

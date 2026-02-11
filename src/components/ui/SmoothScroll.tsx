@@ -33,10 +33,18 @@ export function SmoothScroll({ children }: { children: React.ReactNode }) {
       }
     };
 
+    // Allow other components to stop/start Lenis via custom events
+    const handleLenisStop = () => lenisRef.current?.stop();
+    const handleLenisStart = () => lenisRef.current?.start();
+
     document.addEventListener('visibilitychange', handleVisibilityChange);
+    window.addEventListener('lenis:stop', handleLenisStop);
+    window.addEventListener('lenis:start', handleLenisStart);
 
     return () => {
       document.removeEventListener('visibilitychange', handleVisibilityChange);
+      window.removeEventListener('lenis:stop', handleLenisStop);
+      window.removeEventListener('lenis:start', handleLenisStart);
       lenisRef.current?.destroy();
     };
   }, []);
