@@ -8,7 +8,7 @@ interface EducationItem {
   location: string;
   period: string;
   status: 'Pursuing' | 'Completed';
-  logo: string;
+  image: string;
 }
 
 const educationData: EducationItem[] = [
@@ -18,7 +18,7 @@ const educationData: EducationItem[] = [
     location: 'AIUB',
     period: '2022 - 2026',
     status: 'Pursuing',
-    logo: 'AIUB',
+    image: 'university',
   },
   {
     institution: 'Govt. Azizul Haque College',
@@ -26,7 +26,7 @@ const educationData: EducationItem[] = [
     location: 'Bogura',
     period: '2019 - 2021',
     status: 'Completed',
-    logo: 'GAHC',
+    image: 'college',
   },
   {
     institution: 'Bogra Zilla School',
@@ -34,7 +34,7 @@ const educationData: EducationItem[] = [
     location: 'Bogura',
     period: '2011 - 2019',
     status: 'Completed',
-    logo: 'BZS',
+    image: 'school',
   },
 ];
 
@@ -92,10 +92,15 @@ export function Education() {
                   <div className="relative z-10 flex flex-col md:flex-row md:items-center gap-6">
                     {/* Logo/Icon */}
                     <div className="flex-shrink-0">
-                      <div className="w-20 h-20 md:w-24 md:h-24 rounded-2xl bg-gradient-to-br from-violet-500/20 to-amber-500/10 border border-white/10 flex items-center justify-center">
-                        <span className="text-2xl md:text-3xl font-display font-bold gradient-text">
-                          {edu.logo}
-                        </span>
+                      <div className="w-20 h-20 md:w-24 md:h-24 rounded-2xl bg-gradient-to-br from-violet-500/20 to-amber-500/10 border border-white/10 overflow-hidden">
+                        <img
+                          src={`/images/education/${edu.image}.webp`}
+                          alt={edu.institution}
+                          width={96}
+                          height={96}
+                          loading="lazy"
+                          className="w-full h-full object-cover"
+                        />
                       </div>
                     </div>
 
