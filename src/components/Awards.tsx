@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { awards, getAchievementImage } from '../data/content';
 import { SplitText } from './ui/SplitText';
@@ -7,6 +7,63 @@ import { OptimizedImage } from './ui/OptimizedImage';
 
 export function Awards() {
   const [selectedAward, setSelectedAward] = useState<number | null>(null);
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+
+  const isModalOpen = selectedAward !== null;
+  const isLightboxOpen = lightboxIndex !== null;
+
+  // Lock body scroll when modal or lightbox is open
+  useEffect(() => {
+    if (isModalOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isModalOpen]);
+
+  // Close modal resets lightbox
+  const closeModal = useCallback(() => {
+    setLightboxIndex(null);
+    setSelectedAward(null);
+  }, []);
+
+  // Lightbox navigation
+  const currentImages = selectedAward !== null ? awards[selectedAward].images : [];
+
+  const goNext = useCallback(() => {
+    if (lightboxIndex === null) return;
+    setLightboxIndex((lightboxIndex + 1) % currentImages.length);
+  }, [lightboxIndex, currentImages.length]);
+
+  const goPrev = useCallback(() => {
+    if (lightboxIndex === null) return;
+    setLightboxIndex((lightboxIndex - 1 + currentImages.length) % currentImages.length);
+  }, [lightboxIndex, currentImages.length]);
+
+  // Keyboard support
+  useEffect(() => {
+    if (!isModalOpen) return;
+
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        if (isLightboxOpen) {
+          setLightboxIndex(null);
+        } else {
+          closeModal();
+        }
+      }
+      if (isLightboxOpen) {
+        if (e.key === 'ArrowRight') goNext();
+        if (e.key === 'ArrowLeft') goPrev();
+      }
+    };
+
+    window.addEventListener('keydown', handleKey);
+    return () => window.removeEventListener('keydown', handleKey);
+  }, [isModalOpen, isLightboxOpen, closeModal, goNext, goPrev]);
 
   return (
     <section id="awards" className="py-32 px-6 md:px-12 lg:px-24 relative overflow-hidden">
@@ -128,7 +185,7 @@ export function Awards() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-space-900/95 backdrop-blur-xl"
-              onClick={() => setSelectedAward(null)}
+              onClick={closeModal}
             >
               <motion.div
                 initial={{ scale: 0.95, opacity: 0, y: 20 }}
@@ -142,7 +199,7 @@ export function Awards() {
 
                 {/* Close button */}
                 <button
-                  onClick={() => setSelectedAward(null)}
+                  onClick={closeModal}
                   className="absolute top-4 right-4 w-10 h-10 min-w-[44px] min-h-[44px] rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-white/20 transition-colors z-10"
                 >
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -163,17 +220,94 @@ export function Awards() {
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: i * 0.1 }}
-                      className="aspect-video rounded-xl overflow-hidden bg-space-700"
+                      className="aspect-video rounded-xl overflow-hidden bg-space-700 cursor-pointer group/img"
+                      onClick={() => setLightboxIndex(i)}
                     >
                       <OptimizedImage
                         src={getAchievementImage(img)}
                         alt={`${awards[selectedAward].name} - ${i + 1}`}
                         fill
-                        className="hover:scale-105 transition-transform duration-500"
+                        className="group-hover/img:scale-105 transition-transform duration-500"
                       />
+                      {/* Hover overlay */}
+                      <div className="absolute inset-0 bg-black/0 group-hover/img:bg-black/20 transition-colors duration-300 flex items-center justify-center">
+                        <svg className="w-8 h-8 text-white opacity-0 group-hover/img:opacity-100 transition-opacity duration-300 drop-shadow-lg" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
+                        </svg>
+                      </div>
                     </motion.div>
                   ))}
                 </div>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Lightbox overlay */}
+        <AnimatePresence>
+          {selectedAward !== null && lightboxIndex !== null && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="fixed inset-0 z-[60] flex items-center justify-center bg-black/95"
+              onClick={() => setLightboxIndex(null)}
+            >
+              {/* Image counter */}
+              <div className="absolute top-4 left-1/2 -translate-x-1/2 text-white/70 text-sm font-mono z-10">
+                {lightboxIndex + 1} / {currentImages.length}
+              </div>
+
+              {/* Close button */}
+              <button
+                onClick={() => setLightboxIndex(null)}
+                className="absolute top-4 right-4 w-10 h-10 min-w-[44px] min-h-[44px] rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-white/20 transition-colors z-10"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+
+              {/* Previous button */}
+              {currentImages.length > 1 && (
+                <button
+                  onClick={(e) => { e.stopPropagation(); goPrev(); }}
+                  className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 min-w-[44px] min-h-[44px] rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors z-10"
+                >
+                  <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                  </svg>
+                </button>
+              )}
+
+              {/* Next button */}
+              {currentImages.length > 1 && (
+                <button
+                  onClick={(e) => { e.stopPropagation(); goNext(); }}
+                  className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 min-w-[44px] min-h-[44px] rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors z-10"
+                >
+                  <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </button>
+              )}
+
+              {/* Full-size image */}
+              <motion.div
+                key={lightboxIndex}
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                transition={{ duration: 0.2 }}
+                className="max-w-[90vw] max-h-[85vh] relative"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <img
+                  src={getAchievementImage(currentImages[lightboxIndex])}
+                  alt={`${awards[selectedAward].name} - ${lightboxIndex + 1}`}
+                  className="max-w-full max-h-[85vh] object-contain rounded-lg"
+                />
               </motion.div>
             </motion.div>
           )}
