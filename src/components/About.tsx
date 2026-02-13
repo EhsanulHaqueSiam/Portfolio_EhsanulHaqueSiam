@@ -112,7 +112,8 @@ export function About() {
                     <motion.div
                       className="absolute inset-0 rounded-full border border-violet-500/20"
                       style={{ scale: 1.2 }}
-                      animate={{ rotate: 360 }}
+                      whileInView={{ rotate: 360 }}
+                      viewport={{ once: false, amount: 0 }}
                       transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
                     />
                   </div>

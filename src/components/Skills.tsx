@@ -1,12 +1,87 @@
-import { useState } from 'react';
+import { useState, memo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { skills, categoryIcons, skillLevelToPercent } from '../data/content';
 import { SplitText } from './ui/SplitText';
 import { MagneticHover } from './ui/ImageDistortion';
+import type { Skill } from '../data/types';
+
+const SkillCard = memo(function SkillCard({ skill, index }: { skill: Skill; index: number }) {
+  const [isHovered, setIsHovered] = useState(false);
+  const percent = skillLevelToPercent[skill.level] || 50;
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: index * 0.05, duration: 0.4 }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      className="group relative"
+    >
+      <div className="relative p-6 rounded-2xl bg-space-800/50 border border-white/5 hover:border-violet-500/30 transition-all duration-500 overflow-hidden">
+        {/* Hover glow */}
+        <div
+          className={`absolute inset-0 bg-gradient-to-br from-violet-500/10 to-transparent transition-opacity duration-500 ${
+            isHovered ? 'opacity-100' : 'opacity-0'
+          }`}
+        />
+
+        <div className="relative z-10">
+          {/* Skill icon and name */}
+          <div className="flex items-center gap-4 mb-4">
+            <div className="w-12 h-12 rounded-xl bg-space-700/50 flex items-center justify-center overflow-hidden">
+              <img
+                src={skill.icon}
+                alt={skill.name}
+                className="w-8 h-8 object-contain"
+                onError={(e) => {
+                  (e.target as HTMLImageElement).style.display = 'none';
+                }}
+              />
+            </div>
+            <div>
+              <h3 className="text-white font-medium">{skill.name}</h3>
+              <span className="text-xs text-gray-500 uppercase tracking-wider">
+                {skill.level}
+              </span>
+            </div>
+          </div>
+
+          {/* Progress bar */}
+          <div className="relative h-1.5 bg-space-700/50 rounded-full overflow-hidden">
+            <motion.div
+              className="absolute inset-y-0 left-0 bg-gradient-to-r from-violet-500 to-amber-500 rounded-full"
+              initial={{ width: 0 }}
+              animate={{ width: `${percent}%` }}
+              transition={{ duration: 1, delay: index * 0.05 + 0.3, ease: [0.22, 1, 0.36, 1] }}
+            />
+            {/* Shimmer effect - CSS animation for performance */}
+            <div
+              className="absolute inset-y-0 left-0 w-full animate-shimmer"
+              style={{
+                background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent)',
+                backgroundSize: '200% 100%',
+              }}
+            />
+          </div>
+
+          {/* Percentage on hover */}
+          <motion.div
+            className="absolute top-4 right-4 text-2xl font-display font-bold"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: isHovered ? 1 : 0 }}
+            transition={{ duration: 0.2 }}
+          >
+            <span className="gradient-text">{percent}%</span>
+          </motion.div>
+        </div>
+      </div>
+    </motion.div>
+  );
+});
 
 export function Skills() {
   const [activeCategory, setActiveCategory] = useState(0);
-  const [hoveredSkill, setHoveredSkill] = useState<string | null>(null);
 
   const categories = skills.categories;
 
@@ -80,89 +155,9 @@ export function Skills() {
             transition={{ duration: 0.4 }}
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"
           >
-            {categories[activeCategory].skills.map((skill, index) => {
-              const percent = skillLevelToPercent[skill.level] || 50;
-              const isHovered = hoveredSkill === skill.name;
-
-              return (
-                <motion.div
-                  key={skill.name}
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.05, duration: 0.4 }}
-                  onMouseEnter={() => setHoveredSkill(skill.name)}
-                  onMouseLeave={() => setHoveredSkill(null)}
-                  className="group relative"
-                >
-                  <div className="relative p-6 rounded-2xl bg-space-800/50 border border-white/5 hover:border-violet-500/30 transition-all duration-500 overflow-hidden">
-                    {/* Hover glow */}
-                    <div
-                      className={`absolute inset-0 bg-gradient-to-br from-violet-500/10 to-transparent transition-opacity duration-500 ${
-                        isHovered ? 'opacity-100' : 'opacity-0'
-                      }`}
-                    />
-
-                    <div className="relative z-10">
-                      {/* Skill icon and name */}
-                      <div className="flex items-center gap-4 mb-4">
-                        <div className="w-12 h-12 rounded-xl bg-space-700/50 flex items-center justify-center overflow-hidden">
-                          <img
-                            src={skill.icon}
-                            alt={skill.name}
-                            className="w-8 h-8 object-contain"
-                            onError={(e) => {
-                              (e.target as HTMLImageElement).style.display = 'none';
-                            }}
-                          />
-                        </div>
-                        <div>
-                          <h3 className="text-white font-medium">{skill.name}</h3>
-                          <span className="text-xs text-gray-500 uppercase tracking-wider">
-                            {skill.level}
-                          </span>
-                        </div>
-                      </div>
-
-                      {/* Progress bar */}
-                      <div className="relative h-1.5 bg-space-700/50 rounded-full overflow-hidden">
-                        <motion.div
-                          className="absolute inset-y-0 left-0 bg-gradient-to-r from-violet-500 to-amber-500 rounded-full"
-                          initial={{ width: 0 }}
-                          animate={{ width: `${percent}%` }}
-                          transition={{ duration: 1, delay: index * 0.05 + 0.3, ease: [0.22, 1, 0.36, 1] }}
-                        />
-                        {/* Shimmer effect */}
-                        <motion.div
-                          className="absolute inset-y-0 left-0 w-full"
-                          style={{
-                            background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent)',
-                            backgroundSize: '200% 100%',
-                          }}
-                          animate={{
-                            backgroundPosition: ['200% 0', '-200% 0'],
-                          }}
-                          transition={{
-                            duration: 3,
-                            repeat: Infinity,
-                            ease: 'linear',
-                          }}
-                        />
-                      </div>
-
-                      {/* Percentage on hover */}
-                      <motion.div
-                        className="absolute top-4 right-4 text-2xl font-display font-bold"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: isHovered ? 1 : 0 }}
-                        transition={{ duration: 0.2 }}
-                      >
-                        <span className="gradient-text">{percent}%</span>
-                      </motion.div>
-                    </div>
-                  </div>
-                </motion.div>
-              );
-            })}
+            {categories[activeCategory].skills.map((skill, index) => (
+              <SkillCard key={skill.name} skill={skill} index={index} />
+            ))}
           </motion.div>
         </AnimatePresence>
 

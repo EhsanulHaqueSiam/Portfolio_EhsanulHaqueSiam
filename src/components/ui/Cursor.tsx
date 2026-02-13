@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, useRef } from 'react';
 import { motion, useSpring, useMotionValue, AnimatePresence } from 'framer-motion';
 
 export function CustomCursor() {
@@ -7,6 +7,7 @@ export function CustomCursor() {
   const [cursorText, setCursorText] = useState('');
   const [isVisible, setIsVisible] = useState(false);
   const [isTouchDevice, setIsTouchDevice] = useState(true); // Start true to prevent flash
+  const isVisibleRef = useRef(false);
 
   const cursorX = useMotionValue(-100);
   const cursorY = useMotionValue(-100);
@@ -24,8 +25,11 @@ export function CustomCursor() {
   const handleMouseMove = useCallback((e: MouseEvent) => {
     cursorX.set(e.clientX);
     cursorY.set(e.clientY);
-    if (!isVisible) setIsVisible(true);
-  }, [cursorX, cursorY, isVisible]);
+    if (!isVisibleRef.current) {
+      isVisibleRef.current = true;
+      setIsVisible(true);
+    }
+  }, [cursorX, cursorY]);
 
   const handleMouseDown = useCallback(() => setIsClicking(true), []);
   const handleMouseUp = useCallback(() => setIsClicking(false), []);
@@ -36,8 +40,7 @@ export function CustomCursor() {
     const isInteractive =
       interactiveElements.includes(target.tagName) ||
       target.closest('a, button, [data-cursor], [role="button"]') ||
-      target.classList.contains('cursor-pointer') ||
-      window.getComputedStyle(target).cursor === 'pointer';
+      target.classList.contains('cursor-pointer');
 
     if (isInteractive) {
       setIsHovering(true);
@@ -55,10 +58,12 @@ export function CustomCursor() {
   }, []);
 
   const handleDocumentLeave = useCallback(() => {
+    isVisibleRef.current = false;
     setIsVisible(false);
   }, []);
 
   const handleDocumentEnter = useCallback(() => {
+    isVisibleRef.current = true;
     setIsVisible(true);
   }, []);
 

@@ -1,4 +1,5 @@
-import { useState, useEffect, useCallback, RefObject } from 'react';
+import { useState, useEffect, useCallback, useRef, RefObject } from 'react';
+import { MotionValue, useMotionValue } from 'framer-motion';
 
 interface MousePosition {
   x: number;
@@ -26,12 +27,13 @@ export function useMagneticEffect<T extends HTMLElement>(
 ) {
   const [offset, setOffset] = useState({ x: 0, y: 0 });
   const [isHovered, setIsHovered] = useState(false);
+  const rectRef = useRef<DOMRect | null>(null);
 
   const handleMouseMove = useCallback(
     (e: MouseEvent) => {
-      if (!ref.current) return;
+      const rect = rectRef.current;
+      if (!rect) return;
 
-      const rect = ref.current.getBoundingClientRect();
       const centerX = rect.left + rect.width / 2;
       const centerY = rect.top + rect.height / 2;
 
@@ -43,16 +45,20 @@ export function useMagneticEffect<T extends HTMLElement>(
         y: distanceY * strength,
       });
     },
-    [ref, strength]
+    [strength]
   );
 
   const handleMouseEnter = useCallback(() => {
+    if (ref.current) {
+      rectRef.current = ref.current.getBoundingClientRect();
+    }
     setIsHovered(true);
     window.addEventListener('mousemove', handleMouseMove);
-  }, [handleMouseMove]);
+  }, [ref, handleMouseMove]);
 
   const handleMouseLeave = useCallback(() => {
     setIsHovered(false);
+    rectRef.current = null;
     setOffset({ x: 0, y: 0 });
     window.removeEventListener('mousemove', handleMouseMove);
   }, [handleMouseMove]);
@@ -77,36 +83,41 @@ export function useMagneticEffect<T extends HTMLElement>(
 export function useTiltEffect<T extends HTMLElement>(
   ref: RefObject<T>,
   maxTilt: number = 10
-) {
-  const [tilt, setTilt] = useState({ rotateX: 0, rotateY: 0 });
-  const [isHovered, setIsHovered] = useState(false);
+): { tilt: { rotateX: MotionValue<number>; rotateY: MotionValue<number> }; isHovered: MotionValue<number> } {
+  const rotateX = useMotionValue(0);
+  const rotateY = useMotionValue(0);
+  const isHovered = useMotionValue(0);
+  const rectRef = useRef<DOMRect | null>(null);
 
   useEffect(() => {
     const element = ref.current;
     if (!element) return;
 
     const handleMouseMove = (e: MouseEvent) => {
-      const rect = element.getBoundingClientRect();
+      const rect = rectRef.current;
+      if (!rect) return;
+
       const centerX = rect.left + rect.width / 2;
       const centerY = rect.top + rect.height / 2;
 
       const percentX = (e.clientX - centerX) / (rect.width / 2);
       const percentY = (e.clientY - centerY) / (rect.height / 2);
 
-      setTilt({
-        rotateX: -percentY * maxTilt,
-        rotateY: percentX * maxTilt,
-      });
+      rotateX.set(-percentY * maxTilt);
+      rotateY.set(percentX * maxTilt);
     };
 
     const handleMouseEnter = () => {
-      setIsHovered(true);
+      rectRef.current = element.getBoundingClientRect();
+      isHovered.set(1);
       element.addEventListener('mousemove', handleMouseMove);
     };
 
     const handleMouseLeave = () => {
-      setIsHovered(false);
-      setTilt({ rotateX: 0, rotateY: 0 });
+      isHovered.set(0);
+      rectRef.current = null;
+      rotateX.set(0);
+      rotateY.set(0);
       element.removeEventListener('mousemove', handleMouseMove);
     };
 
@@ -118,7 +129,7 @@ export function useTiltEffect<T extends HTMLElement>(
       element.removeEventListener('mouseleave', handleMouseLeave);
       element.removeEventListener('mousemove', handleMouseMove);
     };
-  }, [ref, maxTilt]);
+  }, [ref, maxTilt, rotateX, rotateY, isHovered]);
 
-  return { tilt, isHovered };
+  return { tilt: { rotateX, rotateY }, isHovered };
 }

@@ -47,7 +47,7 @@ export function Hero() {
         <div className="absolute inset-0 pointer-events-none">
           {/* Primary gradient orb - smaller on mobile for performance */}
           <motion.div
-            className="absolute w-[300px] h-[300px] md:w-[600px] md:h-[600px] lg:w-[800px] lg:h-[800px] rounded-full will-change-transform"
+            className="absolute w-[300px] h-[300px] md:w-[600px] md:h-[600px] lg:w-[800px] lg:h-[800px] rounded-full"
             style={{
               y: isMobile ? 0 : springY1,
               rotate: isMobile ? 0 : rotate,
@@ -60,7 +60,7 @@ export function Hero() {
 
           {/* Secondary gradient orb - smaller on mobile */}
           <motion.div
-            className="absolute w-[250px] h-[250px] md:w-[400px] md:h-[400px] lg:w-[600px] lg:h-[600px] rounded-full will-change-transform"
+            className="absolute w-[250px] h-[250px] md:w-[400px] md:h-[400px] lg:w-[600px] lg:h-[600px] rounded-full"
             style={{
               y: isMobile ? 0 : springY2,
               background: 'radial-gradient(circle, rgba(245, 158, 11, 0.1) 0%, transparent 70%)',
@@ -84,23 +84,26 @@ export function Hero() {
 
           {/* Decorative shapes - hidden on mobile for performance */}
           <motion.div
-            className="hidden md:block absolute top-[20%] left-[10%] w-16 h-16 md:w-24 md:h-24 border border-violet-500/20 rounded-2xl will-change-transform"
+            className="hidden md:block absolute top-[20%] left-[10%] w-16 h-16 md:w-24 md:h-24 border border-violet-500/20 rounded-2xl"
             style={{ y: y3, rotate }}
             initial={{ opacity: 0 }}
-            animate={{ rotate: [0, 90, 0], opacity: 1 }}
+            whileInView={{ rotate: [0, 90, 0], opacity: 1 }}
+            viewport={{ once: false, amount: 0 }}
             transition={{ duration: 20, repeat: Infinity, ease: 'linear', delay: 0.5 }}
           />
           <motion.div
-            className="hidden md:block absolute bottom-[30%] right-[15%] w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-amber-500/10 to-transparent rounded-full will-change-transform"
+            className="hidden md:block absolute bottom-[30%] right-[15%] w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-amber-500/10 to-transparent rounded-full"
             style={{ y: y1 }}
             initial={{ opacity: 0 }}
-            animate={{ scale: [1, 1.2, 1], opacity: 1 }}
+            whileInView={{ scale: [1, 1.2, 1], opacity: 1 }}
+            viewport={{ once: false, amount: 0 }}
             transition={{ duration: 4, repeat: Infinity, delay: 1 }}
           />
           <motion.div
             className="hidden md:block absolute top-[40%] right-[8%] w-2 h-2 bg-violet-500 rounded-full"
             initial={{ opacity: 0 }}
-            animate={{ opacity: [0.2, 1, 0.2] }}
+            whileInView={{ opacity: [0.2, 1, 0.2] }}
+            viewport={{ once: false, amount: 0 }}
             transition={{ duration: 2, repeat: Infinity, delay: 1.5 }}
           />
 

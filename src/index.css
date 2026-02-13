@@ -102,17 +102,9 @@
    ============================================ */
 
 @layer components {
-  /* Gradient text - animated with GPU hint */
+  /* Gradient text - static gradient, no animation for performance */
   .gradient-text {
     @apply bg-gradient-to-r from-violet-400 via-violet-500 to-amber-400 bg-clip-text text-transparent;
-    background-size: 200% auto;
-    animation: gradient-flow 4s ease infinite;
-    will-change: background-position;
-  }
-
-  @keyframes gradient-flow {
-    0%, 100% { background-position: 0% center; }
-    50% { background-position: 200% center; }
   }
 
   /* Glass card - reduced blur for performance */
@@ -561,4 +553,15 @@
 .animate-shimmer {
   animation: shimmer 2s infinite linear;
   will-change: transform;
+}
+
+/* Marquee CSS animations - GPU-composited via transform */
+@keyframes marquee-left {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes marquee-right {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
 }

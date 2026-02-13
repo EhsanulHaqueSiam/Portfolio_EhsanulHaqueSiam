@@ -21,19 +21,15 @@ export function Marquee({
       className={`overflow-hidden whitespace-nowrap ${className}`}
       style={{ maskImage: 'linear-gradient(to right, transparent, black 5%, black 95%, transparent)' }}
     >
-      <motion.div
+      <div
         className={`inline-flex ${pauseOnHover ? 'hover:[animation-play-state:paused]' : ''}`}
-        animate={{ x: direction === 'left' ? '-50%' : '0%' }}
-        initial={{ x: direction === 'left' ? '0%' : '-50%' }}
-        transition={{
-          duration: speed,
-          repeat: Infinity,
-          ease: 'linear',
+        style={{
+          animation: `marquee-${direction} ${speed}s linear infinite`,
         }}
       >
         <span className="inline-flex">{children}</span>
         <span className="inline-flex">{children}</span>
-      </motion.div>
+      </div>
     </div>
   );
 }

@@ -44,16 +44,18 @@ export function Education() {
       {/* Background decorations */}
       <div className="absolute inset-0 pointer-events-none">
         <motion.div
-          animate={{
+          whileInView={{
             rotate: [0, 360],
           }}
+          viewport={{ once: false, amount: 0 }}
           transition={{ duration: 120, repeat: Infinity, ease: 'linear' }}
           className="absolute -top-1/4 -right-1/4 w-[600px] h-[600px] border border-violet-500/10 rounded-full"
         />
         <motion.div
-          animate={{
+          whileInView={{
             rotate: [360, 0],
           }}
+          viewport={{ once: false, amount: 0 }}
           transition={{ duration: 90, repeat: Infinity, ease: 'linear' }}
           className="absolute -bottom-1/4 -left-1/4 w-[500px] h-[500px] border border-amber-500/10 rounded-full"
         />

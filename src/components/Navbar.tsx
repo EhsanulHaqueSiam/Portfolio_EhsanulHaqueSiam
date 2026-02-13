@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
 import { navItems } from '../data/content';
 
@@ -8,15 +8,22 @@ export function Navbar() {
   const [activeSection, setActiveSection] = useState('');
   const [isHidden, setIsHidden] = useState(false);
   const { scrollY } = useScroll();
+  const isHiddenRef = useRef(false);
+  const isScrolledRef = useRef(false);
 
   useMotionValueEvent(scrollY, 'change', (latest) => {
     const previous = scrollY.getPrevious() ?? 0;
-    if (latest > previous && latest > 150) {
-      setIsHidden(true);
-    } else {
-      setIsHidden(false);
+    const shouldHide = latest > previous && latest > 150;
+    const shouldShowScrolled = latest > 50;
+
+    if (shouldHide !== isHiddenRef.current) {
+      isHiddenRef.current = shouldHide;
+      setIsHidden(shouldHide);
     }
-    setIsScrolled(latest > 50);
+    if (shouldShowScrolled !== isScrolledRef.current) {
+      isScrolledRef.current = shouldShowScrolled;
+      setIsScrolled(shouldShowScrolled);
+    }
   });
 
   // Use IntersectionObserver instead of scroll events for better performance

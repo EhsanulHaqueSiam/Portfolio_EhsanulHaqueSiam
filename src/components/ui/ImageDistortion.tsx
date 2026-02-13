@@ -9,6 +9,7 @@ interface ImageDistortionProps {
 
 export function ImageDistortion({ children, className = '', intensity = 10 }: ImageDistortionProps) {
   const ref = useRef<HTMLDivElement>(null);
+  const rectRef = useRef<DOMRect | null>(null);
   const [isHovered, setIsHovered] = useState(false);
 
   const x = useMotionValue(0);
@@ -20,18 +21,22 @@ export function ImageDistortion({ children, className = '', intensity = 10 }: Im
   const rotateX = useTransform(mouseY, [-0.5, 0.5], [intensity, -intensity]);
   const rotateY = useTransform(mouseX, [-0.5, 0.5], [-intensity, intensity]);
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!ref.current) return;
+  const handleMouseEnter = () => {
+    if (ref.current) {
+      rectRef.current = ref.current.getBoundingClientRect();
+    }
+    setIsHovered(true);
+  };
 
-    const rect = ref.current.getBoundingClientRect();
-    const width = rect.width;
-    const height = rect.height;
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = rectRef.current;
+    if (!rect) return;
 
     const mouseXPos = e.clientX - rect.left;
     const mouseYPos = e.clientY - rect.top;
 
-    const xPct = mouseXPos / width - 0.5;
-    const yPct = mouseYPos / height - 0.5;
+    const xPct = mouseXPos / rect.width - 0.5;
+    const yPct = mouseYPos / rect.height - 0.5;
 
     x.set(xPct);
     y.set(yPct);
@@ -39,6 +44,7 @@ export function ImageDistortion({ children, className = '', intensity = 10 }: Im
 
   const handleMouseLeave = () => {
     setIsHovered(false);
+    rectRef.current = null;
     x.set(0);
     y.set(0);
   };
@@ -48,7 +54,7 @@ export function ImageDistortion({ children, className = '', intensity = 10 }: Im
       ref={ref}
       className={`relative ${className}`}
       onMouseMove={handleMouseMove}
-      onMouseEnter={() => setIsHovered(true)}
+      onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       style={{
         perspective: 1000,
@@ -96,6 +102,7 @@ interface MagneticHoverProps {
 
 export function MagneticHover({ children, className = '', strength = 30 }: MagneticHoverProps) {
   const ref = useRef<HTMLDivElement>(null);
+  const rectRef = useRef<DOMRect | null>(null);
 
   const x = useMotionValue(0);
   const y = useMotionValue(0);
@@ -103,10 +110,16 @@ export function MagneticHover({ children, className = '', strength = 30 }: Magne
   const springX = useSpring(x, { stiffness: 150, damping: 15 });
   const springY = useSpring(y, { stiffness: 150, damping: 15 });
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!ref.current) return;
+  const handleMouseEnter = () => {
+    if (ref.current) {
+      rectRef.current = ref.current.getBoundingClientRect();
+    }
+  };
 
-    const rect = ref.current.getBoundingClientRect();
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = rectRef.current;
+    if (!rect) return;
+
     const centerX = rect.left + rect.width / 2;
     const centerY = rect.top + rect.height / 2;
 
@@ -118,6 +131,7 @@ export function MagneticHover({ children, className = '', strength = 30 }: Magne
   };
 
   const handleMouseLeave = () => {
+    rectRef.current = null;
     x.set(0);
     y.set(0);
   };
@@ -126,6 +140,7 @@ export function MagneticHover({ children, className = '', strength = 30 }: Magne
     <motion.div
       ref={ref}
       className={className}
+      onMouseEnter={handleMouseEnter}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       style={{ x: springX, y: springY }}
