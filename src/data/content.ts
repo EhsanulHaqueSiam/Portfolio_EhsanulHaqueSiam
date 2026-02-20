@@ -38,7 +38,7 @@ export const profile: Profile = {
   stats: [
     { label: "GitHub Stars", value: "36+" },
     { label: "Projects", value: "15+" },
-    { label: "Publications", value: "2" },
+    { label: "Publications", value: "3" },
     { label: "Dean's Lists", value: "3x" },
   ],
 };

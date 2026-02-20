@@ -1,5 +1,65 @@
 [
   {
+    "name": "Aurum Gold",
+    "desc": "Premium gold jewellery e-commerce platform with editorial-grade shopping experience. Photography-first design with dark aesthetic, cinematic hero animations, transparent pricing breakdowns, live gold rates, and conversion-driven UX including urgency indicators and social proof.",
+    "metrics": [
+      "React 19 + TanStack Router",
+      "Editorial magazine aesthetic",
+      "Live gold rates & pricing",
+      "Lighthouse 90+ target"
+    ],
+    "images": [
+      "aurumgold"
+    ],
+    "showInHome": true,
+    "categories": [
+      "web",
+      "frontend"
+    ],
+    "tags": [
+      "React",
+      "TypeScript",
+      "TailwindCSS",
+      "Framer Motion",
+      "Zustand",
+      "E-commerce"
+    ],
+    "links": {
+      "view": "https://theaurum.netlify.app",
+      "code": "https://github.com/EhsanulHaqueSiam/aurum-gold"
+    }
+  },
+  {
+    "name": "Void Threads",
+    "desc": "Premium streetwear e-commerce with dark luxury aesthetic and sales psychology-driven UX. Features Ken Burns hero animations, bento grid collections, advanced filtering, quick view modals, exit-intent popups, and mobile-first responsive design from 320px to 1920px.",
+    "metrics": [
+      "React 19 + TanStack Start",
+      "Dark luxury streetwear aesthetic",
+      "Sales psychology UX patterns",
+      "SSR with Nitro 3"
+    ],
+    "images": [
+      "voidthreads"
+    ],
+    "showInHome": true,
+    "categories": [
+      "web",
+      "frontend"
+    ],
+    "tags": [
+      "React",
+      "TypeScript",
+      "TailwindCSS",
+      "Framer Motion",
+      "Zustand",
+      "E-commerce"
+    ],
+    "links": {
+      "view": "https://voidthreadsco.netlify.app",
+      "code": "https://github.com/EhsanulHaqueSiam/void-threads"
+    }
+  },
+  {
     "name": "Indian Claypit",
     "desc": "Premium restaurant website for an award-winning Indian cuisine establishment. Features elegant dark theme, online ordering system, menu browsing, catering services, happy hours section, event booking, and gallery. Built with modern web technologies for optimal performance and user experience.",
     "metrics": [

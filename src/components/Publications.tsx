@@ -116,24 +116,26 @@ export function Publications() {
                           </MagneticHover>
                         )}
 
-                        <button
-                          className="text-gray-500 hover:text-white text-sm flex items-center gap-2 transition-colors"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setExpandedPub(expandedPub === index ? null : index);
-                          }}
-                        >
-                          <span>{expandedPub === index ? 'Hide' : 'View'} Image</span>
-                          <motion.svg
-                            className="w-4 h-4"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                            animate={{ rotate: expandedPub === index ? 180 : 0 }}
+                        {pub.images && pub.images.length > 0 && (
+                          <button
+                            className="text-gray-500 hover:text-white text-sm flex items-center gap-2 transition-colors"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setExpandedPub(expandedPub === index ? null : index);
+                            }}
                           >
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                          </motion.svg>
-                        </button>
+                            <span>{expandedPub === index ? 'Hide' : 'View'} Image</span>
+                            <motion.svg
+                              className="w-4 h-4"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                              animate={{ rotate: expandedPub === index ? 180 : 0 }}
+                            >
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                            </motion.svg>
+                          </button>
+                        )}
                       </div>
                     </div>
                   </div>

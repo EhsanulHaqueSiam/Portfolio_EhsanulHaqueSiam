@@ -48,13 +48,22 @@ export function Experience() {
                   <div className="p-8 md:p-10 rounded-3xl bg-space-800/50 border border-white/5 hover:border-violet-500/30 transition-all duration-500">
                     {/* Header */}
                     <div className="flex flex-wrap items-start justify-between gap-4 mb-6">
-                      <div>
-                        <h3 className="text-2xl font-display font-semibold text-white mb-2">
-                          {exp.role}
-                        </h3>
-                        <p className="text-violet-400 font-medium">
-                          {exp.company}
-                        </p>
+                      <div className="flex items-start gap-4">
+                        {exp.logo && (
+                          <img
+                            src={`/images/experience/${exp.logo}.webp`}
+                            alt={exp.company}
+                            className="w-12 h-12 rounded-xl object-contain bg-white/10 p-1 flex-shrink-0"
+                          />
+                        )}
+                        <div>
+                          <h3 className="text-2xl font-display font-semibold text-white mb-2">
+                            {exp.role}
+                          </h3>
+                          <p className="text-violet-400 font-medium">
+                            {exp.company}
+                          </p>
+                        </div>
                       </div>
                       <span className="px-4 py-2 text-sm font-mono text-gray-400 bg-space-700/50 rounded-xl border border-white/5">
                         {exp.date}

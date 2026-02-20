@@ -1,5 +1,14 @@
 [
     {
+        "company": "Unies",
+        "role": "AI Engineering Intern",
+        "date": "Feb 2026 - May 2026",
+        "desc": "Building production-grade AI systems including RAG pipelines for academic resources using vector databases (Pinecone, ChromaDB), agentic workflows with LangChain/LlamaIndex, and automated LLM evaluation pipelines. Developing FastAPI backends, engineering advanced prompts for curriculum-aligned tutoring, and optimizing embedding strategies and retrieval accuracy.",
+        "alignment": "right",
+        "showInHome": true,
+        "logo": "unies"
+    },
+    {
         "company": "AIUB Computer Graphics Course",
         "role": "Team Lead - Game Development Project",
         "date": "Oct 2024 - Dec 2024",

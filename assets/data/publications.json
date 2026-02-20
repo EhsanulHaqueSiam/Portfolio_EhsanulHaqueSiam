@@ -1,5 +1,14 @@
 [
     {
+        "title": "Decoding Research Trends: A Clustering Based Topic Modeling Framework",
+        "conference": "IEEE QPAIN 2026",
+        "date": "2026 | Accepted (IEEE Xplore, Scopus Indexed)",
+        "desc": "Proposes a clustering-based topic modeling framework for decoding research trends. Accepted with minor revision for IEEE QPAIN 2026, with possible inclusion in IEEE Xplore Digital Library and indexing by Scopus.",
+        "images": [],
+        "showInHome": true,
+        "paperLink": null
+    },
+    {
         "title": "Beyond NER: A Comparative Benchmark of Medical BERTS for Multi-Label Adverse Drug Reaction Classification",
         "conference": "International Conference on Intelligent Data Analysis and Applications (IDAA 2025)",
         "date": "Dec 2025 | Book Chapter (Taylor & Francis)",

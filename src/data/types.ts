@@ -62,6 +62,7 @@ export interface Experience {
   desc: string;
   alignment: 'left' | 'right';
   showInHome: boolean;
+  logo?: string;
 }
 
 export interface Achievement {
