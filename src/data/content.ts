@@ -63,12 +63,12 @@ export const featuredTestimonials = testimonials.filter(t => t.showInHome);
 // Navigation items
 export const navItems = [
   { label: "About", href: "#about" },
+  { label: "Experience", href: "#experience" },
   { label: "Skills", href: "#skills" },
   { label: "Projects", href: "#projects" },
   { label: "Awards", href: "#awards" },
   { label: "Publications", href: "#publications" },
   { label: "Education", href: "#education" },
-  { label: "Experience", href: "#experience" },
   { label: "Contact", href: "#contact" },
 ];
 

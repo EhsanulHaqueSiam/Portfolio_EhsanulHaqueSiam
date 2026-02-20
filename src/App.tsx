@@ -31,6 +31,17 @@ function App() {
   return (
     <SmoothScroll>
       <div className="relative">
+        {/* Fixed background gradients - uses GPU compositing instead of background-attachment: fixed */}
+        <div
+          className="fixed inset-0 -z-10 pointer-events-none"
+          aria-hidden="true"
+          style={{
+            backgroundImage:
+              'radial-gradient(ellipse at 20% 0%, rgba(139, 92, 246, 0.06) 0%, transparent 50%), radial-gradient(ellipse at 80% 100%, rgba(245, 158, 11, 0.04) 0%, transparent 50%)',
+            willChange: 'transform',
+          }}
+        />
+
         {/* Film grain overlay */}
         <NoiseOverlay />
 
@@ -48,14 +59,14 @@ function App() {
           <Navbar />
           <main id="main-content">
             <Hero />
-            <About />
-            <Skills />
-            <Projects />
-            <Awards />
-            <Publications />
-            <Education />
-            <Experience />
-            <Contact />
+            <div className="cv-auto"><About /></div>
+            <div className="cv-auto"><Experience /></div>
+            <div className="cv-auto"><Skills /></div>
+            <div className="cv-auto"><Projects /></div>
+            <div className="cv-auto"><Awards /></div>
+            <div className="cv-auto"><Publications /></div>
+            <div className="cv-auto"><Education /></div>
+            <div className="cv-auto"><Contact /></div>
           </main>
           <Footer />
         </div>

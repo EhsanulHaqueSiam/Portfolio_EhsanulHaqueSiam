@@ -52,8 +52,8 @@ export function SplitText({
         };
       case 'blur':
         return {
-          hidden: { opacity: 0, filter: 'blur(12px)', y: 20 },
-          visible: { opacity: 1, filter: 'blur(0px)', y: 0 },
+          hidden: { opacity: 0, y: 20, scale: 0.95 },
+          visible: { opacity: 1, y: 0, scale: 1 },
         };
       case 'wave':
         return {

@@ -38,7 +38,7 @@ export function Projects() {
         {/* Section header */}
         <div className="mb-10 sm:mb-16 md:mb-20">
           <div className="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-8">
-            <span className="text-violet-500 font-mono text-xs sm:text-sm">03</span>
+            <span className="text-violet-500 font-mono text-xs sm:text-sm">04</span>
             <div className="h-px flex-1 bg-gradient-to-r from-violet-500/50 to-transparent" />
           </div>
           <h2 className="text-3xl sm:text-5xl md:text-7xl lg:text-8xl font-display font-bold">
@@ -186,7 +186,7 @@ export function Projects() {
         </div>
 
         {/* Projects grid */}
-        <motion.div layout className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <motion.div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           <AnimatePresence mode="popLayout">
             {filteredProjects.slice(1).map((project, index) => (
               <motion.div

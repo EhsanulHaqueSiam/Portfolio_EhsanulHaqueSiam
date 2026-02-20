@@ -86,7 +86,7 @@ export function Skills() {
   const categories = skills.categories;
 
   return (
-    <section id="skills" className="py-32 px-6 md:px-12 lg:px-24 relative overflow-hidden">
+    <section id="skills" className="py-16 sm:py-24 md:py-32 px-4 sm:px-6 md:px-12 lg:px-24 relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-1/4 -left-32 w-64 h-64 bg-violet-500/5 rounded-full blur-3xl" />
@@ -94,9 +94,9 @@ export function Skills() {
       </div>
 
       {/* Section header */}
-      <div className="max-w-7xl mx-auto mb-20">
-        <div className="flex items-center gap-4 mb-8">
-          <span className="text-violet-500 font-mono text-sm">02</span>
+      <div className="max-w-7xl mx-auto mb-10 sm:mb-16 md:mb-20">
+        <div className="flex items-center gap-4 mb-4 sm:mb-8">
+          <span className="text-violet-500 font-mono text-sm">03</span>
           <div className="h-px flex-1 bg-gradient-to-r from-violet-500/50 to-transparent" />
         </div>
         <h2 className="text-5xl md:text-7xl lg:text-8xl font-display font-bold">
@@ -108,7 +108,7 @@ export function Skills() {
 
       <div className="max-w-7xl mx-auto">
         {/* Category tabs - horizontally scrollable on mobile */}
-        <div className="relative mb-16">
+        <div className="relative mb-8 sm:mb-12 md:mb-16">
           {/* Scroll fade indicators */}
           <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-space-900 to-transparent z-10 pointer-events-none md:hidden" />
           <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-space-900 to-transparent z-10 pointer-events-none md:hidden" />
@@ -163,7 +163,7 @@ export function Skills() {
 
         {/* Bottom stats */}
         <motion.div
-          className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-6"
+          className="mt-10 sm:mt-16 md:mt-20 grid grid-cols-2 md:grid-cols-4 gap-6"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}

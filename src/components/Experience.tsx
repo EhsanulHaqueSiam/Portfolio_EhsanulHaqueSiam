@@ -5,7 +5,7 @@ import { MagneticHover } from './ui/ImageDistortion';
 
 export function Experience() {
   return (
-    <section id="experience" className="py-32 px-6 md:px-12 lg:px-24 relative overflow-hidden">
+    <section id="experience" className="py-16 sm:py-24 md:py-32 px-4 sm:px-6 md:px-12 lg:px-24 relative overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-violet-500/5 to-transparent" />
@@ -13,9 +13,9 @@ export function Experience() {
 
       <div className="max-w-7xl mx-auto relative z-10">
         {/* Section header */}
-        <div className="mb-20">
+        <div className="mb-10 sm:mb-16 md:mb-20">
           <div className="flex items-center gap-4 mb-8">
-            <span className="text-violet-500 font-mono text-sm">07</span>
+            <span className="text-violet-500 font-mono text-sm">02</span>
             <div className="h-px flex-1 bg-gradient-to-r from-violet-500/50 to-transparent" />
           </div>
           <h2 className="text-5xl md:text-7xl lg:text-8xl font-display font-bold">

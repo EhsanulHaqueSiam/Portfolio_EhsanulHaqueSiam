@@ -69,7 +69,7 @@ export function Awards() {
   }, [isModalOpen, isLightboxOpen, closeModal, goNext, goPrev]);
 
   return (
-    <section id="awards" className="py-32 px-6 md:px-12 lg:px-24 relative overflow-hidden">
+    <section id="awards" className="py-16 sm:py-24 md:py-32 px-4 sm:px-6 md:px-12 lg:px-24 relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-amber-500/5 rounded-full blur-3xl" />
@@ -78,9 +78,9 @@ export function Awards() {
 
       <div className="max-w-7xl mx-auto relative z-10">
         {/* Section header */}
-        <div className="mb-20">
+        <div className="mb-10 sm:mb-16 md:mb-20">
           <div className="flex items-center gap-4 mb-8">
-            <span className="text-violet-500 font-mono text-sm">04</span>
+            <span className="text-violet-500 font-mono text-sm">05</span>
             <div className="h-px flex-1 bg-gradient-to-r from-violet-500/50 to-transparent" />
           </div>
           <h2 className="text-5xl md:text-7xl lg:text-8xl font-display font-bold">

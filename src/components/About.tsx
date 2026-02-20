@@ -113,7 +113,7 @@ export function About() {
                       className="absolute inset-0 rounded-full border border-violet-500/20"
                       style={{ scale: 1.2 }}
                       whileInView={{ rotate: 360 }}
-                      viewport={{ once: false, amount: 0 }}
+                      viewport={{ once: true, amount: 0 }}
                       transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
                     />
                   </div>

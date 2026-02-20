@@ -14,6 +14,7 @@ export const NoiseOverlay = memo(function NoiseOverlay() {
         backgroundRepeat: 'repeat',
         // Using a small tile that repeats - more performant than SVG filter
         backgroundSize: '48px 48px',
+        willChange: 'transform',
       }}
     />
   );

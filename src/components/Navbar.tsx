@@ -54,6 +54,7 @@ export function Navbar() {
         y: isHidden ? -100 : 0,
       }}
       transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+      style={{ willChange: 'transform' }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         isScrolled
           ? 'bg-space-900/80 backdrop-blur-lg border-b border-white/5'

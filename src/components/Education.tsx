@@ -40,14 +40,14 @@ const educationData: EducationItem[] = [
 
 export function Education() {
   return (
-    <section id="education" className="py-32 px-6 md:px-12 lg:px-24 relative overflow-hidden">
+    <section id="education" className="py-16 sm:py-24 md:py-32 px-4 sm:px-6 md:px-12 lg:px-24 relative overflow-hidden">
       {/* Background decorations */}
       <div className="absolute inset-0 pointer-events-none">
         <motion.div
           whileInView={{
             rotate: [0, 360],
           }}
-          viewport={{ once: false, amount: 0 }}
+          viewport={{ once: true, amount: 0 }}
           transition={{ duration: 120, repeat: Infinity, ease: 'linear' }}
           className="absolute -top-1/4 -right-1/4 w-[600px] h-[600px] border border-violet-500/10 rounded-full"
         />
@@ -55,7 +55,7 @@ export function Education() {
           whileInView={{
             rotate: [360, 0],
           }}
-          viewport={{ once: false, amount: 0 }}
+          viewport={{ once: true, amount: 0 }}
           transition={{ duration: 90, repeat: Infinity, ease: 'linear' }}
           className="absolute -bottom-1/4 -left-1/4 w-[500px] h-[500px] border border-amber-500/10 rounded-full"
         />
@@ -63,9 +63,9 @@ export function Education() {
 
       <div className="max-w-7xl mx-auto relative z-10">
         {/* Section header */}
-        <div className="mb-20">
+        <div className="mb-10 sm:mb-16 md:mb-20">
           <div className="flex items-center gap-4 mb-8">
-            <span className="text-violet-500 font-mono text-sm">06</span>
+            <span className="text-violet-500 font-mono text-sm">07</span>
             <div className="h-px flex-1 bg-gradient-to-r from-violet-500/50 to-transparent" />
           </div>
           <h2 className="text-5xl md:text-7xl lg:text-8xl font-display font-bold">

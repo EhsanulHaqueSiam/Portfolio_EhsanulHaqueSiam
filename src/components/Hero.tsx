@@ -88,7 +88,7 @@ export function Hero() {
             style={{ y: y3, rotate }}
             initial={{ opacity: 0 }}
             whileInView={{ rotate: [0, 90, 0], opacity: 1 }}
-            viewport={{ once: false, amount: 0 }}
+            viewport={{ once: true }}
             transition={{ duration: 20, repeat: Infinity, ease: 'linear', delay: 0.5 }}
           />
           <motion.div
@@ -96,14 +96,14 @@ export function Hero() {
             style={{ y: y1 }}
             initial={{ opacity: 0 }}
             whileInView={{ scale: [1, 1.2, 1], opacity: 1 }}
-            viewport={{ once: false, amount: 0 }}
+            viewport={{ once: true }}
             transition={{ duration: 4, repeat: Infinity, delay: 1 }}
           />
           <motion.div
             className="hidden md:block absolute top-[40%] right-[8%] w-2 h-2 bg-violet-500 rounded-full"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: [0.2, 1, 0.2] }}
-            viewport={{ once: false, amount: 0 }}
+            viewport={{ once: true }}
             transition={{ duration: 2, repeat: Infinity, delay: 1.5 }}
           />
 
@@ -199,6 +199,21 @@ export function Hero() {
             </h1>
           </div>
 
+          {/* Key highlights for recruiters */}
+          <motion.div
+            className="flex flex-wrap gap-x-6 gap-y-2 mb-6 sm:mb-8"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 1 }}
+          >
+            {profile.stats.map((stat) => (
+              <span key={stat.label} className="text-sm text-gray-400">
+                <span className="text-white font-semibold">{stat.value}</span>{' '}
+                {stat.label}
+              </span>
+            ))}
+          </motion.div>
+
           {/* Role/title with reveal effect */}
           <div className="mb-6 sm:mb-12 overflow-hidden">
             <RevealText delay={0.8} className="text-lg sm:text-2xl md:text-4xl text-gray-400 font-light">
@@ -210,7 +225,7 @@ export function Hero() {
           <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 sm:gap-8 lg:gap-12 max-w-5xl">
             {/* Description */}
             <p
-              className="text-base sm:text-lg md:text-xl text-gray-500 max-w-md leading-relaxed"
+              className="text-base sm:text-lg md:text-xl text-gray-400 max-w-md leading-relaxed"
             >
               {profile.tagline.split('AI').map((part, i) =>
                 i === 0 ? part : (
