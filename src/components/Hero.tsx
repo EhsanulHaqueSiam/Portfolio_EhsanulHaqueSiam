@@ -249,18 +249,15 @@ export function Hero() {
                   href="#projects"
                   className="group relative inline-flex items-center justify-center gap-2 sm:gap-3 px-5 sm:px-8 py-3 sm:py-4 bg-white text-space-900 rounded-full font-medium overflow-hidden transition-transform active:scale-95 md:hover:scale-105 text-sm sm:text-base min-h-[44px]"
                 >
-                  <span className="relative z-10">View Work</span>
+                  <span className="relative z-10 group-hover:text-white transition-colors duration-300">View Work</span>
                   <motion.span
-                    className="relative z-10"
+                    className="relative z-10 group-hover:text-white transition-colors duration-300"
                     animate={{ x: [0, 5, 0] }}
                     transition={{ duration: 1.5, repeat: Infinity }}
                   >
                     →
                   </motion.span>
                   <div className="absolute inset-0 bg-gradient-to-r from-violet-500 to-amber-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  <span className="absolute inset-0 z-10 flex items-center justify-center gap-3 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    View Work →
-                  </span>
                 </a>
               </MagneticHover>
 
