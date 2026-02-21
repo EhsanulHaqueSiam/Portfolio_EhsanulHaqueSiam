@@ -88,9 +88,9 @@ export function SplitText({
       initial="hidden"
       animate={isInView ? 'visible' : 'hidden'}
     >
-      {elements.map((element, i) => (
+      {elements.map((element, pos) => (
         <span
-          key={`${element}-${i}`}
+          key={`${pos}:${element}`}
           className={`inline-block overflow-hidden ${type === 'words' ? 'mr-[0.25em]' : ''}`}
           style={animation === 'wave' ? { perspective: 1000 } : undefined}
         >

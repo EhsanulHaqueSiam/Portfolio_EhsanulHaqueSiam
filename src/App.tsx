@@ -1,4 +1,4 @@
-import { LazyMotion, domAnimation, MotionConfig } from 'framer-motion';
+import { LazyMotion, domAnimation, MotionConfig, useReducedMotion } from 'framer-motion';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { About } from './components/About';
@@ -29,6 +29,8 @@ if (typeof document !== 'undefined') {
 }
 
 function App() {
+  const shouldReduceMotion = useReducedMotion();
+
   return (
     <LazyMotion features={domAnimation} strict>
     <MotionConfig reducedMotion="user">
@@ -47,8 +49,8 @@ function App() {
         {/* Film grain overlay */}
         <NoiseOverlay />
 
-        {/* Custom cursor - only on desktop */}
-        <CustomCursor />
+        {/* Custom cursor - only on desktop, disabled for reduced motion */}
+        {!shouldReduceMotion && <CustomCursor />}
 
         {/* Scroll progress indicator */}
         <ScrollProgress />

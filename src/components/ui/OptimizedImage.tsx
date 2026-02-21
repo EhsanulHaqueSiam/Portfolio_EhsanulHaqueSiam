@@ -95,9 +95,8 @@ export function OptimizedImage({
   // Determine if source is already WebP
   const isWebP = src.endsWith('.webp');
 
-  // Common image props
+  // Common image props (alt excluded — passed explicitly for linter visibility)
   const imgProps = {
-    alt,
     loading: priority ? 'eager' as const : 'lazy' as const,
     decoding: priority ? 'sync' as const : 'async' as const,
     onLoad: handleLoad,
@@ -146,6 +145,7 @@ export function OptimizedImage({
               <img
                 {...imgProps}
                 src={src}
+                alt={alt}
                 fetchPriority={priority ? 'high' : 'auto'}
               />
             </picture>
@@ -154,6 +154,7 @@ export function OptimizedImage({
             <img
               {...imgProps}
               src={src}
+              alt={alt}
               fetchPriority={priority ? 'high' : 'auto'}
             />
           )}

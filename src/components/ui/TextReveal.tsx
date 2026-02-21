@@ -54,9 +54,9 @@ export function CharReveal({
       whileInView="visible"
       viewport={{ once: true, margin: '-50px' }}
     >
-      {text.split('').map((char, i) => (
+      {text.split('').map((char, pos) => (
         <m.span
-          key={`${char}-${i}`}
+          key={`${pos}:${char}`}
           className="inline-block"
           variants={charVariants}
           style={{ transformOrigin: 'bottom' }}
@@ -113,8 +113,8 @@ export function WordReveal({
       whileInView="visible"
       viewport={{ once: true, margin: '-50px' }}
     >
-      {text.split(' ').map((word, i) => (
-        <m.span key={`${word}-${i}`} className="inline-block mr-[0.25em]" variants={wordVariants}>
+      {text.split(' ').map((word, pos) => (
+        <m.span key={`${pos}:${word}`} className="inline-block mr-[0.25em]" variants={wordVariants}>
           {word}
         </m.span>
       ))}
