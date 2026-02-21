@@ -1,3 +1,4 @@
+import { LazyMotion, domAnimation, MotionConfig } from 'framer-motion';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { About } from './components/About';
@@ -29,6 +30,8 @@ if (typeof document !== 'undefined') {
 
 function App() {
   return (
+    <LazyMotion features={domAnimation} strict>
+    <MotionConfig reducedMotion="user">
     <SmoothScroll>
       <div className="relative">
         {/* Fixed background gradients - uses GPU compositing instead of background-attachment: fixed */}
@@ -38,7 +41,6 @@ function App() {
           style={{
             backgroundImage:
               'radial-gradient(ellipse at 20% 0%, rgba(139, 92, 246, 0.06) 0%, transparent 50%), radial-gradient(ellipse at 80% 100%, rgba(245, 158, 11, 0.04) 0%, transparent 50%)',
-            willChange: 'transform',
           }}
         />
 
@@ -72,6 +74,8 @@ function App() {
         </div>
       </div>
     </SmoothScroll>
+    </MotionConfig>
+    </LazyMotion>
   );
 }
 

@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 
 interface OptimizedImageProps {
   src: string;
@@ -47,12 +47,15 @@ export function OptimizedImage({
   onLoad,
 }: OptimizedImageProps) {
   const [isLoaded, setIsLoaded] = useState(false);
-  const [isInView, setIsInView] = useState(priority);
+  const [isInView, setIsInView] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
   // Intersection Observer for lazy loading
   useEffect(() => {
-    if (priority || isInView) return;
+    if (priority) {
+      setIsInView(true);
+      return;
+    }
 
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -72,7 +75,7 @@ export function OptimizedImage({
     }
 
     return () => observer.disconnect();
-  }, [priority, isInView]);
+  }, [priority]);
 
   const handleLoad = useCallback(() => {
     setIsLoaded(true);
@@ -115,7 +118,7 @@ export function OptimizedImage({
       }}
     >
       {/* Blur placeholder */}
-      <motion.div
+      <m.div
         className="absolute inset-0 bg-gradient-to-br from-space-700/50 to-space-800/50"
         initial={{ opacity: 1 }}
         animate={{ opacity: isLoaded ? 0 : 1 }}
@@ -123,11 +126,11 @@ export function OptimizedImage({
       >
         {/* Shimmer effect */}
         <div className="absolute inset-0 -translate-x-full animate-shimmer bg-gradient-to-r from-transparent via-white/5 to-transparent" />
-      </motion.div>
+      </m.div>
 
       {/* Actual image with picture element for format fallback */}
       {isInView && (
-        <motion.div
+        <m.div
           className="w-full h-full"
           initial={{ opacity: 0, scale: 1.05 }}
           animate={{
@@ -141,20 +144,20 @@ export function OptimizedImage({
             <picture>
               <source srcSet={webpSrc} type="image/webp" sizes={sizes} />
               <img
-                src={src}
                 {...imgProps}
+                src={src}
                 fetchPriority={priority ? 'high' : 'auto'}
               />
             </picture>
           ) : (
             // Single format image
             <img
-              src={src}
               {...imgProps}
+              src={src}
               fetchPriority={priority ? 'high' : 'auto'}
             />
           )}
-        </motion.div>
+        </m.div>
       )}
     </div>
   );

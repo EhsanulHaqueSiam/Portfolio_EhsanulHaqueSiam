@@ -1,15 +1,14 @@
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { profile } from '../data/content';
 import { MagneticHover } from './ui/ImageDistortion';
 
 export function SocialLinks() {
   return (
-    <motion.div
+    <m.div
       className="hidden lg:flex fixed left-8 top-1/2 -translate-y-1/2 flex-col gap-4 z-[100]"
       initial={{ opacity: 0, x: -20 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.8, delay: 1.4 }}
-      style={{ willChange: 'transform' }}
     >
       <MagneticHover strength={30}>
         <a
@@ -53,6 +52,6 @@ export function SocialLinks() {
         </a>
       </MagneticHover>
       <div className="w-px h-24 bg-gradient-to-b from-white/20 to-transparent mx-auto mt-2" />
-    </motion.div>
+    </m.div>
   );
 }

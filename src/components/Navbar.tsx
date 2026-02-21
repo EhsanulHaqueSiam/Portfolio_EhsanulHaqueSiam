@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
+import { m, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
 import { navItems } from '../data/content';
 
 export function Navbar() {
@@ -48,13 +48,12 @@ export function Navbar() {
   }, []);
 
   return (
-    <motion.nav
+    <m.nav
       initial={{ y: -100 }}
       animate={{
         y: isHidden ? -100 : 0,
       }}
       transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-      style={{ willChange: 'transform' }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         isScrolled
           ? 'bg-space-900/80 backdrop-blur-lg border-b border-white/5'
@@ -64,7 +63,7 @@ export function Navbar() {
       <div className="max-w-7xl mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <motion.a
+          <m.a
             href="#"
             aria-label="Go to top"
             className="text-2xl font-display font-bold gradient-text relative"
@@ -73,24 +72,24 @@ export function Navbar() {
             transition={{ type: 'spring', stiffness: 400, damping: 17 }}
           >
             Siam
-            <motion.span
+            <m.span
               className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-violet-500 to-amber-500 rounded-full"
               initial={{ scaleX: 0 }}
               whileHover={{ scaleX: 1 }}
               transition={{ duration: 0.3 }}
             />
-          </motion.a>
+          </m.a>
 
           {/* Desktop Navigation */}
           <ul className="hidden md:flex items-center gap-1">
             {navItems.map((item, i) => (
-              <motion.li
+              <m.li
                 key={item.href}
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: i * 0.05 }}
               >
-                <motion.a
+                <m.a
                   href={item.href}
                   className={`relative px-4 py-2 text-sm font-medium rounded-lg transition-colors duration-300 ${
                     activeSection === item.href.slice(1)
@@ -103,26 +102,26 @@ export function Navbar() {
                 >
                   {item.label}
                   {activeSection === item.href.slice(1) && (
-                    <motion.span
+                    <m.span
                       className="absolute inset-0 bg-violet-500/10 rounded-lg -z-10"
                       layoutId="activeSection"
                       transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                     />
                   )}
-                </motion.a>
-              </motion.li>
+                </m.a>
+              </m.li>
             ))}
           </ul>
 
           {/* Mobile Menu Button */}
-          <motion.button
+          <m.button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className="md:hidden p-2 min-w-[44px] min-h-[44px] text-gray-400 hover:text-white rounded-lg flex items-center justify-center"
             whileTap={{ scale: 0.9 }}
             aria-label="Toggle menu"
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <motion.path
+              <m.path
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 strokeWidth={2}
@@ -135,14 +134,14 @@ export function Navbar() {
                 transition={{ duration: 0.3 }}
               />
             </svg>
-          </motion.button>
+          </m.button>
         </div>
       </div>
 
       {/* Mobile Menu */}
       <AnimatePresence>
         {isMobileMenuOpen && (
-          <motion.div
+          <m.div
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
@@ -151,7 +150,7 @@ export function Navbar() {
           >
             <ul className="px-4 py-4 space-y-1">
               {navItems.map((item, i) => (
-                <motion.li
+                <m.li
                   key={item.href}
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
@@ -169,12 +168,12 @@ export function Navbar() {
                   >
                     {item.label}
                   </a>
-                </motion.li>
+                </m.li>
               ))}
             </ul>
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
-    </motion.nav>
+    </m.nav>
   );
 }

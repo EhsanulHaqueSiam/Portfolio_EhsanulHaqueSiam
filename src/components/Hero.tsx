@@ -1,5 +1,5 @@
 import { useRef, useEffect, useState } from 'react';
-import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
+import { m, useScroll, useTransform, useSpring } from 'framer-motion';
 import { profile, profileHeroImage } from '../data/content';
 import { SplitText, RevealText } from './ui/SplitText';
 import { MagneticHover } from './ui/ImageDistortion';
@@ -46,7 +46,7 @@ export function Hero() {
         {/* Animated gradient mesh background */}
         <div className="absolute inset-0 pointer-events-none">
           {/* Primary gradient orb - smaller on mobile for performance */}
-          <motion.div
+          <m.div
             className="absolute w-[300px] h-[300px] md:w-[600px] md:h-[600px] lg:w-[800px] lg:h-[800px] rounded-full"
             style={{
               y: isMobile ? 0 : springY1,
@@ -59,7 +59,7 @@ export function Hero() {
           />
 
           {/* Secondary gradient orb - smaller on mobile */}
-          <motion.div
+          <m.div
             className="absolute w-[250px] h-[250px] md:w-[400px] md:h-[400px] lg:w-[600px] lg:h-[600px] rounded-full"
             style={{
               y: isMobile ? 0 : springY2,
@@ -83,7 +83,7 @@ export function Hero() {
           />
 
           {/* Decorative shapes - hidden on mobile for performance */}
-          <motion.div
+          <m.div
             className="hidden md:block absolute top-[20%] left-[10%] w-16 h-16 md:w-24 md:h-24 border border-violet-500/20 rounded-2xl"
             style={{ y: y3, rotate }}
             initial={{ opacity: 0 }}
@@ -91,7 +91,7 @@ export function Hero() {
             viewport={{ once: true }}
             transition={{ duration: 20, repeat: Infinity, ease: 'linear', delay: 0.5 }}
           />
-          <motion.div
+          <m.div
             className="hidden md:block absolute bottom-[30%] right-[15%] w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-amber-500/10 to-transparent rounded-full"
             style={{ y: y1 }}
             initial={{ opacity: 0 }}
@@ -99,7 +99,7 @@ export function Hero() {
             viewport={{ once: true }}
             transition={{ duration: 4, repeat: Infinity, delay: 1 }}
           />
-          <motion.div
+          <m.div
             className="hidden md:block absolute top-[40%] right-[8%] w-2 h-2 bg-violet-500 rounded-full"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: [0.2, 1, 0.2] }}
@@ -108,7 +108,7 @@ export function Hero() {
           />
 
           {/* Floating profile image - hidden on mobile */}
-          <motion.div
+          <m.div
             className="hidden xl:block absolute top-[20%] right-[8%] z-0"
             style={{ y: y2 }}
             initial={{ opacity: 0, scale: 0.8 }}
@@ -120,7 +120,7 @@ export function Hero() {
               <div className="absolute inset-0 bg-gradient-to-br from-violet-500/30 to-amber-500/20 rounded-[2rem] blur-2xl scale-110" />
 
               {/* Image container */}
-              <motion.div
+              <m.div
                 className="relative w-64 h-80 rounded-[2rem] overflow-hidden border border-white/10"
                 animate={{ y: [0, -10, 0] }}
                 transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
@@ -136,32 +136,32 @@ export function Hero() {
                 {/* Gradient overlays */}
                 <div className="absolute inset-0 bg-gradient-to-t from-space-900/60 via-transparent to-transparent" />
                 <div className="absolute inset-0 bg-gradient-to-br from-violet-500/10 to-transparent mix-blend-overlay" />
-              </motion.div>
+              </m.div>
 
               {/* Decorative elements around image - staggered for performance */}
-              <motion.div
+              <m.div
                 className="absolute -top-4 -right-4 w-8 h-8 border-t-2 border-r-2 border-violet-500/50 rounded-tr-xl will-change-opacity"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: [0.5, 1, 0.5] }}
                 transition={{ duration: 3, repeat: Infinity, delay: 2 }}
               />
-              <motion.div
+              <m.div
                 className="absolute -bottom-4 -left-4 w-8 h-8 border-b-2 border-l-2 border-amber-500/50 rounded-bl-xl will-change-opacity"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: [0.5, 1, 0.5] }}
                 transition={{ duration: 3, repeat: Infinity, delay: 2.5 }}
               />
             </div>
-          </motion.div>
+          </m.div>
         </div>
 
         {/* Main content */}
-        <motion.div
+        <m.div
           className="relative z-10 px-4 sm:px-6 md:px-12 lg:px-24"
           style={{ scale: isMobile ? 1 : scale, opacity }}
         >
           {/* Eyebrow text */}
-          <motion.div
+          <m.div
             className="mb-4 sm:mb-8"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -171,7 +171,7 @@ export function Hero() {
               <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-green-500 animate-pulse" />
               {profile.available ? 'Available for opportunities' : 'Currently busy'}
             </span>
-          </motion.div>
+          </m.div>
 
           {/* Giant name - main headline - better mobile sizing */}
           <div className="mb-4 sm:mb-6">
@@ -200,7 +200,7 @@ export function Hero() {
           </div>
 
           {/* Key highlights for recruiters */}
-          <motion.div
+          <m.div
             className="flex flex-wrap gap-x-6 gap-y-2 mb-6 sm:mb-8"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -212,7 +212,7 @@ export function Hero() {
                 {stat.label}
               </span>
             ))}
-          </motion.div>
+          </m.div>
 
           {/* Role/title with reveal effect */}
           <div className="mb-6 sm:mb-12 overflow-hidden">
@@ -229,7 +229,7 @@ export function Hero() {
             >
               {profile.tagline.split('AI').map((part, i) =>
                 i === 0 ? part : (
-                  <span key={i}>
+                  <span key={`ai-${part.slice(0, 10)}`}>
                     <span className="text-violet-400">AI</span>
                     {part}
                   </span>
@@ -238,7 +238,7 @@ export function Hero() {
             </p>
 
             {/* CTA Buttons */}
-            <motion.div
+            <m.div
               className="flex flex-row flex-wrap gap-3"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -250,13 +250,13 @@ export function Hero() {
                   className="group relative inline-flex items-center justify-center gap-2 sm:gap-3 px-5 sm:px-8 py-3 sm:py-4 bg-white text-space-900 rounded-full font-medium overflow-hidden transition-transform active:scale-95 md:hover:scale-105 text-sm sm:text-base min-h-[44px]"
                 >
                   <span className="relative z-10 group-hover:text-white transition-colors duration-300">View Work</span>
-                  <motion.span
+                  <m.span
                     className="relative z-10 group-hover:text-white transition-colors duration-300"
                     animate={{ x: [0, 5, 0] }}
                     transition={{ duration: 1.5, repeat: Infinity }}
                   >
                     →
-                  </motion.span>
+                  </m.span>
                   <div className="absolute inset-0 bg-gradient-to-r from-violet-500 to-amber-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </a>
               </MagneticHover>
@@ -286,12 +286,12 @@ export function Hero() {
                   <span className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-r from-amber-500/5 to-transparent blur-xl" />
                 </a>
               </MagneticHover>
-            </motion.div>
+            </m.div>
           </div>
-        </motion.div>
+        </m.div>
 
         {/* Scroll indicator - hidden on mobile, shown on larger screens */}
-        <motion.div
+        <m.div
           className="hidden sm:block absolute bottom-12 right-6 md:right-12 lg:right-24 z-10"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -299,18 +299,18 @@ export function Hero() {
         >
           <a href="#about" className="flex flex-col items-center gap-2 text-gray-500 hover:text-white transition-colors">
             <span className="text-xs font-mono tracking-widest uppercase">Scroll</span>
-            <motion.div
+            <m.div
               className="w-6 h-10 rounded-full border border-current flex items-start justify-center p-2"
               initial={{ opacity: 0.5 }}
             >
-              <motion.div
+              <m.div
                 className="w-1 h-2 rounded-full bg-current"
                 animate={{ y: [0, 12, 0] }}
                 transition={{ duration: 1.5, repeat: Infinity }}
               />
-            </motion.div>
+            </m.div>
           </a>
-        </motion.div>
+        </m.div>
 
       </div>
 

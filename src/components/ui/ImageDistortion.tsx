@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react';
-import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import { m, useMotionValue, useSpring, useTransform } from 'framer-motion';
 
 interface ImageDistortionProps {
   children: React.ReactNode;
@@ -50,7 +50,7 @@ export function ImageDistortion({ children, className = '', intensity = 10 }: Im
   };
 
   return (
-    <motion.div
+    <m.div
       ref={ref}
       className={`relative ${className}`}
       onMouseMove={handleMouseMove}
@@ -61,7 +61,7 @@ export function ImageDistortion({ children, className = '', intensity = 10 }: Im
         transformStyle: 'preserve-3d',
       }}
     >
-      <motion.div
+      <m.div
         style={{
           rotateX,
           rotateY,
@@ -72,7 +72,7 @@ export function ImageDistortion({ children, className = '', intensity = 10 }: Im
         {children}
 
         {/* Glare effect */}
-        <motion.div
+        <m.div
           className="absolute inset-0 pointer-events-none rounded-[inherit]"
           style={{
             background: useTransform(
@@ -88,8 +88,8 @@ export function ImageDistortion({ children, className = '', intensity = 10 }: Im
             transition: 'opacity 0.3s',
           }}
         />
-      </motion.div>
-    </motion.div>
+      </m.div>
+    </m.div>
   );
 }
 
@@ -137,7 +137,7 @@ export function MagneticHover({ children, className = '', strength = 30 }: Magne
   };
 
   return (
-    <motion.div
+    <m.div
       ref={ref}
       className={className}
       onMouseEnter={handleMouseEnter}
@@ -146,6 +146,6 @@ export function MagneticHover({ children, className = '', strength = 30 }: Magne
       style={{ x: springX, y: springY }}
     >
       {children}
-    </motion.div>
+    </m.div>
   );
 }

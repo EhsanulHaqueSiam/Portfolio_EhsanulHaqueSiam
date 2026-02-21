@@ -1,5 +1,5 @@
 import { useState, memo } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 import { skills, categoryIcons, skillLevelToPercent } from '../data/content';
 import { SplitText } from './ui/SplitText';
 import { MagneticHover } from './ui/ImageDistortion';
@@ -10,7 +10,7 @@ const SkillCard = memo(function SkillCard({ skill, index }: { skill: Skill; inde
   const percent = skillLevelToPercent[skill.level] || 50;
 
   return (
-    <motion.div
+    <m.div
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.05, duration: 0.4 }}
@@ -49,7 +49,7 @@ const SkillCard = memo(function SkillCard({ skill, index }: { skill: Skill; inde
 
           {/* Progress bar */}
           <div className="relative h-1.5 bg-space-700/50 rounded-full overflow-hidden">
-            <motion.div
+            <m.div
               className="absolute inset-y-0 left-0 bg-gradient-to-r from-violet-500 to-amber-500 rounded-full"
               initial={{ width: 0 }}
               animate={{ width: `${percent}%` }}
@@ -66,17 +66,17 @@ const SkillCard = memo(function SkillCard({ skill, index }: { skill: Skill; inde
           </div>
 
           {/* Percentage on hover */}
-          <motion.div
+          <m.div
             className="absolute top-4 right-4 text-2xl font-display font-bold"
             initial={{ opacity: 0 }}
             animate={{ opacity: isHovered ? 1 : 0 }}
             transition={{ duration: 0.2 }}
           >
             <span className="gradient-text">{percent}%</span>
-          </motion.div>
+          </m.div>
         </div>
       </div>
-    </motion.div>
+    </m.div>
   );
 });
 
@@ -116,7 +116,7 @@ export function Skills() {
           <div className="flex gap-2 sm:gap-3 overflow-x-auto scrollbar-hide pb-2 -mx-6 px-6 md:mx-0 md:px-0 md:flex-wrap md:overflow-visible">
             {categories.map((category, index) => (
               <MagneticHover key={category.name} strength={15}>
-                <motion.button
+                <m.button
                   onClick={() => setActiveCategory(index)}
                   className={`relative px-4 sm:px-6 py-2.5 sm:py-3 rounded-full font-medium text-sm transition-all duration-300 whitespace-nowrap flex-shrink-0 min-h-[44px] ${
                     activeCategory === index
@@ -128,7 +128,7 @@ export function Skills() {
                 >
                   {/* Background pill */}
                   {activeCategory === index && (
-                    <motion.div
+                    <m.div
                       layoutId="activeCategory"
                       className="absolute inset-0 bg-gradient-to-r from-violet-500/20 to-amber-500/10 rounded-full border border-violet-500/30"
                       transition={{ type: 'spring', stiffness: 400, damping: 30 }}
@@ -139,7 +139,7 @@ export function Skills() {
                     <span className="hidden sm:inline">{category.name}</span>
                     <span className="sm:hidden">{category.name.split(' ')[0]}</span>
                   </span>
-                </motion.button>
+                </m.button>
               </MagneticHover>
             ))}
           </div>
@@ -147,7 +147,7 @@ export function Skills() {
 
         {/* Skills grid */}
         <AnimatePresence mode="wait">
-          <motion.div
+          <m.div
             key={activeCategory}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -158,11 +158,11 @@ export function Skills() {
             {categories[activeCategory].skills.map((skill, index) => (
               <SkillCard key={skill.name} skill={skill} index={index} />
             ))}
-          </motion.div>
+          </m.div>
         </AnimatePresence>
 
         {/* Bottom stats */}
-        <motion.div
+        <m.div
           className="mt-10 sm:mt-16 md:mt-20 grid grid-cols-2 md:grid-cols-4 gap-6"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -188,7 +188,7 @@ export function Skills() {
               </div>
             </div>
           ))}
-        </motion.div>
+        </m.div>
       </div>
     </section>
   );

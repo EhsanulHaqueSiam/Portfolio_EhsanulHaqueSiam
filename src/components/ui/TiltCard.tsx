@@ -1,5 +1,5 @@
 import { useRef, ReactNode } from 'react';
-import { motion, useSpring, useTransform } from 'framer-motion';
+import { m, useSpring, useTransform } from 'framer-motion';
 import { useTiltEffect } from '../../hooks/useMousePosition';
 
 interface TiltCardProps {
@@ -31,7 +31,7 @@ export function TiltCard({
   );
 
   return (
-    <motion.div
+    <m.div
       ref={ref}
       className={`relative ${className}`}
       style={{
@@ -46,7 +46,7 @@ export function TiltCard({
 
       {/* Glare effect */}
       {glareEnabled && (
-        <motion.div
+        <m.div
           className="absolute inset-0 rounded-2xl pointer-events-none"
           style={{
             background: glareBackground,
@@ -54,6 +54,6 @@ export function TiltCard({
           }}
         />
       )}
-    </motion.div>
+    </m.div>
   );
 }

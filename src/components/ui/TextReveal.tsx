@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { motion, Variants } from 'framer-motion';
+import { m, Variants } from 'framer-motion';
 
 interface TextRevealProps {
   children: ReactNode;
@@ -47,7 +47,7 @@ export function CharReveal({
   };
 
   return (
-    <motion.span
+    <m.span
       className={`inline-block ${className}`}
       variants={containerVariants}
       initial="hidden"
@@ -55,16 +55,16 @@ export function CharReveal({
       viewport={{ once: true, margin: '-50px' }}
     >
       {text.split('').map((char, i) => (
-        <motion.span
-          key={i}
+        <m.span
+          key={`${char}-${i}`}
           className="inline-block"
           variants={charVariants}
           style={{ transformOrigin: 'bottom' }}
         >
           {char === ' ' ? '\u00A0' : char}
-        </motion.span>
+        </m.span>
       ))}
-    </motion.span>
+    </m.span>
   );
 }
 
@@ -106,7 +106,7 @@ export function WordReveal({
   };
 
   return (
-    <motion.span
+    <m.span
       className={`inline-block ${className}`}
       variants={containerVariants}
       initial="hidden"
@@ -114,11 +114,11 @@ export function WordReveal({
       viewport={{ once: true, margin: '-50px' }}
     >
       {text.split(' ').map((word, i) => (
-        <motion.span key={i} className="inline-block mr-[0.25em]" variants={wordVariants}>
+        <m.span key={`${word}-${i}`} className="inline-block mr-[0.25em]" variants={wordVariants}>
           {word}
-        </motion.span>
+        </m.span>
       ))}
-    </motion.span>
+    </m.span>
   );
 }
 
@@ -130,7 +130,7 @@ export function LineReveal({
 }: TextRevealProps) {
   return (
     <div className={`overflow-hidden ${className}`}>
-      <motion.div
+      <m.div
         initial={{ y: '100%', opacity: 0 }}
         whileInView={{ y: 0, opacity: 1 }}
         viewport={{ once: true, margin: '-50px' }}
@@ -141,7 +141,7 @@ export function LineReveal({
         }}
       >
         {children}
-      </motion.div>
+      </m.div>
     </div>
   );
 }
@@ -153,9 +153,9 @@ export function BlurFade({
   delay = 0,
 }: TextRevealProps) {
   return (
-    <motion.div
+    <m.div
       className={className}
-      initial={{ opacity: 0, filter: 'blur(20px)', y: 20 }}
+      initial={{ opacity: 0, filter: 'blur(10px)', y: 20 }}
       whileInView={{ opacity: 1, filter: 'blur(0px)', y: 0 }}
       viewport={{ once: true, margin: '-50px' }}
       transition={{
@@ -165,6 +165,6 @@ export function BlurFade({
       }}
     >
       {children}
-    </motion.div>
+    </m.div>
   );
 }

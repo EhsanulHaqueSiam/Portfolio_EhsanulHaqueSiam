@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 import { awards, getAchievementImage } from '../data/content';
 import { SplitText } from './ui/SplitText';
 import { MagneticHover } from './ui/ImageDistortion';
@@ -93,7 +93,7 @@ export function Awards() {
         {/* Awards masonry grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 auto-rows-max">
           {awards.map((award, index) => (
-            <motion.div
+            <m.div
               key={award.name}
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -102,7 +102,7 @@ export function Awards() {
               className={index === 0 ? 'sm:col-span-2 lg:col-span-2 sm:row-span-2' : ''}
             >
               <MagneticHover strength={8}>
-                <motion.div
+                <m.div
                   className="group relative h-full rounded-2xl sm:rounded-3xl overflow-hidden cursor-pointer"
                   onClick={() => setSelectedAward(selectedAward === index ? null : index)}
                   whileHover={{ y: -5 }}
@@ -122,7 +122,7 @@ export function Awards() {
                     <div className="absolute inset-0 bg-gradient-to-t from-space-900 via-space-900/60 to-transparent" />
 
                     {/* Shine effect on hover */}
-                    <motion.div
+                    <m.div
                       className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"
                     />
                   </div>
@@ -137,12 +137,12 @@ export function Awards() {
                     </div>
 
                     {/* Award icon */}
-                    <motion.div
+                    <m.div
                       className="w-12 h-12 mb-4 rounded-2xl bg-gradient-to-br from-amber-500/30 to-amber-600/20 flex items-center justify-center border border-amber-500/30 backdrop-blur-sm"
                       whileHover={{ rotate: 12, scale: 1.1 }}
                     >
                       <span className="text-2xl">🏆</span>
-                    </motion.div>
+                    </m.div>
 
                     {/* Title */}
                     <h3 className={`font-display font-bold text-white mb-2 group-hover:text-amber-400 transition-colors ${index === 0 ? 'text-2xl md:text-3xl' : 'text-lg md:text-xl'}`}>
@@ -150,12 +150,12 @@ export function Awards() {
                     </h3>
 
                     {/* Description - expandable */}
-                    <motion.p
+                    <m.p
                       className="text-gray-400 text-sm leading-relaxed line-clamp-2 group-hover:line-clamp-none transition-all"
                       layout
                     >
                       {award.desc}
-                    </motion.p>
+                    </m.p>
 
                     {/* Image count indicator */}
                     {award.images.length > 1 && (
@@ -170,23 +170,23 @@ export function Awards() {
 
                   {/* Hover border */}
                   <div className="absolute inset-0 rounded-3xl border-2 border-transparent group-hover:border-amber-500/30 transition-colors duration-500 pointer-events-none" />
-                </motion.div>
+                </m.div>
               </MagneticHover>
-            </motion.div>
+            </m.div>
           ))}
         </div>
 
         {/* Image gallery modal */}
         <AnimatePresence>
           {selectedAward !== null && (
-            <motion.div
+            <m.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-space-900/95 backdrop-blur-xl"
               onClick={closeModal}
             >
-              <motion.div
+              <m.div
                 initial={{ scale: 0.95, opacity: 0, y: 20 }}
                 animate={{ scale: 1, opacity: 1, y: 0 }}
                 exit={{ scale: 0.95, opacity: 0, y: 20 }}
@@ -214,7 +214,7 @@ export function Awards() {
                 {/* Image gallery */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
                   {awards[selectedAward].images.map((img, i) => (
-                    <motion.div
+                    <m.div
                       key={img}
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
@@ -234,18 +234,18 @@ export function Awards() {
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
                         </svg>
                       </div>
-                    </motion.div>
+                    </m.div>
                   ))}
                 </div>
-              </motion.div>
-            </motion.div>
+              </m.div>
+            </m.div>
           )}
         </AnimatePresence>
 
         {/* Lightbox overlay */}
         <AnimatePresence>
           {selectedAward !== null && lightboxIndex !== null && (
-            <motion.div
+            <m.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
@@ -293,7 +293,7 @@ export function Awards() {
               )}
 
               {/* Full-size image */}
-              <motion.div
+              <m.div
                 key={lightboxIndex}
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -307,8 +307,8 @@ export function Awards() {
                   alt={`${awards[selectedAward].name} - ${lightboxIndex + 1}`}
                   className="max-w-full max-h-[85vh] object-contain rounded-lg"
                 />
-              </motion.div>
-            </motion.div>
+              </m.div>
+            </m.div>
           )}
         </AnimatePresence>
       </div>

@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { m, useScroll, useTransform } from 'framer-motion';
 
 interface HorizontalScrollProps {
   children: React.ReactNode;
@@ -19,9 +19,9 @@ export function HorizontalScroll({ children, className = '', speed = 1 }: Horizo
   return (
     <div ref={containerRef} className={`relative h-[300vh] ${className}`}>
       <div className="sticky top-0 h-screen flex items-center overflow-hidden">
-        <motion.div className="flex gap-8" style={{ x }}>
+        <m.div className="flex gap-8" style={{ x }}>
           {children}
-        </motion.div>
+        </m.div>
       </div>
     </div>
   );
@@ -55,7 +55,7 @@ export function ParallaxContainer({
 
   return (
     <div ref={ref} className={`relative overflow-hidden ${className}`}>
-      <motion.div style={{ y }}>{children}</motion.div>
+      <m.div style={{ y }}>{children}</m.div>
     </div>
   );
 }

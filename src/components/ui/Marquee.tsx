@@ -1,4 +1,4 @@
-import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
+import { m, useScroll, useTransform, useSpring } from 'framer-motion';
 import { useRef } from 'react';
 
 interface MarqueeProps {
@@ -62,12 +62,12 @@ export function VelocityMarquee({
       className={`overflow-hidden whitespace-nowrap ${className}`}
       style={{ maskImage: 'linear-gradient(to right, transparent, black 10%, black 90%, transparent)' }}
     >
-      <motion.div className="inline-flex" style={{ x }}>
+      <m.div className="inline-flex" style={{ x }}>
         <span className="inline-flex">{children}</span>
         <span className="inline-flex">{children}</span>
         <span className="inline-flex">{children}</span>
         <span className="inline-flex">{children}</span>
-      </motion.div>
+      </m.div>
     </div>
   );
 }

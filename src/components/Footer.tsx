@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { profile } from '../data/content';
 
 export function Footer() {
@@ -9,14 +9,14 @@ export function Footer() {
       <div className="max-w-6xl mx-auto">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           {/* Logo and copyright */}
-          <motion.div
+          <m.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
             className="text-center md:text-left"
           >
             <a
-              href="#"
+              href="#main-content"
               aria-label="Go to top"
               className="text-xl font-display font-bold gradient-text inline-block mb-2"
             >
@@ -25,10 +25,10 @@ export function Footer() {
             <p className="text-gray-500 text-sm">
               © {currentYear} {profile.name}. All rights reserved.
             </p>
-          </motion.div>
+          </m.div>
 
           {/* Quick links */}
-          <motion.div
+          <m.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.1 }}
@@ -52,10 +52,10 @@ export function Footer() {
             >
               Contact
             </a>
-          </motion.div>
+          </m.div>
 
           {/* Social links */}
-          <motion.div
+          <m.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.2 }}
@@ -102,7 +102,7 @@ export function Footer() {
                 />
               </svg>
             </a>
-          </motion.div>
+          </m.div>
         </div>
 
         {/* Bottom decoration */}

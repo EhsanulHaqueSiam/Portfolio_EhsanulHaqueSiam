@@ -1,5 +1,5 @@
 import { useRef, useEffect, useState, useMemo } from 'react';
-import { motion, useInView, Variants } from 'framer-motion';
+import { m, useInView, Variants } from 'framer-motion';
 
 interface SplitTextProps {
   children: string;
@@ -81,7 +81,7 @@ export function SplitText({
   const itemVariants = getVariants();
 
   return (
-    <motion.span
+    <m.span
       ref={containerRef}
       className={`inline-block ${className}`}
       variants={containerVariants}
@@ -90,11 +90,11 @@ export function SplitText({
     >
       {elements.map((element, i) => (
         <span
-          key={i}
+          key={`${element}-${i}`}
           className={`inline-block overflow-hidden ${type === 'words' ? 'mr-[0.25em]' : ''}`}
           style={animation === 'wave' ? { perspective: 1000 } : undefined}
         >
-          <motion.span
+          <m.span
             className="inline-block"
             variants={itemVariants}
             transition={{
@@ -104,10 +104,10 @@ export function SplitText({
             style={animation === 'wave' ? { transformOrigin: 'center bottom' } : undefined}
           >
             {element === ' ' ? '\u00A0' : element}
-          </motion.span>
+          </m.span>
         </span>
       ))}
-    </motion.span>
+    </m.span>
   );
 }
 
@@ -125,7 +125,7 @@ export function RevealText({ children, className = '', delay = 0, duration = 1.2
 
   return (
     <div ref={ref} className={`relative overflow-hidden ${className}`}>
-      <motion.div
+      <m.div
         initial={{ y: '100%' }}
         animate={isInView ? { y: '0%' } : { y: '100%' }}
         transition={{
@@ -135,7 +135,7 @@ export function RevealText({ children, className = '', delay = 0, duration = 1.2
         }}
       >
         {children}
-      </motion.div>
+      </m.div>
     </div>
   );
 }
@@ -148,17 +148,19 @@ interface ScrambleTextProps {
 }
 
 export function ScrambleText({ children, className = '', scrambleSpeed = 30 }: ScrambleTextProps) {
-  const [displayText, setDisplayText] = useState(children);
+  const [scrambledText, setScrambledText] = useState<string | null>(null);
   const ref = useRef<HTMLSpanElement>(null);
   const isInView = useInView(ref, { once: true });
   const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()';
+
+  const displayText = scrambledText ?? children;
 
   useEffect(() => {
     if (!isInView) return;
 
     let iteration = 0;
     const interval = setInterval(() => {
-      setDisplayText(
+      setScrambledText(
         children
           .split('')
           .map((char, i) => {
@@ -171,6 +173,7 @@ export function ScrambleText({ children, className = '', scrambleSpeed = 30 }: S
 
       if (iteration >= children.length) {
         clearInterval(interval);
+        setScrambledText(null);
       }
       iteration += 1 / 3;
     }, scrambleSpeed);

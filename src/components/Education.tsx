@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { SplitText } from './ui/SplitText';
 import { MagneticHover } from './ui/ImageDistortion';
 
@@ -43,7 +43,7 @@ export function Education() {
     <section id="education" className="py-16 sm:py-24 md:py-32 px-4 sm:px-6 md:px-12 lg:px-24 relative overflow-hidden">
       {/* Background decorations */}
       <div className="absolute inset-0 pointer-events-none">
-        <motion.div
+        <m.div
           whileInView={{
             rotate: [0, 360],
           }}
@@ -51,7 +51,7 @@ export function Education() {
           transition={{ duration: 120, repeat: Infinity, ease: 'linear' }}
           className="absolute -top-1/4 -right-1/4 w-[600px] h-[600px] border border-violet-500/10 rounded-full"
         />
-        <motion.div
+        <m.div
           whileInView={{
             rotate: [360, 0],
           }}
@@ -78,7 +78,7 @@ export function Education() {
         {/* Education cards */}
         <div className="grid gap-8">
           {educationData.map((edu, index) => (
-            <motion.div
+            <m.div
               key={edu.institution}
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -152,7 +152,7 @@ export function Education() {
                   </div>
                 </div>
               </MagneticHover>
-            </motion.div>
+            </m.div>
           ))}
         </div>
       </div>

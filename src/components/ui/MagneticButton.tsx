@@ -1,5 +1,5 @@
 import { useRef, ReactNode, memo, useCallback } from 'react';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { useMagneticEffect } from '../../hooks/useMousePosition';
 
 interface MagneticButtonProps {
@@ -26,14 +26,14 @@ export const MagneticButton = memo(function MagneticButton({
   const ref = useRef<HTMLDivElement>(null);
   const { offset, isHovered } = useMagneticEffect(ref, strength);
 
-  const Component = as === 'a' ? motion.a : motion.button;
+  const Component = as === 'a' ? m.a : m.button;
 
   const handleClick = useCallback(() => {
     onClick?.();
   }, [onClick]);
 
   return (
-    <motion.div
+    <m.div
       ref={ref}
       className="relative inline-block"
       animate={{
@@ -57,7 +57,7 @@ export const MagneticButton = memo(function MagneticButton({
         transition={{ duration: 0.1 }}
       >
         {/* Shine effect on hover */}
-        <motion.div
+        <m.div
           className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/10 to-transparent skew-x-12 pointer-events-none"
           animate={{
             translateX: isHovered ? '200%' : '-100%',
@@ -69,6 +69,6 @@ export const MagneticButton = memo(function MagneticButton({
         />
         {children}
       </Component>
-    </motion.div>
+    </m.div>
   );
 });

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 import { featuredPublications, getPublicationImage } from '../data/content';
 import { SplitText } from './ui/SplitText';
 import { MagneticHover } from './ui/ImageDistortion';
@@ -32,7 +32,7 @@ export function Publications() {
         {/* Publications grid */}
         <div className="space-y-8">
           {featuredPublications.map((pub, index) => (
-            <motion.div
+            <m.div
               key={pub.title}
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -41,8 +41,11 @@ export function Publications() {
             >
               <MagneticHover strength={6}>
                 <div
+                  role="button"
+                  tabIndex={0}
                   className="group relative rounded-3xl bg-gradient-to-br from-space-800/80 to-space-800/40 border border-white/5 hover:border-violet-500/30 transition-all duration-500 overflow-hidden cursor-pointer"
                   onClick={() => setExpandedPub(expandedPub === index ? null : index)}
+                  onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setExpandedPub(expandedPub === index ? null : index); } }}
                 >
                   <div className="grid lg:grid-cols-5 gap-0">
                     {/* Publication image */}
@@ -62,7 +65,7 @@ export function Publications() {
                         <div className="absolute inset-0 bg-gradient-to-t from-space-800/80 via-transparent to-transparent lg:hidden" />
 
                         {/* Shine effect */}
-                        <motion.div
+                        <m.div
                           className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"
                         />
                       </div>
@@ -99,7 +102,7 @@ export function Publications() {
                       <div className="flex flex-wrap items-center gap-4">
                         {pub.paperLink && pub.paperLink !== 'https://example.com/paper-placeholder' && (
                           <MagneticHover strength={15}>
-                            <motion.a
+                            <m.a
                               href={pub.paperLink}
                               target="_blank"
                               rel="noopener noreferrer"
@@ -112,7 +115,7 @@ export function Publications() {
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                               </svg>
                               <span>Read Paper</span>
-                            </motion.a>
+                            </m.a>
                           </MagneticHover>
                         )}
 
@@ -125,7 +128,7 @@ export function Publications() {
                             }}
                           >
                             <span>{expandedPub === index ? 'Hide' : 'View'} Image</span>
-                            <motion.svg
+                            <m.svg
                               className="w-4 h-4"
                               fill="none"
                               stroke="currentColor"
@@ -133,7 +136,7 @@ export function Publications() {
                               animate={{ rotate: expandedPub === index ? 180 : 0 }}
                             >
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                            </motion.svg>
+                            </m.svg>
                           </button>
                         )}
                       </div>
@@ -143,7 +146,7 @@ export function Publications() {
                   {/* Expanded image view */}
                   <AnimatePresence>
                     {expandedPub === index && pub.images && pub.images[0] && (
-                      <motion.div
+                      <m.div
                         initial={{ height: 0, opacity: 0 }}
                         animate={{ height: 'auto', opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}
@@ -159,7 +162,7 @@ export function Publications() {
                             className="w-full max-w-4xl mx-auto rounded-2xl shadow-2xl shadow-violet-500/10"
                           />
                         </div>
-                      </motion.div>
+                      </m.div>
                     )}
                   </AnimatePresence>
 
@@ -169,12 +172,12 @@ export function Publications() {
                   </div>
                 </div>
               </MagneticHover>
-            </motion.div>
+            </m.div>
           ))}
         </div>
 
         {/* Research note */}
-        <motion.div
+        <m.div
           className="mt-20 text-center"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -187,7 +190,7 @@ export function Publications() {
               More research publications in progress...
             </p>
           </div>
-        </motion.div>
+        </m.div>
       </div>
     </section>
   );

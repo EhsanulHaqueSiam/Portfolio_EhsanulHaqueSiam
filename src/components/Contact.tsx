@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { profile } from '../data/content';
 import { SplitText } from './ui/SplitText';
 import { MagneticHover } from './ui/ImageDistortion';
@@ -48,7 +48,7 @@ export function Contact() {
               Get In Touch
             </SplitText>
           </h2>
-          <motion.p
+          <m.p
             className="text-gray-500 text-lg max-w-xl mx-auto leading-relaxed"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -57,11 +57,11 @@ export function Contact() {
           >
             I'm always interested in hearing about new opportunities, collaborations,
             or just having a chat about AI and software development.
-          </motion.p>
+          </m.p>
         </div>
 
         {/* Email card */}
-        <motion.div
+        <m.div
           className="mb-16"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -71,14 +71,14 @@ export function Contact() {
           <div className="p-6 sm:p-8 md:p-12 rounded-3xl bg-space-800/50 border border-white/5 text-center">
             <p className="text-gray-500 text-sm font-mono mb-4">// reach_me_at</p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
-              <motion.a
+              <m.a
                 href={`mailto:${profile.email}`}
                 className="text-lg sm:text-2xl md:text-4xl font-display font-bold text-white hover:text-violet-400 transition-colors break-all sm:break-normal"
                 whileHover={{ scale: 1.02 }}
               >
                 {profile.email}
-              </motion.a>
-              <motion.button
+              </m.a>
+              <m.button
                 onClick={copyEmail}
                 className="relative p-3 min-w-[48px] min-h-[48px] rounded-xl bg-space-700/50 text-gray-400 hover:text-white hover:bg-violet-500/20 transition-all flex items-center justify-center"
                 whileHover={{ scale: 1.1 }}
@@ -95,20 +95,20 @@ export function Contact() {
                   </svg>
                 )}
                 {/* Tooltip */}
-                <motion.span
+                <m.span
                   className="absolute -top-10 left-1/2 -translate-x-1/2 px-3 py-1 bg-green-500/20 text-green-400 text-xs rounded-lg whitespace-nowrap"
                   initial={{ opacity: 0, y: 5 }}
                   animate={{ opacity: copied ? 1 : 0, y: copied ? 0 : 5 }}
                 >
                   Copied!
-                </motion.span>
-              </motion.button>
+                </m.span>
+              </m.button>
             </div>
           </div>
-        </motion.div>
+        </m.div>
 
         {/* CTA button */}
-        <motion.div
+        <m.div
           className="text-center mb-16"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -121,7 +121,7 @@ export function Contact() {
               className="group inline-flex items-center gap-4 px-12 py-6 bg-gradient-to-r from-violet-500 to-violet-600 rounded-full font-display font-semibold text-white text-xl hover:shadow-lg hover:shadow-violet-500/25 transition-shadow"
             >
               <span>Say Hello</span>
-              <motion.span
+              <m.span
                 className="text-3xl"
                 animate={{ rotate: [0, 14, -8, 14, -4, 10, 0] }}
                 transition={{
@@ -132,13 +132,13 @@ export function Contact() {
                 }}
               >
                 👋
-              </motion.span>
+              </m.span>
             </a>
           </MagneticHover>
-        </motion.div>
+        </m.div>
 
         {/* Social links */}
-        <motion.div
+        <m.div
           className="flex justify-center gap-6"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -175,7 +175,7 @@ export function Contact() {
               </a>
             </MagneticHover>
           ))}
-        </motion.div>
+        </m.div>
       </div>
     </section>
   );

@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { featuredExperience } from '../data/content';
 import { SplitText } from './ui/SplitText';
 import { MagneticHover } from './ui/ImageDistortion';
@@ -32,7 +32,7 @@ export function Experience() {
 
           <div className="space-y-12">
             {featuredExperience.map((exp, index) => (
-              <motion.div
+              <m.div
                 key={exp.company + exp.role}
                 initial={{ opacity: 0, x: -30 }}
                 whileInView={{ opacity: 1, x: 0 }}
@@ -76,13 +76,13 @@ export function Experience() {
                     </p>
                   </div>
                 </MagneticHover>
-              </motion.div>
+              </m.div>
             ))}
           </div>
         </div>
 
         {/* Resume CTA */}
-        <motion.div
+        <m.div
           className="mt-20 text-center"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -112,7 +112,7 @@ export function Experience() {
               View Resume
             </a>
           </MagneticHover>
-        </motion.div>
+        </m.div>
       </div>
     </section>
   );
