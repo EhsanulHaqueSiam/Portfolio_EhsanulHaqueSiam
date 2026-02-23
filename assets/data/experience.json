@@ -1,5 +1,13 @@
 [
     {
+        "company": "BetaScript LLC",
+        "role": "Lead Developer",
+        "date": "Jan 2026 - Present",
+        "desc": "Leading development at a US-based digital agency, delivering 4 production React websites including IndianClayPit — a restaurant platform driving ~$2K daily revenue with active users. Building with React 19, TanStack Start, TailwindCSS, and Vite. Handling full project lifecycle from architecture to deployment on Netlify, plus SEO optimization and UI/UX design.",
+        "alignment": "left",
+        "showInHome": true
+    },
+    {
         "company": "Unies",
         "role": "AI Engineering Intern",
         "date": "Feb 2026 - May 2026",
