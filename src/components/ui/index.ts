@@ -1,12 +1,11 @@
-export { MagneticButton } from './MagneticButton';
 export { TiltCard } from './TiltCard';
-export { CharReveal, WordReveal, LineReveal, BlurFade } from './TextReveal';
 export { CustomCursor } from './Cursor';
 export { ScrollProgress } from './ScrollProgress';
 export { SmoothScroll } from './SmoothScroll';
 export { NoiseOverlay } from './NoiseOverlay';
-export { Marquee, VelocityMarquee } from './Marquee';
-export { SplitText, RevealText, ScrambleText } from './SplitText';
-export { HorizontalScroll, ParallaxContainer } from './HorizontalScroll';
+export { Marquee } from './Marquee';
+export { SplitText, RevealText } from './SplitText';
 export { ImageDistortion, MagneticHover } from './ImageDistortion';
-export { OptimizedImage, preloadImage, preloadImages } from './OptimizedImage';
+export { OptimizedImage } from './OptimizedImage';
+export { GitHubIcon, LinkedInIcon, ExternalLinkIcon, CloseIcon, ResumeIcon, EmailIcon } from './Icons';
+export { SectionHeader } from './SectionHeader';

@@ -1,5 +1,3 @@
-// Type definitions for portfolio data
-
 export interface Skill {
   name: string;
   level: 'beginner' | 'intermediate' | 'advanced' | 'expert';
@@ -18,7 +16,7 @@ export interface SkillsData {
 
 export interface ProjectLink {
   view: string;
-  code: string;
+  code?: string;
 }
 
 export interface CaseStudyProcess {
@@ -81,16 +79,6 @@ export interface Publication {
   images: string[];
   showInHome: boolean;
   paperLink: string | null;
-}
-
-export interface Testimonial {
-  id: number;
-  quote: string;
-  name: string;
-  role: string;
-  organization: string;
-  image: string;
-  showInHome: boolean;
 }
 
 export interface Profile {

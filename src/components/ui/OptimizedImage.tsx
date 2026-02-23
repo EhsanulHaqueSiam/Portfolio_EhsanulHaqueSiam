@@ -15,24 +15,6 @@ interface OptimizedImageProps {
   onLoad?: () => void;
 }
 
-// Helper to get WebP version of an image path
-function getWebPPath(src: string): string | null {
-  // Check if there's a webp version available
-  const extensions = ['.png', '.jpg', '.jpeg', '.PNG', '.JPG', '.JPEG'];
-  for (const ext of extensions) {
-    if (src.endsWith(ext)) {
-      return src.replace(new RegExp(`${ext}$`), '.webp');
-    }
-  }
-  return null;
-}
-
-// Helper to generate srcset for responsive images
-// This can be extended when responsive sizes are generated at build time
-// function generateSrcSet(src: string): string {
-//   return src;
-// }
-
 export function OptimizedImage({
   src,
   alt,
@@ -47,6 +29,7 @@ export function OptimizedImage({
   onLoad,
 }: OptimizedImageProps) {
   const [isLoaded, setIsLoaded] = useState(false);
+  const [hasError, setHasError] = useState(false);
   const [isInView, setIsInView] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -82,24 +65,20 @@ export function OptimizedImage({
     onLoad?.();
   }, [onLoad]);
 
+  const handleError = useCallback(() => {
+    setHasError(true);
+    setIsLoaded(true);
+  }, []);
+
   const containerStyles = fill
     ? 'absolute inset-0'
-    : aspectRatio
-    ? `aspect-[${aspectRatio}]`
     : '';
 
-  // Get WebP path for picture element
-  const webpSrc = getWebPPath(src);
-  const hasWebP = webpSrc !== null;
-
-  // Determine if source is already WebP
-  const isWebP = src.endsWith('.webp');
-
-  // Common image props (alt excluded — passed explicitly for linter visibility)
   const imgProps = {
     loading: priority ? 'eager' as const : 'lazy' as const,
     decoding: priority ? 'sync' as const : 'async' as const,
     onLoad: handleLoad,
+    onError: handleError,
     className: `w-full h-full object-cover`,
     ...(width && { width }),
     ...(height && { height }),
@@ -120,14 +99,21 @@ export function OptimizedImage({
       <m.div
         className="absolute inset-0 bg-gradient-to-br from-space-700/50 to-space-800/50"
         initial={{ opacity: 1 }}
-        animate={{ opacity: isLoaded ? 0 : 1 }}
+        animate={{ opacity: isLoaded && !hasError ? 0 : 1 }}
         transition={{ duration: 0.4 }}
       >
-        {/* Shimmer effect */}
-        <div className="absolute inset-0 -translate-x-full animate-shimmer bg-gradient-to-r from-transparent via-white/5 to-transparent" />
+        {hasError ? (
+          <div className="absolute inset-0 flex items-center justify-center text-gray-600">
+            <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+          </div>
+        ) : (
+          <div className="absolute inset-0 -translate-x-full animate-shimmer bg-gradient-to-r from-transparent via-white/5 to-transparent" />
+        )}
       </m.div>
 
-      {/* Actual image with picture element for format fallback */}
+      {/* Actual image */}
       {isInView && (
         <m.div
           className="w-full h-full"
@@ -138,65 +124,14 @@ export function OptimizedImage({
           }}
           transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
         >
-          {hasWebP && !isWebP ? (
-            // Use picture element for WebP with JPEG/PNG fallback
-            <picture>
-              <source srcSet={webpSrc} type="image/webp" sizes={sizes} />
-              <img
-                {...imgProps}
-                src={src}
-                alt={alt}
-                fetchPriority={priority ? 'high' : 'auto'}
-              />
-            </picture>
-          ) : (
-            // Single format image
-            <img
-              {...imgProps}
-              src={src}
-              alt={alt}
-              fetchPriority={priority ? 'high' : 'auto'}
-            />
-          )}
+          <img
+            {...imgProps}
+            src={src}
+            alt={alt}
+            fetchPriority={priority ? 'high' : 'auto'}
+          />
         </m.div>
       )}
     </div>
   );
-}
-
-// Preload critical images
-export function preloadImage(src: string): Promise<void> {
-  return new Promise((resolve, reject) => {
-    const img = new Image();
-    img.onload = () => resolve();
-    img.onerror = reject;
-    img.src = src;
-  });
-}
-
-// Preload multiple images with progress callback
-export function preloadImages(
-  srcs: string[],
-  onProgress?: (loaded: number, total: number) => void
-): Promise<void[]> {
-  let loaded = 0;
-  const total = srcs.length;
-
-  return Promise.all(
-    srcs.map((src) =>
-      preloadImage(src).then(() => {
-        loaded++;
-        onProgress?.(loaded, total);
-      })
-    )
-  );
-}
-
-// Get all critical images for preloading
-export function getCriticalImages(): string[] {
-  // Return paths to critical above-the-fold images
-  return [
-    '/images/profile2-hero.webp',
-    '/images/profile2.webp',
-  ];
 }

@@ -26,6 +26,16 @@ export function Navbar() {
     }
   });
 
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => { document.body.style.overflow = ''; };
+  }, [isMobileMenuOpen]);
+
   // Use IntersectionObserver instead of scroll events for better performance
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -119,6 +129,7 @@ export function Navbar() {
             className="md:hidden p-2 min-w-[44px] min-h-[44px] text-gray-400 hover:text-white rounded-lg flex items-center justify-center"
             whileTap={{ scale: 0.9 }}
             aria-label="Toggle menu"
+            aria-expanded={isMobileMenuOpen}
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <m.path
@@ -160,7 +171,7 @@ export function Navbar() {
                   <a
                     href={item.href}
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className={`block px-4 py-4 rounded-xl text-lg font-medium transition-all duration-300 min-h-[48px] flex items-center ${
+                    className={`px-4 py-4 rounded-xl text-lg font-medium transition-all duration-300 min-h-[48px] flex items-center ${
                       activeSection === item.href.slice(1)
                         ? 'text-violet-400 bg-violet-500/10'
                         : 'text-gray-400 hover:text-white hover:bg-white/5 active:bg-white/10'

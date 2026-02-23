@@ -21,6 +21,16 @@ export function ImageDistortion({ children, className = '', intensity = 10 }: Im
   const rotateX = useTransform(mouseY, [-0.5, 0.5], [intensity, -intensity]);
   const rotateY = useTransform(mouseX, [-0.5, 0.5], [-intensity, intensity]);
 
+  const glareBackground = useTransform(
+    [mouseX, mouseY],
+    ([latestX, latestY]) =>
+      `radial-gradient(
+        600px circle at ${(latestX as number + 0.5) * 100}% ${(latestY as number + 0.5) * 100}%,
+        rgba(139, 92, 246, 0.15),
+        transparent 40%
+      )`
+  );
+
   const handleMouseEnter = () => {
     if (ref.current) {
       rectRef.current = ref.current.getBoundingClientRect();
@@ -75,15 +85,7 @@ export function ImageDistortion({ children, className = '', intensity = 10 }: Im
         <m.div
           className="absolute inset-0 pointer-events-none rounded-[inherit]"
           style={{
-            background: useTransform(
-              [mouseX, mouseY],
-              ([latestX, latestY]) =>
-                `radial-gradient(
-                  600px circle at ${(latestX as number + 0.5) * 100}% ${(latestY as number + 0.5) * 100}%,
-                  rgba(139, 92, 246, 0.15),
-                  transparent 40%
-                )`
-            ),
+            background: glareBackground,
             opacity: isHovered ? 1 : 0,
             transition: 'opacity 0.3s',
           }}
@@ -117,6 +119,7 @@ export function MagneticHover({ children, className = '', strength = 30 }: Magne
   };
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (strength === 0) return;
     const rect = rectRef.current;
     if (!rect) return;
 

@@ -1,22 +1,20 @@
+import type React from 'react';
 import type {
+  Skill,
   SkillsData,
   Project,
   Experience,
   Achievement,
   Publication,
-  Testimonial,
   Profile,
 } from './types';
 
-// Import JSON data
 import skillsData from '../../assets/data/skills.json';
 import projectsData from '../../assets/data/projects.json';
 import experienceData from '../../assets/data/experience.json';
 import achievementsData from '../../assets/data/achievements.json';
 import publicationsData from '../../assets/data/publications.json';
-import testimonialsData from '../../assets/data/testimonials.json';
 
-// Profile information
 export const profile: Profile = {
   name: "Ehsanul Haque Siam",
   firstName: "Ehsanul",
@@ -43,22 +41,18 @@ export const profile: Profile = {
   ],
 };
 
-// Export typed data
 export const skills = skillsData as SkillsData;
 export const projects = projectsData as Project[];
 export const experience = experienceData as Experience[];
 export const achievements = achievementsData as Achievement[];
 export const publications = publicationsData as Publication[];
-export const testimonials = testimonialsData as Testimonial[];
 
 // Filtered exports for homepage
 export const featuredProjects = projects.filter(p => p.showInHome);
 export const featuredAchievements = achievements.filter(a => a.showInHome);
 export const awards = achievements.filter(a => a.category === 'award' && a.showInHome);
-export const certificates = achievements.filter(a => a.category === 'certificate');
 export const featuredPublications = publications.filter(p => p.showInHome);
 export const featuredExperience = experience.filter(e => e.showInHome);
-export const featuredTestimonials = testimonials.filter(t => t.showInHome);
 
 // Navigation items
 export const navItems = [
@@ -73,7 +67,7 @@ export const navItems = [
 ];
 
 // Skill level to percentage mapping
-export const skillLevelToPercent: Record<string, number> = {
+export const skillLevelToPercent: Record<Skill['level'], number> = {
   beginner: 40,
   intermediate: 60,
   advanced: 80,
@@ -93,11 +87,12 @@ export const categoryIcons: Record<string, string> = {
 
 // Image path helpers
 export const getProjectImage = (imageName: string): string => {
-  return `/images/projects/${imageName}.webp`;
+  const cleanName = imageName.replace(/\.(webp|png|jpg|jpeg)$/i, '');
+  return `/images/projects/${cleanName}.webp`;
 };
 
 export const getAchievementImage = (imageName: string): string => {
-  // Remove .webp extension if already present
+  // Strip any image extension before appending .webp
   const cleanName = imageName.replace(/\.(webp|png|jpg|jpeg)$/i, '');
   return `/images/achievements/${cleanName}.webp`;
 };
@@ -109,3 +104,7 @@ export const getPublicationImage = (imageName: string): string => {
 
 export const profileImage = '/images/profile2.webp';
 export const profileHeroImage = '/images/profile2-hero.webp';
+
+export const hideImageOnError = (e: React.SyntheticEvent<HTMLImageElement>) => {
+  e.currentTarget.style.display = 'none';
+};

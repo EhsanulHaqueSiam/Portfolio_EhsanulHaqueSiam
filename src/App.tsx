@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { LazyMotion, domAnimation, MotionConfig, useReducedMotion } from 'framer-motion';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
@@ -14,22 +15,24 @@ import { SocialLinks } from './components/SocialLinks';
 import { CustomCursor, ScrollProgress, SmoothScroll, NoiseOverlay } from './components/ui';
 import { profileImage, profileHeroImage, featuredProjects, getProjectImage } from './data/content';
 
-// Preload critical images in background (non-blocking)
-if (typeof document !== 'undefined') {
-  [profileHeroImage, profileImage, ...(featuredProjects[0]?.images[0] ? [getProjectImage(featuredProjects[0].images[0])] : [])].forEach((src) => {
-    const link = document.createElement('link');
-    link.rel = 'preload';
-    link.as = 'image';
-    link.href = src;
-    if (src.endsWith('.webp')) {
-      link.type = 'image/webp';
-    }
-    document.head.appendChild(link);
-  });
-}
-
 function App() {
   const shouldReduceMotion = useReducedMotion();
+
+  // Preload critical images (non-blocking)
+  useEffect(() => {
+    const srcs = [profileHeroImage, profileImage, ...(featuredProjects[0]?.images[0] ? [getProjectImage(featuredProjects[0].images[0])] : [])];
+    const links: HTMLLinkElement[] = [];
+    srcs.forEach((src) => {
+      const link = document.createElement('link');
+      link.rel = 'preload';
+      link.as = 'image';
+      link.href = src;
+      if (src.endsWith('.webp')) link.type = 'image/webp';
+      document.head.appendChild(link);
+      links.push(link);
+    });
+    return () => { links.forEach((link) => link.remove()); };
+  }, []);
 
   return (
     <LazyMotion features={domAnimation} strict>
@@ -46,7 +49,7 @@ function App() {
           }}
         />
 
-        {/* Film grain overlay */}
+        {/* Static noise texture overlay */}
         <NoiseOverlay />
 
         {/* Custom cursor - only on desktop, disabled for reduced motion */}

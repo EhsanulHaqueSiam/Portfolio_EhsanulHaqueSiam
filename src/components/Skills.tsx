@@ -1,13 +1,30 @@
 import { useState, memo } from 'react';
 import { m, AnimatePresence } from 'framer-motion';
 import { skills, categoryIcons, skillLevelToPercent } from '../data/content';
-import { SplitText } from './ui/SplitText';
+import { SectionHeader } from './ui/SectionHeader';
 import { MagneticHover } from './ui/ImageDistortion';
 import type { Skill } from '../data/types';
 
+const SkillIcon = memo(function SkillIcon({ src, name }: { src: string; name: string }) {
+  const [hasError, setHasError] = useState(false);
+
+  if (hasError) {
+    return <span className="text-lg font-bold text-gray-500">{name.charAt(0)}</span>;
+  }
+
+  return (
+    <img
+      src={src}
+      alt={name}
+      className="w-8 h-8 object-contain"
+      onError={() => setHasError(true)}
+    />
+  );
+});
+
 const SkillCard = memo(function SkillCard({ skill, index }: { skill: Skill; index: number }) {
   const [isHovered, setIsHovered] = useState(false);
-  const percent = skillLevelToPercent[skill.level] || 50;
+  const percent = skillLevelToPercent[skill.level];
 
   return (
     <m.div
@@ -30,14 +47,7 @@ const SkillCard = memo(function SkillCard({ skill, index }: { skill: Skill; inde
           {/* Skill icon and name */}
           <div className="flex items-center gap-4 mb-4">
             <div className="w-12 h-12 rounded-xl bg-space-700/50 flex items-center justify-center overflow-hidden">
-              <img
-                src={skill.icon}
-                alt={skill.name}
-                className="w-8 h-8 object-contain"
-                onError={(e) => {
-                  (e.target as HTMLImageElement).style.display = 'none';
-                }}
-              />
+              <SkillIcon src={skill.icon} name={skill.name} />
             </div>
             <div>
               <h3 className="text-white font-medium">{skill.name}</h3>
@@ -55,7 +65,7 @@ const SkillCard = memo(function SkillCard({ skill, index }: { skill: Skill; inde
               animate={{ width: `${percent}%` }}
               transition={{ duration: 1, delay: index * 0.05 + 0.3, ease: [0.22, 1, 0.36, 1] }}
             />
-            {/* Shimmer effect - CSS animation for performance */}
+            {/* Shimmer effect overlay */}
             <div
               className="absolute inset-y-0 left-0 w-full animate-shimmer"
               style={{
@@ -93,17 +103,8 @@ export function Skills() {
         <div className="absolute bottom-1/4 -right-32 w-96 h-96 bg-amber-500/5 rounded-full blur-3xl" />
       </div>
 
-      {/* Section header */}
-      <div className="max-w-7xl mx-auto mb-10 sm:mb-16 md:mb-20">
-        <div className="flex items-center gap-4 mb-4 sm:mb-8">
-          <span className="text-violet-500 font-mono text-sm">03</span>
-          <div className="h-px flex-1 bg-gradient-to-r from-violet-500/50 to-transparent" />
-        </div>
-        <h2 className="text-5xl md:text-7xl lg:text-8xl font-display font-bold">
-          <SplitText animation="blur" stagger={0.03}>
-            Skills & Expertise
-          </SplitText>
-        </h2>
+      <div className="max-w-7xl mx-auto">
+        <SectionHeader number="03" title="Skills & Expertise" />
       </div>
 
       <div className="max-w-7xl mx-auto">

@@ -1,10 +1,10 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import Lenis from '@studio-freight/lenis';
 import { useFrame } from '../../hooks/useFrame';
 
 export function SmoothScroll({ children }: { children: React.ReactNode }) {
   const lenisRef = useRef<Lenis | null>(null);
-  const [isVisible, setIsVisible] = useState(true);
+  const isVisibleRef = useRef(true);
 
   useEffect(() => {
     // Check if we're on a touch device - use native scroll for better performance
@@ -15,20 +15,25 @@ export function SmoothScroll({ children }: { children: React.ReactNode }) {
       return;
     }
 
-    lenisRef.current = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      orientation: 'vertical',
-      smoothWheel: true,
-    });
+    try {
+      lenisRef.current = new Lenis({
+        duration: 1.2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        orientation: 'vertical',
+        smoothWheel: true,
+      });
+    } catch (e) {
+      console.error('Failed to initialize smooth scroll:', e);
+      return;
+    }
 
     // Pause RAF loop when tab is hidden to save battery
     const handleVisibilityChange = () => {
       if (document.hidden) {
-        setIsVisible(false);
+        isVisibleRef.current = false;
         lenisRef.current?.stop();
       } else {
-        setIsVisible(true);
+        isVisibleRef.current = true;
         lenisRef.current?.start();
       }
     };
@@ -50,8 +55,7 @@ export function SmoothScroll({ children }: { children: React.ReactNode }) {
   }, []);
 
   useFrame((time) => {
-    // Only run RAF when tab is visible and lenis is initialized
-    if (isVisible && lenisRef.current) {
+    if (isVisibleRef.current && lenisRef.current) {
       lenisRef.current.raf(time);
     }
   });

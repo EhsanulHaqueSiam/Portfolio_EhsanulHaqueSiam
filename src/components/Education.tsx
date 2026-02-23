@@ -1,5 +1,6 @@
 import { m } from 'framer-motion';
-import { SplitText } from './ui/SplitText';
+import { hideImageOnError } from '../data/content';
+import { SectionHeader } from './ui/SectionHeader';
 import { MagneticHover } from './ui/ImageDistortion';
 
 interface EducationItem {
@@ -62,18 +63,7 @@ export function Education() {
       </div>
 
       <div className="max-w-7xl mx-auto relative z-10">
-        {/* Section header */}
-        <div className="mb-10 sm:mb-16 md:mb-20">
-          <div className="flex items-center gap-4 mb-8">
-            <span className="text-violet-500 font-mono text-sm">07</span>
-            <div className="h-px flex-1 bg-gradient-to-r from-violet-500/50 to-transparent" />
-          </div>
-          <h2 className="text-5xl md:text-7xl lg:text-8xl font-display font-bold">
-            <SplitText animation="blur" stagger={0.03}>
-              Education
-            </SplitText>
-          </h2>
-        </div>
+        <SectionHeader number="07" title="Education" />
 
         {/* Education cards */}
         <div className="grid gap-8">
@@ -102,6 +92,7 @@ export function Education() {
                           height={96}
                           loading="lazy"
                           className="w-full h-full object-cover"
+                          onError={hideImageOnError}
                         />
                       </div>
                     </div>

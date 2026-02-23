@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { m, AnimatePresence } from 'framer-motion';
-import { featuredPublications, getPublicationImage } from '../data/content';
-import { SplitText } from './ui/SplitText';
+import { featuredPublications, getPublicationImage, hideImageOnError } from '../data/content';
+import { SectionHeader } from './ui/SectionHeader';
 import { MagneticHover } from './ui/ImageDistortion';
 
 export function Publications() {
@@ -16,18 +16,7 @@ export function Publications() {
       </div>
 
       <div className="max-w-7xl mx-auto relative z-10">
-        {/* Section header */}
-        <div className="mb-10 sm:mb-16 md:mb-20">
-          <div className="flex items-center gap-4 mb-8">
-            <span className="text-violet-500 font-mono text-sm">06</span>
-            <div className="h-px flex-1 bg-gradient-to-r from-violet-500/50 to-transparent" />
-          </div>
-          <h2 className="text-5xl md:text-7xl lg:text-8xl font-display font-bold">
-            <SplitText animation="blur" stagger={0.03}>
-              Publications
-            </SplitText>
-          </h2>
-        </div>
+        <SectionHeader number="06" title="Publications" />
 
         {/* Publications grid */}
         <div className="space-y-8">
@@ -58,6 +47,7 @@ export function Publications() {
                             loading="lazy"
                             decoding="async"
                             className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                            onError={hideImageOnError}
                           />
                         )}
                         {/* Gradient overlay */}
@@ -100,7 +90,7 @@ export function Publications() {
 
                       {/* Actions */}
                       <div className="flex flex-wrap items-center gap-4">
-                        {pub.paperLink && pub.paperLink !== 'https://example.com/paper-placeholder' && (
+                        {pub.paperLink && (
                           <MagneticHover strength={15}>
                             <m.a
                               href={pub.paperLink}
@@ -160,6 +150,7 @@ export function Publications() {
                             loading="lazy"
                             decoding="async"
                             className="w-full max-w-4xl mx-auto rounded-2xl shadow-2xl shadow-violet-500/10"
+                            onError={hideImageOnError}
                           />
                         </div>
                       </m.div>

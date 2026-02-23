@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState, useMemo } from 'react';
+import { useRef, useMemo } from 'react';
 import { m, useInView, Variants } from 'framer-motion';
 
 interface SplitTextProps {
@@ -137,53 +137,5 @@ export function RevealText({ children, className = '', delay = 0, duration = 1.2
         {children}
       </m.div>
     </div>
-  );
-}
-
-// Scramble text effect
-interface ScrambleTextProps {
-  children: string;
-  className?: string;
-  scrambleSpeed?: number;
-}
-
-export function ScrambleText({ children, className = '', scrambleSpeed = 30 }: ScrambleTextProps) {
-  const [scrambledText, setScrambledText] = useState<string | null>(null);
-  const ref = useRef<HTMLSpanElement>(null);
-  const isInView = useInView(ref, { once: true });
-  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()';
-
-  const displayText = scrambledText ?? children;
-
-  useEffect(() => {
-    if (!isInView) return;
-
-    let iteration = 0;
-    const interval = setInterval(() => {
-      setScrambledText(
-        children
-          .split('')
-          .map((char, i) => {
-            if (i < iteration) return children[i];
-            if (char === ' ') return ' ';
-            return chars[Math.floor(Math.random() * chars.length)];
-          })
-          .join('')
-      );
-
-      if (iteration >= children.length) {
-        clearInterval(interval);
-        setScrambledText(null);
-      }
-      iteration += 1 / 3;
-    }, scrambleSpeed);
-
-    return () => clearInterval(interval);
-  }, [isInView, children, scrambleSpeed]);
-
-  return (
-    <span ref={ref} className={`font-mono ${className}`}>
-      {displayText}
-    </span>
   );
 }

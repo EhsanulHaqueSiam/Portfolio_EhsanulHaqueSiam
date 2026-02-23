@@ -1,6 +1,6 @@
 import { m } from 'framer-motion';
-import { featuredExperience } from '../data/content';
-import { SplitText } from './ui/SplitText';
+import { featuredExperience, profile, hideImageOnError } from '../data/content';
+import { SectionHeader } from './ui/SectionHeader';
 import { MagneticHover } from './ui/ImageDistortion';
 
 export function Experience() {
@@ -12,18 +12,7 @@ export function Experience() {
       </div>
 
       <div className="max-w-7xl mx-auto relative z-10">
-        {/* Section header */}
-        <div className="mb-10 sm:mb-16 md:mb-20">
-          <div className="flex items-center gap-4 mb-8">
-            <span className="text-violet-500 font-mono text-sm">02</span>
-            <div className="h-px flex-1 bg-gradient-to-r from-violet-500/50 to-transparent" />
-          </div>
-          <h2 className="text-5xl md:text-7xl lg:text-8xl font-display font-bold">
-            <SplitText animation="blur" stagger={0.03}>
-              Experience
-            </SplitText>
-          </h2>
-        </div>
+        <SectionHeader number="02" title="Experience" />
 
         {/* Timeline */}
         <div className="relative">
@@ -54,6 +43,7 @@ export function Experience() {
                             src={`/images/experience/${exp.logo}.webp`}
                             alt={exp.company}
                             className="w-12 h-12 rounded-xl object-contain bg-white/10 p-1 flex-shrink-0"
+                            onError={hideImageOnError}
                           />
                         )}
                         <div>
@@ -91,7 +81,7 @@ export function Experience() {
         >
           <MagneticHover strength={20}>
             <a
-              href="https://flowcv.com/resume/61p1hietib2o"
+              href={profile.resume}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-violet-500/20 to-amber-500/10 rounded-full border border-violet-500/30 hover:border-violet-500/50 transition-all font-medium text-white"

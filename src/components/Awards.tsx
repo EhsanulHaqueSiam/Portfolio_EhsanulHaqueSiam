@@ -1,13 +1,16 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { m, AnimatePresence } from 'framer-motion';
-import { awards, getAchievementImage } from '../data/content';
-import { SplitText } from './ui/SplitText';
+import { awards, getAchievementImage, hideImageOnError } from '../data/content';
+import { SectionHeader } from './ui/SectionHeader';
 import { MagneticHover } from './ui/ImageDistortion';
 import { OptimizedImage } from './ui/OptimizedImage';
+import { CloseIcon } from './ui/Icons';
 
 export function Awards() {
   const [selectedAward, setSelectedAward] = useState<number | null>(null);
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const previousFocusRef = useRef<Element | null>(null);
 
   const isModalOpen = selectedAward !== null;
   const isLightboxOpen = lightboxIndex !== null;
@@ -37,14 +40,14 @@ export function Awards() {
   const currentImages = selectedAward !== null ? awards[selectedAward].images : [];
 
   const goNext = useCallback(() => {
-    if (lightboxIndex === null) return;
-    setLightboxIndex((lightboxIndex + 1) % currentImages.length);
-  }, [lightboxIndex, currentImages.length]);
+    if (currentImages.length === 0) return;
+    setLightboxIndex(prev => prev === null ? null : (prev + 1) % currentImages.length);
+  }, [currentImages.length]);
 
   const goPrev = useCallback(() => {
-    if (lightboxIndex === null) return;
-    setLightboxIndex((lightboxIndex - 1 + currentImages.length) % currentImages.length);
-  }, [lightboxIndex, currentImages.length]);
+    if (currentImages.length === 0) return;
+    setLightboxIndex(prev => prev === null ? null : (prev - 1 + currentImages.length) % currentImages.length);
+  }, [currentImages.length]);
 
   // Keyboard support
   useEffect(() => {
@@ -68,6 +71,44 @@ export function Awards() {
     return () => window.removeEventListener('keydown', handleKey);
   }, [isModalOpen, isLightboxOpen, closeModal, goNext, goPrev]);
 
+  // Focus trap: save previous focus, focus close button, trap Tab, restore on close
+  useEffect(() => {
+    if (isModalOpen) {
+      previousFocusRef.current = document.activeElement;
+      // Wait for animation frame so the modal is rendered
+      requestAnimationFrame(() => closeButtonRef.current?.focus());
+    } else if (previousFocusRef.current instanceof HTMLElement) {
+      previousFocusRef.current.focus();
+      previousFocusRef.current = null;
+    }
+  }, [isModalOpen]);
+
+  useEffect(() => {
+    if (!isModalOpen) return;
+
+    const handleTabTrap = (e: KeyboardEvent) => {
+      if (e.key !== 'Tab') return;
+      const modal = document.querySelector('[role="dialog"]');
+      if (!modal) return;
+      const focusable = modal.querySelectorAll<HTMLElement>(
+        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+      );
+      if (focusable.length === 0) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
+
+    window.addEventListener('keydown', handleTabTrap);
+    return () => window.removeEventListener('keydown', handleTabTrap);
+  }, [isModalOpen]);
+
   return (
     <section id="awards" className="py-16 sm:py-24 md:py-32 px-4 sm:px-6 md:px-12 lg:px-24 relative overflow-hidden">
       {/* Background decoration */}
@@ -77,18 +118,7 @@ export function Awards() {
       </div>
 
       <div className="max-w-7xl mx-auto relative z-10">
-        {/* Section header */}
-        <div className="mb-10 sm:mb-16 md:mb-20">
-          <div className="flex items-center gap-4 mb-8">
-            <span className="text-violet-500 font-mono text-sm">05</span>
-            <div className="h-px flex-1 bg-gradient-to-r from-violet-500/50 to-transparent" />
-          </div>
-          <h2 className="text-5xl md:text-7xl lg:text-8xl font-display font-bold">
-            <SplitText animation="blur" stagger={0.03}>
-              Awards & Recognition
-            </SplitText>
-          </h2>
-        </div>
+        <SectionHeader number="05" title="Awards & Recognition" />
 
         {/* Awards masonry grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 auto-rows-max">
@@ -183,6 +213,9 @@ export function Awards() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
+              role="dialog"
+              aria-modal="true"
+              aria-label={`${awards[selectedAward].name} gallery`}
               className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-space-900/95 backdrop-blur-xl"
               onClick={closeModal}
             >
@@ -198,12 +231,12 @@ export function Awards() {
 
                 {/* Close button */}
                 <button
+                  ref={closeButtonRef}
                   onClick={closeModal}
+                  aria-label="Close gallery"
                   className="absolute top-4 right-4 w-10 h-10 min-w-[44px] min-h-[44px] rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-white/20 transition-colors z-10"
                 >
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                  </svg>
+                  <CloseIcon />
                 </button>
 
                 <h3 className="text-xl sm:text-2xl font-display font-bold text-white mb-3 sm:mb-4 pr-12">
@@ -261,17 +294,17 @@ export function Awards() {
               {/* Close button */}
               <button
                 onClick={() => setLightboxIndex(null)}
+                aria-label="Close lightbox"
                 className="absolute top-4 right-4 w-10 h-10 min-w-[44px] min-h-[44px] rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-white/20 transition-colors z-10"
               >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
+                <CloseIcon />
               </button>
 
               {/* Previous button */}
               {currentImages.length > 1 && (
                 <button
                   onClick={(e) => { e.stopPropagation(); goPrev(); }}
+                  aria-label="Previous image"
                   className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 min-w-[44px] min-h-[44px] rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors z-10"
                 >
                   <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -284,6 +317,7 @@ export function Awards() {
               {currentImages.length > 1 && (
                 <button
                   onClick={(e) => { e.stopPropagation(); goNext(); }}
+                  aria-label="Next image"
                   className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 min-w-[44px] min-h-[44px] rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors z-10"
                 >
                   <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -306,6 +340,7 @@ export function Awards() {
                   src={getAchievementImage(currentImages[lightboxIndex])}
                   alt={`${awards[selectedAward].name} - ${lightboxIndex + 1}`}
                   className="max-w-full max-h-[85vh] object-contain rounded-lg"
+                  onError={hideImageOnError}
                 />
               </m.div>
             </m.div>

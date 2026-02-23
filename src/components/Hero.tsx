@@ -5,6 +5,7 @@ import { SplitText, RevealText } from './ui/SplitText';
 import { MagneticHover } from './ui/ImageDistortion';
 import { Marquee } from './ui/Marquee';
 import { OptimizedImage } from './ui/OptimizedImage';
+import { ResumeIcon } from './ui/Icons';
 
 export function Hero() {
   const containerRef = useRef<HTMLElement>(null);
@@ -31,7 +32,7 @@ export function Hero() {
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
   const rotate = useTransform(scrollYProgress, [0, 1], [0, isMobile ? 5 : 15]);
 
-  // Smooth spring for mouse parallax
+  // Smooth spring for scroll-driven parallax
   const springConfig = { stiffness: 100, damping: 30 };
   const springY1 = useSpring(y1, springConfig);
   const springY2 = useSpring(y2, springConfig);
@@ -45,7 +46,7 @@ export function Hero() {
       <div className="sticky top-0 min-h-screen md:h-screen flex flex-col justify-center overflow-hidden py-20 md:py-0">
         {/* Animated gradient mesh background */}
         <div className="absolute inset-0 pointer-events-none">
-          {/* Primary gradient orb - smaller on mobile for performance */}
+          {/* Primary gradient orb - scaled down on mobile for visual balance */}
           <m.div
             className="absolute w-[300px] h-[300px] md:w-[600px] md:h-[600px] lg:w-[800px] lg:h-[800px] rounded-full"
             style={{
@@ -107,7 +108,7 @@ export function Hero() {
             transition={{ duration: 2, repeat: Infinity, delay: 1.5 }}
           />
 
-          {/* Floating profile image - hidden on mobile */}
+          {/* Floating profile image - visible only on xl (1280px+) screens */}
           <m.div
             className="hidden xl:block absolute top-[20%] right-[8%] z-0"
             style={{ y: y2 }}
@@ -138,7 +139,7 @@ export function Hero() {
                 <div className="absolute inset-0 bg-gradient-to-br from-violet-500/10 to-transparent mix-blend-overlay" />
               </m.div>
 
-              {/* Decorative elements around image - staggered for performance */}
+              {/* Staggered fade-in decorative elements */}
               <m.div
                 className="absolute -top-4 -right-4 w-8 h-8 border-t-2 border-r-2 border-violet-500/50 rounded-tr-xl will-change-opacity"
                 initial={{ opacity: 0 }}
@@ -278,9 +279,7 @@ export function Hero() {
                   rel="noopener noreferrer"
                   className="group relative inline-flex items-center justify-center gap-2 px-5 sm:px-6 py-3 sm:py-4 border border-amber-500/30 text-amber-400 rounded-full font-medium hover:bg-amber-500/10 active:bg-amber-500/15 hover:border-amber-500/50 transition-all duration-300 text-sm sm:text-base min-h-[44px]"
                 >
-                  <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
-                  </svg>
+                  <ResumeIcon className="w-4 h-4 sm:w-5 sm:h-5" />
                   <span>Resume</span>
                   {/* Subtle glow effect */}
                   <span className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-r from-amber-500/5 to-transparent blur-xl" />
@@ -290,7 +289,7 @@ export function Hero() {
           </div>
         </m.div>
 
-        {/* Scroll indicator - hidden on mobile, shown on larger screens */}
+        {/* Scroll indicator - hidden below sm (640px) breakpoint */}
         <m.div
           className="hidden sm:block absolute bottom-12 right-6 md:right-12 lg:right-24 z-10"
           initial={{ opacity: 0 }}

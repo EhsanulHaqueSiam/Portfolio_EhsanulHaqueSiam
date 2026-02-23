@@ -7,11 +7,12 @@ export default defineConfig({
     // Note: Compression removed - Netlify handles Brotli/Gzip at edge
   ],
   build: {
-    // Enable minification with terser for better tree-shaking
+    // Terser for smaller bundle output
     minify: 'terser',
     terserOptions: {
       compress: {
-        drop_console: true, // Remove console.log in production
+        // Keep console.error/warn, drop log/debug/info
+        pure_funcs: ['console.log', 'console.debug', 'console.info'],
         drop_debugger: true,
       },
     },
@@ -19,7 +20,7 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: {
-          // Split Framer Motion into separate chunk (~150KB savings on initial load)
+          // Separate chunk for cache efficiency
           'framer-motion': ['framer-motion'],
           // Split Lenis smooth scroll
           'lenis': ['@studio-freight/lenis'],
@@ -28,14 +29,10 @@ export default defineConfig({
         },
       },
     },
-    // Enable CSS code splitting
     cssCodeSplit: true,
-    // Increase chunk size warning limit (our chunks are optimized)
     chunkSizeWarningLimit: 500,
-    // Generate source maps for production debugging (optional, can be disabled)
     sourcemap: false,
   },
-  // Optimize dependencies pre-bundling
   optimizeDeps: {
     include: ['react', 'react-dom', 'framer-motion', '@studio-freight/lenis'],
   },
