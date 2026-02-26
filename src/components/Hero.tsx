@@ -43,7 +43,7 @@ export function Hero() {
       className="relative min-h-[150vh] md:min-h-[200vh]"
     >
       {/* Sticky hero content */}
-      <div className="sticky top-0 min-h-screen md:h-screen flex flex-col justify-center overflow-hidden py-20 md:py-0">
+      <div className="sticky top-0 min-h-screen md:h-screen flex flex-col justify-center overflow-hidden pt-24 pb-20 md:pb-0">
         {/* Animated gradient mesh background */}
         <div className="absolute inset-0 pointer-events-none">
           {/* Primary gradient orb - scaled down on mobile for visual balance */}
@@ -192,7 +192,7 @@ export function Hero() {
                   animation="wave"
                   stagger={0.03}
                   delay={0.5}
-                  className="gradient-text"
+                  charClassName="gradient-text"
                 >
                   {profile.lastName}
                 </SplitText>

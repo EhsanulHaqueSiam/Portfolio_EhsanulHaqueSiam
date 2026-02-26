@@ -9,6 +9,7 @@ interface SplitTextProps {
   animation?: 'fade' | 'slide' | 'reveal' | 'blur' | 'wave';
   stagger?: number;
   once?: boolean;
+  charClassName?: string;
 }
 
 export function SplitText({
@@ -19,6 +20,7 @@ export function SplitText({
   animation = 'reveal',
   stagger = 0.02,
   once = true,
+  charClassName = '',
 }: SplitTextProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(containerRef, { once, margin: '-10%' });
@@ -95,13 +97,19 @@ export function SplitText({
           style={animation === 'wave' ? { perspective: 1000 } : undefined}
         >
           <m.span
-            className="inline-block"
+            className={`inline-block ${charClassName}`}
             variants={itemVariants}
             transition={{
               duration: animation === 'wave' ? 0.6 : 0.5,
               ease: [0.22, 1, 0.36, 1],
             }}
-            style={animation === 'wave' ? { transformOrigin: 'center bottom' } : undefined}
+            style={{
+              transformOrigin: animation === 'wave' ? 'center bottom' : undefined,
+              backgroundSize: charClassName ? `${elements.length * 100}% 100%` : undefined,
+              backgroundPosition: charClassName
+                ? `${elements.length > 1 ? (pos / (elements.length - 1)) * 100 : 0}% 0%`
+                : undefined,
+            }}
           >
             {element === ' ' ? '\u00A0' : element}
           </m.span>
