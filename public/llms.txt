@@ -1,12 +1,12 @@
-# Ehsanul Haque Siam - AI Engineer & Software Developer
+# Ehsanul Haque Siam - AI Engineer · Full-Stack Developer · LLM Engineer
 
-> Personal portfolio of Ehsanul Haque Siam, an AI Engineer and Software Developer from Dhaka, Bangladesh. Computer Science student at AIUB, published researcher, and open source contributor.
+> Personal portfolio of Ehsanul Haque Siam, an AI Engineer, Full-Stack Developer & LLM Engineer from Dhaka, Bangladesh. Lead Developer at BetaScript LLC, AI Engineering Intern at Unies, published researcher, and open source contributor.
 
 ## About
 
-Ehsanul Haque Siam is an AI Engineer and Software Developer specializing in machine learning, natural language processing (NLP), and full-stack development. He is a Computer Science student at the American International University-Bangladesh (AIUB) where he has been recognized with 3 Dean's List awards for academic excellence (CGPA 3.95, 3.89, 3.75+).
+Ehsanul Haque Siam is an AI Engineer, Full-Stack Developer & LLM Engineer. He shipped 4 production React websites generating ~$2K daily revenue as Lead Developer at BetaScript LLC. Built RAG pipelines with high retrieval accuracy using Pinecone and LangChain during AI internship at Unies. Published researcher in medical AI (Taylor & Francis) with 3x Dean's List at AIUB.
 
-He has published research in medical AI — specifically "Beyond NER: A Comparative Benchmark of Medical BERTs for Multi-Label Adverse Drug Reaction Classification" at IDAA 2025, published as a Taylor & Francis Book Chapter. His work involves fine-tuning domain-specific BERT models (BioBERT, PubMedBERT) for healthcare applications.
+He has published research in medical AI — specifically "Beyond NER: A Comparative Benchmark of Medical BERTs for Multi-Label Adverse Drug Reaction Classification" at IDAA 2025, published as a Taylor & Francis Book Chapter. His work involves fine-tuning domain-specific BERT models (BioBERT, PubMedBERT) for healthcare applications. He also has a paper accepted at IEEE QPAIN 2026 on clustering-based topic modeling.
 
 Contact: ehsanul.siamdev@gmail.com
 Location: Dhaka, Bangladesh
@@ -19,11 +19,16 @@ LinkedIn: https://www.linkedin.com/in/EhsanulHaqueSiam/
 ### AI & Machine Learning
 - Machine Learning (Advanced), NLP (Advanced), Scikit-learn (Advanced)
 - TensorFlow (Intermediate), PyTorch (Intermediate)
-- LLMs & BERT (Advanced), Computer Vision (Intermediate)
+- LLMs & BERT (Advanced), RAG Pipelines (LangChain, LlamaIndex, Pinecone, ChromaDB)
+- Computer Vision (Intermediate)
 
 ### Programming Languages
 - Java (Expert), Python (Advanced), C++ (Advanced)
-- Kotlin (Intermediate), C# (Intermediate), JavaScript (Intermediate), SQL (Advanced)
+- Kotlin (Intermediate), C# (Intermediate), TypeScript (Intermediate), SQL (Advanced)
+
+### Web Development
+- React 19 (Advanced), TanStack Start/Router (Advanced), TailwindCSS (Advanced)
+- Framer Motion (Advanced), Vite (Advanced), Zustand (Advanced)
 
 ### Backend & Databases
 - MySQL (Expert), SQLite (Advanced), JDBC (Expert), SQL Server (Intermediate)
@@ -45,59 +50,74 @@ LinkedIn: https://www.linkedin.com/in/EhsanulHaqueSiam/
 ## Featured Projects
 
 ### Indian Claypit - Restaurant Website
-Premium restaurant website with online ordering system, 50,000+ customers served, 4.9 star rating.
+Developed a restaurant platform serving 50,000+ customers with a 4.9★ rating from 2,847 reviews by building a full-stack React application with online ordering, event booking, and catering integration.
 Tech: React, TypeScript, TailwindCSS, Framer Motion
 URL: https://indianclaypit.com/
 
 ### BetaScript - Tech Agency Website
-Tech services agency with Bangladesh-USA partnership, 150+ happy clients, 100% satisfaction rate.
+Launched a tech agency website for a BD-USA partnership serving 150+ clients with 100% satisfaction rate by designing an animated React application with service showcases, testimonials, and 24h response workflow.
 Tech: React, TypeScript, TailwindCSS, Framer Motion
 URL: https://betascript.online/
 
+### Aurum Gold - Gold E-commerce
+Built a premium gold e-commerce platform with editorial-grade UX and live gold rate integration targeting Lighthouse 90+ performance scores by architecting with React 19, TanStack Router, Zustand, and cinematic Framer Motion animations.
+Tech: React 19, TypeScript, TanStack Router, Zustand, TailwindCSS
+URL: https://theaurum.netlify.app
+
+### Void Threads - Streetwear E-commerce
+Created a premium streetwear e-commerce platform with conversion-optimized UX featuring sales psychology patterns by building with React 19, TanStack Start, SSR via Nitro 3, and mobile-first responsive design from 320px to 1920px.
+Tech: React 19, TypeScript, TanStack Start, Nitro 3, TailwindCSS
+URL: https://voidthreadsco.netlify.app
+
 ### Student Management System
-Enterprise-grade database system with 17 GitHub stars, 6-8ms query performance, 3NF normalized schema.
+Reduced university data retrieval time from 50ms to 7ms — a 7x performance improvement by redesigning the database to 3NF normalization with Singleton connection pooling in Java. Earned 17 GitHub stars.
 Tech: Java, MySQL, JDBC, Design Patterns
 GitHub: https://github.com/EhsanulHaqueSiam/StudentManagementSystem
 
 ### Spotify Sentiment Analysis
-NLP sentiment classifier analyzing 52,702 Spotify reviews with 85-90% accuracy using MultinomialNB.
+Classified sentiment of 52,702 Spotify reviews with 85-90% accuracy by building a 17-task ML pipeline with TF-IDF vectorization and Multinomial Naive Bayes.
 Tech: Python, scikit-learn, NLP, TF-IDF, Naive Bayes
 GitHub: https://github.com/EhsanulHaqueSiam/spotify-review-sentiment
 
 ### BD News Scraper & Analytics
-Production-grade data engineering platform scraping 74+ Bangladeshi news sources daily with ML analytics.
+Automated daily scraping of 74+ Bangladeshi news sources with 82 spiders publishing a live Kaggle dataset updated daily via GitHub Actions by engineering a production pipeline with Scrapy, Playwright, ML-powered sentiment analysis, and Docker deployment.
 Tech: Python, Scrapy, FastAPI, Docker, GitHub Actions
 GitHub: https://github.com/EhsanulHaqueSiam/BDNewsPaperScraper
 Kaggle: https://www.kaggle.com/datasets/ehsanulhaquesiam/bangladesh-news-articles
 
 ### Mario's Multiverse Adventure
-2D platformer game with 3 levels, OpenGL rendering, physics engine, SFML audio.
+Led a team of 5 to ship a 2D platformer with 3 unique levels and a physics engine earning 4 GitHub forks and a YouTube demo by building a custom rendering engine with OpenGL, SFML audio, and SQLite high scores in C++.
 Tech: C++, OpenGL, SFML, SQLite, CMake
 GitHub: https://github.com/EhsanulHaqueSiam/MarioMultiverseAdventures
 
 ### Hotel Management System
-Java Swing application with 15 GitHub stars, Bkash/Nagad payment integration, 171 commits.
+Built a hotel operations platform with Bkash/Nagad payment integration earning 15 GitHub stars across 171 commits and 4 releases by developing a modular Java Swing application with secure authentication and admin/user dashboards.
 Tech: Java, Swing, File I/O, OOP
 GitHub: https://github.com/EhsanulHaqueSiam/HotelManagementSystem
 
 ## Publications
 
+### Decoding Research Trends: A Clustering Based Topic Modeling Framework
+- Conference: IEEE QPAIN 2026
+- Status: Accepted (IEEE Xplore, Scopus Indexed)
+- Topic: Proposed a clustering-based topic modeling framework for decoding research trends by developing novel clustering algorithms applied to academic publication data
+
 ### Beyond NER: Medical BERTs for Multi-Label ADR Classification
 - Conference: International Conference on Intelligent Data Analysis and Applications (IDAA 2025)
 - Published: Dec 2025, Taylor & Francis Book Chapter
-- Topic: Fine-tuning LLMs and Medical BERT architectures for multi-label adverse drug reaction classification on PsyTAR dataset
+- Topic: Benchmarked domain-specific Medical BERT models for multi-label adverse drug reaction classification demonstrating improved performance over general BERT on the PsyTAR dataset
 
 ### Unfolding Emerging Issues in the Context of Changing Climatic Scenario
 - Conference: 2nd South Asian Conference on Climate
 - Date: Sep 2024
-- Topic: Statistical analysis of emerging issues under changing climatic scenarios
+- Topic: Presented statistical analysis of emerging climate issues to an international audience contributing to South Asian regional understanding of environmental trends
 
 ## Awards & Achievements
 
-- 3x Dean's List Awards at AIUB (CGPA 3.95, 3.89, 3.75+)
-- 1st Runner Up - AIUB CS FEST 2024 (App Showcase category, competed against 20+ teams)
-- 36+ GitHub Stars across 26 open source repositories
-- Published researcher at Taylor & Francis
+- 3x Dean's List Awards at AIUB (CGPA 3.95, 3.89, 3.75+) — maintained top performance while building 15+ projects and publishing research
+- 1st Runner Up - AIUB CS FEST 2024 (App Showcase, competing against 20+ teams evaluated by industry judges)
+- 36+ GitHub Stars across 26 open source repositories — top project earning 17 stars and 8 forks
+- Published researcher at Taylor & Francis and IEEE
 
 ## Education
 

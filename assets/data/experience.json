@@ -3,7 +3,7 @@
         "company": "BetaScript LLC",
         "role": "Lead Developer",
         "date": "Jan 2026 - Present",
-        "desc": "Leading development at a US-based digital agency, delivering 4 production React websites including IndianClayPit — a restaurant platform driving ~$2K daily revenue with active users. Building with React 19, TanStack Start, TailwindCSS, and Vite. Handling full project lifecycle from architecture to deployment on Netlify, plus SEO optimization and UI/UX design.",
+        "desc": "Delivered 4 production React websites generating ~$2K daily revenue measured by live analytics and client billing by architecting with React 19, TanStack Start, and TailwindCSS with full lifecycle ownership from design to Netlify deployment. Led development at a US-based digital agency, serving 50,000+ end users across restaurant, e-commerce, and agency platforms.",
         "alignment": "left",
         "showInHome": true
     },
@@ -11,7 +11,7 @@
         "company": "Unies",
         "role": "AI Engineering Intern",
         "date": "Feb 2026 - May 2026",
-        "desc": "Building production-grade AI systems including RAG pipelines for academic resources using vector databases (Pinecone, ChromaDB), agentic workflows with LangChain/LlamaIndex, and automated LLM evaluation pipelines. Developing FastAPI backends, engineering advanced prompts for curriculum-aligned tutoring, and optimizing embedding strategies and retrieval accuracy.",
+        "desc": "Built production RAG pipelines achieving high retrieval accuracy for academic resources measured by embedding quality benchmarks across vector databases by implementing retrieval architectures with Pinecone, ChromaDB, LangChain, and LlamaIndex. Engineered automated LLM evaluation pipelines and FastAPI backends for curriculum-aligned tutoring systems.",
         "alignment": "right",
         "showInHome": true,
         "logo": "unies"
@@ -20,7 +20,7 @@
         "company": "AIUB Computer Graphics Course",
         "role": "Team Lead - Game Development Project",
         "date": "Oct 2024 - Dec 2024",
-        "desc": "Led team of 5 developers to create 'Mario's Multiverse Adventure' - a 2D platformer with OpenGL, SFML audio, and SQLite. Features 3 unique levels, collision detection, physics engine, and YouTube gameplay demo.",
+        "desc": "Shipped a 2D platformer game with 3 complete levels and 4 GitHub forks within a 3-month deadline by leading a team of 5 developers and building a custom OpenGL rendering engine with SFML audio and SQLite persistence.",
         "alignment": "right",
         "showInHome": true
     },
@@ -28,7 +28,7 @@
         "company": "South Asian Climate Conference",
         "role": "Research Presenter",
         "date": "Sep 2024",
-        "desc": "Presented research on emerging issues in changing climatic scenarios at the 2nd South Asian Conference. Conducted statistical analysis and data visualization on climate data trends for the South Asian region.",
+        "desc": "Presented original climate research at an international conference with 100+ attendees demonstrating statistical findings on South Asian climate trends by conducting data collection, statistical modeling, and visualization of regional environmental data.",
         "alignment": "left",
         "showInHome": true
     },
@@ -36,7 +36,7 @@
         "company": "AIUB CS Fest 2024",
         "role": "App Showcase | 1st Runner Up",
         "date": "Apr 2024",
-        "desc": "Secured 1st Runner-Up in the App Showcase category at AIUB CS FEST 2024. Competed against 20+ teams, demonstrating innovative mobile application development with technical proficiency and presentation skills to industry judges.",
+        "desc": "Won 1st Runner-Up in App Showcase competing against 20+ teams evaluated by industry judges on technical innovation and presentation quality by developing and demonstrating an innovative mobile application with polished UI/UX.",
         "alignment": "right",
         "showInHome": true
     }

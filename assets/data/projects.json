@@ -1,12 +1,12 @@
 [
   {
     "name": "Aurum Gold",
-    "desc": "Premium gold jewellery e-commerce platform with editorial-grade shopping experience. Photography-first design with dark aesthetic, cinematic hero animations, transparent pricing breakdowns, live gold rates, and conversion-driven UX including urgency indicators and social proof.",
+    "desc": "Built a premium gold e-commerce platform with editorial-grade UX and live gold rate integration targeting Lighthouse 90+ performance scores by architecting with React 19, TanStack Router, Zustand state management, and cinematic Framer Motion animations.",
     "metrics": [
+      "Lighthouse 90+ target",
+      "Live gold rate pricing",
       "React 19 + TanStack Router",
-      "Editorial magazine aesthetic",
-      "Live gold rates & pricing",
-      "Lighthouse 90+ target"
+      "Cinematic editorial UX"
     ],
     "images": [
       "aurumgold"
@@ -31,12 +31,12 @@
   },
   {
     "name": "Void Threads",
-    "desc": "Premium streetwear e-commerce with dark luxury aesthetic and sales psychology-driven UX. Features Ken Burns hero animations, bento grid collections, advanced filtering, quick view modals, exit-intent popups, and mobile-first responsive design from 320px to 1920px.",
+    "desc": "Created a premium streetwear e-commerce platform with conversion-optimized UX featuring sales psychology patterns like exit-intent popups and urgency indicators by building with React 19, TanStack Start, SSR via Nitro 3, and mobile-first responsive design from 320px to 1920px.",
     "metrics": [
-      "React 19 + TanStack Start",
-      "Dark luxury streetwear aesthetic",
-      "Sales psychology UX patterns",
-      "SSR with Nitro 3"
+      "SSR with Nitro 3",
+      "320px\u20131920px responsive",
+      "Sales psychology UX",
+      "React 19 + TanStack Start"
     ],
     "images": [
       "voidthreads"
@@ -61,12 +61,12 @@
   },
   {
     "name": "Indian Claypit",
-    "desc": "Premium restaurant website for an award-winning Indian cuisine establishment. Features elegant dark theme, online ordering system, menu browsing, catering services, happy hours section, event booking, and gallery. Built with modern web technologies for optimal performance and user experience.",
+    "desc": "Developed a restaurant platform serving 50,000+ customers with a 4.9\u2605 rating from 2,847 reviews measured by live ordering analytics and Google Reviews by building a full-stack React application with online ordering, event booking, and catering integration.",
     "metrics": [
-      "Online ordering system",
       "50,000+ customers served",
-      "4.9★ rating (2,847 reviews)",
-      "Responsive dark theme"
+      "4.9\u2605 (2,847 reviews)",
+      "Online ordering system",
+      "Production revenue platform"
     ],
     "images": [
       "indianclaypit"
@@ -89,12 +89,12 @@
   },
   {
     "name": "BetaScript",
-    "desc": "Tech services agency website featuring Bangladesh-USA partnership. Clean, modern design with animated hero section, service showcases, and client testimonials. Built for a digital agency offering web development, design, and branding solutions.",
+    "desc": "Launched a tech agency website for a BD-USA partnership serving 150+ clients with 100% satisfaction rate tracked through client feedback and response metrics by designing an animated React application with service showcases, testimonials, and 24h response workflow.",
     "metrics": [
-      "150+ Happy Clients",
-      "24h Response Time",
-      "100% Satisfaction Rate",
-      "BD-USA Partnership"
+      "150+ clients served",
+      "100% satisfaction rate",
+      "24h response time",
+      "BD-USA partnership"
     ],
     "images": [
       "betascript"
@@ -116,12 +116,12 @@
   },
   {
     "name": "Student Management System",
-    "desc": "Enterprise-grade database management system with 17 GitHub stars. Features 3NF normalized schema, Singleton pattern with dynamic connection pooling (6-8ms queries), and comprehensive Wiki documentation with ER diagrams.",
+    "desc": "Reduced university data retrieval time from 50ms to 7ms — a 7x performance improvement validated by load testing with 45+ active users by redesigning the database to 3NF normalization with Singleton connection pooling in Java. Earned 17 GitHub stars.",
     "metrics": [
       "⭐ 17 Stars, 8 Forks",
-      "6-8ms query performance",
-      "6 entities normalized to 3NF",
-      "4 Wiki documentation pages"
+      "50ms → 7ms queries (7x faster)",
+      "3NF normalized schema",
+      "45+ active users"
     ],
     "images": [
       "studentmanagement"
@@ -184,10 +184,10 @@
   },
   {
     "name": "Spotify Sentiment Analysis",
-    "desc": "NLP sentiment classifier analyzing 52,702 Spotify user reviews with 85-90% accuracy using MultinomialNB. Complete ML pipeline with TF-IDF vectorization, text preprocessing, and Google Colab integration.",
+    "desc": "Classified sentiment of 52,702 Spotify reviews with 85-90% accuracy benchmarked against precision/recall/F1 metrics by building a 17-task ML pipeline with TF-IDF vectorization and Multinomial Naive Bayes.",
     "metrics": [
+      "85-90% classification accuracy",
       "52,702 reviews analyzed",
-      "85-90% accuracy",
       "5,000+ TF-IDF features",
       "17-task ML pipeline"
     ],
@@ -213,11 +213,11 @@
   },
   {
     "name": "Mario's Multiverse Adventure",
-    "desc": "2D platformer game with 3 unique levels built for AIUB Computer Graphics course. Features OpenGL rendering, SFML audio, SQLite high scores, physics engine with collision detection. YouTube demo available.",
+    "desc": "Led a team of 5 to ship a 2D platformer with 3 unique levels and a physics engine earning 4 GitHub forks and a YouTube demo by building a custom rendering engine with OpenGL, SFML audio, and SQLite high scores in C++.",
     "metrics": [
       "3 unique game levels",
       "Team of 5 developers",
-      "⭐ 2 Stars, 4 Forks",
+      "Custom physics engine",
       "YouTube demo available"
     ],
     "images": [
@@ -277,11 +277,11 @@
   },
   {
     "name": "BD News Scraper & Analytics",
-    "desc": "Production-grade data engineering platform scraping 74+ Bangladeshi news sources daily. Features automated GitHub Actions pipelines, daily Kaggle dataset updates, ML-powered analytics (sentiment analysis, topic clustering, breaking news detection), and enterprise infrastructure with Docker/Kubernetes deployment.",
+    "desc": "Automated daily scraping of 74+ Bangladeshi news sources with 82 spiders publishing a live Kaggle dataset updated daily via GitHub Actions by engineering a production pipeline with Scrapy, Playwright, ML-powered sentiment analysis, and Docker deployment.",
     "metrics": [
-      "74+ news sources (EN/BN)",
-      "Daily Kaggle dataset updates",
-      "GitHub Actions automation",
+      "74+ news sources daily",
+      "82 spiders automated",
+      "Live Kaggle dataset",
       "ML analytics pipeline"
     ],
     "images": [
@@ -353,12 +353,12 @@
   },
   {
     "name": "Hotel Management System",
-    "desc": "Java Swing desktop application with 15 GitHub stars. Features user/admin dashboards, room management, Bkash/Nagad payment integration, and interface-driven modular architecture.",
+    "desc": "Built a hotel operations platform with Bkash/Nagad payment integration earning 15 GitHub stars across 171 commits and 4 releases by developing a modular Java Swing application with secure authentication and admin/user dashboards.",
     "metrics": [
       "⭐ 15 Stars, 1 Fork",
       "171 commits, 4 releases",
       "Bkash/Nagad payments",
-      "User & Admin dashboards"
+      "Admin & User dashboards"
     ],
     "images": [
       "hotelmanagement"

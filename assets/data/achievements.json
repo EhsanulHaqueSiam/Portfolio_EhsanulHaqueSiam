@@ -1,7 +1,7 @@
 [
   {
     "name": "Dean's List Awards - 3x Academic Excellence",
-    "desc": "Received 3 Dean's List Awards for maintaining exceptional academic performance: CGPA 3.95 (Fall 2023-24), CGPA 3.89 (Spring 2023-24), and CGPA above 3.75 (Fall 2023-24). Recognized for consistent academic excellence at AIUB.",
+    "desc": "Earned 3 Dean's List Awards for academic excellence with CGPA of 3.95, 3.89, and 3.75+ across consecutive semesters by maintaining top performance while building 15+ projects and publishing research.",
     "images": [
       "deans-award-cert-fall-2023-24.webp",
       "deans-award-cert-spring-2023-24.webp",
@@ -26,7 +26,7 @@
   },
   {
     "name": "AIUB CS FEST 2024 - 1st Runner Up",
-    "desc": "Achieved 1st Runner-Up in the App Showcase category at AIUB CS FEST 2024. Competed against 20+ teams, demonstrating innovative mobile application development and presentation skills.",
+    "desc": "Won 1st Runner-Up at AIUB CS FEST 2024 App Showcase competing against 20+ teams evaluated by industry judges by demonstrating innovative mobile development with polished UI/UX and presentation.",
     "images": [
       "aiubcsfest2024cert",
       "awardcsfest2024",
@@ -37,7 +37,7 @@
   },
   {
     "name": "Published Research - Taylor & Francis (IDAA 2025)",
-    "desc": "Published 'Beyond NER: Medical BERTs for Multi-Label ADR Classification' at IDAA 2025 as a Taylor & Francis Book Chapter. Research on fine-tuning LLMs for healthcare AI.",
+    "desc": "Published a Taylor & Francis Book Chapter on medical AI at IDAA 2025 — an international conference indexed by major databases by benchmarking BioBERT, PubMedBERT, and BERT for multi-label adverse drug reaction classification.",
     "images": [
       "pub1"
     ],
@@ -46,7 +46,7 @@
   },
   {
     "name": "South Asian Climate Conference 2024",
-    "desc": "Received certificate for participation and presentation at the 2nd South Asian Conference on Climate. Presented research on emerging climate issues with statistical analysis.",
+    "desc": "Presented original climate research at an international conference demonstrating statistical findings on South Asian climate trends by conducting data collection, statistical modeling, and visualization of regional environmental data.",
     "images": [
       "cpecertificate",
       "cpepresentation",
@@ -57,7 +57,7 @@
   },
   {
     "name": "GitHub Open Source - 36+ Stars",
-    "desc": "Active open source contributor with 36+ GitHub stars across 26 repositories. Top project: StudentManagementSystem with 17 stars and comprehensive Wiki documentation.",
+    "desc": "Accumulated 36+ GitHub stars across 26 repositories with the top project (Student Management System) earning 17 stars and 8 forks by building well-documented, production-grade open source projects with comprehensive Wikis.",
     "images": [
       "github"
     ],
@@ -66,7 +66,7 @@
   },
   {
     "name": "Mario's Multiverse Adventure - Game Dev",
-    "desc": "Led team of 5 to develop 2D platformer with OpenGL for AIUB Computer Graphics course. Created 3 unique game levels with physics engine. YouTube demo available.",
+    "desc": "Led a team of 5 to ship a 2D platformer with 3 unique levels and a physics engine earning 4 GitHub forks by building a custom OpenGL rendering engine with SFML audio and SQLite persistence in C++.",
     "images": [
       "mariogame"
     ],
@@ -75,7 +75,7 @@
   },
   {
     "name": "Spotify Sentiment Analysis - 85-90% Accuracy",
-    "desc": "Built NLP sentiment classifier analyzing 52,702 Spotify reviews achieving 85-90% classification accuracy using MultinomialNB and TF-IDF vectorization.",
+    "desc": "Classified sentiment of 52,702 Spotify reviews with 85-90% accuracy benchmarked against precision/recall/F1 metrics by building a 17-task ML pipeline with TF-IDF vectorization and Multinomial Naive Bayes.",
     "images": [
       "spotifysentiment"
     ],

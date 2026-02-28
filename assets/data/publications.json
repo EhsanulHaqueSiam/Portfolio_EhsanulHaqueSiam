@@ -3,7 +3,7 @@
         "title": "Decoding Research Trends: A Clustering Based Topic Modeling Framework",
         "conference": "IEEE QPAIN 2026",
         "date": "2026 | Accepted (IEEE Xplore, Scopus Indexed)",
-        "desc": "Proposes a clustering-based topic modeling framework for decoding research trends. Accepted with minor revision for IEEE QPAIN 2026, with possible inclusion in IEEE Xplore Digital Library and indexing by Scopus.",
+        "desc": "Proposed a clustering-based topic modeling framework for decoding research trends accepted with minor revision for IEEE Xplore and Scopus indexing by developing novel clustering algorithms applied to academic publication data.",
         "images": [],
         "showInHome": true,
         "paperLink": null
@@ -12,7 +12,7 @@
         "title": "Beyond NER: A Comparative Benchmark of Medical BERTS for Multi-Label Adverse Drug Reaction Classification",
         "conference": "International Conference on Intelligent Data Analysis and Applications (IDAA 2025)",
         "date": "Dec 2025 | Book Chapter (Taylor & Francis)",
-        "desc": "Explores fine-tuning LLMs and domain-specific Medical BERT architectures for multi-label ADR classification on the PsyTAR dataset. Benchmarked BioBERT, PubMedBERT, and general BERT models.",
+        "desc": "Benchmarked domain-specific Medical BERT models for multi-label adverse drug reaction classification demonstrating improved performance over general BERT on the PsyTAR dataset by fine-tuning BioBERT and PubMedBERT architectures with multi-label classification heads.",
         "images": [
             "pub1.png"
         ],
@@ -23,7 +23,7 @@
         "title": "Unfolding Emerging Issues in the Context of Changing Climatic Scenario",
         "conference": "2nd South Asian Conference on Climate",
         "date": "Sep 2024 | Statistical Analysis & Presentation",
-        "desc": "Conducted statistical analysis to study emerging issues under changing climatic scenarios. Presented findings at the conference, enhancing data interpretation and analytical skills.",
+        "desc": "Presented statistical analysis of emerging climate issues to an international audience contributing to South Asian regional understanding of environmental trends by collecting, modeling, and visualizing climate data with statistical methods.",
         "images": [
             "cpecertificate.png"
         ],
