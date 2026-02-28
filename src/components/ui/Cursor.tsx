@@ -18,8 +18,6 @@ export function CustomCursor() {
 
     if (!dotRef.current || !ringRef.current || !textRef.current) return;
 
-    // Capture non-null refs once — guaranteed by the guard above.
-    // These elements are always mounted when isTouchDevice is false.
     const dot = dotRef.current!;
     const ring = ringRef.current!;
     const text = textRef.current!;
@@ -34,37 +32,46 @@ export function CustomCursor() {
     let visible = false;
     let hovering = false;
 
-    // Lerp factor: 1 = instant, 0 = frozen
-    const DOT_LERP = 1;     // Dot locked to cursor — zero lag
-    const RING_LERP = 0.15; // Ring trails behind smoothly
+    // Scale targets — lerped in rAF to avoid the CSS scale+transform position bug.
+    // CSS `scale` property composes as: scale × transform, which scales the translation.
+    // By putting scale() inside the transform string AFTER translate, it only affects visual size.
+    let dotScale = 1;
+    let dotTargetScale = 1;
+    let ringScale = 1;
+    let ringTargetScale = 1;
+
+    const DOT_LERP = 1;        // Dot position: instant
+    const RING_LERP = 0.15;    // Ring position: trails behind
+    const SCALE_LERP = 0.2;    // Scale changes: smooth ~80ms
 
     function lerp(a: number, b: number, t: number) {
       return a + (b - a) * t;
     }
 
-    // ---- rAF loop: runs every frame, independent of event timing ----
+    // ---- rAF loop ----
     function tick() {
       dotX = lerp(dotX, targetX, DOT_LERP);
       dotY = lerp(dotY, targetY, DOT_LERP);
       ringX = lerp(ringX, targetX, RING_LERP);
       ringY = lerp(ringY, targetY, RING_LERP);
+      dotScale = lerp(dotScale, dotTargetScale, SCALE_LERP);
+      ringScale = lerp(ringScale, ringTargetScale, SCALE_LERP);
 
-      dot.style.transform = `translate3d(${dotX}px, ${dotY}px, 0) translate(-50%, -50%)`;
-      ring.style.transform = `translate3d(${ringX}px, ${ringY}px, 0) translate(-50%, -50%)`;
+      // Scale AFTER translate — only affects visual size, not position
+      dot.style.transform = `translate3d(${dotX}px, ${dotY}px, 0) translate(-50%, -50%) scale(${dotScale})`;
+      ring.style.transform = `translate3d(${ringX}px, ${ringY}px, 0) translate(-50%, -50%) scale(${ringScale})`;
 
       rafRef.current = requestAnimationFrame(tick);
     }
     rafRef.current = requestAnimationFrame(tick);
 
-    // ---- Hover styling via direct DOM — no React re-renders ----
+    // ---- Hover/click styling via direct DOM ----
     function setHoverStyle(isHover: boolean, cursorText: string) {
       hovering = isHover;
-      // Dot
       dot.style.width = isHover ? '8px' : '12px';
       dot.style.height = isHover ? '8px' : '12px';
-      dot.style.scale = isHover ? '0.5' : '1';
+      dotTargetScale = isHover ? 0.5 : 1;
 
-      // Ring
       ring.style.width = isHover ? '80px' : '40px';
       ring.style.height = isHover ? '80px' : '40px';
       ring.style.border = isHover
@@ -75,15 +82,14 @@ export function CustomCursor() {
         : 'none';
       ring.style.backgroundColor = isHover ? 'rgba(139, 92, 246, 0.08)' : 'transparent';
 
-      // Text
       text.textContent = cursorText;
       text.style.opacity = cursorText ? '1' : '0';
       text.style.transform = cursorText ? 'scale(1)' : 'scale(0.5)';
     }
 
     function setClickStyle(isClick: boolean) {
-      dot.style.scale = isClick ? '0.5' : hovering ? '0.5' : '1';
-      ring.style.scale = isClick ? '0.85' : '1';
+      dotTargetScale = isClick ? 0.5 : hovering ? 0.5 : 1;
+      ringTargetScale = isClick ? 0.85 : 1;
     }
 
     function setVisibility(show: boolean) {
@@ -127,7 +133,6 @@ export function CustomCursor() {
     const onDocumentLeave = () => setVisibility(false);
     const onDocumentEnter = () => setVisibility(true);
 
-    // ---- Attach listeners ----
     window.addEventListener('mousemove', onMouseMove, { passive: true });
     window.addEventListener('mousedown', onMouseDown);
     window.addEventListener('mouseup', onMouseUp);
@@ -152,7 +157,6 @@ export function CustomCursor() {
 
   return (
     <>
-      {/* Dot — white circle, mix-blend-difference */}
       <div
         ref={dotRef}
         className="fixed top-0 left-0 rounded-full bg-white pointer-events-none z-[9999] mix-blend-difference"
@@ -160,13 +164,11 @@ export function CustomCursor() {
           width: 12,
           height: 12,
           opacity: 0,
-          // Smooth size/scale changes, but NO transition on transform — that stays instant
-          transition: 'width 0.15s ease, height 0.15s ease, scale 0.12s ease, opacity 0.15s ease',
+          transition: 'width 0.15s ease, height 0.15s ease, opacity 0.15s ease',
           willChange: 'transform',
         }}
       />
 
-      {/* Ring — violet border, trails behind dot */}
       <div
         ref={ringRef}
         className="fixed top-0 left-0 rounded-full pointer-events-none z-[9998] flex items-center justify-center"
@@ -175,12 +177,10 @@ export function CustomCursor() {
           height: 40,
           border: '1px solid rgba(139, 92, 246, 0.25)',
           opacity: 0,
-          // Smooth visual property changes. NO transition on transform — rAF lerp handles trailing.
-          transition: 'width 0.25s cubic-bezier(0.22, 1, 0.36, 1), height 0.25s cubic-bezier(0.22, 1, 0.36, 1), border 0.25s ease, box-shadow 0.3s ease, background-color 0.25s ease, scale 0.15s ease, opacity 0.15s ease',
+          transition: 'width 0.25s cubic-bezier(0.22, 1, 0.36, 1), height 0.25s cubic-bezier(0.22, 1, 0.36, 1), border 0.25s ease, box-shadow 0.3s ease, background-color 0.25s ease, opacity 0.15s ease',
           willChange: 'transform',
         }}
       >
-        {/* Cursor text label */}
         <span
           ref={textRef}
           className="relative z-10 text-[11px] font-semibold text-violet-300 uppercase tracking-wider whitespace-nowrap"
