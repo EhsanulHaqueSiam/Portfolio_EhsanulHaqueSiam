@@ -174,7 +174,7 @@ export function Hero() {
 
           {/* Key highlights for recruiters */}
           <m.div
-            className="flex flex-wrap gap-x-6 gap-y-2 mb-6 sm:mb-8"
+            className="flex flex-wrap gap-x-4 sm:gap-x-6 gap-y-1 sm:gap-y-2 mb-4 sm:mb-6 md:mb-8"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 1 }}
@@ -188,17 +188,17 @@ export function Hero() {
           </m.div>
 
           {/* Role/title with reveal effect */}
-          <div className="mb-6 sm:mb-12 overflow-hidden">
+          <div className="mb-4 sm:mb-8 md:mb-12 overflow-hidden">
             <RevealText delay={0.8} className="text-lg sm:text-2xl md:text-4xl text-gray-400 font-light">
               {profile.title}
             </RevealText>
           </div>
 
           {/* Description and CTA */}
-          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 sm:gap-8 lg:gap-12 max-w-5xl">
+          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4 sm:gap-6 lg:gap-12 max-w-5xl">
             {/* Description */}
             <p
-              className="text-base sm:text-lg md:text-xl text-gray-400 max-w-md leading-relaxed"
+              className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-400 max-w-sm sm:max-w-md leading-relaxed"
             >
               {profile.tagline.split('AI').map((part, i) =>
                 i === 0 ? part : (

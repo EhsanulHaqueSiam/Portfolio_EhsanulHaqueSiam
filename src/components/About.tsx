@@ -44,8 +44,8 @@ export function About() {
                     viewport={{ once: true }}
                     transition={{ delay: 0.3 }}
                   >
-                    I'm a <span className="text-violet-400 font-medium">CS Student & AI Enthusiast</span> building
-                    intelligent systems that solve real-world problems.
+                    I'm an <span className="text-violet-400 font-medium">AI Engineer & Full-Stack Developer</span> with
+                    a 3.89 CGPA, shipping production systems that drive real revenue.
                   </m.p>
                   <m.p
                     className="text-lg text-gray-500 leading-relaxed max-w-2xl"
@@ -54,10 +54,10 @@ export function About() {
                     viewport={{ once: true }}
                     transition={{ delay: 0.5 }}
                   >
-                    From sentiment analysis with <span className="text-amber-400">85-90% accuracy</span> to
-                    database systems with <span className="text-violet-400">6-8ms queries</span>, I focus on
-                    building performant, production-ready solutions. Currently pursuing my degree at AIUB
-                    while contributing to open-source and research.
+                    From <span className="text-amber-400">4 production React websites</span> generating ~$2K daily revenue
+                    to <span className="text-violet-400">RAG pipelines</span> with LangChain and Pinecone — I focus on
+                    shipping high-performance systems. Published researcher in medical AI (Taylor & Francis)
+                    with 3x Dean's List at AIUB.
                   </m.p>
                 </div>
 
