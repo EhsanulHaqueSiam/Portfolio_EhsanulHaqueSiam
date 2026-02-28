@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { m, useScroll, useTransform, useSpring } from 'framer-motion';
+import { m, useScroll, useTransform } from 'framer-motion';
 import { profile, profileHeroImage } from '../data/content';
 import { SplitText, RevealText } from './ui/SplitText';
 import { MagneticHover } from './ui/ImageDistortion';
@@ -17,17 +17,9 @@ export function Hero() {
     offset: ['start start', 'end start'],
   });
 
-  // Reduced parallax on mobile for better performance
-  const y1 = useTransform(scrollYProgress, [0, 1], [0, isMobile ? 100 : 300]);
   const y2 = useTransform(scrollYProgress, [0, 1], [0, isMobile ? -50 : -200]);
   const scale = useTransform(scrollYProgress, [0, 0.5], [1, isMobile ? 0.95 : 0.8]);
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
-  const rotate = useTransform(scrollYProgress, [0, 1], [0, isMobile ? 5 : 15]);
-
-  // Smooth spring for scroll-driven parallax
-  const springConfig = { stiffness: 100, damping: 30 };
-  const springY1 = useSpring(y1, springConfig);
-  const springY2 = useSpring(y2, springConfig);
 
   return (
     <section
@@ -38,12 +30,10 @@ export function Hero() {
       <div className="sticky top-0 min-h-screen md:h-screen flex flex-col justify-center overflow-hidden pt-24 pb-20 md:pb-0">
         {/* Animated gradient mesh background */}
         <div className="absolute inset-0 pointer-events-none">
-          {/* Primary gradient orb - scaled down on mobile for visual balance */}
-          <m.div
+          {/* Primary gradient orb - static, no per-frame recalc needed for blurred bg */}
+          <div
             className="absolute w-[300px] h-[300px] md:w-[600px] md:h-[600px] lg:w-[800px] lg:h-[800px] rounded-full"
             style={{
-              y: isMobile ? 0 : springY1,
-              rotate: isMobile ? 0 : rotate,
               background: 'radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, transparent 70%)',
               filter: isMobile ? 'blur(30px)' : 'blur(20px)',
               top: '5%',
@@ -55,7 +45,7 @@ export function Hero() {
           <m.div
             className="absolute w-[250px] h-[250px] md:w-[400px] md:h-[400px] lg:w-[600px] lg:h-[600px] rounded-full"
             style={{
-              y: isMobile ? 0 : springY2,
+              y: isMobile ? 0 : y2,
               background: 'radial-gradient(circle, rgba(245, 158, 11, 0.1) 0%, transparent 70%)',
               filter: isMobile ? 'blur(30px)' : 'blur(20px)',
               bottom: '5%',

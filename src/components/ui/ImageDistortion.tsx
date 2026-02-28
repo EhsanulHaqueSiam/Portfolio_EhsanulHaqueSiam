@@ -21,16 +21,6 @@ export function ImageDistortion({ children, className = '', intensity = 10 }: Im
   const rotateX = useTransform(mouseY, [-0.5, 0.5], [intensity, -intensity]);
   const rotateY = useTransform(mouseX, [-0.5, 0.5], [-intensity, intensity]);
 
-  const glareBackground = useTransform(
-    [mouseX, mouseY],
-    ([latestX, latestY]) =>
-      `radial-gradient(
-        600px circle at ${(latestX as number + 0.5) * 100}% ${(latestY as number + 0.5) * 100}%,
-        rgba(139, 92, 246, 0.15),
-        transparent 40%
-      )`
-  );
-
   const handleMouseEnter = () => {
     if (ref.current) {
       rectRef.current = ref.current.getBoundingClientRect();
@@ -50,6 +40,10 @@ export function ImageDistortion({ children, className = '', intensity = 10 }: Im
 
     x.set(xPct);
     y.set(yPct);
+    if (ref.current) {
+      ref.current.style.setProperty('--glare-x', `${(xPct + 0.5) * 100}%`);
+      ref.current.style.setProperty('--glare-y', `${(yPct + 0.5) * 100}%`);
+    }
   };
 
   const handleMouseLeave = () => {
@@ -81,11 +75,11 @@ export function ImageDistortion({ children, className = '', intensity = 10 }: Im
       >
         {children}
 
-        {/* Glare effect */}
-        <m.div
+        {/* Glare effect — CSS variables avoid per-frame string building */}
+        <div
           className="absolute inset-0 pointer-events-none rounded-[inherit]"
           style={{
-            background: glareBackground,
+            background: 'radial-gradient(600px circle at var(--glare-x, 50%) var(--glare-y, 50%), rgba(139, 92, 246, 0.15), transparent 40%)',
             opacity: isHovered ? 1 : 0,
             transition: 'opacity 0.3s',
           }}

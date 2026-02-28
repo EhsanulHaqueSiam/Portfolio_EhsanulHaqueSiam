@@ -1,5 +1,5 @@
 import { useEffect, useReducer, useCallback, useRef } from 'react';
-import { m, useSpring, useMotionValue, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 
 interface CursorState {
   isHovering: boolean;
@@ -10,9 +10,7 @@ interface CursorState {
 }
 
 type CursorAction =
-  | { type: 'SET_HOVERING'; payload: boolean }
   | { type: 'SET_CLICKING'; payload: boolean }
-  | { type: 'SET_CURSOR_TEXT'; payload: string }
   | { type: 'SET_VISIBLE'; payload: boolean }
   | { type: 'SET_TOUCH_DEVICE'; payload: boolean }
   | { type: 'HOVER_ENTER'; text: string }
@@ -20,12 +18,8 @@ type CursorAction =
 
 function cursorReducer(state: CursorState, action: CursorAction): CursorState {
   switch (action.type) {
-    case 'SET_HOVERING':
-      return { ...state, isHovering: action.payload };
     case 'SET_CLICKING':
       return { ...state, isClicking: action.payload };
-    case 'SET_CURSOR_TEXT':
-      return { ...state, cursorText: action.payload };
     case 'SET_VISIBLE':
       return { ...state, isVisible: action.payload };
     case 'SET_TOUCH_DEVICE':
@@ -44,35 +38,32 @@ const initialCursorState: CursorState = {
   isClicking: false,
   cursorText: '',
   isVisible: false,
-  isTouchDevice: true, // Start true to prevent flash
+  isTouchDevice: true,
 };
 
 export function CustomCursor() {
   const [state, dispatch] = useReducer(cursorReducer, initialCursorState);
   const { isHovering, isClicking, cursorText, isVisible, isTouchDevice } = state;
   const isVisibleRef = useRef(false);
+  const dotRef = useRef<HTMLDivElement>(null);
+  const ringRef = useRef<HTMLDivElement>(null);
 
-  const cursorX = useMotionValue(-100);
-  const cursorY = useMotionValue(-100);
-
-  // Dot follows cursor tightly
-  const dotSpringConfig = { damping: 35, stiffness: 500, mass: 0.3 };
-  const dotX = useSpring(cursorX, dotSpringConfig);
-  const dotY = useSpring(cursorY, dotSpringConfig);
-
-  // Ring trails behind with a softer, more elastic feel
-  const ringSpringConfig = { damping: 20, stiffness: 150, mass: 0.8 };
-  const ringX = useSpring(cursorX, ringSpringConfig);
-  const ringY = useSpring(cursorY, ringSpringConfig);
-
+  // Position via CSS custom properties — survives React re-renders because
+  // React does not know about them and won't reconcile them away.
   const handleMouseMove = useCallback((e: MouseEvent) => {
-    cursorX.set(e.clientX);
-    cursorY.set(e.clientY);
+    if (dotRef.current) {
+      dotRef.current.style.setProperty('--cx', `${e.clientX}px`);
+      dotRef.current.style.setProperty('--cy', `${e.clientY}px`);
+    }
+    if (ringRef.current) {
+      ringRef.current.style.setProperty('--cx', `${e.clientX}px`);
+      ringRef.current.style.setProperty('--cy', `${e.clientY}px`);
+    }
     if (!isVisibleRef.current) {
       isVisibleRef.current = true;
       dispatch({ type: 'SET_VISIBLE', payload: true });
     }
-  }, [cursorX, cursorY]);
+  }, []);
 
   const handleMouseDown = useCallback(() => dispatch({ type: 'SET_CLICKING', payload: true }), []);
   const handleMouseUp = useCallback(() => dispatch({ type: 'SET_CLICKING', payload: false }), []);
@@ -92,7 +83,9 @@ export function CustomCursor() {
     }
   }, []);
 
-  const handleElementLeave = useCallback(() => {
+  const handleElementLeave = useCallback((e: MouseEvent) => {
+    const relatedTarget = e.relatedTarget as HTMLElement | null;
+    if (relatedTarget?.closest('a, button, [data-cursor], [role="button"]')) return;
     dispatch({ type: 'HOVER_LEAVE' });
   }, []);
 
@@ -106,20 +99,17 @@ export function CustomCursor() {
     dispatch({ type: 'SET_VISIBLE', payload: true });
   }, []);
 
-  // Detect touch device
   useEffect(() => {
     const checkTouch = () => {
       const hasTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
       const hasCoarsePointer = window.matchMedia('(pointer: coarse)').matches;
       dispatch({ type: 'SET_TOUCH_DEVICE', payload: hasTouch && hasCoarsePointer });
     };
-
     checkTouch();
     window.addEventListener('resize', checkTouch);
     return () => window.removeEventListener('resize', checkTouch);
   }, []);
 
-  // Mouse event listeners
   useEffect(() => {
     if (isTouchDevice) return;
 
@@ -144,83 +134,52 @@ export function CustomCursor() {
 
   if (isTouchDevice) return null;
 
+  const dotSize = isHovering ? 8 : 12;
+  const ringSize = isHovering ? 80 : 40;
+
   return (
     <AnimatePresence>
       {isVisible && (
-        <>
-          {/* Main cursor dot - follows tightly */}
-          <m.div
+        <m.div
+          key="cursor-group"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.15 }}
+        >
+          {/* Dot — instant tracking via CSS custom properties, no transition on position */}
+          <div
+            ref={dotRef}
             className="fixed top-0 left-0 rounded-full bg-white pointer-events-none z-[9999] mix-blend-difference"
             style={{
-              x: dotX,
-              y: dotY,
-              translateX: '-50%',
-              translateY: '-50%',
-            }}
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{
-              opacity: 1,
+              width: dotSize,
+              height: dotSize,
+              transform: 'translate(var(--cx, -100px), var(--cy, -100px)) translate(-50%, -50%)',
+              transition: 'width 0.15s ease, height 0.15s ease, scale 0.12s ease',
               scale: isClicking ? 0.5 : isHovering ? 0.5 : 1,
-              width: isHovering ? 8 : 12,
-              height: isHovering ? 8 : 12,
-            }}
-            exit={{ opacity: 0, scale: 0.95 }}
-            transition={{
-              opacity: { duration: 0.2 },
-              scale: { type: 'spring', stiffness: 500, damping: 28 },
-              width: { type: 'spring', stiffness: 500, damping: 28 },
-              height: { type: 'spring', stiffness: 500, damping: 28 },
             }}
           />
 
-          {/* Outer ring - trails behind elegantly */}
-          <m.div
+          {/* Ring — trails behind via CSS transition on transform (compositor thread) */}
+          <div
+            ref={ringRef}
             className="fixed top-0 left-0 rounded-full pointer-events-none z-[9998] flex items-center justify-center"
             style={{
-              x: ringX,
-              y: ringY,
-              translateX: '-50%',
-              translateY: '-50%',
-            }}
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{
-              opacity: 1,
-              width: isHovering ? 80 : 40,
-              height: isHovering ? 80 : 40,
+              width: ringSize,
+              height: ringSize,
+              border: isHovering
+                ? '2px solid rgba(139, 92, 246, 0.6)'
+                : '1px solid rgba(139, 92, 246, 0.25)',
+              boxShadow: isHovering
+                ? '0 0 20px rgba(139, 92, 246, 0.3), inset 0 0 20px rgba(139, 92, 246, 0.1)'
+                : 'none',
+              backgroundColor: isHovering ? 'rgba(139, 92, 246, 0.08)' : 'transparent',
+              // Position via CSS var — survives re-renders. Transition creates the trailing effect.
+              transform: 'translate(var(--cx, -100px), var(--cy, -100px)) translate(-50%, -50%)',
+              transition: 'transform 0.18s cubic-bezier(0.25, 1, 0.5, 1), width 0.3s cubic-bezier(0.22, 1, 0.36, 1), height 0.3s cubic-bezier(0.22, 1, 0.36, 1), border 0.25s ease, box-shadow 0.3s ease, background-color 0.25s ease, scale 0.15s ease',
               scale: isClicking ? 0.85 : 1,
-              borderWidth: isHovering ? 2 : 1,
-            }}
-            exit={{ opacity: 0, scale: 0.95 }}
-            transition={{
-              opacity: { duration: 0.2 },
-              width: { type: 'spring', stiffness: 200, damping: 25 },
-              height: { type: 'spring', stiffness: 200, damping: 25 },
-              scale: { type: 'spring', stiffness: 400, damping: 25 },
-              borderWidth: { duration: 0.2 },
             }}
           >
-            {/* Ring border with gradient effect */}
-            <div
-              className="absolute inset-0 rounded-full transition-all duration-300"
-              style={{
-                border: isHovering
-                  ? '2px solid rgba(139, 92, 246, 0.6)'
-                  : '1px solid rgba(139, 92, 246, 0.25)',
-                boxShadow: isHovering
-                  ? '0 0 20px rgba(139, 92, 246, 0.3), inset 0 0 20px rgba(139, 92, 246, 0.1)'
-                  : 'none',
-              }}
-            />
-
-            {/* Background fill on hover */}
-            <m.div
-              className="absolute inset-0 rounded-full bg-violet-500/10"
-              initial={{ scale: 0.95, opacity: 0 }}
-              animate={{ scale: isHovering ? 1 : 0.95, opacity: isHovering ? 1 : 0 }}
-              transition={{ type: 'spring', stiffness: 300, damping: 25 }}
-            />
-
-            {/* Cursor text */}
             <AnimatePresence>
               {cursorText && (
                 <m.span
@@ -228,35 +187,14 @@ export function CustomCursor() {
                   animate={{ opacity: 1, scale: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.5, y: -5 }}
                   transition={{ type: 'spring', stiffness: 400, damping: 25 }}
-                  className="relative z-10 text-[11px] font-semibold text-violet-300 uppercase tracking-wider"
+                  className="relative z-10 text-[11px] font-semibold text-violet-300 uppercase tracking-wider whitespace-nowrap"
                 >
                   {cursorText}
                 </m.span>
               )}
             </AnimatePresence>
-          </m.div>
-
-          {/* Subtle glow effect on hover */}
-          <AnimatePresence>
-            {isHovering && (
-              <m.div
-                className="fixed top-0 left-0 rounded-full pointer-events-none z-[9997]"
-                style={{
-                  x: ringX,
-                  y: ringY,
-                  translateX: '-50%',
-                  translateY: '-50%',
-                }}
-                initial={{ opacity: 0, scale: 0.5, width: 80, height: 80 }}
-                animate={{ opacity: 0.15, scale: 1.5, width: 100, height: 100 }}
-                exit={{ opacity: 0, scale: 0.5 }}
-                transition={{ type: 'spring', stiffness: 150, damping: 20 }}
-              >
-                <div className="w-full h-full rounded-full bg-violet-500 blur-xl" />
-              </m.div>
-            )}
-          </AnimatePresence>
-        </>
+          </div>
+        </m.div>
       )}
     </AnimatePresence>
   );

@@ -7,6 +7,7 @@ export default defineConfig({
     // Note: Compression removed - Netlify handles Brotli/Gzip at edge
   ],
   build: {
+    target: 'es2020',
     // Terser for smaller bundle output
     minify: 'terser',
     terserOptions: {

@@ -1,21 +1,13 @@
-import { useRef } from 'react';
-import { m, useScroll, useTransform } from 'framer-motion';
+import { m } from 'framer-motion';
 import { profile, profileImage, hideImageOnError } from '../data/content';
 import { SectionHeader } from './ui/SectionHeader';
 import { ImageDistortion, MagneticHover } from './ui/ImageDistortion';
 import { Marquee } from './ui/Marquee';
 
 export function About() {
-  const containerRef = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ['start end', 'end start'],
-  });
-
-  const y = useTransform(scrollYProgress, [0, 1], [100, -100]);
 
   return (
-    <section id="about" ref={containerRef} className="py-16 sm:py-24 md:py-32 px-4 sm:px-6 md:px-12 lg:px-24 relative overflow-hidden">
+    <section id="about" className="py-16 sm:py-24 md:py-32 px-4 sm:px-6 md:px-12 lg:px-24 relative overflow-hidden">
       <div className="max-w-7xl mx-auto">
         <SectionHeader number="01" title="About Me" />
       </div>
@@ -79,8 +71,7 @@ export function About() {
           >
             <ImageDistortion className="h-full">
               <div className="group h-full min-h-[300px] rounded-3xl bg-gradient-to-br from-violet-500/20 to-amber-500/10 border border-white/5 relative overflow-hidden">
-                {/* Profile image with parallax */}
-                <m.div style={{ y }} className="absolute inset-0 flex items-center justify-center p-6">
+                <div className="absolute inset-0 flex items-center justify-center p-6">
                   <div className="relative">
                     {/* Glow effect */}
                     <div className="absolute inset-0 bg-gradient-to-br from-violet-500/30 to-amber-500/20 rounded-full blur-2xl scale-110 opacity-50 group-hover:opacity-80 transition-opacity duration-500" />
@@ -107,7 +98,7 @@ export function About() {
                       className="absolute inset-0 rounded-full border border-violet-500/20 scale-[1.2] animate-[spin_20s_linear_infinite]"
                     />
                   </div>
-                </m.div>
+                </div>
 
                 {/* Name label */}
                 <div className="absolute bottom-4 left-0 right-0 text-center">

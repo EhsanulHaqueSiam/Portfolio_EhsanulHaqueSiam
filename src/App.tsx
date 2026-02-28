@@ -2,11 +2,11 @@ import { lazy, Suspense } from 'react';
 import { LazyMotion, domAnimation, MotionConfig, useReducedMotion } from 'framer-motion';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
-import { About } from './components/About';
 import { SocialLinks } from './components/SocialLinks';
-import { CustomCursor, ScrollProgress, SmoothScroll, NoiseOverlay } from './components/ui';
+import { CustomCursor, ScrollProgress, SmoothScroll } from './components/ui';
 
 // Lazy-load below-fold sections to reduce initial JS parse/execute time
+const About = lazy(() => import('./components/About').then(m => ({ default: m.About })));
 const Experience = lazy(() => import('./components/Experience').then(m => ({ default: m.Experience })));
 const Skills = lazy(() => import('./components/Skills').then(m => ({ default: m.Skills })));
 const Projects = lazy(() => import('./components/Projects').then(m => ({ default: m.Projects })));
@@ -38,9 +38,6 @@ function App() {
           }}
         />
 
-        {/* Static noise texture overlay */}
-        <NoiseOverlay />
-
         {/* Custom cursor - only on desktop, disabled for reduced motion */}
         {!shouldReduceMotion && <CustomCursor />}
 
@@ -55,7 +52,9 @@ function App() {
           <Navbar />
           <main id="main-content">
             <Hero />
-            <div className="cv-auto"><About /></div>
+            <Suspense fallback={<SectionFallback />}>
+              <div className="cv-auto"><About /></div>
+            </Suspense>
             <Suspense fallback={<SectionFallback />}>
               <div className="cv-auto"><Experience /></div>
             </Suspense>

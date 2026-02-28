@@ -2,7 +2,6 @@ export { TiltCard } from './TiltCard';
 export { CustomCursor } from './Cursor';
 export { ScrollProgress } from './ScrollProgress';
 export { SmoothScroll } from './SmoothScroll';
-export { NoiseOverlay } from './NoiseOverlay';
 export { Marquee } from './Marquee';
 export { SplitText, RevealText } from './SplitText';
 export { ImageDistortion, MagneticHover } from './ImageDistortion';
