@@ -1,4 +1,4 @@
-import { useState, memo } from 'react';
+import { useState, memo, useMemo } from 'react';
 import { m, AnimatePresence } from 'framer-motion';
 import { skills, categoryIcons, skillLevelToPercent } from '../data/content';
 import { SectionHeader } from './ui/SectionHeader';
@@ -95,6 +95,13 @@ export function Skills() {
 
   const categories = skills.categories;
 
+  const stats = useMemo(() => [
+    { label: 'Categories', value: categories.length, icon: '📚' },
+    { label: 'Technologies', value: categories.reduce((acc, cat) => acc + cat.skills.length, 0), icon: '⚡' },
+    { label: 'Expert Level', value: categories.reduce((acc, cat) => acc + cat.skills.filter(s => s.level === 'expert').length, 0), icon: '🏆' },
+    { label: 'Advanced Level', value: categories.reduce((acc, cat) => acc + cat.skills.filter(s => s.level === 'advanced').length, 0), icon: '🚀' },
+  ], [categories]);
+
   return (
     <section id="skills" className="py-16 sm:py-24 md:py-32 px-4 sm:px-6 md:px-12 lg:px-24 relative overflow-hidden">
       {/* Background decoration */}
@@ -170,12 +177,7 @@ export function Skills() {
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
         >
-          {[
-            { label: 'Categories', value: categories.length, icon: '📚' },
-            { label: 'Technologies', value: categories.reduce((acc, cat) => acc + cat.skills.length, 0), icon: '⚡' },
-            { label: 'Expert Level', value: categories.reduce((acc, cat) => acc + cat.skills.filter(s => s.level === 'expert').length, 0), icon: '🏆' },
-            { label: 'Advanced Level', value: categories.reduce((acc, cat) => acc + cat.skills.filter(s => s.level === 'advanced').length, 0), icon: '🚀' },
-          ].map((stat) => (
+          {stats.map((stat) => (
             <div
               key={stat.label}
               className="text-center p-6 rounded-2xl bg-space-800/30 border border-white/5"

@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from 'react';
+import { useRef } from 'react';
 import { m, useScroll, useTransform, useSpring } from 'framer-motion';
 import { profile, profileHeroImage } from '../data/content';
 import { SplitText, RevealText } from './ui/SplitText';
@@ -6,18 +6,11 @@ import { MagneticHover } from './ui/ImageDistortion';
 import { Marquee } from './ui/Marquee';
 import { OptimizedImage } from './ui/OptimizedImage';
 import { ResumeIcon } from './ui/Icons';
+import { useMediaQuery } from '../hooks/useMediaQuery';
 
 export function Hero() {
   const containerRef = useRef<HTMLElement>(null);
-  const [isMobile, setIsMobile] = useState(false);
-
-  // Detect mobile for simplified animations
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
+  const isMobile = useMediaQuery('(max-width: 767px)');
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -27,7 +20,6 @@ export function Hero() {
   // Reduced parallax on mobile for better performance
   const y1 = useTransform(scrollYProgress, [0, 1], [0, isMobile ? 100 : 300]);
   const y2 = useTransform(scrollYProgress, [0, 1], [0, isMobile ? -50 : -200]);
-  const y3 = useTransform(scrollYProgress, [0, 1], [0, isMobile ? 50 : 150]);
   const scale = useTransform(scrollYProgress, [0, 0.5], [1, isMobile ? 0.95 : 0.8]);
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
   const rotate = useTransform(scrollYProgress, [0, 1], [0, isMobile ? 5 : 15]);
@@ -40,7 +32,7 @@ export function Hero() {
   return (
     <section
       ref={containerRef}
-      className="relative min-h-[150vh] md:min-h-[200vh]"
+      className="relative min-h-[150vh] lg:min-h-[175vh] xl:min-h-[200vh]"
     >
       {/* Sticky hero content */}
       <div className="sticky top-0 min-h-screen md:h-screen flex flex-col justify-center overflow-hidden pt-24 pb-20 md:pb-0">
@@ -53,7 +45,7 @@ export function Hero() {
               y: isMobile ? 0 : springY1,
               rotate: isMobile ? 0 : rotate,
               background: 'radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, transparent 70%)',
-              filter: isMobile ? 'blur(30px)' : 'blur(40px)',
+              filter: isMobile ? 'blur(30px)' : 'blur(20px)',
               top: '5%',
               right: '-15%',
             }}
@@ -65,7 +57,7 @@ export function Hero() {
             style={{
               y: isMobile ? 0 : springY2,
               background: 'radial-gradient(circle, rgba(245, 158, 11, 0.1) 0%, transparent 70%)',
-              filter: isMobile ? 'blur(30px)' : 'blur(40px)',
+              filter: isMobile ? 'blur(30px)' : 'blur(20px)',
               bottom: '5%',
               left: '-10%',
             }}
@@ -83,34 +75,20 @@ export function Hero() {
             }}
           />
 
-          {/* Decorative shapes - hidden on mobile for performance */}
-          <m.div
-            className="hidden md:block absolute top-[20%] left-[10%] w-16 h-16 md:w-24 md:h-24 border border-violet-500/20 rounded-2xl"
-            style={{ y: y3, rotate }}
-            initial={{ opacity: 0 }}
-            whileInView={{ rotate: [0, 90, 0], opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 20, repeat: Infinity, ease: 'linear', delay: 0.5 }}
+          {/* Decorative shapes - CSS animations (compositor-thread, auto-paused by content-visibility) */}
+          <div
+            className="hidden md:block absolute top-[20%] left-[10%] w-16 h-16 md:w-24 md:h-24 border border-violet-500/20 rounded-2xl hero-decorative-rotate"
           />
-          <m.div
-            className="hidden md:block absolute bottom-[30%] right-[15%] w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-amber-500/10 to-transparent rounded-full"
-            style={{ y: y1 }}
-            initial={{ opacity: 0 }}
-            whileInView={{ scale: [1, 1.2, 1], opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 4, repeat: Infinity, delay: 1 }}
+          <div
+            className="hidden md:block absolute bottom-[30%] right-[15%] w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-amber-500/10 to-transparent rounded-full hero-decorative-pulse"
           />
-          <m.div
-            className="hidden md:block absolute top-[40%] right-[8%] w-2 h-2 bg-violet-500 rounded-full"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: [0.2, 1, 0.2] }}
-            viewport={{ once: true }}
-            transition={{ duration: 2, repeat: Infinity, delay: 1.5 }}
+          <div
+            className="hidden md:block absolute top-[40%] right-[8%] w-2 h-2 bg-violet-500 rounded-full hero-decorative-blink"
           />
 
-          {/* Floating profile image - visible only on xl (1280px+) screens */}
+          {/* Floating profile image - visible from lg (1024px+) screens */}
           <m.div
-            className="hidden xl:block absolute top-[20%] right-[8%] z-0"
+            className="hidden lg:block absolute top-[20%] right-[8%] z-0"
             style={{ y: y2 }}
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -121,10 +99,8 @@ export function Hero() {
               <div className="absolute inset-0 bg-gradient-to-br from-violet-500/30 to-amber-500/20 rounded-[2rem] blur-2xl scale-110" />
 
               {/* Image container */}
-              <m.div
-                className="relative w-64 h-80 rounded-[2rem] overflow-hidden border border-white/10"
-                animate={{ y: [0, -10, 0] }}
-                transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+              <div
+                className="relative lg:w-48 lg:h-60 xl:w-64 xl:h-80 rounded-[2rem] overflow-hidden border border-white/10 hero-float"
               >
                 <OptimizedImage
                   src={profileHeroImage}
@@ -137,20 +113,16 @@ export function Hero() {
                 {/* Gradient overlays */}
                 <div className="absolute inset-0 bg-gradient-to-t from-space-900/60 via-transparent to-transparent" />
                 <div className="absolute inset-0 bg-gradient-to-br from-violet-500/10 to-transparent mix-blend-overlay" />
-              </m.div>
+              </div>
 
               {/* Staggered fade-in decorative elements */}
-              <m.div
-                className="absolute -top-4 -right-4 w-8 h-8 border-t-2 border-r-2 border-violet-500/50 rounded-tr-xl will-change-opacity"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: [0.5, 1, 0.5] }}
-                transition={{ duration: 3, repeat: Infinity, delay: 2 }}
+              <div
+                className="absolute -top-4 -right-4 w-8 h-8 border-t-2 border-r-2 border-violet-500/50 rounded-tr-xl hero-decorative-blink"
+                style={{ animationDuration: '3s' }}
               />
-              <m.div
-                className="absolute -bottom-4 -left-4 w-8 h-8 border-b-2 border-l-2 border-amber-500/50 rounded-bl-xl will-change-opacity"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: [0.5, 1, 0.5] }}
-                transition={{ duration: 3, repeat: Infinity, delay: 2.5 }}
+              <div
+                className="absolute -bottom-4 -left-4 w-8 h-8 border-b-2 border-l-2 border-amber-500/50 rounded-bl-xl hero-decorative-blink"
+                style={{ animationDuration: '3s', animationDelay: '0.5s' }}
               />
             </div>
           </m.div>
@@ -251,13 +223,11 @@ export function Hero() {
                   className="group relative inline-flex items-center justify-center gap-2 sm:gap-3 px-5 sm:px-8 py-3 sm:py-4 bg-white text-space-900 rounded-full font-medium overflow-hidden transition-transform active:scale-95 md:hover:scale-105 text-sm sm:text-base min-h-[44px]"
                 >
                   <span className="relative z-10 group-hover:text-white transition-colors duration-300">View Work</span>
-                  <m.span
-                    className="relative z-10 group-hover:text-white transition-colors duration-300"
-                    animate={{ x: [0, 5, 0] }}
-                    transition={{ duration: 1.5, repeat: Infinity }}
+                  <span
+                    className="relative z-10 group-hover:text-white transition-colors duration-300 inline-block arrow-bounce"
                   >
                     →
-                  </m.span>
+                  </span>
                   <div className="absolute inset-0 bg-gradient-to-r from-violet-500 to-amber-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </a>
               </MagneticHover>
@@ -302,10 +272,8 @@ export function Hero() {
               className="w-6 h-10 rounded-full border border-current flex items-start justify-center p-2"
               initial={{ opacity: 0.5 }}
             >
-              <m.div
-                className="w-1 h-2 rounded-full bg-current"
-                animate={{ y: [0, 12, 0] }}
-                transition={{ duration: 1.5, repeat: Infinity }}
+              <div
+                className="w-1 h-2 rounded-full bg-current scroll-dot"
               />
             </m.div>
           </a>

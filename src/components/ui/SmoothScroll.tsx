@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import Lenis from '@studio-freight/lenis';
-import { useFrame } from '../../hooks/useFrame';
+import { frame, cancelFrame } from 'framer-motion';
 
 export function SmoothScroll({ children }: { children: React.ReactNode }) {
   const lenisRef = useRef<Lenis | null>(null);
@@ -27,6 +27,14 @@ export function SmoothScroll({ children }: { children: React.ReactNode }) {
       return;
     }
 
+    // Use Framer Motion's frame scheduler instead of a separate RAF loop
+    const update = ({ timestamp }: { timestamp: number; delta: number }) => {
+      if (isVisibleRef.current && lenisRef.current) {
+        lenisRef.current.raf(timestamp);
+      }
+    };
+    frame.update(update, true);
+
     // Pause RAF loop when tab is hidden to save battery
     const handleVisibilityChange = () => {
       if (document.hidden) {
@@ -47,18 +55,13 @@ export function SmoothScroll({ children }: { children: React.ReactNode }) {
     window.addEventListener('lenis:start', handleLenisStart);
 
     return () => {
+      cancelFrame(update);
       document.removeEventListener('visibilitychange', handleVisibilityChange);
       window.removeEventListener('lenis:stop', handleLenisStop);
       window.removeEventListener('lenis:start', handleLenisStart);
       lenisRef.current?.destroy();
     };
   }, []);
-
-  useFrame((time) => {
-    if (isVisibleRef.current && lenisRef.current) {
-      lenisRef.current.raf(time);
-    }
-  });
 
   return <>{children}</>;
 }

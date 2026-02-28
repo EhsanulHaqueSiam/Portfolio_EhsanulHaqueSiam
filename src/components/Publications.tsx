@@ -36,7 +36,7 @@ export function Publications() {
                   onClick={() => setExpandedPub(expandedPub === index ? null : index)}
                   onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setExpandedPub(expandedPub === index ? null : index); } }}
                 >
-                  <div className="grid lg:grid-cols-5 gap-0">
+                  <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-0">
                     {/* Publication image */}
                     <div className="lg:col-span-2 relative overflow-hidden">
                       <div className="aspect-[4/3] lg:aspect-auto lg:h-full min-h-[250px] bg-gradient-to-br from-violet-500/10 to-amber-500/5">

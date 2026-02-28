@@ -1,38 +1,27 @@
-import { useEffect } from 'react';
+import { lazy, Suspense } from 'react';
 import { LazyMotion, domAnimation, MotionConfig, useReducedMotion } from 'framer-motion';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { About } from './components/About';
-import { Skills } from './components/Skills';
-import { Projects } from './components/Projects';
-import { Awards } from './components/Awards';
-import { Publications } from './components/Publications';
-import { Education } from './components/Education';
-import { Experience } from './components/Experience';
-import { Contact } from './components/Contact';
-import { Footer } from './components/Footer';
 import { SocialLinks } from './components/SocialLinks';
 import { CustomCursor, ScrollProgress, SmoothScroll, NoiseOverlay } from './components/ui';
-import { profileImage, profileHeroImage, featuredProjects, getProjectImage } from './data/content';
+
+// Lazy-load below-fold sections to reduce initial JS parse/execute time
+const Experience = lazy(() => import('./components/Experience').then(m => ({ default: m.Experience })));
+const Skills = lazy(() => import('./components/Skills').then(m => ({ default: m.Skills })));
+const Projects = lazy(() => import('./components/Projects').then(m => ({ default: m.Projects })));
+const Awards = lazy(() => import('./components/Awards').then(m => ({ default: m.Awards })));
+const Publications = lazy(() => import('./components/Publications').then(m => ({ default: m.Publications })));
+const Education = lazy(() => import('./components/Education').then(m => ({ default: m.Education })));
+const Contact = lazy(() => import('./components/Contact').then(m => ({ default: m.Contact })));
+const Footer = lazy(() => import('./components/Footer').then(m => ({ default: m.Footer })));
+
+function SectionFallback({ minHeight = '800px' }: { minHeight?: string }) {
+  return <div style={{ minHeight }} />;
+}
 
 function App() {
   const shouldReduceMotion = useReducedMotion();
-
-  // Preload critical images (non-blocking)
-  useEffect(() => {
-    const srcs = [profileHeroImage, profileImage, ...(featuredProjects[0]?.images[0] ? [getProjectImage(featuredProjects[0].images[0])] : [])];
-    const links: HTMLLinkElement[] = [];
-    srcs.forEach((src) => {
-      const link = document.createElement('link');
-      link.rel = 'preload';
-      link.as = 'image';
-      link.href = src;
-      if (src.endsWith('.webp')) link.type = 'image/webp';
-      document.head.appendChild(link);
-      links.push(link);
-    });
-    return () => { links.forEach((link) => link.remove()); };
-  }, []);
 
   return (
     <LazyMotion features={domAnimation} strict>
@@ -67,15 +56,31 @@ function App() {
           <main id="main-content">
             <Hero />
             <div className="cv-auto"><About /></div>
-            <div className="cv-auto"><Experience /></div>
-            <div className="cv-auto"><Skills /></div>
-            <div className="cv-auto"><Projects /></div>
-            <div className="cv-auto"><Awards /></div>
-            <div className="cv-auto"><Publications /></div>
-            <div className="cv-auto"><Education /></div>
-            <div className="cv-auto"><Contact /></div>
+            <Suspense fallback={<SectionFallback />}>
+              <div className="cv-auto"><Experience /></div>
+            </Suspense>
+            <Suspense fallback={<SectionFallback />}>
+              <div className="cv-auto"><Skills /></div>
+            </Suspense>
+            <Suspense fallback={<SectionFallback />}>
+              <div className="cv-auto"><Projects /></div>
+            </Suspense>
+            <Suspense fallback={<SectionFallback />}>
+              <div className="cv-auto"><Awards /></div>
+            </Suspense>
+            <Suspense fallback={<SectionFallback />}>
+              <div className="cv-auto"><Publications /></div>
+            </Suspense>
+            <Suspense fallback={<SectionFallback />}>
+              <div className="cv-auto"><Education /></div>
+            </Suspense>
+            <Suspense fallback={<SectionFallback />}>
+              <div className="cv-auto"><Contact /></div>
+            </Suspense>
           </main>
-          <Footer />
+          <Suspense fallback={<SectionFallback minHeight="200px" />}>
+            <Footer />
+          </Suspense>
         </div>
       </div>
     </SmoothScroll>

@@ -180,12 +180,9 @@ export function Awards() {
                     </h3>
 
                     {/* Description - expandable */}
-                    <m.p
-                      className="text-gray-400 text-sm leading-relaxed line-clamp-2 group-hover:line-clamp-none transition-all"
-                      layout
-                    >
+                    <p className="text-gray-400 text-sm leading-relaxed line-clamp-2 group-hover:line-clamp-none transition-all">
                       {award.desc}
-                    </m.p>
+                    </p>
 
                     {/* Image count indicator */}
                     {award.images.length > 1 && (

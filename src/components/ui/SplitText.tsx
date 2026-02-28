@@ -35,7 +35,7 @@ export function SplitText({
     }
   }, [children, type]);
 
-  const getVariants = (): Variants => {
+  const itemVariants = useMemo<Variants>(() => {
     switch (animation) {
       case 'fade':
         return {
@@ -68,9 +68,9 @@ export function SplitText({
           visible: { opacity: 1 },
         };
     }
-  };
+  }, [animation]);
 
-  const containerVariants: Variants = {
+  const containerVariants = useMemo<Variants>(() => ({
     hidden: {},
     visible: {
       transition: {
@@ -78,9 +78,7 @@ export function SplitText({
         delayChildren: delay,
       },
     },
-  };
-
-  const itemVariants = getVariants();
+  }), [stagger, delay]);
 
   return (
     <m.span

@@ -25,7 +25,7 @@ export function About() {
         <div className="grid grid-cols-12 gap-4 md:gap-6">
           {/* Main bio card - spans 8 columns */}
           <m.div
-            className="col-span-12 lg:col-span-8 row-span-2"
+            className="col-span-12 md:col-span-8 row-span-2"
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -71,7 +71,7 @@ export function About() {
 
           {/* Profile image card - spans 4 columns */}
           <m.div
-            className="col-span-12 sm:col-span-6 lg:col-span-4"
+            className="col-span-12 sm:col-span-6 md:col-span-4"
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -103,12 +103,8 @@ export function About() {
                     </div>
 
                     {/* Decorative ring */}
-                    <m.div
-                      className="absolute inset-0 rounded-full border border-violet-500/20"
-                      style={{ scale: 1.2 }}
-                      whileInView={{ rotate: 360 }}
-                      viewport={{ once: true, amount: 0 }}
-                      transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
+                    <div
+                      className="absolute inset-0 rounded-full border border-violet-500/20 scale-[1.2] animate-[spin_20s_linear_infinite]"
                     />
                   </div>
                 </m.div>
@@ -126,7 +122,7 @@ export function About() {
 
           {/* Stats card */}
           <m.div
-            className="col-span-12 sm:col-span-6 lg:col-span-4"
+            className="col-span-12 sm:col-span-6 md:col-span-4"
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -157,7 +153,7 @@ export function About() {
 
           {/* Location card */}
           <m.div
-            className="col-span-6 lg:col-span-4"
+            className="col-span-6 md:col-span-4"
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -174,7 +170,7 @@ export function About() {
 
           {/* Currently card */}
           <m.div
-            className="col-span-6 lg:col-span-4"
+            className="col-span-6 md:col-span-4"
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -194,7 +190,7 @@ export function About() {
 
           {/* Tech stack card */}
           <m.div
-            className="col-span-12 lg:col-span-4"
+            className="col-span-12 md:col-span-4"
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}

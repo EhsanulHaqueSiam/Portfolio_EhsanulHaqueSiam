@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { SplitText } from './SplitText';
 
 interface SectionHeaderProps {
@@ -6,7 +7,7 @@ interface SectionHeaderProps {
   className?: string;
 }
 
-export function SectionHeader({ number, title, className = '' }: SectionHeaderProps) {
+export const SectionHeader = memo(function SectionHeader({ number, title, className = '' }: SectionHeaderProps) {
   return (
     <div className={`mb-10 sm:mb-16 md:mb-20 ${className}`}>
       <div className="flex items-center gap-4 mb-4 sm:mb-8">
@@ -20,4 +21,4 @@ export function SectionHeader({ number, title, className = '' }: SectionHeaderPr
       </h2>
     </div>
   );
-}
+});

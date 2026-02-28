@@ -54,7 +54,7 @@ export function Projects() {
             transition={{ duration: 0.8 }}
           >
             <TiltCard className="group" maxTilt={3}>
-              <div className="grid lg:grid-cols-2 gap-6 sm:gap-8 p-4 sm:p-6 md:p-10 rounded-2xl sm:rounded-3xl bg-gradient-to-br from-space-800/80 to-space-800/40 border border-white/5 backdrop-blur-sm">
+              <div className="grid md:grid-cols-2 gap-6 sm:gap-8 p-4 sm:p-6 md:p-10 rounded-2xl sm:rounded-3xl bg-gradient-to-br from-space-800/80 to-space-800/40 border border-white/5 backdrop-blur-sm">
                 {/* Project image */}
                 <div className="relative overflow-hidden rounded-2xl group/image">
                   <div className="aspect-video bg-gradient-to-br from-violet-500/20 to-amber-500/10 overflow-hidden">
@@ -290,12 +290,9 @@ export function Projects() {
               className="inline-flex items-center gap-3 px-8 py-4 border border-violet-500/30 text-violet-400 rounded-full font-medium hover:bg-violet-500/10 transition-colors"
             >
               View All on GitHub
-              <m.span
-                animate={{ x: [0, 5, 0] }}
-                transition={{ duration: 1.5, repeat: Infinity }}
-              >
+              <span className="inline-block arrow-bounce">
                 →
-              </m.span>
+              </span>
             </a>
           </MagneticHover>
         </m.div>

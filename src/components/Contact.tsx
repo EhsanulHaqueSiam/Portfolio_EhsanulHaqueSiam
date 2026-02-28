@@ -91,7 +91,7 @@ export function Contact() {
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
               <m.a
                 href={`mailto:${profile.email}`}
-                className="text-lg sm:text-2xl md:text-4xl font-display font-bold text-white hover:text-violet-400 transition-colors break-all sm:break-normal"
+                className="text-lg sm:text-2xl md:text-3xl lg:text-4xl font-display font-bold text-white hover:text-violet-400 transition-colors break-all sm:break-normal"
                 whileHover={{ scale: 1.02 }}
               >
                 {profile.email}
@@ -139,18 +139,9 @@ export function Contact() {
               className="group inline-flex items-center gap-4 px-12 py-6 bg-gradient-to-r from-violet-500 to-violet-600 rounded-full font-display font-semibold text-white text-xl hover:shadow-lg hover:shadow-violet-500/25 transition-shadow"
             >
               <span>Say Hello</span>
-              <m.span
-                className="text-3xl"
-                animate={{ rotate: [0, 14, -8, 14, -4, 10, 0] }}
-                transition={{
-                  duration: 2.5,
-                  repeat: Infinity,
-                  repeatDelay: 1,
-                  ease: 'easeInOut',
-                }}
-              >
+              <span className="text-3xl wave-hand">
                 👋
-              </m.span>
+              </span>
             </a>
           </MagneticHover>
         </m.div>

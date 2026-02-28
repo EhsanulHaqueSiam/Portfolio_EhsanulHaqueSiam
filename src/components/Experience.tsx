@@ -42,6 +42,10 @@ export function Experience() {
                           <img
                             src={`/images/experience/${exp.logo}.webp`}
                             alt={exp.company}
+                            loading="lazy"
+                            decoding="async"
+                            width={48}
+                            height={48}
                             className="w-12 h-12 rounded-xl object-contain bg-white/10 p-1 flex-shrink-0"
                             onError={hideImageOnError}
                           />

@@ -44,21 +44,11 @@ export function Education() {
     <section id="education" className="py-16 sm:py-24 md:py-32 px-4 sm:px-6 md:px-12 lg:px-24 relative overflow-hidden">
       {/* Background decorations */}
       <div className="absolute inset-0 pointer-events-none">
-        <m.div
-          whileInView={{
-            rotate: [0, 360],
-          }}
-          viewport={{ once: true, amount: 0 }}
-          transition={{ duration: 120, repeat: Infinity, ease: 'linear' }}
-          className="absolute -top-1/4 -right-1/4 w-[600px] h-[600px] border border-violet-500/10 rounded-full"
+        <div
+          className="absolute -top-1/4 -right-1/4 w-[600px] h-[600px] border border-violet-500/10 rounded-full animate-[spin_120s_linear_infinite]"
         />
-        <m.div
-          whileInView={{
-            rotate: [360, 0],
-          }}
-          viewport={{ once: true, amount: 0 }}
-          transition={{ duration: 90, repeat: Infinity, ease: 'linear' }}
-          className="absolute -bottom-1/4 -left-1/4 w-[500px] h-[500px] border border-amber-500/10 rounded-full"
+        <div
+          className="absolute -bottom-1/4 -left-1/4 w-[500px] h-[500px] border border-amber-500/10 rounded-full animate-[spin_90s_linear_infinite_reverse]"
         />
       </div>
 

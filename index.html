@@ -57,13 +57,15 @@
     <link rel="preconnect" href="https://api.fontshare.com" crossorigin>
     <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
 
-    <!-- Fonts - non-blocking with preload -->
-    <link rel="preload" href="https://api.fontshare.com/v2/css?f[]=clash-display@700&f[]=satoshi@400,500&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <link rel="preload" href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600&f[]=satoshi@700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <!-- Fonts - single request, non-blocking with preload -->
+    <link rel="preload" href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&f[]=satoshi@400,500,700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript>
-      <link href="https://api.fontshare.com/v2/css?f[]=clash-display@700&f[]=satoshi@400,500&display=swap" rel="stylesheet">
-      <link href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600&f[]=satoshi@700&display=swap" rel="stylesheet">
+      <link href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&f[]=satoshi@400,500,700&display=swap" rel="stylesheet">
     </noscript>
+
+    <!-- Hero image preloads -->
+    <link rel="preload" as="image" type="image/webp" href="/images/profile2.webp">
+    <link rel="preload" as="image" type="image/webp" href="/images/profile-hero.webp">
 
     <!-- Structured Data: Person + WebSite + ProfilePage -->
     <script type="application/ld+json">
