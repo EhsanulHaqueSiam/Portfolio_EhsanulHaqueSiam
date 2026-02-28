@@ -14,22 +14,27 @@ When pushing changes to the remote repository:
 
 ### Push Workflow
 
+Uses absolute paths throughout (avoids `cd` issues with shell hooks like zoxide).
+
 ```bash
+SRC=/home/siam/Personal/portfolio
+DST=/home/siam/Personal/Portfolio_EhsanulHaqueSiam
+
 # 1. Clear target (keep .git)
-cd /home/siam/Personal/Portfolio_EhsanulHaqueSiam
-find . -mindepth 1 -maxdepth 1 -not -name '.git' -exec rm -rf {} +
+find $DST -mindepth 1 -maxdepth 1 -not -name '.git' -exec rm -rf {} +
 
 # 2. Copy essential files from source
-cp -r /home/siam/Personal/portfolio/{src,public,assets/data} .
-cp /home/siam/Personal/portfolio/{index.html,package.json,postcss.config.js,tailwind.config.js,tsconfig.json,vite.config.ts,netlify.toml,CLAUDE.md,.gitignore} .
+cp -r $SRC/{src,public} $DST/
+mkdir -p $DST/assets && cp -r $SRC/assets/data $DST/assets/
+cp $SRC/{index.html,package.json,postcss.config.js,tailwind.config.js,tsconfig.json,vite.config.ts,netlify.toml,CLAUDE.md,.gitignore} $DST/
 
-# 3. Verify no png/jpeg
-find . -type f \( -name "*.png" -o -name "*.jpg" -o -name "*.jpeg" \)
+# 3. Verify no png/jpeg (favicons excluded)
+find $DST -type f \( -name "*.png" -o -name "*.jpg" -o -name "*.jpeg" \)
 
 # 4. Commit and push
-git add -A
-git commit -m "commit message here"
-git push
+git -C $DST add -A
+git -C $DST commit -m "commit message here"
+git -C $DST push
 ```
 
 ## Build & Development Commands
