@@ -1,5 +1,64 @@
 [
   {
+    "name": "KaajKormo",
+    "desc": "Built Bangladesh's next-generation job portal with Tinder-style swipe-to-apply delivering AI-powered CV parsing, skill-match percentage scoring, and employer Kanban boards by architecting a full-stack application with React 19, Rust Axum backend, PostgreSQL 17, and Clerk authentication.",
+    "metrics": [
+      "React 19 + Rust/Axum",
+      "AI-powered CV parsing",
+      "Swipe-to-apply UX",
+      "Employer Kanban boards"
+    ],
+    "images": [
+      "kaajkormo"
+    ],
+    "showInHome": true,
+    "categories": [
+      "web",
+      "fullstack"
+    ],
+    "tags": [
+      "React",
+      "TypeScript",
+      "Rust",
+      "PostgreSQL",
+      "TailwindCSS",
+      "Framer Motion"
+    ],
+    "links": {
+      "code": "https://github.com/EhsanulHaqueSiam/kaajkormo"
+    }
+  },
+  {
+    "name": "OfferLagbe",
+    "desc": "Shipped a real-time, map-based deals platform for Bangladesh with community-driven trust scoring achieving auto-moderation at <10% trust threshold and Community Verified badges at 5+ upvotes by building with React 19, TanStack Router, Convex real-time database, and MapLibre GL with clustering and heatmap visualization.",
+    "metrics": [
+      "Real-time Convex subscriptions",
+      "MapLibre clustering + heatmap",
+      "Community trust scoring",
+      "PWA with offline caching"
+    ],
+    "images": [
+      "offerlagbe"
+    ],
+    "showInHome": true,
+    "categories": [
+      "web",
+      "fullstack"
+    ],
+    "tags": [
+      "React",
+      "TypeScript",
+      "TailwindCSS",
+      "Convex",
+      "MapLibre",
+      "PWA"
+    ],
+    "links": {
+      "view": "https://offerlagbe.netlify.app/",
+      "code": "https://github.com/EhsanulHaqueSiam/offerlagbe"
+    }
+  },
+  {
     "name": "Aurum Gold",
     "desc": "Built a premium gold e-commerce platform with editorial-grade UX and live gold rate integration targeting Lighthouse 90+ performance scores by architecting with React 19, TanStack Router, Zustand state management, and cinematic Framer Motion animations.",
     "metrics": [
