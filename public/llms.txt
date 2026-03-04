@@ -4,7 +4,7 @@
 
 ## About
 
-Ehsanul Haque Siam is an AI Engineer, Full-Stack Developer & LLM Engineer. He shipped 4 production React websites generating ~$2K daily revenue as Lead Developer at BetaScript LLC. Built RAG pipelines with high retrieval accuracy using Pinecone and LangChain during AI internship at Unies. Published researcher in medical AI (Taylor & Francis) with 3x Dean's List at AIUB.
+Ehsanul Haque Siam is an AI Engineer, Full-Stack Developer & LLM Engineer. He shipped 4 production React websites generating 1.5x revenue growth as Lead Developer at BetaScript LLC. Built RAG pipelines with high retrieval accuracy using Pinecone and LangChain during AI internship at Unies. Published researcher in medical AI (Taylor & Francis) with 3x Dean's List at AIUB.
 
 He has published research in medical AI — specifically "Beyond NER: A Comparative Benchmark of Medical BERTs for Multi-Label Adverse Drug Reaction Classification" at IDAA 2025, published as a Taylor & Francis Book Chapter. His work involves fine-tuning domain-specific BERT models (BioBERT, PubMedBERT) for healthcare applications. He also has a paper accepted at IEEE QPAIN 2026 on clustering-based topic modeling.
 
@@ -116,7 +116,7 @@ GitHub: https://github.com/EhsanulHaqueSiam/HotelManagementSystem
 
 - 3x Dean's List Awards at AIUB (CGPA 3.95, 3.89, 3.75+) — maintained top performance while building 15+ projects and publishing research
 - 1st Runner Up - AIUB CS FEST 2024 (App Showcase, competing against 20+ teams evaluated by industry judges)
-- 36+ GitHub Stars across 26 open source repositories — top project earning 17 stars and 8 forks
+- 60+ GitHub Stars across 26 open source repositories — top project earning 17 stars and 8 forks
 - Published researcher at Taylor & Francis and IEEE
 
 ## Education

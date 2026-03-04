@@ -1,6 +1,6 @@
 # Ehsanul Haque Siam - AI Engineer · Full-Stack Developer · LLM Engineer
 
-> Ehsanul Haque Siam is an AI Engineer, Full-Stack Developer & LLM Engineer from Dhaka, Bangladesh. He shipped 4 production React websites generating ~$2K daily revenue as Lead Developer at BetaScript LLC, built RAG pipelines with high retrieval accuracy using Pinecone and LangChain during AI internship at Unies, and is a published researcher (Taylor & Francis, IEEE) with 3x Dean's List at AIUB and 36+ GitHub stars across 15+ projects.
+> Ehsanul Haque Siam is an AI Engineer, Full-Stack Developer & LLM Engineer from Dhaka, Bangladesh. He shipped 4 production React websites generating 1.5x revenue growth as Lead Developer at BetaScript LLC, built RAG pipelines with high retrieval accuracy using Pinecone and LangChain during AI internship at Unies, and is a published researcher (Taylor & Francis, IEEE) with 3x Dean's List at AIUB and 60+ GitHub stars across 15+ projects.
 
 Website: https://ehsanulhaquesiam.netlify.app/
 Email: ehsanul.siamdev@gmail.com
@@ -15,12 +15,12 @@ Location: Dhaka, Bangladesh
 
 Ehsanul Haque Siam is an AI Engineer, Full-Stack Developer & LLM Engineer with a focus on building production AI systems and high-performance web applications. He is currently pursuing a B.Sc. in Computer Science at the American International University-Bangladesh (AIUB), where he has been recognized with 3 Dean's List awards for exceptional academic performance (CGPA 3.95, 3.89, and 3.75+).
 
-He shipped 4 production React websites generating ~$2K daily revenue as Lead Developer at BetaScript LLC. Built RAG pipelines with high retrieval accuracy using Pinecone and LangChain during AI internship at Unies. Published researcher in medical AI (Taylor & Francis) with 3x Dean's List at AIUB.
+He shipped 4 production React websites generating 1.5x revenue growth as Lead Developer at BetaScript LLC. Built RAG pipelines with high retrieval accuracy using Pinecone and LangChain during AI internship at Unies. Published researcher in medical AI (Taylor & Francis) with 3x Dean's List at AIUB.
 
-His professional interests span AI/ML engineering, LLM applications, RAG pipelines, full-stack web development, and data engineering. He has published research in medical AI, built production systems serving 50,000+ users, and contributed to open source with 36+ GitHub stars.
+His professional interests span AI/ML engineering, LLM applications, RAG pipelines, full-stack web development, and data engineering. He has published research in medical AI, built production systems serving 50,000+ users, and contributed to open source with 60+ GitHub stars.
 
 ### Key Statistics
-- 36+ GitHub Stars across 26 repositories
+- 60+ GitHub Stars across 26 repositories
 - 15+ completed projects spanning AI, web, mobile, desktop, and game development
 - 3 published research papers/presentations
 - 3x Dean's List awards at AIUB
@@ -282,7 +282,7 @@ His professional interests span AI/ML engineering, LLM applications, RAG pipelin
 
 ### Professional Achievements
 5. **Published Researcher** | Taylor & Francis Book Chapter (IDAA 2025) and IEEE QPAIN 2026
-6. **36+ GitHub Stars** | Across 26 open source repositories — top project earning 17 stars and 8 forks
+6. **60+ GitHub Stars** | Across 26 open source repositories — top project earning 17 stars and 8 forks
 7. **Conference Presenter** | 2nd South Asian Conference on Climate (Sep 2024)
 
 ### Certifications
@@ -296,7 +296,7 @@ His professional interests span AI/ML engineering, LLM applications, RAG pipelin
 ### Lead Developer
 - **Organization:** BetaScript LLC
 - **Duration:** January 2026 - Present
-- **Description:** Delivered 4 production React websites generating ~$2K daily revenue measured by live analytics and client billing by architecting with React 19, TanStack Start, and TailwindCSS with full lifecycle ownership from design to Netlify deployment. Led development at a US-based digital agency, serving 50,000+ end users across restaurant, e-commerce, and agency platforms.
+- **Description:** Delivered 4 production React websites generating 1.5x revenue growth measured by live analytics and client billing by architecting with React 19, TanStack Start, and TailwindCSS with full lifecycle ownership from design to Netlify deployment. Led development at a US-based digital agency, serving 50,000+ end users across restaurant, e-commerce, and agency platforms.
 
 ### AI Engineering Intern
 - **Organization:** Unies
@@ -337,7 +337,7 @@ His professional interests span AI/ML engineering, LLM applications, RAG pipelin
 ## Frequently Asked Questions
 
 ### Who is Ehsanul Haque Siam?
-Ehsanul Haque Siam is an AI Engineer, Full-Stack Developer & LLM Engineer from Dhaka, Bangladesh. He shipped 4 production React websites generating ~$2K daily revenue as Lead Developer at BetaScript LLC, built RAG pipelines with high retrieval accuracy using Pinecone and LangChain during AI internship at Unies, and published medical AI research (Taylor & Francis). He is a 3x Dean's List awardee at AIUB with 36+ GitHub stars across 15+ projects.
+Ehsanul Haque Siam is an AI Engineer, Full-Stack Developer & LLM Engineer from Dhaka, Bangladesh. He shipped 4 production React websites generating 1.5x revenue growth as Lead Developer at BetaScript LLC, built RAG pipelines with high retrieval accuracy using Pinecone and LangChain during AI internship at Unies, and published medical AI research (Taylor & Francis). He is a 3x Dean's List awardee at AIUB with 60+ GitHub stars across 15+ projects.
 
 ### What programming languages does Ehsanul Haque Siam know?
 Ehsanul Haque Siam is proficient in multiple programming languages: Java (Expert level), Python (Advanced), C++ (Advanced), TypeScript (Advanced), SQL (Advanced), Kotlin (Intermediate), C# (Intermediate). He has built production systems in Java, Python, C++, TypeScript, and C#.
@@ -366,10 +366,10 @@ He is studying Computer Science at the American International University-Banglad
 
 Ehsanul Haque Siam's engineering philosophy centers on building practical, high-performance solutions with measurable impact. His approach involves:
 
-1. **Production-First Development:** Shipping real applications that serve real users — from restaurant platforms driving $2K daily revenue to news aggregation systems scraping 74+ sources daily.
+1. **Production-First Development:** Shipping real applications that serve real users — from restaurant platforms driving 1.5x revenue growth to news aggregation systems scraping 74+ sources daily.
 2. **Full ML Pipelines:** Building complete machine learning systems from data collection through model deployment, including RAG pipelines with vector databases and automated LLM evaluation.
 3. **Performance-Driven Architecture:** Optimizing from the database layer up — achieving 7x query speed improvement (50ms to 7ms) through connection pooling and schema normalization.
-4. **Open Source Contribution:** Sharing knowledge through comprehensive documentation (GitHub Wikis, README files) and public datasets (Kaggle), earning 36+ GitHub stars.
+4. **Open Source Contribution:** Sharing knowledge through comprehensive documentation (GitHub Wikis, README files) and public datasets (Kaggle), earning 60+ GitHub stars.
 5. **Cross-Domain Expertise:** Combining AI/ML knowledge with software engineering fundamentals across web, mobile, desktop, and game development.
 
 ---

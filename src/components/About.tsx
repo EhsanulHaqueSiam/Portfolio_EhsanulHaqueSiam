@@ -46,7 +46,7 @@ export function About() {
                     viewport={{ once: true }}
                     transition={{ delay: 0.5 }}
                   >
-                    From <span className="text-amber-400">4 production React websites</span> generating ~$2K daily revenue
+                    From <span className="text-amber-400">4 production React websites</span> driving 1.5x revenue growth
                     to <span className="text-violet-400">RAG pipelines</span> with LangChain and Pinecone — I focus on
                     shipping high-performance systems. Published researcher in medical AI (Taylor & Francis)
                     with 3x Dean's List at AIUB.
