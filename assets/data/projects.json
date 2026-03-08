@@ -76,7 +76,7 @@
   },
   {
     "name": "KaajKormo",
-    "desc": "Built Bangladesh's next-generation job portal with Tinder-style swipe-to-apply delivering AI-powered CV parsing, skill-match percentage scoring, and employer Kanban boards by architecting a full-stack application with React 19, Rust Axum backend, PostgreSQL 17, and Clerk authentication.",
+    "desc": "Built Bangladesh's next-generation job portal with Tinder-style swipe-to-apply as measured by AI-powered CV parsing with skill-match percentage scoring and employer Kanban pipeline tracking by architecting a full-stack application with React 19, Rust Axum backend, PostgreSQL 17, and Clerk authentication.",
     "metrics": [
       "React 19 + Rust/Axum",
       "AI-powered CV parsing",
@@ -105,7 +105,7 @@
   },
   {
     "name": "OfferLagbe",
-    "desc": "Shipped a real-time, map-based deals platform for Bangladesh with community-driven trust scoring achieving auto-moderation at <10% trust threshold and Community Verified badges at 5+ upvotes by building with React 19, TanStack Router, Convex real-time database, and MapLibre GL with clustering and heatmap visualization.",
+    "desc": "Shipped a real-time, map-based deals platform for Bangladesh with community-driven trust scoring as measured by auto-moderation triggers at <10% trust threshold and Community Verified badges at 5+ upvotes by building with React 19, TanStack Router, Convex real-time database, and MapLibre GL with clustering and heatmap visualization.",
     "metrics": [
       "Real-time Convex subscriptions",
       "MapLibre clustering + heatmap",
@@ -135,7 +135,7 @@
   },
   {
     "name": "Aurum Gold",
-    "desc": "Built a premium gold e-commerce platform with editorial-grade UX and live gold rate integration targeting Lighthouse 90+ performance scores by architecting with React 19, TanStack Router, Zustand state management, and cinematic Framer Motion animations.",
+    "desc": "Built a premium gold e-commerce platform with editorial-grade UX and live gold rate integration as measured by Lighthouse 90+ performance scores and real-time price sync by architecting with React 19, TanStack Router, Zustand state management, and cinematic Framer Motion animations.",
     "metrics": [
       "Lighthouse 90+ target",
       "Live gold rate pricing",
@@ -165,7 +165,7 @@
   },
   {
     "name": "Void Threads",
-    "desc": "Created a premium streetwear e-commerce platform with conversion-optimized UX featuring sales psychology patterns like exit-intent popups and urgency indicators by building with React 19, TanStack Start, SSR via Nitro 3, and mobile-first responsive design from 320px to 1920px.",
+    "desc": "Created a premium streetwear e-commerce platform with conversion-optimized UX as measured by sales psychology patterns including exit-intent recovery, urgency indicators, and full 320px–1920px responsive coverage by building with React 19, TanStack Start, SSR via Nitro 3, and mobile-first design.",
     "metrics": [
       "SSR with Nitro 3",
       "320px\u20131920px responsive",
@@ -554,7 +554,7 @@
   },
   {
     "name": "Android Development Journey",
-    "desc": "Comprehensive Android learning repository with 54+ structured lessons from beginner to advanced. Covers MVVM architecture, Retrofit, Hilt, RxJava3, Room Database, Firebase, and Paging 3.",
+    "desc": "Curated a comprehensive Android learning repository with 54+ structured lessons as measured by full coverage from beginner fundamentals to advanced patterns (MVVM, Hilt, Paging 3) by building hands-on projects with Retrofit, RxJava3, Room Database, and Firebase integration.",
     "metrics": [
       "54+ structured lessons",
       "MVVM + Retrofit + Hilt",
@@ -583,7 +583,7 @@
   },
   {
     "name": "Solar System Simulation",
-    "desc": "3D solar system simulation using OpenGL featuring all planets, moons, real-time orbital animations, texture mapping, and interactive camera controls. Cross-platform with CMake.",
+    "desc": "Rendered a 3D solar system simulation with 9 planets and moons in real-time as measured by smooth orbital animations, texture-mapped surfaces, and interactive camera controls by implementing OpenGL rendering with GLUT, GLM math, and cross-platform CMake builds.",
     "metrics": [
       "9 planets + moons",
       "Real-time orbital rotation",
@@ -612,7 +612,7 @@
   },
   {
     "name": "Pharmacy Management System",
-    "desc": "C# .NET desktop application with Windows Forms and SQL Server. Features medicine management, sales tracking, inventory control, and user management with Guna UI framework.",
+    "desc": "Built a pharmacy operations platform streamlining medicine management and sales tracking as measured by integrated inventory control, user role management, and 2 contributors collaborating under MIT license by developing a C# .NET Windows Forms application with SQL Server and Guna UI framework.",
     "metrics": [
       "MIT License",
       "2 contributors",
@@ -640,7 +640,7 @@
   },
   {
     "name": "CVPR - Computer Vision",
-    "desc": "Computer Vision and Pattern Recognition project using Jupyter Notebook. Explores image processing, face detection, and CNN-based classification techniques.",
+    "desc": "Implemented computer vision pipelines for face detection and image classification as measured by CNN-based pattern recognition accuracy across multiple datasets by building end-to-end Jupyter Notebook workflows with OpenCV preprocessing and TensorFlow model training.",
     "metrics": [
       "Face detection",
       "CNN implementation",
@@ -668,7 +668,7 @@
   },
   {
     "name": "Kotlin Practice",
-    "desc": "Kotlin learning repository covering fundamentals to advanced features including coroutines, delegation, collections, and Gradle build system with Kotlin DSL.",
+    "desc": "Mastered Kotlin from fundamentals to advanced concurrency as measured by working implementations of coroutines, flows, property delegation, and functional collection patterns by building progressive exercises with Gradle Kotlin DSL and Android-ready architecture.",
     "metrics": [
       "Coroutines & Flows",
       "Property delegation",
@@ -696,7 +696,7 @@
   },
   {
     "name": "Advent of Code 2024",
-    "desc": "Algorithmic challenge solutions in Kotlin demonstrating functional programming patterns, list transformations, and sequence validation algorithms.",
+    "desc": "Solved Advent of Code 2024 algorithmic challenges in pure Kotlin as measured by multiple optimized solutions per day using functional programming patterns by implementing list transformations, sequence validation, and recursive problem-solving strategies.",
     "metrics": [
       "100% Kotlin",
       "Functional style",
@@ -723,7 +723,7 @@
   },
   {
     "name": "Java Practice Repository",
-    "desc": "Advanced Java practice covering multithreading, network programming (TCP/UDP), collections, and concurrency patterns including Producer-Consumer and ReentrantLock.",
+    "desc": "Built advanced Java concurrency and networking projects as measured by working implementations of Producer-Consumer, ReentrantLock patterns, and TCP/UDP socket programming by developing a multithreaded ATM simulator, collection utilities, and network client-server applications.",
     "metrics": [
       "Multithreaded ATM project",
       "TCP/UDP networking",
@@ -751,7 +751,7 @@
   },
   {
     "name": "Portfolio Website",
-    "desc": "Responsive portfolio website built with HTML, CSS, and JavaScript. Features dark/light theme, scroll animations, PWA support, and dynamic content loading from JSON.",
+    "desc": "Designed a responsive portfolio website with PWA support as measured by dark/light theme toggle, ScrollReveal animations, and dynamic JSON-driven content loading by building with vanilla HTML, CSS, JavaScript, and jQuery deployed on Netlify.",
     "metrics": [
       "PWA enabled",
       "Dark/Light themes",
