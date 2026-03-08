@@ -1,5 +1,80 @@
 [
   {
+    "name": "TTT Autos",
+    "desc": "Delivered a premium vehicle dealership platform with cinematic 'Velocity Noir' UI, interactive 3D Spline showcases, and a full admin dashboard supporting cars, motorcycles, and bicycles as measured by a polymorphic inventory system with 7 indexed database tables and multi-filter search across 12+ facets by architecting a full-stack application with React 19, TanStack Start SSR, Drizzle ORM on SQLite, Better Auth, and UploadThing file management.",
+    "metrics": [
+      "3D Spline vehicle showcases",
+      "Full admin CRUD dashboard",
+      "12+ filter facets with pagination",
+      "Trust-first UX (zero FOMO tactics)"
+    ],
+    "images": [
+      "ttt-autos"
+    ],
+    "showInHome": true,
+    "categories": [
+      "web",
+      "fullstack"
+    ],
+    "tags": [
+      "React",
+      "TypeScript",
+      "TailwindCSS",
+      "Framer Motion",
+      "TanStack Start",
+      "Drizzle ORM",
+      "SQLite",
+      "Spline 3D"
+    ],
+    "links": {
+      "view": "https://ttt.autos/"
+    },
+    "caseStudy": {
+      "problem": "Traditional dealership websites rely on generic templates with FOMO-driven sales tactics, lacking a premium browsing experience that builds trust through transparency and visual immersion.",
+      "solution": "Built a cinematic 'Velocity Noir' dealership platform with interactive 3D models, headlight-effect UI, multi-angle photo galleries, and a comprehensive admin dashboard — all architected for trust-first positioning with transparent pricing and verified quality badges.",
+      "process": [
+        {
+          "title": "Cinematic Design System",
+          "desc": "Implemented 'Velocity Noir' aesthetic with headlight amber gradients, industrial grain textures, and dimensional parallax using Framer Motion animations.",
+          "icon": "fas fa-palette"
+        },
+        {
+          "title": "Polymorphic Inventory",
+          "desc": "Designed a flexible Drizzle ORM schema supporting cars, motorcycles, and bicycles with category-specific fields, 7 indexed tables, and 12+ filter facets.",
+          "icon": "fas fa-database"
+        },
+        {
+          "title": "3D Vehicle Immersion",
+          "desc": "Integrated Spline 3D scenes with lazy loading via Intersection Observer, error boundaries, and Suspense fallbacks for zero-jank performance.",
+          "icon": "fas fa-cube"
+        },
+        {
+          "title": "Admin Dashboard",
+          "desc": "Built full inventory CRUD, photo management with UploadThing, hero slide editor, testimonials, and analytics with Better Auth session management.",
+          "icon": "fas fa-tachometer-alt"
+        }
+      ],
+      "results": [
+        {
+          "label": "DB Tables",
+          "value": "7"
+        },
+        {
+          "label": "Filter Facets",
+          "value": "12+"
+        },
+        {
+          "label": "Admin Pages",
+          "value": "17"
+        },
+        {
+          "label": "Animation Variants",
+          "value": "10+"
+        }
+      ]
+    }
+  },
+  {
     "name": "KaajKormo",
     "desc": "Built Bangladesh's next-generation job portal with Tinder-style swipe-to-apply delivering AI-powered CV parsing, skill-match percentage scoring, and employer Kanban boards by architecting a full-stack application with React 19, Rust Axum backend, PostgreSQL 17, and Clerk authentication.",
     "metrics": [
