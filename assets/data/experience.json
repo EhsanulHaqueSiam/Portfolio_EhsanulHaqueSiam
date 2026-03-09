@@ -1,5 +1,13 @@
 [
     {
+        "company": "BDTracks",
+        "role": "AI & Data Engineer",
+        "date": "Aug 2025 - Present",
+        "desc": "Built 15+ web scrapers powering Bangladesh's commodity and accident tracking platform (bdtracks.com). Trained and fine-tuned Google Gemini 2.5 Flash and Gemini 2.5 Pro using Vertex AI for automated data classification across commodity pricing and accident report analysis. Engineered production data pipelines processing daily feeds from multiple national sources into structured, searchable datasets serving live dashboards.",
+        "alignment": "left",
+        "showInHome": true
+    },
+    {
         "company": "BetaScript LLC",
         "role": "Solo Developer (Part-time)",
         "date": "Jan 2026 - Present",
