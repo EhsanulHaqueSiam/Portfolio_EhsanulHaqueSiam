@@ -1,5 +1,5 @@
 import { m } from 'framer-motion';
-import { featuredExperience, profile, hideImageOnError } from '../data/content';
+import { featuredExperience, hideImageOnError } from '../data/content';
 import { SectionHeader } from './ui/SectionHeader';
 import { MagneticHover } from './ui/ImageDistortion';
 
@@ -85,9 +85,7 @@ export function Experience() {
         >
           <MagneticHover strength={20}>
             <a
-              href={profile.resume}
-              target="_blank"
-              rel="noopener noreferrer"
+              href="#resume"
               className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-violet-500/20 to-amber-500/10 rounded-full border border-violet-500/30 hover:border-violet-500/50 transition-all font-medium text-white"
             >
               <svg

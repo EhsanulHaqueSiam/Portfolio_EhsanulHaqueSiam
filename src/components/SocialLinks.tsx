@@ -35,9 +35,7 @@ export function SocialLinks() {
       </MagneticHover>
       <MagneticHover strength={30}>
         <a
-          href={profile.resume}
-          target="_blank"
-          rel="noopener noreferrer"
+          href="#resume"
           aria-label="Resume"
           className="group relative w-12 h-12 rounded-full border border-white/10 bg-space-900/80 flex items-center justify-center text-gray-400 hover:text-white hover:border-amber-500/50 hover:bg-amber-500/10 transition-all duration-300"
         >
