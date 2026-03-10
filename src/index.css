@@ -43,6 +43,11 @@
     }
   }
 
+  /* Hide preloader once CSS+JS loaded */
+  #preloader {
+    display: none !important;
+  }
+
   body {
     @apply bg-space-900 text-gray-100 font-body antialiased;
     overflow-x: hidden;
@@ -229,4 +234,106 @@
 @keyframes marquee-right {
   0% { transform: translateX(-50%); }
   100% { transform: translateX(0); }
+}
+
+/* Resume bullet points */
+.resume-bullets {
+  list-style: disc;
+  padding-left: 1.25rem;
+}
+
+.resume-bullets li {
+  font-size: 0.8125rem;
+  color: rgb(209 213 219);
+  margin-bottom: 0.125rem;
+  line-height: 1.5;
+}
+
+/* ===== Print styles for resume PDF download ===== */
+@media print {
+  html.resume-printing *,
+  html.resume-printing *::before,
+  html.resume-printing *::after {
+    visibility: hidden !important;
+    animation: none !important;
+    transition: none !important;
+  }
+
+  html.resume-printing .resume-paper,
+  html.resume-printing .resume-paper *,
+  html.resume-printing .resume-paper *::before,
+  html.resume-printing .resume-paper *::after {
+    visibility: visible !important;
+  }
+
+  html.resume-printing body {
+    background: white !important;
+    overflow: visible !important;
+  }
+
+  html.resume-printing .resume-paper {
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    background: white !important;
+    color: #000 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    overflow: visible !important;
+  }
+
+  html.resume-printing .resume-paper .resume-chrome {
+    display: none !important;
+  }
+
+  html.resume-printing .resume-paper * {
+    color: #000 !important;
+    background: transparent !important;
+  }
+
+  html.resume-printing .resume-paper a {
+    color: #000 !important;
+    text-decoration: underline !important;
+  }
+
+  html.resume-printing .resume-paper .resume-contact span {
+    color: #555 !important;
+  }
+
+  html.resume-printing .resume-paper .resume-section-title {
+    color: #000 !important;
+    border-bottom: 1.5px solid #000 !important;
+    letter-spacing: 0.15em !important;
+    font-size: 10pt !important;
+  }
+
+  html.resume-printing .resume-paper .resume-header-border {
+    border-bottom-color: transparent !important;
+  }
+
+  html.resume-printing .resume-paper .resume-name {
+    font-size: 22pt !important;
+    letter-spacing: 0.05em !important;
+  }
+
+  html.resume-printing .resume-paper .resume-bullets li {
+    color: #000 !important;
+    font-size: 9.5pt !important;
+    line-height: 1.35 !important;
+    margin-bottom: 1px !important;
+  }
+
+  html.resume-printing .resume-paper .resume-pub-list li {
+    margin-bottom: 3px !important;
+  }
+
+  @page {
+    margin: 0.4in 0.5in;
+    size: letter;
+  }
 }

@@ -15,6 +15,7 @@ const Publications = lazy(() => import('./components/Publications').then(m => ({
 const Education = lazy(() => import('./components/Education').then(m => ({ default: m.Education })));
 const Contact = lazy(() => import('./components/Contact').then(m => ({ default: m.Contact })));
 const Footer = lazy(() => import('./components/Footer').then(m => ({ default: m.Footer })));
+const Resume = lazy(() => import('./components/Resume').then(m => ({ default: m.Resume })));
 
 function SectionFallback({ minHeight = '800px' }: { minHeight?: string }) {
   return <div style={{ minHeight }} />;
@@ -81,6 +82,11 @@ function App() {
             <Footer />
           </Suspense>
         </div>
+
+        {/* Resume overlay - self-managed via URL hash */}
+        <Suspense fallback={null}>
+          <Resume />
+        </Suspense>
       </div>
     </SmoothScroll>
     </MotionConfig>

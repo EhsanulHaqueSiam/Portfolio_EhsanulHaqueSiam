@@ -234,9 +234,7 @@ export function Hero() {
               {/* Resume button - visible on all screens */}
               <MagneticHover strength={isMobile ? 0 : 20}>
                 <a
-                  href={profile.resume}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href="#resume"
                   className="group relative inline-flex items-center justify-center gap-2 px-5 sm:px-6 py-3 sm:py-4 border border-amber-500/30 text-amber-400 rounded-full font-medium hover:bg-amber-500/10 active:bg-amber-500/15 hover:border-amber-500/50 transition-all duration-300 text-sm sm:text-base min-h-[44px]"
                 >
                   <ResumeIcon className="w-4 h-4 sm:w-5 sm:h-5" />
