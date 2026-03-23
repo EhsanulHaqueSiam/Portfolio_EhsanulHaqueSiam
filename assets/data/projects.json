@@ -1,5 +1,80 @@
 [
   {
+    "name": "ScholarHub",
+    "desc": "Built a comprehensive scholarship discovery platform aggregating 12,000+ international scholarships from 272 sources with daily automated scraping as measured by full-text search with autocomplete, multi-facet filtering across country, degree, field, funding type, and prestige tier, plus an admin dashboard for review queue and source trust management by architecting a full-stack application with React 19, TanStack Start SSR, Convex real-time database, and a Python scraping pipeline with 7 scraping methods including Cloudflare bypass.",
+    "metrics": [
+      "12,000+ scholarships indexed daily",
+      "272 spiders across 5 source categories",
+      "Admin dashboard with review queue",
+      "SEO with dynamic OG images & sitemaps"
+    ],
+    "images": [
+      "scholarhub"
+    ],
+    "showInHome": true,
+    "categories": [
+      "web",
+      "fullstack"
+    ],
+    "tags": [
+      "React",
+      "TypeScript",
+      "TailwindCSS",
+      "TanStack Start",
+      "Convex",
+      "Python",
+      "Web Scraping"
+    ],
+    "links": {
+      "view": "https://thescholarhub.netlify.app/",
+      "code": "https://github.com/EhsanulHaqueSiam/ScholarHub"
+    },
+    "caseStudy": {
+      "problem": "Students seeking international scholarships face fragmented information scattered across hundreds of sources, making it nearly impossible to discover relevant opportunities before deadlines pass.",
+      "solution": "Built a unified scholarship discovery platform with 272 automated spiders scraping daily, intelligent deduplication, multi-facet search and filtering, and an admin dashboard for quality control — giving students a single place to find every scholarship they're eligible for.",
+      "process": [
+        {
+          "title": "Scraping Pipeline",
+          "desc": "Engineered 272 spiders across 7 scraping methods (HTML, API, RSS, JSON-LD, Scrapling, AJAX, Inertia.js) with wave-based scheduling, automatic deduplication, and source health monitoring.",
+          "icon": "fas fa-spider"
+        },
+        {
+          "title": "Discovery Engine",
+          "desc": "Implemented full-text search with autocomplete, filtering by country, degree level, field of study, funding type, and prestige tier, plus nationality-aware recommendations.",
+          "icon": "fas fa-search"
+        },
+        {
+          "title": "Admin Dashboard",
+          "desc": "Built a review queue for pending scholarships, source trust manager for auto-publish vs manual review, collections manager, and tags manager with status-based stats.",
+          "icon": "fas fa-tachometer-alt"
+        },
+        {
+          "title": "SEO & Performance",
+          "desc": "Implemented dynamic OG image generation with Satori, XML sitemaps, JSON-LD structured data, country and degree landing pages, and SSR with TanStack Start on Netlify.",
+          "icon": "fas fa-chart-line"
+        }
+      ],
+      "results": [
+        {
+          "label": "Scholarships",
+          "value": "12,000+"
+        },
+        {
+          "label": "Sources",
+          "value": "272"
+        },
+        {
+          "label": "Scraping Methods",
+          "value": "7"
+        },
+        {
+          "label": "Source Categories",
+          "value": "5"
+        }
+      ]
+    }
+  },
+  {
     "name": "TTT Autos",
     "desc": "Delivered a premium vehicle dealership platform with cinematic 'Velocity Noir' UI, interactive 3D Spline showcases, and a full admin dashboard supporting cars, motorcycles, and bicycles as measured by a polymorphic inventory system with 7 indexed database tables and multi-filter search across 12+ facets by architecting a full-stack application with React 19, TanStack Start SSR, Drizzle ORM on SQLite, Better Auth, and UploadThing file management.",
     "metrics": [
