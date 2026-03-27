@@ -4,80 +4,74 @@ import { m, useInView } from 'framer-motion';
 const DAYS = 7;
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 const DAY_LABELS = ['', 'M', '', 'W', '', 'F', ''];
+const GITHUB_USERNAME = 'EhsanulHaqueSiam';
+const API_URL = `https://github-contributions-api.jogruber.de/v4/${GITHUB_USERNAME}?y=last`;
 
-// Cell size constants
 const CELL = 10;
 const GAP = 2;
 const STEP = CELL + GAP;
-const LABEL_W = 20; // day label column width
+const LABEL_W = 20;
 
-function seededRandom(seed: number) {
-  let s = seed;
-  return () => {
-    s = (s * 16807 + 0) % 2147483647;
-    return (s - 1) / 2147483646;
-  };
+interface ContributionDay {
+  date: string;
+  count: number;
+  level: number;
 }
 
-function generateContributions(weeks: number): number[][] {
-  const today = new Date();
-  const seed = today.getFullYear() * 10000 + (today.getMonth() + 1) * 100 + today.getDate();
-  const rand = seededRandom(seed);
+interface ApiResponse {
+  total: { lastYear: number };
+  contributions: ContributionDay[];
+}
 
-  const grid: number[][] = [];
-  // Generate a full year then slice to requested weeks
-  for (let week = 0; week < 53; week++) {
-    const weekData: number[] = [];
-    const weekActivity = rand() < 0.15 ? 0 : rand() < 0.3 ? 1 : rand() < 0.6 ? 2 : 3;
+// Convert flat contributions array into weeks grid (7 days per week)
+function toWeeksGrid(contributions: ContributionDay[]): { level: number; count: number }[][] {
+  const weeks: { level: number; count: number }[][] = [];
+  let currentWeek: { level: number; count: number }[] = [];
 
-    for (let day = 0; day < DAYS; day++) {
-      const isWeekend = day === 0 || day === 6;
-      const r = rand();
-
-      let level: number;
-      if (weekActivity === 0) level = r < 0.85 ? 0 : 1;
-      else if (weekActivity === 1) level = r < 0.4 ? 0 : r < 0.75 ? 1 : 2;
-      else if (weekActivity === 2) level = r < 0.15 ? 0 : r < 0.4 ? 1 : r < 0.75 ? 2 : 3;
-      else level = r < 0.05 ? 0 : r < 0.2 ? 1 : r < 0.45 ? 2 : r < 0.75 ? 3 : 4;
-
-      if (isWeekend && level > 0 && rand() > 0.6) level = Math.max(0, level - 1);
-      if (week === 52) {
-        const currentDay = today.getDay();
-        if (day > currentDay) level = 0;
-      }
-      weekData.push(level);
+  for (const day of contributions) {
+    currentWeek.push({ level: day.level, count: day.count });
+    if (currentWeek.length === 7) {
+      weeks.push(currentWeek);
+      currentWeek = [];
     }
-    grid.push(weekData);
   }
-
-  return grid.slice(53 - weeks);
+  if (currentWeek.length > 0) {
+    weeks.push(currentWeek);
+  }
+  return weeks;
 }
 
-function getMonthLabels(weeks: number): { label: string; col: number }[] {
-  const today = new Date();
+function getMonthLabels(contributions: ContributionDay[], visibleWeeks: number): { label: string; col: number }[] {
+  const totalDays = contributions.length;
+  const startIdx = Math.max(0, totalDays - visibleWeeks * 7);
   const labels: { label: string; col: number }[] = [];
-  const startDate = new Date(today);
-  startDate.setDate(startDate.getDate() - weeks * 7);
-
   let lastMonth = -1;
-  for (let week = 0; week < weeks; week++) {
-    const d = new Date(startDate);
-    d.setDate(d.getDate() + week * 7);
-    const month = d.getMonth();
+
+  for (let i = startIdx; i < totalDays; i += 7) {
+    const weekIdx = Math.floor((i - startIdx) / 7);
+    const month = new Date(contributions[i].date).getMonth();
     if (month !== lastMonth) {
-      labels.push({ label: MONTHS[month], col: week });
+      labels.push({ label: MONTHS[month], col: weekIdx });
       lastMonth = month;
     }
   }
   return labels;
 }
 
-const CELL_COLORS = [
+const FILL_CLASSES = [
+  'fill-white/[0.04]',
+  'fill-violet-500/25',
+  'fill-violet-500/45',
+  'fill-violet-400/65',
+  'fill-violet-400/90',
+];
+
+const LEGEND_BG = [
   'bg-white/[0.04]',
-  'bg-violet-500/20',
-  'bg-violet-500/40',
-  'bg-violet-500/60',
-  'bg-violet-400/80',
+  'bg-violet-500/25',
+  'bg-violet-500/45',
+  'bg-violet-400/65',
+  'bg-violet-400/90',
 ];
 
 export function GitHubGraph() {
@@ -86,29 +80,45 @@ export function GitHubGraph() {
   const isInView = useInView(containerRef, { once: true, margin: '-10%' });
   const [hoveredCell, setHoveredCell] = useState<{ week: number; day: number } | null>(null);
   const [visibleWeeks, setVisibleWeeks] = useState(52);
+  const [data, setData] = useState<ApiResponse | null>(null);
 
-  // Measure container and compute how many weeks fit
+  // Fetch real contribution data from public API
+  useEffect(() => {
+    fetch(API_URL)
+      .then(r => r.json())
+      .then((json: ApiResponse) => setData(json))
+      .catch(() => {/* silently use empty state */});
+  }, []);
+
+  // Measure container width to compute visible weeks
   useEffect(() => {
     function measure() {
       if (!graphAreaRef.current) return;
       const width = graphAreaRef.current.clientWidth;
-      const available = width - LABEL_W - 4; // padding
-      const weeks = Math.max(20, Math.min(52, Math.floor(available / STEP)));
-      setVisibleWeeks(weeks);
+      const available = width - LABEL_W - 4;
+      setVisibleWeeks(Math.max(20, Math.min(52, Math.floor(available / STEP))));
     }
     measure();
     window.addEventListener('resize', measure);
     return () => window.removeEventListener('resize', measure);
   }, []);
 
-  const contributions = useMemo(() => generateContributions(visibleWeeks), [visibleWeeks]);
-  const monthLabels = useMemo(() => getMonthLabels(visibleWeeks), [visibleWeeks]);
+  // Slice contributions to visible weeks
+  const contributions = useMemo(() => {
+    if (!data) return [];
+    const totalDays = data.contributions.length;
+    const neededDays = visibleWeeks * 7;
+    const sliced = data.contributions.slice(Math.max(0, totalDays - neededDays));
+    return sliced;
+  }, [data, visibleWeeks]);
 
-  const totalContributions = useMemo(
-    () => contributions.reduce((sum, week) => sum + week.reduce((s, d) => s + d, 0), 0),
-    [contributions],
+  const weeks = useMemo(() => toWeeksGrid(contributions), [contributions]);
+  const monthLabels = useMemo(
+    () => data ? getMonthLabels(data.contributions, visibleWeeks) : [],
+    [data, visibleWeeks],
   );
-  const displayCount = useMemo(() => totalContributions * 3 + 142, [totalContributions]);
+
+  const totalContributions = data?.total?.lastYear ?? 0;
 
   const handleMouseEnter = useCallback((week: number, day: number) => {
     setHoveredCell({ week, day });
@@ -117,18 +127,18 @@ export function GitHubGraph() {
     setHoveredCell(null);
   }, []);
 
-  const graphWidth = LABEL_W + visibleWeeks * STEP;
+  const displayWeeks = weeks.length || visibleWeeks;
+  const graphWidth = LABEL_W + displayWeeks * STEP;
   const graphHeight = DAYS * STEP - GAP;
 
   return (
     <div ref={containerRef} className="group relative h-full p-4 sm:p-5 rounded-3xl bg-space-800/50 border border-white/5 hover:border-violet-500/20 transition-colors duration-500 overflow-hidden">
-      {/* Background glow */}
       <div className="absolute -bottom-16 -right-16 w-40 h-40 bg-violet-500/[0.06] rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
 
       {/* Header */}
       <div className="flex items-center justify-between mb-2.5 relative z-10">
         <a
-          href="https://github.com/EhsanulHaqueSiam"
+          href={`https://github.com/${GITHUB_USERNAME}`}
           target="_blank"
           rel="noopener noreferrer"
           className="flex items-center gap-1.5 text-gray-500 hover:text-violet-400 transition-colors"
@@ -138,103 +148,105 @@ export function GitHubGraph() {
           </svg>
           <span className="text-[10px] sm:text-xs font-mono tracking-wide">Activity</span>
         </a>
-        <span className="text-gray-600 text-[10px] sm:text-xs font-mono">
-          {displayCount}
-        </span>
+        {totalContributions > 0 && (
+          <span className="text-gray-600 text-[10px] sm:text-xs font-mono">
+            {totalContributions.toLocaleString()} contributions
+          </span>
+        )}
       </div>
 
-      {/* Graph — auto-fits container width */}
+      {/* Graph */}
       <div ref={graphAreaRef} className="relative z-10">
-        <svg
-          width="100%"
-          viewBox={`0 0 ${graphWidth} ${graphHeight + 14}`}
-          className="block"
-        >
-          {/* Month labels */}
-          {monthLabels.map(({ label, col }, i) => (
-            <text
-              key={`${label}-${i}`}
-              x={LABEL_W + col * STEP}
-              y={8}
-              className="fill-gray-600 font-mono"
-              fontSize="8"
-            >
-              {label}
-            </text>
-          ))}
-
-          {/* Day labels */}
-          {DAY_LABELS.map((label, i) =>
-            label ? (
+        {weeks.length > 0 ? (
+          <svg
+            width="100%"
+            viewBox={`0 0 ${graphWidth} ${graphHeight + 14}`}
+            className="block"
+          >
+            {/* Month labels */}
+            {monthLabels.map(({ label, col }, i) => (
               <text
-                key={i}
-                x={0}
-                y={14 + i * STEP + CELL * 0.75}
+                key={`${label}-${i}`}
+                x={LABEL_W + col * STEP}
+                y={8}
                 className="fill-gray-600 font-mono"
                 fontSize="8"
               >
                 {label}
               </text>
-            ) : null,
-          )}
+            ))}
 
-          {/* Cells */}
-          {contributions.map((week, weekIdx) =>
-            week.map((level, dayIdx) => {
-              const isHovered = hoveredCell?.week === weekIdx && hoveredCell?.day === dayIdx;
-              const x = LABEL_W + weekIdx * STEP;
-              const y = 14 + dayIdx * STEP;
+            {/* Day labels */}
+            {DAY_LABELS.map((label, i) =>
+              label ? (
+                <text
+                  key={i}
+                  x={0}
+                  y={14 + i * STEP + CELL * 0.75}
+                  className="fill-gray-600 font-mono"
+                  fontSize="8"
+                >
+                  {label}
+                </text>
+              ) : null,
+            )}
 
-              return (
-                <m.rect
-                  key={`${weekIdx}-${dayIdx}`}
-                  x={x}
-                  y={y}
-                  width={CELL}
-                  height={CELL}
-                  rx={2}
-                  className={`cursor-crosshair ${
-                    level === 0 ? 'fill-white/[0.04]' :
-                    level === 1 ? 'fill-violet-500/20' :
-                    level === 2 ? 'fill-violet-500/40' :
-                    level === 3 ? 'fill-violet-500/60' :
-                    'fill-violet-400/80'
-                  }`}
-                  initial={{ opacity: 0 }}
-                  animate={
-                    isInView
-                      ? {
-                          opacity: 1,
-                          scale: isHovered ? 1.3 : 1,
-                          originX: `${x + CELL / 2}px`,
-                          originY: `${y + CELL / 2}px`,
-                        }
-                      : { opacity: 0 }
-                  }
-                  transition={{
-                    opacity: { duration: 0.3, delay: weekIdx * 0.006 },
-                    scale: { duration: 0.12 },
-                  }}
-                  onMouseEnter={() => handleMouseEnter(weekIdx, dayIdx)}
-                  onMouseLeave={handleMouseLeave}
-                />
-              );
-            }),
-          )}
-        </svg>
+            {/* Cells */}
+            {weeks.map((week, weekIdx) =>
+              week.map((day, dayIdx) => {
+                const isHovered = hoveredCell?.week === weekIdx && hoveredCell?.day === dayIdx;
+                const x = LABEL_W + weekIdx * STEP;
+                const y = 14 + dayIdx * STEP;
+                const level = Math.min(day.level, 4);
+
+                return (
+                  <m.rect
+                    key={`${weekIdx}-${dayIdx}`}
+                    x={x}
+                    y={y}
+                    width={CELL}
+                    height={CELL}
+                    rx={2}
+                    className={`cursor-crosshair ${FILL_CLASSES[level]}`}
+                    initial={{ opacity: 0 }}
+                    animate={
+                      isInView
+                        ? { opacity: 1, scale: isHovered ? 1.3 : 1, originX: `${x + CELL / 2}px`, originY: `${y + CELL / 2}px` }
+                        : { opacity: 0 }
+                    }
+                    transition={{
+                      opacity: { duration: 0.3, delay: weekIdx * 0.006 },
+                      scale: { duration: 0.12 },
+                    }}
+                    onMouseEnter={() => handleMouseEnter(weekIdx, dayIdx)}
+                    onMouseLeave={handleMouseLeave}
+                  >
+                    {isHovered && day.count > 0 && (
+                      <title>{day.count} contributions</title>
+                    )}
+                  </m.rect>
+                );
+              }),
+            )}
+          </svg>
+        ) : (
+          /* Loading skeleton */
+          <div className="h-[100px] flex items-center justify-center">
+            <span className="text-gray-600 text-xs font-mono animate-pulse">Loading contributions...</span>
+          </div>
+        )}
       </div>
 
       {/* Legend */}
-      <div className="flex items-center justify-end gap-1 mt-1.5 relative z-10">
-        <span className="text-[9px] text-gray-600 font-mono mr-0.5">Less</span>
-        {CELL_COLORS.map((_, i) => (
-          <div
-            key={i}
-            className={`w-[9px] h-[9px] rounded-[2px] ${CELL_COLORS[i]}`}
-          />
-        ))}
-        <span className="text-[9px] text-gray-600 font-mono ml-0.5">More</span>
-      </div>
+      {weeks.length > 0 && (
+        <div className="flex items-center justify-end gap-1 mt-1.5 relative z-10">
+          <span className="text-[9px] text-gray-600 font-mono mr-0.5">Less</span>
+          {LEGEND_BG.map((bg, i) => (
+            <div key={i} className={`w-[9px] h-[9px] rounded-[2px] ${bg}`} />
+          ))}
+          <span className="text-[9px] text-gray-600 font-mono ml-0.5">More</span>
+        </div>
+      )}
     </div>
   );
 }

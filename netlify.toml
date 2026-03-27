@@ -26,7 +26,7 @@
     Referrer-Policy = "strict-origin-when-cross-origin"
     Permissions-Policy = "camera=(), microphone=(), geolocation=()"
     X-Robots-Tag = "index, follow, max-image-preview:large, max-snippet:-1"
-    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://api.fontshare.com; img-src 'self' data: https://cdn.jsdelivr.net; font-src 'self' https://cdn.fontshare.com; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://api.fontshare.com; img-src 'self' data: https://cdn.jsdelivr.net; font-src 'self' https://cdn.fontshare.com; connect-src 'self' https://github-contributions-api.jogruber.de; frame-ancestors 'none'; base-uri 'self'; form-action 'self'"
     Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
     X-DNS-Prefetch-Control = "on"
 
