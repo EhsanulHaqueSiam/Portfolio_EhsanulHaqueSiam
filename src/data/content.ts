@@ -81,6 +81,7 @@ export const skillLevelToPercent: Record<Skill['level'], number> = {
 // Category icons mapping
 export const categoryIcons: Record<string, string> = {
   'AI & Machine Learning': '🧠',
+  'Web Development': '🌐',
   'Programming Languages': '💻',
   'Backend & Databases': '🗄️',
   'Mobile Development': '📱',

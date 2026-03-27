@@ -38,6 +38,47 @@
           "name": "Computer Vision",
           "level": "intermediate",
           "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/opencv/opencv-original.svg"
+        },
+        {
+          "name": "LangChain",
+          "level": "advanced",
+          "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg"
+        },
+        {
+          "name": "Pinecone",
+          "level": "intermediate",
+          "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg"
+        }
+      ]
+    },
+    {
+      "name": "Web Development",
+      "icon": "fas fa-globe",
+      "skills": [
+        {
+          "name": "React",
+          "level": "expert",
+          "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg"
+        },
+        {
+          "name": "TypeScript",
+          "level": "expert",
+          "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg"
+        },
+        {
+          "name": "TailwindCSS",
+          "level": "expert",
+          "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg"
+        },
+        {
+          "name": "Framer Motion",
+          "level": "advanced",
+          "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/framermotion/framermotion-original.svg"
+        },
+        {
+          "name": "TanStack Start",
+          "level": "advanced",
+          "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg"
         }
       ]
     },
@@ -72,7 +113,7 @@
         },
         {
           "name": "JavaScript",
-          "level": "intermediate",
+          "level": "advanced",
           "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"
         },
         {
@@ -118,6 +159,11 @@
         },
         {
           "name": "Database Design",
+          "level": "advanced",
+          "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg"
+        },
+        {
+          "name": "PostgreSQL",
           "level": "advanced",
           "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg"
         }
@@ -249,6 +295,11 @@
           "name": "Jupyter",
           "level": "advanced",
           "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jupyter/jupyter-original.svg"
+        },
+        {
+          "name": "Google Cloud",
+          "level": "intermediate",
+          "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/googlecloud/googlecloud-original.svg"
         }
       ]
     }

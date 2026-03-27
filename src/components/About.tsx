@@ -3,6 +3,7 @@ import { profile, profileImage, hideImageOnError } from '../data/content';
 import { SectionHeader } from './ui/SectionHeader';
 import { ImageDistortion, MagneticHover } from './ui/ImageDistortion';
 import { Marquee } from './ui/Marquee';
+import { GitHubGraph } from './ui/GitHubGraph';
 
 export function About() {
 
@@ -140,6 +141,17 @@ export function About() {
                 ))}
               </div>
             </div>
+          </m.div>
+
+          {/* GitHub contribution graph */}
+          <m.div
+            className="col-span-12"
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.25 }}
+          >
+            <GitHubGraph />
           </m.div>
 
           {/* Location card */}
