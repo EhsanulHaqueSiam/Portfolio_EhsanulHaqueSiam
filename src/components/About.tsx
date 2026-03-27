@@ -18,7 +18,7 @@ export function About() {
         <div className="grid grid-cols-12 gap-4 md:gap-6">
           {/* Main bio card - spans 8 columns */}
           <m.div
-            className="col-span-12 md:col-span-8 row-span-2"
+            className="col-span-12 md:col-span-8"
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -112,7 +112,18 @@ export function About() {
             </ImageDistortion>
           </m.div>
 
-          {/* Stats card */}
+          {/* GitHub contribution graph - fills the gap below bio */}
+          <m.div
+            className="col-span-12 md:col-span-8"
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.25 }}
+          >
+            <GitHubGraph />
+          </m.div>
+
+          {/* Stats card - sits next to GitHub graph */}
           <m.div
             className="col-span-12 sm:col-span-6 md:col-span-4"
             initial={{ opacity: 0, y: 50 }}
@@ -141,17 +152,6 @@ export function About() {
                 ))}
               </div>
             </div>
-          </m.div>
-
-          {/* GitHub contribution graph */}
-          <m.div
-            className="col-span-12"
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.25 }}
-          >
-            <GitHubGraph />
           </m.div>
 
           {/* Location card */}

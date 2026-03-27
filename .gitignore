@@ -3,3 +3,8 @@ dist
 .claude
 test-results
 *.log
+.netlify
+.playwright-cli
+.playwright-report
+.playwright-results
+playwright-report

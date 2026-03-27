@@ -1,13 +1,16 @@
-import { useMemo, useState, useCallback } from 'react';
+import { useMemo, useState, useCallback, useRef, useEffect } from 'react';
 import { m, useInView } from 'framer-motion';
-import { useRef } from 'react';
 
-const WEEKS = 52;
 const DAYS = 7;
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-const DAY_LABELS = ['', 'Mon', '', 'Wed', '', 'Fri', ''];
+const DAY_LABELS = ['', 'M', '', 'W', '', 'F', ''];
 
-// Deterministic seed from date so graph changes daily but stays consistent within a day
+// Cell size constants
+const CELL = 10;
+const GAP = 2;
+const STEP = CELL + GAP;
+const LABEL_W = 20; // day label column width
+
 function seededRandom(seed: number) {
   let s = seed;
   return () => {
@@ -16,61 +19,48 @@ function seededRandom(seed: number) {
   };
 }
 
-function generateContributions(): number[][] {
+function generateContributions(weeks: number): number[][] {
   const today = new Date();
   const seed = today.getFullYear() * 10000 + (today.getMonth() + 1) * 100 + today.getDate();
   const rand = seededRandom(seed);
 
   const grid: number[][] = [];
-
-  for (let week = 0; week < WEEKS; week++) {
+  // Generate a full year then slice to requested weeks
+  for (let week = 0; week < 53; week++) {
     const weekData: number[] = [];
-    // Create realistic patterns: bursts of activity, weekday bias
     const weekActivity = rand() < 0.15 ? 0 : rand() < 0.3 ? 1 : rand() < 0.6 ? 2 : 3;
 
     for (let day = 0; day < DAYS; day++) {
       const isWeekend = day === 0 || day === 6;
-      const weekendPenalty = isWeekend ? 0.6 : 1;
       const r = rand();
 
       let level: number;
-      if (weekActivity === 0) {
-        level = r < 0.85 ? 0 : 1;
-      } else if (weekActivity === 1) {
-        level = r < 0.4 ? 0 : r < 0.75 ? 1 : 2;
-      } else if (weekActivity === 2) {
-        level = r < 0.15 ? 0 : r < 0.4 ? 1 : r < 0.75 ? 2 : 3;
-      } else {
-        level = r < 0.05 ? 0 : r < 0.2 ? 1 : r < 0.45 ? 2 : r < 0.75 ? 3 : 4;
-      }
+      if (weekActivity === 0) level = r < 0.85 ? 0 : 1;
+      else if (weekActivity === 1) level = r < 0.4 ? 0 : r < 0.75 ? 1 : 2;
+      else if (weekActivity === 2) level = r < 0.15 ? 0 : r < 0.4 ? 1 : r < 0.75 ? 2 : 3;
+      else level = r < 0.05 ? 0 : r < 0.2 ? 1 : r < 0.45 ? 2 : r < 0.75 ? 3 : 4;
 
-      // Weekend reduction
-      if (isWeekend && level > 0 && rand() > weekendPenalty) {
-        level = Math.max(0, level - 1);
-      }
-
-      // Future dates in the last week should be empty
-      if (week === WEEKS - 1) {
-        const currentDay = today.getDay(); // 0=Sun
+      if (isWeekend && level > 0 && rand() > 0.6) level = Math.max(0, level - 1);
+      if (week === 52) {
+        const currentDay = today.getDay();
         if (day > currentDay) level = 0;
       }
-
       weekData.push(level);
     }
     grid.push(weekData);
   }
 
-  return grid;
+  return grid.slice(53 - weeks);
 }
 
-function getMonthLabels(): { label: string; col: number }[] {
+function getMonthLabels(weeks: number): { label: string; col: number }[] {
   const today = new Date();
   const labels: { label: string; col: number }[] = [];
   const startDate = new Date(today);
-  startDate.setDate(startDate.getDate() - WEEKS * 7);
+  startDate.setDate(startDate.getDate() - weeks * 7);
 
   let lastMonth = -1;
-  for (let week = 0; week < WEEKS; week++) {
+  for (let week = 0; week < weeks; week++) {
     const d = new Date(startDate);
     d.setDate(d.getDate() + week * 7);
     const month = d.getMonth();
@@ -79,143 +69,171 @@ function getMonthLabels(): { label: string; col: number }[] {
       lastMonth = month;
     }
   }
-
   return labels;
 }
 
 const CELL_COLORS = [
-  'bg-white/[0.04]',           // Level 0 — empty
-  'bg-violet-500/20',          // Level 1 — light
-  'bg-violet-500/40',          // Level 2 — medium
-  'bg-violet-500/60',          // Level 3 — high
-  'bg-violet-400/80',          // Level 4 — peak
-];
-
-const CELL_COLORS_HOVER = [
-  'hover:bg-white/[0.08]',
-  'hover:bg-violet-500/30',
-  'hover:bg-violet-500/50',
-  'hover:bg-violet-500/70',
-  'hover:bg-violet-400/90',
+  'bg-white/[0.04]',
+  'bg-violet-500/20',
+  'bg-violet-500/40',
+  'bg-violet-500/60',
+  'bg-violet-400/80',
 ];
 
 export function GitHubGraph() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const graphAreaRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(containerRef, { once: true, margin: '-10%' });
   const [hoveredCell, setHoveredCell] = useState<{ week: number; day: number } | null>(null);
+  const [visibleWeeks, setVisibleWeeks] = useState(52);
 
-  const contributions = useMemo(generateContributions, []);
-  const monthLabels = useMemo(getMonthLabels, []);
+  // Measure container and compute how many weeks fit
+  useEffect(() => {
+    function measure() {
+      if (!graphAreaRef.current) return;
+      const width = graphAreaRef.current.clientWidth;
+      const available = width - LABEL_W - 4; // padding
+      const weeks = Math.max(20, Math.min(52, Math.floor(available / STEP)));
+      setVisibleWeeks(weeks);
+    }
+    measure();
+    window.addEventListener('resize', measure);
+    return () => window.removeEventListener('resize', measure);
+  }, []);
+
+  const contributions = useMemo(() => generateContributions(visibleWeeks), [visibleWeeks]);
+  const monthLabels = useMemo(() => getMonthLabels(visibleWeeks), [visibleWeeks]);
 
   const totalContributions = useMemo(
     () => contributions.reduce((sum, week) => sum + week.reduce((s, d) => s + d, 0), 0),
     [contributions],
   );
-
-  // Rough "contributions in the last year" display number — scale level sums to realistic count
   const displayCount = useMemo(() => totalContributions * 3 + 142, [totalContributions]);
 
   const handleMouseEnter = useCallback((week: number, day: number) => {
     setHoveredCell({ week, day });
   }, []);
-
   const handleMouseLeave = useCallback(() => {
     setHoveredCell(null);
   }, []);
 
+  const graphWidth = LABEL_W + visibleWeeks * STEP;
+  const graphHeight = DAYS * STEP - GAP;
+
   return (
-    <div ref={containerRef} className="group relative h-full p-5 sm:p-6 rounded-3xl bg-space-800/50 border border-white/5 hover:border-violet-500/20 transition-colors duration-500 overflow-hidden">
+    <div ref={containerRef} className="group relative h-full p-4 sm:p-5 rounded-3xl bg-space-800/50 border border-white/5 hover:border-violet-500/20 transition-colors duration-500 overflow-hidden">
       {/* Background glow */}
-      <div className="absolute -bottom-20 -right-20 w-48 h-48 bg-violet-500/[0.06] rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
+      <div className="absolute -bottom-16 -right-16 w-40 h-40 bg-violet-500/[0.06] rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
 
       {/* Header */}
-      <div className="flex items-center justify-between mb-3 sm:mb-4 relative z-10">
-        <div className="flex items-center gap-2">
-          <svg className="w-4 h-4 text-gray-500" viewBox="0 0 16 16" fill="currentColor">
-            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
-          </svg>
-          <span className="text-gray-500 text-xs font-mono tracking-wide">github.com/EhsanulHaqueSiam</span>
-        </div>
+      <div className="flex items-center justify-between mb-2.5 relative z-10">
         <a
           href="https://github.com/EhsanulHaqueSiam"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-gray-600 hover:text-violet-400 transition-colors text-xs font-mono"
+          className="flex items-center gap-1.5 text-gray-500 hover:text-violet-400 transition-colors"
         >
-          <span className="hidden sm:inline">{displayCount} contributions in the last year</span>
-          <span className="sm:hidden">{displayCount} contributions</span>
+          <svg className="w-3.5 h-3.5" viewBox="0 0 16 16" fill="currentColor">
+            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
+          </svg>
+          <span className="text-[10px] sm:text-xs font-mono tracking-wide">Activity</span>
         </a>
+        <span className="text-gray-600 text-[10px] sm:text-xs font-mono">
+          {displayCount}
+        </span>
       </div>
 
-      {/* Graph container — horizontally scrollable on small screens */}
-      <div className="relative z-10 overflow-x-auto scrollbar-hide -mx-1 px-1">
-        <div className="min-w-[680px]">
+      {/* Graph — auto-fits container width */}
+      <div ref={graphAreaRef} className="relative z-10">
+        <svg
+          width="100%"
+          viewBox={`0 0 ${graphWidth} ${graphHeight + 14}`}
+          className="block"
+        >
           {/* Month labels */}
-          <div className="flex ml-7 mb-1.5">
-            {monthLabels.map(({ label, col }, i) => (
-              <span
-                key={`${label}-${i}`}
-                className="text-[10px] text-gray-600 font-mono"
-                style={{
-                  position: 'absolute',
-                  left: `${col * 13 + 28}px`,
-                }}
+          {monthLabels.map(({ label, col }, i) => (
+            <text
+              key={`${label}-${i}`}
+              x={LABEL_W + col * STEP}
+              y={8}
+              className="fill-gray-600 font-mono"
+              fontSize="8"
+            >
+              {label}
+            </text>
+          ))}
+
+          {/* Day labels */}
+          {DAY_LABELS.map((label, i) =>
+            label ? (
+              <text
+                key={i}
+                x={0}
+                y={14 + i * STEP + CELL * 0.75}
+                className="fill-gray-600 font-mono"
+                fontSize="8"
               >
                 {label}
-              </span>
-            ))}
-          </div>
+              </text>
+            ) : null,
+          )}
 
-          {/* Grid with day labels */}
-          <div className="flex gap-0 mt-5 relative">
-            {/* Day labels */}
-            <div className="flex flex-col justify-between pr-1.5 flex-shrink-0" style={{ height: `${DAYS * 13 - 2}px` }}>
-              {DAY_LABELS.map((label, i) => (
-                <span key={i} className="text-[10px] text-gray-600 font-mono leading-none h-[11px] flex items-center">
-                  {label}
-                </span>
-              ))}
-            </div>
+          {/* Cells */}
+          {contributions.map((week, weekIdx) =>
+            week.map((level, dayIdx) => {
+              const isHovered = hoveredCell?.week === weekIdx && hoveredCell?.day === dayIdx;
+              const x = LABEL_W + weekIdx * STEP;
+              const y = 14 + dayIdx * STEP;
 
-            {/* Contribution cells */}
-            <div className="flex gap-[2px]">
-              {contributions.map((week, weekIdx) => (
-                <div key={weekIdx} className="flex flex-col gap-[2px]">
-                  {week.map((level, dayIdx) => {
-                    const isHovered = hoveredCell?.week === weekIdx && hoveredCell?.day === dayIdx;
-                    return (
-                      <m.div
-                        key={dayIdx}
-                        className={`w-[11px] h-[11px] rounded-[2px] ${CELL_COLORS[level]} ${CELL_COLORS_HOVER[level]} transition-colors duration-150 cursor-crosshair`}
-                        initial={{ opacity: 0, scale: 0 }}
-                        animate={
-                          isInView
-                            ? { opacity: 1, scale: isHovered ? 1.4 : 1 }
-                            : { opacity: 0, scale: 0 }
+              return (
+                <m.rect
+                  key={`${weekIdx}-${dayIdx}`}
+                  x={x}
+                  y={y}
+                  width={CELL}
+                  height={CELL}
+                  rx={2}
+                  className={`cursor-crosshair ${
+                    level === 0 ? 'fill-white/[0.04]' :
+                    level === 1 ? 'fill-violet-500/20' :
+                    level === 2 ? 'fill-violet-500/40' :
+                    level === 3 ? 'fill-violet-500/60' :
+                    'fill-violet-400/80'
+                  }`}
+                  initial={{ opacity: 0 }}
+                  animate={
+                    isInView
+                      ? {
+                          opacity: 1,
+                          scale: isHovered ? 1.3 : 1,
+                          originX: `${x + CELL / 2}px`,
+                          originY: `${y + CELL / 2}px`,
                         }
-                        transition={{
-                          opacity: { duration: 0.3, delay: weekIdx * 0.008 + dayIdx * 0.002 },
-                          scale: { duration: 0.15 },
-                        }}
-                        onMouseEnter={() => handleMouseEnter(weekIdx, dayIdx)}
-                        onMouseLeave={handleMouseLeave}
-                      />
-                    );
-                  })}
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
+                      : { opacity: 0 }
+                  }
+                  transition={{
+                    opacity: { duration: 0.3, delay: weekIdx * 0.006 },
+                    scale: { duration: 0.12 },
+                  }}
+                  onMouseEnter={() => handleMouseEnter(weekIdx, dayIdx)}
+                  onMouseLeave={handleMouseLeave}
+                />
+              );
+            }),
+          )}
+        </svg>
       </div>
 
       {/* Legend */}
-      <div className="flex items-center justify-end gap-1.5 mt-3 relative z-10">
-        <span className="text-[10px] text-gray-600 font-mono mr-1">Less</span>
-        {CELL_COLORS.map((color, i) => (
-          <div key={i} className={`w-[11px] h-[11px] rounded-[2px] ${color}`} />
+      <div className="flex items-center justify-end gap-1 mt-1.5 relative z-10">
+        <span className="text-[9px] text-gray-600 font-mono mr-0.5">Less</span>
+        {CELL_COLORS.map((_, i) => (
+          <div
+            key={i}
+            className={`w-[9px] h-[9px] rounded-[2px] ${CELL_COLORS[i]}`}
+          />
         ))}
-        <span className="text-[10px] text-gray-600 font-mono ml-1">More</span>
+        <span className="text-[9px] text-gray-600 font-mono ml-0.5">More</span>
       </div>
     </div>
   );
