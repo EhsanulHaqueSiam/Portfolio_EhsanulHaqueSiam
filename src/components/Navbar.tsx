@@ -38,6 +38,11 @@ export function Navbar() {
 
   // Use IntersectionObserver instead of scroll events for better performance
   useEffect(() => {
+    if (typeof IntersectionObserver === 'undefined') {
+      setActiveSection(window.location.hash.replace('#', ''));
+      return;
+    }
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {

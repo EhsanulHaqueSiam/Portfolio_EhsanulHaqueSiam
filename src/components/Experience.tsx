@@ -12,7 +12,7 @@ export function Experience() {
       </div>
 
       <div className="max-w-7xl mx-auto relative z-10">
-        <SectionHeader number="02" title="Experience" />
+        <SectionHeader number="03" title="Experience" />
 
         {/* Timeline */}
         <div className="relative">

@@ -2,6 +2,7 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
 export default defineConfig({
+  cacheDir: '/tmp/portfolio-vite-cache',
   plugins: [
     react(),
     // Note: Compression removed - Netlify handles Brotli/Gzip at edge

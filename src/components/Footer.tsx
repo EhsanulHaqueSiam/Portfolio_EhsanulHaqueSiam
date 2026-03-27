@@ -65,7 +65,7 @@ export function Footer() {
             <a
               href={profile.github}
               target="_blank"
-              rel="noopener noreferrer"
+              rel="me noopener noreferrer"
               className="w-10 h-10 rounded-xl bg-space-800/50 flex items-center justify-center text-gray-500 hover:text-violet-400 hover:bg-space-700/50 transition-all"
               aria-label="GitHub"
             >
@@ -74,7 +74,7 @@ export function Footer() {
             <a
               href={profile.linkedin}
               target="_blank"
-              rel="noopener noreferrer"
+              rel="me noopener noreferrer"
               className="w-10 h-10 rounded-xl bg-space-800/50 flex items-center justify-center text-gray-500 hover:text-violet-400 hover:bg-space-700/50 transition-all"
               aria-label="LinkedIn"
             >

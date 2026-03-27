@@ -8,6 +8,7 @@ import { SplitText } from './ui/SplitText';
 export function Contact() {
   const [copied, setCopied] = useState(false);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const recruiterMailtoHref = `mailto:${profile.email}?subject=${encodeURIComponent('Job Opportunity for Ehsanul Haque Siam')}&body=${encodeURIComponent('Hi Ehsanul,\n\nI found your portfolio and would like to discuss a role.\n\nRole Title:\nCompany:\nLocation:\nCompensation Range:\nInterview Process:\n\nBest regards,')}`;
 
   // Cleanup timeout on unmount
   useEffect(() => {
@@ -58,7 +59,7 @@ export function Contact() {
         <div className="text-center mb-20">
           <div className="flex items-center justify-center gap-4 mb-8">
             <div className="h-px w-16 bg-gradient-to-r from-transparent to-violet-500/50" />
-            <span className="text-violet-500 font-mono text-sm">08</span>
+            <span className="text-violet-500 font-mono text-sm">11</span>
             <div className="h-px w-16 bg-gradient-to-l from-transparent to-violet-500/50" />
           </div>
           <h2 className="text-5xl md:text-7xl lg:text-8xl font-display font-bold mb-6">
@@ -90,7 +91,7 @@ export function Contact() {
             <p className="text-gray-500 text-sm font-mono mb-4">// reach_me_at</p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
               <m.a
-                href={`mailto:${profile.email}`}
+                href={recruiterMailtoHref}
                 className="text-lg sm:text-2xl md:text-3xl lg:text-4xl font-display font-bold text-white hover:text-violet-400 transition-colors break-all sm:break-normal"
                 whileHover={{ scale: 1.02 }}
               >
@@ -133,17 +134,25 @@ export function Contact() {
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.3 }}
         >
-          <MagneticHover strength={25}>
+          <div className="flex flex-wrap items-center justify-center gap-3">
+            <MagneticHover strength={25}>
+              <a
+                href={recruiterMailtoHref}
+                className="group inline-flex items-center gap-4 px-10 py-5 bg-gradient-to-r from-violet-500 to-violet-600 rounded-full font-display font-semibold text-white text-lg sm:text-xl hover:shadow-lg hover:shadow-violet-500/25 transition-shadow"
+              >
+                <span>Discuss a Role</span>
+                <span className="text-3xl wave-hand">
+                  👋
+                </span>
+              </a>
+            </MagneticHover>
             <a
-              href={`mailto:${profile.email}`}
-              className="group inline-flex items-center gap-4 px-12 py-6 bg-gradient-to-r from-violet-500 to-violet-600 rounded-full font-display font-semibold text-white text-xl hover:shadow-lg hover:shadow-violet-500/25 transition-shadow"
+              href="/hire-me.html"
+              className="inline-flex items-center justify-center gap-2 px-6 py-4 rounded-full border border-white/20 text-gray-200 hover:text-white hover:border-violet-500/50 hover:bg-violet-500/10 transition-all min-h-[44px]"
             >
-              <span>Say Hello</span>
-              <span className="text-3xl wave-hand">
-                👋
-              </span>
+              Hiring Snapshot
             </a>
-          </MagneticHover>
+          </div>
         </m.div>
 
         {/* Social links */}
@@ -162,7 +171,7 @@ export function Contact() {
               <a
                 href={social.href}
                 target="_blank"
-                rel="noopener noreferrer"
+                rel="me noopener noreferrer"
                 className="flex items-center gap-3 px-6 py-3 rounded-full border border-white/10 text-gray-400 hover:text-white hover:border-violet-500/50 transition-all"
               >
                 <social.Icon />

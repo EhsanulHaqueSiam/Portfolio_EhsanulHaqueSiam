@@ -7,11 +7,14 @@ import { CustomCursor, ScrollProgress, SmoothScroll } from './components/ui';
 
 // Lazy-load below-fold sections to reduce initial JS parse/execute time
 const About = lazy(() => import('./components/About').then(m => ({ default: m.About })));
+const WhyMe = lazy(() => import('./components/WhyMe').then(m => ({ default: m.WhyMe })));
 const Experience = lazy(() => import('./components/Experience').then(m => ({ default: m.Experience })));
 const Skills = lazy(() => import('./components/Skills').then(m => ({ default: m.Skills })));
 const Projects = lazy(() => import('./components/Projects').then(m => ({ default: m.Projects })));
+const Testimonials = lazy(() => import('./components/Testimonials').then(m => ({ default: m.Testimonials })));
 const Awards = lazy(() => import('./components/Awards').then(m => ({ default: m.Awards })));
 const Publications = lazy(() => import('./components/Publications').then(m => ({ default: m.Publications })));
+const Blog = lazy(() => import('./components/Blog').then(m => ({ default: m.Blog })));
 const Education = lazy(() => import('./components/Education').then(m => ({ default: m.Education })));
 const Contact = lazy(() => import('./components/Contact').then(m => ({ default: m.Contact })));
 const Footer = lazy(() => import('./components/Footer').then(m => ({ default: m.Footer })));
@@ -56,6 +59,9 @@ function App() {
             <Suspense fallback={<SectionFallback />}>
               <div className="cv-auto"><About /></div>
             </Suspense>
+            <Suspense fallback={<SectionFallback minHeight="500px" />}>
+              <div className="cv-auto"><WhyMe /></div>
+            </Suspense>
             <Suspense fallback={<SectionFallback />}>
               <div className="cv-auto"><Experience /></div>
             </Suspense>
@@ -66,10 +72,16 @@ function App() {
               <div className="cv-auto"><Projects /></div>
             </Suspense>
             <Suspense fallback={<SectionFallback />}>
+              <div className="cv-auto"><Testimonials /></div>
+            </Suspense>
+            <Suspense fallback={<SectionFallback />}>
               <div className="cv-auto"><Awards /></div>
             </Suspense>
             <Suspense fallback={<SectionFallback />}>
               <div className="cv-auto"><Publications /></div>
+            </Suspense>
+            <Suspense fallback={<SectionFallback minHeight="500px" />}>
+              <div className="cv-auto"><Blog /></div>
             </Suspense>
             <Suspense fallback={<SectionFallback />}>
               <div className="cv-auto"><Education /></div>

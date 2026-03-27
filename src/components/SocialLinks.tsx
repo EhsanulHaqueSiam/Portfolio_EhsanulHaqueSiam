@@ -15,7 +15,7 @@ export function SocialLinks() {
         <a
           href={profile.github}
           target="_blank"
-          rel="noopener noreferrer"
+          rel="me noopener noreferrer"
           aria-label="GitHub"
           className="w-12 h-12 rounded-full border border-white/10 bg-space-900/80 flex items-center justify-center text-gray-400 hover:text-white hover:border-violet-500/50 hover:bg-violet-500/10 transition-all duration-300"
         >
@@ -26,7 +26,7 @@ export function SocialLinks() {
         <a
           href={profile.linkedin}
           target="_blank"
-          rel="noopener noreferrer"
+          rel="me noopener noreferrer"
           aria-label="LinkedIn"
           className="w-12 h-12 rounded-full border border-white/10 bg-space-900/80 flex items-center justify-center text-gray-400 hover:text-white hover:border-violet-500/50 hover:bg-violet-500/10 transition-all duration-300"
         >

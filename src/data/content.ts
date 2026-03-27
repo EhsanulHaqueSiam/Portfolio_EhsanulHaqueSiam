@@ -6,6 +6,8 @@ import type {
   Experience,
   Achievement,
   Publication,
+  Testimonial,
+  BlogPost,
   Profile,
 } from './types';
 
@@ -14,14 +16,16 @@ import projectsData from '../../assets/data/projects.json';
 import experienceData from '../../assets/data/experience.json';
 import achievementsData from '../../assets/data/achievements.json';
 import publicationsData from '../../assets/data/publications.json';
+import testimonialsData from '../../assets/data/testimonials.json';
+import blogData from '../../assets/data/blog.json';
 
 export const profile: Profile = {
   name: "Ehsanul Haque Siam",
   firstName: "Ehsanul",
   lastName: "Haque Siam",
-  title: "AI Engineer · Full-Stack Developer · LLM Engineer",
-  tagline: "Building production AI systems and high-performance web applications — from RAG pipelines to e-commerce platforms driving 1.5x revenue growth",
-  bio: `Shipped 4 production React websites driving 1.5x revenue growth as Lead Developer at BetaScript LLC. Built RAG pipelines with high retrieval accuracy using Pinecone and LangChain during AI internship at Unies. Published researcher in medical AI (Taylor & Francis) with 3x Dean's List at AIUB.`,
+  title: "AI Engineer & Full-Stack Developer",
+  tagline: "Published researcher who ships production systems — from RAG pipelines with LangChain to e-commerce platforms serving 50,000+ users",
+  bio: `I bridge research and production. Published 3 peer-reviewed papers (IEEE, Taylor & Francis) while shipping 4 production websites that drove 1.5x client revenue at BetaScript LLC. Built RAG pipelines with Pinecone and LangChain at Unies. Obsessed with turning complex problems into systems that scale.`,
   email: "ehsanul.siamdev@gmail.com",
   github: "https://github.com/EhsanulHaqueSiam",
   linkedin: "https://www.linkedin.com/in/EhsanulHaqueSiam/",
@@ -31,10 +35,10 @@ export const profile: Profile = {
   currentCompany: "BetaScript LLC & Unies",
   available: true,
   stats: [
-    { label: "GitHub Stars", value: "60+" },
-    { label: "Projects", value: "15+" },
-    { label: "Publications", value: "3" },
-    { label: "Dean's Lists", value: "3x" },
+    { label: "Revenue Growth", value: "1.5x" },
+    { label: "Users Served", value: "50K+" },
+    { label: "Peer-Reviewed Papers", value: "3" },
+    { label: "Production Apps", value: "8+" },
   ],
 };
 
@@ -43,6 +47,8 @@ export const projects = projectsData as Project[];
 export const experience = experienceData as Experience[];
 export const achievements = achievementsData as Achievement[];
 export const publications = publicationsData as Publication[];
+export const testimonials = testimonialsData as Testimonial[];
+export const blogPosts = blogData as BlogPost[];
 
 // Filtered exports for homepage
 export const featuredProjects = projects.filter(p => p.showInHome);
@@ -57,9 +63,10 @@ export const navItems = [
   { label: "Experience", href: "#experience" },
   { label: "Skills", href: "#skills" },
   { label: "Projects", href: "#projects" },
+  { label: "Testimonials", href: "#testimonials" },
   { label: "Awards", href: "#awards" },
   { label: "Publications", href: "#publications" },
-  { label: "Education", href: "#education" },
+  { label: "Writing", href: "#blog" },
   { label: "Contact", href: "#contact" },
 ];
 

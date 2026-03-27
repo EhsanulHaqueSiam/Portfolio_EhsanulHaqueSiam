@@ -81,6 +81,24 @@ export interface Publication {
   paperLink: string | null;
 }
 
+export interface Testimonial {
+  name: string;
+  role: string;
+  company: string;
+  quote: string;
+  avatar?: string;
+}
+
+export interface BlogPost {
+  title: string;
+  description: string;
+  url: string;
+  platform: 'devto' | 'medium' | 'hashnode' | 'other';
+  date: string;
+  tags: string[];
+  readTime?: string;
+}
+
 export interface Profile {
   name: string;
   firstName: string;

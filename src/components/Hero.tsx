@@ -243,6 +243,22 @@ export function Hero() {
                   <span className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-r from-amber-500/5 to-transparent blur-xl" />
                 </a>
               </MagneticHover>
+
+              {/* Direct PDF download */}
+              <MagneticHover strength={isMobile ? 0 : 20}>
+                <a
+                  href="/resume.pdf"
+                  download="Ehsanul_Haque_Siam_Resume.pdf"
+                  className="inline-flex items-center justify-center gap-2 px-5 sm:px-6 py-3 sm:py-4 border border-white/10 text-gray-400 rounded-full font-medium hover:bg-white/5 hover:text-white hover:border-white/20 transition-all duration-300 text-sm sm:text-base min-h-[44px]"
+                >
+                  <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                    <polyline points="7 10 12 15 17 10" />
+                    <line x1="12" y1="15" x2="12" y2="3" />
+                  </svg>
+                  <span>PDF</span>
+                </a>
+              </MagneticHover>
             </m.div>
           </div>
         </m.div>

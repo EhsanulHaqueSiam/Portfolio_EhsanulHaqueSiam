@@ -1,50 +1,34 @@
 [
     {
         "company": "BDTracks",
-        "role": "AI & Data Engineer",
+        "role": "AI & Data Engineer (Part-time, ~15 hrs/week)",
         "date": "Aug 2025 - Present",
-        "desc": "Built 15+ web scrapers powering Bangladesh's commodity and accident tracking platform (bdtracks.com). Trained and fine-tuned Google Gemini 2.5 Flash and Gemini 2.5 Pro using Vertex AI for automated data classification across commodity pricing and accident report analysis. Engineered production data pipelines processing daily feeds from multiple national sources into structured, searchable datasets serving live dashboards.",
+        "desc": "Powering Bangladesh's commodity and accident tracking platform (bdtracks.com). Built 15+ web scrapers and fine-tuned Google Gemini 2.5 Flash/Pro via Vertex AI for automated data classification. Engineered production pipelines processing daily feeds from multiple national sources into structured datasets serving live dashboards.",
         "alignment": "left",
         "showInHome": true
     },
     {
         "company": "BetaScript LLC",
-        "role": "Solo Developer (Part-time)",
+        "role": "Lead Developer (Part-time, ~20 hrs/week)",
         "date": "Jan 2026 - Present",
-        "desc": "Delivered 4 production React websites driving 1.5x revenue growth measured by live analytics and client billing by architecting with React 19, TanStack Start, and TailwindCSS with full lifecycle ownership from design to Netlify deployment. Led development at a US-based digital agency, serving 50,000+ end users across restaurant, e-commerce, and agency platforms.",
+        "desc": "Shipped 4 production React websites for this US-based digital agency, driving 1.5x client revenue growth measured by post-launch analytics and client billing. Full lifecycle ownership — design, React 19 + TanStack Start architecture, and Netlify deployment — across restaurant, e-commerce, and agency platforms serving 50,000+ end users.",
         "alignment": "left",
         "showInHome": true
     },
     {
         "company": "Unies",
-        "role": "AI Engineering Intern",
+        "role": "AI Engineering Intern (Full-time)",
         "date": "Feb 2026 - May 2026",
-        "desc": "Built production RAG pipelines achieving high retrieval accuracy for academic resources measured by embedding quality benchmarks across vector databases by implementing retrieval architectures with Pinecone, ChromaDB, LangChain, and LlamaIndex. Engineered automated LLM evaluation pipelines and FastAPI backends for curriculum-aligned tutoring systems.",
+        "desc": "Built production RAG pipelines for academic resource retrieval using Pinecone, ChromaDB, LangChain, and LlamaIndex. Engineered automated LLM evaluation pipelines and FastAPI backends powering curriculum-aligned tutoring systems. Benchmarked embedding quality across vector databases to optimize retrieval accuracy.",
         "alignment": "right",
         "showInHome": true,
         "logo": "unies"
     },
     {
-        "company": "AIUB Computer Graphics Course",
-        "role": "Team Lead - Game Development Project",
+        "company": "AIUB",
+        "role": "Team Lead - Game Development",
         "date": "Oct 2024 - Dec 2024",
-        "desc": "Shipped a 2D platformer game with 3 complete levels and 4 GitHub forks within a 3-month deadline by leading a team of 5 developers and building a custom OpenGL rendering engine with SFML audio and SQLite persistence.",
-        "alignment": "right",
-        "showInHome": true
-    },
-    {
-        "company": "South Asian Climate Conference",
-        "role": "Research Presenter",
-        "date": "Sep 2024",
-        "desc": "Presented original climate research at an international conference with 100+ attendees demonstrating statistical findings on South Asian climate trends by conducting data collection, statistical modeling, and visualization of regional environmental data.",
-        "alignment": "left",
-        "showInHome": true
-    },
-    {
-        "company": "AIUB CS Fest 2024",
-        "role": "App Showcase | 1st Runner Up",
-        "date": "Apr 2024",
-        "desc": "Won 1st Runner-Up in App Showcase competing against 20+ teams evaluated by industry judges on technical innovation and presentation quality by developing and demonstrating an innovative mobile application with polished UI/UX.",
+        "desc": "Led a team of 5 developers to ship a 2D platformer with 3 levels, a custom OpenGL rendering engine, SFML audio, and SQLite persistence — within a 3-month deadline. Earned 4 GitHub forks and a YouTube demo.",
         "alignment": "right",
         "showInHome": true
     }

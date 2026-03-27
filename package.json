@@ -6,8 +6,13 @@
   "sideEffects": false,
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
-    "preview": "vite preview"
+    "lint": "tsc -b --pretty false",
+    "build": "tsc -b && vite build && cp public/.htaccess dist/.htaccess",
+    "preview": "vite preview",
+    "set:site-url": "node scripts/set-site-url.mjs",
+    "verify:live": "node scripts/verify-live.mjs",
+    "test:compat": "playwright test --project=desktop-chromium-1366 --project=desktop-chromium-1920 --project=desktop-firefox-1366 --project=mobile-android",
+    "test:compat:webkit": "docker run --rm --user $(id -u):$(id -g) --ipc=host -v \"$PWD\":/work -w /work mcr.microsoft.com/playwright:v1.58.2-jammy bash -lc 'npx playwright test --project=desktop-webkit-1366 --project=tablet-ipad --project=mobile-ios'"
   },
   "dependencies": {
     "@studio-freight/lenis": "^1.0.42",

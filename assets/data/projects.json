@@ -1,7 +1,7 @@
 [
   {
     "name": "ScholarHub",
-    "desc": "Built a comprehensive scholarship discovery platform aggregating 12,000+ international scholarships from 272 sources with daily automated scraping as measured by full-text search with autocomplete, multi-facet filtering across country, degree, field, funding type, and prestige tier, plus an admin dashboard for review queue and source trust management by architecting a full-stack application with React 19, TanStack Start SSR, Convex real-time database, and a Python scraping pipeline with 7 scraping methods including Cloudflare bypass.",
+    "desc": "Students waste 20+ hours searching fragmented scholarship sources before deadlines pass. Built a unified discovery platform that indexes 12,000+ opportunities daily from 272 automated spiders — reducing search time to minutes. Full-text search with multi-facet filtering, admin review dashboard, and dynamic SEO. React 19 + TanStack Start SSR + Convex + Python scraping pipeline.",
     "metrics": [
       "12,000+ scholarships indexed daily",
       "272 spiders across 5 source categories",
@@ -76,7 +76,7 @@
   },
   {
     "name": "TTT Autos",
-    "desc": "Delivered a premium vehicle dealership platform with cinematic 'Velocity Noir' UI, interactive 3D Spline showcases, and a full admin dashboard supporting cars, motorcycles, and bicycles as measured by a polymorphic inventory system with 7 indexed database tables and multi-filter search across 12+ facets by architecting a full-stack application with React 19, TanStack Start SSR, Drizzle ORM on SQLite, Better Auth, and UploadThing file management.",
+    "desc": "Dealership websites lack trust — generic templates with FOMO-driven tactics. Built a cinematic 'Velocity Noir' platform with interactive 3D vehicle showcases, transparent pricing, and a 17-page admin dashboard supporting cars, motorcycles, and bicycles. Polymorphic inventory with 7 indexed tables and 12+ filter facets. React 19 + TanStack Start + Drizzle ORM + Spline 3D.",
     "metrics": [
       "3D Spline vehicle showcases",
       "Full admin CRUD dashboard",
@@ -151,7 +151,7 @@
   },
   {
     "name": "KaajKormo",
-    "desc": "Built Bangladesh's next-generation job portal with Tinder-style swipe-to-apply as measured by AI-powered CV parsing with skill-match percentage scoring and employer Kanban pipeline tracking by architecting a full-stack application with React 19, Rust Axum backend, PostgreSQL 17, and Clerk authentication.",
+    "desc": "Job applications in Bangladesh are tedious and opaque. Reimagined the experience with Tinder-style swipe-to-apply, AI-powered CV parsing that calculates skill-match percentages, and employer Kanban boards for pipeline tracking. Full-stack: React 19 frontend + Rust/Axum backend + PostgreSQL 17.",
     "metrics": [
       "React 19 + Rust/Axum",
       "AI-powered CV parsing",
@@ -180,7 +180,7 @@
   },
   {
     "name": "OfferLagbe",
-    "desc": "Shipped a real-time, map-based deals platform for Bangladesh with community-driven trust scoring as measured by auto-moderation triggers at <10% trust threshold and Community Verified badges at 5+ upvotes by building with React 19, TanStack Router, Convex real-time database, and MapLibre GL with clustering and heatmap visualization.",
+    "desc": "Local deals platforms lack trust — anyone can post anything. Built a community-driven marketplace where user trust scores auto-moderate content (bad actors removed at <10% trust, verified badges at 5+ upvotes). Real-time map with clustering and heatmap visualization. React 19 + Convex real-time DB + MapLibre GL + PWA with offline support.",
     "metrics": [
       "Real-time Convex subscriptions",
       "MapLibre clustering + heatmap",
@@ -210,7 +210,7 @@
   },
   {
     "name": "Aurum Gold",
-    "desc": "Built a premium gold e-commerce platform with editorial-grade UX and live gold rate integration as measured by Lighthouse 90+ performance scores and real-time price sync by architecting with React 19, TanStack Router, Zustand state management, and cinematic Framer Motion animations.",
+    "desc": "Gold buyers need real-time pricing they can trust. Built a premium e-commerce platform with live gold rate integration, editorial-grade product presentation, and Lighthouse 90+ performance. Cinematic animations create a luxury feel that matches the product. React 19 + TanStack Router + Zustand.",
     "metrics": [
       "Lighthouse 90+ target",
       "Live gold rate pricing",
@@ -240,7 +240,7 @@
   },
   {
     "name": "Void Threads",
-    "desc": "Created a premium streetwear e-commerce platform with conversion-optimized UX as measured by sales psychology patterns including exit-intent recovery, urgency indicators, and full 320px–1920px responsive coverage by building with React 19, TanStack Start, SSR via Nitro 3, and mobile-first design.",
+    "desc": "Most e-commerce sites leave money on the table with poor mobile UX. Built a conversion-optimized streetwear platform using sales psychology — exit-intent recovery, urgency indicators, and trust signals — with pixel-perfect responsive coverage from 320px to 1920px. SSR via Nitro 3 for instant page loads. React 19 + TanStack Start.",
     "metrics": [
       "SSR with Nitro 3",
       "320px\u20131920px responsive",
@@ -270,11 +270,11 @@
   },
   {
     "name": "Indian Claypit",
-    "desc": "Developed a restaurant platform serving 50,000+ customers with a 4.9\u2605 rating from 2,847 reviews measured by live ordering analytics and Google Reviews by building a full-stack React application with online ordering, event booking, and catering integration.",
+    "desc": "A restaurant needed to move from phone-only orders to a digital platform without losing the personal touch that earned their reputation. Built the full-stack solution — frontend ordering experience, backend order processing, event booking, and catering integration — now serving 50,000+ customers with a 4.9\u2605 rating from 2,847 Google Reviews.",
     "metrics": [
       "50,000+ customers served",
       "4.9\u2605 (2,847 reviews)",
-      "Online ordering system",
+      "Full-stack ordering system",
       "Production revenue platform"
     ],
     "images": [
@@ -283,22 +283,67 @@
     "showInHome": true,
     "categories": [
       "web",
-      "frontend"
+      "fullstack"
     ],
     "tags": [
       "React",
       "TypeScript",
       "TailwindCSS",
       "Framer Motion",
+      "Node.js",
       "E-commerce"
     ],
     "links": {
       "view": "https://indianclaypit.com/"
+    },
+    "caseStudy": {
+      "problem": "Indian Claypit relied on phone-only ordering, losing potential customers who expected digital convenience. Their excellent food and service (reflected in 2,847 Google Reviews) wasn't translating to online reach.",
+      "solution": "Built a full-stack restaurant platform with seamless online ordering, real-time order tracking, event booking for private dining, and catering integration — maintaining the warmth of their brand while scaling digitally.",
+      "process": [
+        {
+          "title": "Ordering Experience",
+          "desc": "Designed an intuitive menu browsing and cart system with real-time availability, dietary filters, and frictionless checkout optimized for mobile-first customers.",
+          "icon": "fas fa-shopping-cart"
+        },
+        {
+          "title": "Backend & Processing",
+          "desc": "Built order processing pipeline handling real-time submissions, kitchen notifications, and order status tracking from placement to delivery.",
+          "icon": "fas fa-server"
+        },
+        {
+          "title": "Event & Catering",
+          "desc": "Integrated event booking for private dining and large-scale catering requests with custom menu selection and automated quote generation.",
+          "icon": "fas fa-calendar-alt"
+        },
+        {
+          "title": "Performance & SEO",
+          "desc": "Optimized for Core Web Vitals with lazy loading, image optimization, and local SEO to capture nearby customer searches.",
+          "icon": "fas fa-chart-line"
+        }
+      ],
+      "results": [
+        {
+          "label": "Customers",
+          "value": "50,000+"
+        },
+        {
+          "label": "Rating",
+          "value": "4.9\u2605"
+        },
+        {
+          "label": "Reviews",
+          "value": "2,847"
+        },
+        {
+          "label": "Platform",
+          "value": "Production"
+        }
+      ]
     }
   },
   {
     "name": "BetaScript",
-    "desc": "Launched a tech agency website for a BD-USA partnership serving 150+ clients with 100% satisfaction rate tracked through client feedback and response metrics by designing an animated React application with service showcases, testimonials, and 24h response workflow.",
+    "desc": "A US-based digital agency needed a web presence that matched their premium positioning and 24-hour response promise. Designed and shipped an animated React site with service showcases, client testimonials, and conversion-optimized contact flows — now representing a BD-USA partnership serving 150+ clients with 100% satisfaction.",
     "metrics": [
       "150+ clients served",
       "100% satisfaction rate",

@@ -111,7 +111,7 @@ export function Skills() {
       </div>
 
       <div className="max-w-7xl mx-auto">
-        <SectionHeader number="03" title="Skills & Expertise" />
+        <SectionHeader number="04" title="Skills & Expertise" />
       </div>
 
       <div className="max-w-7xl mx-auto">

@@ -1,0 +1,29 @@
+[
+  {
+    "title": "How I Built 272 Web Spiders for ScholarHub",
+    "description": "The architecture behind scraping 12,000+ scholarships daily from 272 sources using 7 different scraping methods — including Cloudflare bypass and auto-healing pipelines.",
+    "url": "#",
+    "platform": "devto",
+    "date": "Coming Soon",
+    "tags": ["Python", "Web Scraping", "Architecture"],
+    "readTime": "8 min"
+  },
+  {
+    "title": "7x Query Performance: Database Normalization in Practice",
+    "description": "How redesigning a student management database to 3NF with Singleton connection pooling dropped query latency from 50ms to 7ms.",
+    "url": "#",
+    "platform": "devto",
+    "date": "Coming Soon",
+    "tags": ["Database", "Performance", "Java"],
+    "readTime": "6 min"
+  },
+  {
+    "title": "Building RAG Pipelines That Actually Work",
+    "description": "Lessons from production — choosing between Pinecone and ChromaDB, optimizing embedding quality, and building evaluation pipelines that catch retrieval failures.",
+    "url": "#",
+    "platform": "devto",
+    "date": "Coming Soon",
+    "tags": ["AI", "RAG", "LangChain"],
+    "readTime": "10 min"
+  }
+]

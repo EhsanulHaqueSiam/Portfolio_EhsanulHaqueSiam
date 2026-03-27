@@ -118,7 +118,7 @@ export function Awards() {
       </div>
 
       <div className="max-w-7xl mx-auto relative z-10">
-        <SectionHeader number="05" title="Awards & Recognition" />
+        <SectionHeader number="07" title="Awards & Recognition" />
 
         {/* Awards masonry grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 auto-rows-max">
@@ -132,8 +132,10 @@ export function Awards() {
               className={index === 0 ? 'sm:col-span-2 lg:col-span-2 sm:row-span-2' : ''}
             >
               <MagneticHover strength={8}>
-                <m.div
-                  className="group relative h-full rounded-2xl sm:rounded-3xl overflow-hidden cursor-pointer"
+                <m.button
+                  type="button"
+                  aria-label={`Open ${award.name} gallery`}
+                  className="group relative h-full w-full rounded-2xl sm:rounded-3xl overflow-hidden cursor-pointer text-left focus-visible:ring-2 focus-visible:ring-violet-400 focus-visible:ring-offset-2 focus-visible:ring-offset-space-900"
                   onClick={() => setSelectedAward(selectedAward === index ? null : index)}
                   whileHover={{ y: -5 }}
                   transition={{ duration: 0.3 }}
@@ -197,7 +199,7 @@ export function Awards() {
 
                   {/* Hover border */}
                   <div className="absolute inset-0 rounded-3xl border-2 border-transparent group-hover:border-amber-500/30 transition-colors duration-500 pointer-events-none" />
-                </m.div>
+                </m.button>
               </MagneticHover>
             </m.div>
           ))}
@@ -213,7 +215,7 @@ export function Awards() {
               role="dialog"
               aria-modal="true"
               aria-label={`${awards[selectedAward].name} gallery`}
-              className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-space-900/95 backdrop-blur-xl"
+              className="fixed inset-0 z-[200] flex items-end sm:items-center justify-center bg-space-900/95 backdrop-blur-xl"
               onClick={closeModal}
             >
               <m.div
@@ -280,7 +282,7 @@ export function Awards() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
-              className="fixed inset-0 z-[60] flex items-center justify-center bg-black/95"
+              className="fixed inset-0 z-[210] flex items-center justify-center bg-black/95"
               onClick={() => setLightboxIndex(null)}
             >
               {/* Image counter */}

@@ -16,7 +16,7 @@ export function Publications() {
       </div>
 
       <div className="max-w-7xl mx-auto relative z-10">
-        <SectionHeader number="06" title="Publications" />
+        <SectionHeader number="08" title="Publications" />
 
         {/* Publications grid */}
         <div className="space-y-8">

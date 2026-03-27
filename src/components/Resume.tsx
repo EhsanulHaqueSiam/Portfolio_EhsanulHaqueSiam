@@ -202,11 +202,11 @@ export function Resume() {
                     ehsanul.siamdev@gmail.com
                   </a>
                   <span className="text-white/[0.08]">/</span>
-                  <a href="https://linkedin.com/in/EhsanulHaqueSiam" target="_blank" rel="noopener noreferrer" className="hover:text-violet-400 active:text-violet-400 transition-colors underline decoration-white/[0.08] underline-offset-2">
+                  <a href="https://linkedin.com/in/EhsanulHaqueSiam" target="_blank" rel="me noopener noreferrer" className="hover:text-violet-400 active:text-violet-400 transition-colors underline decoration-white/[0.08] underline-offset-2">
                     LinkedIn
                   </a>
                   <span className="text-white/[0.08]">/</span>
-                  <a href="https://github.com/EhsanulHaqueSiam" target="_blank" rel="noopener noreferrer" className="hover:text-violet-400 active:text-violet-400 transition-colors underline decoration-white/[0.08] underline-offset-2">
+                  <a href="https://github.com/EhsanulHaqueSiam" target="_blank" rel="me noopener noreferrer" className="hover:text-violet-400 active:text-violet-400 transition-colors underline decoration-white/[0.08] underline-offset-2">
                     GitHub
                   </a>
                   <span className="text-white/[0.08]">/</span>

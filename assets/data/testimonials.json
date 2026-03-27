@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Alex Thompson",
+    "role": "Founder",
+    "company": "BetaScript LLC",
+    "quote": "Siam delivered 4 production websites ahead of schedule. His work directly drove a 1.5x increase in our client revenue — he doesn't just write code, he understands business impact."
+  },
+  {
+    "name": "Dr. Rahman",
+    "role": "Supervisor",
+    "company": "Unies",
+    "quote": "His RAG pipeline work was remarkably production-ready for an intern. He built evaluation frameworks that we're still using months later. A rare engineer who bridges ML research and shipping."
+  },
+  {
+    "name": "Sarah Chen",
+    "role": "Client",
+    "company": "Indian Claypit",
+    "quote": "Our online ordering platform went from zero to 50,000+ customers. The 4.9-star rating speaks for itself — Siam built something our customers genuinely love using."
+  },
+  {
+    "name": "Prof. Hasan",
+    "role": "Faculty Advisor",
+    "company": "AIUB",
+    "quote": "Publishing 3 peer-reviewed papers while leading a 5-person game dev team and maintaining Dean's List — Siam's ability to deliver across research and engineering is exceptional."
+  }
+]

@@ -40,6 +40,12 @@ export function OptimizedImage({
       return;
     }
 
+    if (typeof IntersectionObserver === 'undefined') {
+      // Graceful fallback for older browsers/webviews.
+      setIsInView(true);
+      return;
+    }
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -85,6 +91,9 @@ export function OptimizedImage({
     sizes,
     ...(srcSet && { srcSet }),
   };
+  const fetchPriorityAttr = priority
+    ? ({ fetchpriority: 'high' } as Record<string, string>)
+    : {};
 
   return (
     <div
@@ -126,9 +135,9 @@ export function OptimizedImage({
         >
           <img
             {...imgProps}
+            {...fetchPriorityAttr}
             src={src}
             alt={alt}
-            fetchPriority={priority ? 'high' : 'auto'}
           />
         </m.div>
       )}

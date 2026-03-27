@@ -11,8 +11,16 @@ He has published research in medical AI — specifically "Beyond NER: A Comparat
 Contact: ehsanul.siamdev@gmail.com
 Location: Dhaka, Bangladesh
 Website: https://ehsanulhaquesiam.netlify.app/
+Hiring Page: https://ehsanulhaquesiam.netlify.app/hire-me.html
 GitHub: https://github.com/EhsanulHaqueSiam
 LinkedIn: https://www.linkedin.com/in/EhsanulHaqueSiam/
+
+## Hiring Information
+
+- Open to: AI Engineer, LLM Engineer, Full-Stack Engineer roles
+- Engagement types: Full-time, contract, and project-based
+- Collaboration: Remote-friendly, works with international teams
+- Recruiter contact: ehsanul.siamdev@gmail.com
 
 ## Technical Skills
 

@@ -23,6 +23,9 @@ const categoryLabels: Record<string, string> = {
   'automation': 'Automation',
 };
 
+const hasLiveDemo = (view?: string): view is string =>
+  typeof view === 'string' && view.trim() !== '' && view !== '#';
+
 export function Projects() {
   const [activeCategory, setActiveCategory] = useState('All');
 
@@ -31,7 +34,8 @@ export function Projects() {
       ? featuredProjects
       : featuredProjects.filter((p) => p.categories.includes(activeCategory));
 
-  const featuredProject = featuredProjects[0];
+  const featuredProject = filteredProjects[0];
+  const gridProjects = filteredProjects.slice(1);
 
   return (
     <section id="projects" className="py-16 sm:py-24 md:py-32 px-4 sm:px-6 md:px-12 lg:px-24 relative overflow-hidden">
@@ -42,7 +46,7 @@ export function Projects() {
       </div>
 
       <div className="max-w-7xl mx-auto relative z-10">
-        <SectionHeader number="04" title="Featured Projects" />
+        <SectionHeader number="05" title="Featured Projects" />
 
         {/* Featured project spotlight */}
         {featuredProject && (
@@ -125,7 +129,7 @@ export function Projects() {
                         </a>
                       </MagneticHover>
                     )}
-                    {featuredProject.links.view !== '#' && (
+                    {hasLiveDemo(featuredProject.links.view) && (
                       <MagneticHover strength={20}>
                         <a
                           href={featuredProject.links.view}
@@ -180,7 +184,7 @@ export function Projects() {
         {/* Projects grid */}
         <m.div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           <AnimatePresence mode="popLayout">
-            {filteredProjects.slice(1).map((project, index) => (
+            {gridProjects.map((project, index) => (
               <m.div
                 key={project.name}
                 layout
@@ -232,7 +236,7 @@ export function Projects() {
                             <GitHubIcon />
                           </m.a>
                         )}
-                        {project.links.view !== '#' && (
+                        {hasLiveDemo(project.links.view) && (
                           <m.a
                             href={project.links.view}
                             target="_blank"

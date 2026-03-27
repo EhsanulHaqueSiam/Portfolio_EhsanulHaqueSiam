@@ -53,7 +53,7 @@ export function Education() {
       </div>
 
       <div className="max-w-7xl mx-auto relative z-10">
-        <SectionHeader number="07" title="Education" />
+        <SectionHeader number="10" title="Education" />
 
         {/* Education cards */}
         <div className="grid gap-8">
