@@ -3,6 +3,7 @@ import { m, useInView } from 'framer-motion';
 
 const DAYS = 7;
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+const SHORT_DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 const DAY_LABELS = ['', 'M', '', 'W', '', 'F', ''];
 const GITHUB_USERNAME = 'EhsanulHaqueSiam';
 const API_URL = `https://github-contributions-api.jogruber.de/v4/${GITHUB_USERNAME}?y=last`;
@@ -11,6 +12,11 @@ const CELL = 10;
 const GAP = 2;
 const STEP = CELL + GAP;
 const LABEL_W = 20;
+
+function formatTooltipDate(dateStr: string): string {
+  const d = new Date(dateStr + 'T00:00:00');
+  return `${SHORT_DAYS[d.getDay()]}, ${MONTHS[d.getMonth()]} ${d.getDate()}`;
+}
 
 interface ContributionDay {
   date: string;
@@ -23,13 +29,15 @@ interface ApiResponse {
   contributions: ContributionDay[];
 }
 
+interface CellData { level: number; count: number; date: string }
+
 // Convert flat contributions array into weeks grid (7 days per week)
-function toWeeksGrid(contributions: ContributionDay[]): { level: number; count: number }[][] {
-  const weeks: { level: number; count: number }[][] = [];
-  let currentWeek: { level: number; count: number }[] = [];
+function toWeeksGrid(contributions: ContributionDay[]): CellData[][] {
+  const weeks: CellData[][] = [];
+  let currentWeek: CellData[] = [];
 
   for (const day of contributions) {
-    currentWeek.push({ level: day.level, count: day.count });
+    currentWeek.push({ level: day.level, count: day.count, date: day.date });
     if (currentWeek.length === 7) {
       weeks.push(currentWeek);
       currentWeek = [];
@@ -78,7 +86,7 @@ export function GitHubGraph() {
   const containerRef = useRef<HTMLDivElement>(null);
   const graphAreaRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(containerRef, { once: true, margin: '-10%' });
-  const [hoveredCell, setHoveredCell] = useState<{ week: number; day: number } | null>(null);
+  const [hoveredCell, setHoveredCell] = useState<{ week: number; day: number; count: number; date: string } | null>(null);
   const [visibleWeeks, setVisibleWeeks] = useState(52);
   const [data, setData] = useState<ApiResponse | null>(null);
 
@@ -120,12 +128,20 @@ export function GitHubGraph() {
 
   const totalContributions = data?.total?.lastYear ?? 0;
 
-  const handleMouseEnter = useCallback((week: number, day: number) => {
-    setHoveredCell({ week, day });
+  const handleMouseEnter = useCallback((week: number, day: number, count: number, date: string) => {
+    setHoveredCell({ week, day, count, date });
   }, []);
   const handleMouseLeave = useCallback(() => {
     setHoveredCell(null);
   }, []);
+
+  // Is a cell adjacent to (within 1 step of) the hovered cell?
+  const isNeighbor = useCallback((wk: number, dy: number) => {
+    if (!hoveredCell) return false;
+    const dw = Math.abs(wk - hoveredCell.week);
+    const dd = Math.abs(dy - hoveredCell.day);
+    return dw <= 1 && dd <= 1 && !(dw === 0 && dd === 0);
+  }, [hoveredCell]);
 
   const displayWeeks = weeks.length || visibleWeeks;
   const graphWidth = LABEL_W + displayWeeks * STEP;
@@ -191,42 +207,107 @@ export function GitHubGraph() {
               ) : null,
             )}
 
+            {/* Column highlight — faint vertical line on hovered column */}
+            {hoveredCell && (
+              <m.rect
+                x={LABEL_W + hoveredCell.week * STEP - 1}
+                y={14}
+                width={CELL + 2}
+                height={graphHeight}
+                rx={3}
+                className="fill-violet-500/[0.04]"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.15 }}
+              />
+            )}
+
             {/* Cells */}
             {weeks.map((week, weekIdx) =>
               week.map((day, dayIdx) => {
                 const isHovered = hoveredCell?.week === weekIdx && hoveredCell?.day === dayIdx;
+                const neighbor = isNeighbor(weekIdx, dayIdx);
                 const x = LABEL_W + weekIdx * STEP;
                 const y = 14 + dayIdx * STEP;
                 const level = Math.min(day.level, 4);
 
                 return (
-                  <m.rect
-                    key={`${weekIdx}-${dayIdx}`}
-                    x={x}
-                    y={y}
-                    width={CELL}
-                    height={CELL}
-                    rx={2}
-                    className={`cursor-crosshair ${FILL_CLASSES[level]}`}
-                    initial={{ opacity: 0 }}
-                    animate={
-                      isInView
-                        ? { opacity: 1, scale: isHovered ? 1.3 : 1, originX: `${x + CELL / 2}px`, originY: `${y + CELL / 2}px` }
-                        : { opacity: 0 }
-                    }
-                    transition={{
-                      opacity: { duration: 0.3, delay: weekIdx * 0.006 },
-                      scale: { duration: 0.12 },
-                    }}
-                    onMouseEnter={() => handleMouseEnter(weekIdx, dayIdx)}
-                    onMouseLeave={handleMouseLeave}
-                  >
-                    {isHovered && day.count > 0 && (
-                      <title>{day.count} contributions</title>
+                  <g key={`${weekIdx}-${dayIdx}`}>
+                    {/* Glow ring — soft violet halo behind hovered cell */}
+                    {isHovered && level > 0 && (
+                      <m.rect
+                        x={x - 2}
+                        y={y - 2}
+                        width={CELL + 4}
+                        height={CELL + 4}
+                        rx={4}
+                        className="fill-transparent stroke-violet-400/40"
+                        strokeWidth={1}
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.15 }}
+                        style={{ transformOrigin: `${x + CELL / 2}px ${y + CELL / 2}px` }}
+                      />
                     )}
-                  </m.rect>
+                    <m.rect
+                      x={x}
+                      y={y}
+                      width={CELL}
+                      height={CELL}
+                      rx={2}
+                      className={`cursor-crosshair ${FILL_CLASSES[level]}`}
+                      initial={{ opacity: 0 }}
+                      animate={
+                        isInView
+                          ? {
+                              opacity: neighbor && level > 0 ? 1 : 1,
+                              scale: isHovered ? 1.35 : 1,
+                              filter: neighbor && level > 0 ? 'brightness(1.4)' : 'brightness(1)',
+                            }
+                          : { opacity: 0 }
+                      }
+                      transition={{
+                        opacity: { duration: 0.3, delay: weekIdx * 0.006 },
+                        scale: { type: 'spring', stiffness: 500, damping: 25 },
+                        filter: { duration: 0.2 },
+                      }}
+                      style={{ transformOrigin: `${x + CELL / 2}px ${y + CELL / 2}px` }}
+                      onMouseEnter={() => handleMouseEnter(weekIdx, dayIdx, day.count, day.date)}
+                      onMouseLeave={handleMouseLeave}
+                    />
+                  </g>
                 );
               }),
+            )}
+
+            {/* Floating tooltip inside SVG */}
+            {hoveredCell && (
+              <foreignObject
+                x={Math.max(0, Math.min(
+                  LABEL_W + hoveredCell.week * STEP + CELL / 2 - 60,
+                  graphWidth - 120
+                ))}
+                y={Math.max(0, 14 + hoveredCell.day * STEP - 28)}
+                width={120}
+                height={24}
+                className="pointer-events-none"
+                style={{ overflow: 'visible' }}
+              >
+                <m.div
+                  className="flex items-center justify-center"
+                  initial={{ opacity: 0, y: 3 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.1 }}
+                >
+                  <div className="px-2 py-0.5 rounded-md bg-space-700/95 border border-white/10 backdrop-blur-sm shadow-lg shadow-black/30 whitespace-nowrap">
+                    <span className="text-[8px] text-gray-300 font-mono">
+                      <span className="text-violet-400 font-semibold">{hoveredCell.count}</span>
+                      {' '}· {formatTooltipDate(hoveredCell.date)}
+                    </span>
+                  </div>
+                </m.div>
+              </foreignObject>
             )}
           </svg>
         ) : (
