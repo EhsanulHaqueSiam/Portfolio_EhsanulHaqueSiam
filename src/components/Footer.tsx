@@ -19,7 +19,7 @@ export function Footer() {
             <a
               href="#main-content"
               aria-label="Go to top"
-              className="text-xl font-display font-bold gradient-text inline-block mb-2"
+              className="inline-flex items-center min-h-[44px] text-xl font-display font-bold gradient-text mb-2"
             >
               Siam
             </a>
@@ -37,19 +37,19 @@ export function Footer() {
           >
             <a
               href="#about"
-              className="text-gray-500 hover:text-violet-400 text-sm transition-colors"
+              className="inline-flex items-center min-h-[44px] px-1 text-gray-500 hover:text-violet-400 text-sm transition-colors"
             >
               About
             </a>
             <a
               href="#projects"
-              className="text-gray-500 hover:text-violet-400 text-sm transition-colors"
+              className="inline-flex items-center min-h-[44px] px-1 text-gray-500 hover:text-violet-400 text-sm transition-colors"
             >
               Projects
             </a>
             <a
               href="#contact"
-              className="text-gray-500 hover:text-violet-400 text-sm transition-colors"
+              className="inline-flex items-center min-h-[44px] px-1 text-gray-500 hover:text-violet-400 text-sm transition-colors"
             >
               Contact
             </a>
@@ -66,7 +66,7 @@ export function Footer() {
               href={profile.github}
               target="_blank"
               rel="me noopener noreferrer"
-              className="w-10 h-10 rounded-xl bg-space-800/50 flex items-center justify-center text-gray-500 hover:text-violet-400 hover:bg-space-700/50 transition-all"
+              className="w-11 h-11 min-w-[44px] min-h-[44px] rounded-xl bg-space-800/50 flex items-center justify-center text-gray-500 hover:text-violet-400 hover:bg-space-700/50 transition-all"
               aria-label="GitHub"
             >
               <GitHubIcon />
@@ -75,14 +75,14 @@ export function Footer() {
               href={profile.linkedin}
               target="_blank"
               rel="me noopener noreferrer"
-              className="w-10 h-10 rounded-xl bg-space-800/50 flex items-center justify-center text-gray-500 hover:text-violet-400 hover:bg-space-700/50 transition-all"
+              className="w-11 h-11 min-w-[44px] min-h-[44px] rounded-xl bg-space-800/50 flex items-center justify-center text-gray-500 hover:text-violet-400 hover:bg-space-700/50 transition-all"
               aria-label="LinkedIn"
             >
               <LinkedInIcon />
             </a>
             <a
               href={`mailto:${profile.email}`}
-              className="w-10 h-10 rounded-xl bg-space-800/50 flex items-center justify-center text-gray-500 hover:text-violet-400 hover:bg-space-700/50 transition-all"
+              className="w-11 h-11 min-w-[44px] min-h-[44px] rounded-xl bg-space-800/50 flex items-center justify-center text-gray-500 hover:text-violet-400 hover:bg-space-700/50 transition-all"
               aria-label="Email"
             >
               <EmailIcon />

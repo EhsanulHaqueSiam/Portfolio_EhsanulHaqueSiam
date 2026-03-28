@@ -184,19 +184,23 @@ export function Projects() {
         {/* Projects grid */}
         <m.div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           <AnimatePresence mode="popLayout">
-            {gridProjects.map((project, index) => (
-              <m.div
-                key={project.name}
-                layout
-                initial={{ opacity: 0, scale: 0.9, y: 30 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.9, y: -30 }}
-                transition={{
-                  duration: 0.4,
-                  delay: index * 0.08,
-                  ease: [0.22, 1, 0.36, 1],
-                }}
-              >
+            {gridProjects.map((project, index) => {
+              const hasDemo = hasLiveDemo(project.links.view);
+              const mobilePrimaryLink = hasDemo ? project.links.view : project.links.code;
+
+              return (
+                <m.div
+                  key={project.name}
+                  layout
+                  initial={{ opacity: 0, scale: 0.9, y: 30 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.9, y: -30 }}
+                  transition={{
+                    duration: 0.4,
+                    delay: index * 0.08,
+                    ease: [0.22, 1, 0.36, 1],
+                  }}
+                >
                 <TiltCard className="group h-full" maxTilt={5}>
                   <div className="h-full flex flex-col rounded-2xl bg-space-800/50 border border-white/5 overflow-hidden hover:border-violet-500/30 transition-colors duration-500">
                     {/* Project thumbnail */}
@@ -221,7 +225,7 @@ export function Projects() {
 
                       {/* Overlay links */}
                       <m.div
-                        className="absolute inset-0 bg-space-900/80 flex items-center justify-center gap-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                        className="absolute inset-0 hidden lg:flex items-center justify-center gap-4 bg-space-900/80 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-opacity duration-300"
                       >
                         {project.links.code && (
                           <m.a
@@ -270,11 +274,38 @@ export function Projects() {
                           </span>
                         ))}
                       </div>
+
+                      {/* Touch-device actions (mobile/tablet): avoid hover-only links */}
+                      {mobilePrimaryLink && (
+                        <div className="mt-4 flex flex-wrap gap-2 lg:hidden">
+                          <a
+                            href={mobilePrimaryLink}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            data-project-action="mobile-primary"
+                            className="inline-flex items-center justify-center px-3 py-2 min-h-[44px] rounded-lg border border-white/10 text-sm text-white hover:bg-white/5 active:bg-white/10 transition-colors"
+                          >
+                            {hasDemo ? 'Open Demo' : 'View Code'}
+                          </a>
+                          {hasDemo && project.links.code && (
+                            <a
+                              href={project.links.code}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              data-project-action="mobile-code"
+                              className="inline-flex items-center justify-center px-3 py-2 min-h-[44px] rounded-lg border border-white/10 text-sm text-gray-300 hover:bg-white/5 active:bg-white/10 transition-colors"
+                            >
+                              Code
+                            </a>
+                          )}
+                        </div>
+                      )}
                     </div>
                   </div>
                 </TiltCard>
               </m.div>
-            ))}
+              );
+            })}
           </AnimatePresence>
         </m.div>
 

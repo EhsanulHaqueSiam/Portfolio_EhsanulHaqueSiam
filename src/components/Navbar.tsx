@@ -81,7 +81,7 @@ export function Navbar() {
           <m.a
             href="#"
             aria-label="Go to top"
-            className="text-2xl font-display font-bold gradient-text relative"
+            className="inline-flex items-center min-h-[44px] text-2xl font-display font-bold gradient-text relative"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             transition={{ type: 'spring', stiffness: 400, damping: 17 }}
@@ -106,7 +106,7 @@ export function Navbar() {
               >
                 <m.a
                   href={item.href}
-                  className={`relative px-4 py-2 text-sm font-medium rounded-lg transition-colors duration-300 ${
+                  className={`relative inline-flex items-center min-h-[44px] px-4 py-2 text-sm font-medium rounded-lg transition-colors duration-300 ${
                     activeSection === item.href.slice(1)
                       ? 'text-violet-400'
                       : 'text-gray-400 hover:text-white'

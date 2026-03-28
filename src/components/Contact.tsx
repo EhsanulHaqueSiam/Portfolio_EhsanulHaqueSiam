@@ -92,7 +92,7 @@ export function Contact() {
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
               <m.a
                 href={recruiterMailtoHref}
-                className="text-lg sm:text-2xl md:text-3xl lg:text-4xl font-display font-bold text-white hover:text-violet-400 transition-colors break-all sm:break-normal"
+                className="inline-flex items-center min-h-[44px] text-lg sm:text-2xl md:text-3xl lg:text-4xl font-display font-bold text-white hover:text-violet-400 transition-colors break-all sm:break-normal"
                 whileHover={{ scale: 1.02 }}
               >
                 {profile.email}

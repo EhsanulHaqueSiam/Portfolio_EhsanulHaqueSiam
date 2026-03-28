@@ -111,7 +111,7 @@ export function Publications() {
 
                         {pub.images && pub.images.length > 0 && (
                           <button
-                            className="text-gray-500 hover:text-white text-sm flex items-center gap-2 transition-colors"
+                            className="inline-flex items-center gap-2 px-2 min-h-[44px] text-gray-500 hover:text-white text-sm transition-colors"
                             onClick={(e) => {
                               e.stopPropagation();
                               setExpandedPub(expandedPub === index ? null : index);
