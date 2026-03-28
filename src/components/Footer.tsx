@@ -37,19 +37,19 @@ export function Footer() {
           >
             <a
               href="#about"
-              className="inline-flex items-center min-h-[44px] px-1 text-gray-500 hover:text-violet-400 text-sm transition-colors"
+              className="press-feedback inline-flex items-center min-h-[44px] px-1 text-gray-500 hover:text-violet-400 text-sm"
             >
               About
             </a>
             <a
               href="#projects"
-              className="inline-flex items-center min-h-[44px] px-1 text-gray-500 hover:text-violet-400 text-sm transition-colors"
+              className="press-feedback inline-flex items-center min-h-[44px] px-1 text-gray-500 hover:text-violet-400 text-sm"
             >
               Projects
             </a>
             <a
               href="#contact"
-              className="inline-flex items-center min-h-[44px] px-1 text-gray-500 hover:text-violet-400 text-sm transition-colors"
+              className="press-feedback inline-flex items-center min-h-[44px] px-1 text-gray-500 hover:text-violet-400 text-sm"
             >
               Contact
             </a>
@@ -66,7 +66,7 @@ export function Footer() {
               href={profile.github}
               target="_blank"
               rel="me noopener noreferrer"
-              className="w-11 h-11 min-w-[44px] min-h-[44px] rounded-xl bg-space-800/50 flex items-center justify-center text-gray-500 hover:text-violet-400 hover:bg-space-700/50 transition-all"
+              className="press-feedback w-11 h-11 min-w-[44px] min-h-[44px] rounded-xl bg-space-800/50 flex items-center justify-center text-gray-500 hover:text-violet-400 hover:bg-space-700/50"
               aria-label="GitHub"
             >
               <GitHubIcon />
@@ -75,14 +75,14 @@ export function Footer() {
               href={profile.linkedin}
               target="_blank"
               rel="me noopener noreferrer"
-              className="w-11 h-11 min-w-[44px] min-h-[44px] rounded-xl bg-space-800/50 flex items-center justify-center text-gray-500 hover:text-violet-400 hover:bg-space-700/50 transition-all"
+              className="press-feedback w-11 h-11 min-w-[44px] min-h-[44px] rounded-xl bg-space-800/50 flex items-center justify-center text-gray-500 hover:text-violet-400 hover:bg-space-700/50"
               aria-label="LinkedIn"
             >
               <LinkedInIcon />
             </a>
             <a
               href={`mailto:${profile.email}`}
-              className="w-11 h-11 min-w-[44px] min-h-[44px] rounded-xl bg-space-800/50 flex items-center justify-center text-gray-500 hover:text-violet-400 hover:bg-space-700/50 transition-all"
+              className="press-feedback w-11 h-11 min-w-[44px] min-h-[44px] rounded-xl bg-space-800/50 flex items-center justify-center text-gray-500 hover:text-violet-400 hover:bg-space-700/50"
               aria-label="Email"
             >
               <EmailIcon />

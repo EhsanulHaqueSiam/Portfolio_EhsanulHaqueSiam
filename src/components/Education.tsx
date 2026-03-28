@@ -66,9 +66,9 @@ export function Education() {
               transition={{ duration: 0.6, delay: index * 0.15 }}
             >
               <MagneticHover strength={6}>
-                <div className="group relative p-8 md:p-10 rounded-3xl bg-space-800/50 border border-white/5 hover:border-violet-500/30 transition-all duration-500 overflow-hidden">
+                <div className="group relative p-8 md:p-10 rounded-3xl bg-space-800/50 border border-white/5 hover:border-violet-500/30 transition-[border-color] duration-200 overflow-hidden">
                   {/* Gradient overlay on hover */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-violet-500/5 via-transparent to-amber-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  <div className="absolute inset-0 bg-gradient-to-br from-violet-500/5 via-transparent to-amber-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
 
                   {/* Content */}
                   <div className="relative z-10 flex flex-col md:flex-row md:items-center gap-6">

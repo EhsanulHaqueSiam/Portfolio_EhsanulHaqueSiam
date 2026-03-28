@@ -75,10 +75,10 @@ export function About() {
                 <div className="absolute inset-0 flex items-center justify-center p-6">
                   <div className="relative">
                     {/* Glow effect */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-violet-500/30 to-amber-500/20 rounded-full blur-2xl scale-110 opacity-50 group-hover:opacity-80 transition-opacity duration-500" />
+                    <div className="absolute inset-0 bg-gradient-to-br from-violet-500/30 to-amber-500/20 rounded-full blur-2xl scale-110 opacity-50 group-hover:opacity-80 transition-opacity duration-200" />
 
                     {/* Image container */}
-                    <div className="relative w-40 h-40 md:w-48 md:h-48 rounded-full overflow-hidden border-2 border-white/10 group-hover:border-violet-500/50 transition-colors duration-500">
+                    <div className="relative w-40 h-40 md:w-48 md:h-48 rounded-full overflow-hidden border-2 border-white/10 group-hover:border-violet-500/50 transition-colors duration-200">
                       <img
                         src={profileImage}
                         alt={profile.name}
@@ -87,11 +87,11 @@ export function About() {
                         width={192}
                         height={192}
                         sizes="(max-width: 768px) 160px, 192px"
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                        className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
                         onError={hideImageOnError}
                       />
                       {/* Overlay gradient */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-space-900/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-space-900/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
                     </div>
 
                     {/* Decorative ring */}
@@ -107,7 +107,7 @@ export function About() {
                 </div>
 
                 {/* Animated hover border */}
-                <div className="absolute inset-0 rounded-3xl border border-violet-500/0 group-hover:border-violet-500/30 transition-colors duration-500 pointer-events-none" />
+                <div className="absolute inset-0 rounded-3xl border border-violet-500/0 group-hover:border-violet-500/30 transition-colors duration-200 pointer-events-none" />
               </div>
             </ImageDistortion>
           </m.div>
@@ -205,7 +205,7 @@ export function About() {
                 {['Python', 'Java', 'PyTorch', 'TensorFlow', 'Android', 'MySQL', 'C++', 'Git'].map((tech) => (
                   <m.span
                     key={tech}
-                    className="px-3 py-1.5 text-sm bg-space-700/50 text-gray-300 rounded-lg border border-white/5 hover:border-violet-500/30 hover:text-white transition-all cursor-default"
+                    className="px-3 py-1.5 text-sm bg-space-700/50 text-gray-300 rounded-lg border border-white/5 hover:border-violet-500/30 hover:text-white transition-colors duration-200 cursor-default"
                     whileHover={{ scale: 1.05, y: -2 }}
                   >
                     {tech}

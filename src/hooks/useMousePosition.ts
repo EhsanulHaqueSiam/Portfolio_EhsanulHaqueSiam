@@ -14,6 +14,17 @@ export function useTiltEffect<T extends HTMLElement>(
     const element = ref.current;
     if (!element) return;
 
+    if (typeof window !== 'undefined') {
+      const hasFinePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+      const shouldReduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (!hasFinePointer || shouldReduceMotion) {
+        rotateX.set(0);
+        rotateY.set(0);
+        isHovered.set(0);
+        return;
+      }
+    }
+
     const handleMouseMove = (e: MouseEvent) => {
       const rect = rectRef.current;
       if (!rect) return;

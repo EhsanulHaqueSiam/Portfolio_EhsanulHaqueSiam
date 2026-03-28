@@ -64,12 +64,12 @@ export function Navbar() {
 
   return (
     <m.nav
-      initial={{ y: -100 }}
+      initial={{ transform: 'translateY(-100px)' }}
       animate={{
-        y: isHidden ? -100 : 0,
+        transform: isHidden ? 'translateY(-100px)' : 'translateY(0px)',
       }}
       transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-[background-color,border-color,backdrop-filter] duration-300 ${
         isScrolled
           ? 'bg-space-900/80 backdrop-blur-sm border-b border-white/5'
           : 'bg-transparent'
@@ -81,9 +81,9 @@ export function Navbar() {
           <m.a
             href="#"
             aria-label="Go to top"
-            className="inline-flex items-center min-h-[44px] text-2xl font-display font-bold gradient-text relative"
+            className="press-feedback inline-flex items-center min-h-[44px] text-2xl font-display font-bold gradient-text relative"
             whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+            whileTap={{ scale: 0.97 }}
             transition={{ type: 'spring', stiffness: 400, damping: 17 }}
           >
             Siam
@@ -106,13 +106,13 @@ export function Navbar() {
               >
                 <m.a
                   href={item.href}
-                  className={`relative inline-flex items-center min-h-[44px] px-4 py-2 text-sm font-medium rounded-lg transition-colors duration-300 ${
+                  className={`press-feedback relative inline-flex items-center min-h-[44px] px-4 py-2 text-sm font-medium rounded-lg ${
                     activeSection === item.href.slice(1)
                       ? 'text-violet-400'
                       : 'text-gray-400 hover:text-white'
                   }`}
-                  whileHover={{ y: -2 }}
-                  whileTap={{ scale: 0.95 }}
+                  whileHover={{ y: -1 }}
+                  whileTap={{ scale: 0.97 }}
                   transition={{ type: 'spring', stiffness: 400, damping: 17 }}
                 >
                   {item.label}
@@ -131,8 +131,8 @@ export function Navbar() {
           {/* Mobile Menu Button */}
           <m.button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="md:hidden p-2 min-w-[44px] min-h-[44px] text-gray-400 hover:text-white rounded-lg flex items-center justify-center"
-            whileTap={{ scale: 0.9 }}
+            className="press-feedback md:hidden p-2 min-w-[44px] min-h-[44px] text-gray-400 hover:text-white rounded-lg flex items-center justify-center"
+            whileTap={{ scale: 0.97 }}
             aria-label="Toggle menu"
             aria-expanded={isMobileMenuOpen}
           >
@@ -161,7 +161,10 @@ export function Navbar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+            transition={{
+              duration: 0.3,
+              ease: [0.16, 1, 0.3, 1],
+            }}
             className="md:hidden bg-space-800/95 backdrop-blur-lg border-b border-white/5 overflow-hidden"
           >
             <ul className="px-4 py-4 space-y-1">
@@ -176,7 +179,7 @@ export function Navbar() {
                   <a
                     href={item.href}
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className={`px-4 py-4 rounded-xl text-lg font-medium transition-all duration-300 min-h-[48px] flex items-center ${
+                    className={`press-feedback px-4 py-4 rounded-xl text-lg font-medium min-h-[48px] flex items-center ${
                       activeSection === item.href.slice(1)
                         ? 'text-violet-400 bg-violet-500/10'
                         : 'text-gray-400 hover:text-white hover:bg-white/5 active:bg-white/10'

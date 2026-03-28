@@ -177,8 +177,8 @@ export function GitHubGraph() {
   const graphHeight = DAYS * STEP - GAP;
 
   return (
-    <div ref={containerRef} className="group relative h-full p-4 sm:p-5 rounded-3xl bg-space-800/50 border border-white/5 hover:border-violet-500/20 transition-colors duration-500 overflow-hidden">
-      <div className="absolute -bottom-16 -right-16 w-40 h-40 bg-violet-500/[0.06] rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
+    <div ref={containerRef} className="group relative h-full p-4 sm:p-5 rounded-3xl bg-space-800/50 border border-white/5 hover:border-violet-500/20 transition-colors duration-200 overflow-hidden">
+      <div className="absolute -bottom-16 -right-16 w-40 h-40 bg-violet-500/[0.06] rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-250 pointer-events-none" />
 
       {/* Header */}
       <div className="flex items-center justify-between mb-2.5 relative z-10">

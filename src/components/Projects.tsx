@@ -69,11 +69,11 @@ export function Projects() {
                         priority
                         aspectRatio="16/9"
                         sizes="(max-width: 1024px) 100vw, 50vw"
-                        className="w-full h-full transition-transform duration-700 group-hover/image:scale-105"
+                        className="w-full h-full transition-transform duration-300 group-hover/image:scale-105"
                       />
                     )}
                     {/* Overlay gradient */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-space-900/60 via-transparent to-transparent opacity-0 group-hover/image:opacity-100 transition-opacity duration-500" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-space-900/60 via-transparent to-transparent opacity-0 group-hover/image:opacity-100 transition-opacity duration-200" />
                   </div>
                   {/* Featured badge */}
                   <div className="absolute top-4 left-4 px-3 py-1 bg-amber-500/20 text-amber-400 text-xs font-medium rounded-full border border-amber-500/30 backdrop-blur-sm">
@@ -122,7 +122,7 @@ export function Projects() {
                           href={featuredProject.links.code}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 bg-white text-space-900 rounded-full font-medium hover:bg-gray-100 active:bg-gray-200 transition-colors text-sm sm:text-base min-h-[44px]"
+                          className="press-feedback inline-flex items-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 bg-white text-space-900 rounded-full font-medium hover:bg-gray-100 active:bg-gray-200 text-sm sm:text-base min-h-[44px]"
                         >
                           <GitHubIcon />
                           View Code
@@ -135,7 +135,7 @@ export function Projects() {
                           href={featuredProject.links.view}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 border border-white/20 text-white rounded-full font-medium hover:bg-white/5 active:bg-white/10 transition-colors text-sm sm:text-base min-h-[44px]"
+                          className="press-feedback inline-flex items-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 border border-white/20 text-white rounded-full font-medium hover:bg-white/5 active:bg-white/10 text-sm sm:text-base min-h-[44px]"
                         >
                           <ExternalLinkIcon />
                           Live Demo
@@ -156,27 +156,26 @@ export function Projects() {
 
           <div className="flex gap-2 sm:gap-3 overflow-x-auto scrollbar-hide pb-2 -mx-6 px-6 sm:mx-0 sm:px-0 sm:flex-wrap sm:justify-center sm:overflow-visible">
             {categories.map((category) => (
-              <MagneticHover key={category} strength={15}>
-                <m.button
-                  onClick={() => setActiveCategory(category)}
-                  className={`relative px-4 sm:px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 whitespace-nowrap flex-shrink-0 min-h-[44px] ${
-                    activeCategory === category
-                      ? 'text-white'
-                      : 'text-gray-500 hover:text-gray-300'
-                  }`}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  {activeCategory === category && (
-                    <m.div
-                      layoutId="activeProjectCategory"
-                      className="absolute inset-0 bg-violet-600 rounded-full"
-                      transition={{ type: 'spring', stiffness: 400, damping: 30 }}
-                    />
-                  )}
-                  <span className="relative z-10">{categoryLabels[category]}</span>
-                </m.button>
-              </MagneticHover>
+              <m.button
+                key={category}
+                onClick={() => setActiveCategory(category)}
+                className={`press-feedback relative px-4 sm:px-5 py-2.5 rounded-full text-sm font-medium whitespace-nowrap flex-shrink-0 min-h-[44px] ${
+                  activeCategory === category
+                    ? 'text-white'
+                    : 'text-gray-500 hover:text-gray-300'
+                }`}
+                whileHover={{ scale: 1.01 }}
+                whileTap={{ scale: 0.97 }}
+              >
+                {activeCategory === category && (
+                  <m.div
+                    layoutId="activeProjectCategory"
+                    className="absolute inset-0 bg-violet-600 rounded-full"
+                    transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+                  />
+                )}
+                <span className="relative z-10">{categoryLabels[category]}</span>
+              </m.button>
             ))}
           </div>
         </div>
@@ -192,17 +191,20 @@ export function Projects() {
                 <m.div
                   key={project.name}
                   layout
-                  initial={{ opacity: 0, scale: 0.9, y: 30 }}
-                  animate={{ opacity: 1, scale: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 0.9, y: -30 }}
-                  transition={{
-                    duration: 0.4,
-                    delay: index * 0.08,
-                    ease: [0.22, 1, 0.36, 1],
+                  initial={{ opacity: 0, transform: 'scale(0.9) translateY(30px)' }}
+                  animate={{
+                    opacity: 1,
+                    transform: 'scale(1) translateY(0px)',
+                    transition: { duration: 0.4, delay: index * 0.08, ease: [0.22, 1, 0.36, 1] },
+                  }}
+                  exit={{
+                    opacity: 0,
+                    transform: 'scale(0.9) translateY(-30px)',
+                    transition: { duration: 0.2, ease: [0.22, 1, 0.36, 1] },
                   }}
                 >
                 <TiltCard className="group h-full" maxTilt={5}>
-                  <div className="h-full flex flex-col rounded-2xl bg-space-800/50 border border-white/5 overflow-hidden hover:border-violet-500/30 transition-colors duration-500">
+                  <div className="h-full flex flex-col rounded-2xl bg-space-800/50 border border-white/5 overflow-hidden hover:border-violet-500/30 transition-colors duration-200">
                     {/* Project thumbnail */}
                     <div className="relative aspect-video bg-gradient-to-br from-violet-500/10 to-amber-500/5 overflow-hidden">
                       {project.images[0] ? (
@@ -210,7 +212,7 @@ export function Projects() {
                           src={getProjectImage(project.images[0])}
                           alt={project.name}
                           aspectRatio="16/9"
-                          className="w-full h-full transition-transform duration-700 group-hover:scale-110"
+                          className="w-full h-full transition-transform duration-300 group-hover:scale-110"
                         />
                       ) : (
                         <div className="absolute inset-0 flex items-center justify-center text-6xl">
@@ -233,9 +235,9 @@ export function Projects() {
                             target="_blank"
                             rel="noopener noreferrer"
                             aria-label={`View ${project.name} source code on GitHub`}
-                            className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-violet-500 transition-colors"
-                            whileHover={{ scale: 1.1 }}
-                            whileTap={{ scale: 0.9 }}
+                            className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-violet-500 transition-[transform,color,background-color,border-color] duration-150"
+                            whileHover={{ scale: 1.04 }}
+                            whileTap={{ scale: 0.97 }}
                           >
                             <GitHubIcon />
                           </m.a>
@@ -246,9 +248,9 @@ export function Projects() {
                             target="_blank"
                             rel="noopener noreferrer"
                             aria-label={`View ${project.name} live demo`}
-                            className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-amber-500 transition-colors"
-                            whileHover={{ scale: 1.1 }}
-                            whileTap={{ scale: 0.9 }}
+                            className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-amber-500 transition-[transform,color,background-color,border-color] duration-150"
+                            whileHover={{ scale: 1.04 }}
+                            whileTap={{ scale: 0.97 }}
                           >
                             <ExternalLinkIcon />
                           </m.a>
@@ -283,7 +285,7 @@ export function Projects() {
                             target="_blank"
                             rel="noopener noreferrer"
                             data-project-action="mobile-primary"
-                            className="inline-flex items-center justify-center px-3 py-2 min-h-[44px] rounded-lg border border-white/10 text-sm text-white hover:bg-white/5 active:bg-white/10 transition-colors"
+                            className="press-feedback inline-flex items-center justify-center px-3 py-2 min-h-[44px] rounded-lg border border-white/10 text-sm text-white hover:bg-white/5 active:bg-white/10"
                           >
                             {hasDemo ? 'Open Demo' : 'View Code'}
                           </a>
@@ -293,7 +295,7 @@ export function Projects() {
                               target="_blank"
                               rel="noopener noreferrer"
                               data-project-action="mobile-code"
-                              className="inline-flex items-center justify-center px-3 py-2 min-h-[44px] rounded-lg border border-white/10 text-sm text-gray-300 hover:bg-white/5 active:bg-white/10 transition-colors"
+                              className="press-feedback inline-flex items-center justify-center px-3 py-2 min-h-[44px] rounded-lg border border-white/10 text-sm text-gray-300 hover:bg-white/5 active:bg-white/10"
                             >
                               Code
                             </a>
@@ -322,7 +324,7 @@ export function Projects() {
               href={profile.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-3 px-8 py-4 border border-violet-500/30 text-violet-400 rounded-full font-medium hover:bg-violet-500/10 transition-colors"
+              className="press-feedback inline-flex items-center gap-3 px-8 py-4 border border-violet-500/30 text-violet-400 rounded-full font-medium hover:bg-violet-500/10"
             >
               View All on GitHub
               <span className="inline-block arrow-bounce">

@@ -34,7 +34,7 @@ export function Experience() {
 
                 {/* Card */}
                 <MagneticHover strength={8}>
-                  <div className="p-8 md:p-10 rounded-3xl bg-space-800/50 border border-white/5 hover:border-violet-500/30 transition-all duration-500">
+                  <div className="p-8 md:p-10 rounded-3xl bg-space-800/50 border border-white/5 hover:border-violet-500/30 transition-[border-color] duration-200">
                     {/* Header */}
                     <div className="flex flex-wrap items-start justify-between gap-4 mb-6">
                       <div className="flex items-start gap-4">
@@ -86,7 +86,7 @@ export function Experience() {
           <MagneticHover strength={20}>
             <a
               href="#resume"
-              className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-violet-500/20 to-amber-500/10 rounded-full border border-violet-500/30 hover:border-violet-500/50 transition-all font-medium text-white"
+              className="press-feedback inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-violet-500/20 to-amber-500/10 rounded-full border border-violet-500/30 hover:border-violet-500/50 font-medium text-white"
             >
               <svg
                 className="w-5 h-5 text-violet-400"

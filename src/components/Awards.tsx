@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { m, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { awards, getAchievementImage, hideImageOnError } from '../data/content';
 import { SectionHeader } from './ui/SectionHeader';
 import { MagneticHover } from './ui/ImageDistortion';
@@ -9,8 +9,10 @@ import { CloseIcon } from './ui/Icons';
 export function Awards() {
   const [selectedAward, setSelectedAward] = useState<number | null>(null);
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+  const [instantMotion, setInstantMotion] = useState(false);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const previousFocusRef = useRef<Element | null>(null);
+  const shouldReduceMotion = useReducedMotion();
 
   const isModalOpen = selectedAward !== null;
   const isLightboxOpen = lightboxIndex !== null;
@@ -31,7 +33,8 @@ export function Awards() {
   }, [isModalOpen]);
 
   // Close modal resets lightbox
-  const closeModal = useCallback(() => {
+  const closeModal = useCallback((instant = false) => {
+    setInstantMotion(instant);
     setLightboxIndex(null);
     setSelectedAward(null);
   }, []);
@@ -39,13 +42,15 @@ export function Awards() {
   // Lightbox navigation
   const currentImages = selectedAward !== null ? awards[selectedAward].images : [];
 
-  const goNext = useCallback(() => {
+  const goNext = useCallback((instant = false) => {
     if (currentImages.length === 0) return;
+    setInstantMotion(instant);
     setLightboxIndex(prev => prev === null ? null : (prev + 1) % currentImages.length);
   }, [currentImages.length]);
 
-  const goPrev = useCallback(() => {
+  const goPrev = useCallback((instant = false) => {
     if (currentImages.length === 0) return;
+    setInstantMotion(instant);
     setLightboxIndex(prev => prev === null ? null : (prev - 1 + currentImages.length) % currentImages.length);
   }, [currentImages.length]);
 
@@ -56,14 +61,15 @@ export function Awards() {
     const handleKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         if (isLightboxOpen) {
+          setInstantMotion(true);
           setLightboxIndex(null);
         } else {
-          closeModal();
+          closeModal(true);
         }
       }
       if (isLightboxOpen) {
-        if (e.key === 'ArrowRight') goNext();
-        if (e.key === 'ArrowLeft') goPrev();
+        if (e.key === 'ArrowRight') goNext(true);
+        if (e.key === 'ArrowLeft') goPrev(true);
       }
     };
 
@@ -136,7 +142,14 @@ export function Awards() {
                   type="button"
                   aria-label={`Open ${award.name} gallery`}
                   className="group relative h-full w-full rounded-2xl sm:rounded-3xl overflow-hidden cursor-pointer text-left focus-visible:ring-2 focus-visible:ring-violet-400 focus-visible:ring-offset-2 focus-visible:ring-offset-space-900"
-                  onClick={() => setSelectedAward(selectedAward === index ? null : index)}
+                  onClick={() => {
+                    if (selectedAward === index) {
+                      closeModal(false);
+                      return;
+                    }
+                    setInstantMotion(false);
+                    setSelectedAward(index);
+                  }}
                   whileHover={{ y: -5 }}
                   transition={{ duration: 0.3 }}
                 >
@@ -147,7 +160,7 @@ export function Awards() {
                         src={getAchievementImage(award.images[0])}
                         alt={award.name}
                         fill
-                        className="transition-transform duration-700 group-hover:scale-110"
+                        className="transition-transform duration-300 group-hover:scale-110"
                       />
                     )}
                     {/* Gradient overlay */}
@@ -155,7 +168,7 @@ export function Awards() {
 
                     {/* Shine effect on hover */}
                     <m.div
-                      className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"
+                      className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-500"
                     />
                   </div>
 
@@ -182,7 +195,7 @@ export function Awards() {
                     </h3>
 
                     {/* Description - expandable */}
-                    <p className="text-gray-400 text-sm leading-relaxed line-clamp-2 group-hover:line-clamp-none transition-all">
+                    <p className="text-gray-400 text-sm leading-relaxed line-clamp-2 group-hover:line-clamp-none transition-colors">
                       {award.desc}
                     </p>
 
@@ -198,7 +211,7 @@ export function Awards() {
                   </div>
 
                   {/* Hover border */}
-                  <div className="absolute inset-0 rounded-3xl border-2 border-transparent group-hover:border-amber-500/30 transition-colors duration-500 pointer-events-none" />
+                  <div className="absolute inset-0 rounded-3xl border-2 border-transparent group-hover:border-amber-500/30 transition-colors duration-200 pointer-events-none" />
                 </m.button>
               </MagneticHover>
             </m.div>
@@ -212,16 +225,18 @@ export function Awards() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
+              transition={{ duration: shouldReduceMotion || instantMotion ? 0 : 0.15 }}
               role="dialog"
               aria-modal="true"
               aria-label={`${awards[selectedAward].name} gallery`}
               className="fixed inset-0 z-[200] flex items-end sm:items-center justify-center bg-space-900/95 backdrop-blur-xl"
-              onClick={closeModal}
+              onClick={() => closeModal(false)}
             >
               <m.div
-                initial={{ scale: 0.95, opacity: 0, y: 20 }}
-                animate={{ scale: 1, opacity: 1, y: 0 }}
-                exit={{ scale: 0.95, opacity: 0, y: 20 }}
+                initial={{ scale: 0.95, opacity: 0, transform: 'translateY(20px)' }}
+                animate={{ scale: 1, opacity: 1, transform: 'translateY(0px)' }}
+                exit={{ scale: 0.95, opacity: 0, transform: 'translateY(20px)' }}
+                transition={{ duration: shouldReduceMotion || instantMotion ? 0 : 0.25, ease: [0.22, 1, 0.36, 1] }}
                 className="relative w-full sm:max-w-5xl max-h-[85vh] sm:max-h-[90vh] overflow-auto rounded-t-3xl sm:rounded-3xl bg-space-800/95 sm:bg-space-800/90 border-t sm:border border-white/10 p-4 sm:p-6 sm:m-4"
                 onClick={(e) => e.stopPropagation()}
               >
@@ -231,9 +246,9 @@ export function Awards() {
                 {/* Close button */}
                 <button
                   ref={closeButtonRef}
-                  onClick={closeModal}
+                  onClick={() => closeModal(false)}
                   aria-label="Close gallery"
-                  className="absolute top-4 right-4 w-10 h-10 min-w-[44px] min-h-[44px] rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-white/20 transition-colors z-10"
+                  className="press-feedback absolute top-4 right-4 w-10 h-10 min-w-[44px] min-h-[44px] rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-white/20 z-10"
                 >
                   <CloseIcon />
                 </button>
@@ -252,13 +267,16 @@ export function Awards() {
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: i * 0.1 }}
                       className="aspect-video rounded-xl overflow-hidden bg-space-700 cursor-pointer group/img"
-                      onClick={() => setLightboxIndex(i)}
+                      onClick={() => {
+                        setInstantMotion(false);
+                        setLightboxIndex(i);
+                      }}
                     >
                       <OptimizedImage
                         src={getAchievementImage(img)}
                         alt={`${awards[selectedAward].name} - ${i + 1}`}
                         fill
-                        className="group-hover/img:scale-105 transition-transform duration-500"
+                        className="group-hover/img:scale-105 transition-transform duration-300"
                       />
                       {/* Hover overlay */}
                       <div className="absolute inset-0 bg-black/0 group-hover/img:bg-black/20 transition-colors duration-300 flex items-center justify-center">
@@ -281,9 +299,12 @@ export function Awards() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
+              transition={{ duration: shouldReduceMotion || instantMotion ? 0 : 0.2 }}
               className="fixed inset-0 z-[210] flex items-center justify-center bg-black/95"
-              onClick={() => setLightboxIndex(null)}
+              onClick={() => {
+                setInstantMotion(false);
+                setLightboxIndex(null);
+              }}
             >
               {/* Image counter */}
               <div className="absolute top-4 left-1/2 -translate-x-1/2 text-white/70 text-sm font-mono z-10">
@@ -292,9 +313,12 @@ export function Awards() {
 
               {/* Close button */}
               <button
-                onClick={() => setLightboxIndex(null)}
+                onClick={() => {
+                  setInstantMotion(false);
+                  setLightboxIndex(null);
+                }}
                 aria-label="Close lightbox"
-                className="absolute top-4 right-4 w-10 h-10 min-w-[44px] min-h-[44px] rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-white/20 transition-colors z-10"
+                className="press-feedback absolute top-4 right-4 w-10 h-10 min-w-[44px] min-h-[44px] rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-white/20 z-10"
               >
                 <CloseIcon />
               </button>
@@ -302,9 +326,9 @@ export function Awards() {
               {/* Previous button */}
               {currentImages.length > 1 && (
                 <button
-                  onClick={(e) => { e.stopPropagation(); goPrev(); }}
+                  onClick={(e) => { e.stopPropagation(); goPrev(false); }}
                   aria-label="Previous image"
-                  className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 min-w-[44px] min-h-[44px] rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors z-10"
+                  className="press-feedback absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 min-w-[44px] min-h-[44px] rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white z-10"
                 >
                   <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -315,9 +339,9 @@ export function Awards() {
               {/* Next button */}
               {currentImages.length > 1 && (
                 <button
-                  onClick={(e) => { e.stopPropagation(); goNext(); }}
+                  onClick={(e) => { e.stopPropagation(); goNext(false); }}
                   aria-label="Next image"
-                  className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 min-w-[44px] min-h-[44px] rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors z-10"
+                  className="press-feedback absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 min-w-[44px] min-h-[44px] rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white z-10"
                 >
                   <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -331,7 +355,7 @@ export function Awards() {
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.95 }}
-                transition={{ duration: 0.2 }}
+                transition={{ duration: shouldReduceMotion || instantMotion ? 0 : 0.2 }}
                 className="max-w-[90vw] max-h-[85vh] relative"
                 onClick={(e) => e.stopPropagation()}
               >

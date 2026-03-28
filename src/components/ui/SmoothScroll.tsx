@@ -9,8 +9,9 @@ export function SmoothScroll({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     // Check if we're on a touch device - use native scroll for better performance
     const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    const shouldReduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    if (isTouchDevice) {
+    if (isTouchDevice || shouldReduceMotion) {
       // Don't initialize Lenis on mobile - native scroll is smoother and saves battery
       return;
     }

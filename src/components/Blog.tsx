@@ -59,12 +59,12 @@ export function Blog() {
               >
                 <Tag
                   {...(!isComingSoon ? { href: post.url, target: '_blank', rel: 'noopener noreferrer' } : {})}
-                  className={`group relative flex flex-col h-full p-6 sm:p-8 rounded-3xl bg-gradient-to-br from-space-800/80 to-space-800/40 backdrop-blur-sm border border-white/5 transition-all duration-500 overflow-hidden ${
+                  className={`group relative flex flex-col h-full p-6 sm:p-8 rounded-3xl bg-gradient-to-br from-space-800/80 to-space-800/40 backdrop-blur-sm border border-white/5 transition-[border-color] duration-200 overflow-hidden ${
                     isComingSoon ? 'cursor-default' : 'hover:border-white/10 cursor-pointer'
                   }`}
                 >
                   {/* Hover glow */}
-                  <div className="absolute -top-20 -left-20 w-40 h-40 bg-violet-500/10 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                  <div className="absolute -top-20 -left-20 w-40 h-40 bg-violet-500/10 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-250" />
 
                   {/* Top row: platform + read time */}
                   <div className="flex items-center justify-between gap-3 mb-4 sm:mb-6 relative z-10">
@@ -113,7 +113,7 @@ export function Blog() {
                   )}
 
                   {/* Bottom gradient line */}
-                  <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-violet-500 to-amber-500 opacity-0 group-hover:opacity-20 transition-opacity duration-500" />
+                  <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-violet-500 to-amber-500 opacity-0 group-hover:opacity-20 transition-opacity duration-200" />
                 </Tag>
               </m.div>
             );

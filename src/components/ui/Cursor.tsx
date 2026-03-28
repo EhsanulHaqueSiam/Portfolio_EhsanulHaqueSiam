@@ -8,9 +8,8 @@ export function CustomCursor() {
   const rafRef = useRef<number>(0);
 
   useEffect(() => {
-    const hasTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-    const hasCoarsePointer = window.matchMedia('(pointer: coarse)').matches;
-    setIsTouchDevice(hasTouch && hasCoarsePointer);
+    const supportsDesktopHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    setIsTouchDevice(!supportsDesktopHover);
   }, []);
 
   useEffect(() => {

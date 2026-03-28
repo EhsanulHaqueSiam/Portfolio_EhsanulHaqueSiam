@@ -207,10 +207,10 @@ export function Hero() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
             >
-              <MagneticHover strength={isMobile ? 0 : 20}>
+              <MagneticHover strength={isMobile ? 0 : 16}>
                 <a
                   href="#projects"
-                  className="group relative inline-flex items-center justify-center gap-2 sm:gap-3 px-5 sm:px-8 py-3 sm:py-4 bg-white text-space-900 rounded-full font-medium overflow-hidden transition-transform active:scale-95 md:hover:scale-105 text-sm sm:text-base min-h-[44px]"
+                  className="press-feedback group relative inline-flex items-center justify-center gap-2 sm:gap-3 px-5 sm:px-8 py-3 sm:py-4 bg-white text-space-900 rounded-full font-medium overflow-hidden md:hover:scale-105 text-sm sm:text-base min-h-[44px]"
                 >
                   <span className="relative z-10 group-hover:text-white transition-colors duration-300">View Work</span>
                   <span
@@ -222,20 +222,20 @@ export function Hero() {
                 </a>
               </MagneticHover>
 
-              <MagneticHover strength={isMobile ? 0 : 20}>
+              <MagneticHover strength={isMobile ? 0 : 16}>
                 <a
                   href="#contact"
-                  className="inline-flex items-center justify-center gap-2 sm:gap-3 px-5 sm:px-8 py-3 sm:py-4 border border-white/20 text-white rounded-full font-medium hover:bg-white/5 active:bg-white/10 hover:border-white/40 transition-all duration-300 text-sm sm:text-base min-h-[44px]"
+                  className="press-feedback inline-flex items-center justify-center gap-2 sm:gap-3 px-5 sm:px-8 py-3 sm:py-4 border border-white/20 text-white rounded-full font-medium hover:bg-white/5 active:bg-white/10 hover:border-white/40 text-sm sm:text-base min-h-[44px]"
                 >
                   Let's Talk
                 </a>
               </MagneticHover>
 
               {/* Resume button - visible on all screens */}
-              <MagneticHover strength={isMobile ? 0 : 20}>
+              <MagneticHover strength={isMobile ? 0 : 16}>
                 <a
                   href="#resume"
-                  className="group relative inline-flex items-center justify-center gap-2 px-5 sm:px-6 py-3 sm:py-4 border border-amber-500/30 text-amber-400 rounded-full font-medium hover:bg-amber-500/10 active:bg-amber-500/15 hover:border-amber-500/50 transition-all duration-300 text-sm sm:text-base min-h-[44px]"
+                  className="press-feedback group relative inline-flex items-center justify-center gap-2 px-5 sm:px-6 py-3 sm:py-4 border border-amber-500/30 text-amber-400 rounded-full font-medium hover:bg-amber-500/10 active:bg-amber-500/15 hover:border-amber-500/50 text-sm sm:text-base min-h-[44px]"
                 >
                   <ResumeIcon className="w-4 h-4 sm:w-5 sm:h-5" />
                   <span>Resume</span>
@@ -245,11 +245,11 @@ export function Hero() {
               </MagneticHover>
 
               {/* Direct PDF download */}
-              <MagneticHover strength={isMobile ? 0 : 20}>
+              <MagneticHover strength={isMobile ? 0 : 16}>
                 <a
                   href="/resume.pdf"
                   download="Ehsanul_Haque_Siam_Resume.pdf"
-                  className="inline-flex items-center justify-center gap-2 px-5 sm:px-6 py-3 sm:py-4 border border-white/10 text-gray-400 rounded-full font-medium hover:bg-white/5 hover:text-white hover:border-white/20 transition-all duration-300 text-sm sm:text-base min-h-[44px]"
+                  className="press-feedback inline-flex items-center justify-center gap-2 px-5 sm:px-6 py-3 sm:py-4 border border-white/10 text-gray-400 rounded-full font-medium hover:bg-white/5 hover:text-white hover:border-white/20 text-sm sm:text-base min-h-[44px]"
                 >
                   <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />

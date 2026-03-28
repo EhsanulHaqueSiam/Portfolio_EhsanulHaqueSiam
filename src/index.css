@@ -2,6 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Design system easing curves */
+:root {
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-out-strong: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out-strong: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+  --ease-float: cubic-bezier(0.45, 0.05, 0.55, 0.95);
+  --ease-pulse: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 @layer base {
   html {
     /* scroll-behavior handled by Lenis - CSS smooth conflicts with Chrome */
@@ -98,6 +108,21 @@
     @apply bg-gradient-to-r from-violet-400 via-violet-500 to-amber-400 bg-clip-text text-transparent;
     -webkit-text-fill-color: transparent;
   }
+
+  /* Consistent tactile press feedback across interactive controls */
+  .press-feedback {
+    transition:
+      transform 140ms var(--ease-out),
+      color 160ms var(--ease-out),
+      background-color 160ms var(--ease-out),
+      border-color 160ms var(--ease-out),
+      box-shadow 180ms var(--ease-out),
+      opacity 160ms var(--ease-out);
+  }
+
+  .press-feedback:active {
+    transform: scale(0.97);
+  }
 }
 
 /* Focus ring */
@@ -107,19 +132,63 @@
 
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
+  html:focus-within {
+    scroll-behavior: auto;
+  }
+
   *,
   *::before,
   *::after {
-    animation-duration: 0.01ms !important;
+    animation-duration: 200ms !important;
     animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
+  }
+
+  .hero-decorative-rotate,
+  .hero-decorative-pulse,
+  .hero-decorative-blink,
+  .hero-float,
+  .arrow-bounce,
+  .scroll-dot,
+  .wave-hand,
+  .animate-shimmer,
+  .animate-\[spin_20s_linear_infinite\],
+  .animate-\[spin_90s_linear_infinite_reverse\],
+  .animate-\[spin_120s_linear_infinite\] {
+    animation: none !important;
+  }
+
+  a,
+  button,
+  [role="button"],
+  input,
+  select,
+  textarea,
+  summary {
+    transition-property: color, background-color, border-color, opacity, box-shadow !important;
+    transition-duration: 160ms !important;
+    transition-timing-function: var(--ease-out) !important;
+  }
+
+  .group:hover .group-hover\:scale-110,
+  .group:hover .group-hover\:scale-105,
+  .group:hover .group-hover\:scale-125,
+  .group\/image:hover .group-hover\/image\:scale-105,
+  .group\/img:hover .group-hover\/img\:scale-105 {
+    transform: none !important;
   }
 }
 
-/* Touch devices - show default cursor */
-@media (hover: none) {
+/* Touch devices - show default cursor and disable transform-based hover effects */
+@media (hover: none), (pointer: coarse) {
   * {
     cursor: auto !important;
+  }
+
+  /* Prevent false-positive hover states on touch tap */
+  .group:hover .group-hover\:scale-110,
+  .group:hover .group-hover\:scale-105,
+  .group\/image:hover .group-hover\/image\:scale-105 {
+    transform: none !important;
   }
 }
 
@@ -170,11 +239,11 @@
 }
 
 .hero-decorative-pulse {
-  animation: hero-pulse 4s ease-in-out infinite;
+  animation: hero-pulse 4s var(--ease-pulse) infinite;
 }
 
 .hero-decorative-blink {
-  animation: hero-blink 2s ease-in-out infinite;
+  animation: hero-blink 2s var(--ease-pulse) infinite;
 }
 
 /* Hero float animation */
@@ -184,7 +253,7 @@
 }
 
 .hero-float {
-  animation: hero-float 6s ease-in-out infinite;
+  animation: hero-float 6s var(--ease-float) infinite;
 }
 
 /* Arrow bounce animation */
@@ -194,7 +263,13 @@
 }
 
 .arrow-bounce {
-  animation: arrow-bounce 1.5s ease-in-out infinite;
+  animation: arrow-bounce 1.2s var(--ease-out-strong) infinite;
+  animation-play-state: paused;
+}
+
+.group:hover .arrow-bounce,
+a:hover .arrow-bounce {
+  animation-play-state: running;
 }
 
 /* Scroll indicator dot animation */
@@ -204,7 +279,7 @@
 }
 
 .scroll-dot {
-  animation: scroll-dot 1.5s ease-in-out infinite;
+  animation: scroll-dot 1.5s var(--ease-out-strong) infinite;
 }
 
 /* Waving hand animation */
@@ -219,10 +294,14 @@
 }
 
 .wave-hand {
-  animation: wave-hand 2.5s ease-in-out infinite;
-  animation-delay: 1s;
+  animation: wave-hand 2.2s var(--ease-out) infinite;
+  animation-play-state: paused;
   display: inline-block;
   transform-origin: 70% 70%;
+}
+
+.group:hover .wave-hand {
+  animation-play-state: running;
 }
 
 /* Marquee CSS animations - GPU-composited via transform */

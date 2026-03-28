@@ -29,13 +29,13 @@ export default {
         'body': ['Satoshi', 'system-ui', 'sans-serif'],
       },
       animation: {
-        'float': 'float 6s ease-in-out infinite',
-        'float-delayed': 'float 6s ease-in-out 2s infinite',
-        'float-slow': 'float 8s ease-in-out infinite',
-        'pulse-glow': 'pulse-glow 2s ease-in-out infinite',
+        'float': 'float 6s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite',
+        'float-delayed': 'float 6s cubic-bezier(0.45, 0.05, 0.55, 0.95) 2s infinite',
+        'float-slow': 'float 8s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite',
+        'pulse-glow': 'pulse-glow 2s cubic-bezier(0.4, 0, 0.2, 1) infinite',
         'gradient-x': 'gradient-x 3s ease infinite',
         'spin-slow': 'spin 20s linear infinite',
-        'glitch': 'glitch 0.3s ease-in-out',
+        'glitch': 'glitch 0.3s ease-out',
         'shimmer': 'shimmer 2s infinite',
       },
       keyframes: {

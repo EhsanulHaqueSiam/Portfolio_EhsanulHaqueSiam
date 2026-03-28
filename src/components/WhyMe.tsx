@@ -81,10 +81,10 @@ export function WhyMe() {
               transition={{ duration: 0.7, delay: 0.2 + i * 0.15, ease }}
               className="group relative"
             >
-              <div className="relative h-full p-6 sm:p-8 rounded-3xl bg-gradient-to-br from-space-800/80 to-space-800/40 backdrop-blur-sm border border-white/5 hover:border-white/10 transition-all duration-500 overflow-hidden">
+              <div className="relative h-full p-6 sm:p-8 rounded-3xl bg-gradient-to-br from-space-800/80 to-space-800/40 backdrop-blur-sm border border-white/5 hover:border-white/10 transition-[border-color] duration-200 overflow-hidden">
                 {/* Hover glow */}
                 <div
-                  className={`absolute -top-16 -right-16 w-32 h-32 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 ${
+                  className={`absolute -top-16 -right-16 w-32 h-32 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-250 ${
                     point.glow === 'violet' ? 'bg-violet-500/15' : 'bg-amber-500/15'
                   }`}
                 />
@@ -108,7 +108,7 @@ export function WhyMe() {
                 </p>
 
                 {/* Bottom gradient line */}
-                <div className={`absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r ${point.accent} opacity-0 group-hover:opacity-30 transition-opacity duration-500`} />
+                <div className={`absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r ${point.accent} opacity-0 group-hover:opacity-30 transition-opacity duration-200`} />
               </div>
             </m.div>
           ))}

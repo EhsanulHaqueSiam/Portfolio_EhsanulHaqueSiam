@@ -1,11 +1,13 @@
 import { useState } from 'react';
-import { m, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { featuredPublications, getPublicationImage, hideImageOnError } from '../data/content';
 import { SectionHeader } from './ui/SectionHeader';
 import { MagneticHover } from './ui/ImageDistortion';
 
 export function Publications() {
   const [expandedPub, setExpandedPub] = useState<number | null>(null);
+  const [instantToggle, setInstantToggle] = useState(false);
+  const shouldReduceMotion = useReducedMotion();
 
   return (
     <section id="publications" className="py-16 sm:py-24 md:py-32 px-4 sm:px-6 md:px-12 lg:px-24 relative overflow-hidden">
@@ -32,9 +34,18 @@ export function Publications() {
                 <div
                   role="button"
                   tabIndex={0}
-                  className="group relative rounded-3xl bg-gradient-to-br from-space-800/80 to-space-800/40 border border-white/5 hover:border-violet-500/30 transition-all duration-500 overflow-hidden cursor-pointer"
-                  onClick={() => setExpandedPub(expandedPub === index ? null : index)}
-                  onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setExpandedPub(expandedPub === index ? null : index); } }}
+                  className="group relative rounded-3xl bg-gradient-to-br from-space-800/80 to-space-800/40 border border-white/5 hover:border-violet-500/30 transition-[border-color] duration-200 overflow-hidden cursor-pointer"
+                  onClick={() => {
+                    setInstantToggle(false);
+                    setExpandedPub(expandedPub === index ? null : index);
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      setInstantToggle(true);
+                      setExpandedPub(expandedPub === index ? null : index);
+                    }
+                  }}
                 >
                   <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-0">
                     {/* Publication image */}
@@ -46,7 +57,7 @@ export function Publications() {
                             alt={pub.title}
                             loading="lazy"
                             decoding="async"
-                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                             onError={hideImageOnError}
                           />
                         )}
@@ -56,7 +67,7 @@ export function Publications() {
 
                         {/* Shine effect */}
                         <m.div
-                          className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"
+                          className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-500"
                         />
                       </div>
 
@@ -96,10 +107,10 @@ export function Publications() {
                               href={pub.paperLink}
                               target="_blank"
                               rel="noopener noreferrer"
-                              onClick={(e) => e.stopPropagation()}
-                              className="inline-flex items-center gap-2 px-5 py-2.5 bg-violet-500/20 text-violet-400 rounded-xl border border-violet-500/30 hover:bg-violet-500/30 transition-colors"
+                            onClick={(e) => e.stopPropagation()}
+                              className="press-feedback inline-flex items-center gap-2 px-5 py-2.5 bg-violet-500/20 text-violet-400 rounded-xl border border-violet-500/30 hover:bg-violet-500/30"
                               whileHover={{ scale: 1.02 }}
-                              whileTap={{ scale: 0.98 }}
+                              whileTap={{ scale: 0.97 }}
                             >
                               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
@@ -111,9 +122,10 @@ export function Publications() {
 
                         {pub.images && pub.images.length > 0 && (
                           <button
-                            className="inline-flex items-center gap-2 px-2 min-h-[44px] text-gray-500 hover:text-white text-sm transition-colors"
+                            className="press-feedback inline-flex items-center gap-2 px-2 min-h-[44px] text-gray-500 hover:text-white text-sm"
                             onClick={(e) => {
                               e.stopPropagation();
+                              setInstantToggle(false);
                               setExpandedPub(expandedPub === index ? null : index);
                             }}
                           >
@@ -138,9 +150,8 @@ export function Publications() {
                     {expandedPub === index && pub.images && pub.images[0] && (
                       <m.div
                         initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: 'auto', opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                        animate={{ height: 'auto', opacity: 1, transition: { duration: shouldReduceMotion || instantToggle ? 0 : 0.4, ease: [0.22, 1, 0.36, 1] } }}
+                        exit={{ height: 0, opacity: 0, transition: { duration: shouldReduceMotion || instantToggle ? 0 : 0.2, ease: [0.22, 1, 0.36, 1] } }}
                         className="overflow-hidden border-t border-white/5"
                       >
                         <div className="p-6 bg-space-900/50">
@@ -158,7 +169,7 @@ export function Publications() {
                   </AnimatePresence>
 
                   {/* Decorative corner accent */}
-                  <div className="absolute top-0 right-0 w-32 h-32 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
+                  <div className="absolute top-0 right-0 w-32 h-32 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
                     <div className="absolute top-4 right-4 w-8 h-8 border-t-2 border-r-2 border-violet-500/50 rounded-tr-xl" />
                   </div>
                 </div>

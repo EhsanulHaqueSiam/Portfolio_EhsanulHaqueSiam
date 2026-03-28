@@ -92,16 +92,16 @@ export function Contact() {
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
               <m.a
                 href={recruiterMailtoHref}
-                className="inline-flex items-center min-h-[44px] text-lg sm:text-2xl md:text-3xl lg:text-4xl font-display font-bold text-white hover:text-violet-400 transition-colors break-all sm:break-normal"
+                className="press-feedback inline-flex items-center min-h-[44px] text-lg sm:text-2xl md:text-3xl lg:text-4xl font-display font-bold text-white hover:text-violet-400 break-all sm:break-normal"
                 whileHover={{ scale: 1.02 }}
               >
                 {profile.email}
               </m.a>
               <m.button
                 onClick={copyEmail}
-                className="relative p-3 min-w-[48px] min-h-[48px] rounded-xl bg-space-700/50 text-gray-400 hover:text-white hover:bg-violet-500/20 transition-all flex items-center justify-center"
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
+                className="relative p-3 min-w-[48px] min-h-[48px] rounded-xl bg-space-700/50 text-gray-400 hover:text-white hover:bg-violet-500/20 transition-[transform,color,background-color,border-color] duration-150 flex items-center justify-center"
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
                 aria-label="Copy email"
               >
                 {copied ? (
@@ -138,7 +138,7 @@ export function Contact() {
             <MagneticHover strength={25}>
               <a
                 href={recruiterMailtoHref}
-                className="group inline-flex items-center gap-4 px-10 py-5 bg-gradient-to-r from-violet-500 to-violet-600 rounded-full font-display font-semibold text-white text-lg sm:text-xl hover:shadow-lg hover:shadow-violet-500/25 transition-shadow"
+                className="press-feedback group inline-flex items-center gap-4 px-10 py-5 bg-gradient-to-r from-violet-500 to-violet-600 rounded-full font-display font-semibold text-white text-lg sm:text-xl hover:shadow-lg hover:shadow-violet-500/25"
               >
                 <span>Discuss a Role</span>
                 <span className="text-3xl wave-hand">
@@ -148,7 +148,7 @@ export function Contact() {
             </MagneticHover>
             <a
               href="/hire-me.html"
-              className="inline-flex items-center justify-center gap-2 px-6 py-4 rounded-full border border-white/20 text-gray-200 hover:text-white hover:border-violet-500/50 hover:bg-violet-500/10 transition-all min-h-[44px]"
+              className="press-feedback inline-flex items-center justify-center gap-2 px-6 py-4 rounded-full border border-white/20 text-gray-200 hover:text-white hover:border-violet-500/50 hover:bg-violet-500/10 min-h-[44px]"
             >
               Hiring Snapshot
             </a>
@@ -167,17 +167,16 @@ export function Contact() {
             { href: profile.github, label: 'GitHub', Icon: GitHubIcon },
             { href: profile.linkedin, label: 'LinkedIn', Icon: LinkedInIcon },
           ].map((social) => (
-            <MagneticHover key={social.label} strength={20}>
-              <a
-                href={social.href}
-                target="_blank"
-                rel="me noopener noreferrer"
-                className="flex items-center gap-3 px-6 py-3 rounded-full border border-white/10 text-gray-400 hover:text-white hover:border-violet-500/50 transition-all"
-              >
-                <social.Icon />
-                <span className="font-medium">{social.label}</span>
-              </a>
-            </MagneticHover>
+            <a
+              key={social.label}
+              href={social.href}
+              target="_blank"
+              rel="me noopener noreferrer"
+              className="press-feedback flex items-center gap-3 px-6 py-3 rounded-full border border-white/10 text-gray-400 hover:text-white hover:border-violet-500/50"
+            >
+              <social.Icon />
+              <span className="font-medium">{social.label}</span>
+            </a>
           ))}
         </m.div>
       </div>

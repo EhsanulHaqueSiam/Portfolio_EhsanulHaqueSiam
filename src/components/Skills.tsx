@@ -2,7 +2,6 @@ import { useState, memo, useMemo } from 'react';
 import { m, AnimatePresence } from 'framer-motion';
 import { skills, categoryIcons, skillLevelToPercent } from '../data/content';
 import { SectionHeader } from './ui/SectionHeader';
-import { MagneticHover } from './ui/ImageDistortion';
 import type { Skill } from '../data/types';
 
 const SkillIcon = memo(function SkillIcon({ src, name }: { src: string; name: string }) {
@@ -35,10 +34,10 @@ const SkillCard = memo(function SkillCard({ skill, index }: { skill: Skill; inde
       onMouseLeave={() => setIsHovered(false)}
       className="group relative"
     >
-      <div className="relative p-6 rounded-2xl bg-space-800/50 border border-white/5 hover:border-violet-500/30 transition-all duration-500 overflow-hidden">
+      <div className="relative p-6 rounded-2xl bg-space-800/50 border border-white/5 hover:border-violet-500/30 transition-[border-color] duration-200 overflow-hidden">
         {/* Hover glow */}
         <div
-          className={`absolute inset-0 bg-gradient-to-br from-violet-500/10 to-transparent transition-opacity duration-500 ${
+          className={`absolute inset-0 bg-gradient-to-br from-violet-500/10 to-transparent transition-opacity duration-200 ${
             isHovered ? 'opacity-100' : 'opacity-0'
           }`}
         />
@@ -123,32 +122,31 @@ export function Skills() {
 
           <div className="flex gap-2 sm:gap-3 overflow-x-auto scrollbar-hide pb-2 -mx-6 px-6 md:mx-0 md:px-0 md:flex-wrap md:overflow-visible">
             {categories.map((category, index) => (
-              <MagneticHover key={category.name} strength={15}>
-                <m.button
-                  onClick={() => setActiveCategory(index)}
-                  className={`relative px-4 sm:px-6 py-2.5 sm:py-3 rounded-full font-medium text-sm transition-all duration-300 whitespace-nowrap flex-shrink-0 min-h-[44px] ${
-                    activeCategory === index
-                      ? 'text-white'
-                      : 'text-gray-500 hover:text-gray-300'
-                  }`}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  {/* Background pill */}
-                  {activeCategory === index && (
-                    <m.div
-                      layoutId="activeCategory"
-                      className="absolute inset-0 bg-gradient-to-r from-violet-500/20 to-amber-500/10 rounded-full border border-violet-500/30"
-                      transition={{ type: 'spring', stiffness: 400, damping: 30 }}
-                    />
-                  )}
-                  <span className="relative z-10 flex items-center gap-2">
-                    <span>{categoryIcons[category.name] || '📦'}</span>
-                    <span className="hidden sm:inline">{category.name}</span>
-                    <span className="sm:hidden">{category.name.split(' ')[0]}</span>
-                  </span>
-                </m.button>
-              </MagneticHover>
+              <m.button
+                key={category.name}
+                onClick={() => setActiveCategory(index)}
+                className={`press-feedback relative px-4 sm:px-6 py-2.5 sm:py-3 rounded-full font-medium text-sm whitespace-nowrap flex-shrink-0 min-h-[44px] ${
+                  activeCategory === index
+                    ? 'text-white'
+                    : 'text-gray-500 hover:text-gray-300'
+                }`}
+                whileHover={{ scale: 1.01 }}
+                whileTap={{ scale: 0.97 }}
+              >
+                {/* Background pill */}
+                {activeCategory === index && (
+                  <m.div
+                    layoutId="activeCategory"
+                    className="absolute inset-0 bg-gradient-to-r from-violet-500/20 to-amber-500/10 rounded-full border border-violet-500/30"
+                    transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+                  />
+                )}
+                <span className="relative z-10 flex items-center gap-2">
+                  <span>{categoryIcons[category.name] || '📦'}</span>
+                  <span className="hidden sm:inline">{category.name}</span>
+                  <span className="sm:hidden">{category.name.split(' ')[0]}</span>
+                </span>
+              </m.button>
             ))}
           </div>
         </div>
@@ -157,10 +155,9 @@ export function Skills() {
         <AnimatePresence mode="wait">
           <m.div
             key={activeCategory}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.4 }}
+            initial={{ opacity: 0, transform: 'translateY(20px)' }}
+            animate={{ opacity: 1, transform: 'translateY(0px)', transition: { duration: 0.4 } }}
+            exit={{ opacity: 0, transform: 'translateY(-20px)', transition: { duration: 0.2 } }}
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"
           >
             {categories[activeCategory].skills.map((skill, index) => (

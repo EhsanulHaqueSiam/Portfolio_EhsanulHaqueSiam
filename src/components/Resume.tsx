@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useRef, type ReactNode } from 'react';
-import { m, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence, useReducedMotion } from 'framer-motion';
 
 /* ------------------------------------------------------------------ */
 /*  Typographic sub-components                                         */
@@ -80,11 +80,17 @@ function SkillRow({ label, value }: { label: string; value: string }) {
 
 export function Resume() {
   const [isOpen, setIsOpen] = useState(false);
+  const [instantClose, setInstantClose] = useState(false);
   const overlayRef = useRef<HTMLDivElement>(null);
+  const shouldReduceMotion = useReducedMotion();
 
   /* ── hash sync ── */
   useEffect(() => {
-    const sync = () => setIsOpen(window.location.hash === '#resume');
+    const sync = () => {
+      const nextIsOpen = window.location.hash === '#resume';
+      if (nextIsOpen) setInstantClose(false);
+      setIsOpen(nextIsOpen);
+    };
     sync();
     window.addEventListener('hashchange', sync);
     return () => window.removeEventListener('hashchange', sync);
@@ -119,12 +125,15 @@ export function Resume() {
     };
   }, [isOpen]);
 
-  const close = useCallback(() => { window.location.hash = ''; }, []);
+  const close = useCallback((instant = false) => {
+    setInstantClose(instant);
+    window.location.hash = '';
+  }, []);
 
   /* ── ESC key ── */
   useEffect(() => {
     if (!isOpen) return;
-    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') close(); };
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') close(true); };
     document.addEventListener('keydown', onKey);
     return () => document.removeEventListener('keydown', onKey);
   }, [isOpen, close]);
@@ -139,13 +148,13 @@ export function Resume() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.2 }}
+          transition={{ duration: shouldReduceMotion || instantClose ? 0 : 0.2 }}
         >
           {/* ═══ TOP BAR ═══ */}
           <div className="shrink-0 flex items-center justify-between px-3 sm:px-5 h-12 sm:h-14 border-b border-white/[0.06]">
             <button
-              onClick={close}
-              className="flex items-center gap-1.5 -ml-1 px-2 py-2 text-gray-400 hover:text-white active:text-white rounded-lg transition-colors min-h-[48px] min-w-[48px]"
+              onClick={() => close(false)}
+              className="press-feedback flex items-center gap-1.5 -ml-1 px-2 py-2 text-gray-400 hover:text-white active:text-white rounded-lg min-h-[48px] min-w-[48px]"
               aria-label="Close resume"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
@@ -160,7 +169,7 @@ export function Resume() {
                 href="/resume.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-1.5 px-3 py-2 text-[13px] text-gray-500 hover:text-white rounded-lg hover:bg-white/[0.04] transition-colors min-h-[44px]"
+                className="press-feedback flex items-center gap-1.5 px-3 py-2 text-[13px] text-gray-500 hover:text-white rounded-lg hover:bg-white/[0.04] min-h-[44px]"
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
@@ -170,7 +179,7 @@ export function Resume() {
               <a
                 href="/resume.pdf"
                 download="Ehsanul_Haque_Siam_Resume.pdf"
-                className="flex items-center gap-2 px-4 py-2 text-[13px] font-semibold text-white bg-violet-600 hover:bg-violet-500 rounded-lg transition-colors min-h-[44px]"
+                className="press-feedback flex items-center gap-2 px-4 py-2 text-[13px] font-semibold text-white bg-violet-600 hover:bg-violet-500 rounded-lg min-h-[44px]"
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
@@ -198,19 +207,19 @@ export function Resume() {
                   Ehsanul Haque Siam
                 </h1>
                 <div className="flex flex-wrap items-center justify-center gap-x-1.5 sm:gap-x-2.5 gap-y-0.5 text-[11px] sm:text-[12px] text-gray-500 leading-relaxed">
-                  <a href="mailto:ehsanul.siamdev@gmail.com" className="hover:text-violet-400 active:text-violet-400 transition-colors underline decoration-white/[0.08] underline-offset-2">
+                  <a href="mailto:ehsanul.siamdev@gmail.com" className="press-feedback hover:text-violet-400 active:text-violet-400 underline decoration-white/[0.08] underline-offset-2">
                     ehsanul.siamdev@gmail.com
                   </a>
                   <span className="text-white/[0.08]">/</span>
-                  <a href="https://linkedin.com/in/EhsanulHaqueSiam" target="_blank" rel="me noopener noreferrer" className="hover:text-violet-400 active:text-violet-400 transition-colors underline decoration-white/[0.08] underline-offset-2">
+                  <a href="https://linkedin.com/in/EhsanulHaqueSiam" target="_blank" rel="me noopener noreferrer" className="press-feedback hover:text-violet-400 active:text-violet-400 underline decoration-white/[0.08] underline-offset-2">
                     LinkedIn
                   </a>
                   <span className="text-white/[0.08]">/</span>
-                  <a href="https://github.com/EhsanulHaqueSiam" target="_blank" rel="me noopener noreferrer" className="hover:text-violet-400 active:text-violet-400 transition-colors underline decoration-white/[0.08] underline-offset-2">
+                  <a href="https://github.com/EhsanulHaqueSiam" target="_blank" rel="me noopener noreferrer" className="press-feedback hover:text-violet-400 active:text-violet-400 underline decoration-white/[0.08] underline-offset-2">
                     GitHub
                   </a>
                   <span className="text-white/[0.08]">/</span>
-                  <a href="https://ehsanulhaquesiam.netlify.app" target="_blank" rel="noopener noreferrer" className="hover:text-violet-400 active:text-violet-400 transition-colors underline decoration-white/[0.08] underline-offset-2">
+                  <a href="https://ehsanulhaquesiam.netlify.app" target="_blank" rel="noopener noreferrer" className="press-feedback hover:text-violet-400 active:text-violet-400 underline decoration-white/[0.08] underline-offset-2">
                     Portfolio
                   </a>
                 </div>
@@ -363,7 +372,7 @@ export function Resume() {
               <a
                 href="/resume.pdf"
                 download="Ehsanul_Haque_Siam_Resume.pdf"
-                className="flex-1 flex items-center justify-center gap-2.5 py-3.5 text-[14px] font-semibold text-white bg-violet-600 hover:bg-violet-500 active:bg-violet-700 rounded-xl transition-colors min-h-[52px]"
+                className="press-feedback flex-1 flex items-center justify-center gap-2.5 py-3.5 text-[14px] font-semibold text-white bg-violet-600 hover:bg-violet-500 active:bg-violet-700 rounded-xl min-h-[52px]"
               >
                 <svg className="w-[18px] h-[18px]" fill="none" stroke="currentColor" strokeWidth={2.2} viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
@@ -374,7 +383,7 @@ export function Resume() {
                 href="/resume.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 px-5 py-3.5 text-[14px] font-medium text-gray-300 bg-white/[0.05] hover:bg-white/[0.08] active:bg-white/[0.12] border border-white/[0.08] rounded-xl transition-colors min-h-[52px]"
+                className="press-feedback flex items-center justify-center gap-2 px-5 py-3.5 text-[14px] font-medium text-gray-300 bg-white/[0.05] hover:bg-white/[0.08] active:bg-white/[0.12] border border-white/[0.08] rounded-xl min-h-[52px]"
               >
                 <svg className="w-[18px] h-[18px]" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />

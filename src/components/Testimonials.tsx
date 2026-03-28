@@ -33,9 +33,9 @@ export function Testimonials() {
               className="group relative"
             >
               {/* Card */}
-              <div className="relative h-full p-6 sm:p-8 rounded-3xl bg-gradient-to-br from-space-800/80 to-space-800/40 backdrop-blur-sm border border-white/5 hover:border-white/10 transition-colors duration-500 overflow-hidden">
+              <div className="relative h-full p-6 sm:p-8 rounded-3xl bg-gradient-to-br from-space-800/80 to-space-800/40 backdrop-blur-sm border border-white/5 hover:border-white/10 transition-colors duration-200 overflow-hidden">
                 {/* Hover glow */}
-                <div className="absolute -top-20 -right-20 w-40 h-40 bg-violet-500/10 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                <div className="absolute -top-20 -right-20 w-40 h-40 bg-violet-500/10 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-250" />
 
                 {/* Quote mark */}
                 <QuoteIcon className="w-8 h-8 sm:w-10 sm:h-10 text-violet-500/20 mb-4 sm:mb-6" />
