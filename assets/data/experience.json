@@ -9,12 +9,13 @@
         "logo": "deepchain"
     },
     {
-        "company": "BDTracks",
-        "role": "AI & Data Engineer (Part-time, ~15 hrs/week)",
-        "date": "Aug 2025 - Present",
-        "desc": "Powering Bangladesh's commodity and accident tracking platform (bdtracks.com). Built 15+ web scrapers and fine-tuned Google Gemini 2.5 Flash/Pro via Vertex AI for automated data classification. Engineered production pipelines processing daily feeds from multiple national sources into structured datasets serving live dashboards.",
-        "alignment": "left",
-        "showInHome": true
+        "company": "Unies",
+        "role": "AI Engineering Intern (Full-time)",
+        "date": "Feb 2026 - May 2026",
+        "desc": "Built production RAG pipelines for academic resource retrieval using Pinecone, ChromaDB, LangChain, and LlamaIndex. Engineered automated LLM evaluation pipelines and FastAPI backends powering curriculum-aligned tutoring systems. Benchmarked embedding quality across vector databases to optimize retrieval accuracy.",
+        "alignment": "right",
+        "showInHome": true,
+        "logo": "unies"
     },
     {
         "company": "BetaScript LLC",
@@ -25,20 +26,19 @@
         "showInHome": true
     },
     {
-        "company": "Unies",
-        "role": "AI Engineering Intern (Full-time)",
-        "date": "Feb 2026 - May 2026",
-        "desc": "Built production RAG pipelines for academic resource retrieval using Pinecone, ChromaDB, LangChain, and LlamaIndex. Engineered automated LLM evaluation pipelines and FastAPI backends powering curriculum-aligned tutoring systems. Benchmarked embedding quality across vector databases to optimize retrieval accuracy.",
+        "company": "BDTracks",
+        "role": "AI & Data Engineer (Part-time, ~15 hrs/week)",
+        "date": "Aug 2025 - Present",
+        "desc": "Powering Bangladesh's commodity and accident tracking platform (bdtracks.com). Built 15+ web scrapers and fine-tuned Google Gemini 2.5 Flash/Pro via Vertex AI for automated data classification. Engineered production pipelines processing daily feeds from multiple national sources into structured datasets serving live dashboards.",
         "alignment": "right",
-        "showInHome": true,
-        "logo": "unies"
+        "showInHome": true
     },
     {
         "company": "AIUB",
         "role": "Team Lead - Game Development",
         "date": "Oct 2024 - Dec 2024",
         "desc": "Led a team of 5 developers to ship a 2D platformer with 3 levels, a custom OpenGL rendering engine, SFML audio, and SQLite persistence — within a 3-month deadline. Earned 4 GitHub forks and a YouTube demo.",
-        "alignment": "right",
+        "alignment": "left",
         "showInHome": true
     }
 ]
