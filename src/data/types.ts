@@ -15,7 +15,7 @@ export interface SkillsData {
 }
 
 export interface ProjectLink {
-  view: string;
+  view?: string;
   code?: string;
 }
 

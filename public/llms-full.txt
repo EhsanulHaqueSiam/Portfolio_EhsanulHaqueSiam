@@ -1,6 +1,6 @@
 # Ehsanul Haque Siam - AI Engineer · Full-Stack Developer · LLM Engineer
 
-> Ehsanul Haque Siam is an AI Engineer, Full-Stack Developer & LLM Engineer from Dhaka, Bangladesh. He shipped 4 production React websites generating 1.5x revenue growth as Solo Developer at BetaScript LLC, built RAG pipelines with high retrieval accuracy using Pinecone and LangChain during AI internship at Unies, and is a published researcher (Taylor & Francis, IEEE) with 3x Dean's List at AIUB and 60+ GitHub stars across 15+ projects.
+> Ehsanul Haque Siam is an AI Engineer, Full-Stack Developer & LLM Engineer from Dhaka, Bangladesh. Research Assistant at Deepchain Labs driving R&D in blockchain, cybersecurity, and quantum cryptography. Shipped 4 production React websites generating 1.5x revenue growth as Solo Developer at BetaScript LLC. Built 15+ web scrapers and AI classification pipelines as AI & Data Engineer at BDTracks. Published researcher (Taylor & Francis, IEEE) with 3x Dean's List at AIUB and 60+ GitHub stars across 15+ projects.
 
 Website: https://ehsanulhaquesiam.netlify.app/
 Email: ehsanul.siamdev@gmail.com
@@ -15,7 +15,7 @@ Location: Dhaka, Bangladesh
 
 Ehsanul Haque Siam is an AI Engineer, Full-Stack Developer & LLM Engineer with a focus on building production AI systems and high-performance web applications. He is currently pursuing a B.Sc. in Computer Science at the American International University-Bangladesh (AIUB), where he has been recognized with 3 Dean's List awards for exceptional academic performance (CGPA 3.95, 3.89, and 3.75+).
 
-He shipped 4 production React websites generating 1.5x revenue growth as Solo Developer at BetaScript LLC. Built RAG pipelines with high retrieval accuracy using Pinecone and LangChain during AI internship at Unies. Published researcher in medical AI (Taylor & Francis) with 3x Dean's List at AIUB.
+Research Assistant at Deepchain Labs contributing to R&D in blockchain, cybersecurity, and quantum cryptography. Shipped 4 production React websites generating 1.5x revenue growth as Solo Developer at BetaScript LLC. Built 15+ web scrapers and fine-tuned Google Gemini models as AI & Data Engineer at BDTracks. Published researcher in medical AI (Taylor & Francis) with 3x Dean's List at AIUB.
 
 His professional interests span AI/ML engineering, LLM applications, RAG pipelines, full-stack web development, and data engineering. He has published research in medical AI, built production systems serving 50,000+ users, and contributed to open source with 60+ GitHub stars.
 
@@ -120,7 +120,37 @@ His professional interests span AI/ML engineering, LLM applications, RAG pipelin
 
 ## Projects (Complete Portfolio)
 
-### 1. Aurum Gold - Premium Gold E-commerce
+### 1. ScholarHub - Scholarship Discovery Platform
+- **Description:** Built a unified scholarship discovery platform indexing 12,000+ opportunities daily from 272 automated spiders — reducing student search time to minutes. Full-text search with multi-facet filtering, admin review dashboard, and dynamic SEO.
+- **Key Metrics:** 12,000+ scholarships indexed daily | 272 spiders across 5 source categories | Admin dashboard with review queue | SEO with dynamic OG images & sitemaps
+- **Technologies:** React 19, TypeScript, TanStack Start, Convex, Python, Web Scraping
+- **Live URL:** https://thescholarhub.netlify.app/
+- **GitHub:** https://github.com/EhsanulHaqueSiam/ScholarHub
+- **Categories:** Web Development, Full-Stack
+
+### 2. TTT Autos - Cinematic Dealership Platform
+- **Description:** Built a cinematic 'Velocity Noir' dealership platform with interactive 3D vehicle showcases, transparent pricing, and a 17-page admin dashboard supporting cars, motorcycles, and bicycles. Polymorphic inventory with 7 indexed tables and 12+ filter facets.
+- **Key Metrics:** 3D Spline vehicle showcases | Full admin CRUD dashboard | 12+ filter facets with pagination | Trust-first UX
+- **Technologies:** React 19, TypeScript, TanStack Start, Drizzle ORM, SQLite, Spline 3D
+- **Live URL:** https://ttt.autos/
+- **Categories:** Web Development, Full-Stack
+
+### 3. KaajKormo - AI-Powered Job Platform
+- **Description:** Reimagined job applications with Tinder-style swipe-to-apply, AI-powered CV parsing that calculates skill-match percentages, and employer Kanban boards for pipeline tracking. Full-stack: React 19 frontend + Rust/Axum backend + PostgreSQL 17.
+- **Key Metrics:** React 19 + Rust/Axum | AI-powered CV parsing | Swipe-to-apply UX | Employer Kanban boards
+- **Technologies:** React, TypeScript, Rust, PostgreSQL, TailwindCSS, Framer Motion
+- **GitHub:** https://github.com/EhsanulHaqueSiam/kaajkormo
+- **Categories:** Web Development, Full-Stack
+
+### 4. OfferLagbe - Community Deals Platform
+- **Description:** Built a community-driven marketplace where user trust scores auto-moderate content. Real-time map with clustering and heatmap visualization. PWA with offline support.
+- **Key Metrics:** Real-time Convex subscriptions | MapLibre clustering + heatmap | Community trust scoring | PWA with offline caching
+- **Technologies:** React, TypeScript, TailwindCSS, Convex, MapLibre, PWA
+- **Live URL:** https://offerlagbe.netlify.app/
+- **GitHub:** https://github.com/EhsanulHaqueSiam/offerlagbe
+- **Categories:** Web Development, Full-Stack
+
+### 5. Aurum Gold - Premium Gold E-commerce
 - **Description:** Built a premium gold e-commerce platform with editorial-grade UX and live gold rate integration targeting Lighthouse 90+ performance scores by architecting with React 19, TanStack Router, Zustand state management, and cinematic Framer Motion animations.
 - **Key Metrics:** Lighthouse 90+ target | Live gold rate pricing | React 19 + TanStack Router | Cinematic editorial UX
 - **Technologies:** React 19, TypeScript, TanStack Router, Zustand, TailwindCSS, Framer Motion
@@ -293,6 +323,11 @@ His professional interests span AI/ML engineering, LLM applications, RAG pipelin
 
 ## Professional Experience
 
+### Research Assistant (Full-time, Remote)
+- **Organization:** Deepchain Labs
+- **Duration:** April 2026 - Present
+- **Description:** Contributing to R&D initiatives in blockchain, cybersecurity, and quantum cryptography. Conducting advanced research, producing academic papers and technical documentation, and driving innovation-driven projects across multiple security domains.
+
 ### Solo Developer
 - **Organization:** BetaScript LLC
 - **Duration:** January 2026 - Present
@@ -302,6 +337,11 @@ His professional interests span AI/ML engineering, LLM applications, RAG pipelin
 - **Organization:** Unies
 - **Duration:** February 2026 - May 2026
 - **Description:** Built production RAG pipelines achieving high retrieval accuracy for academic resources measured by embedding quality benchmarks across vector databases by implementing retrieval architectures with Pinecone, ChromaDB, LangChain, and LlamaIndex. Engineered automated LLM evaluation pipelines and FastAPI backends for curriculum-aligned tutoring systems.
+
+### AI & Data Engineer (Part-time)
+- **Organization:** BDTracks
+- **Duration:** August 2025 - Present
+- **Description:** Powering Bangladesh's commodity and accident tracking platform (bdtracks.com). Built 15+ web scrapers and fine-tuned Google Gemini 2.5 Flash/Pro via Vertex AI for automated data classification. Engineered production pipelines processing daily feeds from multiple national sources into structured datasets serving live dashboards.
 
 ### Team Lead - Game Development Project
 - **Organization:** AIUB Computer Graphics Course
@@ -337,7 +377,7 @@ His professional interests span AI/ML engineering, LLM applications, RAG pipelin
 ## Frequently Asked Questions
 
 ### Who is Ehsanul Haque Siam?
-Ehsanul Haque Siam is an AI Engineer, Full-Stack Developer & LLM Engineer from Dhaka, Bangladesh. He shipped 4 production React websites generating 1.5x revenue growth as Solo Developer at BetaScript LLC, built RAG pipelines with high retrieval accuracy using Pinecone and LangChain during AI internship at Unies, and published medical AI research (Taylor & Francis). He is a 3x Dean's List awardee at AIUB with 60+ GitHub stars across 15+ projects.
+Ehsanul Haque Siam is an AI Engineer, Full-Stack Developer & LLM Engineer from Dhaka, Bangladesh. Research Assistant at Deepchain Labs driving R&D in blockchain, cybersecurity, and quantum cryptography. Shipped 4 production React websites generating 1.5x revenue growth as Solo Developer at BetaScript LLC. Built 15+ web scrapers and AI classification pipelines as AI & Data Engineer at BDTracks. Published medical AI research (Taylor & Francis, IEEE). He is a 3x Dean's List awardee at AIUB with 60+ GitHub stars across 15+ projects.
 
 ### What programming languages does Ehsanul Haque Siam know?
 Ehsanul Haque Siam is proficient in multiple programming languages: Java (Expert level), Python (Advanced), C++ (Advanced), TypeScript (Advanced), SQL (Advanced), Kotlin (Intermediate), C# (Intermediate). He has built production systems in Java, Python, C++, TypeScript, and C#.
@@ -374,5 +414,5 @@ Ehsanul Haque Siam's engineering philosophy centers on building practical, high-
 
 ---
 
-*Last updated: February 28, 2026*
+*Last updated: March 29, 2026*
 *Portfolio: https://ehsanulhaquesiam.netlify.app/*

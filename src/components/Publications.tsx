@@ -31,21 +31,14 @@ export function Publications() {
               transition={{ duration: 0.6, delay: index * 0.15 }}
             >
               <MagneticHover strength={6}>
-                <div
-                  role="button"
-                  tabIndex={0}
-                  className="group relative rounded-3xl bg-gradient-to-br from-space-800/80 to-space-800/40 border border-white/5 hover:border-violet-500/30 transition-[border-color] duration-200 overflow-hidden cursor-pointer"
+                <button
+                  type="button"
+                  className="group relative w-full text-left rounded-3xl bg-gradient-to-br from-space-800/80 to-space-800/40 border border-white/5 hover:border-violet-500/30 transition-[border-color] duration-200 overflow-hidden cursor-pointer"
                   onClick={() => {
                     setInstantToggle(false);
                     setExpandedPub(expandedPub === index ? null : index);
                   }}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter' || e.key === ' ') {
-                      e.preventDefault();
-                      setInstantToggle(true);
-                      setExpandedPub(expandedPub === index ? null : index);
-                    }
-                  }}
+                  aria-expanded={expandedPub === index}
                 >
                   <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-0">
                     {/* Publication image */}
@@ -172,7 +165,7 @@ export function Publications() {
                   <div className="absolute top-0 right-0 w-32 h-32 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
                     <div className="absolute top-4 right-4 w-8 h-8 border-t-2 border-r-2 border-violet-500/50 rounded-tr-xl" />
                   </div>
-                </div>
+                </button>
               </MagneticHover>
             </m.div>
           ))}

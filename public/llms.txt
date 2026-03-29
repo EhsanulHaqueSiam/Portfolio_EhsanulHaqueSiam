@@ -1,10 +1,10 @@
 # Ehsanul Haque Siam - AI Engineer · Full-Stack Developer · LLM Engineer
 
-> Personal portfolio of Ehsanul Haque Siam, an AI Engineer, Full-Stack Developer & LLM Engineer from Dhaka, Bangladesh. Solo Developer at BetaScript LLC, AI Engineering Intern at Unies, published researcher, and open source contributor.
+> Personal portfolio of Ehsanul Haque Siam, an AI Engineer, Full-Stack Developer & LLM Engineer from Dhaka, Bangladesh. Research Assistant at Deepchain Labs, Solo Developer at BetaScript LLC, AI & Data Engineer at BDTracks, published researcher, and open source contributor.
 
 ## About
 
-Ehsanul Haque Siam is an AI Engineer, Full-Stack Developer & LLM Engineer. He shipped 4 production React websites generating 1.5x revenue growth as Solo Developer at BetaScript LLC. Built RAG pipelines with high retrieval accuracy using Pinecone and LangChain during AI internship at Unies. Published researcher in medical AI (Taylor & Francis) with 3x Dean's List at AIUB.
+Ehsanul Haque Siam is an AI Engineer, Full-Stack Developer & LLM Engineer. Research Assistant at Deepchain Labs contributing to R&D in blockchain, cybersecurity, and quantum cryptography. Shipped 4 production React websites generating 1.5x revenue growth as Solo Developer at BetaScript LLC. Built 15+ web scrapers and AI classification pipelines as AI & Data Engineer at BDTracks. Published researcher in medical AI (Taylor & Francis) with 3x Dean's List at AIUB.
 
 He has published research in medical AI — specifically "Beyond NER: A Comparative Benchmark of Medical BERTs for Multi-Label Adverse Drug Reaction Classification" at IDAA 2025, published as a Taylor & Francis Book Chapter. His work involves fine-tuning domain-specific BERT models (BioBERT, PubMedBERT) for healthcare applications. He also has a paper accepted at IEEE QPAIN 2026 on clustering-based topic modeling.
 
@@ -56,6 +56,17 @@ LinkedIn: https://www.linkedin.com/in/EhsanulHaqueSiam/
 - Git (Expert), GitHub (Expert), Linux (Advanced), Docker (Intermediate), Jupyter (Advanced)
 
 ## Featured Projects
+
+### ScholarHub - Scholarship Discovery Platform
+Built a unified scholarship discovery platform indexing 12,000+ opportunities daily from 272 automated spiders. Full-text search with multi-facet filtering, admin review dashboard, and dynamic SEO.
+Tech: React 19, TypeScript, TanStack Start, Convex, Python
+URL: https://thescholarhub.netlify.app/
+GitHub: https://github.com/EhsanulHaqueSiam/ScholarHub
+
+### TTT Autos - Cinematic Dealership Platform
+Built a cinematic 'Velocity Noir' dealership platform with 3D Spline vehicle showcases, transparent pricing, and 17-page admin dashboard supporting cars, motorcycles, and bicycles.
+Tech: React 19, TypeScript, TanStack Start, Drizzle ORM, Spline 3D
+URL: https://ttt.autos/
 
 ### Indian Claypit - Restaurant Website
 Developed a restaurant platform serving 50,000+ customers with a 4.9★ rating from 2,847 reviews by building a full-stack React application with online ordering, event booking, and catering integration.
