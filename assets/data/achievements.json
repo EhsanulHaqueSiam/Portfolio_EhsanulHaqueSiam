@@ -83,6 +83,15 @@
     "showInHome": true
   },
   {
+    "name": "Certified Ethical Hacker - Team Matrix",
+    "desc": "Certified Ethical Hacker through a 4-month, 29-module offensive security program passing 3 rigorous exams (theoretical, hands-on lab, and viva) by performing real-world penetration tests on live servers, exploiting OWASP Top 10 vulnerabilities (SQLi, XSS, session hijacking), conducting OSINT reconnaissance and digital forensics, building and analyzing malware, and completing CTF challenges and bug bounty engagements — trained under an EC-Council CEH Master certified instructor.",
+    "images": [
+      "ceh-certificate"
+    ],
+    "category": "certificate",
+    "showInHome": true
+  },
+  {
     "name": "54+ Android Development Lessons",
     "desc": "Completed comprehensive Android development curriculum from beginner to advanced. Mastered MVVM architecture, Retrofit, Hilt, RxJava3, Room Database, and Firebase integration.",
     "images": [
