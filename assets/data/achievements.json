@@ -84,7 +84,7 @@
   },
   {
     "name": "Certified Ethical Hacker - Team Matrix",
-    "desc": "Certified Ethical Hacker through a 4-month, 29-module offensive security program passing 3 rigorous exams (theoretical, hands-on lab, and viva) by performing real-world penetration tests on live servers, exploiting OWASP Top 10 vulnerabilities (SQLi, XSS, session hijacking), conducting OSINT reconnaissance and digital forensics, building and analyzing malware, and completing CTF challenges and bug bounty engagements — trained under an EC-Council CEH Master certified instructor.",
+    "desc": "Certified Ethical Hacker through a 4-month, 29-module offensive security program passing 3 exams (theoretical, lab, viva) by performing penetration tests on live servers, exploiting OWASP Top 10 vulnerabilities, and completing CTF and bug bounty engagements.",
     "images": [
       "ceh-certificate"
     ],
