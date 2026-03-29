@@ -9,20 +9,11 @@
         "logo": "deepchain"
     },
     {
-        "company": "Unies",
-        "role": "AI Engineering Intern (Full-time)",
-        "date": "Feb 2026 - May 2026",
-        "desc": "Built production RAG pipelines for academic resource retrieval using Pinecone, ChromaDB, LangChain, and LlamaIndex. Engineered automated LLM evaluation pipelines and FastAPI backends powering curriculum-aligned tutoring systems. Benchmarked embedding quality across vector databases to optimize retrieval accuracy.",
-        "alignment": "right",
-        "showInHome": true,
-        "logo": "unies"
-    },
-    {
         "company": "BetaScript LLC",
         "role": "Solo Developer (Part-time, ~20 hrs/week)",
         "date": "Jan 2026 - Present",
         "desc": "Shipped 4 production React websites for this US-based digital agency, driving 1.5x client revenue growth measured by post-launch analytics and client billing. Full lifecycle ownership — design, React 19 + TanStack Start architecture, and Netlify deployment — across restaurant, e-commerce, and agency platforms serving 50,000+ end users.",
-        "alignment": "left",
+        "alignment": "right",
         "showInHome": true
     },
     {
@@ -30,8 +21,17 @@
         "role": "AI & Data Engineer (Part-time, ~15 hrs/week)",
         "date": "Aug 2025 - Present",
         "desc": "Powering Bangladesh's commodity and accident tracking platform (bdtracks.com). Built 15+ web scrapers and fine-tuned Google Gemini 2.5 Flash/Pro via Vertex AI for automated data classification. Engineered production pipelines processing daily feeds from multiple national sources into structured datasets serving live dashboards.",
-        "alignment": "right",
+        "alignment": "left",
         "showInHome": true
+    },
+    {
+        "company": "Unies",
+        "role": "AI Engineering Intern (Full-time)",
+        "date": "Feb 2026 - May 2026",
+        "desc": "Built production RAG pipelines for academic resource retrieval using Pinecone, ChromaDB, LangChain, and LlamaIndex. Engineered automated LLM evaluation pipelines and FastAPI backends powering curriculum-aligned tutoring systems. Benchmarked embedding quality across vector databases to optimize retrieval accuracy.",
+        "alignment": "right",
+        "showInHome": true,
+        "logo": "unies"
     },
     {
         "company": "AIUB",
