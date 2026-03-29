@@ -53,7 +53,7 @@ export const blogPosts = blogData as BlogPost[];
 // Filtered exports for homepage
 export const featuredProjects = projects.filter(p => p.showInHome);
 export const featuredAchievements = achievements.filter(a => a.showInHome);
-export const awards = achievements.filter(a => a.category === 'award' && a.showInHome);
+export const awards = achievements.filter(a => (a.category === 'award' || a.category === 'certificate') && a.showInHome);
 export const featuredPublications = publications.filter(p => p.showInHome);
 export const featuredExperience = experience.filter(e => e.showInHome);
 
