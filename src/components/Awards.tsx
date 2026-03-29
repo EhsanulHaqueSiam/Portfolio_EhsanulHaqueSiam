@@ -135,7 +135,7 @@ export function Awards() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
-              className={index === 0 ? 'sm:col-span-2 lg:col-span-2 sm:row-span-2' : index >= 3 ? 'sm:col-span-2 lg:col-span-3' : ''}
+              className={index === 0 ? 'sm:col-span-2 lg:col-span-2' : index >= 3 ? 'sm:col-span-2 lg:col-span-2' : ''}
             >
               <MagneticHover strength={8}>
                 <m.button
