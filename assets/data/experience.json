@@ -1,5 +1,14 @@
 [
     {
+        "company": "Deepchain Labs",
+        "role": "Joined",
+        "date": "Apr 2026 - Present",
+        "desc": "Joined Deepchain Labs (deepchainlabs.com), a company focused on blockchain and AI solutions.",
+        "alignment": "left",
+        "showInHome": true,
+        "logo": "deepchain"
+    },
+    {
         "company": "BDTracks",
         "role": "AI & Data Engineer (Part-time, ~15 hrs/week)",
         "date": "Aug 2025 - Present",
