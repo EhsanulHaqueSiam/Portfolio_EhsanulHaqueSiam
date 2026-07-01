@@ -8,7 +8,7 @@ const SkillIcon = memo(function SkillIcon({ src, name }: { src: string; name: st
   const [hasError, setHasError] = useState(false);
 
   if (hasError) {
-    return <span className="text-lg font-bold text-gray-500">{name.charAt(0)}</span>;
+    return <span className="text-lg font-bold text-gray-400">{name.charAt(0)}</span>;
   }
 
   return (
@@ -50,7 +50,7 @@ const SkillCard = memo(function SkillCard({ skill, index }: { skill: Skill; inde
             </div>
             <div>
               <h3 className="text-white font-medium">{skill.name}</h3>
-              <span className="text-xs text-gray-500 uppercase tracking-wider">
+              <span className="text-xs text-gray-400 uppercase tracking-wider">
                 {skill.level}
               </span>
             </div>
@@ -128,7 +128,7 @@ export function Skills() {
                 className={`press-feedback relative px-4 sm:px-6 py-2.5 sm:py-3 rounded-full font-medium text-sm whitespace-nowrap flex-shrink-0 min-h-[44px] ${
                   activeCategory === index
                     ? 'text-white'
-                    : 'text-gray-500 hover:text-gray-300'
+                    : 'text-gray-400 hover:text-gray-300'
                 }`}
                 whileHover={{ scale: 1.01 }}
                 whileTap={{ scale: 0.97 }}
@@ -183,7 +183,7 @@ export function Skills() {
               <div className="text-4xl font-display font-bold gradient-text mb-1">
                 {stat.value}
               </div>
-              <div className="text-gray-500 text-sm uppercase tracking-wider">
+              <div className="text-gray-400 text-sm uppercase tracking-wider">
                 {stat.label}
               </div>
             </div>

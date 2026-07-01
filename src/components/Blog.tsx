@@ -73,10 +73,10 @@ export function Blog() {
                     </span>
                     <div className="flex items-center gap-3">
                       {post.readTime && (
-                        <span className="text-gray-600 text-xs font-mono">{post.readTime}</span>
+                        <span className="text-gray-400 text-xs font-mono">{post.readTime}</span>
                       )}
                       {!isComingSoon && (
-                        <ArrowIcon className="w-4 h-4 text-gray-600 group-hover:text-violet-400 transition-colors duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transform" />
+                        <ArrowIcon className="w-4 h-4 text-gray-400 group-hover:text-violet-400 transition-colors duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transform" />
                       )}
                     </div>
                   </div>
@@ -87,7 +87,7 @@ export function Blog() {
                   </h3>
 
                   {/* Description */}
-                  <p className="relative z-10 text-gray-500 text-sm leading-relaxed mb-6 flex-1">
+                  <p className="relative z-10 text-gray-400 text-sm leading-relaxed mb-6 flex-1">
                     {post.description}
                   </p>
 
@@ -96,7 +96,7 @@ export function Blog() {
                     {post.tags.map(tag => (
                       <span
                         key={tag}
-                        className="text-xs text-gray-600 font-mono"
+                        className="text-xs text-gray-400 font-mono"
                       >
                         #{tag}
                       </span>

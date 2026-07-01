@@ -2,91 +2,83 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## Git Push Process
+## Stack (migrated to Astro 7, July 2026)
 
-When pushing changes to the remote repository:
+This repository **is the primary, standalone project** and is what deploys to Netlify.
+It was migrated from a Vite React SPA to **Astro 7 (static output, no SSR)**.
 
-1. **Source Directory**: Development happens in `/home/siam/Personal/portfolio`
-2. **Target Directory**: Push to `/home/siam/Personal/Portfolio_EhsanulHaqueSiam`
-3. **Files to Copy**: Only essential files (no node_modules, dist, test-results, .claude)
-4. **Images**: Only WebP format allowed - no PNG, JPG, or JPEG files
-5. **Commit Messages**: Clean commit messages without `Co-Authored-By: Claude` attribution
-
-### Push Workflow
-
-Uses absolute paths throughout (avoids `cd` issues with shell hooks like zoxide).
-
-```bash
-SRC=/home/siam/Personal/portfolio
-DST=/home/siam/Personal/Portfolio_EhsanulHaqueSiam
-
-# 1. Clear target (keep .git)
-find $DST -mindepth 1 -maxdepth 1 -not -name '.git' -exec rm -rf {} +
-
-# 2. Copy essential files from source
-cp -r $SRC/{src,public} $DST/
-mkdir -p $DST/assets && cp -r $SRC/assets/data $DST/assets/
-cp $SRC/{index.html,package.json,postcss.config.js,tailwind.config.js,tsconfig.json,vite.config.ts,netlify.toml,CLAUDE.md,.gitignore} $DST/
-
-# 3. Verify no png/jpeg (favicons excluded)
-find $DST -type f \( -name "*.png" -o -name "*.jpg" -o -name "*.jpeg" \)
-
-# 4. Commit and push
-git -C $DST add -A
-git -C $DST commit -m "commit message here"
-git -C $DST push
-```
+- The entire React + Framer Motion experience mounts as a **single Astro island**
+  (`src/pages/index.astro` → `<App client:load />`). Astro server-renders it to
+  static HTML at build time (SEO/AEO/GEO), then hydrates it in the browser so every
+  animation, Lenis smooth-scroll, and interaction works exactly as before.
+- **No SSR / no adapter** — `output: 'static'`. Netlify serves the pre-built `dist/`.
+- React 18, Tailwind v3 (via PostCSS), framer-motion 11, `@studio-freight/lenis`.
+- The legacy Vite SPA lives in `/home/siam/Personal/portfolio` (now stale — do not
+  copy from it; work directly in this repo).
 
 ## Build & Development Commands
 
 ```bash
-# Development
-bun run dev          # Start Vite dev server
-
-# Build
-bun run build        # TypeScript check + Vite production build
-bun run preview      # Preview production build locally
+bun install          # install deps
+bun run dev          # Astro dev server (http://localhost:4321)
+bun run build        # regenerate SEO files (scripts/generate-seo.mjs) + astro build → dist/
+bun run preview      # serve the production build locally
+bun run seo:gen      # regenerate public SEO files only
 ```
 
-Uses Bun as package manager. The build outputs to `dist/` and deploys to Netlify.
+Uses Bun locally; Netlify runs `npm run build` with `NODE_VERSION=22.12.0` (see netlify.toml).
+
+## Git / Deploy Process
+
+Work directly in this repo. Netlify auto-deploys the `main` branch of the GitHub remote.
+
+1. **Images**: WebP only — no PNG/JPG/JPEG (favicons `favicon-32x32.png` / `apple-touch-icon.png` excepted).
+2. **Commit messages**: clean, no `Co-Authored-By: Claude` attribution.
+3. `git add -A && git commit -m "…" && git push`.
 
 ## Architecture Overview
 
-This is a React + TypeScript portfolio site using Vite, TailwindCSS, and Framer Motion.
+Astro 7 + React islands + TailwindCSS + Framer Motion.
 
-### Data Flow
-- **Content source**: JSON files in `assets/data/` (skills, projects, experience, achievements, publications, testimonials)
-- **Type definitions**: `src/data/types.ts` defines interfaces for all content types
-- **Content hub**: `src/data/content.ts` imports JSON, exports typed data + filtered subsets (e.g., `featuredProjects`)
-- **Path aliases**: `@/*` maps to `src/*`, `@data/*` maps to `assets/data/*`
+### Data Flow — single source of truth
+- **Content**: JSON in `assets/data/` — `profile.json` (identity/stats), plus skills,
+  projects, experience, achievements, publications, testimonials, blog.
+- **Types**: `src/data/types.ts`.
+- **Content hub**: `src/data/content.ts` imports the JSON and exports typed data +
+  filtered subsets (`featuredProjects`, `awards`, …). Components import from here.
+- The SAME JSON drives both the UI and the SEO layer, so metadata can never drift.
 
-### Component Structure
+### Astro structure
 ```
 src/
-├── App.tsx              # Main app with loading screen, section composition
-├── components/
-│   ├── [Section].tsx    # Page sections (Hero, About, Skills, Projects, etc.)
-│   └── ui/              # Reusable animation/effect components
-│       ├── index.ts     # Barrel export for all UI components
-│       ├── SmoothScroll.tsx   # Lenis-based smooth scrolling
-│       ├── Cursor.tsx         # Custom cursor (desktop only)
-│       └── ...                # TextReveal, TiltCard, MagneticButton, etc.
-└── hooks/               # useScrollReveal, useMousePosition, useFrame
+├── pages/index.astro     # mounts <App client:load /> inside Layout
+├── pages/404.astro       # static 404 (noindex)
+├── layouts/Layout.astro  # <head>: meta, OG/Twitter, JSON-LD, fonts, favicons, no-JS reveal
+├── seo/schema.ts         # builds full JSON-LD @graph + META from content.ts (data-driven)
+├── App.tsx               # composes all sections (static imports so they SSR into HTML)
+├── index.css             # global styles + Tailwind directives (imported by Layout)
+├── components/            # section components + ui/ (animation/effect components)
+└── hooks/                 # useMediaQuery, useMousePosition (all SSR-safe / effect-guarded)
+scripts/generate-seo.mjs   # prebuild: regenerates public/{robots.txt,sitemap.xml,llms.txt,llms-full.txt}
 ```
 
+### SEO / AEO / GEO
+- `src/seo/schema.ts` → JSON-LD `@graph` (Person, ProfilePage, WebSite, 3× ScholarlyArticle,
+  ItemList of projects, ProfessionalService, BreadcrumbList, FAQPage, WebPage) + meta config,
+  all generated from `assets/data`. Rendered in `Layout.astro`.
+- `scripts/generate-seo.mjs` regenerates `robots.txt`, `sitemap.xml`, `llms.txt`,
+  `llms-full.txt` from the same data on every build — keep it in sync when data changes.
+- SSR-hidden content: Framer Motion emits `opacity:0` inline until hydration. Layout injects
+  an `html.no-js` fallback + inline JS so JS-off visitors and crawlers still see all content.
+
 ### Key Libraries
-- **Framer Motion**: All animations and transitions
-- **@studio-freight/lenis**: Smooth scroll behavior (wrapped in `SmoothScroll` component)
-- **TailwindCSS**: Styling with custom `space-*`, `violet-*` colors and `display`/`body` fonts
+- **Astro 7** — static site generator, React integration (`@astrojs/react`).
+- **Framer Motion 11** — all animations (islands hydrate to run them).
+- **@studio-freight/lenis** — smooth scroll (`SmoothScroll`, browser-only, effect-guarded).
+- **TailwindCSS v3** — custom `space-*`, `violet-*`, `amber-*` colors; `display`/`body` fonts.
 
 ### Image Handling
-- Images stored in `public/images/` (projects/, achievements/, publications/, education/)
-- All images use WebP format for optimization
-- Helper functions in `content.ts`: `getProjectImage()`, `getAchievementImage()`, `getPublicationImage()`
-- `OptimizedImage` component handles lazy loading and preloading
-
-### Custom Tailwind Config
-Extended theme in `tailwind.config.js`:
-- Colors: `space-600..900`, `violet-400..600`, `amber-400..600`
-- Fonts: `font-display` (Clash Display), `font-body` (Satoshi)
-- Custom animations: `float`, `pulse-glow`, `gradient-x`, `glitch`, `shimmer`
+- WebP in `public/images/` (projects/, achievements/, publications/, education/).
+- Helpers in `content.ts`: `getProjectImage()`, `getAchievementImage()`, `getPublicationImage()`.
+- `OptimizedImage` lazy-loads via IntersectionObserver (non-priority images are absent from
+  static HTML — use `priority` for anything that must be crawlable/LCP).

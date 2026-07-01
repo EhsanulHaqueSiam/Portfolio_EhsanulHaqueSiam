@@ -57,7 +57,7 @@ export function Testimonials() {
                   </div>
                   <div className="min-w-0">
                     <p className="text-white font-medium text-sm sm:text-base truncate">{testimonial.name}</p>
-                    <p className="text-gray-500 text-xs sm:text-sm truncate">
+                    <p className="text-gray-400 text-xs sm:text-sm truncate">
                       {testimonial.role}, <span className="text-violet-400/80">{testimonial.company}</span>
                     </p>
                   </div>

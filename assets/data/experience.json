@@ -26,7 +26,7 @@
     },
     {
         "company": "Unies",
-        "role": "AI Engineering Intern (Full-time)",
+        "role": "AI Engineering Intern",
         "date": "Feb 2026 - May 2026",
         "desc": "Built production RAG pipelines for academic resource retrieval using Pinecone, ChromaDB, LangChain, and LlamaIndex. Engineered automated LLM evaluation pipelines and FastAPI backends powering curriculum-aligned tutoring systems. Benchmarked embedding quality across vector databases to optimize retrieval accuracy.",
         "alignment": "right",

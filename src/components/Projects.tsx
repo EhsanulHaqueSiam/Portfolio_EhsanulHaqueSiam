@@ -162,7 +162,7 @@ export function Projects() {
                 className={`press-feedback relative px-4 sm:px-5 py-2.5 rounded-full text-sm font-medium whitespace-nowrap flex-shrink-0 min-h-[44px] ${
                   activeCategory === category
                     ? 'text-white'
-                    : 'text-gray-500 hover:text-gray-300'
+                    : 'text-gray-400 hover:text-gray-300'
                 }`}
                 whileHover={{ scale: 1.01 }}
                 whileTap={{ scale: 0.97 }}
@@ -263,7 +263,7 @@ export function Projects() {
                       <h3 className="text-lg font-display font-semibold text-white mb-2 group-hover:text-violet-400 transition-colors">
                         {project.name}
                       </h3>
-                      <p className="text-gray-500 text-sm leading-relaxed mb-4 flex-1 line-clamp-2">
+                      <p className="text-gray-400 text-sm leading-relaxed mb-4 flex-1 line-clamp-2">
                         {project.desc}
                       </p>
                       <div className="flex flex-wrap gap-2">

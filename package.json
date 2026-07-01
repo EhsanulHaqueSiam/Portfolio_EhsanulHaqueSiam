@@ -1,35 +1,30 @@
 {
   "name": "siam-portfolio",
   "private": true,
-  "version": "1.0.0",
+  "version": "2.0.0",
   "type": "module",
-  "sideEffects": false,
   "scripts": {
-    "dev": "vite",
-    "lint": "tsc -b --pretty false",
-    "build": "tsc -b && vite build && cp public/.htaccess dist/.htaccess",
-    "preview": "vite preview",
-    "set:site-url": "node scripts/set-site-url.mjs",
-    "verify:live": "node scripts/verify-live.mjs",
-    "test:compat": "playwright test --project=desktop-chromium-1366 --project=desktop-chromium-1920 --project=desktop-firefox-1366 --project=mobile-android",
-    "test:compat:webkit": "docker run --rm --user $(id -u):$(id -g) --ipc=host -v \"$PWD\":/work -w /work mcr.microsoft.com/playwright:v1.58.2-jammy bash -lc 'npx playwright test --project=desktop-webkit-1366 --project=tablet-ipad --project=mobile-ios'"
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "node scripts/generate-seo.mjs && astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "seo:gen": "node scripts/generate-seo.mjs"
   },
   "dependencies": {
+    "@astrojs/react": "^6.0.0",
     "@studio-freight/lenis": "^1.0.42",
+    "astro": "^7.0.5",
     "framer-motion": "^11.15.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
   "devDependencies": {
-    "@playwright/test": "^1.58.2",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
-    "@vitejs/plugin-react": "^4.3.4",
     "autoprefixer": "^10.4.20",
     "postcss": "^8.4.49",
     "tailwindcss": "^3.4.17",
-    "terser": "^5.46.0",
-    "typescript": "~5.6.2",
-    "vite": "^6.0.5"
+    "typescript": "~5.6.2"
   }
 }

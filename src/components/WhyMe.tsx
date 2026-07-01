@@ -103,7 +103,7 @@ export function WhyMe() {
                 </div>
 
                 {/* Detail */}
-                <p className="relative z-10 text-gray-500 text-sm leading-relaxed">
+                <p className="relative z-10 text-gray-400 text-sm leading-relaxed">
                   {point.detail}
                 </p>
 

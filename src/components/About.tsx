@@ -41,7 +41,7 @@ export function About() {
                     a 3.89 CGPA, shipping production systems that drive real revenue.
                   </m.p>
                   <m.p
-                    className="text-lg text-gray-500 leading-relaxed max-w-2xl"
+                    className="text-lg text-gray-400 leading-relaxed max-w-2xl"
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
                     viewport={{ once: true }}
@@ -54,8 +54,8 @@ export function About() {
                   </m.p>
                 </div>
 
-                {/* Code decoration */}
-                <div className="absolute bottom-6 right-6 text-violet-500/20 font-mono text-xs">
+                {/* Code decoration — hidden from a11y tree & text extraction */}
+                <div aria-hidden="true" className="absolute bottom-6 right-6 text-violet-500/20 font-mono text-xs">
                   {'</bio>'}
                 </div>
               </div>
@@ -103,7 +103,7 @@ export function About() {
 
                 {/* Name label */}
                 <div className="absolute bottom-4 left-0 right-0 text-center">
-                  <p className="text-gray-500 text-sm font-mono">{profile.name}</p>
+                  <p className="text-gray-400 text-sm font-mono">{profile.name}</p>
                 </div>
 
                 {/* Animated hover border */}
@@ -144,7 +144,7 @@ export function About() {
                       <div className="text-3xl md:text-4xl font-display font-bold gradient-text">
                         {stat.value}
                       </div>
-                      <div className="text-gray-500 text-xs mt-1 uppercase tracking-wider">
+                      <div className="text-gray-400 text-xs mt-1 uppercase tracking-wider">
                         {stat.label}
                       </div>
                     </m.div>
@@ -165,7 +165,7 @@ export function About() {
             <div className="h-full p-6 rounded-3xl bg-space-800/50 border border-white/5 flex flex-col justify-between min-h-[200px]">
               <div className="text-5xl mb-4">🇧🇩</div>
               <div>
-                <p className="text-gray-500 text-sm uppercase tracking-wider mb-1">Based in</p>
+                <p className="text-gray-400 text-sm uppercase tracking-wider mb-1">Based in</p>
                 <p className="text-2xl font-display font-semibold text-white">{profile.location}</p>
               </div>
             </div>
@@ -186,7 +186,7 @@ export function About() {
               </div>
               <div>
                 <p className="text-white font-medium">{profile.currentRole}</p>
-                <p className="text-gray-500 text-sm">@ {profile.currentCompany}</p>
+                <p className="text-gray-400 text-sm">@ {profile.currentCompany}</p>
               </div>
             </div>
           </m.div>
@@ -200,7 +200,7 @@ export function About() {
             transition={{ duration: 0.8, delay: 0.5 }}
           >
             <div className="h-full p-6 rounded-3xl bg-space-800/50 border border-white/5">
-              <p className="text-gray-500 text-sm font-mono mb-4">// primary_stack</p>
+              <p className="text-gray-400 text-sm font-mono mb-4">// primary_stack</p>
               <div className="flex flex-wrap gap-2">
                 {['Python', 'Java', 'PyTorch', 'TensorFlow', 'Android', 'MySQL', 'C++', 'Git'].map((tech) => (
                   <m.span

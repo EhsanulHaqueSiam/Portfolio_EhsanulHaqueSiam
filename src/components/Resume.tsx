@@ -29,11 +29,11 @@ function Entry({
     <div className={isLast ? '' : 'mb-3'}>
       <div className="flex justify-between items-baseline gap-3">
         <span className="font-semibold text-white text-[13px] leading-tight">{role}</span>
-        <span className="text-gray-500 text-[10.5px] shrink-0 font-mono tracking-wide">{period}</span>
+        <span className="text-gray-400 text-[10.5px] shrink-0 font-mono tracking-wide">{period}</span>
       </div>
       <div className="flex justify-between items-baseline gap-3 mt-px">
         <span className="text-gray-400 italic text-[12px]">{company}</span>
-        <span className="text-gray-600 italic text-[10.5px] shrink-0">{location}</span>
+        <span className="text-gray-400 italic text-[10.5px] shrink-0">{location}</span>
       </div>
       <ul className="resume-bullets mt-1.5">
         {bullets.map((b, i) => <li key={i}>{b}</li>)}
@@ -54,7 +54,7 @@ function Project({
         <span className="text-[13px] leading-tight">
           <span className="font-semibold text-white">{name}</span>
           <span className="text-white/10 mx-1.5">|</span>
-          <span className="text-gray-500 italic text-[11px]">{tech}</span>
+          <span className="text-gray-400 italic text-[11px]">{tech}</span>
         </span>
         {extra && <span className="text-amber-500/60 text-[10.5px] shrink-0 font-mono">{extra}</span>}
       </div>
@@ -169,7 +169,7 @@ export function Resume() {
                 href="/resume.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="press-feedback flex items-center gap-1.5 px-3 py-2 text-[13px] text-gray-500 hover:text-white rounded-lg hover:bg-white/[0.04] min-h-[44px]"
+                className="press-feedback flex items-center gap-1.5 px-3 py-2 text-[13px] text-gray-400 hover:text-white rounded-lg hover:bg-white/[0.04] min-h-[44px]"
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
@@ -189,7 +189,7 @@ export function Resume() {
             </div>
 
             {/* ESC hint — desktop only */}
-            <kbd className="hidden lg:inline text-[10px] text-gray-600 border border-white/[0.06] rounded px-1.5 py-0.5 font-mono">
+            <kbd className="hidden lg:inline text-[10px] text-gray-400 border border-white/[0.06] rounded px-1.5 py-0.5 font-mono">
               ESC
             </kbd>
           </div>
@@ -203,10 +203,10 @@ export function Resume() {
 
               {/* ── Header ── */}
               <div className="text-center mb-6">
-                <h1 className="text-[1.35rem] sm:text-[1.7rem] md:text-[2rem] font-display font-bold text-white tracking-[0.04em] uppercase leading-none mb-2">
+                <div role="heading" aria-level={2} className="resume-name text-[1.35rem] sm:text-[1.7rem] md:text-[2rem] font-display font-bold text-white tracking-[0.04em] uppercase leading-none mb-2">
                   Ehsanul Haque Siam
-                </h1>
-                <div className="flex flex-wrap items-center justify-center gap-x-1.5 sm:gap-x-2.5 gap-y-0.5 text-[11px] sm:text-[12px] text-gray-500 leading-relaxed">
+                </div>
+                <div className="flex flex-wrap items-center justify-center gap-x-1.5 sm:gap-x-2.5 gap-y-0.5 text-[11px] sm:text-[12px] text-gray-400 leading-relaxed">
                   <a href="mailto:ehsanul.siamdev@gmail.com" className="press-feedback hover:text-violet-400 active:text-violet-400 underline decoration-white/[0.08] underline-offset-2">
                     ehsanul.siamdev@gmail.com
                   </a>
@@ -314,13 +314,13 @@ export function Resume() {
                   <span className="font-semibold text-white text-[13px]">
                     American International University-Bangladesh (AIUB)
                   </span>
-                  <span className="text-gray-600 text-[10.5px] shrink-0">Dhaka, Bangladesh</span>
+                  <span className="text-gray-400 text-[10.5px] shrink-0">Dhaka, Bangladesh</span>
                 </div>
                 <div className="flex justify-between items-baseline gap-3 mt-px">
                   <span className="text-gray-400 italic text-[12px]">
                     Bachelor of Science in Computer Science and Engineering
                   </span>
-                  <span className="text-gray-600 italic text-[10.5px] shrink-0 font-mono tracking-wide">
+                  <span className="text-gray-400 italic text-[10.5px] shrink-0 font-mono tracking-wide">
                     2022 — 2026
                   </span>
                 </div>
@@ -335,15 +335,15 @@ export function Resume() {
                 <div className="space-y-1.5 text-[12px] leading-relaxed">
                   <p>
                     <span className="text-white font-medium">"Decoding Research Trends: A Clustering Based Topic Modeling Framework"</span>
-                    <span className="text-gray-600"> — IEEE QPAIN 2026 (Accepted, IEEE Xplore/Scopus)</span>
+                    <span className="text-gray-400"> — IEEE QPAIN 2026 (Accepted, IEEE Xplore/Scopus)</span>
                   </p>
                   <p>
                     <span className="text-white font-medium">"Beyond NER: Medical BERTs for Multi-Label ADR Classification"</span>
-                    <span className="text-gray-600"> — Taylor &amp; Francis, IDAA 2025</span>
+                    <span className="text-gray-400"> — Taylor &amp; Francis, IDAA 2025</span>
                   </p>
                   <p>
                     <span className="text-white font-medium">"Unfolding Emerging Issues in Changing Climatic Scenario"</span>
-                    <span className="text-gray-600"> — 2nd South Asian Climate Conference, 2024</span>
+                    <span className="text-gray-400"> — 2nd South Asian Climate Conference, 2024</span>
                   </p>
                 </div>
               </Section>

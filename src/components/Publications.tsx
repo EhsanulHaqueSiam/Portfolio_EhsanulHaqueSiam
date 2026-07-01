@@ -31,14 +31,14 @@ export function Publications() {
               transition={{ duration: 0.6, delay: index * 0.15 }}
             >
               <MagneticHover strength={6}>
-                <button
-                  type="button"
+                {/* Card is a div (not a button) so the nested "Read Paper" link
+                    and "View Image" button are valid HTML and hydrate cleanly. */}
+                <div
                   className="group relative w-full text-left rounded-3xl bg-gradient-to-br from-space-800/80 to-space-800/40 border border-white/5 hover:border-violet-500/30 transition-[border-color] duration-200 overflow-hidden cursor-pointer"
                   onClick={() => {
                     setInstantToggle(false);
                     setExpandedPub(expandedPub === index ? null : index);
                   }}
-                  aria-expanded={expandedPub === index}
                 >
                   <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-0">
                     {/* Publication image */}
@@ -79,7 +79,7 @@ export function Publications() {
                         <span className="px-4 py-2 text-sm font-medium bg-gradient-to-r from-violet-500/20 to-amber-500/10 text-violet-400 rounded-xl border border-violet-500/20">
                           {pub.conference.split('(')[0].trim()}
                         </span>
-                        <span className="text-gray-500 text-sm font-mono">{pub.date}</span>
+                        <span className="text-gray-400 text-sm font-mono">{pub.date}</span>
                       </div>
 
                       {/* Title */}
@@ -88,7 +88,7 @@ export function Publications() {
                       </h3>
 
                       {/* Description */}
-                      <p className="text-gray-500 leading-relaxed mb-6">
+                      <p className="text-gray-400 leading-relaxed mb-6">
                         {pub.desc}
                       </p>
 
@@ -115,7 +115,10 @@ export function Publications() {
 
                         {pub.images && pub.images.length > 0 && (
                           <button
-                            className="press-feedback inline-flex items-center gap-2 px-2 min-h-[44px] text-gray-500 hover:text-white text-sm"
+                            type="button"
+                            aria-expanded={expandedPub === index}
+                            aria-label={`${expandedPub === index ? 'Hide' : 'View'} image for ${pub.title}`}
+                            className="press-feedback inline-flex items-center gap-2 px-2 min-h-[44px] text-gray-400 hover:text-white text-sm"
                             onClick={(e) => {
                               e.stopPropagation();
                               setInstantToggle(false);
@@ -165,7 +168,7 @@ export function Publications() {
                   <div className="absolute top-0 right-0 w-32 h-32 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
                     <div className="absolute top-4 right-4 w-8 h-8 border-t-2 border-r-2 border-violet-500/50 rounded-tr-xl" />
                   </div>
-                </button>
+                </div>
               </MagneticHover>
             </m.div>
           ))}
@@ -181,7 +184,7 @@ export function Publications() {
         >
           <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-space-800/50 border border-white/5">
             <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse" />
-            <p className="text-gray-500 text-sm font-mono">
+            <p className="text-gray-400 text-sm font-mono">
               More research publications in progress...
             </p>
           </div>

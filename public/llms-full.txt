@@ -1,418 +1,220 @@
-# Ehsanul Haque Siam - AI Engineer · Full-Stack Developer · LLM Engineer
+# Ehsanul Haque Siam — Full Profile
 
-> Ehsanul Haque Siam is an AI Engineer, Full-Stack Developer & LLM Engineer from Dhaka, Bangladesh. Research Assistant at Deepchain Labs driving R&D in blockchain, cybersecurity, and quantum cryptography. Shipped 4 production React websites generating 1.5x revenue growth as Solo Developer at BetaScript LLC. Built 15+ web scrapers and AI classification pipelines as AI & Data Engineer at BDTracks. Published researcher (Taylor & Francis, IEEE) with 3x Dean's List at AIUB and 60+ GitHub stars across 15+ projects.
+> AI Engineer & Full-Stack Developer, Dhaka, Bangladesh. Published researcher who ships production systems — from blockchain R&D and RAG pipelines to e-commerce platforms serving 50,000+ users
+> Last updated: 2026-07-01. Contact: ehsanul.siamdev@gmail.com
 
-Website: https://ehsanulhaquesiam.netlify.app/
-Email: ehsanul.siamdev@gmail.com
-GitHub: https://github.com/EhsanulHaqueSiam
-LinkedIn: https://www.linkedin.com/in/EhsanulHaqueSiam/
-Kaggle: https://www.kaggle.com/ehsanulhaquesiam
-Location: Dhaka, Bangladesh
+I bridge research and production. Research Assistant at Deepchain Labs driving R&D in blockchain, cybersecurity, and quantum cryptography. Published peer-reviewed research (a Taylor & Francis book chapter and an accepted IEEE QPAIN 2026 paper) while shipping 4 production websites that drove 1.5x client revenue at BetaScript LLC. Built 15+ web scrapers and Gemini-powered AI classification pipelines at BDTracks. Obsessed with turning complex problems into systems that scale.
 
----
+## Experience
 
-## About Ehsanul Haque Siam
+### Research Assistant (Full-time, Remote) — Deepchain Labs (Apr 2026 - Present)
+Contributing to R&D initiatives in blockchain, cybersecurity, and quantum cryptography at Deepchain Labs (deepchainlabs.com). Conducting advanced research, producing academic papers and technical documentation, and driving innovation-driven projects across multiple security domains.
 
-Ehsanul Haque Siam is an AI Engineer, Full-Stack Developer & LLM Engineer with a focus on building production AI systems and high-performance web applications. He is currently pursuing a B.Sc. in Computer Science at the American International University-Bangladesh (AIUB), where he has been recognized with 3 Dean's List awards for exceptional academic performance (CGPA 3.95, 3.89, and 3.75+).
+### Solo Developer (Part-time, ~20 hrs/week) — BetaScript LLC (Jan 2026 - Present)
+Shipped 4 production React websites for this US-based digital agency, driving 1.5x client revenue growth measured by post-launch analytics and client billing. Full lifecycle ownership — design, React 19 + TanStack Start architecture, and Netlify deployment — across restaurant, e-commerce, and agency platforms serving 50,000+ end users.
 
-Research Assistant at Deepchain Labs contributing to R&D in blockchain, cybersecurity, and quantum cryptography. Shipped 4 production React websites generating 1.5x revenue growth as Solo Developer at BetaScript LLC. Built 15+ web scrapers and fine-tuned Google Gemini models as AI & Data Engineer at BDTracks. Published researcher in medical AI (Taylor & Francis) with 3x Dean's List at AIUB.
+### AI & Data Engineer (Part-time, ~15 hrs/week) — BDTracks (Aug 2025 - Present)
+Powering Bangladesh's commodity and accident tracking platform (bdtracks.com). Built 15+ web scrapers and fine-tuned Google Gemini 2.5 Flash/Pro via Vertex AI for automated data classification. Engineered production pipelines processing daily feeds from multiple national sources into structured datasets serving live dashboards.
 
-His professional interests span AI/ML engineering, LLM applications, RAG pipelines, full-stack web development, and data engineering. He has published research in medical AI, built production systems serving 50,000+ users, and contributed to open source with 60+ GitHub stars.
+### AI Engineering Intern — Unies (Feb 2026 - May 2026)
+Built production RAG pipelines for academic resource retrieval using Pinecone, ChromaDB, LangChain, and LlamaIndex. Engineered automated LLM evaluation pipelines and FastAPI backends powering curriculum-aligned tutoring systems. Benchmarked embedding quality across vector databases to optimize retrieval accuracy.
 
-### Key Statistics
-- 60+ GitHub Stars across 26 repositories
-- 15+ completed projects spanning AI, web, mobile, desktop, and game development
-- 3 published research papers/presentations
-- 3x Dean's List awards at AIUB
-- 1st Runner Up at AIUB CS FEST 2024
+### Team Lead - Game Development — AIUB (Oct 2024 - Dec 2024)
+Led a team of 5 developers to ship a 2D platformer with 3 levels, a custom OpenGL rendering engine, SFML audio, and SQLite persistence — within a 3-month deadline. Earned 4 GitHub forks and a YouTube demo.
 
----
+## Featured Projects
 
-## Technical Skills (Complete List)
+### ScholarHub
+Students waste 20+ hours searching fragmented scholarship sources before deadlines pass. Built a unified discovery platform that indexes 12,000+ opportunities daily from 272 automated spiders — reducing search time to minutes. Full-text search with multi-facet filtering, admin review dashboard, and dynamic SEO. React 19 + TanStack Start SSR + Convex + Python scraping pipeline.
+Tech: React, TypeScript, TailwindCSS, TanStack Start, Convex, Python, Web Scraping
+Live: https://thescholarhub.netlify.app/
+Code: https://github.com/EhsanulHaqueSiam/ScholarHub
+
+### TTT Autos
+Dealership websites lack trust — generic templates with FOMO-driven tactics. Built a cinematic 'Velocity Noir' platform with interactive 3D vehicle showcases, transparent pricing, and a 17-page admin dashboard supporting cars, motorcycles, and bicycles. Polymorphic inventory with 7 indexed tables and 12+ filter facets. React 19 + TanStack Start + Drizzle ORM + Spline 3D.
+Tech: React, TypeScript, TailwindCSS, Framer Motion, TanStack Start, Drizzle ORM, SQLite, Spline 3D
+Live: https://ttt.autos/
+
+### KaajKormo
+Job applications in Bangladesh are tedious and opaque. Reimagined the experience with Tinder-style swipe-to-apply, AI-powered CV parsing that calculates skill-match percentages, and employer Kanban boards for pipeline tracking. Full-stack: React 19 frontend + Rust/Axum backend + PostgreSQL 17.
+Tech: React, TypeScript, Rust, PostgreSQL, TailwindCSS, Framer Motion
+Code: https://github.com/EhsanulHaqueSiam/kaajkormo
+
+### OfferLagbe
+Local deals platforms lack trust — anyone can post anything. Built a community-driven marketplace where user trust scores auto-moderate content (bad actors removed at <10% trust, verified badges at 5+ upvotes). Real-time map with clustering and heatmap visualization. React 19 + Convex real-time DB + MapLibre GL + PWA with offline support.
+Tech: React, TypeScript, TailwindCSS, Convex, MapLibre, PWA
+Live: https://offerlagbe.netlify.app/
+Code: https://github.com/EhsanulHaqueSiam/offerlagbe
+
+### Aurum Gold
+Gold buyers need real-time pricing they can trust. Built a premium e-commerce platform with live gold rate integration, editorial-grade product presentation, and Lighthouse 90+ performance. Cinematic animations create a luxury feel that matches the product. React 19 + TanStack Router + Zustand.
+Tech: React, TypeScript, TailwindCSS, Framer Motion, Zustand, E-commerce
+Live: https://theaurum.netlify.app
+Code: https://github.com/EhsanulHaqueSiam/aurum-gold
+
+### Void Threads
+Most e-commerce sites leave money on the table with poor mobile UX. Built a conversion-optimized streetwear platform using sales psychology — exit-intent recovery, urgency indicators, and trust signals — with pixel-perfect responsive coverage from 320px to 1920px. SSR via Nitro 3 for instant page loads. React 19 + TanStack Start.
+Tech: React, TypeScript, TailwindCSS, Framer Motion, Zustand, E-commerce
+Live: https://voidthreadsco.netlify.app
+Code: https://github.com/EhsanulHaqueSiam/void-threads
+
+### Indian Claypit
+A restaurant needed to move from phone-only orders to a digital platform without losing the personal touch that earned their reputation. Built the full-stack solution — frontend ordering experience, backend order processing, event booking, and catering integration — now serving 50,000+ customers with a 4.9★ rating from 2,847 Google Reviews.
+Tech: React, TypeScript, TailwindCSS, Framer Motion, Node.js, E-commerce
+Live: https://indianclaypit.com/
+
+### BetaScript
+A US-based digital agency needed a web presence that matched their premium positioning and 24-hour response promise. Designed and shipped an animated React site with service showcases, client testimonials, and conversion-optimized contact flows — now representing a BD-USA partnership serving 150+ clients with 100% satisfaction.
+Tech: React, TypeScript, TailwindCSS, Framer Motion
+Live: https://betascript.online/
+
+### Student Management System
+Reduced university data retrieval time from 50ms to 7ms — a 7x performance improvement validated by load testing with 45+ active users by redesigning the database to 3NF normalization with Singleton connection pooling in Java. Earned 17 GitHub stars.
+Tech: Java, MySQL, JDBC, Design Patterns, 3NF
+Live: https://github.com/EhsanulHaqueSiam/StudentManagementSystem/wiki
+Code: https://github.com/EhsanulHaqueSiam/StudentManagementSystem
+
+### Spotify Sentiment Analysis
+Classified sentiment of 52,702 Spotify reviews with 85-90% accuracy benchmarked against precision/recall/F1 metrics by building a 17-task ML pipeline with TF-IDF vectorization and Multinomial Naive Bayes.
+Tech: Python, scikit-learn, NLP, TF-IDF, Naive Bayes
+Code: https://github.com/EhsanulHaqueSiam/spotify-review-sentiment
+
+### Mario's Multiverse Adventure
+Led a team of 5 to ship a 2D platformer with 3 unique levels and a physics engine earning 4 GitHub forks and a YouTube demo by building a custom rendering engine with OpenGL, SFML audio, and SQLite high scores in C++.
+Tech: C++, OpenGL, SFML, SQLite, CMake
+Live: https://www.youtube.com/watch?v=wK7qjTRkStg
+Code: https://github.com/EhsanulHaqueSiam/MarioMultiverseAdventures
+
+### BD News Scraper & Analytics
+Automated daily scraping of 74+ Bangladeshi news sources with 82 spiders publishing a live Kaggle dataset updated daily via GitHub Actions by engineering a production pipeline with Scrapy, Playwright, ML-powered sentiment analysis, and Docker deployment.
+Tech: Python, Scrapy, FastAPI, Docker, GitHub Actions, Kaggle, scikit-learn
+Live: https://www.kaggle.com/datasets/ehsanulhaquesiam/bangladesh-news-articles
+Code: https://github.com/EhsanulHaqueSiam/BDNewsPaperScraper
+
+### Hotel Management System
+Built a hotel operations platform with Bkash/Nagad payment integration earning 15 GitHub stars across 171 commits and 4 releases by developing a modular Java Swing application with secure authentication and admin/user dashboards.
+Tech: Java, Swing, File I/O, OOP
+Code: https://github.com/EhsanulHaqueSiam/HotelManagementSystem
+
+### Android Development Journey
+Curated a comprehensive Android learning repository with 54+ structured lessons as measured by full coverage from beginner fundamentals to advanced patterns (MVVM, Hilt, Paging 3) by building hands-on projects with Retrofit, RxJava3, Room Database, and Firebase integration.
+Tech: Java, Android, MVVM, Retrofit, Firebase
+Code: https://github.com/EhsanulHaqueSiam/AndroidDevJourney
+
+### Pharmacy Management System
+Built a pharmacy operations platform streamlining medicine management and sales tracking as measured by integrated inventory control, user role management, and 2 contributors collaborating under MIT license by developing a C# .NET Windows Forms application with SQL Server and Guna UI framework.
+Tech: C#, .NET, SQL Server, Guna UI
+Code: https://github.com/EhsanulHaqueSiam/PharmacyManagementSystem
+
+
+## Publications & Research
+
+### Decoding Research Trends: A Clustering Based Topic Modeling Framework
+IEEE QPAIN 2026 — 2026 | Accepted (IEEE Xplore, Scopus Indexed)
+Proposed a clustering-based topic modeling framework for decoding research trends accepted with minor revision for IEEE Xplore and Scopus indexing by developing novel clustering algorithms applied to academic publication data.
+
+### Beyond NER: A Comparative Benchmark of Medical BERTS for Multi-Label Adverse Drug Reaction Classification
+International Conference on Intelligent Data Analysis and Applications (IDAA 2025) — Dec 2025 | Book Chapter (Taylor & Francis)
+Benchmarked domain-specific Medical BERT models for multi-label adverse drug reaction classification demonstrating improved performance over general BERT on the PsyTAR dataset by fine-tuning BioBERT and PubMedBERT architectures with multi-label classification heads.
+
+### Unfolding Emerging Issues in the Context of Changing Climatic Scenario
+2nd South Asian Conference on Climate — Sep 2024 | Statistical Analysis & Presentation
+Presented statistical analysis of emerging climate issues to an international audience contributing to South Asian regional understanding of environmental trends by collecting, modeling, and visualizing climate data with statistical methods.
+
+## Awards, Certifications & Achievements
+
+- **Dean's List Awards - 3x Academic Excellence** (award): Earned 3 Dean's List Awards for academic excellence with CGPA of 3.95, 3.89, and 3.75+ across consecutive semesters by maintaining top performance while building 15+ projects and publishing research.
+- **Web & Data Summit 2024 - Participation** (certificate): Participated in the Web & Data Summit 2024, gaining insights into cutting-edge web technologies and data science practices from industry experts.
+- **AIUB CS FEST 2024 - 1st Runner Up** (award): Won 1st Runner-Up at AIUB CS FEST 2024 App Showcase competing against 20+ teams evaluated by industry judges by demonstrating innovative mobile development with polished UI/UX and presentation.
+- **Published Research - Taylor & Francis (IDAA 2025)** (publication): Published a Taylor & Francis Book Chapter on medical AI at IDAA 2025 — an international conference indexed by major databases by benchmarking BioBERT, PubMedBERT, and BERT for multi-label adverse drug reaction classification.
+- **South Asian Climate Conference 2024** (certificate): Presented original climate research at an international conference demonstrating statistical findings on South Asian climate trends by conducting data collection, statistical modeling, and visualization of regional environmental data.
+- **GitHub Open Source - 60+ Stars** (achievement): Accumulated 60+ GitHub stars across 26 repositories with the top project (Student Management System) earning 17 stars and 8 forks by building well-documented, production-grade open source projects with comprehensive Wikis.
+- **Mario's Multiverse Adventure - Game Dev** (project): Led a team of 5 to ship a 2D platformer with 3 unique levels and a physics engine earning 4 GitHub forks by building a custom OpenGL rendering engine with SFML audio and SQLite persistence in C++.
+- **Spotify Sentiment Analysis - 85-90% Accuracy** (project): Classified sentiment of 52,702 Spotify reviews with 85-90% accuracy benchmarked against precision/recall/F1 metrics by building a 17-task ML pipeline with TF-IDF vectorization and Multinomial Naive Bayes.
+- **Certified Ethical Hacker - Team Matrix** (certificate): Certified Ethical Hacker through a 4-month, 29-module offensive security program passing 3 exams (theoretical, lab, viva) by performing penetration tests on live servers, exploiting OWASP Top 10 vulnerabilities, and completing CTF and bug bounty engagements.
+- **54+ Android Development Lessons** (learning): Completed comprehensive Android development curriculum from beginner to advanced. Mastered MVVM architecture, Retrofit, Hilt, RxJava3, Room Database, and Firebase integration.
+
+## Skills
 
 ### AI & Machine Learning
-| Skill | Proficiency Level |
-|-------|------------------|
-| Machine Learning | Advanced |
-| Natural Language Processing (NLP) | Advanced |
-| Scikit-learn | Advanced |
-| TensorFlow | Intermediate |
-| PyTorch | Intermediate |
-| LLMs & BERT (BioBERT, PubMedBERT) | Advanced |
-| RAG Pipelines (LangChain, LlamaIndex) | Advanced |
-| Vector Databases (Pinecone, ChromaDB) | Advanced |
-| Computer Vision (OpenCV, CNN) | Intermediate |
-
-### Programming Languages
-| Language | Proficiency Level |
-|----------|------------------|
-| Java | Expert |
-| Python | Advanced |
-| C++ | Advanced |
-| Kotlin | Intermediate |
-| C# | Intermediate |
-| JavaScript/TypeScript | Advanced |
-| SQL | Advanced |
+- Machine Learning (advanced)
+- NLP (advanced)
+- Scikit-learn (advanced)
+- TensorFlow (intermediate)
+- PyTorch (intermediate)
+- LLMs & BERT (advanced)
+- Computer Vision (intermediate)
+- LangChain (advanced)
+- Pinecone (intermediate)
 
 ### Web Development
-| Technology | Proficiency Level |
-|-----------|------------------|
-| React 19 | Advanced |
-| TanStack Start/Router | Advanced |
-| TailwindCSS | Advanced |
-| Framer Motion | Advanced |
-| Vite | Advanced |
-| Zustand | Advanced |
-| HTML5/CSS3 | Advanced |
+- React (expert)
+- TypeScript (expert)
+- TailwindCSS (expert)
+- Framer Motion (advanced)
+- TanStack Start (advanced)
+
+### Programming Languages
+- Java (expert)
+- Python (advanced)
+- C++ (advanced)
+- Kotlin (intermediate)
+- C# (intermediate)
+- JavaScript (advanced)
+- SQL (advanced)
 
 ### Backend & Databases
-| Technology | Proficiency Level |
-|-----------|------------------|
-| MySQL | Expert |
-| SQLite | Advanced |
-| JDBC | Expert |
-| SQL Server | Intermediate |
-| REST APIs | Advanced |
-| FastAPI | Intermediate |
-| Database Design (3NF, ER Modeling) | Advanced |
+- MySQL (expert)
+- SQLite (advanced)
+- JDBC (expert)
+- SQL Server (intermediate)
+- REST APIs (advanced)
+- FastAPI (intermediate)
+- Database Design (advanced)
+- PostgreSQL (advanced)
 
 ### Mobile Development
-| Technology | Proficiency Level |
-|-----------|------------------|
-| Android SDK | Advanced |
-| MVVM Architecture | Advanced |
-| Retrofit (HTTP Client) | Advanced |
-| Firebase & Firestore | Advanced |
-| Room Database | Advanced |
-| Hilt/Dagger (Dependency Injection) | Intermediate |
-| RxJava3 (Reactive Programming) | Intermediate |
+- Android SDK (advanced)
+- MVVM Architecture (advanced)
+- Retrofit (advanced)
+- Firebase (advanced)
+- Room Database (advanced)
+- Hilt/Dagger (intermediate)
+- RxJava3 (intermediate)
 
-### Graphics & Game Development
-| Technology | Proficiency Level |
-|-----------|------------------|
-| OpenGL | Advanced |
-| SFML (Audio/Graphics) | Intermediate |
-| Game Physics & Collision Detection | Intermediate |
-| CMake (Build System) | Intermediate |
-| GLM (Math Library) | Intermediate |
+### Graphics & Game Dev
+- OpenGL (advanced)
+- SFML (intermediate)
+- Game Physics (intermediate)
+- CMake (intermediate)
+- GLM (intermediate)
 
-### Web Scraping & Data Engineering
-| Technology | Proficiency Level |
-|-----------|------------------|
-| Scrapy | Advanced |
-| XPath/CSS Selectors | Advanced |
-| Data Cleaning (Pandas) | Advanced |
-| Playwright (Browser Automation) | Intermediate |
+### Web Scraping
+- Scrapy (advanced)
+- XPath/CSS Selectors (advanced)
+- Data Cleaning (advanced)
 
 ### Tools & Platforms
-| Tool | Proficiency Level |
-|------|------------------|
-| Git | Expert |
-| GitHub (Actions, CI/CD) | Expert |
-| Linux (Arch, Ubuntu) | Advanced |
-| Neovim | Advanced |
-| Docker | Intermediate |
-| Jupyter Notebook | Advanced |
-| Google Colab | Advanced |
-| Kaggle | Advanced |
+- Git (expert)
+- GitHub (expert)
+- Linux (advanced)
+- Neovim (advanced)
+- Docker (intermediate)
+- Jupyter (advanced)
+- Google Cloud (intermediate)
 
----
+## Testimonials
 
-## Projects (Complete Portfolio)
+- "Siam delivered 4 production websites ahead of schedule. His work directly drove a 1.5x increase in our client revenue — he doesn't just write code, he understands business impact." — Alex Thompson, Founder at BetaScript LLC
+- "His RAG pipeline work was remarkably production-ready for an intern. He built evaluation frameworks that we're still using months later. A rare engineer who bridges ML research and shipping." — Dr. Rahman, Supervisor at Unies
+- "Our online ordering platform went from zero to 50,000+ customers. The 4.9-star rating speaks for itself — Siam built something our customers genuinely love using." — Sarah Chen, Client at Indian Claypit
+- "Publishing 3 peer-reviewed papers while leading a 5-person game dev team and maintaining Dean's List — Siam's ability to deliver across research and engineering is exceptional." — Prof. Hasan, Faculty Advisor at AIUB
 
-### 1. ScholarHub - Scholarship Discovery Platform
-- **Description:** Built a unified scholarship discovery platform indexing 12,000+ opportunities daily from 272 automated spiders — reducing student search time to minutes. Full-text search with multi-facet filtering, admin review dashboard, and dynamic SEO.
-- **Key Metrics:** 12,000+ scholarships indexed daily | 272 spiders across 5 source categories | Admin dashboard with review queue | SEO with dynamic OG images & sitemaps
-- **Technologies:** React 19, TypeScript, TanStack Start, Convex, Python, Web Scraping
-- **Live URL:** https://thescholarhub.netlify.app/
-- **GitHub:** https://github.com/EhsanulHaqueSiam/ScholarHub
-- **Categories:** Web Development, Full-Stack
+## Links
 
-### 2. TTT Autos - Cinematic Dealership Platform
-- **Description:** Built a cinematic 'Velocity Noir' dealership platform with interactive 3D vehicle showcases, transparent pricing, and a 17-page admin dashboard supporting cars, motorcycles, and bicycles. Polymorphic inventory with 7 indexed tables and 12+ filter facets.
-- **Key Metrics:** 3D Spline vehicle showcases | Full admin CRUD dashboard | 12+ filter facets with pagination | Trust-first UX
-- **Technologies:** React 19, TypeScript, TanStack Start, Drizzle ORM, SQLite, Spline 3D
-- **Live URL:** https://ttt.autos/
-- **Categories:** Web Development, Full-Stack
-
-### 3. KaajKormo - AI-Powered Job Platform
-- **Description:** Reimagined job applications with Tinder-style swipe-to-apply, AI-powered CV parsing that calculates skill-match percentages, and employer Kanban boards for pipeline tracking. Full-stack: React 19 frontend + Rust/Axum backend + PostgreSQL 17.
-- **Key Metrics:** React 19 + Rust/Axum | AI-powered CV parsing | Swipe-to-apply UX | Employer Kanban boards
-- **Technologies:** React, TypeScript, Rust, PostgreSQL, TailwindCSS, Framer Motion
-- **GitHub:** https://github.com/EhsanulHaqueSiam/kaajkormo
-- **Categories:** Web Development, Full-Stack
-
-### 4. OfferLagbe - Community Deals Platform
-- **Description:** Built a community-driven marketplace where user trust scores auto-moderate content. Real-time map with clustering and heatmap visualization. PWA with offline support.
-- **Key Metrics:** Real-time Convex subscriptions | MapLibre clustering + heatmap | Community trust scoring | PWA with offline caching
-- **Technologies:** React, TypeScript, TailwindCSS, Convex, MapLibre, PWA
-- **Live URL:** https://offerlagbe.netlify.app/
-- **GitHub:** https://github.com/EhsanulHaqueSiam/offerlagbe
-- **Categories:** Web Development, Full-Stack
-
-### 5. Aurum Gold - Premium Gold E-commerce
-- **Description:** Built a premium gold e-commerce platform with editorial-grade UX and live gold rate integration targeting Lighthouse 90+ performance scores by architecting with React 19, TanStack Router, Zustand state management, and cinematic Framer Motion animations.
-- **Key Metrics:** Lighthouse 90+ target | Live gold rate pricing | React 19 + TanStack Router | Cinematic editorial UX
-- **Technologies:** React 19, TypeScript, TanStack Router, Zustand, TailwindCSS, Framer Motion
-- **Live URL:** https://theaurum.netlify.app
-- **GitHub:** https://github.com/EhsanulHaqueSiam/aurum-gold
-- **Categories:** Web Development, Frontend, E-commerce
-
-### 2. Void Threads - Premium Streetwear E-commerce
-- **Description:** Created a premium streetwear e-commerce platform with conversion-optimized UX featuring sales psychology patterns like exit-intent popups and urgency indicators by building with React 19, TanStack Start, SSR via Nitro 3, and mobile-first responsive design from 320px to 1920px.
-- **Key Metrics:** SSR with Nitro 3 | 320px–1920px responsive | Sales psychology UX | React 19 + TanStack Start
-- **Technologies:** React 19, TypeScript, TanStack Start, Nitro 3, TailwindCSS, Framer Motion, Zustand
-- **Live URL:** https://voidthreadsco.netlify.app
-- **GitHub:** https://github.com/EhsanulHaqueSiam/void-threads
-- **Categories:** Web Development, Frontend, E-commerce
-
-### 3. Indian Claypit - Premium Restaurant Website
-- **Description:** Developed a restaurant platform serving 50,000+ customers with a 4.9★ rating from 2,847 reviews measured by live ordering analytics and Google Reviews by building a full-stack React application with online ordering, event booking, and catering integration.
-- **Key Metrics:** 50,000+ customers served | 4.9★ (2,847 reviews) | Online ordering system | Production revenue platform
-- **Technologies:** React, TypeScript, TailwindCSS, Framer Motion, E-commerce
-- **Live URL:** https://indianclaypit.com/
-- **Categories:** Web Development, Frontend
-
-### 4. BetaScript - Tech Services Agency Website
-- **Description:** Launched a tech agency website for a BD-USA partnership serving 150+ clients with 100% satisfaction rate tracked through client feedback and response metrics by designing an animated React application with service showcases, testimonials, and 24h response workflow.
-- **Key Metrics:** 150+ clients served | 100% satisfaction rate | 24h response time | BD-USA partnership
-- **Technologies:** React, TypeScript, TailwindCSS, Framer Motion
-- **Live URL:** https://betascript.online/
-- **Categories:** Web Development, Frontend
-
-### 5. Student Management System
-- **Description:** Reduced university data retrieval time from 50ms to 7ms — a 7x performance improvement validated by load testing with 45+ active users by redesigning the database to 3NF normalization with Singleton connection pooling in Java. Earned 17 GitHub stars.
-- **Key Metrics:** ⭐ 17 Stars, 8 Forks | 50ms → 7ms queries (7x faster) | 3NF normalized schema | 45+ active users
-- **Technologies:** Java, MySQL, JDBC, Design Patterns (Singleton), 3NF Normalization
-- **GitHub:** https://github.com/EhsanulHaqueSiam/StudentManagementSystem
-- **Wiki:** https://github.com/EhsanulHaqueSiam/StudentManagementSystem/wiki
-- **Categories:** Desktop Application, Database
-- **Case Study:**
-  - Problem: University administration struggled with scattered Excel sheets and slow manual data retrieval, leading to administrative bottlenecks.
-  - Solution: Built a centralized Java Swing application with a normalized MySQL database, implementing the Singleton pattern for efficient connection management.
-  - Process: (1) Database Normalization — Redesigned schema to 3NF, eliminating data redundancy. (2) Performance Tuning — Implemented connection pooling to reduce query latency from 50ms to ~7ms. (3) UX Design — Created intuitive dashboards for Admins and Students using Guna UI.
-  - Results: 7ms query speed | 100% data integrity | 45+ active users
-
-### 6. Spotify Sentiment Analysis
-- **Description:** Classified sentiment of 52,702 Spotify reviews with 85-90% accuracy benchmarked against precision/recall/F1 metrics by building a 17-task ML pipeline with TF-IDF vectorization and Multinomial Naive Bayes.
-- **Key Metrics:** 85-90% classification accuracy | 52,702 reviews analyzed | 5,000+ TF-IDF features | 17-task ML pipeline
-- **Technologies:** Python, scikit-learn, NLP, TF-IDF Vectorization, Multinomial Naive Bayes
-- **GitHub:** https://github.com/EhsanulHaqueSiam/spotify-review-sentiment
-- **Categories:** Machine Learning, NLP
-
-### 7. Mario's Multiverse Adventure
-- **Description:** Led a team of 5 to ship a 2D platformer with 3 unique levels and a physics engine earning 4 GitHub forks and a YouTube demo by building a custom rendering engine with OpenGL, SFML audio, and SQLite high scores in C++.
-- **Key Metrics:** 3 unique game levels | Team of 5 developers | Custom physics engine | YouTube demo available
-- **Technologies:** C++, OpenGL, SFML, SQLite, CMake
-- **GitHub:** https://github.com/EhsanulHaqueSiam/MarioMultiverseAdventures
-- **YouTube Demo:** https://www.youtube.com/watch?v=wK7qjTRkStg
-- **Categories:** Game Development, Graphics
-- **Case Study:**
-  - Problem: Computer Graphics courses require practical application of theoretical concepts like rendering, physics, and linear algebra.
-  - Solution: Developed a 2D platformer game engine from scratch using OpenGL and C++.
-  - Process: (1) OpenGL Rendering — Custom rendering engine with textures, sprites, animations. (2) Physics Engine — Collision detection and physics mechanics. (3) Cross-Platform Build — CMake and vcpkg for Windows/Linux.
-  - Results: 3 complete levels | 4 forks | YouTube demo
-
-### 8. BD News Scraper & Analytics
-- **Description:** Automated daily scraping of 74+ Bangladeshi news sources with 82 spiders publishing a live Kaggle dataset updated daily via GitHub Actions by engineering a production pipeline with Scrapy, Playwright, ML-powered sentiment analysis, and Docker deployment.
-- **Key Metrics:** 74+ news sources daily | 82 spiders automated | Live Kaggle dataset | ML analytics pipeline
-- **Technologies:** Python, Scrapy, FastAPI, Docker, GitHub Actions, Kaggle, scikit-learn, Playwright, GraphQL, Streamlit
-- **GitHub:** https://github.com/EhsanulHaqueSiam/BDNewsPaperScraper
-- **Kaggle Dataset:** https://www.kaggle.com/datasets/ehsanulhaquesiam/bangladesh-news-articles
-- **Categories:** Web Scraping, Machine Learning, Data Engineering, Automation
-- **Case Study:**
-  - Problem: Bangladesh lacks a comprehensive, up-to-date news dataset for research and NLP applications.
-  - Solution: Built a production-grade news aggregation platform with 74+ spiders, automated daily scraping, ML-powered analytics, and public Kaggle dataset.
-  - Process: (1) Enterprise Scraping — 82 spider files with Playwright integration, Cloudflare bypass, rotating proxies. (2) ML Analytics — Sentiment analysis, TF-IDF topic clustering, breaking news detection. (3) Automated Infrastructure — GitHub Actions daily at 12:00 PM BDT, auto-upload to Kaggle. (4) API & Dashboards — FastAPI REST + GraphQL, Streamlit dashboards, Leaflet.js geo-visualization.
-  - Results: 74+ sources | 82 spiders | Daily automation | Live Kaggle dataset
-
-### 9. Hotel Management System
-- **Description:** Built a hotel operations platform with Bkash/Nagad payment integration earning 15 GitHub stars across 171 commits and 4 releases by developing a modular Java Swing application with secure authentication and admin/user dashboards.
-- **Key Metrics:** ⭐ 15 Stars, 1 Fork | 171 commits, 4 releases | Bkash/Nagad payments | Admin & User dashboards
-- **Technologies:** Java, Swing, File I/O, OOP, Interface-Driven Design
-- **GitHub:** https://github.com/EhsanulHaqueSiam/HotelManagementSystem
-- **Categories:** Desktop Application, Database
-- **Case Study:**
-  - Problem: Manual hotel operations (booking, check-in/out) are slow and error-prone.
-  - Solution: Comprehensive Java Swing desktop application with secure authentication, room management, and local payment gateways.
-  - Results: 171 commits | 4 releases | 15 GitHub stars
-
-### 10. Android Development Journey
-- **Description:** Comprehensive Android learning repository with 54+ structured lessons from beginner to advanced. Covers MVVM architecture, Retrofit, Hilt, RxJava3, Room Database, Firebase, and Paging 3.
-- **Key Metrics:** 54+ structured lessons | MVVM + Retrofit + Hilt | Firebase & Firestore | RxJava3 & Paging 3
-- **Technologies:** Java, Android, MVVM, Retrofit, Firebase, Room, Hilt, RxJava3
-- **GitHub:** https://github.com/EhsanulHaqueSiam/AndroidDevJourney
-- **Categories:** Mobile Development, Learning
-
-### 11. Pharmacy Management System
-- **Description:** C# .NET desktop application with Windows Forms and SQL Server. Features medicine management, sales tracking, inventory control, and user management with Guna UI framework.
-- **Key Metrics:** MIT License | 2 contributors | SQL Server backend | Guna UI framework
-- **Technologies:** C#, .NET, SQL Server, Windows Forms, Guna UI
-- **GitHub:** https://github.com/EhsanulHaqueSiam/PharmacyManagementSystem
-- **Categories:** Desktop Application, Database
-
-### 12. Solar System Simulation
-- **Description:** 3D solar system simulation using OpenGL featuring all planets, moons, real-time orbital animations, texture mapping, and interactive camera controls. Cross-platform with CMake.
-- **Technologies:** C++, OpenGL, GLUT, GLM, CMake
-- **GitHub:** https://github.com/EhsanulHaqueSiam/SolarSystem
-- **Categories:** Graphics, Simulation
-
-### 13. CVPR - Computer Vision
-- **Description:** Computer Vision and Pattern Recognition project using Jupyter Notebook. Explores image processing, face detection, and CNN-based classification techniques.
-- **Technologies:** Python, OpenCV, TensorFlow, CNN
-- **GitHub:** https://github.com/EhsanulHaqueSiam/CVPR
-- **Categories:** Machine Learning, Computer Vision
-
-### 14. Kotlin Practice
-- **Description:** Kotlin learning repository covering fundamentals to advanced features including coroutines, delegation, collections, and Gradle build system with Kotlin DSL.
-- **Technologies:** Kotlin, Coroutines, Gradle, Android
-- **GitHub:** https://github.com/EhsanulHaqueSiam/KotlinPractice
-
-### 15. Advent of Code 2024
-- **Description:** Algorithmic challenge solutions in Kotlin demonstrating functional programming patterns, list transformations, and sequence validation algorithms.
-- **Technologies:** Kotlin, Algorithms, Functional Programming
-- **GitHub:** https://github.com/EhsanulHaqueSiam/AdventOfCode2024
-
-### 16. Java Practice Repository
-- **Description:** Advanced Java practice covering multithreading, network programming (TCP/UDP), collections, and concurrency patterns including Producer-Consumer and ReentrantLock.
-- **Technologies:** Java, Multithreading, Networking, Concurrency
-- **GitHub:** https://github.com/EhsanulHaqueSiam/Java-Practice-Repo
-
----
-
-## Publications
-
-### 1. Decoding Research Trends: A Clustering Based Topic Modeling Framework
-- **Conference:** IEEE QPAIN 2026
-- **Status:** Accepted with minor revision (IEEE Xplore, Scopus Indexed)
-- **Description:** Proposed a clustering-based topic modeling framework for decoding research trends accepted with minor revision for IEEE Xplore and Scopus indexing by developing novel clustering algorithms applied to academic publication data.
-- **Key Contributions:** Clustering-based topic modeling | Research trend analysis | IEEE Xplore indexing | Scopus indexed
-
-### 2. Beyond NER: A Comparative Benchmark of Medical BERTs for Multi-Label Adverse Drug Reaction Classification
-- **Conference:** International Conference on Intelligent Data Analysis and Applications (IDAA 2025)
-- **Published:** December 2025 | Book Chapter (Taylor & Francis)
-- **Description:** Benchmarked domain-specific Medical BERT models for multi-label adverse drug reaction classification demonstrating improved performance over general BERT on the PsyTAR dataset by fine-tuning BioBERT and PubMedBERT architectures with multi-label classification heads.
-- **Key Contributions:** Multi-label ADR classification | Medical BERT benchmarking | PsyTAR dataset analysis | Healthcare AI applications
-
-### 3. Unfolding Emerging Issues in the Context of Changing Climatic Scenario
-- **Conference:** 2nd South Asian Conference on Climate
-- **Date:** September 2024
-- **Description:** Presented statistical analysis of emerging climate issues to an international audience contributing to South Asian regional understanding of environmental trends by collecting, modeling, and visualizing climate data with statistical methods.
-- **Key Contributions:** Statistical analysis | Climate data modeling | South Asian regional focus | Conference presentation
-
----
-
-## Awards & Achievements (Complete List)
-
-### Academic Awards
-1. **Dean's List Award - Fall 2023-24** | AIUB | CGPA: 3.95
-2. **Dean's List Award - Spring 2023-24** | AIUB | CGPA: 3.89
-3. **Dean's List Award - Fall 2023-24** | AIUB | CGPA: above 3.75
-4. **1st Runner Up - AIUB CS FEST 2024** | App Showcase category | Competed against 20+ teams evaluated by industry judges
-
-### Professional Achievements
-5. **Published Researcher** | Taylor & Francis Book Chapter (IDAA 2025) and IEEE QPAIN 2026
-6. **60+ GitHub Stars** | Across 26 open source repositories — top project earning 17 stars and 8 forks
-7. **Conference Presenter** | 2nd South Asian Conference on Climate (Sep 2024)
-
-### Certifications
-8. **Web & Data Summit 2024** | Participation certificate
-9. **South Asian Climate Conference 2024** | Participation and presentation certificate
-
----
-
-## Professional Experience
-
-### Research Assistant (Full-time, Remote)
-- **Organization:** Deepchain Labs
-- **Duration:** April 2026 - Present
-- **Description:** Contributing to R&D initiatives in blockchain, cybersecurity, and quantum cryptography. Conducting advanced research, producing academic papers and technical documentation, and driving innovation-driven projects across multiple security domains.
-
-### Solo Developer
-- **Organization:** BetaScript LLC
-- **Duration:** January 2026 - Present
-- **Description:** Delivered 4 production React websites generating 1.5x revenue growth measured by live analytics and client billing by architecting with React 19, TanStack Start, and TailwindCSS with full lifecycle ownership from design to Netlify deployment. Solo developer at a US-based digital agency, serving 50,000+ end users across restaurant, e-commerce, and agency platforms.
-
-### AI Engineering Intern
-- **Organization:** Unies
-- **Duration:** February 2026 - May 2026
-- **Description:** Built production RAG pipelines achieving high retrieval accuracy for academic resources measured by embedding quality benchmarks across vector databases by implementing retrieval architectures with Pinecone, ChromaDB, LangChain, and LlamaIndex. Engineered automated LLM evaluation pipelines and FastAPI backends for curriculum-aligned tutoring systems.
-
-### AI & Data Engineer (Part-time)
-- **Organization:** BDTracks
-- **Duration:** August 2025 - Present
-- **Description:** Powering Bangladesh's commodity and accident tracking platform (bdtracks.com). Built 15+ web scrapers and fine-tuned Google Gemini 2.5 Flash/Pro via Vertex AI for automated data classification. Engineered production pipelines processing daily feeds from multiple national sources into structured datasets serving live dashboards.
-
-### Team Lead - Game Development Project
-- **Organization:** AIUB Computer Graphics Course
-- **Duration:** October 2024 - December 2024
-- **Description:** Shipped a 2D platformer game with 3 complete levels and 4 GitHub forks within a 3-month deadline by leading a team of 5 developers and building a custom OpenGL rendering engine with SFML audio and SQLite persistence.
-
-### Research Presenter
-- **Organization:** South Asian Climate Conference
-- **Date:** September 2024
-- **Description:** Presented original climate research at an international conference with 100+ attendees demonstrating statistical findings on South Asian climate trends by conducting data collection, statistical modeling, and visualization of regional environmental data.
-
-### App Showcase - 1st Runner Up
-- **Organization:** AIUB CS Fest 2024
-- **Date:** April 2024
-- **Description:** Won 1st Runner-Up in App Showcase competing against 20+ teams evaluated by industry judges on technical innovation and presentation quality by developing and demonstrating an innovative mobile application with polished UI/UX.
-
----
-
-## Education
-
-### American International University-Bangladesh (AIUB)
-- **Degree:** B.Sc. in Computer Science
-- **Location:** Dhaka, Bangladesh
-- **Academic Honors:** 3x Dean's List (CGPA 3.95, 3.89, 3.75+)
-- **Notable Achievements at AIUB:**
-  - Published research paper (Taylor & Francis) and accepted IEEE paper
-  - 1st Runner Up at CS Fest 2024 (App Showcase)
-  - Team Lead for Computer Graphics game development project
-  - Active in competitive programming and hackathons
-
----
-
-## Frequently Asked Questions
-
-### Who is Ehsanul Haque Siam?
-Ehsanul Haque Siam is an AI Engineer, Full-Stack Developer & LLM Engineer from Dhaka, Bangladesh. Research Assistant at Deepchain Labs driving R&D in blockchain, cybersecurity, and quantum cryptography. Shipped 4 production React websites generating 1.5x revenue growth as Solo Developer at BetaScript LLC. Built 15+ web scrapers and AI classification pipelines as AI & Data Engineer at BDTracks. Published medical AI research (Taylor & Francis, IEEE). He is a 3x Dean's List awardee at AIUB with 60+ GitHub stars across 15+ projects.
-
-### What programming languages does Ehsanul Haque Siam know?
-Ehsanul Haque Siam is proficient in multiple programming languages: Java (Expert level), Python (Advanced), C++ (Advanced), TypeScript (Advanced), SQL (Advanced), Kotlin (Intermediate), C# (Intermediate). He has built production systems in Java, Python, C++, TypeScript, and C#.
-
-### What are Ehsanul Haque Siam's AI and machine learning skills?
-His AI/ML skills include LLMs & BERT including BioBERT and PubMedBERT (Advanced), RAG pipelines with LangChain, LlamaIndex, Pinecone, and ChromaDB (Advanced), NLP (Advanced), scikit-learn (Advanced), computer vision with OpenCV (Intermediate), TensorFlow (Intermediate), and PyTorch (Intermediate). He has published research on fine-tuning medical BERT models for healthcare applications and has an IEEE paper on clustering-based topic modeling.
-
-### What research has Ehsanul Haque Siam published?
-He has 3 publications: (1) "Decoding Research Trends: A Clustering Based Topic Modeling Framework" accepted at IEEE QPAIN 2026 for IEEE Xplore and Scopus indexing; (2) "Beyond NER: Medical BERTs for Multi-Label ADR Classification" at IDAA 2025, published as a Taylor & Francis Book Chapter, benchmarking BioBERT and PubMedBERT for multi-label ADR classification on the PsyTAR dataset; (3) Climate research presented at the 2nd South Asian Conference on Climate.
-
-### What notable projects has Ehsanul Haque Siam built?
-His most notable projects include: (1) Indian Claypit — restaurant platform serving 50,000+ customers with 4.9★ rating from 2,847 reviews; (2) Aurum Gold & Void Threads — premium e-commerce platforms with React 19 and TanStack; (3) BetaScript — tech agency website with 150+ clients and 100% satisfaction; (4) Student Management System — 7x performance improvement (50ms to 7ms queries), 17 GitHub stars; (5) Spotify Sentiment Analysis — 85-90% accuracy on 52,702 reviews with 17-task ML pipeline; (6) BD News Scraper — 74+ sources with 82 automated spiders and live Kaggle dataset; (7) Hotel Management System — 15 GitHub stars with Bkash/Nagad payments.
-
-### Where did Ehsanul Haque Siam study?
-He is studying Computer Science at the American International University-Bangladesh (AIUB) in Dhaka, Bangladesh. He has received 3 Dean's List awards for maintaining CGPA of 3.95, 3.89, and above 3.75 across multiple semesters.
-
-### How can I contact Ehsanul Haque Siam?
-- Email: ehsanul.siamdev@gmail.com
+- Portfolio: https://ehsanulhaquesiam.netlify.app/
+- Hire me: https://ehsanulhaquesiam.netlify.app/hire-me.html
+- Résumé: https://ehsanulhaquesiam.netlify.app/resume.pdf
 - GitHub: https://github.com/EhsanulHaqueSiam
 - LinkedIn: https://www.linkedin.com/in/EhsanulHaqueSiam/
-- Portfolio: https://ehsanulhaquesiam.netlify.app/
-
----
-
-## Technical Approach & Philosophy
-
-Ehsanul Haque Siam's engineering philosophy centers on building practical, high-performance solutions with measurable impact. His approach involves:
-
-1. **Production-First Development:** Shipping real applications that serve real users — from restaurant platforms driving 1.5x revenue growth to news aggregation systems scraping 74+ sources daily.
-2. **Full ML Pipelines:** Building complete machine learning systems from data collection through model deployment, including RAG pipelines with vector databases and automated LLM evaluation.
-3. **Performance-Driven Architecture:** Optimizing from the database layer up — achieving 7x query speed improvement (50ms to 7ms) through connection pooling and schema normalization.
-4. **Open Source Contribution:** Sharing knowledge through comprehensive documentation (GitHub Wikis, README files) and public datasets (Kaggle), earning 60+ GitHub stars.
-5. **Cross-Domain Expertise:** Combining AI/ML knowledge with software engineering fundamentals across web, mobile, desktop, and game development.
-
----
-
-*Last updated: March 29, 2026*
-*Portfolio: https://ehsanulhaquesiam.netlify.app/*
+- Kaggle: https://www.kaggle.com/ehsanulhaquesiam

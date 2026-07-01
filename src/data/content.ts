@@ -18,29 +18,11 @@ import achievementsData from '../../assets/data/achievements.json';
 import publicationsData from '../../assets/data/publications.json';
 import testimonialsData from '../../assets/data/testimonials.json';
 import blogData from '../../assets/data/blog.json';
+import profileData from '../../assets/data/profile.json';
 
-export const profile: Profile = {
-  name: "Ehsanul Haque Siam",
-  firstName: "Ehsanul",
-  lastName: "Haque Siam",
-  title: "AI Engineer & Full-Stack Developer",
-  tagline: "Published researcher who ships production systems — from blockchain R&D and RAG pipelines to e-commerce platforms serving 50,000+ users",
-  bio: `I bridge research and production. Research Assistant at Deepchain Labs driving R&D in blockchain, cybersecurity, and quantum cryptography. Published 3 peer-reviewed papers (IEEE, Taylor & Francis) while shipping 4 production websites that drove 1.5x client revenue at BetaScript LLC. Built 15+ web scrapers and AI classification pipelines at BDTracks. Obsessed with turning complex problems into systems that scale.`,
-  email: "ehsanul.siamdev@gmail.com",
-  github: "https://github.com/EhsanulHaqueSiam",
-  linkedin: "https://www.linkedin.com/in/EhsanulHaqueSiam/",
-  resume: "https://flowcv.com/resume/61p1hietib2o",
-  location: "Dhaka, Bangladesh",
-  currentRole: "Research Assistant & Solo Developer",
-  currentCompany: "Deepchain Labs, BetaScript LLC & BDTracks",
-  available: true,
-  stats: [
-    { label: "Revenue Growth", value: "1.5x" },
-    { label: "Users Served", value: "50K+" },
-    { label: "Peer-Reviewed Papers", value: "3" },
-    { label: "Production Apps", value: "8+" },
-  ],
-};
+// Single source of truth: profile lives in assets/data/profile.json so the
+// SEO generator (scripts/generate-seo.mjs) and the UI read identical data.
+export const profile: Profile = profileData as Profile;
 
 export const skills = skillsData as SkillsData;
 export const projects = projectsData as Project[];
@@ -66,8 +48,37 @@ export const navItems = [
   { label: "Testimonials", href: "#testimonials" },
   { label: "Awards", href: "#awards" },
   { label: "Publications", href: "#publications" },
-  { label: "Writing", href: "#blog" },
   { label: "Contact", href: "#contact" },
+];
+
+// FAQ — single source of truth for the visible FAQ section AND the JSON-LD
+// FAQPage (Google requires FAQ markup to have matching on-page content).
+export const faqItems: Array<{ question: string; answer: string }> = [
+  {
+    question: 'Who is Ehsanul Haque Siam?',
+    answer:
+      'Ehsanul Haque Siam is an AI Engineer and Full-Stack Developer based in Dhaka, Bangladesh. He is a Research Assistant at Deepchain Labs (blockchain, cybersecurity, and quantum cryptography R&D), a Solo Developer at BetaScript LLC where he shipped 4 production React websites driving 1.5x client revenue, and an AI & Data Engineer at BDTracks building web scrapers and Gemini-based data-classification pipelines. He has published peer-reviewed research (Taylor & Francis; IEEE QPAIN 2026, accepted), is a 3× Dean’s List awardee at AIUB, and is a Certified Ethical Hacker.',
+  },
+  {
+    question: 'Is Ehsanul Haque Siam available for hire?',
+    answer:
+      'Yes. He is open to AI/ML engineering, LLM/RAG, and full-stack development roles — full-time, part-time, or freelance, remote or based in Dhaka, Bangladesh. Reach him at ehsanul.siamdev@gmail.com or via the hire page at /hire-me.html.',
+  },
+  {
+    question: "What are Ehsanul Haque Siam's technical skills?",
+    answer:
+      'He works in Python, Java, C++, TypeScript, and Kotlin. His AI/ML stack covers LLMs and medical BERTs (BioBERT, PubMedBERT), RAG pipelines (LangChain, LlamaIndex, Pinecone, ChromaDB), NLP, scikit-learn, TensorFlow, and PyTorch, plus fine-tuning Google Gemini via Vertex AI. He builds production React apps with TanStack and TailwindCSS, FastAPI backends, MySQL/SQLite databases, and Scrapy/Playwright scraping pipelines, working with Docker, Git, and Linux.',
+  },
+  {
+    question: 'What research has Ehsanul Haque Siam published?',
+    answer:
+      'A Taylor & Francis book chapter — "Beyond NER: A Comparative Benchmark of Medical BERTs for Multi-Label Adverse Drug Reaction Classification" (IDAA 2025) — is published; "Decoding Research Trends: A Clustering-Based Topic Modeling Framework" is accepted at IEEE QPAIN 2026 (IEEE Xplore, Scopus); and he presented climate research at the 2nd South Asian Conference on Climate (2024).',
+  },
+  {
+    question: 'What is Ehsanul Haque Siam working on now?',
+    answer:
+      'Research Assistant at Deepchain Labs (blockchain, cybersecurity, quantum cryptography), Solo Developer at BetaScript LLC (production React apps), and AI & Data Engineer at BDTracks (scrapers and Gemini-powered data classification).',
+  },
 ];
 
 // Skill level to percentage mapping

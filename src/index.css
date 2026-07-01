@@ -256,6 +256,41 @@
   animation: hero-float 6s var(--ease-float) infinite;
 }
 
+/* ===== Kinetic hero name — CSS-driven so it paints instantly (LCP) with no
+   JS/hydration dependency. Per-char spring for the first name; mask-reveal for
+   the gradient last name. ===== */
+@keyframes kinetic-char-in {
+  from { opacity: 0; transform: translateY(0.55em) rotate(3deg); }
+  to { opacity: 1; transform: translateY(0) rotate(0deg); }
+}
+.kinetic-char {
+  display: inline-block;
+  animation-name: kinetic-char-in;
+  animation-duration: 0.62s;
+  animation-timing-function: var(--ease-out-strong);
+  animation-fill-mode: both;
+  will-change: transform, opacity;
+}
+
+@keyframes hero-mask-reveal {
+  from { transform: translateY(110%); }
+  to { transform: translateY(0); }
+}
+.hero-mask-reveal {
+  display: inline-block;
+  animation: hero-mask-reveal 0.9s var(--ease-out-strong) 0.12s both;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kinetic-char,
+  .hero-mask-reveal {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
 /* Arrow bounce animation */
 @keyframes arrow-bounce {
   0%, 100% { transform: translateX(0); }

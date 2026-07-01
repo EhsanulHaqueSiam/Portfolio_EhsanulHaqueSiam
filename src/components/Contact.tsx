@@ -68,7 +68,7 @@ export function Contact() {
             </SplitText>
           </h2>
           <m.p
-            className="text-gray-500 text-lg max-w-xl mx-auto leading-relaxed"
+            className="text-gray-400 text-lg max-w-xl mx-auto leading-relaxed"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -88,7 +88,7 @@ export function Contact() {
           transition={{ duration: 0.6, delay: 0.2 }}
         >
           <div className="p-6 sm:p-8 md:p-12 rounded-3xl bg-space-800/50 border border-white/5 text-center">
-            <p className="text-gray-500 text-sm font-mono mb-4">// reach_me_at</p>
+            <p className="text-gray-400 text-sm font-mono mb-4">// reach_me_at</p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
               <m.a
                 href={recruiterMailtoHref}

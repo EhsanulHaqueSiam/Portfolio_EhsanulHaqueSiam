@@ -23,7 +23,7 @@ export function Footer() {
             >
               Siam
             </a>
-            <p className="text-gray-500 text-sm">
+            <p className="text-gray-400 text-sm">
               © {currentYear} {profile.name}. All rights reserved.
             </p>
           </m.div>
@@ -37,19 +37,19 @@ export function Footer() {
           >
             <a
               href="#about"
-              className="press-feedback inline-flex items-center min-h-[44px] px-1 text-gray-500 hover:text-violet-400 text-sm"
+              className="press-feedback inline-flex items-center min-h-[44px] px-1 text-gray-400 hover:text-violet-400 text-sm"
             >
               About
             </a>
             <a
               href="#projects"
-              className="press-feedback inline-flex items-center min-h-[44px] px-1 text-gray-500 hover:text-violet-400 text-sm"
+              className="press-feedback inline-flex items-center min-h-[44px] px-1 text-gray-400 hover:text-violet-400 text-sm"
             >
               Projects
             </a>
             <a
               href="#contact"
-              className="press-feedback inline-flex items-center min-h-[44px] px-1 text-gray-500 hover:text-violet-400 text-sm"
+              className="press-feedback inline-flex items-center min-h-[44px] px-1 text-gray-400 hover:text-violet-400 text-sm"
             >
               Contact
             </a>
@@ -66,7 +66,7 @@ export function Footer() {
               href={profile.github}
               target="_blank"
               rel="me noopener noreferrer"
-              className="press-feedback w-11 h-11 min-w-[44px] min-h-[44px] rounded-xl bg-space-800/50 flex items-center justify-center text-gray-500 hover:text-violet-400 hover:bg-space-700/50"
+              className="press-feedback w-11 h-11 min-w-[44px] min-h-[44px] rounded-xl bg-space-800/50 flex items-center justify-center text-gray-400 hover:text-violet-400 hover:bg-space-700/50"
               aria-label="GitHub"
             >
               <GitHubIcon />
@@ -75,14 +75,14 @@ export function Footer() {
               href={profile.linkedin}
               target="_blank"
               rel="me noopener noreferrer"
-              className="press-feedback w-11 h-11 min-w-[44px] min-h-[44px] rounded-xl bg-space-800/50 flex items-center justify-center text-gray-500 hover:text-violet-400 hover:bg-space-700/50"
+              className="press-feedback w-11 h-11 min-w-[44px] min-h-[44px] rounded-xl bg-space-800/50 flex items-center justify-center text-gray-400 hover:text-violet-400 hover:bg-space-700/50"
               aria-label="LinkedIn"
             >
               <LinkedInIcon />
             </a>
             <a
               href={`mailto:${profile.email}`}
-              className="press-feedback w-11 h-11 min-w-[44px] min-h-[44px] rounded-xl bg-space-800/50 flex items-center justify-center text-gray-500 hover:text-violet-400 hover:bg-space-700/50"
+              className="press-feedback w-11 h-11 min-w-[44px] min-h-[44px] rounded-xl bg-space-800/50 flex items-center justify-center text-gray-400 hover:text-violet-400 hover:bg-space-700/50"
               aria-label="Email"
             >
               <EmailIcon />
@@ -92,7 +92,7 @@ export function Footer() {
 
         {/* Bottom decoration */}
         <div className="mt-8 pt-8 border-t border-white/5 text-center">
-          <p className="text-gray-500 text-xs font-mono">
+          <p className="text-gray-400 text-xs font-mono">
             {'<'} Built with React, TypeScript & Tailwind {'/>'}
           </p>
         </div>

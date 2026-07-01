@@ -1,0 +1,12 @@
+---
+import Layout from '../layouts/Layout.astro';
+import App from '../App';
+---
+
+<Layout>
+  {/* The entire React experience mounts as one island. Astro server-renders it
+      to static HTML at build (great for SEO/AEO/GEO), then client:load hydrates
+      it so every Framer Motion animation, Lenis smooth-scroll, and interaction
+      works exactly as before. */}
+  <App client:load />
+</Layout>

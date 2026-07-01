@@ -1,7 +1,8 @@
 import { useRef } from 'react';
 import { m, useScroll, useTransform } from 'framer-motion';
 import { profile, profileHeroImage } from '../data/content';
-import { SplitText, RevealText } from './ui/SplitText';
+import { RevealText } from './ui/SplitText';
+import { KineticText } from './ui/KineticText';
 import { MagneticHover } from './ui/ImageDistortion';
 import { Marquee } from './ui/Marquee';
 import { OptimizedImage } from './ui/OptimizedImage';
@@ -138,26 +139,19 @@ export function Hero() {
 
           {/* Giant name - main headline - better mobile sizing */}
           <div className="mb-4 sm:mb-6">
-            <h1 className="text-[clamp(2.5rem,12vw,12rem)] font-display font-bold leading-[0.9] tracking-[-0.03em]">
-              <span className="block overflow-hidden">
-                <SplitText
-                  animation="wave"
-                  stagger={0.03}
-                  delay={0.3}
-                  className="text-white"
-                >
-                  {profile.firstName}
-                </SplitText>
+            <h1
+              aria-label={profile.name}
+              className="text-[clamp(2.5rem,10vw,9rem)] font-display font-bold leading-[0.92] tracking-[-0.035em] [text-wrap:balance]"
+            >
+              {/* Real, correctly-spaced name for crawlers/AI textContent */}
+              <span className="sr-only">{profile.name}</span>
+              {/* First name: per-char kinetic reveal (CSS — paints instantly) */}
+              <span className="block" aria-hidden="true">
+                <KineticText text={profile.firstName} className="text-white" />
               </span>
-              <span className="block overflow-hidden">
-                <SplitText
-                  animation="wave"
-                  stagger={0.03}
-                  delay={0.5}
-                  charClassName="gradient-text"
-                >
-                  {profile.lastName}
-                </SplitText>
+              {/* Last name: gradient mask-reveal (CSS — paints instantly) */}
+              <span className="block overflow-hidden pb-[0.08em]" aria-hidden="true">
+                <span className="hero-mask-reveal gradient-text">{profile.lastName}</span>
               </span>
             </h1>
           </div>
@@ -270,7 +264,7 @@ export function Hero() {
           animate={{ opacity: 1 }}
           transition={{ delay: 1.6 }}
         >
-          <a href="#about" className="flex flex-col items-center gap-2 text-gray-500 hover:text-white transition-colors">
+          <a href="#about" className="flex flex-col items-center gap-2 text-gray-400 hover:text-white transition-colors">
             <span className="text-xs font-mono tracking-widest uppercase">Scroll</span>
             <m.div
               className="w-6 h-10 rounded-full border border-current flex items-start justify-center p-2"

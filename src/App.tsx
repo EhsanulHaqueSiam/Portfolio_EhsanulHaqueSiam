@@ -1,28 +1,23 @@
-import { lazy, Suspense } from 'react';
 import { LazyMotion, domAnimation, MotionConfig, useReducedMotion } from 'framer-motion';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { SocialLinks } from './components/SocialLinks';
 import { CustomCursor, ScrollProgress, SmoothScroll } from './components/ui';
-
-// Lazy-load below-fold sections to reduce initial JS parse/execute time
-const About = lazy(() => import('./components/About').then(m => ({ default: m.About })));
-const WhyMe = lazy(() => import('./components/WhyMe').then(m => ({ default: m.WhyMe })));
-const Experience = lazy(() => import('./components/Experience').then(m => ({ default: m.Experience })));
-const Skills = lazy(() => import('./components/Skills').then(m => ({ default: m.Skills })));
-const Projects = lazy(() => import('./components/Projects').then(m => ({ default: m.Projects })));
-const Testimonials = lazy(() => import('./components/Testimonials').then(m => ({ default: m.Testimonials })));
-const Awards = lazy(() => import('./components/Awards').then(m => ({ default: m.Awards })));
-const Publications = lazy(() => import('./components/Publications').then(m => ({ default: m.Publications })));
-const Blog = lazy(() => import('./components/Blog').then(m => ({ default: m.Blog })));
-const Education = lazy(() => import('./components/Education').then(m => ({ default: m.Education })));
-const Contact = lazy(() => import('./components/Contact').then(m => ({ default: m.Contact })));
-const Footer = lazy(() => import('./components/Footer').then(m => ({ default: m.Footer })));
-const Resume = lazy(() => import('./components/Resume').then(m => ({ default: m.Resume })));
-
-function SectionFallback({ minHeight = '800px' }: { minHeight?: string }) {
-  return <div style={{ minHeight }} />;
-}
+// Direct (non-lazy) imports so Astro server-renders every section into the
+// static HTML at build time — critical for SEO/AEO/GEO crawlers.
+import { About } from './components/About';
+import { WhyMe } from './components/WhyMe';
+import { Experience } from './components/Experience';
+import { Skills } from './components/Skills';
+import { Projects } from './components/Projects';
+import { Testimonials } from './components/Testimonials';
+import { Awards } from './components/Awards';
+import { Publications } from './components/Publications';
+import { Education } from './components/Education';
+import { FAQ } from './components/FAQ';
+import { Contact } from './components/Contact';
+import { Footer } from './components/Footer';
+import { Resume } from './components/Resume';
 
 function App() {
   const shouldReduceMotion = useReducedMotion();
@@ -51,54 +46,28 @@ function App() {
         {/* Social links - fixed position, outside main content flow */}
         <SocialLinks />
 
-        {/* Main content - renders immediately, no loading screen */}
+        {/* Main content */}
         <div className="relative z-10">
           <Navbar />
           <main id="main-content">
             <Hero />
-            <Suspense fallback={<SectionFallback />}>
-              <div className="cv-auto"><About /></div>
-            </Suspense>
-            <Suspense fallback={<SectionFallback minHeight="500px" />}>
-              <div className="cv-auto"><WhyMe /></div>
-            </Suspense>
-            <Suspense fallback={<SectionFallback />}>
-              <div className="cv-auto"><Experience /></div>
-            </Suspense>
-            <Suspense fallback={<SectionFallback />}>
-              <div className="cv-auto"><Skills /></div>
-            </Suspense>
-            <Suspense fallback={<SectionFallback />}>
-              <div className="cv-auto"><Projects /></div>
-            </Suspense>
-            <Suspense fallback={<SectionFallback />}>
-              <div className="cv-auto"><Testimonials /></div>
-            </Suspense>
-            <Suspense fallback={<SectionFallback />}>
-              <div className="cv-auto"><Awards /></div>
-            </Suspense>
-            <Suspense fallback={<SectionFallback />}>
-              <div className="cv-auto"><Publications /></div>
-            </Suspense>
-            <Suspense fallback={<SectionFallback minHeight="500px" />}>
-              <div className="cv-auto"><Blog /></div>
-            </Suspense>
-            <Suspense fallback={<SectionFallback />}>
-              <div className="cv-auto"><Education /></div>
-            </Suspense>
-            <Suspense fallback={<SectionFallback />}>
-              <div className="cv-auto"><Contact /></div>
-            </Suspense>
+            <div className="cv-auto"><About /></div>
+            <div className="cv-auto"><WhyMe /></div>
+            <div className="cv-auto"><Experience /></div>
+            <div className="cv-auto"><Skills /></div>
+            <div className="cv-auto"><Projects /></div>
+            <div className="cv-auto"><Testimonials /></div>
+            <div className="cv-auto"><Awards /></div>
+            <div className="cv-auto"><Publications /></div>
+            <div className="cv-auto"><Education /></div>
+            <div className="cv-auto"><FAQ /></div>
+            <div className="cv-auto"><Contact /></div>
           </main>
-          <Suspense fallback={<SectionFallback minHeight="200px" />}>
-            <Footer />
-          </Suspense>
+          <Footer />
         </div>
 
         {/* Resume overlay - self-managed via URL hash */}
-        <Suspense fallback={null}>
-          <Resume />
-        </Suspense>
+        <Resume />
       </div>
     </SmoothScroll>
     </MotionConfig>
