@@ -158,13 +158,16 @@ export function AsciiTorus({ className = '' }: { className?: string }) {
       }
     };
 
+    let hasFrame = false;
     const tick = (now: number) => {
       if (disposed) return;
       raf = requestAnimationFrame(tick);
-      // hold a frozen frame while the page scrolls (canvas raster is pricey)
-      if (document.documentElement.classList.contains('is-scrolling')) return;
+      // Hold a frozen frame while the page scrolls (canvas raster is pricey)
+      // — but always paint the FIRST frame so the cell is never blank.
+      if (hasFrame && document.documentElement.classList.contains('is-scrolling')) return;
       if (now - lastFrame < 33) return; // ~30fps
       lastFrame = now;
+      hasFrame = true;
       angleA += 0.028 * spinDir;
       angleB += 0.014 * spinDir;
       hueShift += 0.0016;

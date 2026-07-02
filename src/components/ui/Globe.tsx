@@ -60,13 +60,17 @@ export function Globe({ className = '' }: { className?: string }) {
       ro.observe(canvas);
 
       let lastFrame = 0;
+      let hasFrame = false;
       const tick = (now: number) => {
         raf = requestAnimationFrame(tick);
-        // hold a frozen frame while the page scrolls (GL submission is pricey)
-        if (document.documentElement.classList.contains('is-scrolling')) return;
+        // Hold a frozen frame while the page scrolls (GL submission is
+        // pricey) — but always paint the FIRST frame, so scrolling into
+        // view never shows an empty canvas.
+        if (hasFrame && document.documentElement.classList.contains('is-scrolling')) return;
         // ~30fps: WebGL submission is the main-thread cost here
         if (now - lastFrame < 33) return;
         lastFrame = now;
+        hasFrame = true;
         if (!pointerDown && !reduced) phi += 0.006;
         globe.update({ phi, width: width * 2, height: width * 2, ...themed() });
       };

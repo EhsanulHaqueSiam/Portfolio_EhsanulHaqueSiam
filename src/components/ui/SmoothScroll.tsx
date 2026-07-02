@@ -14,7 +14,15 @@ export function SmoothScroll({ children }: { children: React.ReactNode }) {
   // pause is the win there).
   useEffect(() => {
     let idleTimer = 0;
+    let lastY = 0;
     const onScroll = () => {
+      const y = window.scrollY;
+      const moved = Math.abs(y - lastY);
+      lastY = y;
+      // Lenis's ease-out tail emits near-stationary scroll events for a good
+      // while; don't let sub-3px drift keep the freeze armed, so animations
+      // resume as soon as the glide visually settles.
+      if (moved < 3) return;
       if (!idleTimer) document.documentElement.classList.add('is-scrolling');
       window.clearTimeout(idleTimer);
       idleTimer = window.setTimeout(() => {

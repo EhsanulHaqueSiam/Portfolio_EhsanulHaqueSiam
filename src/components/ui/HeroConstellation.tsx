@@ -99,14 +99,17 @@ export function HeroConstellation({
     let lastTime = 0;
     let lastDraw = 0;
 
+    let hasFrame = false;
     function animate(time: number) {
       animationId = requestAnimationFrame(animate);
       // Freeze while the page scrolls: canvas raster is the #1 scroll cost,
       // and a static frame is invisible when everything is moving anyway.
-      if (document.documentElement.classList.contains('is-scrolling')) return;
+      // The FIRST frame always paints so the canvas is never blank.
+      if (hasFrame && document.documentElement.classList.contains('is-scrolling')) return;
       // ~30fps keeps the drift smooth while halving main-thread time
       if (time - lastDraw < 33) return;
       lastDraw = time;
+      hasFrame = true;
       const dt = lastTime ? Math.min(time - lastTime, 100) : 16;
       lastTime = time;
 

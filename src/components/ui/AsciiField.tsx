@@ -113,16 +113,19 @@ export function AsciiField({ className = '', cols = 64, surface = 'ink' }: Ascii
       }
     };
 
+    let hasFrame = false;
     const tick = (now: number) => {
       if (disposed) return;
-      // hold a frozen frame while the page scrolls (canvas raster is pricey)
-      if (document.documentElement.classList.contains('is-scrolling')) {
+      // Hold a frozen frame while the page scrolls (canvas raster is pricey)
+      // — but always paint the FIRST frame so the cell is never blank.
+      if (hasFrame && document.documentElement.classList.contains('is-scrolling')) {
         raf = requestAnimationFrame(tick);
         return;
       }
       // ~30fps is plenty for a drifting field and keeps main thread light
       if (now - lastFrame >= 33) {
         lastFrame = now;
+        hasFrame = true;
         if (!reduced) t += 0.016;
         for (let i = 0; i < influence.length; i++) {
           influence[i] += (target[i] - influence[i]) * LERP;
