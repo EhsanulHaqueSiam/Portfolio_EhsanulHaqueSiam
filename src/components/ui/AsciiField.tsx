@@ -14,18 +14,20 @@ const CELL_ASPECT = 0.6;
 const RADIUS = 150;
 const LERP = 0.15;
 
-/** warm print palette the cursor pulls out of the field: vermilion → amber → cobalt */
+/** signal palette the cursor pulls out of the field: violet through cyan,
+    magenta and amber, so the wake reads as full-color ASCII */
 const PALETTE: Array<[number, number, number]> = [
-  [217, 58, 13], // vermilion
-  [239, 93, 46], // vermilion-400
-  [224, 159, 62], // warm amber ink
-  [44, 69, 201], // cobalt
+  [139, 124, 255], // iris violet
+  [94, 231, 245], // signal cyan
+  [255, 110, 199], // magenta
+  [255, 194, 75], // amber
+  [169, 157, 255], // violet-400
 ];
 
 /**
  * Abstract interactive ASCII art: a slowly drifting interference-wave field
- * typeset in mono glyphs. Characters near the cursor flood with print colors
- * (vermilion/amber/cobalt); the field breathes on its own. Pure decoration —
+ * typeset in mono glyphs. Characters near the cursor flood with signal colors
+ * (iris violet/cyan); the field breathes on its own. Pure decoration —
  * client-only, aria-hidden, disabled for reduced motion (static frame).
  */
 export function AsciiField({ className = '', cols = 64, surface = 'ink' }: AsciiFieldProps) {
@@ -56,8 +58,8 @@ export function AsciiField({ className = '', cols = 64, surface = 'ink' }: Ascii
 
     const base =
       surface === 'ink'
-        ? { r: 245, g: 241, b: 232, a: 0.34 } // paper glyphs on ink
-        : { r: 23, g: 20, b: 18, a: 0.5 }; // ink glyphs on paper
+        ? { r: 238, g: 241, b: 248, a: 0.3 } // bright glyphs on raised panels
+        : { r: 174, g: 181, b: 200, a: 0.4 }; // softer glyphs on the page void
 
     const layout = () => {
       const w = wrap.clientWidth;

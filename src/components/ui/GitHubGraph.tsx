@@ -67,10 +67,10 @@ function getMonthLabels(contributions: ContributionDay[], visibleWeeks: number):
   return labels;
 }
 
-// Print-like ink ramp: empty cells are blank paper with a hairline;
-// activity deepens through vermilion ink density to full impression.
+// Signal ramp: empty cells are faint glass; activity brightens through
+// iris violet up to the full glowing impression.
 const FILL_CLASSES = [
-  'fill-paper-200 stroke-[color:var(--hairline)]',
+  'fill-ink-900/[0.06]',
   'fill-vermilion/25',
   'fill-vermilion/45',
   'fill-vermilion/70',
@@ -78,7 +78,7 @@ const FILL_CLASSES = [
 ];
 
 const LEGEND_BG = [
-  'bg-paper-200 shadow-[inset_0_0_0_1px_var(--hairline)]',
+  'bg-ink-900/[0.06]',
   'bg-vermilion/25',
   'bg-vermilion/45',
   'bg-vermilion/70',
@@ -182,7 +182,7 @@ export function GitHubGraph() {
   return (
     <div
       ref={containerRef}
-      className="rule relative h-full border bg-paper-50 p-4 transition-colors duration-300 hover:border-[color:var(--hairline-strong)] sm:p-5"
+      className="glass-card relative h-full p-4 sm:p-5"
     >
       {/* Header */}
       <div className="mb-2.5 flex items-center justify-between gap-3">
@@ -190,7 +190,7 @@ export function GitHubGraph() {
           href={`https://github.com/${GITHUB_USERNAME}`}
           target="_blank"
           rel="me noopener noreferrer"
-          className="inline-flex min-h-[44px] items-center gap-1.5 px-1 font-mono text-[10px] uppercase tracking-[0.14em] text-ink-600 transition-colors hover:text-vermilion-600 sm:text-xs"
+          className="inline-flex min-h-[44px] items-center gap-1.5 px-1 font-mono text-[10px] uppercase tracking-[0.14em] text-ink-600 transition-colors hover:text-vermilion-400 sm:text-xs"
           aria-label={`GitHub profile of ${GITHUB_USERNAME} (opens in new tab)`}
         >
           <GitHubIcon className="h-3.5 w-3.5" />
@@ -270,6 +270,7 @@ export function GitHubGraph() {
                       <m.rect
                         x={x - 2}
                         y={y - 2}
+                        rx={3}
                         width={CELL + 4}
                         height={CELL + 4}
                         className="fill-transparent stroke-vermilion/50"
@@ -283,6 +284,7 @@ export function GitHubGraph() {
                     <m.rect
                       x={x}
                       y={y}
+                      rx={2}
                       width={CELL}
                       height={CELL}
                       strokeWidth={0.75}
@@ -330,8 +332,8 @@ export function GitHubGraph() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.1 }}
                 >
-                  <div className="whitespace-nowrap bg-ink-900 px-2 py-1 shadow-plate">
-                    <span className="font-mono text-[8px] uppercase tracking-[0.06em] text-paper-300">
+                  <div className="whitespace-nowrap rounded-md border border-[color:var(--hairline-strong)] bg-paper-300 px-2 py-1 shadow-plate">
+                    <span className="font-mono text-[8px] uppercase tracking-[0.06em] text-ink-700">
                       <span className="font-semibold text-vermilion-400">{hoveredCell.count}</span>
                       {' '}· {formatTooltipDate(hoveredCell.date)}
                     </span>
@@ -359,7 +361,7 @@ export function GitHubGraph() {
         <div className="mt-2 flex items-center justify-end gap-1">
           <span className="mr-0.5 font-mono text-[9px] uppercase tracking-[0.14em] text-ink-500">Less</span>
           {LEGEND_BG.map((bg, i) => (
-            <div key={i} className={`h-[9px] w-[9px] ${bg}`} />
+            <div key={i} className={`h-[9px] w-[9px] rounded-[2px] ${bg}`} />
           ))}
           <span className="ml-0.5 font-mono text-[9px] uppercase tracking-[0.14em] text-ink-500">More</span>
         </div>

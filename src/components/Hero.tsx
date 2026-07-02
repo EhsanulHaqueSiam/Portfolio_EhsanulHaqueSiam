@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
 import type { CSSProperties } from 'react';
 import { m, useScroll, useTransform, useReducedMotion, useInView } from 'framer-motion';
-import { profile, profileHeroImage } from '../data/content';
+import { profile } from '../data/content';
 import { FerroText } from './ui/FerroText';
 import { MagneticHover } from './ui/ImageDistortion';
-import { OptimizedImage } from './ui/OptimizedImage';
+import { AsciiTorus } from './ui/AsciiTorus';
+import { DitherField } from './ui/DitherField';
 import { ArrowDownIcon } from './ui/Icons';
 import { useMediaQuery } from '../hooks/useMediaQuery';
 
@@ -67,36 +68,58 @@ export function Hero() {
       className="relative min-h-[100svh] flex flex-col justify-start pt-24 sm:pt-28 lg:pt-32 pb-6"
       aria-label="Introduction"
     >
+      {/* Animated dither field — fades out toward the fold */}
+      <div
+        className="absolute inset-0 overflow-hidden"
+        style={{
+          WebkitMaskImage: 'linear-gradient(to bottom, black 55%, transparent 96%)',
+          maskImage: 'linear-gradient(to bottom, black 55%, transparent 96%)',
+        }}
+        aria-hidden="true"
+      >
+        {!isMobile && <DitherField />}
+        <div className="dither-veil" />
+      </div>
+
       <m.div
         style={{ y: exitY, opacity: exitOpacity }}
         className="relative mx-auto w-full max-w-[1400px] px-5 sm:px-8 lg:px-12 flex-1 flex flex-col"
       >
         {/* Masthead meta row */}
         <div className="border-t border-b rule-strong py-2.5 flex items-center justify-between gap-4">
-          <span className="folio">Now — {profile.currentRole}</span>
+          <span className="folio">Now · {profile.currentRole}</span>
           <span className="folio hidden md:block">Deepchain Labs · BetaScript · BDTracks</span>
           <span className="folio hidden sm:block">{profile.location}</span>
         </div>
 
-        {/* Masthead name — italic serif accent over giant poster type */}
+        {/* Availability pill + name */}
         <div className="hero-name-block relative mt-10 sm:mt-14 lg:mt-16">
+          {profile.available && (
+            <span className="stamp-in stamp mb-5 sm:mb-7 inline-flex items-center gap-2.5 px-4 py-2 text-[10px] sm:text-[11px]">
+              <span
+                className="h-2 w-2 rounded-full bg-green-400 animate-pulse-dot"
+                aria-hidden="true"
+              />
+              Open to work · worldwide
+            </span>
+          )}
           <p
-            className="rise-in font-display italic font-light text-vermilion text-2xl sm:text-4xl lg:text-5xl leading-none mb-2 sm:mb-4"
+            className="rise-in font-display italic font-light text-vermilion-400 text-2xl sm:text-4xl lg:text-5xl leading-none mb-2 sm:mb-4"
             style={{ '--rise-delay': '0.1s' } as CSSProperties}
           >
             {profile.title.toLowerCase()}
           </p>
-          <h1 className="poster leading-[0.9]">
+          <h1 className="poster leading-[0.95]">
             <span className="sr-only">{profile.name}</span>
-            <span className="hero-name-line block text-ink-900">
-              <FerroText text={profile.firstName.toUpperCase()} delay={0.05} stagger={0.035} />
+            <span className="hero-name-line block text-ink-950">
+              <FerroText text={profile.firstName} delay={0.05} stagger={0.035} />
             </span>
-            <span className="hero-name-line block text-ink-900">
+            <span className="hero-name-line block text-ink-950">
               <FerroText
-                text={profile.lastName.toUpperCase()}
+                text={profile.lastName}
                 delay={0.3}
                 stagger={0.03}
-                suffix={<span className="text-vermilion">.</span>}
+                suffix={<span className="text-vermilion-400">.</span>}
               />
             </span>
           </h1>
@@ -118,19 +141,13 @@ export function Hero() {
               style={{ '--rise-delay': '0.65s' } as CSSProperties}
             >
               <MagneticHover strength={isMobile ? 0 : 18}>
-                <a
-                  href="#projects"
-                  className="press-feedback inline-flex items-center gap-3 bg-ink-900 text-paper-50 font-mono text-xs uppercase tracking-[0.16em] px-6 py-4 hover:bg-vermilion transition-colors duration-300"
-                >
+                <a href="#projects" className="btn-primary px-7 py-4">
                   Selected work
                   <span className="arrow-bounce" aria-hidden="true">→</span>
                 </a>
               </MagneticHover>
               <MagneticHover strength={isMobile ? 0 : 18}>
-                <a
-                  href="#contact"
-                  className="press-feedback inline-flex items-center gap-3 bg-vermilion text-paper-50 font-mono text-xs uppercase tracking-[0.16em] px-6 py-4 hover:bg-ink-900 transition-colors duration-300"
-                >
+                <a href="#contact" className="btn-glass px-7 py-4">
                   Let’s talk
                   <span aria-hidden="true">→</span>
                 </a>
@@ -150,23 +167,26 @@ export function Hero() {
             </div>
           </div>
 
-          {/* Portrait plate */}
+          {/* Signal torus — color ASCII animation on a glass plate */}
           <figure
             className="rise-in lg:col-span-5 xl:col-span-4 max-w-sm lg:max-w-none lg:justify-self-end w-full"
             style={{ '--rise-delay': '0.3s' } as CSSProperties}
           >
-            <div className="plate reg-marks relative">
-              <OptimizedImage
-                src={profileHeroImage}
-                alt={profile.name}
-                priority
-                aspectRatio="954/960"
-                sizes="(min-width: 1024px) 420px, 90vw"
-                className="w-full"
+            <div className="relative">
+              <div
+                className="absolute -inset-6 rounded-[2rem] opacity-60 blur-2xl"
+                style={{
+                  background:
+                    'radial-gradient(60% 60% at 60% 30%, rgba(139,124,255,0.25), transparent 70%)',
+                }}
+                aria-hidden="true"
               />
+              <div className="glass reg-marks relative overflow-hidden">
+                <AsciiTorus className="aspect-square w-full" />
+              </div>
             </div>
             <figcaption className="folio mt-3 flex justify-between gap-4">
-              <span>Fig. 00 — The author</span>
+              <span>Fig. 00 · Signal, in orbit · click to flip</span>
               <span className="hidden sm:inline">Dhaka, BD</span>
             </figcaption>
           </figure>
@@ -174,7 +194,7 @@ export function Hero() {
 
         {/* Stats colophon — proof, measured (X-Y-Z) */}
         <dl
-          className="rise-in mt-12 sm:mt-16 border-t border-b rule-strong grid grid-cols-2 md:grid-cols-4"
+          className="rise-in glass mt-12 sm:mt-16 grid grid-cols-2 md:grid-cols-4 overflow-hidden"
           style={{ '--rise-delay': '0.85s' } as CSSProperties}
         >
           {profile.stats.map((stat, i) => (
@@ -183,7 +203,7 @@ export function Hero() {
               className={`flex flex-col py-5 sm:py-6 px-4 sm:px-6 ${i > 0 ? 'md:border-l md:rule' : ''} ${i % 2 === 1 ? 'max-md:border-l max-md:rule' : ''} ${i >= 2 ? 'max-md:border-t max-md:rule' : ''}`}
             >
               <dt className="folio order-2">{stat.label}</dt>
-              <dd className="order-1 font-display font-light text-3xl sm:text-4xl xl:text-5xl text-ink-900 mb-1">
+              <dd className="order-1 font-display font-light text-3xl sm:text-4xl xl:text-5xl text-ink-950 mb-1">
                 <StatTicker raw={stat.value} />
               </dd>
             </div>
@@ -197,7 +217,7 @@ export function Hero() {
           style={{ '--rise-delay': '1.2s' } as CSSProperties}
         >
           <span className="scroll-dot inline-block" aria-hidden="true">↓</span>
-          Scroll — the work speaks
+          Scroll, the work speaks
         </a>
       </m.div>
     </section>

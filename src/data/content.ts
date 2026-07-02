@@ -41,7 +41,7 @@ export const featuredExperience = experience.filter(e => e.showInHome);
 
 // Navigation items
 // `no` mirrors each section's printed folio number — gaps are intentional
-// (the nav is an abridged index of the full 01–11 running order).
+// (the nav is an abridged index of the full 01-12 running order).
 export const navItems = [
   { no: "01", label: "About", href: "#about" },
   { no: "03", label: "Experience", href: "#experience" },
@@ -50,7 +50,8 @@ export const navItems = [
   { no: "06", label: "Testimonials", href: "#testimonials" },
   { no: "07", label: "Awards", href: "#awards" },
   { no: "08", label: "Research", href: "#publications" },
-  { no: "11", label: "Contact", href: "#contact" },
+  { no: "11", label: "Notes", href: "#blog" },
+  { no: "12", label: "Contact", href: "#contact" },
 ];
 
 // FAQ — single source of truth for the visible FAQ section AND the JSON-LD
@@ -64,7 +65,7 @@ export const faqItems: Array<{ question: string; answer: string }> = [
   {
     question: 'Is Ehsanul Haque Siam available for hire?',
     answer:
-      'Yes. He is open to AI/ML engineering, LLM/RAG, and full-stack development roles — full-time, part-time, or freelance, remote or based in Dhaka, Bangladesh. Reach him at ehsanul.siamdev@gmail.com or via the hire page at /hire-me.html.',
+      'Yes. He is open to AI/ML engineering, LLM/RAG, and full-stack development roles: full-time, part-time, or freelance, remote or based in Dhaka, Bangladesh. Reach him at ehsanul.siamdev@gmail.com or via the hire page at /hire-me.html.',
   },
   {
     question: "What are Ehsanul Haque Siam's technical skills?",
@@ -74,7 +75,7 @@ export const faqItems: Array<{ question: string; answer: string }> = [
   {
     question: 'What research has Ehsanul Haque Siam published?',
     answer:
-      'A Taylor & Francis book chapter — "Beyond NER: A Comparative Benchmark of Medical BERTs for Multi-Label Adverse Drug Reaction Classification" (IDAA 2025) — is published; "Decoding Research Trends: A Clustering-Based Topic Modeling Framework" is accepted at IEEE QPAIN 2026 (IEEE Xplore, Scopus); and he presented climate research at the 2nd South Asian Conference on Climate (2024).',
+      'A Taylor & Francis book chapter, "Beyond NER: A Comparative Benchmark of Medical BERTs for Multi-Label Adverse Drug Reaction Classification" (IDAA 2025), is published; "Decoding Research Trends: A Clustering-Based Topic Modeling Framework" is accepted at IEEE QPAIN 2026 (IEEE Xplore, Scopus); and he presented climate research at the 2nd South Asian Conference on Climate (2024).',
   },
   {
     question: 'What is Ehsanul Haque Siam working on now?',

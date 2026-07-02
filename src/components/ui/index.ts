@@ -23,4 +23,7 @@ export {
 } from './Icons';
 export { SectionHeader } from './SectionHeader';
 export { FerroText } from './FerroText';
+export { DitherField } from './DitherField';
+export { CommandPalette, OPEN_PALETTE_EVENT } from './CommandPalette';
+export { Spotlight } from './Spotlight';
 export { StudioCat } from './StudioCat';

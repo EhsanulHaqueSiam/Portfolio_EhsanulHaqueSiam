@@ -153,7 +153,7 @@ export function Awards() {
               Awards &amp; <em>honours</em>
             </>
           }
-          annotation={`CAT. ${catNo(0)} — ${catNo(awards.length - 1)} · ARCHIVE`}
+          annotation={`CAT. ${catNo(0)}–${catNo(awards.length - 1)} · ARCHIVE`}
         />
 
         {/* Archival plate grid — asymmetric: first and last entries span two columns
@@ -182,7 +182,7 @@ export function Awards() {
                     setInstantMotion(false);
                     setSelectedAward(index);
                   }}
-                  className="group press-feedback relative flex h-full w-full cursor-pointer flex-col rounded-none border rule bg-paper-50 text-left transition-[transform,box-shadow] duration-200 ease-out-expo hover:-translate-y-0.5 hover:shadow-plate focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vermilion focus-visible:ring-offset-2 focus-visible:ring-offset-paper-100"
+                  className="group glass-card relative flex h-full w-full cursor-pointer flex-col text-left hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vermilion focus-visible:ring-offset-2 focus-visible:ring-offset-paper-100"
                 >
                   {/* Cover plate — duotone develops to colour on hover */}
                   <div className="reg-marks relative m-3 sm:m-4">
@@ -199,7 +199,7 @@ export function Awards() {
                     {certified && (
                       <span
                         aria-hidden="true"
-                        className="stamp absolute right-3 top-3 z-10 inline-block -rotate-6 bg-paper-100 px-3 py-1.5 text-[11px]"
+                        className="stamp absolute right-3 top-3 z-10 inline-block px-3.5 py-1.5 text-[11px]"
                       >
                         Certified
                       </span>
@@ -209,10 +209,10 @@ export function Awards() {
                   {/* Catalog entry */}
                   <div className="flex flex-1 flex-col px-4 pb-5 sm:px-5 sm:pb-6">
                     <div className="mb-3 flex items-center justify-between gap-3">
-                      <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-vermilion-600">
+                      <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-vermilion-400">
                         Cat. {catNo(index)}
                       </span>
-                      <span className="border rule px-2 py-1 font-mono text-[10px] uppercase tracking-[0.16em] text-ink-600">
+                      <span className="rounded-full border border-white/10 bg-white/5 px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.16em] text-ink-600">
                         {award.category}
                       </span>
                     </div>
@@ -223,16 +223,16 @@ export function Awards() {
                       }`}
                     >
                       {award.name}
-                      <span className="sr-only"> — open gallery</span>
+                      <span className="sr-only">, open gallery</span>
                     </span>
 
                     <p className="mb-5 mt-2 max-w-prose text-sm leading-relaxed text-ink-500">
                       {award.desc}
                     </p>
 
-                    <span className="mt-auto flex items-center gap-2 border-t rule pt-3 font-mono text-[11px] uppercase tracking-[0.16em] text-ink-600 transition-colors duration-200 group-hover:text-vermilion-600">
+                    <span className="mt-auto flex items-center gap-2 border-t rule pt-3 font-mono text-[11px] uppercase tracking-[0.16em] text-ink-600 transition-colors duration-200 group-hover:text-vermilion-400">
                       <PlusIcon className="h-3.5 w-3.5" aria-hidden="true" />
-                      View gallery — {award.images.length} {award.images.length === 1 ? 'plate' : 'plates'}
+                      View gallery · {award.images.length} {award.images.length === 1 ? 'plate' : 'plates'}
                     </span>
                   </div>
                 </button>
@@ -260,7 +260,7 @@ export function Awards() {
               role="dialog"
               aria-modal="true"
               aria-label={`${awards[selectedAward].name} gallery`}
-              className="fixed inset-0 z-[200] flex items-end justify-center bg-ink-950/95 sm:items-center"
+              className="fixed inset-0 z-[200] flex items-end justify-center bg-black/80 backdrop-blur-sm sm:items-center"
               onClick={() => closeModal(false)}
             >
               <m.div
@@ -268,18 +268,18 @@ export function Awards() {
                 animate={{ scale: 1, opacity: 1, transform: 'translateY(0px)' }}
                 exit={{ scale: 0.98, opacity: 0, transform: 'translateY(20px)' }}
                 transition={{ duration: shouldReduceMotion || instantMotion ? 0 : 0.25, ease: EASE }}
-                className="relative max-h-[85vh] w-full overflow-y-auto rounded-none bg-paper-100 p-5 shadow-plate-lg sm:m-4 sm:max-h-[90vh] sm:max-w-5xl sm:p-8"
+                className="relative max-h-[85vh] w-full overflow-y-auto rounded-t-2xl border border-white/10 bg-paper-50/95 p-5 shadow-plate-lg backdrop-blur-2xl sm:m-4 sm:max-h-[90vh] sm:max-w-5xl sm:rounded-2xl sm:p-8"
                 onClick={(e) => e.stopPropagation()}
               >
                 {/* Mobile pull bar */}
-                <div className="mx-auto mb-4 h-[3px] w-12 bg-ink-300 sm:hidden" aria-hidden="true" />
+                <div className="mx-auto mb-4 h-[3px] w-12 rounded-full bg-white/20 sm:hidden" aria-hidden="true" />
 
                 {/* Close button */}
                 <button
                   ref={closeButtonRef}
                   onClick={() => closeModal(false)}
                   aria-label="Close gallery"
-                  className="press-feedback absolute right-4 top-4 z-10 flex h-11 w-11 min-h-[44px] min-w-[44px] items-center justify-center border rule-strong text-ink-900 hover:bg-ink-900 hover:text-paper-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vermilion"
+                  className="press-feedback absolute right-4 top-4 z-10 flex h-11 w-11 min-h-[44px] min-w-[44px] items-center justify-center rounded-full border rule-strong text-ink-900 hover:bg-ink-900 hover:text-paper-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vermilion"
                 >
                   <CloseIcon />
                 </button>
@@ -287,8 +287,8 @@ export function Awards() {
                 {/* Catalog header */}
                 <div className="mb-6 border-b rule pb-5 pr-14">
                   <p className="folio mb-3">
-                    <span className="text-vermilion-600">Cat. {catNo(selectedAward)}</span>
-                    <span aria-hidden="true"> — </span>
+                    <span className="text-vermilion-400">Cat. {catNo(selectedAward)}</span>
+                    <span aria-hidden="true"> / </span>
                     {awards[selectedAward].category} · {currentImages.length}{' '}
                     {currentImages.length === 1 ? 'plate' : 'plates'}
                   </p>
@@ -318,7 +318,7 @@ export function Awards() {
                         setLightboxIndex(i);
                       }}
                       aria-label={`View plate ${i + 1} of ${currentImages.length} full size`}
-                      className="group press-feedback cursor-pointer rounded-none text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vermilion focus-visible:ring-offset-2 focus-visible:ring-offset-paper-100"
+                      className="group press-feedback cursor-pointer rounded-xl text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vermilion focus-visible:ring-offset-2 focus-visible:ring-offset-paper-100"
                     >
                       <div className="plate relative aspect-video border rule">
                         <OptimizedImage
@@ -328,7 +328,7 @@ export function Awards() {
                           className="grayscale transition-[filter] duration-500 ease-out-expo group-hover:grayscale-0"
                         />
                       </div>
-                      <span className="mt-2 flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.16em] text-ink-500 transition-colors duration-200 group-hover:text-vermilion-600">
+                      <span className="mt-2 flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.16em] text-ink-500 transition-colors duration-200 group-hover:text-vermilion-400">
                         <span>Plate {String(i + 1).padStart(2, '0')}</span>
                         <PlusIcon className="h-3 w-3" aria-hidden="true" />
                       </span>
@@ -352,14 +352,14 @@ export function Awards() {
               role="dialog"
               aria-modal="true"
               aria-label={`Plate ${lightboxIndex + 1} of ${currentImages.length}`}
-              className="fixed inset-0 z-[210] flex items-center justify-center bg-ink-950/95"
+              className="fixed inset-0 z-[210] flex items-center justify-center bg-black/90 backdrop-blur-sm"
               onClick={() => {
                 setInstantMotion(false);
                 setLightboxIndex(null);
               }}
             >
               {/* Plate counter */}
-              <div className="absolute left-1/2 top-5 z-10 -translate-x-1/2 font-mono text-xs uppercase tracking-[0.2em] text-paper-300">
+              <div className="absolute left-1/2 top-5 z-10 -translate-x-1/2 font-mono text-xs uppercase tracking-[0.2em] text-ink-600">
                 Plate {String(lightboxIndex + 1).padStart(2, '0')} / {String(currentImages.length).padStart(2, '0')}
               </div>
 
@@ -371,7 +371,7 @@ export function Awards() {
                   setLightboxIndex(null);
                 }}
                 aria-label="Close lightbox"
-                className="press-feedback absolute right-4 top-4 z-10 flex h-11 w-11 min-h-[44px] min-w-[44px] items-center justify-center border rule-inverse text-paper-100 hover:bg-paper-100 hover:text-ink-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vermilion"
+                className="press-feedback absolute right-4 top-4 z-10 flex h-11 w-11 min-h-[44px] min-w-[44px] items-center justify-center rounded-full border border-white/20 text-ink-900 hover:bg-ink-950 hover:text-paper-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vermilion"
               >
                 <CloseIcon />
               </button>
@@ -381,7 +381,7 @@ export function Awards() {
                 <button
                   onClick={(e) => { e.stopPropagation(); goPrev(false); }}
                   aria-label="Previous image"
-                  className="press-feedback absolute left-2 top-1/2 z-10 flex h-11 w-11 min-h-[44px] min-w-[44px] -translate-y-1/2 items-center justify-center border rule-inverse text-paper-100 hover:bg-paper-100 hover:text-ink-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vermilion sm:left-4 sm:h-12 sm:w-12"
+                  className="press-feedback absolute left-2 top-1/2 z-10 flex h-11 w-11 min-h-[44px] min-w-[44px] -translate-y-1/2 items-center justify-center rounded-full border border-white/20 text-ink-900 hover:bg-ink-950 hover:text-paper-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vermilion sm:left-4 sm:h-12 sm:w-12"
                 >
                   <ArrowRightIcon className="h-5 w-5 rotate-180" />
                 </button>
@@ -392,7 +392,7 @@ export function Awards() {
                 <button
                   onClick={(e) => { e.stopPropagation(); goNext(false); }}
                   aria-label="Next image"
-                  className="press-feedback absolute right-2 top-1/2 z-10 flex h-11 w-11 min-h-[44px] min-w-[44px] -translate-y-1/2 items-center justify-center border rule-inverse text-paper-100 hover:bg-paper-100 hover:text-ink-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vermilion sm:right-4 sm:h-12 sm:w-12"
+                  className="press-feedback absolute right-2 top-1/2 z-10 flex h-11 w-11 min-h-[44px] min-w-[44px] -translate-y-1/2 items-center justify-center rounded-full border border-white/20 text-ink-900 hover:bg-ink-950 hover:text-paper-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vermilion sm:right-4 sm:h-12 sm:w-12"
                 >
                   <ArrowRightIcon className="h-5 w-5" />
                 </button>
@@ -411,7 +411,7 @@ export function Awards() {
                 <img
                   src={getAchievementImage(currentImages[lightboxIndex])}
                   alt={`${awards[selectedAward].name} - ${lightboxIndex + 1}`}
-                  className="max-h-[85vh] max-w-full rounded-none border rule-inverse object-contain"
+                  className="max-h-[85vh] max-w-full rounded-xl border border-white/10 object-contain"
                   onError={hideImageOnError}
                 />
               </m.div>

@@ -40,7 +40,7 @@ const ORG_URLS: Record<string, string> = {
 // Meta tags
 // ---------------------------------------------------------------------------
 export const META = {
-  title: 'Ehsanul Haque Siam — AI Engineer & Full-Stack Developer',
+  title: 'Ehsanul Haque Siam: AI Engineer & Full-Stack Developer',
   // ~155 chars, front-loaded (Google truncates ~160)
   description:
     'AI Engineer & Full-Stack Developer in Dhaka. Research Assistant at Deepchain Labs; shipped 4 React apps driving 1.5x revenue at BetaScript. Open to AI/ML & full-stack roles.',
@@ -68,7 +68,7 @@ export const META = {
   ].join(', '),
   ogImage: abs('/images/og-image.jpg'),
   ogImageAlt:
-    'Ehsanul Haque Siam — AI Engineer & Full-Stack Developer portfolio',
+    'Ehsanul Haque Siam: AI Engineer & Full-Stack Developer portfolio',
   image: abs('/images/profile2.webp'),
 } as const;
 
@@ -259,7 +259,7 @@ export function buildJsonLd() {
       {
         '@type': 'Service',
         '@id': `${SITE.url}/#service`,
-        name: 'AI Engineering & Full-Stack Development — Ehsanul Haque Siam',
+        name: 'AI Engineering & Full-Stack Development: Ehsanul Haque Siam',
         url: SITE.url + '/',
         provider: { '@id': PERSON_ID },
         description:
@@ -310,7 +310,7 @@ export function buildJsonLd() {
         '@type': 'WebPage',
         '@id': `${SITE.url}/hire-me.html#webpage`,
         url: `${SITE.url}/hire-me.html`,
-        name: 'Hire Ehsanul Haque Siam — AI Engineer & Full-Stack Developer',
+        name: 'Hire Ehsanul Haque Siam: AI Engineer & Full-Stack Developer',
         description:
           'Recruiter-friendly hiring page for AI engineering, LLM applications, and full-stack product development.',
         isPartOf: { '@id': WEBSITE_ID },

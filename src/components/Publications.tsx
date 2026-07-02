@@ -46,8 +46,8 @@ export function Publications() {
           annotation={`${featuredPublications.length} ENTRIES · PEER-REVIEWED`}
         />
 
-        {/* Citation list — numbered, hanging-indent entries */}
-        <ol className="border-b rule">
+        {/* Citation list — numbered, hanging-indent glass panels */}
+        <ol className="space-y-5 sm:space-y-7">
           {entries.map(({ pub, status, figNo }, index) => {
             const isExpanded = expandedPub === index;
             const hasPlate = figNo !== null && pub.images && pub.images[0];
@@ -55,7 +55,7 @@ export function Publications() {
             return (
               <m.li
                 key={pub.title}
-                className="border-t rule py-10 sm:py-12"
+                className="glass-card p-6 py-8 sm:p-10"
                 initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-10%' }}
@@ -63,7 +63,7 @@ export function Publications() {
               >
                 <div className="grid grid-cols-[2.75rem_minmax(0,1fr)] gap-x-2 sm:grid-cols-[4.5rem_minmax(0,1fr)] sm:gap-x-4">
                   {/* Hanging citation marker */}
-                  <span className="select-none pt-1 font-mono text-sm text-vermilion-600 sm:pt-1.5 sm:text-base">
+                  <span className="select-none pt-1 font-mono text-sm text-vermilion-400 sm:pt-1.5 sm:text-base">
                     [{index + 1}]
                   </span>
 
@@ -73,11 +73,7 @@ export function Publications() {
                       <h3 className="max-w-3xl font-display text-2xl font-light leading-[1.12] text-ink-900 sm:text-3xl">
                         {pub.title}
                       </h3>
-                      <span
-                        className={`stamp inline-block shrink-0 px-3 py-1.5 text-[10px] ${
-                          index % 2 === 0 ? '-rotate-3' : 'rotate-2'
-                        }`}
-                      >
+                      <span className="stamp inline-block shrink-0 px-3.5 py-1.5 text-[10px]">
                         {status}
                       </span>
                     </div>
@@ -103,7 +99,7 @@ export function Publications() {
                             target="_blank"
                             rel="noopener noreferrer"
                             aria-label={`Read paper: ${pub.title}`}
-                            className="press-feedback inline-flex min-h-[44px] items-center gap-2 border rule px-5 font-mono text-[11px] uppercase tracking-[0.16em] text-ink-900 transition-colors hover:border-vermilion hover:text-vermilion"
+                            className="btn-glass min-h-[44px] gap-2 px-5 text-[11px]"
                           >
                             Read
                             <ArrowUpRightIcon className="h-3.5 w-3.5" />
@@ -119,7 +115,7 @@ export function Publications() {
                             onClick={() =>
                               setExpandedPub(isExpanded ? null : index)
                             }
-                            className="press-feedback inline-flex min-h-[44px] items-center gap-2.5 border rule px-5 font-mono text-[11px] uppercase tracking-[0.16em] text-ink-700 transition-colors hover:border-vermilion hover:text-vermilion"
+                            className="btn-glass min-h-[44px] gap-2.5 px-5 text-[11px] !text-ink-700 hover:!text-vermilion-400"
                           >
                             <span>{isExpanded ? 'Hide plate' : 'View plate'}</span>
                             <m.span
@@ -172,7 +168,7 @@ export function Publications() {
                                 />
                               </div>
                               <figcaption className="folio mt-3 max-w-3xl">
-                                FIG. {String(figNo).padStart(2, '0')} —{' '}
+                                FIG. {String(figNo).padStart(2, '0')} ·{' '}
                                 {pub.conference}
                               </figcaption>
                             </figure>
@@ -195,7 +191,7 @@ export function Publications() {
           viewport={{ once: true, margin: '-10%' }}
           transition={{ duration: 0.6, ease: EASE, delay: 0.15 }}
         >
-          <span className="h-2 w-2 shrink-0 bg-vermilion animate-pulse" aria-hidden="true" />
+          <span className="h-2 w-2 shrink-0 rounded-full bg-vermilion animate-pulse" aria-hidden="true" />
           More research publications in progress...
         </m.p>
       </div>

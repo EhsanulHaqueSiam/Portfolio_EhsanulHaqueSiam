@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 
 /**
- * Crosshair cursor for the "Proof of Work" print aesthetic: a small square dot
- * with a trailing square frame that rotates 45° over interactive elements.
- * White + mix-blend-difference so it self-inverts on paper and ink spreads.
+ * Signal cursor for the "Obsidian Signal" dark glass aesthetic: a glowing iris
+ * dot with a trailing square frame that rotates 45° over interactive elements.
+ * The frame stays white + mix-blend-difference so it reads on any surface.
  * All state lives outside React; positions are lerped in a single rAF loop.
  */
 export function CustomCursor() {
@@ -93,7 +93,7 @@ export function CustomCursor() {
       dotTargetScale = isHover ? 0.5 : 1;
       frameTargetScale = isHover ? 2.4 : 1;
       frameTargetRot = isHover ? 45 : 0;
-      frame.style.borderColor = isHover ? 'rgba(255,255,255,0.9)' : 'rgba(255,255,255,0.55)';
+      frame.style.borderColor = isHover ? 'rgba(169,157,255,0.95)' : 'rgba(255,255,255,0.5)';
 
       text.textContent = cursorText;
       text.style.opacity = cursorText ? '1' : '0';
@@ -181,10 +181,12 @@ export function CustomCursor() {
     <>
       <div
         ref={dotRef}
-        className="fixed top-0 left-0 bg-white pointer-events-none z-[9999] mix-blend-difference"
+        className="fixed top-0 left-0 rounded-full pointer-events-none z-[9999]"
         style={{
           width: 5,
           height: 5,
+          background: '#A99DFF',
+          boxShadow: '0 0 10px rgba(139,124,255,0.9), 0 0 24px rgba(139,124,255,0.45)',
           opacity: 0,
           transition: 'opacity 0.15s ease',
           willChange: 'transform',
@@ -197,7 +199,7 @@ export function CustomCursor() {
         style={{
           width: 26,
           height: 26,
-          border: '1px solid rgba(255,255,255,0.55)',
+          border: '1px solid rgba(255,255,255,0.5)',
           opacity: 0,
           transition: 'border-color 0.25s ease, opacity 0.15s ease',
           willChange: 'transform',

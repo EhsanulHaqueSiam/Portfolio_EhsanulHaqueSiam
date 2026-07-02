@@ -3,20 +3,23 @@
 @tailwind utilities;
 
 /* ============================================================
-   "PROOF OF WORK" — editorial print design system
-   Paper + ink + vermilion. Fraunces / Instrument Sans / Spline Sans Mono.
+   "OBSIDIAN SIGNAL" — dark glass design system
+   Void black + electric iris + signal cyan. Glassmorphism, dither,
+   aurora glows. Archivo / Fraunces / Instrument Sans / Spline Sans Mono.
    ============================================================ */
 
 :root {
-  --paper: #f5f1e8;
-  --paper-raised: #faf7f0;
-  --ink: #171412;
-  --ink-muted: #6b6152;
-  --vermilion: #d93a0d;
-  --cobalt: #2c45c9;
-  --hairline: rgba(23, 20, 18, 0.14);
-  --hairline-strong: rgba(23, 20, 18, 0.3);
-  --hairline-inverse: rgba(245, 241, 232, 0.16);
+  --paper: #05060a;
+  --paper-raised: #0b0d14;
+  --ink: #eef1f8;
+  --ink-muted: #6e7488;
+  --vermilion: #8b7cff;
+  --cobalt: #5ee7f5;
+  --hairline: rgba(235, 240, 255, 0.08);
+  --hairline-strong: rgba(235, 240, 255, 0.16);
+  --hairline-inverse: rgba(5, 6, 10, 0.16);
+  --glass-bg: linear-gradient(180deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.018));
+  --glass-border: rgba(235, 240, 255, 0.09);
 
   --ease-out: cubic-bezier(0.25, 1, 0.5, 1);
   --ease-out-strong: cubic-bezier(0.16, 1, 0.3, 1);
@@ -30,6 +33,7 @@
   html {
     /* scroll-behavior handled by Lenis - CSS smooth conflicts with Chrome */
     padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+    color-scheme: dark;
   }
 
   body {
@@ -49,10 +53,10 @@
   }
 
   * {
-    -webkit-tap-highlight-color: rgba(217, 58, 13, 0.12);
+    -webkit-tap-highlight-color: rgba(139, 124, 255, 0.15);
   }
 
-  /* Hide default cursor on desktop — replaced by the crosshair cursor island */
+  /* Hide default cursor on desktop — replaced by the glow cursor island */
   @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
     html.js, html.js body {
       cursor: none !important;
@@ -74,11 +78,11 @@
   }
 
   ::selection {
-    background: rgba(217, 58, 13, 0.85);
-    color: #faf7f0;
+    background: rgba(139, 124, 255, 0.9);
+    color: #05060a;
   }
 
-  /* Ink hairline scrollbar */
+  /* Hairline glow scrollbar */
   ::-webkit-scrollbar {
     width: 8px;
   }
@@ -88,8 +92,8 @@
   }
 
   ::-webkit-scrollbar-thumb {
-    background: rgba(23, 20, 18, 0.28);
-    border-radius: 0;
+    background: rgba(235, 240, 255, 0.18);
+    border-radius: 99px;
     border-left: 3px solid var(--paper);
     border-right: 3px solid var(--paper);
   }
@@ -114,23 +118,22 @@
 }
 
 @layer components {
-  /* Poster type — cinematic headline voice: heavy, wide, uppercase Archivo.
-     An <em> inside flips to Fraunces italic (the "accent word"), vermilion. */
+  /* Display type — tight Framer-esque grotesque, sentence case.
+     An <em> inside flips to Fraunces italic with an iris gradient (the
+     "accent word"). */
   .poster {
     font-family: 'Archivo Variable', 'Arial Black', sans-serif;
-    font-weight: 800;
-    font-stretch: 115%;
-    text-transform: uppercase;
-    letter-spacing: -0.015em;
-    line-height: 0.92;
+    font-weight: 640;
+    font-stretch: 105%;
+    letter-spacing: -0.035em;
+    line-height: 1.0;
   }
 
   .poster em {
     font-family: 'Fraunces Variable', Georgia, serif;
     font-style: italic;
-    font-weight: 420;
+    font-weight: 380;
     font-stretch: 100%;
-    text-transform: none;
     letter-spacing: -0.01em;
     color: var(--vermilion);
   }
@@ -141,7 +144,7 @@
   }
 
   .folio-inverse {
-    @apply font-mono text-label uppercase tracking-[0.18em] text-paper-300;
+    @apply font-mono text-label uppercase tracking-[0.18em] text-ink-400;
   }
 
   /* Hairline rules */
@@ -154,7 +157,76 @@
   }
 
   .rule-inverse {
-    border-color: var(--hairline-inverse);
+    border-color: var(--hairline);
+  }
+
+  /* ===== Glass surfaces ===== */
+  .glass {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 16px 40px -24px rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(20px) saturate(130%);
+    -webkit-backdrop-filter: blur(20px) saturate(130%);
+    border-radius: 1.25rem;
+  }
+
+  /* Chrome-level glass (navbar, overlays) — darker, blurrier */
+  .glass-chrome {
+    background: rgba(9, 11, 17, 0.62);
+    border: 1px solid rgba(235, 240, 255, 0.08);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 24px 48px -24px rgba(0, 0, 0, 0.9);
+    backdrop-filter: blur(24px) saturate(150%);
+    -webkit-backdrop-filter: blur(24px) saturate(150%);
+  }
+
+  /* Interactive glass card — lifts and rings violet on hover */
+  .glass-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 16px 40px -24px rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(20px) saturate(130%);
+    -webkit-backdrop-filter: blur(20px) saturate(130%);
+    border-radius: 1.25rem;
+    transition:
+      border-color 0.4s var(--ease-out),
+      box-shadow 0.4s var(--ease-out),
+      background-color 0.4s var(--ease-out),
+      transform 0.4s var(--ease-out);
+  }
+
+  /* Cursor spotlight — --mx/--my driven by the Spotlight island */
+  .glass-card {
+    position: relative;
+  }
+
+  .glass-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.45s var(--ease-out);
+    background: radial-gradient(320px circle at var(--mx, 50%) var(--my, 50%), rgba(139, 124, 255, 0.09), transparent 65%);
+  }
+
+  .glass-card:hover::before {
+    opacity: 1;
+  }
+
+  .glass-card:hover,
+  .group:hover > .glass-card {
+    border-color: rgba(139, 124, 255, 0.35);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.08),
+      0 0 0 1px rgba(139, 124, 255, 0.12),
+      0 24px 64px -24px rgba(0, 0, 0, 0.9),
+      0 8px 48px -12px rgba(139, 124, 255, 0.22);
+  }
+
+  /* Accent text (solid; kept as a named voice for emphasis moments) */
+  .text-iris {
+    color: #a99dff;
   }
 
   /* Ink link with underline that draws in from the left */
@@ -188,37 +260,42 @@
     animation: link-redraw 0.7s var(--ease-out-strong);
   }
 
-  /* Rubber stamp — rotated, double ring, vermilion ink */
+  /* Status pill — glass capsule with glow ring (was: rubber stamp) */
   .stamp {
-    @apply font-mono uppercase text-vermilion-600 border-2 border-vermilion;
+    @apply font-mono uppercase text-vermilion-400;
     letter-spacing: 0.14em;
-    box-shadow: inset 0 0 0 3px var(--paper), inset 0 0 0 4px var(--vermilion);
-    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.55' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.92 0.08'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E");
-    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.55' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.92 0.08'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E");
+    background: rgba(139, 124, 255, 0.08);
+    border: 1px solid rgba(139, 124, 255, 0.35);
+    border-radius: 999px;
+    box-shadow: 0 0 24px -6px rgba(139, 124, 255, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
   }
 
   .stamp-on-ink {
     @apply text-vermilion-400;
-    box-shadow: inset 0 0 0 3px var(--ink), inset 0 0 0 4px var(--vermilion);
   }
 
-  /* Duotone plate: wrap an <img> — grayscale below, paper tint blended above */
+  /* Glass image plate: wrap an <img> — desaturated + dimmed until hover */
   .plate {
     @apply relative overflow-hidden bg-paper-200;
+    border-radius: 1.25rem;
+    border: 1px solid var(--glass-border);
   }
 
   .plate img {
-    filter: grayscale(1) contrast(1.06) brightness(1.02);
+    filter: grayscale(0.85) contrast(1.05) brightness(0.9);
     transition: filter 0.6s var(--ease-out-strong), transform 0.8s var(--ease-out-strong);
   }
 
   .plate::after {
     content: '';
     @apply absolute inset-0 pointer-events-none;
-    background: var(--vermilion);
+    background: rgba(139, 124, 255, 0.16);
     mix-blend-mode: soft-light;
-    opacity: 0.25;
+    opacity: 0.8;
     transition: opacity 0.6s var(--ease-out-strong);
+    border-radius: inherit;
   }
 
   .plate:hover img,
@@ -231,7 +308,7 @@
     opacity: 0;
   }
 
-  /* Registration marks (print crop corners) — apply to a relatively-positioned box */
+  /* Registration marks (HUD crop corners) — apply to a relatively-positioned box */
   .reg-marks::before,
   .reg-marks::after {
     content: '';
@@ -241,15 +318,15 @@
   .reg-marks::before {
     top: -1px;
     left: -1px;
-    border-top: 1px solid var(--hairline-strong);
-    border-left: 1px solid var(--hairline-strong);
+    border-top: 1px solid rgba(139, 124, 255, 0.5);
+    border-left: 1px solid rgba(139, 124, 255, 0.5);
   }
 
   .reg-marks::after {
     bottom: -1px;
     right: -1px;
-    border-bottom: 1px solid var(--hairline-strong);
-    border-right: 1px solid var(--hairline-strong);
+    border-bottom: 1px solid rgba(139, 124, 255, 0.5);
+    border-right: 1px solid rgba(139, 124, 255, 0.5);
   }
 
   /* Dotted leader line for ledger/TOC rows */
@@ -262,18 +339,18 @@
   }
 
   .leader-inverse {
-    border-bottom-color: var(--hairline-inverse);
+    border-bottom-color: var(--hairline-strong);
   }
 
   /* Outlined ghost display type (giant numerals, watermarks) */
   .text-outline {
     color: transparent;
-    -webkit-text-stroke: 1px rgba(23, 20, 18, 0.3);
+    -webkit-text-stroke: 1px rgba(235, 240, 255, 0.22);
   }
 
   .text-outline-inverse {
     color: transparent;
-    -webkit-text-stroke: 1px rgba(245, 241, 232, 0.28);
+    -webkit-text-stroke: 1px rgba(235, 240, 255, 0.22);
   }
 
   /* Consistent tactile press feedback across interactive controls */
@@ -290,6 +367,33 @@
   .press-feedback:active {
     transform: scale(0.97);
   }
+
+  /* ===== Buttons ===== */
+  /* Primary — Framer-style solid white pill */
+  .btn-primary {
+    @apply press-feedback inline-flex items-center justify-center gap-3 rounded-full bg-ink-950 text-paper-100 font-mono text-xs uppercase tracking-[0.16em];
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.4) inset, 0 12px 32px -12px rgba(238, 241, 248, 0.35);
+  }
+
+  .btn-primary:hover {
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.4) inset, 0 0 0 1px rgba(139, 124, 255, 0.4), 0 12px 44px -10px rgba(139, 124, 255, 0.5);
+  }
+
+  /* Secondary — glass pill */
+  .btn-glass {
+    @apply press-feedback inline-flex items-center justify-center gap-3 rounded-full text-ink-900 font-mono text-xs uppercase tracking-[0.16em];
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(235, 240, 255, 0.14);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.07);
+  }
+
+  .btn-glass:hover {
+    border-color: rgba(139, 124, 255, 0.45);
+    background: rgba(139, 124, 255, 0.1);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.09), 0 0 32px -8px rgba(139, 124, 255, 0.4);
+  }
 }
 
 @keyframes link-redraw {
@@ -297,31 +401,72 @@
   100% { background-size: 100% 1px; background-position: 0 100%; }
 }
 
-/* Dither edge — halftone dot band dissolving paper into ink (print transition).
-   Place directly above an ink spread; add .dither-edge-flip below one. */
+/* Dither edge — halftone dot band dissolving void into panel (transition).
+   Light dots on transparent; add .dither-edge-flip to mirror. */
 .dither-edge {
   height: 40px;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='40'%3E%3Cg fill='%23171412'%3E%3Ccircle cx='4' cy='4' r='0.6'/%3E%3Ccircle cx='0' cy='12' r='1.2'/%3E%3Ccircle cx='8' cy='12' r='1.2'/%3E%3Ccircle cx='4' cy='20' r='2'/%3E%3Ccircle cx='0' cy='28' r='2.8'/%3E%3Ccircle cx='8' cy='28' r='2.8'/%3E%3Ccircle cx='4' cy='36' r='3.7'/%3E%3Ccircle cx='0' cy='36' r='1.4'/%3E%3Ccircle cx='8' cy='36' r='1.4'/%3E%3C/g%3E%3C/svg%3E");
+  opacity: 0.5;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='40'%3E%3Cg fill='%238b7cff'%3E%3Ccircle cx='4' cy='4' r='0.6'/%3E%3Ccircle cx='0' cy='12' r='1.2'/%3E%3Ccircle cx='8' cy='12' r='1.2'/%3E%3Ccircle cx='4' cy='20' r='2'/%3E%3Ccircle cx='0' cy='28' r='2.8'/%3E%3Ccircle cx='8' cy='28' r='2.8'/%3E%3Ccircle cx='4' cy='36' r='3.7'/%3E%3Ccircle cx='0' cy='36' r='1.4'/%3E%3C/g%3E%3C/svg%3E");
   background-size: 8px 40px;
   background-repeat: repeat-x;
+  -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+  mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
 }
 
 .dither-edge-flip {
   transform: scaleY(-1);
 }
 
-/* Paper grain — fixed full-viewport noise, sits above everything, very faint */
+/* Bayer dither veil — ordered-dither texture over gradients/images.
+   The 2026 "dither" trend: chunky 1-bit pixel noise, very faint. */
+.dither-veil {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.35;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Cg fill='%23eef1f8' fill-opacity='0.13'%3E%3Crect x='0' y='0' width='1' height='1'/%3E%3Crect x='2' y='2' width='1' height='1'/%3E%3C/g%3E%3Cg fill='%23eef1f8' fill-opacity='0.05'%3E%3Crect x='2' y='0' width='1' height='1'/%3E%3Crect x='0' y='2' width='1' height='1'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: 4px 4px;
+}
+
+/* Film grain — fixed full-viewport noise above everything, very faint */
 .grain-overlay {
   position: fixed;
   inset: 0;
   z-index: 60;
   pointer-events: none;
-  opacity: 0.5;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.09 0 0 0 0 0.08 0 0 0 0 0.07 0 0 0 0.05 0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23g)'/%3E%3C/svg%3E");
+  opacity: 0.4;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.93 0 0 0 0 0.94 0 0 0 0 0.97 0 0 0 0.04 0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23g)'/%3E%3C/svg%3E");
   background-size: 180px 180px;
 }
 
-/* Ruled layout columns — faint vertical hairlines behind content (wide screens) */
+/* Aurora backdrop — fixed ambient glows behind everything */
+.aurora-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.aurora-backdrop::before {
+  content: '';
+  position: absolute;
+  inset: -20%;
+  background:
+    radial-gradient(38% 32% at 68% 6%, rgba(139, 124, 255, 0.11), transparent 70%),
+    radial-gradient(30% 28% at 12% 30%, rgba(139, 124, 255, 0.045), transparent 70%),
+    radial-gradient(42% 36% at 50% 108%, rgba(111, 92, 242, 0.08), transparent 72%);
+  animation: aurora-drift 26s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aurora-backdrop::before {
+    animation: none !important;
+  }
+}
+
+/* Blueprint grid — faint line grid behind content (wide screens) */
 .ruled-columns {
   position: fixed;
   inset: 0;
@@ -334,9 +479,11 @@
   .ruled-columns {
     display: block;
     background-image:
-      linear-gradient(to right, rgba(23, 20, 18, 0.055) 1px, transparent 1px);
+      linear-gradient(to right, rgba(235, 240, 255, 0.035) 1px, transparent 1px);
     background-size: calc(100% / 6) 100%;
     background-position: 0 0;
+    -webkit-mask-image: linear-gradient(to bottom, black, transparent 85%);
+    mask-image: linear-gradient(to bottom, black, transparent 85%);
   }
 }
 
@@ -344,7 +491,7 @@
 :focus-visible {
   outline: 2px solid transparent; /* forced-colors fallback */
   outline-offset: 2px;
-  box-shadow: 0 0 0 2px var(--paper-raised), 0 0 0 4px var(--vermilion);
+  box-shadow: 0 0 0 2px var(--paper), 0 0 0 4px var(--vermilion);
 }
 
 /* Content-visibility for off-screen sections */
@@ -425,11 +572,11 @@
   will-change: transform;
 }
 
-/* Slow rubber-stamp thump-in for the hero availability stamp */
+/* Availability pill pop-in (was: rubber-stamp thump) */
 @keyframes stamp-in {
-  0% { opacity: 0; transform: rotate(6deg) scale(1.6); }
-  60% { opacity: 1; transform: rotate(-4deg) scale(0.96); }
-  100% { opacity: 1; transform: rotate(-6deg) scale(1); }
+  0% { opacity: 0; transform: scale(0.8); }
+  70% { opacity: 1; transform: scale(1.04); }
+  100% { opacity: 1; transform: scale(1); }
 }
 
 .stamp-in {
@@ -442,11 +589,6 @@
   .stamp-in {
     animation: none !important;
     opacity: 1 !important;
-    transform: rotate(-6deg) !important;
-  }
-
-  .kinetic-char,
-  .hero-mask-reveal {
     transform: none !important;
   }
 }
@@ -591,7 +733,7 @@ a:hover .arrow-bounce {
   }
 }
 
-/* Resume bullet points */
+/* Resume bullet points (on-screen resume overlay stays light/paper for print parity) */
 .resume-bullets {
   list-style: disc;
   padding-left: 1.25rem;

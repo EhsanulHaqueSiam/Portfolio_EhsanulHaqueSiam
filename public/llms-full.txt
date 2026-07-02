@@ -1,37 +1,37 @@
-# Ehsanul Haque Siam — Full Profile
+# Ehsanul Haque Siam: Full Profile
 
-> AI Engineer & Full-Stack Developer, Dhaka, Bangladesh. Published researcher who ships production systems — from blockchain R&D and RAG pipelines to e-commerce platforms serving 50,000+ users
+> AI Engineer & Full-Stack Developer, Dhaka, Bangladesh. Published researcher who ships production systems, from blockchain R&D and RAG pipelines to e-commerce platforms serving 50,000+ users
 > Last updated: 2026-07-02. Contact: ehsanul.siamdev@gmail.com
 
 I bridge research and production. Research Assistant at Deepchain Labs driving R&D in blockchain, cybersecurity, and quantum cryptography. Published peer-reviewed research (a Taylor & Francis book chapter and an accepted IEEE QPAIN 2026 paper) while shipping 4 production websites that drove 1.5x client revenue at BetaScript LLC. Built 15+ web scrapers and Gemini-powered AI classification pipelines at BDTracks. Obsessed with turning complex problems into systems that scale.
 
 ## Experience
 
-### Research Assistant (Full-time, Remote) — Deepchain Labs (Apr 2026 - Present)
-Researching blockchain, cybersecurity, and quantum cryptography at Deepchain Labs (deepchainlabs.com) — producing peer-review-ready papers, threat analyses, and technical documentation across multiple security domains.
+### Research Assistant (Full-time, Remote) at Deepchain Labs (Apr 2026–Present)
+Researching blockchain, cybersecurity, and quantum cryptography at Deepchain Labs (deepchainlabs.com), producing peer-review-ready papers, threat analyses, and technical documentation across multiple security domains.
 
-### Solo Developer (Part-time, ~20 hrs/week) — BetaScript LLC (Jan 2026 - Present)
-Shipped 4 production React websites for this US-based digital agency, driving 1.5x client revenue growth measured by post-launch analytics and client billing. Full lifecycle ownership — design, React 19 + TanStack Start architecture, and Netlify deployment — across restaurant, e-commerce, and agency platforms serving 50,000+ end users.
+### Solo Developer (Part-time, ~20 hrs/week) at BetaScript LLC (Jan 2026–Present)
+Shipped 4 production React websites for this US-based digital agency, driving 1.5x client revenue growth measured by post-launch analytics and client billing. Full lifecycle ownership spanning design, React 19 + TanStack Start architecture, and Netlify deployment across restaurant, e-commerce, and agency platforms serving 50,000+ end users.
 
-### AI & Data Engineer (Part-time, ~15 hrs/week) — BDTracks (Aug 2025 - Present)
+### AI & Data Engineer (Part-time, ~15 hrs/week) at BDTracks (Aug 2025–Present)
 Powering Bangladesh's commodity and accident tracking platform (bdtracks.com). Built 15+ web scrapers and fine-tuned Google Gemini 2.5 Flash/Pro via Vertex AI for automated data classification. Engineered production pipelines processing daily feeds from multiple national sources into structured datasets serving live dashboards.
 
-### AI Engineering Intern — Unies (Feb 2026 - May 2026)
+### AI Engineering Intern at Unies (Feb 2026–May 2026)
 Built production RAG pipelines for academic resource retrieval using Pinecone, ChromaDB, LangChain, and LlamaIndex. Engineered automated LLM evaluation pipelines and FastAPI backends powering curriculum-aligned tutoring systems. Benchmarked embedding quality across vector databases to optimize retrieval accuracy.
 
-### Team Lead - Game Development — AIUB (Oct 2024 - Dec 2024)
-Led a team of 5 developers to ship a 2D platformer with 3 levels, a custom OpenGL rendering engine, SFML audio, and SQLite persistence — within a 3-month deadline. Earned 4 GitHub forks and a YouTube demo.
+### Team Lead - Game Development at AIUB (Oct 2024–Dec 2024)
+Led a team of 5 developers to ship a 2D platformer with 3 levels, a custom OpenGL rendering engine, SFML audio, and SQLite persistence, all within a 3-month deadline. Earned 4 GitHub forks and a YouTube demo.
 
 ## Featured Projects
 
 ### ScholarHub
-Students waste 20+ hours searching fragmented scholarship sources before deadlines pass. Built a unified discovery platform that indexes 12,000+ opportunities daily from 272 automated spiders — reducing search time to minutes. Full-text search with multi-facet filtering, admin review dashboard, and dynamic SEO. React 19 + TanStack Start SSR + Convex + Python scraping pipeline.
+Students waste 20+ hours searching fragmented scholarship sources before deadlines pass. Built a unified discovery platform that indexes 12,000+ opportunities daily from 272 automated spiders, reducing search time to minutes. Full-text search with multi-facet filtering, admin review dashboard, and dynamic SEO. React 19 + TanStack Start SSR + Convex + Python scraping pipeline.
 Tech: React, TypeScript, TailwindCSS, TanStack Start, Convex, Python, Web Scraping
 Live: https://thescholarhub.netlify.app/
 Code: https://github.com/EhsanulHaqueSiam/ScholarHub
 
 ### TTT Autos
-Dealership websites lack trust — generic templates with FOMO-driven tactics. Built a cinematic 'Velocity Noir' platform with interactive 3D vehicle showcases, transparent pricing, and a 17-page admin dashboard supporting cars, motorcycles, and bicycles. Polymorphic inventory with 7 indexed tables and 12+ filter facets. React 19 + TanStack Start + Drizzle ORM + Spline 3D.
+Dealership websites lack trust: generic templates with FOMO-driven tactics. Built a cinematic 'Velocity Noir' platform with interactive 3D vehicle showcases, transparent pricing, and a 17-page admin dashboard supporting cars, motorcycles, and bicycles. Polymorphic inventory with 7 indexed tables and 12+ filter facets. React 19 + TanStack Start + Drizzle ORM + Spline 3D.
 Tech: React, TypeScript, TailwindCSS, Framer Motion, TanStack Start, Drizzle ORM, SQLite, Spline 3D
 Live: https://ttt.autos/
 
@@ -41,7 +41,7 @@ Tech: React, TypeScript, Rust, PostgreSQL, TailwindCSS, Framer Motion
 Code: https://github.com/EhsanulHaqueSiam/kaajkormo
 
 ### OfferLagbe
-Local deals platforms lack trust — anyone can post anything. Built a community-driven marketplace where user trust scores auto-moderate content (bad actors removed at <10% trust, verified badges at 5+ upvotes). Real-time map with clustering and heatmap visualization. React 19 + Convex real-time DB + MapLibre GL + PWA with offline support.
+Local deals platforms lack trust: anyone can post anything. Built a community-driven marketplace where user trust scores auto-moderate content (bad actors removed at <10% trust, verified badges at 5+ upvotes). Real-time map with clustering and heatmap visualization. React 19 + Convex real-time DB + MapLibre GL + PWA with offline support.
 Tech: React, TypeScript, TailwindCSS, Convex, MapLibre, PWA
 Live: https://offerlagbe.netlify.app/
 Code: https://github.com/EhsanulHaqueSiam/offerlagbe
@@ -53,23 +53,23 @@ Live: https://theaurum.netlify.app
 Code: https://github.com/EhsanulHaqueSiam/aurum-gold
 
 ### Void Threads
-Most e-commerce sites leave money on the table with poor mobile UX. Built a conversion-optimized streetwear platform using sales psychology — exit-intent recovery, urgency indicators, and trust signals — with pixel-perfect responsive coverage from 320px to 1920px. SSR via Nitro 3 for instant page loads. React 19 + TanStack Start.
+Most e-commerce sites leave money on the table with poor mobile UX. Built a conversion-optimized streetwear platform using sales psychology such as exit-intent recovery, urgency indicators, and trust signals, plus pixel-perfect responsive coverage from 320px to 1920px. SSR via Nitro 3 for instant page loads. React 19 + TanStack Start.
 Tech: React, TypeScript, TailwindCSS, Framer Motion, Zustand, E-commerce
 Live: https://voidthreadsco.netlify.app
 Code: https://github.com/EhsanulHaqueSiam/void-threads
 
 ### Indian Claypit
-A restaurant needed to move from phone-only orders to a digital platform without losing the personal touch that earned their reputation. Built the full-stack solution — frontend ordering experience, backend order processing, event booking, and catering integration — now serving 50,000+ customers with a 4.9★ rating from 2,847 Google Reviews.
+A restaurant needed to move from phone-only orders to a digital platform without losing the personal touch that earned their reputation. Built the full-stack solution: frontend ordering experience, backend order processing, event booking, and catering integration, now serving 50,000+ customers with a 4.9★ rating from 2,847 Google Reviews.
 Tech: React, TypeScript, TailwindCSS, Framer Motion, Node.js, E-commerce
 Live: https://indianclaypit.com/
 
 ### BetaScript
-A US-based digital agency needed a web presence that matched their premium positioning and 24-hour response promise. Designed and shipped an animated React site with service showcases, client testimonials, and conversion-optimized contact flows — now representing a BD-USA partnership serving 150+ clients with 100% satisfaction.
+A US-based digital agency needed a web presence that matched their premium positioning and 24-hour response promise. Designed and shipped an animated React site with service showcases, client testimonials, and conversion-optimized contact flows, now representing a BD-USA partnership serving 150+ clients with 100% satisfaction.
 Tech: React, TypeScript, TailwindCSS, Framer Motion
 Live: https://betascript.online/
 
 ### Student Management System
-Reduced university data retrieval time from 50ms to 7ms — a 7x performance improvement validated by load testing with 45+ active users by redesigning the database to 3NF normalization with Singleton connection pooling in Java. Earned 17 GitHub stars.
+Reduced university data retrieval time from 50ms to 7ms, a 7x performance improvement validated by load testing with 45+ active users, by redesigning the database to 3NF normalization with Singleton connection pooling in Java. Earned 17 GitHub stars.
 Tech: Java, MySQL, JDBC, Design Patterns, 3NF
 Live: https://github.com/EhsanulHaqueSiam/StudentManagementSystem/wiki
 Code: https://github.com/EhsanulHaqueSiam/StudentManagementSystem
@@ -110,15 +110,15 @@ Code: https://github.com/EhsanulHaqueSiam/PharmacyManagementSystem
 ## Publications & Research
 
 ### Decoding Research Trends: A Clustering Based Topic Modeling Framework
-IEEE QPAIN 2026 — 2026 | Accepted (IEEE Xplore, Scopus Indexed)
+IEEE QPAIN 2026, 2026 | Accepted (IEEE Xplore, Scopus Indexed)
 Proposed a clustering-based topic modeling framework for decoding research trends accepted with minor revision for IEEE Xplore and Scopus indexing by developing novel clustering algorithms applied to academic publication data.
 
 ### Beyond NER: A Comparative Benchmark of Medical BERTS for Multi-Label Adverse Drug Reaction Classification
-International Conference on Intelligent Data Analysis and Applications (IDAA 2025) — Dec 2025 | Book Chapter (Taylor & Francis)
+International Conference on Intelligent Data Analysis and Applications (IDAA 2025), Dec 2025 | Book Chapter (Taylor & Francis)
 Benchmarked domain-specific Medical BERT models for multi-label adverse drug reaction classification demonstrating improved performance over general BERT on the PsyTAR dataset by fine-tuning BioBERT and PubMedBERT architectures with multi-label classification heads.
 
 ### Unfolding Emerging Issues in the Context of Changing Climatic Scenario
-2nd South Asian Conference on Climate — Sep 2024 | Statistical Analysis & Presentation
+2nd South Asian Conference on Climate, Sep 2024 | Statistical Analysis & Presentation
 Presented statistical analysis of emerging climate issues to an international audience contributing to South Asian regional understanding of environmental trends by collecting, modeling, and visualizing climate data with statistical methods.
 
 ## Awards, Certifications & Achievements
@@ -126,7 +126,7 @@ Presented statistical analysis of emerging climate issues to an international au
 - **Dean's List Awards - 3x Academic Excellence** (award): Earned 3 Dean's List Awards for academic excellence with CGPA of 3.95, 3.89, and 3.75+ across consecutive semesters by maintaining top performance while building 15+ projects and publishing research.
 - **Web & Data Summit 2024 - Participation** (certificate): Participated in the Web & Data Summit 2024, gaining insights into cutting-edge web technologies and data science practices from industry experts.
 - **AIUB CS FEST 2024 - 1st Runner Up** (award): Won 1st Runner-Up at AIUB CS FEST 2024 App Showcase competing against 20+ teams evaluated by industry judges by demonstrating innovative mobile development with polished UI/UX and presentation.
-- **Published Research - Taylor & Francis (IDAA 2025)** (publication): Published a Taylor & Francis Book Chapter on medical AI at IDAA 2025 — an international conference indexed by major databases by benchmarking BioBERT, PubMedBERT, and BERT for multi-label adverse drug reaction classification.
+- **Published Research - Taylor & Francis (IDAA 2025)** (publication): Published a Taylor & Francis Book Chapter on medical AI at IDAA 2025, an international conference indexed by major databases, by benchmarking BioBERT, PubMedBERT, and BERT for multi-label adverse drug reaction classification.
 - **South Asian Climate Conference 2024** (certificate): Presented original climate research at an international conference demonstrating statistical findings on South Asian climate trends by conducting data collection, statistical modeling, and visualization of regional environmental data.
 - **GitHub Open Source - 60+ Stars** (achievement): Accumulated 60+ GitHub stars across 26 repositories with the top project (Student Management System) earning 17 stars and 8 forks by building well-documented, production-grade open source projects with comprehensive Wikis.
 - **Mario's Multiverse Adventure - Game Dev** (project): Led a team of 5 to ship a 2D platformer with 3 unique levels and a physics engine earning 4 GitHub forks by building a custom OpenGL rendering engine with SFML audio and SQLite persistence in C++.
@@ -205,10 +205,10 @@ Presented statistical analysis of emerging climate issues to an international au
 
 ## Testimonials
 
-- "Siam delivered 4 production websites ahead of schedule. His work directly drove a 1.5x increase in our client revenue — he doesn't just write code, he understands business impact." — Alex Thompson, Founder at BetaScript LLC
-- "His RAG pipeline work was remarkably production-ready for an intern. He built evaluation frameworks that we're still using months later. A rare engineer who bridges ML research and shipping." — Dr. Rahman, Supervisor at Unies
-- "Our online ordering platform went from zero to 50,000+ customers. The 4.9-star rating speaks for itself — Siam built something our customers genuinely love using." — Sarah Chen, Client at Indian Claypit
-- "Publishing 3 peer-reviewed papers while leading a 5-person game dev team and maintaining Dean's List — Siam's ability to deliver across research and engineering is exceptional." — Prof. Hasan, Faculty Advisor at AIUB
+- "Siam delivered 4 production websites ahead of schedule. His work directly drove a 1.5x increase in our client revenue. He doesn't just write code, he understands business impact." (Alex Thompson, Founder at BetaScript LLC)
+- "His RAG pipeline work was remarkably production-ready for an intern. He built evaluation frameworks that we're still using months later. A rare engineer who bridges ML research and shipping." (Dr. Rahman, Supervisor at Unies)
+- "Our online ordering platform went from zero to 50,000+ customers. The 4.9-star rating speaks for itself. Siam built something our customers genuinely love using." (Sarah Chen, Client at Indian Claypit)
+- "Publishing 3 peer-reviewed papers while leading a 5-person game dev team and maintaining Dean's List, Siam's ability to deliver across research and engineering is exceptional." (Prof. Hasan, Faculty Advisor at AIUB)
 
 ## Links
 

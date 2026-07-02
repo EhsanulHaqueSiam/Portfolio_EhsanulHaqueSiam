@@ -84,7 +84,15 @@ export function About() {
           >
             <figure className="max-w-sm lg:max-w-none">
               <div className="reg-marks relative p-2 sm:p-3">
-                <div className="plate shadow-plate">
+                <div
+                  className="absolute -inset-4 rounded-[2rem] opacity-50 blur-2xl"
+                  style={{
+                    background:
+                      'radial-gradient(60% 60% at 60% 35%, rgba(139,124,255,0.18), transparent 70%)',
+                  }}
+                  aria-hidden="true"
+                />
+                <div className="plate shadow-plate relative">
                   <img
                     src={profileImage}
                     alt={profile.name}
@@ -99,7 +107,7 @@ export function About() {
                 </div>
               </div>
               <figcaption className="folio mt-3 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 px-2 sm:px-3">
-                <span>Fig. 01 — The author</span>
+                <span>Fig. 01 · The author</span>
                 <span className="text-ink-500">{profile.name}</span>
               </figcaption>
             </figure>
@@ -123,7 +131,7 @@ export function About() {
               <div className="flex items-baseline py-3.5">
                 <dt className="folio whitespace-nowrap">Now</dt>
                 <span className="leader" aria-hidden="true" />
-                <dd className="text-right font-mono text-xs font-semibold uppercase tracking-[0.14em] text-vermilion-600">
+                <dd className="text-right font-mono text-xs font-semibold uppercase tracking-[0.14em] text-vermilion-400">
                   {profile.currentCompany.split(',')[0]}
                 </dd>
               </div>
@@ -133,7 +141,7 @@ export function About() {
           {/* ——— Right column: drop-cap bio + contribution figure ——— */}
           <div className="lg:col-span-7 lg:col-start-6">
             <m.p
-              className="max-w-[40rem] font-display text-xl font-light leading-[1.65] text-ink-900 first-letter:float-left first-letter:-mt-1 first-letter:pr-3 first-letter:font-display first-letter:text-[4.25rem] first-letter:font-normal first-letter:leading-[0.8] first-letter:text-vermilion sm:text-2xl sm:first-letter:-mt-2 sm:first-letter:pr-4 sm:first-letter:text-[5.25rem]"
+              className="max-w-[40rem] font-display text-xl font-light leading-[1.65] text-ink-900 first-letter:float-left first-letter:-mt-1 first-letter:pr-3 first-letter:font-display first-letter:text-[4.25rem] first-letter:font-normal first-letter:leading-[0.8] first-letter:text-vermilion-400 sm:text-2xl sm:first-letter:-mt-2 sm:first-letter:pr-4 sm:first-letter:text-[5.25rem]"
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-10%' }}
@@ -149,7 +157,7 @@ export function About() {
               viewport={{ once: true, margin: '-10%' }}
               transition={{ duration: 0.7, delay: 0.18, ease: EASE }}
             >
-              Currently — <span className="text-ink-900">{profile.currentRole}</span>{' '}
+              Currently · <span className="text-ink-900">{profile.currentRole}</span>{' '}
               · {profile.currentCompany}
             </m.p>
 
@@ -162,7 +170,7 @@ export function About() {
             >
               <GitHubGraph />
               <figcaption className="folio mt-3 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
-                <span>Fig. 02 — Contribution density</span>
+                <span>Fig. 02 · Contribution density</span>
                 <span className="text-ink-500">52 weeks</span>
               </figcaption>
             </m.figure>

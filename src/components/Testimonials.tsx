@@ -33,7 +33,7 @@ export function Testimonials() {
               top-left whitespace like a drop cap, without covering any text. */}
           <span
             aria-hidden="true"
-            className="pointer-events-none select-none absolute -top-6 -left-2 sm:-top-9 sm:-left-4 lg:-top-12 lg:-left-8 font-display font-light leading-none text-vermilion text-[8rem] sm:text-[12rem] lg:text-[16rem] opacity-90"
+            className="pointer-events-none select-none absolute -top-6 -left-2 sm:-top-9 sm:-left-4 lg:-top-12 lg:-left-8 font-display font-light leading-none text-vermilion-400 text-[8rem] sm:text-[12rem] lg:text-[16rem] opacity-50"
           >
             &ldquo;
           </span>
@@ -51,7 +51,7 @@ export function Testimonials() {
                 viewport={{ once: true, margin: '-10%' }}
                 whileHover={{ y: -2, transition: { duration: 0.15, ease: EASE } }}
                 transition={{ duration: 0.2, ease: EASE }}
-                className={`group relative m-0 border border-transparent p-5 sm:p-8 transition-[border-color,box-shadow] duration-200 ease-out-expo hover:border-[color:var(--hairline-strong)] hover:shadow-plate ${
+                className={`group glass-card relative m-0 p-6 !transition-[border-color,box-shadow,background-color] sm:p-8 ${
                   i % 2 === 1 ? 'lg:mt-16' : ''
                 }`}
               >
@@ -62,15 +62,15 @@ export function Testimonials() {
 
                 {/* The quote, typeset with hanging punctuation */}
                 <blockquote className="m-0">
-                  <p className="font-display italic font-light text-xl sm:text-2xl xl:text-[1.75rem] leading-[1.55] text-ink-900 indent-[-0.45em]">
+                  <p className="font-display italic font-light text-xl sm:text-2xl xl:text-[1.75rem] leading-[1.55] text-ink-800 indent-[-0.45em]">
                     &ldquo;{testimonial.quote}&rdquo;
                   </p>
                 </blockquote>
 
                 {/* Signature block */}
                 <figcaption className="mt-7 border-t rule pt-4 font-mono text-[11px] uppercase tracking-[0.16em] leading-relaxed sm:mt-8 sm:text-xs">
-                  <span className="text-ink-900 transition-colors duration-200 group-hover:text-vermilion-600">
-                    — {testimonial.name}
+                  <span className="text-ink-900 transition-colors duration-200 group-hover:text-vermilion-400">
+                    {testimonial.name}
                   </span>
                   <span className="text-ink-500">
                     {' '}

@@ -25,7 +25,7 @@ const primaryRecord: EducationItem = {
   institution: 'American International University-Bangladesh',
   degree: 'Bachelor of Science in Computer Science and Engineering',
   location: 'AIUB',
-  period: '2022 — 2026',
+  period: '2022–2026',
   status: 'Pursuing',
   image: 'university',
 };
@@ -44,7 +44,7 @@ const priorRecords: EducationItem[] = [
     institution: 'Govt. Azizul Haque College',
     degree: 'Higher Secondary School Certificate (HSC) in Science',
     location: 'Bogura',
-    period: '2019 — 2021',
+    period: '2019–2021',
     status: 'Completed',
     image: 'college',
   },
@@ -52,7 +52,7 @@ const priorRecords: EducationItem[] = [
     institution: 'Bogra Zilla School',
     degree: 'Secondary School Certificate (SSC) in Science',
     location: 'Bogura',
-    period: '2011 — 2019',
+    period: '2011–2019',
     status: 'Completed',
     image: 'school',
   },
@@ -70,12 +70,12 @@ export function Education() {
               Academic <em>record</em>
             </>
           }
-          annotation="3 INSTITUTIONS · 2011—2026"
+          annotation="3 INSTITUTIONS · 2011–2026"
         />
 
         {/* Primary record — hairline-framed transcript excerpt */}
         <m.article
-          className="reg-marks relative border rule bg-paper-50 shadow-plate"
+          className="glass-card relative overflow-hidden"
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-10%' }}
@@ -97,7 +97,7 @@ export function Education() {
                 <h3 className="max-w-2xl font-display text-3xl font-light leading-[1.08] text-ink-900 sm:text-4xl">
                   {primaryRecord.institution}
                 </h3>
-                <span className="stamp inline-block shrink-0 -rotate-3 px-3 py-1.5 text-[10px]">
+                <span className="stamp inline-block shrink-0 px-3.5 py-1.5 text-[10px]">
                   {primaryRecord.status}
                 </span>
               </div>
@@ -121,7 +121,7 @@ export function Education() {
                     <dd
                       className={`shrink-0 text-right font-mono text-xs uppercase tracking-[0.14em] ${
                         row.accent
-                          ? 'font-medium text-vermilion-600'
+                          ? 'font-medium text-vermilion-400'
                           : 'text-ink-900'
                       }`}
                     >
@@ -134,7 +134,7 @@ export function Education() {
 
             {/* University plate */}
             <figure className="group lg:pt-1">
-              <div className="plate reg-marks relative shadow-plate">
+              <div className="plate relative shadow-plate">
                 <img
                   src={`/images/education/${primaryRecord.image}.webp`}
                   alt={primaryRecord.institution}
@@ -147,7 +147,7 @@ export function Education() {
                 />
               </div>
               <figcaption className="folio mt-3">
-                FIG. 01 — THE UNIVERSITY · AIUB
+                FIG. 01 · THE UNIVERSITY · AIUB
               </figcaption>
             </figure>
           </div>
@@ -163,7 +163,7 @@ export function Education() {
             transition={{ duration: 0.6, ease: EASE }}
           >
             <span className="folio">PRIOR RECORDS</span>
-            <span className="folio text-right">2011 — 2021</span>
+            <span className="folio text-right">2011–2021</span>
           </m.div>
 
           <ul className="mt-2">
@@ -177,7 +177,7 @@ export function Education() {
                 transition={{ duration: 0.7, ease: EASE, delay: index * 0.08 }}
               >
                 {/* Small plate */}
-                <div className="plate relative h-14 w-14 sm:h-20 sm:w-20">
+                <div className="plate relative h-14 w-14 rounded-xl sm:h-20 sm:w-20">
                   <img
                     src={`/images/education/${edu.image}.webp`}
                     alt={edu.institution}

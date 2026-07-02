@@ -90,7 +90,7 @@ export function StudioCat({ className = '' }: { className?: string }) {
           <path
             className="cat-tail"
             d="M52 56 C64 56 68 48 66 42"
-            stroke="#171412"
+            stroke="#AEB5C8"
             strokeWidth="6"
             strokeLinecap="round"
             fill="none"
@@ -98,27 +98,27 @@ export function StudioCat({ className = '' }: { className?: string }) {
           {/* body */}
           <path
             d="M20 60 C14 44 18 32 30 28 L42 28 C54 32 58 44 52 60 Z"
-            fill="#171412"
+            fill="#AEB5C8"
           />
           {/* chest patch */}
-          <path d="M32 60 C30 48 32 40 36 36 C40 40 42 48 40 60 Z" fill="#F5F1E8" opacity="0.92" />
+          <path d="M32 60 C30 48 32 40 36 36 C40 40 42 48 40 60 Z" fill="#05060A" opacity="0.85" />
           {/* head group (rotates toward cursor) */}
           <g ref={headRef} style={{ transformOrigin: '36px 24px', willChange: 'transform' }}>
             {/* ears */}
-            <path d="M24 16 L26 4 L34 12 Z" fill="#171412" />
-            <path d="M48 16 L46 4 L38 12 Z" fill="#171412" />
+            <path d="M24 16 L26 4 L34 12 Z" fill="#AEB5C8" />
+            <path d="M48 16 L46 4 L38 12 Z" fill="#AEB5C8" />
             {/* head */}
-            <ellipse cx="36" cy="18" rx="14" ry="12" fill="#171412" />
+            <ellipse cx="36" cy="18" rx="14" ry="12" fill="#AEB5C8" />
             {/* eyes (blink via CSS scaleY) */}
             <g className="cat-eyes">
-              <circle cx="30.5" cy="17" r="1.8" fill="#F5F1E8" />
-              <circle cx="41.5" cy="17" r="1.8" fill="#F5F1E8" />
+              <circle cx="30.5" cy="17" r="1.8" fill="#05060A" />
+              <circle cx="41.5" cy="17" r="1.8" fill="#05060A" />
             </g>
             {/* nose */}
-            <path d="M35 22 L37 22 L36 23.5 Z" fill="#D93A0D" />
+            <path d="M35 22 L37 22 L36 23.5 Z" fill="#8B7CFF" />
           </g>
-          {/* ground shadow */}
-          <ellipse cx="36" cy="61.5" rx="20" ry="2" fill="#171412" opacity="0.12" />
+          {/* ground glow */}
+          <ellipse cx="36" cy="61.5" rx="20" ry="2" fill="#8B7CFF" opacity="0.14" />
         </svg>
       </button>
     </div>

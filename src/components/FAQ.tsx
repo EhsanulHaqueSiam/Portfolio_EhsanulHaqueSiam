@@ -36,7 +36,7 @@ export function FAQ() {
             <div className="lg:sticky lg:top-28">
               <p className="folio">Appendix A</p>
               <p className="mt-4 max-w-[36ch] font-mono text-[11px] uppercase leading-relaxed tracking-[0.14em] text-ink-500">
-                Answers are typeset in full below — the same text served to
+                Answers are typeset in full below, the same text served to
                 search and answer engines.
               </p>
             </div>
@@ -56,16 +56,16 @@ export function FAQ() {
                 >
                   <summary className="flex min-h-[44px] cursor-pointer list-none items-start gap-4 py-6 [&::-webkit-details-marker]:hidden focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-vermilion sm:gap-6 sm:py-8">
                     <span
-                      className="folio w-10 shrink-0 pt-1.5 text-vermilion-600 sm:w-14"
+                      className="folio w-10 shrink-0 pt-1.5 !text-vermilion-400 sm:w-14"
                       aria-hidden="true"
                     >
                       Q.{String(i + 1).padStart(2, '0')}
                     </span>
-                    <span className="flex-1 font-display text-lg font-light leading-snug text-ink-900 transition-colors duration-300 group-open:text-vermilion-600 sm:text-xl md:text-2xl">
+                    <span className="flex-1 font-display text-lg font-light leading-snug text-ink-900 transition-colors duration-300 group-open:text-vermilion-400 sm:text-xl md:text-2xl">
                       {item.question}
                     </span>
                     <span
-                      className="press-feedback mt-0.5 flex h-11 w-11 shrink-0 items-center justify-center border rule text-ink-900 transition-colors duration-300 group-hover:border-vermilion group-hover:text-vermilion group-open:border-vermilion group-open:text-vermilion"
+                      className="press-feedback mt-0.5 flex h-11 w-11 shrink-0 items-center justify-center rounded-full border rule bg-white/5 text-ink-900 backdrop-blur-sm transition-colors duration-300 group-hover:border-vermilion-500/50 group-hover:text-vermilion-400 group-open:border-vermilion-500/50 group-open:text-vermilion-400"
                       aria-hidden="true"
                     >
                       <PlusIcon className="h-4 w-4 transition-transform duration-300 ease-out-expo group-open:rotate-45" />
@@ -89,10 +89,10 @@ export function FAQ() {
               className="mt-8 font-mono text-[11px] uppercase tracking-[0.16em] text-ink-500"
             >
               Further inquiries{' '}
-              <span aria-hidden="true">—</span>{' '}
+              <span aria-hidden="true">·</span>{' '}
               <a
                 href="#contact"
-                className="link-ink inline-flex min-h-[44px] items-center text-ink-900 hover:text-vermilion focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-vermilion"
+                className="link-ink inline-flex min-h-[44px] items-center text-ink-900 hover:text-vermilion-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-vermilion"
               >
                 See 11 / Contact <span aria-hidden="true" className="ml-1">↓</span>
               </a>

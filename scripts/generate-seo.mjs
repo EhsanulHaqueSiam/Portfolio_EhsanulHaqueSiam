@@ -45,7 +45,7 @@ const AI_BOTS = [
 write(
   'robots.txt',
   `# robots.txt for ehsanulhaquesiam.netlify.app
-# Generated ${TODAY} from assets/data — do not edit by hand.
+# Generated ${TODAY} from assets/data. Do not edit by hand.
 
 User-agent: *
 Allow: /
@@ -81,7 +81,7 @@ ${urls
         ? `
     <image:image>
       <image:loc>${SITE}/images/og-image.webp</image:loc>
-      <image:title>Ehsanul Haque Siam — AI Engineer &amp; Full-Stack Developer</image:title>
+      <image:title>Ehsanul Haque Siam: AI Engineer &amp; Full-Stack Developer</image:title>
     </image:image>`
         : ''
     }
@@ -107,7 +107,7 @@ write(
 ${currentRoles.map((e) => `- **${e.role}, ${e.company}** (${e.date})`).join('\n')}
 
 ## Highlights
-${profile.stats.map((s) => `- ${s.value} — ${s.label}`).join('\n')}
+${profile.stats.map((s) => `- ${s.value}: ${s.label}`).join('\n')}
 
 ## Key pages
 - [Portfolio home](${SITE}/): full experience, projects, publications, skills
@@ -116,7 +116,7 @@ ${profile.stats.map((s) => `- ${s.value} — ${s.label}`).join('\n')}
 - [Full profile for LLMs](${SITE}/llms-full.txt): complete structured detail
 
 ## Publications
-${publications.map((p) => `- ${p.paperLink ? `[${p.title}](${p.paperLink})` : p.title} — ${p.conference} (${p.date})`).join('\n')}
+${publications.map((p) => `- ${p.paperLink ? `[${p.title}](${p.paperLink})` : p.title}: ${p.conference} (${p.date})`).join('\n')}
 
 ## Contact
 - Email: ${profile.email}
@@ -124,7 +124,7 @@ ${publications.map((p) => `- ${p.paperLink ? `[${p.title}](${p.paperLink})` : p.
 - LinkedIn: ${profile.linkedin}
 
 ## Availability
-Open to AI/ML engineering, LLM/RAG, and full-stack roles — full-time, part-time, or freelance; remote or Dhaka, Bangladesh.
+Open to AI/ML engineering, LLM/RAG, and full-stack roles: full-time, part-time, or freelance; remote or Dhaka, Bangladesh.
 `,
 );
 
@@ -141,7 +141,7 @@ const skillsBlock = skills.categories
 
 write(
   'llms-full.txt',
-  `# ${profile.name} — Full Profile
+  `# ${profile.name}: Full Profile
 
 > ${profile.title}, ${profile.location}. ${profile.tagline}
 > Last updated: ${TODAY}. Contact: ${profile.email}
@@ -150,7 +150,7 @@ ${profile.bio}
 ${section(
   'Experience',
   experience
-    .map((e) => `### ${e.role} — ${e.company} (${e.date})\n${e.desc}`)
+    .map((e) => `### ${e.role} at ${e.company} (${e.date})\n${e.desc}`)
     .join('\n\n'),
 )}${section(
     'Featured Projects',
@@ -166,7 +166,7 @@ ${section(
     'Publications & Research',
     publications
       .map(
-        (p) => `### ${p.title}\n${p.conference} — ${p.date}\n${p.desc}`,
+        (p) => `### ${p.title}\n${p.conference}, ${p.date}\n${p.desc}`,
       )
       .join('\n\n'),
   )}${section(
@@ -177,7 +177,7 @@ ${section(
   )}${section('Skills', skillsBlock)}${section(
     'Testimonials',
     testimonials
-      .map((t) => `- "${t.quote}" — ${t.name}, ${t.role} at ${t.company}`)
+      .map((t) => `- "${t.quote}" (${t.name}, ${t.role} at ${t.company})`)
       .join('\n'),
   )}${
     blog.length

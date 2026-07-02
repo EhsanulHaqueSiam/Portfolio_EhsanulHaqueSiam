@@ -7,11 +7,11 @@ import type { Skill, SkillCategory } from '../data/types';
 const EASE = [0.16, 1, 0.3, 1] as const;
 
 /**
- * Proficiency → ink weight. The specimen reads like a printed key:
- * vermilion = expert, full ink = advanced, faded ink = intermediate.
+ * Proficiency → luminance weight. The specimen reads like a signal key:
+ * iris violet = expert, bright = advanced, faded = intermediate.
  */
 const LEVEL_CLASS: Record<Skill['level'], string> = {
-  expert: 'text-vermilion-600 font-medium',
+  expert: 'text-vermilion-400 font-medium',
   advanced: 'text-ink-900',
   intermediate: 'text-ink-500',
   beginner: 'text-ink-500',
@@ -42,7 +42,7 @@ const CategoryRow = memo(function CategoryRow({
 
   return (
     <m.li
-      className="group border-t rule transition-colors duration-200 hover:bg-paper-50"
+      className="group border-t rule transition-colors duration-200 hover:bg-white/[0.03]"
       initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-10%' }}
@@ -53,7 +53,7 @@ const CategoryRow = memo(function CategoryRow({
         <div className="mb-3 flex items-baseline justify-between gap-4 sm:mb-4">
           <span
             aria-hidden="true"
-            className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-500 transition-colors duration-200 group-hover:text-vermilion-600 sm:text-xs"
+            className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-500 transition-colors duration-200 group-hover:text-vermilion-400 sm:text-xs"
           >
             04.{index + 1}
           </span>
@@ -108,18 +108,18 @@ export function Skills() {
 
         {/* Reading key for the specimen ink weights */}
         <m.div
-          className="mb-10 inline-flex flex-wrap items-baseline gap-x-6 gap-y-2 border rule px-4 py-3 sm:mb-14 sm:px-5"
+          className="glass mb-10 inline-flex flex-wrap items-baseline gap-x-6 gap-y-2 !rounded-full px-5 py-3 sm:mb-14 sm:px-6"
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-10%' }}
           transition={{ duration: 0.6, ease: EASE }}
         >
           <span className="folio">Key</span>
-          <span className="font-mono text-[11px] font-medium uppercase tracking-[0.16em] text-vermilion-600">
-            <span aria-hidden="true">● </span>Vermilion = Expert
+          <span className="font-mono text-[11px] font-medium uppercase tracking-[0.16em] text-vermilion-400">
+            <span aria-hidden="true">● </span>Violet = Expert
           </span>
           <span className="font-mono text-[11px] uppercase tracking-[0.16em] text-ink-900">
-            <span aria-hidden="true">● </span>Ink = Advanced
+            <span aria-hidden="true">● </span>Bright = Advanced
           </span>
           <span className="font-mono text-[11px] uppercase tracking-[0.16em] text-ink-500">
             <span aria-hidden="true">● </span>Faded = Intermediate

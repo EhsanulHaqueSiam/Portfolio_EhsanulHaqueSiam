@@ -14,10 +14,9 @@ const platformLabels: Record<BlogPost['platform'], string> = {
 };
 
 /**
- * 12 / Field Notes — writing rendered as a table-of-contents ledger.
+ * 11 / Field Notes — writing rendered as a table-of-contents ledger.
  * Entries with url === '#' are unlinked rows carrying a mono IN PRESS
  * chip; live entries are external links with an arrow.
- * (Currently unmounted in App.tsx — exports kept identical for later use.)
  */
 export function Blog() {
   const inPressCount = blogPosts.filter((post) => post.url === '#').length;
@@ -30,7 +29,7 @@ export function Blog() {
     <section id="blog" className="py-24 sm:py-32">
       <div className="mx-auto max-w-[1400px] px-5 sm:px-8 lg:px-12">
         <SectionHeader
-          number="12"
+          number="11"
           name="FIELD NOTES"
           title={
             <>
@@ -47,7 +46,7 @@ export function Blog() {
           viewport={{ once: true, margin: '-10%' }}
           transition={{ duration: 0.7, ease: EASE }}
         >
-          Technical deep-dives on the systems I build — architecture decisions,
+          Technical deep-dives on the systems I build: architecture decisions,
           performance wins, and lessons from production.
         </m.p>
 
@@ -74,21 +73,21 @@ export function Blog() {
                           'aria-label': `Read ${post.title} (opens in new tab)`,
                         }
                       : {})}
-                    className={`group block -mx-2 px-2 py-6 transition-colors duration-300 sm:-mx-4 sm:px-4 sm:py-8 ${
-                      isComingSoon ? '' : 'cursor-pointer hover:bg-paper-50'
+                    className={`group block -mx-2 rounded-2xl px-2 py-6 transition-colors duration-300 sm:-mx-4 sm:px-4 sm:py-8 ${
+                      isComingSoon ? '' : 'cursor-pointer hover:bg-white/[0.04]'
                     }`}
                   >
                     <div className="flex flex-col gap-3 sm:grid sm:grid-cols-[4rem_1fr_auto] sm:items-baseline sm:gap-x-6">
                       {/* Entry index */}
                       <span className="folio text-[10px] sm:text-[11px]" aria-hidden="true">
-                        12.{String(i + 1).padStart(2, '0')}
+                        11.{String(i + 1).padStart(2, '0')}
                       </span>
 
                       {/* Title + dotted leader */}
                       <div className="flex min-w-0 items-baseline">
                         <h3
                           className={`font-display font-light text-xl leading-snug text-ink-900 transition-colors duration-300 sm:text-2xl lg:text-3xl ${
-                            isComingSoon ? '' : 'group-hover:text-vermilion'
+                            isComingSoon ? '' : 'group-hover:text-vermilion-400'
                           }`}
                         >
                           {post.title}
@@ -104,11 +103,11 @@ export function Blog() {
                           </span>
                         )}
                         {isComingSoon ? (
-                          <span className="whitespace-nowrap border border-vermilion px-2 py-1 font-mono text-[10px] uppercase tracking-[0.16em] text-vermilion sm:text-[11px]">
+                          <span className="whitespace-nowrap rounded-full border border-vermilion-500/40 bg-vermilion-50/60 px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.16em] text-vermilion-400 sm:text-[11px]">
                             IN PRESS
                           </span>
                         ) : (
-                          <ArrowUpRightIcon className="h-4 w-4 shrink-0 text-ink-500 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-vermilion" />
+                          <ArrowUpRightIcon className="h-4 w-4 shrink-0 text-ink-500 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-vermilion-400" />
                         )}
                       </div>
 

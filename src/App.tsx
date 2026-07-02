@@ -2,7 +2,7 @@ import { LazyMotion, domAnimation, MotionConfig, useReducedMotion } from 'framer
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { SocialLinks } from './components/SocialLinks';
-import { CustomCursor, ScrollProgress, SmoothScroll, Marquee, StudioCat } from './components/ui';
+import { CustomCursor, ScrollProgress, SmoothScroll, Marquee, CommandPalette, Spotlight } from './components/ui';
 // Direct (non-lazy) imports so Astro server-renders every section into the
 // static HTML at build time — critical for SEO/AEO/GEO crawlers.
 import { About } from './components/About';
@@ -15,6 +15,7 @@ import { Awards } from './components/Awards';
 import { Publications } from './components/Publications';
 import { Education } from './components/Education';
 import { FAQ } from './components/FAQ';
+import { Blog } from './components/Blog';
 import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
 import { Resume } from './components/Resume';
@@ -25,7 +26,7 @@ function Ticker({ items, direction = 'left' }: { items: string[]; direction?: 'l
     <div className="border-t border-b rule-strong py-3 sm:py-4" aria-hidden="true">
       <Marquee speed={38} direction={direction} pauseOnHover={false}>
         {items.map((item) => (
-          <span key={item} className="folio !text-ink-700 mx-6 inline-flex items-center gap-6">
+          <span key={item} className="folio !text-ink-600 mx-6 inline-flex items-center gap-6">
             {item}
             <span className="text-vermilion">✦</span>
           </span>
@@ -43,7 +44,8 @@ function App() {
     <MotionConfig reducedMotion="user">
     <SmoothScroll>
       <div className="relative">
-        {/* Print furniture: fixed ruled layout columns + paper grain */}
+        {/* Ambient furniture: aurora glows + blueprint columns + film grain */}
+        <div className="aurora-backdrop" aria-hidden="true" />
         <div className="ruled-columns" aria-hidden="true" />
         <div className="grain-overlay" aria-hidden="true" />
 
@@ -67,7 +69,7 @@ function App() {
                 'LLM / RAG systems',
                 'Full-stack development',
                 'Published research',
-                'Dhaka → worldwide',
+                'Dhaka to worldwide',
               ]}
             />
             <div className="cv-auto"><About /></div>
@@ -78,7 +80,7 @@ function App() {
               direction="right"
               items={[
                 'Selected works',
-                '2023 — 2026',
+                'Since 2023',
                 'Shipped & measured',
                 '50,000+ users served',
                 'Production-grade',
@@ -92,12 +94,7 @@ function App() {
             <div className="cv-auto"><Publications /></div>
             <div className="cv-auto"><Education /></div>
             <div className="cv-auto"><FAQ /></div>
-            {/* A quiet beat before the finale: the studio cat on its hairline */}
-            <div className="mx-auto max-w-[1400px] px-5 sm:px-8 lg:px-12" aria-hidden="true">
-              <div className="border-b rule-strong flex justify-end pr-[12%] sm:pr-[18%]">
-                <StudioCat className="translate-y-[3px]" />
-              </div>
-            </div>
+            <div className="cv-auto"><Blog /></div>
             <div className="dither-edge" aria-hidden="true" />
             <div className="cv-auto"><Contact /></div>
           </main>
@@ -106,6 +103,10 @@ function App() {
 
         {/* Resume overlay - self-managed via URL hash */}
         <Resume />
+
+        {/* Ctrl/Cmd+K command palette + glass-card cursor spotlight */}
+        <CommandPalette />
+        <Spotlight />
       </div>
     </SmoothScroll>
     </MotionConfig>

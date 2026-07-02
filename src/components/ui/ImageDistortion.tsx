@@ -105,7 +105,7 @@ export function ImageDistortion({ children, className = '', intensity = 8 }: Ima
         <div
           className="absolute inset-0 pointer-events-none rounded-[inherit]"
           style={{
-            background: 'radial-gradient(600px circle at var(--glare-x, 50%) var(--glare-y, 50%), rgba(23, 20, 18, 0.08), transparent 40%)',
+            background: 'radial-gradient(600px circle at var(--glare-x, 50%) var(--glare-y, 50%), rgba(238, 241, 248, 0.07), transparent 40%)',
             opacity: isHovered ? 1 : 0,
             transition: 'opacity 180ms cubic-bezier(0.23, 1, 0.32, 1)',
           }}

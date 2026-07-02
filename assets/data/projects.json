@@ -1,7 +1,7 @@
 [
   {
     "name": "ScholarHub",
-    "desc": "Students waste 20+ hours searching fragmented scholarship sources before deadlines pass. Built a unified discovery platform that indexes 12,000+ opportunities daily from 272 automated spiders — reducing search time to minutes. Full-text search with multi-facet filtering, admin review dashboard, and dynamic SEO. React 19 + TanStack Start SSR + Convex + Python scraping pipeline.",
+    "desc": "Students waste 20+ hours searching fragmented scholarship sources before deadlines pass. Built a unified discovery platform that indexes 12,000+ opportunities daily from 272 automated spiders, reducing search time to minutes. Full-text search with multi-facet filtering, admin review dashboard, and dynamic SEO. React 19 + TanStack Start SSR + Convex + Python scraping pipeline.",
     "metrics": [
       "12,000+ scholarships indexed daily",
       "272 spiders across 5 source categories",
@@ -31,7 +31,7 @@
     },
     "caseStudy": {
       "problem": "Students seeking international scholarships face fragmented information scattered across hundreds of sources, making it nearly impossible to discover relevant opportunities before deadlines pass.",
-      "solution": "Built a unified scholarship discovery platform with 272 automated spiders scraping daily, intelligent deduplication, multi-facet search and filtering, and an admin dashboard for quality control — giving students a single place to find every scholarship they're eligible for.",
+      "solution": "Built a unified scholarship discovery platform with 272 automated spiders scraping daily, intelligent deduplication, multi-facet search and filtering, and an admin dashboard for quality control, giving students a single place to find every scholarship they're eligible for.",
       "process": [
         {
           "title": "Scraping Pipeline",
@@ -76,7 +76,7 @@
   },
   {
     "name": "TTT Autos",
-    "desc": "Dealership websites lack trust — generic templates with FOMO-driven tactics. Built a cinematic 'Velocity Noir' platform with interactive 3D vehicle showcases, transparent pricing, and a 17-page admin dashboard supporting cars, motorcycles, and bicycles. Polymorphic inventory with 7 indexed tables and 12+ filter facets. React 19 + TanStack Start + Drizzle ORM + Spline 3D.",
+    "desc": "Dealership websites lack trust: generic templates with FOMO-driven tactics. Built a cinematic 'Velocity Noir' platform with interactive 3D vehicle showcases, transparent pricing, and a 17-page admin dashboard supporting cars, motorcycles, and bicycles. Polymorphic inventory with 7 indexed tables and 12+ filter facets. React 19 + TanStack Start + Drizzle ORM + Spline 3D.",
     "metrics": [
       "3D Spline vehicle showcases",
       "Full admin CRUD dashboard",
@@ -106,7 +106,7 @@
     },
     "caseStudy": {
       "problem": "Traditional dealership websites rely on generic templates with FOMO-driven sales tactics, lacking a premium browsing experience that builds trust through transparency and visual immersion.",
-      "solution": "Built a cinematic 'Velocity Noir' dealership platform with interactive 3D models, headlight-effect UI, multi-angle photo galleries, and a comprehensive admin dashboard — all architected for trust-first positioning with transparent pricing and verified quality badges.",
+      "solution": "Built a cinematic 'Velocity Noir' dealership platform with interactive 3D models, headlight-effect UI, multi-angle photo galleries, and a comprehensive admin dashboard, all architected for trust-first positioning with transparent pricing and verified quality badges.",
       "process": [
         {
           "title": "Cinematic Design System",
@@ -180,7 +180,7 @@
   },
   {
     "name": "OfferLagbe",
-    "desc": "Local deals platforms lack trust — anyone can post anything. Built a community-driven marketplace where user trust scores auto-moderate content (bad actors removed at <10% trust, verified badges at 5+ upvotes). Real-time map with clustering and heatmap visualization. React 19 + Convex real-time DB + MapLibre GL + PWA with offline support.",
+    "desc": "Local deals platforms lack trust: anyone can post anything. Built a community-driven marketplace where user trust scores auto-moderate content (bad actors removed at <10% trust, verified badges at 5+ upvotes). Real-time map with clustering and heatmap visualization. React 19 + Convex real-time DB + MapLibre GL + PWA with offline support.",
     "metrics": [
       "Real-time Convex subscriptions",
       "MapLibre clustering + heatmap",
@@ -240,7 +240,7 @@
   },
   {
     "name": "Void Threads",
-    "desc": "Most e-commerce sites leave money on the table with poor mobile UX. Built a conversion-optimized streetwear platform using sales psychology — exit-intent recovery, urgency indicators, and trust signals — with pixel-perfect responsive coverage from 320px to 1920px. SSR via Nitro 3 for instant page loads. React 19 + TanStack Start.",
+    "desc": "Most e-commerce sites leave money on the table with poor mobile UX. Built a conversion-optimized streetwear platform using sales psychology such as exit-intent recovery, urgency indicators, and trust signals, plus pixel-perfect responsive coverage from 320px to 1920px. SSR via Nitro 3 for instant page loads. React 19 + TanStack Start.",
     "metrics": [
       "SSR with Nitro 3",
       "320px\u20131920px responsive",
@@ -270,7 +270,7 @@
   },
   {
     "name": "Indian Claypit",
-    "desc": "A restaurant needed to move from phone-only orders to a digital platform without losing the personal touch that earned their reputation. Built the full-stack solution — frontend ordering experience, backend order processing, event booking, and catering integration — now serving 50,000+ customers with a 4.9\u2605 rating from 2,847 Google Reviews.",
+    "desc": "A restaurant needed to move from phone-only orders to a digital platform without losing the personal touch that earned their reputation. Built the full-stack solution: frontend ordering experience, backend order processing, event booking, and catering integration, now serving 50,000+ customers with a 4.9\u2605 rating from 2,847 Google Reviews.",
     "metrics": [
       "50,000+ customers served",
       "4.9\u2605 (2,847 reviews)",
@@ -298,7 +298,7 @@
     },
     "caseStudy": {
       "problem": "Indian Claypit relied on phone-only ordering, losing potential customers who expected digital convenience. Their excellent food and service (reflected in 2,847 Google Reviews) wasn't translating to online reach.",
-      "solution": "Built a full-stack restaurant platform with seamless online ordering, real-time order tracking, event booking for private dining, and catering integration — maintaining the warmth of their brand while scaling digitally.",
+      "solution": "Built a full-stack restaurant platform with seamless online ordering, real-time order tracking, event booking for private dining, and catering integration, maintaining the warmth of their brand while scaling digitally.",
       "process": [
         {
           "title": "Ordering Experience",
@@ -343,7 +343,7 @@
   },
   {
     "name": "BetaScript",
-    "desc": "A US-based digital agency needed a web presence that matched their premium positioning and 24-hour response promise. Designed and shipped an animated React site with service showcases, client testimonials, and conversion-optimized contact flows — now representing a BD-USA partnership serving 150+ clients with 100% satisfaction.",
+    "desc": "A US-based digital agency needed a web presence that matched their premium positioning and 24-hour response promise. Designed and shipped an animated React site with service showcases, client testimonials, and conversion-optimized contact flows, now representing a BD-USA partnership serving 150+ clients with 100% satisfaction.",
     "metrics": [
       "150+ clients served",
       "100% satisfaction rate",
@@ -370,7 +370,7 @@
   },
   {
     "name": "Student Management System",
-    "desc": "Reduced university data retrieval time from 50ms to 7ms — a 7x performance improvement validated by load testing with 45+ active users by redesigning the database to 3NF normalization with Singleton connection pooling in Java. Earned 17 GitHub stars.",
+    "desc": "Reduced university data retrieval time from 50ms to 7ms, a 7x performance improvement validated by load testing with 45+ active users, by redesigning the database to 3NF normalization with Singleton connection pooling in Java. Earned 17 GitHub stars.",
     "metrics": [
       "⭐ 17 Stars, 8 Forks",
       "50ms → 7ms queries (7x faster)",

@@ -3,23 +3,23 @@ const siteUrl = 'https://ehsanulhaquesiam.netlify.app';
 ---
 
 <!doctype html>
-<html lang="en" style="background:#F5F1E8">
+<html lang="en" style="background:#05060A">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>404 — Page Not Found | Ehsanul Haque Siam</title>
+    <title>404 · Page Not Found | Ehsanul Haque Siam</title>
     <meta name="robots" content="noindex, follow" />
     <link rel="canonical" href={siteUrl + '/'} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <style is:inline>
       :root {
-        --paper: #F5F1E8;
-        --paper-raised: #FAF7F0;
-        --ink: #171412;
-        --ink-muted: #544A3E;
-        --ink-faint: #8D8371;
-        --hairline: rgba(23, 20, 18, 0.16);
-        --vermilion: #D93A0D;
+        --paper: #05060a;
+        --paper-raised: #0b0d14;
+        --ink: #eef1f8;
+        --ink-muted: #8b92a8;
+        --ink-faint: #6e7488;
+        --hairline: rgba(235, 240, 255, 0.12);
+        --vermilion: #8b7cff;
         --serif: Georgia, 'Times New Roman', serif;
         --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace;
       }
@@ -31,7 +31,9 @@ const siteUrl = 'https://ehsanulhaquesiam.netlify.app';
         align-items: center;
         justify-content: center;
         padding: 2rem 1.25rem;
-        background: var(--paper);
+        background:
+          radial-gradient(42% 34% at 70% 0%, rgba(139, 124, 255, 0.1), transparent 70%)
+          var(--paper);
         color: var(--ink);
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
         line-height: 1.6;
@@ -45,7 +47,7 @@ const siteUrl = 'https://ehsanulhaquesiam.netlify.app';
         justify-content: space-between;
         align-items: baseline;
         gap: 1rem;
-        border-top: 1px solid var(--ink);
+        border-top: 1px solid var(--hairline);
         padding-top: 0.75rem;
         font-family: var(--mono);
         font-size: 0.6875rem;
@@ -71,18 +73,20 @@ const siteUrl = 'https://ehsanulhaquesiam.netlify.app';
         position: absolute;
         top: 14%;
         right: 0;
-        transform: rotate(-8deg);
+        transform: rotate(-4deg);
         font-family: var(--mono);
         font-size: 0.75rem;
         font-weight: 600;
         letter-spacing: 0.22em;
         text-transform: uppercase;
         color: var(--vermilion);
-        border: 2px solid var(--vermilion);
-        outline: 1.5px solid var(--vermilion);
-        outline-offset: 3px;
-        padding: 0.5rem 0.9rem;
-        background: var(--paper);
+        border: 1px solid rgba(139, 124, 255, 0.4);
+        border-radius: 999px;
+        padding: 0.5rem 1rem;
+        background: rgba(139, 124, 255, 0.08);
+        box-shadow: 0 0 24px -6px rgba(139, 124, 255, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
       }
       h1 {
         margin: 1.75rem 0 0.75rem;
@@ -104,18 +108,20 @@ const siteUrl = 'https://ehsanulhaquesiam.netlify.app';
         min-height: 44px;
         padding: 0.85rem 1.6rem;
         background: var(--ink);
-        color: var(--paper-raised);
+        color: var(--paper);
+        border-radius: 999px;
         text-decoration: none;
         font-family: var(--mono);
         font-size: 0.75rem;
         font-weight: 600;
         letter-spacing: 0.16em;
         text-transform: uppercase;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 12px 32px -12px rgba(238, 241, 248, 0.35);
+        transition: box-shadow 0.3s ease;
       }
       .btn:hover,
       .btn:focus-visible {
-        background: var(--vermilion);
-        color: var(--paper-raised);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 0 0 1px rgba(139, 124, 255, 0.4), 0 12px 44px -10px rgba(139, 124, 255, 0.5);
       }
       .colophon {
         margin-top: 2.5rem;
@@ -132,20 +138,20 @@ const siteUrl = 'https://ehsanulhaquesiam.netlify.app';
   <body>
     <main>
       <div class="folio">
-        <span><strong>Err. 404</strong> — Page not found</span>
-        <span aria-hidden="true">Proof of work</span>
+        <span><strong>Err. 404</strong> / Page not found</span>
+        <span aria-hidden="true">Obsidian signal</span>
       </div>
       <div class="display">
         <p class="giant">404</p>
-        <span class="stamp" aria-hidden="true">Misprint</span>
+        <span class="stamp" aria-hidden="true">Signal lost</span>
       </div>
-      <h1>This page wandered off the press.</h1>
+      <h1>This page slipped out of the signal.</h1>
       <p class="desc">
-        The page you're looking for doesn't exist — but the portfolio of Ehsanul Haque Siam,
+        The page you're looking for doesn't exist, but the portfolio of Ehsanul Haque Siam,
         AI Engineer &amp; Full-Stack Developer, is one click away.
       </p>
       <a class="btn" href="/">&larr; Return to the front page</a>
-      <div class="colophon">Ehsanul Haque Siam — Dhaka, Bangladesh</div>
+      <div class="colophon">Ehsanul Haque Siam · Dhaka, Bangladesh</div>
     </main>
   </body>
 </html>

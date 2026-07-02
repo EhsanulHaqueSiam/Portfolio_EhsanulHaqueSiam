@@ -36,9 +36,9 @@ function parseRole(role: string): ParsedRole {
   return { title, annotations };
 }
 
-/** "Apr 2026 - Present" → "Apr 2026 — Present" (uppercased via mono styling) */
+/** "Apr 2026 - Present" → "Apr 2026 · Present" (uppercased via mono styling) */
 function formatDate(date: string): string {
-  return date.replace(/\s*-\s*/g, ' — ');
+  return date.replace(/\s*-\s*/g, ' · ');
 }
 
 export function Experience() {
@@ -53,7 +53,7 @@ export function Experience() {
       : null;
   const annotation =
     spanStart !== null && spanEnd !== null
-      ? `${featuredExperience.length} ENTRIES · ${spanStart}—${spanEnd}`
+      ? `${featuredExperience.length} ENTRIES · ${spanStart}-${spanEnd}`
       : `${featuredExperience.length} ENTRIES`;
 
   return (
@@ -87,7 +87,7 @@ export function Experience() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-10%' }}
                 transition={{ duration: 0.7, delay: index * 0.06, ease: EASE }}
-                className="group border-t rule transition-colors duration-200 hover:bg-paper-50"
+                className="group border-t rule transition-colors duration-200 hover:bg-white/[0.03]"
               >
                 <div className="grid grid-cols-1 gap-y-4 py-8 sm:py-10 lg:grid-cols-[11.5rem_minmax(0,1fr)] lg:gap-x-10">
                   {/* Date column — fixed width on lg, inline row on mobile */}
@@ -96,7 +96,11 @@ export function Experience() {
                       {formatDate(exp.date)}
                     </span>
                     {ongoing && (
-                      <span className="stamp inline-block -rotate-3 px-2.5 py-1.5 text-[10px] leading-none">
+                      <span className="stamp inline-flex items-center gap-1.5 px-2.5 py-1.5 text-[10px] leading-none">
+                        <span
+                          className="h-1.5 w-1.5 rounded-full bg-green-400 animate-pulse-dot"
+                          aria-hidden="true"
+                        />
                         Ongoing
                       </span>
                     )}
@@ -105,7 +109,7 @@ export function Experience() {
                   {/* Entry — optional logo plate + company/role ledger line + desc */}
                   <div className="flex min-w-0 gap-4 sm:gap-6">
                     {exp.logo && (
-                      <div className="plate h-10 w-10 shrink-0 sm:h-14 sm:w-14">
+                      <div className="plate h-10 w-10 shrink-0 rounded-xl sm:h-14 sm:w-14">
                         <img
                           src={`/images/experience/${exp.logo}.webp`}
                           alt={`${exp.company} logo`}
@@ -121,7 +125,7 @@ export function Experience() {
 
                     <div className="min-w-0 flex-1">
                       <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1.5">
-                        <h3 className="font-display text-2xl font-light text-ink-900 transition-colors duration-200 group-hover:text-vermilion sm:text-3xl">
+                        <h3 className="font-display text-2xl font-light text-ink-900 transition-colors duration-200 group-hover:text-vermilion-400 sm:text-3xl">
                           {exp.company}
                         </h3>
                         <span className="font-body text-sm text-ink-700 sm:text-base">
@@ -157,7 +161,7 @@ export function Experience() {
           <MagneticHover strength={12}>
             <a
               href="#resume"
-              className="press-feedback inline-flex min-h-[44px] items-center gap-3 border border-ink-900 bg-ink-900 px-6 py-4 font-mono text-xs uppercase tracking-[0.16em] text-paper-50 transition-colors duration-200 hover:border-vermilion hover:bg-vermilion focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-vermilion"
+              className="btn-primary min-h-[44px] px-7 py-4"
             >
               View Full Record
               <ArrowRightIcon className="arrow-bounce h-4 w-4" />

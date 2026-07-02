@@ -75,7 +75,14 @@ scripts/generate-seo.mjs   # prebuild: regenerates public/{robots.txt,sitemap.xm
 - **Astro 7** — static site generator, React integration (`@astrojs/react`).
 - **Framer Motion 11** — all animations (islands hydrate to run them).
 - **@studio-freight/lenis** — smooth scroll (`SmoothScroll`, browser-only, effect-guarded).
-- **TailwindCSS v3** — custom `space-*`, `violet-*`, `amber-*` colors; `display`/`body` fonts.
+- **TailwindCSS v3** — "Obsidian Signal" dark glass theme. IMPORTANT token remap:
+  legacy names kept but re-valued — `paper-*` = DARK surface scale (paper-100 = page
+  void `#05060A`, paper-50 = raised `#0B0D14`), `ink-*` = LIGHT foreground scale
+  (ink-900 = `#EEF1F8`), `vermilion` = iris violet `#8B7CFF`, `cobalt` = cyan.
+  Glass utilities in `src/index.css`: `.glass`, `.glass-card`, `.glass-chrome`,
+  `.btn-primary` (white pill), `.btn-glass`, `.text-iris` (gradient), `.dither-veil`,
+  `.aurora-backdrop`. Animated dither hero backdrop: `src/components/ui/DitherField.tsx`.
+  The Resume overlay sheet (`.resume-paper`) intentionally stays light for print.
 
 ### Image Handling
 - WebP in `public/images/` (projects/, achievements/, publications/, education/).

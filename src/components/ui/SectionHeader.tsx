@@ -40,7 +40,7 @@ export const SectionHeader = memo(function SectionHeader({
           <span className={inverse ? 'text-vermilion-400' : 'text-vermilion'}>{number}</span>
           {name && (
             <>
-              <span aria-hidden="true"> — </span>
+              <span aria-hidden="true"> · </span>
               {name}
             </>
           )}
@@ -50,9 +50,7 @@ export const SectionHeader = memo(function SectionHeader({
         )}
       </div>
       <h2
-        className={`poster text-display-lg ${
-          inverse ? 'text-paper-100' : 'text-ink-900'
-        }`}
+        className="poster text-display-lg text-ink-900"
       >
         <span className="block overflow-hidden pb-[0.12em] -mb-[0.12em]">
           <m.span

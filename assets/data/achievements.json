@@ -37,7 +37,7 @@
   },
   {
     "name": "Published Research - Taylor & Francis (IDAA 2025)",
-    "desc": "Published a Taylor & Francis Book Chapter on medical AI at IDAA 2025 — an international conference indexed by major databases by benchmarking BioBERT, PubMedBERT, and BERT for multi-label adverse drug reaction classification.",
+    "desc": "Published a Taylor & Francis Book Chapter on medical AI at IDAA 2025, an international conference indexed by major databases, by benchmarking BioBERT, PubMedBERT, and BERT for multi-label adverse drug reaction classification.",
     "images": [
       "pub1"
     ],

@@ -110,9 +110,8 @@ function DhakaClock() {
  * override the Tailwind hover translate — so hover physics live one level in.
  */
 const CELL =
-  'relative flex h-full flex-col bg-paper-50 p-5 sm:p-7 ' +
-  'transition-[transform,box-shadow] duration-[180ms] ease-out ' +
-  'hover:z-10 hover:-translate-y-0.5 hover:shadow-plate';
+  'glass-card relative flex h-full flex-col p-5 sm:p-7 ' +
+  'hover:z-10 hover:-translate-y-0.5';
 
 /** Staggered rise-in for each cell (0.05 stagger, y:16, once). */
 const reveal = (i: number) => ({
@@ -150,8 +149,8 @@ export function WhyMe() {
           annotation="MEASURED RESULTS · LIVE"
         />
 
-        {/* Gapless bento — hairline seams via gap-px over a hairline-tinted bed */}
-        <div className="grid grid-cols-2 gap-px border rule bg-[color:var(--hairline)] lg:grid-cols-12">
+        {/* Glass bento — frosted cells over the void, violet ring on hover */}
+        <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-12">
           {/* ——— 1–4 · Stat cells (Google-XYZ proof points) ——— */}
           {profile.stats.slice(0, 4).map((stat, i) => (
             <m.div
@@ -160,7 +159,7 @@ export function WhyMe() {
               {...reveal(i)}
             >
               <div className={`${CELL} group min-h-[9rem] sm:min-h-[11rem]`}>
-                <span className="folio transition-colors duration-[180ms] ease-out group-hover:text-vermilion">
+                <span className="folio transition-colors duration-[180ms] ease-out group-hover:text-vermilion-400">
                   P.{String(i + 1).padStart(2, '0')}
                 </span>
                 <span className="mt-auto block pt-6 font-display text-[clamp(2.75rem,4.5vw,4.75rem)] font-light leading-none text-ink-900">
@@ -185,12 +184,12 @@ export function WhyMe() {
                 {currentRoles.map((r) => (
                   <li key={r.company} className="flex items-start gap-3 py-3.5">
                     <span
-                      className="mt-1 h-1.5 w-1.5 shrink-0 animate-pulse bg-vermilion motion-reduce:animate-none"
+                      className="mt-1 h-1.5 w-1.5 shrink-0 animate-pulse rounded-full bg-vermilion shadow-glow-sm motion-reduce:animate-none"
                       aria-hidden="true"
                     />
                     <div className="min-w-0">
                       <span className="block font-mono text-xs uppercase tracking-[0.14em] text-ink-900">
-                        {r.role} <span className="text-vermilion">@</span> {r.company}
+                        {r.role} <span className="text-vermilion-400">@</span> {r.company}
                       </span>
                       <span className="mt-1 block font-mono text-[10px] uppercase tracking-[0.16em] text-ink-500">
                         {r.meta ? `${r.meta} · ` : ''}since {r.since}
@@ -200,7 +199,7 @@ export function WhyMe() {
                 ))}
               </ul>
               <p className="folio mt-4 border-t rule pt-4 !text-ink-600">
-                {currentRoles.length} concurrent roles — all live
+                {currentRoles.length} concurrent roles, all live
               </p>
             </div>
           </m.div>
@@ -210,24 +209,24 @@ export function WhyMe() {
             <a
               href="#publications"
               className={`${CELL} group`}
-              aria-label={`${paperCount} peer-reviewed papers — view publications`}
+              aria-label={`${paperCount} peer-reviewed papers, view publications`}
             >
               <span className="flex items-baseline justify-between gap-4">
                 <span className="folio">Research</span>
                 <ArrowUpRightIcon
-                  className="h-3.5 w-3.5 shrink-0 self-center text-ink-400 transition-colors duration-[180ms] ease-out group-hover:text-vermilion"
+                  className="h-3.5 w-3.5 shrink-0 self-center text-ink-400 transition-colors duration-[180ms] ease-out group-hover:text-vermilion-400"
                   aria-hidden="true"
                 />
               </span>
               <p className="mt-6 font-display text-2xl font-light leading-tight text-ink-900 sm:text-3xl">
-                <span className="text-vermilion">{paperCount}</span> peer-reviewed{' '}
+                <span className="text-vermilion-400">{paperCount}</span> peer-reviewed{' '}
                 <em className="italic">papers</em>
               </p>
               <ul className="mt-auto flex flex-wrap gap-1.5 pt-6" aria-label="Venues">
                 {VENUES.map((venue) => (
                   <li
                     key={venue}
-                    className="border rule px-2 py-1 font-mono text-[10px] uppercase tracking-[0.12em] text-ink-700"
+                    className="rounded-full border border-white/10 bg-white/5 px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.12em] text-ink-700"
                   >
                     {venue}
                   </li>
@@ -241,17 +240,17 @@ export function WhyMe() {
             <a
               href="#awards"
               className={`${CELL} group`}
-              aria-label="Certified Ethical Hacker — view awards and certifications"
+              aria-label="Certified Ethical Hacker, view awards and certifications"
             >
               <span className="flex items-baseline justify-between gap-4">
                 <span className="folio">Certified</span>
                 <ArrowUpRightIcon
-                  className="h-3.5 w-3.5 shrink-0 self-center text-ink-400 transition-colors duration-[180ms] ease-out group-hover:text-vermilion"
+                  className="h-3.5 w-3.5 shrink-0 self-center text-ink-400 transition-colors duration-[180ms] ease-out group-hover:text-vermilion-400"
                   aria-hidden="true"
                 />
               </span>
               <span
-                className="stamp mt-6 inline-block -rotate-6 self-start px-3 py-1.5 text-sm font-semibold transition-transform duration-[180ms] ease-out group-hover:-rotate-3"
+                className="stamp mt-6 inline-block self-start px-3.5 py-1.5 text-sm font-semibold transition-transform duration-[180ms] ease-out group-hover:scale-105"
                 aria-hidden="true"
               >
                 CEH
@@ -269,17 +268,17 @@ export function WhyMe() {
               target="_blank"
               rel="me noopener noreferrer"
               className={`${CELL} group`}
-              aria-label={`GitHub profile — ${ossStars} stars across ${ossRepos} repositories (opens in new tab)`}
+              aria-label={`GitHub profile, ${ossStars} stars across ${ossRepos} repositories (opens in new tab)`}
             >
               <span className="flex items-baseline justify-between gap-4">
                 <span className="folio">Open source</span>
                 <GitHubIcon
-                  className="h-4 w-4 shrink-0 self-center text-ink-400 transition-colors duration-[180ms] ease-out group-hover:text-vermilion"
+                  className="h-4 w-4 shrink-0 self-center text-ink-400 transition-colors duration-[180ms] ease-out group-hover:text-vermilion-400"
                   aria-hidden="true"
                 />
               </span>
               <p className="mt-6 font-display text-2xl font-light leading-tight text-ink-900 sm:text-3xl">
-                <span className="text-vermilion">{ossStars}</span>{' '}
+                <span className="text-vermilion-400">{ossStars}</span>{' '}
                 <em className="italic">stars</em>
               </p>
               <span className="mt-auto block pt-6 font-mono text-[10px] uppercase tracking-[0.16em] text-ink-600 sm:text-xs sm:tracking-[0.14em]">
@@ -294,10 +293,10 @@ export function WhyMe() {
             <div className={CELL}>
               <span className="folio">Location / TZ</span>
               <p className="mt-auto pt-6 font-mono text-xs uppercase tracking-[0.16em] text-ink-900 sm:text-sm">
-                Dhaka, BD — <DhakaClock />
+                Dhaka, BD · <DhakaClock />
               </p>
               <p className="mt-2 font-mono text-xs uppercase tracking-[0.16em] text-ink-600 sm:text-sm">
-                Remote — Worldwide
+                Remote · Worldwide
               </p>
             </div>
           </m.div>
@@ -313,13 +312,13 @@ export function WhyMe() {
                 &ldquo;Strong accept. No revisions required.&rdquo;
               </blockquote>
               <p className="mt-auto pt-5 font-mono text-[10px] uppercase tracking-[0.16em] text-ink-500 sm:text-[11px]">
-                — Reviewer #2 requested no changes. Believed to be a first in the literature.
+                Reviewer #2 requested no changes. Believed to be a first in the literature.
               </p>
               <m.span
                 className="stamp absolute right-4 top-4 px-3 py-1.5 text-xs font-semibold sm:right-8 sm:px-4 sm:py-2 sm:text-sm"
-                initial={{ opacity: 0, scale: 1.4, rotate: -14 }}
-                whileInView={{ opacity: 1, scale: 1, rotate: -6 }}
-                whileHover={{ rotate: -3, scale: 1.04 }}
+                initial={{ opacity: 0, scale: 0.8 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                whileHover={{ scale: 1.05 }}
                 viewport={{ once: true, margin: '-10%' }}
                 transition={{ duration: 0.45, delay: 0.55, ease: EASE }}
               >

@@ -4,15 +4,15 @@
 > Last updated: 2026-07-02. Contact: ehsanul.siamdev@gmail.com
 
 ## Now
-- **Research Assistant (Full-time, Remote), Deepchain Labs** (Apr 2026 - Present)
-- **Solo Developer (Part-time, ~20 hrs/week), BetaScript LLC** (Jan 2026 - Present)
-- **AI & Data Engineer (Part-time, ~15 hrs/week), BDTracks** (Aug 2025 - Present)
+- **Research Assistant (Full-time, Remote), Deepchain Labs** (Apr 2026–Present)
+- **Solo Developer (Part-time, ~20 hrs/week), BetaScript LLC** (Jan 2026–Present)
+- **AI & Data Engineer (Part-time, ~15 hrs/week), BDTracks** (Aug 2025–Present)
 
 ## Highlights
-- 1.5x — Revenue Growth
-- 50K+ — Users Served
-- 3 — Papers & Talks
-- 8+ — Production Apps
+- 1.5x: Revenue Growth
+- 50K+: Users Served
+- 3: Papers & Talks
+- 8+: Production Apps
 
 ## Key pages
 - [Portfolio home](https://ehsanulhaquesiam.netlify.app/): full experience, projects, publications, skills
@@ -21,9 +21,9 @@
 - [Full profile for LLMs](https://ehsanulhaquesiam.netlify.app/llms-full.txt): complete structured detail
 
 ## Publications
-- Decoding Research Trends: A Clustering Based Topic Modeling Framework — IEEE QPAIN 2026 (2026 | Accepted (IEEE Xplore, Scopus Indexed))
-- Beyond NER: A Comparative Benchmark of Medical BERTS for Multi-Label Adverse Drug Reaction Classification — International Conference on Intelligent Data Analysis and Applications (IDAA 2025) (Dec 2025 | Book Chapter (Taylor & Francis))
-- Unfolding Emerging Issues in the Context of Changing Climatic Scenario — 2nd South Asian Conference on Climate (Sep 2024 | Statistical Analysis & Presentation)
+- Decoding Research Trends: A Clustering Based Topic Modeling Framework: IEEE QPAIN 2026 (2026 | Accepted (IEEE Xplore, Scopus Indexed))
+- Beyond NER: A Comparative Benchmark of Medical BERTS for Multi-Label Adverse Drug Reaction Classification: International Conference on Intelligent Data Analysis and Applications (IDAA 2025) (Dec 2025 | Book Chapter (Taylor & Francis))
+- Unfolding Emerging Issues in the Context of Changing Climatic Scenario: 2nd South Asian Conference on Climate (Sep 2024 | Statistical Analysis & Presentation)
 
 ## Contact
 - Email: ehsanul.siamdev@gmail.com
@@ -31,4 +31,4 @@
 - LinkedIn: https://www.linkedin.com/in/EhsanulHaqueSiam/
 
 ## Availability
-Open to AI/ML engineering, LLM/RAG, and full-stack roles — full-time, part-time, or freelance; remote or Dhaka, Bangladesh.
+Open to AI/ML engineering, LLM/RAG, and full-stack roles: full-time, part-time, or freelance; remote or Dhaka, Bangladesh.

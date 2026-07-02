@@ -109,19 +109,21 @@ export function Navbar() {
         transform: isHidden && !isMobileMenuOpen ? 'translateY(-100px)' : 'translateY(0px)',
       }}
       transition={{ duration: 0.4, ease: EASE }}
-      className={`fixed top-0 left-0 right-0 z-50 border-b transition-[background-color,border-color] duration-300 ${
-        isScrolled && !isMobileMenuOpen
-          ? 'bg-paper-100 rule'
-          : 'bg-transparent border-transparent'
-      }`}
+      className="fixed top-0 left-0 right-0 z-50"
     >
-      <div className="mx-auto max-w-[1400px] px-5 sm:px-8 lg:px-12">
+      <div
+        className={`mx-auto transition-all duration-500 ease-out-expo ${
+          isScrolled && !isMobileMenuOpen
+            ? 'glass-chrome mt-3 max-w-[1200px] rounded-full px-5 sm:px-7 mx-4 min-[1248px]:mx-auto'
+            : 'max-w-[1400px] bg-transparent px-5 sm:px-8 lg:px-12'
+        }`}
+      >
         <div className="flex h-16 items-center justify-between gap-4">
           {/* Wordmark */}
           <a
             href="#"
             aria-label="Go to top"
-            className="press-feedback inline-flex min-h-[44px] shrink-0 items-center font-mono text-xs uppercase tracking-[0.24em] text-ink-900 hover:text-vermilion"
+            className="press-feedback inline-flex min-h-[44px] shrink-0 items-center font-mono text-xs uppercase tracking-[0.24em] text-ink-900 hover:text-vermilion-400"
           >
             <span className="hidden md:inline">Ehsanul&nbsp;Haque&nbsp;Siam</span>
             <span className="md:hidden">E.H.S.</span>
@@ -142,12 +144,12 @@ export function Navbar() {
                     href={item.href}
                     aria-current={isActive ? 'location' : undefined}
                     className={`group press-feedback inline-flex min-h-[44px] items-center gap-1.5 px-2 2xl:px-3 font-mono text-[11px] uppercase tracking-[0.14em] ${
-                      isActive ? 'text-vermilion-600' : 'text-ink-600 hover:text-ink-900'
+                      isActive ? 'text-vermilion-400' : 'text-ink-600 hover:text-ink-900'
                     }`}
                   >
                     <span
                       aria-hidden="true"
-                      className={isActive ? 'text-vermilion-600' : 'text-ink-400'}
+                      className={isActive ? 'text-vermilion-400' : 'text-ink-400'}
                     >
                       {item.no}
                     </span>
@@ -161,11 +163,28 @@ export function Navbar() {
           </ul>
 
           <div className="flex items-center gap-2 sm:gap-3">
+            {/* Command palette trigger */}
+            <button
+              type="button"
+              onClick={() => window.dispatchEvent(new CustomEvent('open-command-palette'))}
+              className="press-feedback hidden md:inline-flex min-h-[44px] items-center gap-2.5 rounded-full border rule bg-white/[0.04] px-4 font-mono text-[11px] uppercase tracking-[0.14em] text-ink-600 hover:text-ink-900 hover:border-vermilion-500/40"
+              aria-label="Open command palette"
+            >
+              <svg className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                <circle cx="11" cy="11" r="7" />
+                <path d="m20 20-3.5-3.5" strokeLinecap="round" />
+              </svg>
+              Search
+              <kbd className="rounded-md border rule px-1.5 py-0.5 text-[10px] normal-case tracking-normal text-ink-500">
+                Ctrl K
+              </kbd>
+            </button>
+
             {/* [ HIRE ME ] */}
             <a
               href="#contact"
               onClick={() => setIsMobileMenuOpen(false)}
-              className="press-feedback inline-flex min-h-[44px] items-center justify-center bg-ink-900 px-4 sm:px-6 font-mono text-[11px] uppercase tracking-[0.16em] text-paper-50 hover:bg-vermilion"
+              className="btn-primary min-h-[44px] px-4 sm:px-6 text-[11px]"
             >
               <span aria-hidden="true">[&nbsp;</span>
               Hire&nbsp;me
@@ -175,7 +194,7 @@ export function Navbar() {
             {/* Index toggle (mobile / tablet) */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="press-feedback xl:hidden flex h-11 w-11 items-center justify-center border rule text-ink-900 hover:text-vermilion"
+              className="press-feedback xl:hidden flex h-11 w-11 items-center justify-center rounded-full border rule text-ink-900 hover:text-vermilion-400 hover:border-vermilion-500/40"
               aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
               aria-expanded={isMobileMenuOpen}
               aria-controls="mobile-menu"
@@ -214,11 +233,11 @@ export function Navbar() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.35, ease: EASE }}
-            className="xl:hidden absolute left-0 right-0 top-0 -z-10 h-screen bg-paper-100"
+            className="xl:hidden absolute left-0 right-0 top-0 -z-10 h-screen bg-paper-100/90 backdrop-blur-2xl"
           >
             <div className="mx-auto flex h-full max-w-[1400px] flex-col overflow-y-auto px-5 pb-8 pt-24 sm:px-8 lg:px-12">
               <p className="folio mb-4" aria-hidden="true">
-                Index — {profile.name}
+                Index · {profile.name}
               </p>
 
               <ul className="border-t rule">

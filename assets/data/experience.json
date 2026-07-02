@@ -2,8 +2,8 @@
   {
     "company": "Deepchain Labs",
     "role": "Research Assistant (Full-time, Remote)",
-    "date": "Apr 2026 - Present",
-    "desc": "Researching blockchain, cybersecurity, and quantum cryptography at Deepchain Labs (deepchainlabs.com) — producing peer-review-ready papers, threat analyses, and technical documentation across multiple security domains.",
+    "date": "Apr 2026–Present",
+    "desc": "Researching blockchain, cybersecurity, and quantum cryptography at Deepchain Labs (deepchainlabs.com), producing peer-review-ready papers, threat analyses, and technical documentation across multiple security domains.",
     "alignment": "left",
     "showInHome": true,
     "logo": "deepchain"
@@ -11,15 +11,15 @@
   {
     "company": "BetaScript LLC",
     "role": "Solo Developer (Part-time, ~20 hrs/week)",
-    "date": "Jan 2026 - Present",
-    "desc": "Shipped 4 production React websites for this US-based digital agency, driving 1.5x client revenue growth measured by post-launch analytics and client billing. Full lifecycle ownership — design, React 19 + TanStack Start architecture, and Netlify deployment — across restaurant, e-commerce, and agency platforms serving 50,000+ end users.",
+    "date": "Jan 2026–Present",
+    "desc": "Shipped 4 production React websites for this US-based digital agency, driving 1.5x client revenue growth measured by post-launch analytics and client billing. Full lifecycle ownership spanning design, React 19 + TanStack Start architecture, and Netlify deployment across restaurant, e-commerce, and agency platforms serving 50,000+ end users.",
     "alignment": "right",
     "showInHome": true
   },
   {
     "company": "BDTracks",
     "role": "AI & Data Engineer (Part-time, ~15 hrs/week)",
-    "date": "Aug 2025 - Present",
+    "date": "Aug 2025–Present",
     "desc": "Powering Bangladesh's commodity and accident tracking platform (bdtracks.com). Built 15+ web scrapers and fine-tuned Google Gemini 2.5 Flash/Pro via Vertex AI for automated data classification. Engineered production pipelines processing daily feeds from multiple national sources into structured datasets serving live dashboards.",
     "alignment": "left",
     "showInHome": true
@@ -27,7 +27,7 @@
   {
     "company": "Unies",
     "role": "AI Engineering Intern",
-    "date": "Feb 2026 - May 2026",
+    "date": "Feb 2026–May 2026",
     "desc": "Built production RAG pipelines for academic resource retrieval using Pinecone, ChromaDB, LangChain, and LlamaIndex. Engineered automated LLM evaluation pipelines and FastAPI backends powering curriculum-aligned tutoring systems. Benchmarked embedding quality across vector databases to optimize retrieval accuracy.",
     "alignment": "right",
     "showInHome": true,
@@ -36,8 +36,8 @@
   {
     "company": "AIUB",
     "role": "Team Lead - Game Development",
-    "date": "Oct 2024 - Dec 2024",
-    "desc": "Led a team of 5 developers to ship a 2D platformer with 3 levels, a custom OpenGL rendering engine, SFML audio, and SQLite persistence — within a 3-month deadline. Earned 4 GitHub forks and a YouTube demo.",
+    "date": "Oct 2024–Dec 2024",
+    "desc": "Led a team of 5 developers to ship a 2D platformer with 3 levels, a custom OpenGL rendering engine, SFML audio, and SQLite persistence, all within a 3-month deadline. Earned 4 GitHub forks and a YouTube demo.",
     "alignment": "left",
     "showInHome": true
   }

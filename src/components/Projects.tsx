@@ -32,14 +32,14 @@ const hasLiveDemo = (view?: string): view is string =>
 const PREVIEW_W = 320;
 const PREVIEW_H = 200;
 
-/* Print crop corners drawn with inverse hairlines (reg marks on ink) */
+/* HUD crop corners — faint violet registration marks around the case plates */
 function RegMarksInverse() {
   return (
     <>
-      <span aria-hidden="true" className="pointer-events-none absolute -left-px -top-px h-4 w-4 border-l border-t rule-inverse" />
-      <span aria-hidden="true" className="pointer-events-none absolute -right-px -top-px h-4 w-4 border-r border-t rule-inverse" />
-      <span aria-hidden="true" className="pointer-events-none absolute -bottom-px -left-px h-4 w-4 border-b border-l rule-inverse" />
-      <span aria-hidden="true" className="pointer-events-none absolute -bottom-px -right-px h-4 w-4 border-b border-r rule-inverse" />
+      <span aria-hidden="true" className="pointer-events-none absolute -left-px -top-px h-4 w-4 border-l border-t border-vermilion-500/40" />
+      <span aria-hidden="true" className="pointer-events-none absolute -right-px -top-px h-4 w-4 border-r border-t border-vermilion-500/40" />
+      <span aria-hidden="true" className="pointer-events-none absolute -bottom-px -left-px h-4 w-4 border-b border-l border-vermilion-500/40" />
+      <span aria-hidden="true" className="pointer-events-none absolute -bottom-px -right-px h-4 w-4 border-b border-r border-vermilion-500/40" />
     </>
   );
 }
@@ -60,7 +60,7 @@ function CasePlate({ project, index }: { project: Project; index: number }) {
   const plateInner = image && (
     <OptimizedImage
       src={getProjectImage(image)}
-      alt={`${project.name} — project interface`}
+      alt={`${project.name} project interface`}
       aspectRatio="16/10"
       sizes="(max-width: 1024px) 100vw, 58vw"
       className="h-full w-full"
@@ -94,11 +94,11 @@ function CasePlate({ project, index }: { project: Project; index: number }) {
           )}
         </div>
         <div className="mt-2 flex items-baseline justify-between gap-4 px-2 sm:px-3">
-          <span className="folio-inverse">
-            FIG. 0{index + 1} — {project.name}
+          <span className="folio">
+            FIG. 0{index + 1} · {project.name}
           </span>
           {project.tags[0] && (
-            <span className="folio-inverse hidden sm:block text-right">
+            <span className="folio hidden sm:block text-right">
               {project.tags[0]}
             </span>
           )}
@@ -115,14 +115,14 @@ function CasePlate({ project, index }: { project: Project; index: number }) {
       >
         <span
           aria-hidden="true"
-          className="pointer-events-none block select-none font-display font-light leading-none text-outline-inverse text-[clamp(3.5rem,8vw,6.5rem)]"
+          className="pointer-events-none block select-none font-display font-light leading-none text-outline text-[clamp(3.5rem,8vw,6.5rem)]"
         >
           00{index + 1}
         </span>
-        <h3 className="mt-2 font-display font-light leading-[0.98] text-paper-100 text-4xl sm:text-5xl xl:text-6xl">
+        <h3 className="mt-2 font-display font-light leading-[0.98] text-ink-950 text-4xl sm:text-5xl xl:text-6xl">
           {project.name}
         </h3>
-        <p className="mt-4 max-w-prose text-base leading-relaxed text-ink-300 sm:mt-5 sm:text-lg">
+        <p className="mt-4 max-w-prose text-base leading-relaxed text-ink-600 sm:mt-5 sm:text-lg">
           {project.desc}
         </p>
 
@@ -130,10 +130,10 @@ function CasePlate({ project, index }: { project: Project; index: number }) {
           {chips.map((chip) => (
             <li
               key={`${chip.value}-${chip.label ?? ''}`}
-              className="border rule-inverse px-3 py-2 font-mono text-xs uppercase tracking-[0.14em]"
+              className="rounded-full border border-white/10 bg-white/5 px-3.5 py-2 font-mono text-xs uppercase tracking-[0.14em] backdrop-blur-sm transition-colors duration-300 hover:border-vermilion-500/40"
             >
               <span className="font-semibold text-vermilion-400">{chip.value}</span>
-              {chip.label && <span className="text-ink-300"> {chip.label}</span>}
+              {chip.label && <span className="text-ink-700"> {chip.label}</span>}
             </li>
           ))}
         </ul>
@@ -145,7 +145,7 @@ function CasePlate({ project, index }: { project: Project; index: number }) {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={`View ${project.name} live demo`}
-              className="link-ink press-feedback inline-flex min-h-[44px] items-center gap-1.5 font-mono text-xs uppercase tracking-[0.16em] text-paper-100 transition-colors hover:text-vermilion-400"
+              className="link-ink press-feedback inline-flex min-h-[44px] items-center gap-1.5 font-mono text-xs uppercase tracking-[0.16em] text-ink-900 transition-colors hover:text-vermilion-400"
             >
               Live
               <ArrowUpRightIcon className="h-3.5 w-3.5" />
@@ -157,7 +157,7 @@ function CasePlate({ project, index }: { project: Project; index: number }) {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={`View ${project.name} source code on GitHub`}
-              className="link-ink press-feedback inline-flex min-h-[44px] items-center gap-1.5 font-mono text-xs uppercase tracking-[0.16em] text-paper-100 transition-colors hover:text-vermilion-400"
+              className="link-ink press-feedback inline-flex min-h-[44px] items-center gap-1.5 font-mono text-xs uppercase tracking-[0.16em] text-ink-900 transition-colors hover:text-vermilion-400"
             >
               Code
               <ArrowUpRightIcon className="h-3.5 w-3.5" />
@@ -225,9 +225,14 @@ export function Projects() {
     <section
       id="projects"
       aria-label="Selected works and projects"
-      className="relative bg-ink-900 text-paper-100 py-24 sm:py-32"
+      className="relative py-24 sm:py-32"
     >
-      <div className="mx-auto max-w-[1400px] px-5 sm:px-8 lg:px-12">
+      {/* Recessed glass band behind the showcase */}
+      <div
+        className="pointer-events-none absolute inset-0 bg-paper-200/50"
+        aria-hidden="true"
+      />
+      <div className="relative mx-auto max-w-[1400px] px-5 sm:px-8 lg:px-12">
         <SectionHeader
           number="05"
           name="SELECTED WORK"
@@ -236,17 +241,16 @@ export function Projects() {
               Selected <em>work</em>
             </>
           }
-          annotation={`EXHIBITS 001—${String(featuredProjects.length).padStart(3, '0')}`}
-          inverse
+          annotation={`EXHIBITS 001–${String(featuredProjects.length).padStart(3, '0')}`}
         />
 
         {/* ————— Zone 1 · Case plates ————— */}
-        <div className="mb-8 flex items-baseline justify-between gap-4 border-t rule-inverse pt-3 sm:mb-12">
-          <span className="folio-inverse">
+        <div className="mb-8 flex items-baseline justify-between gap-4 border-t rule-strong pt-3 sm:mb-12">
+          <span className="folio">
             <span className="text-vermilion-400">05.1</span>
-            <span aria-hidden="true"> — </span>CASE PLATES
+            <span aria-hidden="true"> / </span>CASE PLATES
           </span>
-          <span className="folio-inverse text-right">
+          <span className="folio text-right">
             {casePlates.length} SYSTEMS IN PRODUCTION
           </span>
         </div>
@@ -259,12 +263,12 @@ export function Projects() {
 
         {/* ————— Zone 2 · The index ————— */}
         <div className="mt-24 sm:mt-32">
-          <div className="flex items-baseline justify-between gap-4 border-t rule-inverse pt-3">
-            <span className="folio-inverse">
+          <div className="flex items-baseline justify-between gap-4 border-t rule-strong pt-3">
+            <span className="folio">
               <span className="text-vermilion-400">05.2</span>
-              <span aria-hidden="true"> — </span>THE INDEX
+              <span aria-hidden="true"> / </span>THE INDEX
             </span>
-            <span className="folio-inverse text-right">
+            <span className="folio text-right">
               {indexProjects.length} FURTHER WORKS
             </span>
           </div>
@@ -292,7 +296,7 @@ export function Projects() {
                         rendition; hidden once the cursor preview takes over. */}
                     <span
                       aria-hidden="true"
-                      className={`${previewEnabled ? 'hidden' : 'block'} plate h-12 w-16 shrink-0 sm:h-14 sm:w-20`}
+                      className={`${previewEnabled ? 'hidden' : 'block'} plate h-12 w-16 shrink-0 rounded-lg sm:h-14 sm:w-20`}
                     >
                       {thumb && (
                         <img
@@ -308,7 +312,7 @@ export function Projects() {
                     </span>
 
                     <span className="min-w-0 flex-1 md:flex-none">
-                      <span className="block font-display font-light leading-tight text-paper-100 transition-colors duration-200 group-hover:text-vermilion-400 text-2xl sm:text-3xl lg:text-4xl">
+                      <span className="block font-display font-light leading-tight text-ink-900 transition-colors duration-200 group-hover:text-vermilion-400 text-2xl sm:text-3xl lg:text-4xl">
                         {project.name}
                       </span>
                       <span className="mt-1 block truncate font-mono text-[10px] uppercase tracking-[0.14em] text-ink-400 md:hidden">
@@ -316,22 +320,22 @@ export function Projects() {
                       </span>
                     </span>
 
-                    <span className="leader leader-inverse hidden md:block" aria-hidden="true" />
+                    <span className="leader hidden md:block" aria-hidden="true" />
 
-                    <span className="hidden shrink-0 items-baseline gap-4 font-mono text-[11px] uppercase tracking-[0.14em] text-ink-300 md:flex">
+                    <span className="hidden shrink-0 items-baseline gap-4 font-mono text-[11px] uppercase tracking-[0.14em] text-ink-500 md:flex">
                       {project.tags.slice(0, 3).map((tag) => (
                         <span key={tag}>{tag}</span>
                       ))}
                     </span>
 
-                    <ArrowUpRightIcon className="h-5 w-5 shrink-0 text-ink-300 transition-all duration-300 ease-out-expo group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-vermilion-400 sm:h-6 sm:w-6" />
+                    <ArrowUpRightIcon className="h-5 w-5 shrink-0 text-ink-500 transition-all duration-300 ease-out-expo group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-vermilion-400 sm:h-6 sm:w-6" />
                   </>
                 );
 
                 return (
                   <m.li
                     key={project.name}
-                    className="border-b rule-inverse"
+                    className="border-b rule"
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: '-10%' }}
@@ -376,10 +380,10 @@ export function Projects() {
                 }
                 transition={{ duration: 0.3, ease: EASE }}
               >
-                {/* Full color — no .plate duotone here: at 320px on the ink spread,
-                    dark app screenshots must stay legible. Static row thumbnails
-                    and case plates keep their duotone treatment. */}
-                <div className="relative overflow-hidden bg-paper-200 shadow-plate-lg">
+                {/* Full color — no .plate desaturation here: at 320px the
+                    screenshots must stay legible. Static row thumbnails and
+                    case plates keep their desaturated treatment. */}
+                <div className="relative overflow-hidden rounded-t-xl border border-b-0 border-white/10 bg-paper-200 shadow-plate-lg">
                   {shownImage && (
                     <img
                       key={shownProject.name}
@@ -393,8 +397,8 @@ export function Projects() {
                     />
                   )}
                 </div>
-                <div className="flex items-baseline justify-between gap-3 border border-t-0 rule-inverse bg-ink-950 px-3 py-2 font-mono text-[10px] uppercase tracking-[0.16em] text-paper-300">
-                  <span>{indexNumber(shownIdx)}</span>
+                <div className="glass-chrome flex items-baseline justify-between gap-3 rounded-b-xl border-t-0 px-3 py-2 font-mono text-[10px] uppercase tracking-[0.16em] text-ink-600">
+                  <span className="text-vermilion-400">{indexNumber(shownIdx)}</span>
                   <span className="truncate">{shownProject.name}</span>
                 </div>
               </m.div>
@@ -415,7 +419,7 @@ export function Projects() {
             target="_blank"
             rel="me noopener noreferrer"
             aria-label="View the full project archive on GitHub"
-            className="press-feedback inline-flex min-h-[44px] items-center gap-2 border rule-inverse px-6 py-4 font-mono text-xs uppercase tracking-[0.16em] text-paper-100 transition-colors hover:border-vermilion hover:text-vermilion-400"
+            className="btn-glass min-h-[44px] px-7 py-4"
           >
             Full archive on GitHub
             <ArrowUpRightIcon className="h-4 w-4" />

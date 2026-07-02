@@ -10,10 +10,10 @@ function Section({ title, children }: { title: string; children: ReactNode }) {
   return (
     <div className="mb-5 last:mb-0">
       <div className="flex items-center gap-3 mb-2">
-        <h2 className="resume-section-title text-[11px] font-mono font-semibold uppercase tracking-[0.22em] text-ink-900 whitespace-nowrap">
+        <h2 className="resume-section-title text-[11px] font-mono font-semibold uppercase tracking-[0.22em] text-[#171412] whitespace-nowrap">
           {title}
         </h2>
-        <div className="flex-1 h-px bg-ink-900/15" aria-hidden="true" />
+        <div className="flex-1 h-px bg-black/15" aria-hidden="true" />
       </div>
       {children}
     </div>
@@ -29,12 +29,12 @@ function Entry({
   return (
     <div className={isLast ? '' : 'mb-3'}>
       <div className="flex justify-between items-baseline gap-3">
-        <span className="font-semibold text-ink-950 text-[13px] leading-tight">{role}</span>
-        <span className="text-ink-500 text-[10.5px] shrink-0 font-mono tracking-wide">{period}</span>
+        <span className="font-semibold text-[#111008] text-[13px] leading-tight">{role}</span>
+        <span className="text-[#79705f] text-[10.5px] shrink-0 font-mono tracking-wide">{period}</span>
       </div>
       <div className="flex justify-between items-baseline gap-3 mt-px">
-        <span className="text-ink-600 italic text-[12px]">{company}</span>
-        <span className="text-ink-600 italic text-[10.5px] shrink-0">{location}</span>
+        <span className="text-[#5c5346] italic text-[12px]">{company}</span>
+        <span className="text-[#5c5346] italic text-[10.5px] shrink-0">{location}</span>
       </div>
       <ul className="resume-bullets mt-1.5">
         {bullets.map((b, i) => <li key={i}>{b}</li>)}
@@ -53,11 +53,11 @@ function Project({
     <div className={isLast ? '' : 'mb-2.5'}>
       <div className="flex justify-between items-baseline gap-3">
         <span className="text-[13px] leading-tight">
-          <span className="font-semibold text-ink-950">{name}</span>
-          <span className="text-ink-300 mx-1.5">|</span>
-          <span className="text-ink-600 italic text-[11px]">{tech}</span>
+          <span className="font-semibold text-[#111008]">{name}</span>
+          <span className="text-[#c2b9a6] mx-1.5">|</span>
+          <span className="text-[#5c5346] italic text-[11px]">{tech}</span>
         </span>
-        {extra && <span className="text-vermilion-600 text-[10.5px] shrink-0 font-mono">{extra}</span>}
+        {extra && <span className="text-[#6f5cf2] text-[10.5px] shrink-0 font-mono">{extra}</span>}
       </div>
       <ul className="resume-bullets mt-1">
         {bullets.map((b, i) => <li key={i}>{b}</li>)}
@@ -69,8 +69,8 @@ function Project({
 function SkillRow({ label, value }: { label: string; value: string }) {
   return (
     <div className="leading-snug">
-      <span className="font-semibold text-ink-950">{label}: </span>
-      <span className="text-ink-600">{value}</span>
+      <span className="font-semibold text-[#111008]">{label}: </span>
+      <span className="text-[#5c5346]">{value}</span>
     </div>
   );
 }
@@ -120,7 +120,7 @@ export function Resume() {
     const el = overlayRef.current;
     if (!isOpen || !el) return;
     const stop = (e: Event) => e.stopPropagation();
-    // passive: true — we don't call preventDefault, just stop bubbling
+    // passive: true – we don't call preventDefault, just stop bubbling
     el.addEventListener('wheel', stop, { passive: true });
     el.addEventListener('touchmove', stop, { passive: true });
     return () => {
@@ -196,7 +196,7 @@ export function Resume() {
           role="dialog"
           aria-modal="true"
           aria-label="Résumé"
-          className="fixed inset-0 z-[100] flex flex-col bg-ink-950/90"
+          className="fixed inset-0 z-[100] flex flex-col bg-paper-100/85 backdrop-blur-xl"
           style={{ touchAction: 'pan-y' }}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -204,11 +204,11 @@ export function Resume() {
           transition={{ duration: shouldReduceMotion || instantClose ? 0 : 0.2 }}
         >
           {/* ═══ TOP BAR ═══ */}
-          <div className="shrink-0 flex items-center justify-between gap-2 px-3 sm:px-5 h-12 sm:h-14 bg-ink-950 border-b rule-inverse">
+          <div className="glass-chrome shrink-0 flex items-center justify-between gap-2 px-3 sm:px-5 h-12 sm:h-14 !rounded-none border-x-0 border-t-0">
             <button
               ref={backButtonRef}
               onClick={() => close(false)}
-              className="press-feedback flex items-center gap-2 -ml-1 px-2 py-2 font-mono text-xs uppercase tracking-[0.16em] text-paper-300 hover:text-paper-50 active:text-paper-50 min-h-[48px] min-w-[48px]"
+              className="press-feedback flex items-center gap-2 -ml-1 px-2 py-2 font-mono text-xs uppercase tracking-[0.16em] text-ink-600 hover:text-ink-950 active:text-ink-950 min-h-[48px] min-w-[48px]"
               aria-label="Close resume"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24" aria-hidden="true">
@@ -221,7 +221,7 @@ export function Resume() {
             <div className="hidden sm:flex items-center gap-2">
               <button
                 onClick={handlePrint}
-                className="press-feedback flex items-center gap-2 px-4 py-2 font-mono text-xs uppercase tracking-[0.16em] text-paper-100 border rule-inverse hover:border-paper-100 min-h-[44px]"
+                className="btn-glass gap-2 px-4 py-2 min-h-[44px]"
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={1.75} viewBox="0 0 24 24" aria-hidden="true">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M6 9V3h12v6M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2M6 14h12v7H6v-7z" />
@@ -232,7 +232,7 @@ export function Resume() {
                 href="/resume.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="press-feedback flex items-center gap-2 px-4 py-2 font-mono text-xs uppercase tracking-[0.16em] text-paper-100 border rule-inverse hover:border-paper-100 min-h-[44px]"
+                className="btn-glass gap-2 px-4 py-2 min-h-[44px]"
               >
                 <ExternalLinkIcon className="w-4 h-4" />
                 View PDF
@@ -240,15 +240,15 @@ export function Resume() {
               <a
                 href="/resume.pdf"
                 download="Ehsanul_Haque_Siam_Resume.pdf"
-                className="press-feedback flex items-center gap-2 px-4 py-2 font-mono text-xs font-semibold uppercase tracking-[0.16em] bg-paper-50 text-ink-900 hover:bg-vermilion hover:text-paper-50 min-h-[44px]"
+                className="btn-primary gap-2 px-5 py-2 min-h-[44px] font-semibold"
               >
                 <DownloadIcon className="w-4 h-4" />
                 Download
               </a>
             </div>
 
-            {/* ESC hint — desktop only */}
-            <kbd className="hidden lg:inline font-mono text-[10px] tracking-[0.14em] text-ink-300 border rule-inverse px-1.5 py-0.5">
+            {/* ESC hint – desktop only */}
+            <kbd className="hidden lg:inline font-mono text-[10px] tracking-[0.14em] text-ink-500 border rule rounded-md px-1.5 py-0.5">
               ESC
             </kbd>
           </div>
@@ -259,7 +259,7 @@ export function Resume() {
             style={{ WebkitOverflowScrolling: 'touch' }}
           >
             <div className="px-3 sm:px-6 py-4 sm:py-8">
-              {/* The white sheet — print contract root (.resume-paper) */}
+              {/* The white sheet – print contract root (.resume-paper) */}
               <div className="resume-paper mx-auto w-full max-w-[760px] bg-white text-ink-900 shadow-plate-lg px-4 sm:px-8 pt-6 sm:pt-8 pb-7 sm:pb-10">
 
                 {/* ── Header ── */}
@@ -291,7 +291,7 @@ export function Resume() {
                   <Entry
                     role="Research Assistant"
                     company="Deepchain Labs"
-                    period="Apr 2026 — Present"
+                    period="Apr 2026 – Present"
                     location="Remote"
                     bullets={[
                       'Driving R&D initiatives in blockchain, cybersecurity, and quantum cryptography',
@@ -301,7 +301,7 @@ export function Resume() {
                   <Entry
                     role="AI Engineering Intern"
                     company="Unies"
-                    period="Feb 2026 — May 2026"
+                    period="Feb 2026 – May 2026"
                     location="Remote"
                     bullets={[
                       'Developed RAG pipelines with Pinecone, ChromaDB, LangChain, and LlamaIndex for academic retrieval',
@@ -311,7 +311,7 @@ export function Resume() {
                   <Entry
                     role="Solo Developer"
                     company="BetaScript LLC (US-based)"
-                    period="Jan 2026 — Present"
+                    period="Jan 2026 – Present"
                     location="Remote"
                     bullets={[
                       'Shipped 4 production React websites driving 1.5x revenue growth, serving 50,000+ users across 3 industries',
@@ -321,7 +321,7 @@ export function Resume() {
                   <Entry
                     role="AI & Data Engineer"
                     company="BDTracks"
-                    period="Aug 2025 — Present"
+                    period="Aug 2025 – Present"
                     location="Dhaka, Bangladesh"
                     bullets={[
                       'Developed 15+ web scrapers powering Bangladesh\'s commodity and accident tracking platform',
@@ -329,9 +329,9 @@ export function Resume() {
                     ]}
                   />
                   <Entry
-                    role="Team Lead — Game Development"
+                    role="Team Lead – Game Development"
                     company="AIUB Computer Graphics Course"
-                    period="Oct 2024 — Dec 2024"
+                    period="Oct 2024 – Dec 2024"
                     location="Dhaka, Bangladesh"
                     bullets={[
                       'Led 5-developer team shipping a 2D platformer with 3 levels and 4 GitHub forks in 3 months',
@@ -392,13 +392,13 @@ export function Resume() {
                       Bachelor of Science in Computer Science and Engineering
                     </span>
                     <span className="text-ink-600 italic text-[10.5px] shrink-0 font-mono tracking-wide">
-                      2022 — 2026
+                      2022 – 2026
                     </span>
                   </div>
                   <ul className="resume-bullets mt-1.5">
                     <li>3x Dean's List Award for academic excellence (CGPA 3.95, 3.89, 3.75+)</li>
                     <li>1st Runner-Up at AIUB CS Fest 2024 App Showcase competing against 20+ teams</li>
-                    <li>Certified Ethical Hacker (CEH) — Team Matrix; 29-module program covering OWASP Top 10, CTF &amp; bug bounty</li>
+                    <li>Certified Ethical Hacker (CEH) – Team Matrix; 29-module program covering OWASP Top 10, CTF &amp; bug bounty</li>
                   </ul>
                 </Section>
 
@@ -407,15 +407,15 @@ export function Resume() {
                   <ul className="resume-pub-list list-none pl-0 space-y-1.5 text-[12px] leading-relaxed">
                     <li>
                       <span className="text-ink-950 font-medium">"Decoding Research Trends: A Clustering Based Topic Modeling Framework"</span>
-                      <span className="text-ink-600"> — IEEE QPAIN 2026 (Accepted, IEEE Xplore/Scopus)</span>
+                      <span className="text-ink-600"> – IEEE QPAIN 2026 (Accepted, IEEE Xplore/Scopus)</span>
                     </li>
                     <li>
                       <span className="text-ink-950 font-medium">"Beyond NER: Medical BERTs for Multi-Label ADR Classification"</span>
-                      <span className="text-ink-600"> — Taylor &amp; Francis, IDAA 2025</span>
+                      <span className="text-ink-600"> – Taylor &amp; Francis, IDAA 2025</span>
                     </li>
                     <li>
                       <span className="text-ink-950 font-medium">"Unfolding Emerging Issues in Changing Climatic Scenario"</span>
-                      <span className="text-ink-600"> — 2nd South Asian Climate Conference, 2024</span>
+                      <span className="text-ink-600"> – 2nd South Asian Climate Conference, 2024</span>
                     </li>
                   </ul>
                 </Section>
@@ -436,7 +436,7 @@ export function Resume() {
           </div>
 
           {/* ═══ STICKY BOTTOM ACTION BAR ═══ */}
-          {/* Always visible — the primary way to download/view on all devices */}
+          {/* Always visible – the primary way to download/view on all devices */}
           <div
             className="shrink-0 border-t rule-inverse bg-ink-950 px-3 sm:px-5"
             style={{ paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom))' }}
