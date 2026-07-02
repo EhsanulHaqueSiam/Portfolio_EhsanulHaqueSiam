@@ -291,6 +291,9 @@ export function CommandPalette() {
 
             <div
               ref={listRef}
+              // data-lenis-prevent: Lenis eats window-level wheel events while
+              // stopped; this opts the list out so the mouse wheel scrolls it.
+              data-lenis-prevent
               className="max-h-[46vh] overflow-y-auto overscroll-contain py-2"
               role="listbox"
               aria-label="Commands"

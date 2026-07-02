@@ -71,9 +71,15 @@ export function SmoothScroll({ children }: { children: React.ReactNode }) {
       }
     };
 
-    // Allow other components to stop/start Lenis via custom events
+    // Allow other components to stop/start Lenis via custom events.
+    // On restart, force a dimension recompute: overlays lock <html> overflow,
+    // and if Lenis's debounced ResizeObserver sampled the page while it was
+    // collapsed, its cached scroll limit is ~0 and the wheel goes dead.
     const handleLenisStop = () => lenisRef.current?.stop();
-    const handleLenisStart = () => lenisRef.current?.start();
+    const handleLenisStart = () => {
+      lenisRef.current?.resize();
+      lenisRef.current?.start();
+    };
 
     document.addEventListener('visibilitychange', handleVisibilityChange);
     window.addEventListener('lenis:stop', handleLenisStop);
