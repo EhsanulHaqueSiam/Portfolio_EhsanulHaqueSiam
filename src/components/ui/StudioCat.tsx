@@ -62,6 +62,14 @@ export function StudioCat({ className = '' }: { className?: string }) {
     window.setTimeout(() => setMrrp(false), 1400);
   };
 
+  // The command palette's "Pet the cat" action lands here.
+  // biome-ignore lint/correctness/useExhaustiveDependencies: onPoke only touches setState; bind once
+  useEffect(() => {
+    const onPet = () => onPoke();
+    window.addEventListener('cat:pet', onPet);
+    return () => window.removeEventListener('cat:pet', onPet);
+  }, []);
+
   return (
     <div
       ref={rootRef}
@@ -85,7 +93,7 @@ export function StudioCat({ className = '' }: { className?: string }) {
         className={`block cat-hop-host ${hopping ? 'cat-hop' : ''}`}
         style={{ background: 'transparent', border: 'none', padding: 0, minHeight: 0, minWidth: 0 }}
       >
-        <svg width="72" height="64" viewBox="0 0 72 64" fill="none">
+        <svg aria-hidden="true" width="72" height="64" viewBox="0 0 72 64" fill="none">
           {/* tail */}
           <path
             className="cat-tail"

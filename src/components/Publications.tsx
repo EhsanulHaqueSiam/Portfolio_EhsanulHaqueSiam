@@ -1,10 +1,13 @@
+import { useState } from 'react';
+import { AnimatePresence } from 'framer-motion';
 import { featuredPublications, getPublicationImage } from '../data/content';
 import type { Publication } from '../data/types';
 import { SectionHeading, headingIconClass } from './ui/SectionHeading';
 import { BlurFade } from './ui/BlurFade';
-import { SpotlightGlow } from './ui/SpotlightGlow';
+import { GlowCard } from './ui/GlowCard';
+import { Lightbox } from './ui/Lightbox';
 import { BorderBeam } from './ui/BorderBeam';
-import { FlaskIcon, ArrowUpRightIcon } from './ui/Icons';
+import { FlaskIcon, ArrowUpRightIcon, ExpandIcon } from './ui/Icons';
 
 function statusOf(pub: Publication): { label: string; tone: string } {
   const date = pub.date.toLowerCase();
@@ -19,9 +22,10 @@ function statusOf(pub: Publication): { label: string; tone: string } {
 
 function PublicationCard({ pub, highlight }: { pub: Publication; highlight: boolean }) {
   const status = statusOf(pub);
+  const [viewer, setViewer] = useState(false);
+  const images = (pub.images ?? []).map(getPublicationImage);
   const inner = (
-    <div className="group/glow relative h-full overflow-hidden rounded-xl border bg-card/60 p-5 backdrop-blur-sm transition-colors duration-300 hover:border-ring/60">
-      <SpotlightGlow />
+    <GlowCard contentClassName="p-5" cursorEmoji="📄">
       {highlight && <BorderBeam size={90} duration={8} colorFrom="#7ddfff" colorTo="rgba(125,223,255,0)" />}
       <div className="flex items-start justify-between gap-3">
         <h3 className="text-sm font-semibold leading-snug tracking-tight text-foreground sm:text-base">
@@ -45,19 +49,42 @@ function PublicationCard({ pub, highlight }: { pub: Publication; highlight: bool
       </p>
       <div className="mt-3 flex items-start gap-4">
         <p className="min-w-0 flex-1 text-sm leading-relaxed text-muted-foreground">{pub.desc}</p>
-        {pub.images?.[0] && (
-          <img
-            src={getPublicationImage(pub.images[0])}
-            alt={`${pub.title} document`}
-            width={112}
-            height={80}
-            loading="lazy"
-            decoding="async"
-            className="hidden h-20 w-28 shrink-0 rounded-md border border-border object-cover object-top transition-transform duration-300 group-hover/glow:scale-105 sm:block"
-          />
+        {images[0] && (
+          <button
+            type="button"
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              setViewer(true);
+            }}
+            aria-label={`View ${pub.title} document fullscreen`}
+            className="group/thumb relative hidden shrink-0 cursor-zoom-in sm:block"
+          >
+            <img
+              src={images[0]}
+              alt={`${pub.title} document`}
+              width={112}
+              height={80}
+              loading="lazy"
+              decoding="async"
+              className="h-20 w-28 rounded-md border border-border object-cover object-top transition-transform duration-300 group-hover/glow:scale-105"
+            />
+            <span className="absolute inset-0 flex items-center justify-center rounded-md bg-black/35 opacity-0 transition-opacity duration-200 group-hover/thumb:opacity-100">
+              <ExpandIcon className="h-4 w-4 text-white" />
+            </span>
+          </button>
         )}
       </div>
-    </div>
+      <AnimatePresence>
+        {viewer && (
+          <Lightbox
+            images={images.map((src, i) => ({ src, alt: `${pub.title} — document ${i + 1}` }))}
+            caption={pub.title}
+            onClose={() => setViewer(false)}
+          />
+        )}
+      </AnimatePresence>
+    </GlowCard>
   );
 
   if (pub.paperLink) {

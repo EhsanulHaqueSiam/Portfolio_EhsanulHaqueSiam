@@ -1,4 +1,4 @@
-import React from 'react';
+import type React from 'react';
 import { ScrambleText } from './ScrambleText';
 
 export const headingIconClass = 'h-5 w-5 sm:h-6 sm:w-6 text-secondary-foreground';

@@ -6,6 +6,30 @@ export function SmoothScroll({ children }: { children: React.ReactNode }) {
   const lenisRef = useRef<Lenis | null>(null);
   const isVisibleRef = useRef(true);
 
+  // While the page is actively scrolling, tag <html> with .is-scrolling.
+  // Canvas loops (constellation, globe, ASCII) hold a frozen frame for the
+  // duration — measured as the #1 scroll-FPS cost — and CSS disables pointer
+  // events inside <main>, so hover recomputation + transition storms stop as
+  // content moves under a stationary cursor. Runs on touch too (the canvas
+  // pause is the win there).
+  useEffect(() => {
+    let idleTimer = 0;
+    const onScroll = () => {
+      if (!idleTimer) document.documentElement.classList.add('is-scrolling');
+      window.clearTimeout(idleTimer);
+      idleTimer = window.setTimeout(() => {
+        idleTimer = 0;
+        document.documentElement.classList.remove('is-scrolling');
+      }, 140);
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      window.clearTimeout(idleTimer);
+      document.documentElement.classList.remove('is-scrolling');
+    };
+  }, []);
+
   useEffect(() => {
     // Check if we're on a touch device - use native scroll for better performance
     const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
@@ -19,7 +43,7 @@ export function SmoothScroll({ children }: { children: React.ReactNode }) {
     try {
       lenisRef.current = new Lenis({
         duration: 0.8,
-        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        easing: (t) => Math.min(1, 1.001 - 2 ** (-10 * t)),
         orientation: 'vertical',
         smoothWheel: true,
       });

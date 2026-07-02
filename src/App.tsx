@@ -8,6 +8,7 @@ import { WhyMe } from './components/WhyMe';
 import { Experience } from './components/Experience';
 import { Skills } from './components/Skills';
 import { Projects } from './components/Projects';
+import { CaseStudies } from './components/CaseStudies';
 import { Testimonials } from './components/Testimonials';
 import { Awards } from './components/Awards';
 import { Publications } from './components/Publications';
@@ -28,6 +29,7 @@ const sections = [
   Experience,
   Skills,
   Projects,
+  CaseStudies,
   Testimonials,
   Awards,
   Publications,
@@ -58,8 +60,10 @@ function App() {
                 <section id="hero" aria-label="Introduction">
                   <Hero />
                 </section>
+                {/* About (i=0) stays eagerly rendered — it's partially in the
+                    first viewport; everything below skips offscreen work. */}
                 {sections.map((Section, i) => (
-                  <div key={i} className={i > 1 ? 'cv-auto' : undefined}>
+                  <div key={i} className={i > 0 ? 'cv-auto' : undefined}>
                     <Section />
                   </div>
                 ))}

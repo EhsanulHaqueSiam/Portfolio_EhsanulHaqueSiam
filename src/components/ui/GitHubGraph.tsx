@@ -1,6 +1,8 @@
 import { useMemo, useState, useCallback, useRef, useEffect } from 'react';
-import { m, useInView } from 'framer-motion';
+import { useInView } from 'framer-motion';
 import { GitHubIcon } from './Icons';
+import { GlowingEffect } from './GlowingEffect';
+import { SpotlightGlow } from './SpotlightGlow';
 
 const DAYS = 7;
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -13,9 +15,10 @@ const CELL = 10;
 const GAP = 2;
 const STEP = CELL + GAP;
 const LABEL_W = 20;
+const TOP_PAD = 14;
 
 function formatTooltipDate(dateStr: string): string {
-  const d = new Date(dateStr + 'T00:00:00');
+  const d = new Date(`${dateStr}T00:00:00`);
   return `${SHORT_DAYS[d.getDay()]}, ${MONTHS[d.getMonth()]} ${d.getDate()}`;
 }
 
@@ -84,11 +87,47 @@ const LEGEND_BG = [
   'bg-emerald-400',
 ];
 
+interface Hovered { week: number; day: number; count: number; date: string }
+
+/**
+ * The full cell grid as plain SVG rects, memoized so hover-state changes never
+ * touch it. Reveal is a CSS opacity transition staggered per week — the old
+ * per-cell framer springs (364 of them) were a measurable scroll-jank source.
+ */
+function CellGrid({ weeks, visible }: { weeks: CellData[][]; visible: boolean }) {
+  return useMemo(
+    () => (
+      <g>
+        {weeks.map((week, weekIdx) =>
+          week.map((day, dayIdx) => (
+            <rect
+              key={`${weekIdx}-${dayIdx}`}
+              x={LABEL_W + weekIdx * STEP}
+              y={TOP_PAD + dayIdx * STEP}
+              rx={2}
+              width={CELL}
+              height={CELL}
+              className={FILL_CLASSES[Math.min(day.level, 4)]}
+              style={{
+                opacity: visible ? 1 : 0,
+                transition: 'opacity 0.3s ease',
+                transitionDelay: `${weekIdx * 6}ms`,
+              }}
+            />
+          )),
+        )}
+      </g>
+    ),
+    [weeks, visible],
+  );
+}
+
 export function GitHubGraph() {
   const containerRef = useRef<HTMLDivElement>(null);
   const graphAreaRef = useRef<HTMLDivElement>(null);
+  const svgRef = useRef<SVGSVGElement>(null);
   const isInView = useInView(containerRef, { once: true, margin: '-10%' });
-  const [hoveredCell, setHoveredCell] = useState<{ week: number; day: number; count: number; date: string } | null>(null);
+  const [hoveredCell, setHoveredCell] = useState<Hovered | null>(null);
   const [visibleWeeks, setVisibleWeeks] = useState(52);
   const [data, setData] = useState<ApiResponse | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -129,17 +168,22 @@ export function GitHubGraph() {
     };
   }, []);
 
-  // Measure container width to compute visible weeks
+  // Measure container width to compute visible weeks. ResizeObserver (not a
+  // window resize listener) so a mount inside a content-visibility-skipped
+  // subtree re-measures once the section actually gets laid out.
   useEffect(() => {
+    const el = graphAreaRef.current;
+    if (!el) return;
     function measure() {
-      if (!graphAreaRef.current) return;
-      const width = graphAreaRef.current.clientWidth;
+      const width = el!.clientWidth;
+      if (!width) return;
       const available = width - LABEL_W - 4;
       setVisibleWeeks(Math.max(20, Math.min(52, Math.floor(available / STEP))));
     }
     measure();
-    window.addEventListener('resize', measure);
-    return () => window.removeEventListener('resize', measure);
+    const ro = new ResizeObserver(measure);
+    ro.observe(el);
+    return () => ro.disconnect();
   }, []);
 
   // Slice contributions to visible weeks
@@ -159,44 +203,61 @@ export function GitHubGraph() {
 
   const totalContributions = data?.total?.lastYear ?? 0;
 
-  const handleMouseEnter = useCallback((week: number, day: number, count: number, date: string) => {
-    setHoveredCell({ week, day, count, date });
-  }, []);
-  const handleMouseLeave = useCallback(() => {
-    setHoveredCell(null);
-  }, []);
+  // One delegated pointer handler on the SVG instead of 364 per-cell
+  // listeners: map pointer position back into grid coordinates.
+  const handlePointerMove = useCallback(
+    (e: React.PointerEvent<SVGSVGElement>) => {
+      const svg = svgRef.current;
+      if (!svg || weeks.length === 0) return;
+      const rect = svg.getBoundingClientRect();
+      const scale = (LABEL_W + weeks.length * STEP) / rect.width;
+      const gx = (e.clientX - rect.left) * scale - LABEL_W;
+      const gy = (e.clientY - rect.top) * scale - TOP_PAD;
+      const week = Math.floor(gx / STEP);
+      const day = Math.floor(gy / STEP);
+      if (week < 0 || week >= weeks.length || day < 0 || day >= DAYS || gx % STEP > CELL || gy % STEP > CELL) {
+        setHoveredCell((h) => (h === null ? h : null));
+        return;
+      }
+      const cell = weeks[week]?.[day];
+      if (!cell) return;
+      setHoveredCell((h) =>
+        h && h.week === week && h.day === day ? h : { week, day, count: cell.count, date: cell.date },
+      );
+    },
+    [weeks],
+  );
 
-  // Is a cell adjacent to (within 1 step of) the hovered cell?
-  const isNeighbor = useCallback((wk: number, dy: number) => {
-    if (!hoveredCell) return false;
-    const dw = Math.abs(wk - hoveredCell.week);
-    const dd = Math.abs(dy - hoveredCell.day);
-    return dw <= 1 && dd <= 1 && !(dw === 0 && dd === 0);
-  }, [hoveredCell]);
+  const handlePointerLeave = useCallback(() => setHoveredCell(null), []);
 
   const displayWeeks = weeks.length || visibleWeeks;
   const graphWidth = LABEL_W + displayWeeks * STEP;
   const graphHeight = DAYS * STEP - GAP;
+  const hoveredLevel = Math.min(weeks[hoveredCell?.week ?? -1]?.[hoveredCell?.day ?? -1]?.level ?? 0, 4);
 
   return (
-    <div
-      ref={containerRef}
-      className="glass-card relative flex h-full flex-col justify-center p-4 sm:p-5"
-    >
+    // Same shell as the sibling bento cells (About GridItem): chasing conic
+    // border outside, spotlight inside, matching sans-serif header.
+    <div ref={containerRef} className="relative mx-auto h-full rounded-xl border p-2 md:rounded-2xl">
+      <GlowingEffect spread={40} glow proximity={64} inactiveZone={0.01} />
+      <div className="group/glow relative flex h-full flex-col justify-center overflow-hidden rounded-lg bg-card/60 p-4">
+        <SpotlightGlow />
       {/* Header */}
       <div className="mb-2.5 flex items-center justify-between gap-3">
         <a
           href={`https://github.com/${GITHUB_USERNAME}`}
           target="_blank"
           rel="me noopener noreferrer"
-          className="inline-flex min-h-[44px] items-center gap-1.5 px-1 font-mono text-[10px] uppercase tracking-[0.14em] text-muted-foreground transition-colors hover:text-foreground sm:text-xs"
+          className="inline-flex items-center gap-2 text-foreground transition-colors hover:text-foreground sm:gap-3"
           aria-label={`GitHub profile of ${GITHUB_USERNAME} (opens in new tab)`}
         >
-          <GitHubIcon className="h-3.5 w-3.5" />
-          <span className="link-underline">@{GITHUB_USERNAME}</span>
+          <GitHubIcon className="h-4 w-4 sm:h-5 sm:w-5" />
+          <span className="link-underline text-sm font-semibold tracking-tight sm:text-base">
+            GitHub Activity
+          </span>
         </a>
         {totalContributions > 0 && (
-          <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-muted-foreground sm:text-xs">
+          <span className="text-xs tabular-nums text-muted-foreground">
             {totalContributions.toLocaleString()} contributions
           </span>
         )}
@@ -206,9 +267,14 @@ export function GitHubGraph() {
       <div ref={graphAreaRef} className="relative">
         {weeks.length > 0 ? (
           <svg
+            ref={svgRef}
+            role="img"
+            aria-label={`GitHub contribution heatmap: ${totalContributions.toLocaleString()} contributions in the last year`}
             width="100%"
-            viewBox={`0 0 ${graphWidth} ${graphHeight + 14}`}
-            className="block"
+            viewBox={`0 0 ${graphWidth} ${graphHeight + TOP_PAD}`}
+            className="block cursor-crosshair"
+            onPointerMove={handlePointerMove}
+            onPointerLeave={handlePointerLeave}
           >
             {/* Month labels */}
             {monthLabels.map(({ label, col }, i) => (
@@ -216,7 +282,7 @@ export function GitHubGraph() {
                 key={`${label}-${i}`}
                 x={LABEL_W + col * STEP}
                 y={8}
-                className="fill-muted-foreground font-mono"
+                className="fill-muted-foreground"
                 fontSize="8"
               >
                 {label}
@@ -229,8 +295,8 @@ export function GitHubGraph() {
                 <text
                   key={i}
                   x={0}
-                  y={14 + i * STEP + CELL * 0.75}
-                  className="fill-muted-foreground font-mono"
+                  y={TOP_PAD + i * STEP + CELL * 0.75}
+                  className="fill-muted-foreground"
                   fontSize="8"
                 >
                   {label}
@@ -238,113 +304,67 @@ export function GitHubGraph() {
               ) : null,
             )}
 
-            {/* Column highlight — faint ink wash on hovered column */}
+            <CellGrid weeks={weeks} visible={isInView} />
+
+            {/* Hover overlays: drawn separately so the grid never re-renders */}
             {hoveredCell && (
-              <m.rect
-                x={LABEL_W + hoveredCell.week * STEP - 1}
-                y={14}
-                width={CELL + 2}
-                height={graphHeight}
-                className="fill-foreground/[0.05]"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.15 }}
-              />
-            )}
-
-            {/* Cells */}
-            {weeks.map((week, weekIdx) =>
-              week.map((day, dayIdx) => {
-                const isHovered = hoveredCell?.week === weekIdx && hoveredCell?.day === dayIdx;
-                const neighbor = isNeighbor(weekIdx, dayIdx);
-                const x = LABEL_W + weekIdx * STEP;
-                const y = 14 + dayIdx * STEP;
-                const level = Math.min(day.level, 4);
-
-                return (
-                  <g key={`${weekIdx}-${dayIdx}`}>
-                    {/* Hairline emerald ring on the hovered cell */}
-                    {isHovered && level > 0 && (
-                      <m.rect
-                        x={x - 2}
-                        y={y - 2}
-                        rx={3}
-                        width={CELL + 4}
-                        height={CELL + 4}
-                        className="fill-transparent stroke-emerald-400/60"
-                        strokeWidth={1}
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ duration: 0.15 }}
-                        style={{ transformOrigin: `${x + CELL / 2}px ${y + CELL / 2}px` }}
-                      />
-                    )}
-                    <m.rect
-                      x={x}
-                      y={y}
-                      rx={2}
-                      width={CELL}
-                      height={CELL}
-                      strokeWidth={0.75}
-                      className={`cursor-crosshair ${FILL_CLASSES[level]}`}
-                      initial={{ opacity: 0 }}
-                      animate={
-                        isInView
-                          ? {
-                              opacity: neighbor && level > 0 ? 1 : 1,
-                              scale: isHovered ? 1.35 : 1,
-                              filter: neighbor && level > 0 ? 'brightness(0.92)' : 'brightness(1)',
-                            }
-                          : { opacity: 0 }
-                      }
-                      transition={{
-                        opacity: { duration: 0.3, delay: weekIdx * 0.006 },
-                        scale: { type: 'spring', stiffness: 500, damping: 25 },
-                        filter: { duration: 0.2 },
-                      }}
-                      style={{ transformOrigin: `${x + CELL / 2}px ${y + CELL / 2}px` }}
-                      onMouseEnter={() => handleMouseEnter(weekIdx, dayIdx, day.count, day.date)}
-                      onMouseLeave={handleMouseLeave}
-                    />
-                  </g>
-                );
-              }),
-            )}
-
-            {/* Floating tooltip inside SVG */}
-            {hoveredCell && (
-              <foreignObject
-                x={Math.max(0, Math.min(
-                  LABEL_W + hoveredCell.week * STEP + CELL / 2 - 60,
-                  graphWidth - 120
-                ))}
-                y={Math.max(0, 14 + hoveredCell.day * STEP - 28)}
-                width={120}
-                height={24}
-                className="pointer-events-none"
-                style={{ overflow: 'visible' }}
-              >
-                <m.div
-                  className="flex items-center justify-center"
-                  initial={{ opacity: 0, y: 3 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.1 }}
+              <g className="pointer-events-none">
+                {/* faint ink wash on the hovered column */}
+                <rect
+                  x={LABEL_W + hoveredCell.week * STEP - 1}
+                  y={TOP_PAD}
+                  width={CELL + 2}
+                  height={graphHeight}
+                  className="fill-foreground/[0.05]"
+                />
+                {/* enlarged copy of the hovered cell */}
+                <rect
+                  x={LABEL_W + hoveredCell.week * STEP - 1.75}
+                  y={TOP_PAD + hoveredCell.day * STEP - 1.75}
+                  rx={2.5}
+                  width={CELL + 3.5}
+                  height={CELL + 3.5}
+                  className={FILL_CLASSES[hoveredLevel]}
+                />
+                {/* hairline emerald ring */}
+                {hoveredLevel > 0 && (
+                  <rect
+                    x={LABEL_W + hoveredCell.week * STEP - 2}
+                    y={TOP_PAD + hoveredCell.day * STEP - 2}
+                    rx={3}
+                    width={CELL + 4}
+                    height={CELL + 4}
+                    className="fill-transparent stroke-emerald-400/60"
+                    strokeWidth={1}
+                  />
+                )}
+                {/* floating tooltip */}
+                <foreignObject
+                  x={Math.max(0, Math.min(
+                    LABEL_W + hoveredCell.week * STEP + CELL / 2 - 60,
+                    graphWidth - 120
+                  ))}
+                  y={Math.max(0, TOP_PAD + hoveredCell.day * STEP - 28)}
+                  width={120}
+                  height={24}
+                  style={{ overflow: 'visible' }}
                 >
-                  <div className="whitespace-nowrap rounded-md border border-border bg-card px-2 py-1 shadow-md">
-                    <span className="font-mono text-[8px] uppercase tracking-[0.06em] text-muted-foreground">
-                      <span className="font-semibold text-emerald-500">{hoveredCell.count}</span>
-                      {' '}· {formatTooltipDate(hoveredCell.date)}
-                    </span>
+                  <div className="flex items-center justify-center">
+                    <div className="whitespace-nowrap rounded-md border border-border bg-card px-2 py-1 shadow-md">
+                      <span className="font-mono text-[8px] uppercase tracking-[0.06em] text-muted-foreground">
+                        <span className="font-semibold text-emerald-500">{hoveredCell.count}</span>
+                        {' '}· {formatTooltipDate(hoveredCell.date)}
+                      </span>
+                    </div>
                   </div>
-                </m.div>
-              </foreignObject>
+                </foreignObject>
+              </g>
             )}
           </svg>
         ) : (
           /* Loading skeleton */
           <div className="flex h-[100px] items-center justify-center">
-            <span className={`font-mono text-xs uppercase tracking-[0.14em] text-muted-foreground ${isLoading ? 'animate-pulse' : ''}`}>
+            <span className={`text-xs text-muted-foreground ${isLoading ? 'animate-pulse' : ''}`}>
               {isLoading
                 ? 'Loading contributions...'
                 : loadError
@@ -358,13 +378,14 @@ export function GitHubGraph() {
       {/* Legend */}
       {weeks.length > 0 && (
         <div className="mt-2 flex items-center justify-end gap-1">
-          <span className="mr-0.5 font-mono text-[9px] uppercase tracking-[0.14em] text-muted-foreground">Less</span>
+          <span className="mr-0.5 text-[10px] text-muted-foreground">Less</span>
           {LEGEND_BG.map((bg, i) => (
             <div key={i} className={`h-[9px] w-[9px] rounded-[2px] ${bg}`} />
           ))}
-          <span className="ml-0.5 font-mono text-[9px] uppercase tracking-[0.14em] text-muted-foreground">More</span>
+          <span className="ml-0.5 text-[10px] text-muted-foreground">More</span>
         </div>
       )}
+      </div>
     </div>
   );
 }

@@ -84,7 +84,7 @@ export function AsciiTorus({ className = '' }: { className?: string }) {
       cellH = cellW / CELL_ASPECT;
       rows = Math.max(1, Math.round(canvas.height / cellH));
       cellH = canvas.height / rows;
-      ctx.font = `600 ${Math.ceil(cellH * 0.96)}px 'Spline Sans Mono Variable', 'Spline Sans Mono', monospace`;
+      ctx.font = `600 ${Math.ceil(cellH * 0.96)}px 'Geist Mono Variable', monospace`;
       ctx.textBaseline = 'top';
       zBuf = new Float32Array(cols * rows);
       lumBuf = new Float32Array(cols * rows);
@@ -161,6 +161,8 @@ export function AsciiTorus({ className = '' }: { className?: string }) {
     const tick = (now: number) => {
       if (disposed) return;
       raf = requestAnimationFrame(tick);
+      // hold a frozen frame while the page scrolls (canvas raster is pricey)
+      if (document.documentElement.classList.contains('is-scrolling')) return;
       if (now - lastFrame < 33) return; // ~30fps
       lastFrame = now;
       angleA += 0.028 * spinDir;

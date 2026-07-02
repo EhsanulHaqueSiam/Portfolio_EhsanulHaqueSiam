@@ -34,6 +34,13 @@ export const blogPosts = blogData as BlogPost[];
 
 // Filtered exports for homepage
 export const featuredProjects = projects.filter(p => p.showInHome);
+
+// Deep-dive case studies: the two strongest "problem → approach → measured
+// result" stories (technical depth + business impact).
+const CASE_STUDY_NAMES = ['ScholarHub', 'Indian Claypit'];
+export const caseStudies = CASE_STUDY_NAMES
+  .map(name => projects.find(p => p.name === name))
+  .filter((p): p is Project => Boolean(p?.caseStudy));
 export const featuredAchievements = achievements.filter(a => a.showInHome);
 export const awards = achievements.filter(a => (a.category === 'award' || a.category === 'certificate') && a.showInHome);
 export const featuredPublications = publications.filter(p => p.showInHome);
@@ -47,11 +54,12 @@ export const navItems = [
   { no: "03", label: "Experience", href: "#experience" },
   { no: "04", label: "Skills", href: "#skills" },
   { no: "05", label: "Work", href: "#projects" },
-  { no: "06", label: "Testimonials", href: "#testimonials" },
-  { no: "07", label: "Awards", href: "#awards" },
-  { no: "08", label: "Research", href: "#publications" },
-  { no: "11", label: "Notes", href: "#blog" },
-  { no: "12", label: "Contact", href: "#contact" },
+  { no: "06", label: "Case Studies", href: "#case-studies" },
+  { no: "07", label: "Testimonials", href: "#testimonials" },
+  { no: "08", label: "Awards", href: "#awards" },
+  { no: "09", label: "Research", href: "#publications" },
+  { no: "12", label: "Notes", href: "#blog" },
+  { no: "13", label: "Contact", href: "#contact" },
 ];
 
 // FAQ — single source of truth for the visible FAQ section AND the JSON-LD

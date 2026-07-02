@@ -53,7 +53,6 @@ export function AsciiField({ className = '', cols = 64, surface = 'ink' }: Ascii
     let t = Math.random() * 100;
     let influence: Float32Array = new Float32Array(0);
     let target: Float32Array = new Float32Array(0);
-    let pointerInside = false;
     let lastFrame = 0;
 
     const base =
@@ -72,7 +71,7 @@ export function AsciiField({ className = '', cols = 64, surface = 'ink' }: Ascii
       cellH = cellW / CELL_ASPECT;
       rows = Math.max(1, Math.round(canvas.height / cellH));
       cellH = canvas.height / rows;
-      ctx.font = `500 ${Math.ceil(cellH)}px 'Spline Sans Mono Variable', 'Spline Sans Mono', monospace`;
+      ctx.font = `500 ${Math.ceil(cellH)}px 'Geist Mono Variable', monospace`;
       ctx.textBaseline = 'top';
       influence = new Float32Array(cols * rows);
       target = new Float32Array(cols * rows);
@@ -116,6 +115,11 @@ export function AsciiField({ className = '', cols = 64, surface = 'ink' }: Ascii
 
     const tick = (now: number) => {
       if (disposed) return;
+      // hold a frozen frame while the page scrolls (canvas raster is pricey)
+      if (document.documentElement.classList.contains('is-scrolling')) {
+        raf = requestAnimationFrame(tick);
+        return;
+      }
       // ~30fps is plenty for a drifting field and keeps main thread light
       if (now - lastFrame >= 33) {
         lastFrame = now;
@@ -129,7 +133,6 @@ export function AsciiField({ className = '', cols = 64, surface = 'ink' }: Ascii
     };
 
     const onPointerMove = (e: PointerEvent) => {
-      pointerInside = true;
       const rect = canvas.getBoundingClientRect();
       const px = (e.clientX - rect.left) * (canvas.width / rect.width);
       const py = (e.clientY - rect.top) * (canvas.height / rect.height);
@@ -137,13 +140,12 @@ export function AsciiField({ className = '', cols = 64, surface = 'ink' }: Ascii
       for (let y = 0; y < rows; y++) {
         for (let x = 0; x < cols; x++) {
           const d = Math.hypot(x * cellW + cellW / 2 - px, y * cellH + cellH / 2 - py);
-          target[y * cols + x] = d < rad ? Math.pow(1 - d / rad, 1.3) : 0;
+          target[y * cols + x] = d < rad ? (1 - d / rad) ** 1.3 : 0;
         }
       }
     };
 
     const onPointerLeave = () => {
-      pointerInside = false;
       target.fill(0);
     };
 

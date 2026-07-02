@@ -1,5 +1,5 @@
-import { useEffect, useRef, RefObject } from 'react';
-import { MotionValue, useMotionValue } from 'framer-motion';
+import { useEffect, useRef, type RefObject } from 'react';
+import { type MotionValue, useMotionValue } from 'framer-motion';
 
 export function useTiltEffect<T extends HTMLElement>(
   ref: RefObject<T>,

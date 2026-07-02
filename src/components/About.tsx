@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { profile, skills } from '../data/content';
 import { SectionHeading, headingIconClass } from './ui/SectionHeading';
 import { GlowingEffect } from './ui/GlowingEffect';
@@ -28,7 +28,8 @@ import {
 
 const dashboardIconClass = 'h-4 w-4 sm:h-5 sm:w-5 text-foreground';
 
-// Fun sticker GIFs hidden under the scratch foil (same set as the reference).
+// Fun prizes hidden under the scratch foil: sticker GIFs (same set as the
+// reference) mixed with emoji stickers so the deck stays fresh even offline.
 const SCRATCH_GIFS = [
   'https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3YXJld3JyYXo1Z3d1Nnh1ZzFxbXU3ZzV5N3JiamNsa3ByMHBvam1vaiZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/eOjuCYIGqXSqfBy0MX/giphy.gif',
   'https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3aGh0YmFybmt1d3d4ZGY0c2lyMDhmcTlnMTBkanozNGxuangydjluaSZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/AEDD6xjlOxNMgFsUmA/giphy.gif',
@@ -44,6 +45,26 @@ const SCRATCH_GIFS = [
   'https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3dXIxaXR2dzFhenZieXo1N2F0c2NpZmNza2ZwbnZpbm5vNHZ4ZWFwbyZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/LIcwKtctRdCtPaaaNO/giphy.gif',
   'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExb3FqaHAwa2d1ZHB4ZTIwMXlka2FrNGNrbHRlamJxZ3AzbXVzdHpqMCZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/UmbybxMJ3sRvKBV5qw/giphy.gif',
 ];
+
+const SCRATCH_EMOJIS = ['🎉', '🚀', '🐱', '🔥', '🤖', '✨', '🦄', '🎮', '☕', '🧠', '🛡️', '👾'];
+
+type ScratchPrize = { kind: 'gif'; src: string } | { kind: 'emoji'; glyph: string };
+
+const SCRATCH_PRIZES: ScratchPrize[] = [
+  ...SCRATCH_GIFS.map((src): ScratchPrize => ({ kind: 'gif', src })),
+  ...SCRATCH_EMOJIS.map((glyph): ScratchPrize => ({ kind: 'emoji', glyph })),
+];
+
+const prizeKey = (p: ScratchPrize) => (p.kind === 'gif' ? p.src : p.glyph);
+
+function shuffle<T>(arr: readonly T[]): T[] {
+  const out = [...arr];
+  for (let i = out.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [out[i], out[j]] = [out[j], out[i]];
+  }
+  return out;
+}
 
 interface GridItemProps {
   area: string;
@@ -65,7 +86,7 @@ function GridItem({ area, icon, title, children, tooltip, cursorEmoji }: GridIte
     >
       <div className="relative mx-auto h-full rounded-xl border p-2 md:rounded-2xl">
         <GlowingEffect spread={40} glow proximity={64} inactiveZone={0.01} />
-        <div className="group/glow relative flex h-full flex-col justify-between gap-2 overflow-hidden rounded-lg bg-card/60 p-4 backdrop-blur-sm">
+        <div className="group/glow relative flex h-full flex-col justify-between gap-2 overflow-hidden rounded-lg bg-card/60 p-4">
           <SpotlightGlow />
           <div className="relative flex flex-row items-center gap-2 sm:gap-3">
             <div>{icon}</div>
@@ -98,19 +119,35 @@ const marqueeTools = skills.categories
  * counters, scratch card, tools marquee).
  */
 export function About() {
-  // Random GIF on mount (client-only to avoid a hydration mismatch), new
-  // random GIF after each completed scratch, like the reference.
-  const [gif, setGif] = useState<string | null>(null);
-  useEffect(() => {
-    setGif(SCRATCH_GIFS[Math.floor(Math.random() * SCRATCH_GIFS.length)]);
-  }, []);
+  // Scratch prizes come off a shuffled deck (client-only to avoid a hydration
+  // mismatch): every reset reveals a new GIF or emoji, no repeats until the
+  // whole deck has cycled. The next GIF preloads while the current one shows.
+  const deckRef = useRef<ScratchPrize[]>([]);
+  const [prize, setPrize] = useState<ScratchPrize | null>(null);
 
-  const pickNewGif = () => {
-    setGif((current) => {
-      const rest = SCRATCH_GIFS.filter((g) => g !== current);
-      return rest[Math.floor(Math.random() * rest.length)];
+  const drawPrize = () => {
+    setPrize((current) => {
+      if (deckRef.current.length === 0) {
+        deckRef.current = shuffle(SCRATCH_PRIZES);
+        // never deal the same prize twice in a row across reshuffles
+        if (current && prizeKey(deckRef.current[0]) === prizeKey(current)) {
+          deckRef.current.push(deckRef.current.shift()!);
+        }
+      }
+      const next = deckRef.current.shift()!;
+      const upcoming = deckRef.current[0];
+      if (upcoming?.kind === 'gif') {
+        const img = new Image();
+        img.src = upcoming.src;
+      }
+      return next;
     });
   };
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: deal the first prize once on mount only
+  useEffect(() => {
+    drawPrize();
+  }, []);
 
   return (
     <section id="about" className="scroll-mt-28">
@@ -197,31 +234,37 @@ export function About() {
             <ScratchToReveal
               className="flex h-24 items-center justify-center rounded-md border border-border/60 bg-background"
               minScratchPercentage={20}
-              resetKey={gif ?? 'ssr'}
+              resetKey={prize ? prizeKey(prize) : 'ssr'}
               onComplete={() => {
-                window.setTimeout(pickNewGif, 2400);
+                window.setTimeout(drawPrize, 2400);
               }}
             >
-              {gif && (
-                <img
-                  src={gif}
-                  alt="Scratched-off surprise sticker"
-                  width={100}
-                  height={100}
-                  loading="lazy"
-                  decoding="async"
-                  className="h-16 object-contain"
-                />
-              )}
+              {prize &&
+                (prize.kind === 'gif' ? (
+                  <img
+                    src={prize.src}
+                    alt="Scratched-off surprise sticker"
+                    width={100}
+                    height={100}
+                    loading="lazy"
+                    decoding="async"
+                    className="h-16 object-contain"
+                  />
+                ) : (
+                  <span role="img" aria-label="Scratched-off surprise emoji" className="select-none text-5xl leading-none">
+                    {prize.glyph}
+                  </span>
+                ))}
             </ScratchToReveal>
             <button
               type="button"
-              onClick={pickNewGif}
+              onClick={drawPrize}
               onMouseDown={(e) => e.stopPropagation()}
               aria-label="New surprise"
               className="group absolute right-1 top-1 z-10 rounded-md p-1 text-muted-foreground transition-colors hover:bg-background/60 hover:text-foreground"
             >
               <svg
+                aria-hidden="true"
                 className="h-4 w-4 transition-transform duration-300 group-hover:rotate-180"
                 viewBox="0 0 24 24"
                 fill="none"
@@ -249,8 +292,8 @@ export function About() {
                 rel={href.startsWith('http') ? 'me noopener noreferrer' : undefined}
                 className="group flex items-center gap-2"
               >
-                <Icon className="h-5 w-5 text-muted-foreground transition-all group-hover:scale-125 group-hover:animate-wiggle group-hover:text-foreground" />
-                <span className="text-sm text-muted-foreground transition-all group-hover:font-semibold group-hover:text-foreground">
+                <Icon className="h-5 w-5 text-muted-foreground transition-[transform,color] group-hover:scale-125 group-hover:animate-wiggle group-hover:text-foreground" />
+                <span className="text-sm text-muted-foreground transition-colors group-hover:font-semibold group-hover:text-foreground">
                   {label}
                 </span>
               </a>

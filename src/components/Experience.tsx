@@ -3,7 +3,7 @@ import type { Experience as ExperienceEntry } from '../data/types';
 import { SectionHeading, headingIconClass } from './ui/SectionHeading';
 import { TracingBeam } from './ui/TracingBeam';
 import { BlurFade } from './ui/BlurFade';
-import { SpotlightGlow } from './ui/SpotlightGlow';
+import { GlowCard } from './ui/GlowCard';
 import { BriefcaseIcon } from './ui/Icons';
 
 // Skill chips per company (experience.json carries prose, not tags).
@@ -27,12 +27,11 @@ function initials(company: string): string {
 function ExperienceCard({ item }: { item: ExperienceEntry }) {
   const skills = COMPANY_SKILLS[item.company] ?? [];
   return (
-    <div className="group/glow relative overflow-hidden rounded-xl border bg-card/60 p-4 backdrop-blur-sm transition-colors duration-300 hover:border-ring/60">
-      <SpotlightGlow />
+    <GlowCard contentClassName="p-4" cursorEmoji="💼">
       <div className="flex flex-row space-x-3">
         <span
           aria-hidden="true"
-          className="mt-1 flex h-9 w-9 shrink-0 items-center justify-center rounded-md border border-border bg-secondary text-xs font-bold text-secondary-foreground sm:h-10 sm:w-10"
+          className="mt-1 flex h-9 w-9 shrink-0 items-center justify-center rounded-md border border-border bg-secondary text-xs font-bold text-secondary-foreground transition-transform duration-300 group-hover/glow:-rotate-6 group-hover/glow:scale-110 sm:h-10 sm:w-10"
         >
           {initials(item.company)}
         </span>
@@ -54,14 +53,14 @@ function ExperienceCard({ item }: { item: ExperienceEntry }) {
         <div className="mt-4 flex flex-row flex-wrap gap-2">
           {skills.map((skill, index) => (
             <BlurFade key={skill} delay={0.05 + index * 0.05} direction="up" inView>
-              <span className="flex items-center justify-center rounded-sm bg-secondary px-2 py-1 text-xs font-semibold leading-none tracking-tight text-secondary-foreground transition-colors md:text-sm">
+              <span className="flex items-center justify-center rounded-sm bg-secondary px-2 py-1 text-xs font-semibold leading-none tracking-tight text-secondary-foreground transition-transform duration-200 hover:-translate-y-0.5 hover:scale-105 md:text-sm">
                 {skill}
               </span>
             </BlurFade>
           ))}
         </div>
       )}
-    </div>
+    </GlowCard>
   );
 }
 

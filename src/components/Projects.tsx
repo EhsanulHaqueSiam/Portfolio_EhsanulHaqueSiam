@@ -3,6 +3,7 @@ import type { Project } from '../data/types';
 import { SectionHeading, headingIconClass } from './ui/SectionHeading';
 import { BlurFade } from './ui/BlurFade';
 import { TiltCard } from './ui/TiltCard';
+import { GlowCard } from './ui/GlowCard';
 import { OptimizedImage } from './ui/OptimizedImage';
 import { BrushIcon, GitHubIcon, ExternalLinkIcon, ArrowUpRightIcon } from './ui/Icons';
 
@@ -12,7 +13,10 @@ function ProjectCard({ project }: { project: Project }) {
 
   return (
     <a href={href} target="_blank" rel="noopener noreferrer" className="group block h-full">
-      <div className="relative flex h-full flex-col overflow-hidden rounded-xl border bg-card/60 backdrop-blur-sm transition-all duration-300 ease-out hover:-translate-y-0.5 hover:border-ring/60 hover:shadow-lg hover:shadow-foreground/5">
+      <GlowCard
+        className="transition-[transform,box-shadow,border-color] duration-300 ease-out hover:-translate-y-0.5 hover:shadow-lg hover:shadow-foreground/5"
+        cursorEmoji="🚀"
+      >
         {/* Cover */}
         <div className="relative h-44 overflow-hidden bg-muted sm:h-52">
           {image && (
@@ -27,6 +31,12 @@ function ProjectCard({ project }: { project: Project }) {
           <div className="absolute right-2 top-2 z-20 rounded-full bg-black/25 p-1.5 text-white opacity-100 backdrop-blur-sm transition-opacity duration-300 sm:opacity-0 sm:group-hover:opacity-100">
             <ArrowUpRightIcon className="h-4 w-4" />
           </div>
+          {/* Headline impact metric, always visible (mobile included) */}
+          {project.metrics?.[0] && (
+            <span className="absolute bottom-2 left-2 z-20 max-w-[85%] truncate rounded-full bg-black/45 px-2.5 py-1 text-[11px] font-semibold text-white backdrop-blur-sm">
+              {project.metrics[0]}
+            </span>
+          )}
         </div>
 
         {/* Body */}
@@ -56,6 +66,7 @@ function ProjectCard({ project }: { project: Project }) {
               </span>
             )}
             {project.links?.code && (
+              // biome-ignore lint/a11y/useSemanticElements: a real <a> cannot nest inside the card's <a>; span[role=link] keeps it keyboard-operable
               <span
                 role="link"
                 tabIndex={0}
@@ -77,14 +88,14 @@ function ProjectCard({ project }: { project: Project }) {
                 Code
               </span>
             )}
-            {project.metrics?.[0] && (
+            {project.metrics?.[1] && (
               <span className="ml-auto hidden truncate text-[11px] text-muted-foreground sm:block">
-                {project.metrics[0]}
+                {project.metrics[1]}
               </span>
             )}
           </div>
         </div>
-      </div>
+      </GlowCard>
     </a>
   );
 }

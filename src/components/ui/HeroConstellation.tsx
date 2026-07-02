@@ -101,6 +101,9 @@ export function HeroConstellation({
 
     function animate(time: number) {
       animationId = requestAnimationFrame(animate);
+      // Freeze while the page scrolls: canvas raster is the #1 scroll cost,
+      // and a static frame is invisible when everything is moving anyway.
+      if (document.documentElement.classList.contains('is-scrolling')) return;
       // ~30fps keeps the drift smooth while halving main-thread time
       if (time - lastDraw < 33) return;
       lastDraw = time;
@@ -211,6 +214,7 @@ export function HeroConstellation({
   }, [desktopDots, mobileDots]);
 
   return (
+    // biome-ignore lint/a11y/noAriaHiddenOnFocusable: canvas has no tabindex and is purely decorative
     <canvas
       ref={canvasRef}
       className={`absolute inset-0 h-full w-full ${className}`}

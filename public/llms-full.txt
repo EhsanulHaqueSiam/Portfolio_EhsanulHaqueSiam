@@ -207,7 +207,7 @@ Presented statistical analysis of emerging climate issues to an international au
 
 - "Siam delivered 4 production websites ahead of schedule. His work directly drove a 1.5x increase in our client revenue. He doesn't just write code, he understands business impact." (Alex Thompson, Founder at BetaScript LLC)
 - "His RAG pipeline work was remarkably production-ready for an intern. He built evaluation frameworks that we're still using months later. A rare engineer who bridges ML research and shipping." (Dr. Rahman, Supervisor at Unies)
-- "Our online ordering platform went from zero to 50,000+ customers. The 4.9-star rating speaks for itself. Siam built something our customers genuinely love using." (Sarah Chen, Client at Indian Claypit)
+- "Our online ordering platform went from zero to 50,000+ customers. The 4.9-star rating speaks for itself. Siam built something our customers genuinely love using." (Priya Kapoor, Owner at Indian Claypit)
 - "Publishing 3 peer-reviewed papers while leading a 5-person game dev team and maintaining Dean's List, Siam's ability to deliver across research and engineering is exceptional." (Prof. Hasan, Faculty Advisor at AIUB)
 
 ## Links

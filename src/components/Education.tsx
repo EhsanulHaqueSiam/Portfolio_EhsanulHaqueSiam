@@ -1,6 +1,7 @@
 import { SectionHeading, headingIconClass } from './ui/SectionHeading';
 import { BlurFade } from './ui/BlurFade';
-import { SpotlightGlow } from './ui/SpotlightGlow';
+import { GlowCard } from './ui/GlowCard';
+import { PeekCat } from './ui/PeekCat';
 import { SchoolIcon } from './ui/Icons';
 import { hideImageOnError } from '../data/content';
 
@@ -38,10 +39,10 @@ const records: EducationItem[] = [
   },
 ];
 
-function EducationCard({ item }: { item: EducationItem }) {
+function EducationCard({ item, cat = false }: { item: EducationItem; cat?: boolean }) {
   return (
-    <div className="group/glow relative overflow-hidden rounded-xl border bg-card/60 p-4 backdrop-blur-sm transition-colors duration-300 hover:border-ring/60">
-      <SpotlightGlow />
+    <GlowCard contentClassName="p-4" cursorEmoji="🎓">
+      {cat && <PeekCat className="right-12" />}
       <div className="flex flex-row space-x-3">
         <img
           src={`/images/education/${item.image}.webp`}
@@ -50,7 +51,7 @@ function EducationCard({ item }: { item: EducationItem }) {
           alt=""
           loading="lazy"
           onError={hideImageOnError}
-          className="mt-1 h-9 w-9 rounded-md object-cover sm:h-10 sm:w-10"
+          className="mt-1 h-9 w-9 rounded-md object-cover transition-transform duration-300 group-hover/glow:-rotate-6 group-hover/glow:scale-110 sm:h-10 sm:w-10"
         />
         <div className="flex flex-col">
           <p className="text-balance text-sm font-bold leading-normal tracking-tight text-foreground sm:text-base">
@@ -86,7 +87,7 @@ function EducationCard({ item }: { item: EducationItem }) {
           ))}
         </div>
       )}
-    </div>
+    </GlowCard>
   );
 }
 
@@ -98,7 +99,7 @@ export function Education() {
       <div className="space-y-4">
         {records.map((item, i) => (
           <BlurFade key={item.institution} delay={0.1 + i * 0.05} direction="right" inView>
-            <EducationCard item={item} />
+            <EducationCard item={item} cat={i === records.length - 1} />
           </BlurFade>
         ))}
       </div>

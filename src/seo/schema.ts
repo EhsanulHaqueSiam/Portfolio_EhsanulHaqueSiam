@@ -185,7 +185,7 @@ export function buildJsonLd() {
       {
         '@type': 'WebSite',
         '@id': WEBSITE_ID,
-        url: SITE.url + '/',
+        url: `${SITE.url}/`,
         name: SITE.name,
         description: META.ogDescription,
         inLanguage: SITE.lang,
@@ -194,7 +194,7 @@ export function buildJsonLd() {
       {
         '@type': 'ProfilePage',
         '@id': `${SITE.url}/#profilepage`,
-        url: SITE.url + '/',
+        url: `${SITE.url}/`,
         name: META.title,
         description: META.description,
         isPartOf: { '@id': WEBSITE_ID },
@@ -209,7 +209,7 @@ export function buildJsonLd() {
         name: profile.name,
         givenName: profile.firstName,
         familyName: profile.lastName,
-        url: SITE.url + '/',
+        url: `${SITE.url}/`,
         image: META.image,
         jobTitle: profile.title,
         description: profile.bio,
@@ -225,7 +225,7 @@ export function buildJsonLd() {
         alumniOf: {
           '@type': 'CollegeOrUniversity',
           name: 'American International University-Bangladesh (AIUB)',
-          url: ORG_URLS['AIUB'],
+          url: ORG_URLS.AIUB,
         },
         hasOccupation: {
           '@type': 'Occupation',
@@ -260,7 +260,7 @@ export function buildJsonLd() {
         '@type': 'Service',
         '@id': `${SITE.url}/#service`,
         name: 'AI Engineering & Full-Stack Development: Ehsanul Haque Siam',
-        url: SITE.url + '/',
+        url: `${SITE.url}/`,
         provider: { '@id': PERSON_ID },
         description:
           'AI engineering, LLM/RAG application development, automation, and full-stack web development for startups and teams.',

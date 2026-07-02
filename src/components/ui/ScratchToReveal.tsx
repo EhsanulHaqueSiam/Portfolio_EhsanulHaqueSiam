@@ -28,6 +28,7 @@ export function ScratchToReveal({
   const scratching = useRef(false);
   const doneRef = useRef(false);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: resetKey intentionally re-runs the effect to repaint the foil
   useEffect(() => {
     const canvas = canvasRef.current;
     const wrap = wrapRef.current;
@@ -111,6 +112,7 @@ export function ScratchToReveal({
   return (
     <div ref={wrapRef} className={cn('relative overflow-hidden select-none', className)}>
       {children}
+      {/* biome-ignore lint/a11y/noAriaHiddenOnFocusable: canvas has no tabindex and is purely decorative */}
       <canvas
         ref={canvasRef}
         className={cn(

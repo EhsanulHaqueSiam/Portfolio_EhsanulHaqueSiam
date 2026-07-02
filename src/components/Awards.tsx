@@ -1,12 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
+import { AnimatePresence } from 'framer-motion';
 import { awards, getAchievementImage } from '../data/content';
 import type { Achievement } from '../data/types';
 import { SectionHeading, headingIconClass } from './ui/SectionHeading';
 import { BlurFade } from './ui/BlurFade';
-import { SpotlightGlow } from './ui/SpotlightGlow';
+import { GlowCard } from './ui/GlowCard';
+import { Lightbox } from './ui/Lightbox';
 import { OptimizedImage } from './ui/OptimizedImage';
 import { TiltCard } from './ui/TiltCard';
-import { AwardIcon, ShieldIcon } from './ui/Icons';
+import { AwardIcon, ShieldIcon, ExpandIcon } from './ui/Icons';
 
 const categoryLabel: Record<string, string> = {
   award: 'Award',
@@ -16,6 +18,7 @@ const categoryLabel: Record<string, string> = {
 function AwardCard({ item }: { item: Achievement }) {
   const images = (item.images ?? []).map(getAchievementImage);
   const [frame, setFrame] = useState(0);
+  const [viewer, setViewer] = useState<number | null>(null);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   // While hovered, flip through the full photo set (galleries of 8 exist).
@@ -28,17 +31,26 @@ function AwardCard({ item }: { item: Achievement }) {
     timerRef.current = null;
     setFrame(0);
   };
+  // biome-ignore lint/correctness/useExhaustiveDependencies: unmount-only cleanup; re-running per render would kill the cycle
   useEffect(() => () => stopCycle(), []);
 
   return (
-    <div
-      className="group/glow relative flex h-full flex-col overflow-hidden rounded-xl border bg-card/60 backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-ring/60 hover:shadow-lg hover:shadow-foreground/5"
+    <GlowCard
+      className="transition-[transform,box-shadow,border-color] duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-foreground/5"
+      cursorEmoji={item.category === 'award' ? '🏆' : '📜'}
       onMouseEnter={startCycle}
       onMouseLeave={stopCycle}
     >
-      <SpotlightGlow />
       {images.length > 0 && (
-        <div className="relative h-36 overflow-hidden bg-muted">
+        <button
+          type="button"
+          onClick={() => {
+            stopCycle();
+            setViewer(frame);
+          }}
+          aria-label={`View ${item.name} image${images.length > 1 ? 's' : ''} fullscreen`}
+          className="relative block h-36 w-full cursor-zoom-in overflow-hidden bg-muted text-left"
+        >
           <OptimizedImage
             src={images[0]}
             alt={item.name}
@@ -55,12 +67,15 @@ function AwardCard({ item }: { item: Achievement }) {
               decoding="async"
             />
           )}
+          <span className="absolute right-2 top-2 rounded-full bg-black/40 p-1.5 text-white opacity-0 backdrop-blur-sm transition-opacity duration-300 group-hover/glow:opacity-100">
+            <ExpandIcon className="h-3.5 w-3.5" />
+          </span>
           {images.length > 1 && (
             <span className="absolute bottom-2 right-2 rounded-full bg-black/40 px-2 py-0.5 text-[10px] font-semibold tabular-nums text-white backdrop-blur-sm">
               {frame + 1}/{images.length}
             </span>
           )}
-        </div>
+        </button>
       )}
       <div className="flex flex-1 flex-col p-4">
         <div className="flex items-start justify-between gap-3">
@@ -80,7 +95,17 @@ function AwardCard({ item }: { item: Achievement }) {
           {item.desc}
         </p>
       </div>
-    </div>
+      <AnimatePresence>
+        {viewer !== null && (
+          <Lightbox
+            images={images.map((src, i) => ({ src, alt: `${item.name} — image ${i + 1}` }))}
+            startIndex={viewer}
+            caption={item.name}
+            onClose={() => setViewer(null)}
+          />
+        )}
+      </AnimatePresence>
+    </GlowCard>
   );
 }
 

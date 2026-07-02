@@ -16,7 +16,7 @@ interface Props {
 const {
   title = META.title,
   description = META.description,
-  canonical = SITE.url + '/',
+  canonical = `${SITE.url}/`,
 } = Astro.props;
 
 const jsonLd = buildJsonLd();

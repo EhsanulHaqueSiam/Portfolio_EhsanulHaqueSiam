@@ -309,6 +309,14 @@
   contain-intrinsic-size: auto 700px;
 }
 
+/* While actively scrolling (SmoothScroll tags <html>), skip hit-testing
+   inside the content column: no :hover recomputation, no transition storms,
+   no glow/spotlight work as cards slide under a stationary cursor. Pointer
+   events return ~140ms after the last scroll tick. */
+html.is-scrolling #main-content {
+  pointer-events: none;
+}
+
 /* ===== Studio cat ===== */
 @keyframes cat-tail-sway {
   0%, 100% { transform: rotate(0deg); }

@@ -8,6 +8,7 @@ import { ShimmerBorder } from './ui/ShimmerBorder';
 import { AnimatedName } from './ui/AnimatedName';
 import { Tooltip } from './ui/Tooltip';
 import { GitHubIcon, LinkedInIcon, EmailIcon, ArrowRightIcon } from './ui/Icons';
+import { OPEN_PALETTE_EVENT } from './ui/CommandPalette';
 
 /** Dhaka-local status, like the reference: green while awake, amber after hours. */
 function getStatus(): { status: string; dotClass: string } {
@@ -17,7 +18,7 @@ function getStatus(): { status: string; dotClass: string } {
   );
   return hour >= 8 && hour < 23
     ? { status: 'Available', dotClass: 'bg-green-500' }
-    : { status: 'Recharging in Dhaka', dotClass: 'bg-amber-500' };
+    : { status: 'Building after dark', dotClass: 'bg-amber-500' };
 }
 
 /** SSR renders the default; the live Dhaka status resolves after hydration. */
@@ -70,23 +71,25 @@ export function Hero() {
       <HeroConstellation desktopDots={220} mobileDots={70} />
 
       <BlurFade delay={0.005} inView>
-        <div className="relative flex-col space-y-1">
+        <div className="relative flex-col space-y-4 sm:space-y-6">
           <div className="relative flex flex-col items-center justify-center">
             {/* Portrait in an animated glow ring: grayscale until hover */}
             <div className="group relative p-[4px]" data-cursor-emoji="👋">
+              {/* transform-only rotation: compositor animation, no repaints */}
               <m.div
                 aria-hidden
-                className="absolute inset-1 z-[1] rounded-full opacity-40 blur-md transition duration-500 will-change-transform group-hover:opacity-100 bg-[radial-gradient(circle_farthest-side_at_0_100%,#7b61ff,transparent),radial-gradient(circle_farthest-side_at_100%_0,#5ee7f5,transparent),radial-gradient(circle_farthest-side_at_100%_100%,#ffc414,transparent),radial-gradient(circle_farthest-side_at_0_0,#ff6ec7,#141316)]"
-                style={{ backgroundSize: '400% 400%' }}
-                animate={{ backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'] }}
-                transition={{ duration: 5, repeat: Infinity, repeatType: 'reverse' }}
+                className="absolute inset-1 z-[1] rounded-full opacity-40 blur-md transition-opacity duration-500 will-change-transform group-hover:opacity-100 bg-[radial-gradient(circle_farthest-side_at_0_100%,#7b61ff,transparent),radial-gradient(circle_farthest-side_at_100%_0,#5ee7f5,transparent),radial-gradient(circle_farthest-side_at_100%_100%,#ffc414,transparent),radial-gradient(circle_farthest-side_at_0_0,#ff6ec7,#141316)]"
+                animate={{ rotate: 360 }}
+                transition={{ duration: 9, repeat: Infinity, ease: 'linear' }}
               />
               <img
                 src={profileHeroImage}
                 alt={profile.name}
                 width={96}
                 height={96}
-                fetchPriority="high"
+                // React 18 DOM needs the lowercase form; the camelCase prop
+                // triggers an unknown-prop warning and gets dropped.
+                {...({ fetchpriority: 'high' } as Record<string, string>)}
                 className="relative z-10 h-20 w-20 rounded-full border border-white/10 object-cover grayscale transition-[filter,transform] duration-300 group-hover:scale-[1.03] group-hover:grayscale-0 sm:h-24 sm:w-24"
               />
             </div>
@@ -113,17 +116,21 @@ export function Hero() {
               </h1>
               <p className="text-center text-base font-medium tracking-tight text-secondary-foreground subpixel-antialiased sm:text-2xl">
                 An AI Engineer &amp; Full-Stack Developer who likes{' '}
-                <span className="script-accent">building things</span>.
+                <AnimatedName
+                  names={['building things', 'shipping research', 'training models', 'hacking, ethically']}
+                  holdMs={2800}
+                  className="script-accent"
+                />
               </p>
               <p className="mt-3 text-center text-xs text-muted-foreground sm:text-sm">
-                Published researcher · 50K+ users served · {profile.location}
+                Published researcher · Certified Ethical Hacker · 50K+ users served · {profile.location}
               </p>
             </BlurFade>
 
             <BlurFade delay={0.01} direction="down" inView>
-              <div className="z-10 flex flex-row items-center justify-center gap-5">
+              <div className="z-10 flex flex-row items-center justify-center gap-3 sm:gap-5">
                 {/* Contact icons */}
-                <div className="flex flex-row items-center justify-center space-x-6">
+                <div className="flex flex-row items-center justify-center space-x-4 sm:space-x-6">
                   {contactIcons.map(({ label, href, icon: Icon, aria }) => (
                     <Tooltip key={label} label={label} side="bottom">
                       <a
@@ -164,6 +171,23 @@ export function Hero() {
                   <ShimmerBorder />
                 </a>
               </div>
+
+              {/* Command palette hint (desktop only; the palette is keyboard-first) */}
+              <button
+                type="button"
+                onClick={() => window.dispatchEvent(new CustomEvent(OPEN_PALETTE_EVENT))}
+                className="group/kbd mx-auto mt-6 hidden items-center justify-center gap-1.5 text-xs text-muted-foreground transition-colors hover:text-foreground sm:flex"
+                data-cursor-emoji="⌨️"
+              >
+                <span>Press</span>
+                <kbd className="rounded-md border border-border bg-secondary px-1.5 py-0.5 font-mono text-[10px] font-semibold text-secondary-foreground transition-transform duration-200 group-hover/kbd:-translate-y-0.5">
+                  Ctrl
+                </kbd>
+                <kbd className="rounded-md border border-border bg-secondary px-1.5 py-0.5 font-mono text-[10px] font-semibold text-secondary-foreground transition-transform duration-200 delay-75 group-hover/kbd:-translate-y-0.5">
+                  K
+                </kbd>
+                <span>to jump anywhere</span>
+              </button>
             </BlurFade>
           </div>
         </div>

@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { profile } from '../data/content';
 import { SectionHeading, headingIconClass } from './ui/SectionHeading';
 import { BlurFade } from './ui/BlurFade';
+import { GlowCard } from './ui/GlowCard';
 import { AsciiField } from './ui/AsciiField';
 import { ShimmerBorder } from './ui/ShimmerBorder';
 import {
@@ -95,8 +96,8 @@ export function Contact() {
 
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         {/* Direct lines */}
-        <BlurFade delay={0.06} inView>
-          <div className="flex h-full flex-col gap-3 rounded-xl border bg-card/60 p-5 backdrop-blur-sm">
+        <BlurFade delay={0.06} inView className="h-full">
+          <GlowCard contentClassName="gap-3 p-5" cursorEmoji="📬">
             {rows.map(({ label, value, href, icon: Icon }) => (
               <div key={label} className="flex items-center justify-between gap-3">
                 <a
@@ -142,7 +143,7 @@ export function Contact() {
               <ArrowUpRightIcon className="h-4 w-4 text-muted-foreground transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
               <ShimmerBorder duration="4s" />
             </a>
-          </div>
+          </GlowCard>
         </BlurFade>
 
         {/* Interactive ASCII signal */}

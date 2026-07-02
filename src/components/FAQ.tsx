@@ -4,6 +4,7 @@ import { faqItems } from '../data/content';
 import { SectionHeading, headingIconClass } from './ui/SectionHeading';
 import { QuestionIcon, PlusIcon } from './ui/Icons';
 import { BlurFade } from './ui/BlurFade';
+import { GlowCard } from './ui/GlowCard';
 
 function FaqRow({
   question,
@@ -17,7 +18,7 @@ function FaqRow({
   onToggle: () => void;
 }) {
   return (
-    <div className="overflow-hidden rounded-xl border bg-card/60 backdrop-blur-sm transition-colors duration-300 hover:border-ring/60">
+    <GlowCard cursorEmoji="💡">
       <button
         type="button"
         onClick={onToggle}
@@ -48,7 +49,7 @@ function FaqRow({
           </m.div>
         )}
       </AnimatePresence>
-    </div>
+    </GlowCard>
   );
 }
 

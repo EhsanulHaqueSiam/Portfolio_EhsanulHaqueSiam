@@ -33,10 +33,14 @@ export const GlowingEffect = memo(
     const containerRef = useRef<HTMLDivElement>(null);
     const lastPosition = useRef({ x: 0, y: 0 });
     const animationFrameRef = useRef<number>(0);
+    const angleAnimRef = useRef<ReturnType<typeof animate> | null>(null);
 
     const handleMove = useCallback(
       (e?: MouseEvent | { x: number; y: number }) => {
         if (!containerRef.current) return;
+        // Mid-scroll the pointer isn't meaningfully "on" anything; skip the
+        // rect read + tween churn entirely (many instances share each move).
+        if (document.documentElement.classList.contains('is-scrolling')) return;
 
         if (animationFrameRef.current) {
           cancelAnimationFrame(animationFrameRef.current);
@@ -79,7 +83,9 @@ export const GlowingEffect = memo(
           const angleDiff = ((targetAngle - currentAngle + 180) % 360) - 180;
           const newAngle = currentAngle + angleDiff;
 
-          animate(currentAngle, newAngle, {
+          // Replace, never stack: each move retargets one running tween.
+          angleAnimRef.current?.stop();
+          angleAnimRef.current = animate(currentAngle, newAngle, {
             duration: movementDuration,
             ease: [0.16, 1, 0.3, 1],
             onUpdate: (value) => {
@@ -98,20 +104,19 @@ export const GlowingEffect = memo(
 
       // Only track the pointer while the card is actually on screen; nine of
       // these reading layout on every pointermove is real jank otherwise.
+      // No scroll listener on purpose: Lenis emits scroll every frame, and
+      // reacting to it spawned a fresh tween per card per frame.
       let attached = false;
-      const handleScroll = () => handleMove();
       const handlePointerMove = (e: PointerEvent) => handleMove(e);
 
       const attach = () => {
         if (attached) return;
         attached = true;
-        window.addEventListener('scroll', handleScroll, { passive: true });
         document.body.addEventListener('pointermove', handlePointerMove, { passive: true });
       };
       const detach = () => {
         if (!attached) return;
         attached = false;
-        window.removeEventListener('scroll', handleScroll);
         document.body.removeEventListener('pointermove', handlePointerMove);
       };
 
@@ -124,6 +129,7 @@ export const GlowingEffect = memo(
         if (animationFrameRef.current) {
           cancelAnimationFrame(animationFrameRef.current);
         }
+        angleAnimRef.current?.stop();
         io.disconnect();
         detach();
       };

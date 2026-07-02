@@ -21,15 +21,15 @@ function Section({ title, children }: { title: string; children: ReactNode }) {
 }
 
 function Entry({
-  role, company, period, location, bullets, isLast,
+  position, company, period, location, bullets, isLast,
 }: {
-  role: string; company: string; period: string; location: string;
+  position: string; company: string; period: string; location: string;
   bullets: string[]; isLast?: boolean;
 }) {
   return (
     <div className={isLast ? '' : 'mb-3'}>
       <div className="flex justify-between items-baseline gap-3">
-        <span className="font-semibold text-[#111008] text-[13px] leading-tight">{role}</span>
+        <span className="font-semibold text-[#111008] text-[13px] leading-tight">{position}</span>
         <span className="text-[#79705f] text-[10.5px] shrink-0 font-mono tracking-wide">{period}</span>
       </div>
       <div className="flex justify-between items-baseline gap-3 mt-px">
@@ -99,17 +99,20 @@ export function Resume() {
     return () => window.removeEventListener('hashchange', sync);
   }, []);
 
-  /* ── lock body + stop Lenis ── */
+  /* ── lock body + <html> (the real scroller) + stop Lenis ── */
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
+      document.documentElement.style.overflow = 'hidden';
       window.dispatchEvent(new Event('lenis:stop'));
     } else {
       document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
       window.dispatchEvent(new Event('lenis:start'));
     }
     return () => {
       document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
       document.documentElement.classList.remove('resume-printing');
       window.dispatchEvent(new Event('lenis:start'));
     };
@@ -207,6 +210,7 @@ export function Resume() {
           <div className="glass-chrome shrink-0 flex items-center justify-between gap-2 px-3 sm:px-5 h-12 sm:h-14 !rounded-none border-x-0 border-t-0">
             <button
               ref={backButtonRef}
+              type="button"
               onClick={() => close(false)}
               className="press-feedback flex items-center gap-2 -ml-1 px-2 py-2 font-mono text-xs uppercase tracking-[0.16em] text-muted-foreground hover:text-foreground active:text-foreground min-h-[48px] min-w-[48px]"
               aria-label="Close resume"
@@ -220,6 +224,7 @@ export function Resume() {
             {/* Desktop: show actions in top bar too */}
             <div className="hidden sm:flex items-center gap-2">
               <button
+                type="button"
                 onClick={handlePrint}
                 className="btn-glass gap-2 px-4 py-2 min-h-[44px]"
               >
@@ -264,9 +269,9 @@ export function Resume() {
 
                 {/* ── Header ── */}
                 <div className="resume-header-border text-center mb-6 pb-5 border-b rule">
-                  <div role="heading" aria-level={2} className="resume-name text-[1.35rem] sm:text-[1.7rem] md:text-[2rem] font-sans font-semibold text-ink-950 tracking-[0.04em] uppercase leading-none mb-2">
+                  <h2 className="resume-name text-[1.35rem] sm:text-[1.7rem] md:text-[2rem] font-sans font-semibold text-ink-950 tracking-[0.04em] uppercase leading-none mb-2">
                     Ehsanul Haque Siam
-                  </div>
+                  </h2>
                   <div className="resume-contact flex flex-wrap items-center justify-center gap-x-1.5 sm:gap-x-2.5 gap-y-0.5 text-[11px] sm:text-[12px] text-ink-600 leading-relaxed">
                     <a href="mailto:ehsanul.siamdev@gmail.com" className="press-feedback text-ink-700 hover:text-vermilion-600 active:text-vermilion-600 underline decoration-ink-900/20 underline-offset-2">
                       ehsanul.siamdev@gmail.com
@@ -289,7 +294,7 @@ export function Resume() {
                 {/* ── Experience ── */}
                 <Section title="Experience">
                   <Entry
-                    role="Research Assistant"
+                    position="Research Assistant"
                     company="Deepchain Labs"
                     period="Apr 2026 – Present"
                     location="Remote"
@@ -299,7 +304,7 @@ export function Resume() {
                     ]}
                   />
                   <Entry
-                    role="AI Engineering Intern"
+                    position="AI Engineering Intern"
                     company="Unies"
                     period="Feb 2026 – May 2026"
                     location="Remote"
@@ -309,7 +314,7 @@ export function Resume() {
                     ]}
                   />
                   <Entry
-                    role="Solo Developer"
+                    position="Solo Developer"
                     company="BetaScript LLC (US-based)"
                     period="Jan 2026 – Present"
                     location="Remote"
@@ -319,7 +324,7 @@ export function Resume() {
                     ]}
                   />
                   <Entry
-                    role="AI & Data Engineer"
+                    position="AI & Data Engineer"
                     company="BDTracks"
                     period="Aug 2025 – Present"
                     location="Dhaka, Bangladesh"
@@ -329,7 +334,7 @@ export function Resume() {
                     ]}
                   />
                   <Entry
-                    role="Team Lead – Game Development"
+                    position="Team Lead – Game Development"
                     company="AIUB Computer Graphics Course"
                     period="Oct 2024 – Dec 2024"
                     location="Dhaka, Bangladesh"

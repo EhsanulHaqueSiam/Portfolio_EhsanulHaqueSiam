@@ -2,12 +2,14 @@ import { testimonials } from '../data/content';
 import type { Testimonial } from '../data/types';
 import { SectionHeading, headingIconClass } from './ui/SectionHeading';
 import { Marquee } from './ui/Marquee';
+import { SpotlightGlow } from './ui/SpotlightGlow';
 import { QuoteIcon } from './ui/Icons';
 
 function TestimonialCard({ item }: { item: Testimonial }) {
   return (
-    <figure className="relative w-[300px] shrink-0 overflow-hidden rounded-xl border bg-card/60 p-5 backdrop-blur-sm transition-colors duration-300 hover:border-ring/60 sm:w-[360px]">
-      <QuoteIcon className="h-4 w-4 text-muted-foreground/70" />
+    <figure className="group/glow relative w-[300px] shrink-0 overflow-hidden rounded-xl border bg-card/60 p-5 transition-[transform,border-color] duration-300 hover:-translate-y-0.5 hover:border-ring/60 sm:w-[360px]">
+      <SpotlightGlow />
+      <QuoteIcon className="h-4 w-4 text-muted-foreground/70 transition-transform duration-300 group-hover/glow:-rotate-12 group-hover/glow:scale-125" />
       <blockquote className="mt-3 whitespace-normal text-sm leading-relaxed text-foreground/90">
         {item.quote}
       </blockquote>
@@ -42,7 +44,7 @@ export function Testimonials() {
   return (
     <section id="testimonials" className="scroll-mt-28">
       <SectionHeading icon={<QuoteIcon className={headingIconClass} />}>Testimonials</SectionHeading>
-      <div className="relative overflow-hidden">
+      <div className="relative overflow-hidden" data-cursor-emoji="💬">
         <div className="fade-mask-left" />
         <div className="fade-mask-right" />
         <Marquee pauseOnHover className="[--duration:38s] [--gap:1rem]">

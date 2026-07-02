@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { m, AnimatePresence } from 'framer-motion';
 import { navItems, profile } from '../../data/content';
+import { StudioCat } from './StudioCat';
 import {
   GitHubIcon,
   LinkedInIcon,
@@ -155,6 +156,20 @@ export function CommandPalette() {
           window.open(profile.linkedin, '_blank', 'noopener');
         },
       },
+      {
+        id: 'pet-cat',
+        group: 'Actions',
+        label: 'Pet the cat',
+        hint: 'mrrp',
+        keywords: 'cat meow easter egg studio',
+        icon: <span className="text-sm leading-none">🐈</span>,
+        run: () => {
+          close();
+          document.querySelector('footer')?.scrollIntoView({ behavior: 'smooth' });
+          // let the scroll land before the cat reacts
+          window.setTimeout(() => window.dispatchEvent(new Event('cat:pet')), 900);
+        },
+      },
     ];
   }, [close, copied]);
 
@@ -177,14 +192,21 @@ export function CommandPalette() {
     };
   }, []);
 
-  // Focus input + lock scroll while open
+  // Focus input + lock scroll while open. The page scrolls on <html> (body
+  // overflow alone doesn't lock it), and Lenis drives scrollTop directly, so
+  // pause both explicitly.
   useEffect(() => {
     if (!open) return;
     inputRef.current?.focus();
-    const prev = document.body.style.overflow;
+    const prevBody = document.body.style.overflow;
+    const prevHtml = document.documentElement.style.overflow;
     document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden';
+    window.dispatchEvent(new Event('lenis:stop'));
     return () => {
-      document.body.style.overflow = prev;
+      document.body.style.overflow = prevBody;
+      document.documentElement.style.overflow = prevHtml;
+      window.dispatchEvent(new Event('lenis:start'));
     };
   }, [open]);
 
@@ -244,7 +266,7 @@ export function CommandPalette() {
           >
             <div className="flex items-center gap-3 border-b border-border px-5">
               <span className="text-muted-foreground" aria-hidden="true">
-                <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <svg aria-hidden="true" className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <circle cx="11" cy="11" r="7" />
                   <path d="m20 20-3.5-3.5" strokeLinecap="round" />
                 </svg>
@@ -274,9 +296,15 @@ export function CommandPalette() {
               aria-label="Commands"
             >
               {filtered.length === 0 && (
-                <p className="px-5 py-8 text-center font-mono text-xs uppercase tracking-[0.14em] text-muted-foreground">
-                  No matches for "{query}"
-                </p>
+                <div className="flex flex-col items-center gap-1 px-5 py-6">
+                  <StudioCat className="scale-90" />
+                  <p className="text-center font-mono text-xs uppercase tracking-[0.14em] text-muted-foreground">
+                    No matches for "{query}"
+                  </p>
+                  <p className="text-center font-mono text-[10px] uppercase tracking-[0.14em] text-muted-foreground/60">
+                    only a cat lives here
+                  </p>
+                </div>
               )}
               {filtered.map((cmd, i) => {
                 const showGroup = cmd.group !== lastGroup;

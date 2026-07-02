@@ -2,7 +2,7 @@ import { blogPosts } from '../data/content';
 import type { BlogPost } from '../data/types';
 import { SectionHeading, headingIconClass } from './ui/SectionHeading';
 import { BlurFade } from './ui/BlurFade';
-import { SpotlightGlow } from './ui/SpotlightGlow';
+import { GlowCard } from './ui/GlowCard';
 import { PencilIcon, ArrowUpRightIcon } from './ui/Icons';
 
 const platformLabels: Record<BlogPost['platform'], string> = {
@@ -28,8 +28,7 @@ function WritingCard({ post }: { post: BlogPost }) {
         : {})}
       className="group block h-full"
     >
-      <div className="group/glow relative flex h-full flex-col overflow-hidden rounded-xl border bg-card/60 p-4 backdrop-blur-sm transition-colors duration-300 hover:border-ring/60">
-        <SpotlightGlow />
+      <GlowCard contentClassName="p-4" cursorEmoji="✍️">
         <div className="flex items-start justify-between gap-3">
           <h3 className="text-sm font-semibold leading-snug tracking-tight text-foreground sm:text-base">
             <span className="bg-[linear-gradient(currentColor,currentColor)] bg-[length:0%_1px] bg-left-bottom bg-no-repeat pb-1 transition-[background-size] duration-300 group-hover:bg-[length:100%_1px]">
@@ -63,7 +62,7 @@ function WritingCard({ post }: { post: BlogPost }) {
             </>
           )}
         </p>
-      </div>
+      </GlowCard>
     </Wrapper>
   );
 }
