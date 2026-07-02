@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { m, AnimatePresence } from 'framer-motion';
 import { navItems, profile } from '../../data/content';
+import { scrollToSection } from '../../lib/scrollToSection';
 import { StudioCat } from './StudioCat';
 import {
   GitHubIcon,
@@ -61,7 +62,7 @@ export function CommandPalette() {
   const commands = useMemo<Command[]>(() => {
     const go = (href: string) => () => {
       close();
-      document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
+      scrollToSection(href);
       history.replaceState(null, '', href);
     };
     const nav: Command[] = navItems.map((item) => ({

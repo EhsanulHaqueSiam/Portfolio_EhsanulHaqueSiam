@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import { AnimatePresence, m, useScroll, useMotionValueEvent } from 'framer-motion';
 import { navItems } from '../data/content';
+import { scrollToSection } from '../lib/scrollToSection';
 import { ThemeToggle } from './ui/ThemeToggle';
-import { GitHubIcon, StarIcon, CommandIcon } from './ui/Icons';
+import { GitHubIcon, StarIcon, CommandIcon, MenuIcon, CloseIcon } from './ui/Icons';
 
 const GITHUB_USER = 'EhsanulHaqueSiam';
 const PROFILE_URL = `https://github.com/${GITHUB_USER}`;
@@ -43,10 +44,12 @@ const barItems = navItems.filter((item) => NAV_LABELS.includes(item.label));
 /**
  * Glass navbar (reference port): hides on scroll down, returns on scroll up.
  * Logo, section links, GitHub star chip, command palette button, theme toggle.
+ * Below md the links collapse into a hamburger menu listing every section.
  */
 export function Navbar() {
   const { scrollY } = useScroll();
   const [visible, setVisible] = useState(true);
+  const [menuOpen, setMenuOpen] = useState(false);
   const [stars, setStars] = useState<number | null>(null);
 
   useMotionValueEvent(scrollY, 'change', (current) => {
@@ -54,6 +57,20 @@ export function Navbar() {
     if (current < 50) setVisible(true);
     else setVisible(current < previous);
   });
+
+  // The bar hides on scroll-down; take the menu with it.
+  useEffect(() => {
+    if (!visible) setMenuOpen(false);
+  }, [visible]);
+
+  useEffect(() => {
+    if (!menuOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setMenuOpen(false);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [menuOpen]);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -66,7 +83,7 @@ export function Navbar() {
   }, []);
 
   const goTo = (href: string) => {
-    document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
+    scrollToSection(href);
     history.replaceState(null, '', href);
   };
 
@@ -98,14 +115,14 @@ export function Navbar() {
             es.
           </a>
 
-          {/* Links */}
-          <nav aria-label="Primary" className="flex items-center gap-1 sm:gap-2">
+          {/* Links (desktop) */}
+          <nav aria-label="Primary" className="hidden items-center gap-2 md:flex">
             {barItems.map((item) => (
               <button
                 key={item.href}
                 type="button"
                 onClick={() => goTo(item.href)}
-                className="relative rounded-md px-1.5 py-1.5 text-[13px] font-semibold text-muted-foreground transition-colors duration-300 hover:text-foreground sm:px-2.5 sm:text-sm max-[480px]:[&:nth-child(n+4)]:hidden"
+                className="relative rounded-md px-2.5 py-1.5 text-sm font-semibold text-muted-foreground transition-colors duration-300 hover:text-foreground"
               >
                 {item.label}
               </button>
@@ -113,7 +130,7 @@ export function Navbar() {
           </nav>
 
           <div className="flex items-center gap-1.5 sm:gap-3">
-            <span aria-hidden className="hidden h-5 w-px bg-border sm:block" />
+            <span aria-hidden className="hidden h-5 w-px bg-border md:block" />
 
             {/* GitHub chip: total stars across all repos */}
             <a
@@ -143,7 +160,48 @@ export function Navbar() {
             </button>
 
             <ThemeToggle />
+
+            {/* Hamburger (mobile) */}
+            <button
+              type="button"
+              onClick={() => setMenuOpen((open) => !open)}
+              aria-label={menuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+              aria-expanded={menuOpen}
+              aria-controls="mobile-nav"
+              className="flex h-9 w-9 items-center justify-center rounded-md text-muted-foreground transition-colors hover:text-foreground md:hidden"
+            >
+              {menuOpen ? <CloseIcon className="h-5 w-5" /> : <MenuIcon className="h-5 w-5" />}
+            </button>
           </div>
+
+          {/* Mobile menu: every section, two columns */}
+          <AnimatePresence>
+            {menuOpen && (
+              <m.nav
+                id="mobile-nav"
+                aria-label="Primary"
+                initial={{ opacity: 0, y: -8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -8 }}
+                transition={{ duration: 0.18 }}
+                className="glass-chrome absolute inset-x-3 top-full mt-2 grid grid-cols-2 gap-1 rounded-xl bg-background/90 p-3 sm:inset-x-0 md:hidden"
+              >
+                {navItems.map((item) => (
+                  <button
+                    key={item.href}
+                    type="button"
+                    onClick={() => {
+                      setMenuOpen(false);
+                      goTo(item.href);
+                    }}
+                    className="rounded-md px-3 py-2.5 text-left text-sm font-semibold text-muted-foreground transition-colors hover:bg-secondary/60 hover:text-foreground"
+                  >
+                    {item.label}
+                  </button>
+                ))}
+              </m.nav>
+            )}
+          </AnimatePresence>
         </m.header>
       )}
     </AnimatePresence>

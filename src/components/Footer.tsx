@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { m, useInView } from 'framer-motion';
 import { profile, navItems } from '../data/content';
+import { scrollToSection } from '../lib/scrollToSection';
 import { RainbowButton } from './ui/RainbowButton';
 import { StudioCat } from './ui/StudioCat';
 import { GitHubIcon, LinkedInIcon, EmailIcon, ResumeIcon, SendIcon, StarIcon } from './ui/Icons';
@@ -36,7 +37,7 @@ export function Footer() {
   };
 
   const goTo = (href: string) => {
-    document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
+    scrollToSection(href);
     history.replaceState(null, '', href);
   };
 

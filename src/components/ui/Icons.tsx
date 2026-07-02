@@ -233,6 +233,14 @@ export function CommandIcon({ className = 'w-5 h-5' }: IconProps) {
   );
 }
 
+export function MenuIcon({ className = 'w-5 h-5' }: IconProps) {
+  return (
+    <svg aria-hidden="true" className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M4 7h16M4 12h16M4 17h16" />
+    </svg>
+  );
+}
+
 export function HandClickIcon({ className = 'w-5 h-5' }: IconProps) {
   return (
     <svg aria-hidden="true" className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>

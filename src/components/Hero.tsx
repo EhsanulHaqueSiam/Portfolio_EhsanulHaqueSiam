@@ -102,7 +102,7 @@ export function Hero() {
 
           <div className="w-full space-y-6">
             <BlurFade delay={0.005} inView>
-              <h1 className="whitespace-nowrap text-center text-5xl font-bold leading-[1.8] subpixel-antialiased sm:text-7xl">
+              <h1 className="whitespace-nowrap text-center text-[clamp(1.875rem,10.5vw,3rem)] font-bold leading-[1.8] subpixel-antialiased sm:text-7xl">
                 <span className="sr-only">{profile.name}</span>
                 <span
                   aria-hidden="true"
@@ -114,7 +114,7 @@ export function Hero() {
                   </span>
                 </span>
               </h1>
-              <p className="text-center text-base font-medium tracking-tight text-secondary-foreground subpixel-antialiased sm:text-2xl">
+              <p className="px-4 text-center text-base font-medium tracking-tight text-secondary-foreground subpixel-antialiased sm:text-2xl">
                 An AI Engineer &amp; Full-Stack Developer who likes{' '}
                 <AnimatedName
                   names={['building things', 'shipping research', 'training models', 'hacking, ethically']}
@@ -122,15 +122,15 @@ export function Hero() {
                   className="script-accent"
                 />
               </p>
-              <p className="mt-3 text-center text-xs text-muted-foreground sm:text-sm">
+              <p className="mt-3 px-4 text-center text-xs text-muted-foreground sm:text-sm">
                 Published researcher · Certified Ethical Hacker · 50K+ users served · {profile.location}
               </p>
             </BlurFade>
 
             <BlurFade delay={0.01} direction="down" inView>
-              <div className="z-10 flex flex-row items-center justify-center gap-3 sm:gap-5">
+              <div className="z-10 flex flex-row flex-wrap items-center justify-center gap-3 px-4 sm:gap-5">
                 {/* Contact icons */}
-                <div className="flex flex-row items-center justify-center space-x-4 sm:space-x-6">
+                <div className="flex flex-row items-center justify-center space-x-3 sm:space-x-6">
                   {contactIcons.map(({ label, href, icon: Icon, aria }) => (
                     <Tooltip key={label} label={label} side="bottom">
                       <a
@@ -149,7 +149,7 @@ export function Hero() {
                   ))}
                 </div>
 
-                <span className="h-5 w-px bg-border" aria-hidden />
+                <span className="hidden h-5 w-px bg-border sm:block" aria-hidden />
 
                 {/* View my work pill */}
                 <a
