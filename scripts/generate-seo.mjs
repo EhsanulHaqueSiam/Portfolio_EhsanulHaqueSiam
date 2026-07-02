@@ -163,6 +163,19 @@ ${section(
       )
       .join('\n'),
   )}${section(
+    'Case Studies (problem → approach → measured result)',
+    projects
+      .filter((p) => p.caseStudy && p.showInHome)
+      .map((p) => {
+        const cs = p.caseStudy;
+        return `### ${p.name}\n**Problem:** ${cs.problem}\n**Approach:** ${cs.solution}\n**Process:** ${cs.process
+          .map((s) => `${s.title} — ${s.desc}`)
+          .join(' | ')}\n**Measured results:** ${cs.results
+          .map((r) => `${r.label}: ${r.value}`)
+          .join(', ')}`;
+      })
+      .join('\n\n'),
+  )}${section(
     'Publications & Research',
     publications
       .map(

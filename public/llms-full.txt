@@ -107,6 +107,50 @@ Tech: C#, .NET, SQL Server, Guna UI
 Code: https://github.com/EhsanulHaqueSiam/PharmacyManagementSystem
 
 
+## Case Studies (problem → approach → measured result)
+
+### ScholarHub
+**Problem:** Students seeking international scholarships face fragmented information scattered across hundreds of sources, making it nearly impossible to discover relevant opportunities before deadlines pass.
+**Approach:** Built a unified scholarship discovery platform with 272 automated spiders scraping daily, intelligent deduplication, multi-facet search and filtering, and an admin dashboard for quality control, giving students a single place to find every scholarship they're eligible for.
+**Process:** Scraping Pipeline — Engineered 272 spiders across 7 scraping methods (HTML, API, RSS, JSON-LD, Scrapling, AJAX, Inertia.js) with wave-based scheduling, automatic deduplication, and source health monitoring. | Discovery Engine — Implemented full-text search with autocomplete, filtering by country, degree level, field of study, funding type, and prestige tier, plus nationality-aware recommendations. | Admin Dashboard — Built a review queue for pending scholarships, source trust manager for auto-publish vs manual review, collections manager, and tags manager with status-based stats. | SEO & Performance — Implemented dynamic OG image generation with Satori, XML sitemaps, JSON-LD structured data, country and degree landing pages, and SSR with TanStack Start on Netlify.
+**Measured results:** Scholarships: 12,000+, Sources: 272, Scraping Methods: 7, Source Categories: 5
+
+### TTT Autos
+**Problem:** Traditional dealership websites rely on generic templates with FOMO-driven sales tactics, lacking a premium browsing experience that builds trust through transparency and visual immersion.
+**Approach:** Built a cinematic 'Velocity Noir' dealership platform with interactive 3D models, headlight-effect UI, multi-angle photo galleries, and a comprehensive admin dashboard, all architected for trust-first positioning with transparent pricing and verified quality badges.
+**Process:** Cinematic Design System — Implemented 'Velocity Noir' aesthetic with headlight amber gradients, industrial grain textures, and dimensional parallax using Framer Motion animations. | Polymorphic Inventory — Designed a flexible Drizzle ORM schema supporting cars, motorcycles, and bicycles with category-specific fields, 7 indexed tables, and 12+ filter facets. | 3D Vehicle Immersion — Integrated Spline 3D scenes with lazy loading via Intersection Observer, error boundaries, and Suspense fallbacks for zero-jank performance. | Admin Dashboard — Built full inventory CRUD, photo management with UploadThing, hero slide editor, testimonials, and analytics with Better Auth session management.
+**Measured results:** DB Tables: 7, Filter Facets: 12+, Admin Pages: 17, Animation Variants: 10+
+
+### Indian Claypit
+**Problem:** Indian Claypit relied on phone-only ordering, losing potential customers who expected digital convenience. Their excellent food and service (reflected in 2,847 Google Reviews) wasn't translating to online reach.
+**Approach:** Built a full-stack restaurant platform with seamless online ordering, real-time order tracking, event booking for private dining, and catering integration, maintaining the warmth of their brand while scaling digitally.
+**Process:** Ordering Experience — Designed an intuitive menu browsing and cart system with real-time availability, dietary filters, and frictionless checkout optimized for mobile-first customers. | Backend & Processing — Built order processing pipeline handling real-time submissions, kitchen notifications, and order status tracking from placement to delivery. | Event & Catering — Integrated event booking for private dining and large-scale catering requests with custom menu selection and automated quote generation. | Performance & SEO — Optimized for Core Web Vitals with lazy loading, image optimization, and local SEO to capture nearby customer searches.
+**Measured results:** Customers: 50,000+, Rating: 4.9★, Reviews: 2,847, Platform: Production
+
+### Student Management System
+**Problem:** University administration struggled with scattered excel sheets and slow manual data retrieval, leading to administrative bottlenecks.
+**Approach:** Built a centralized Java Swing application with a normalized MySQL database, implementing the Singleton pattern for efficient connection management.
+**Process:** Database Normalization — Redesigned schema to 3NF, eliminating data redundancy and improving integrity. | Performance Tuning — Implemented connection pooling to reduce query latency from 50ms to ~7ms. | UX Design — Created intuitive dashboards for both Admins and Students using Guna UI.
+**Measured results:** Query Speed: 7ms, Data Integrity: 100%, User Adoption: 45+
+
+### Mario's Multiverse Adventure
+**Problem:** Computer Graphics courses require practical application of theoretical concepts like rendering, physics, and linear algebra in a real-time environment.
+**Approach:** Developed a 2D platformer game engine from scratch using OpenGL and C++, demonstrating core graphics programming and game development principles.
+**Process:** OpenGL Rendering — Built a custom rendering engine using OpenGL, GLUT, and GLEW to handle textures, sprites, and animations. | Physics Engine — Implemented collision detection and basic physics mechanics for character movement and environmental interaction. | Cross-Platform Build — Configured CMake and vcpkg to ensure the project builds and runs consistently on Windows and Linux.
+**Measured results:** Levels: 3, Forks: 4, Stars: 2
+
+### BD News Scraper & Analytics
+**Problem:** Bangladesh lacks a comprehensive, up-to-date news dataset for research and NLP applications, with no automated pipeline for continuous data collection and analysis.
+**Approach:** Built a production-grade news aggregation platform with 74+ spiders, automated daily scraping via GitHub Actions, ML-powered analytics, and public Kaggle dataset for the research community.
+**Process:** Enterprise Scraping — Developed 82 spider files with Playwright integration, Cloudflare bypass, rotating proxies, and smart fallback architecture. | ML Analytics Pipeline — Implemented sentiment analysis, TF-IDF topic clustering, breaking news detection via spike analysis, and duplicate detection. | Automated Infrastructure — GitHub Actions daily scraping at 12:00 PM BDT, auto-upload to Kaggle, Docker/Kubernetes deployment, multi-format exports. | API & Dashboards — FastAPI REST + GraphQL endpoints, Streamlit dashboards, Leaflet.js geo-visualization, real-time notifications (Telegram/Slack/Discord).
+**Measured results:** Sources: 74+, Spiders: 82, Daily Auto: ✓, Kaggle: Live
+
+### Hotel Management System
+**Problem:** Manual hotel operations (booking, check-in/out) are slow, error-prone, and lack secure payment integration.
+**Approach:** Developed a comprehensive Java Swing desktop application with secure user authentication, room management dashboards, and integrated local payment gateways.
+**Process:** Modular Architecture — Adhered to interface-driven design principles to ensure maintainability and scalability. | Payment Integration — Integrated local payment methods (Bkash, Nagad) for seamless financial transactions. | Security Implementation — Built a secure authentication system with signup, login, and password recovery functionality.
+**Measured results:** Commits: 171, Releases: 4, Stars: 15
+
 ## Publications & Research
 
 ### Decoding Research Trends: A Clustering Based Topic Modeling Framework
