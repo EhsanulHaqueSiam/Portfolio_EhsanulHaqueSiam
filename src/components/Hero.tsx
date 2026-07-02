@@ -1,225 +1,173 @@
 import { useEffect, useRef, useState } from 'react';
-import type { CSSProperties } from 'react';
-import { m, useScroll, useTransform, useReducedMotion, useInView } from 'framer-motion';
-import { profile } from '../data/content';
-import { FerroText } from './ui/FerroText';
-import { MagneticHover } from './ui/ImageDistortion';
-import { AsciiTorus } from './ui/AsciiTorus';
-import { DitherField } from './ui/DitherField';
-import { ArrowDownIcon } from './ui/Icons';
-import { useMediaQuery } from '../hooks/useMediaQuery';
+import { m } from 'framer-motion';
+import { profile, profileHeroImage } from '../data/content';
+import { BlurFade } from './ui/BlurFade';
+import { HeroConstellation } from './ui/HeroConstellation';
+import { ShimmerButton } from './ui/ShimmerButton';
+import { ShimmerBorder } from './ui/ShimmerBorder';
+import { AnimatedName } from './ui/AnimatedName';
+import { Tooltip } from './ui/Tooltip';
+import { GitHubIcon, LinkedInIcon, EmailIcon, ArrowRightIcon } from './ui/Icons';
 
-/** Parses "1.5x" / "50K+" / "8+" into { value, decimals, suffix } for the ticker. */
-function parseStat(raw: string): { value: number; decimals: number; suffix: string } {
-  const match = raw.match(/^([\d.]+)(.*)$/);
-  if (!match) return { value: 0, decimals: 0, suffix: raw };
-  const num = parseFloat(match[1]);
-  const decimals = match[1].includes('.') ? match[1].split('.')[1].length : 0;
-  return { value: num, decimals, suffix: match[2] };
+/** Dhaka-local status, like the reference: green while awake, amber after hours. */
+function getStatus(): { status: string; dotClass: string } {
+  const hour = parseInt(
+    new Intl.DateTimeFormat('en-US', { timeZone: 'Asia/Dhaka', hour: 'numeric', hour12: false }).format(new Date()),
+    10
+  );
+  return hour >= 8 && hour < 23
+    ? { status: 'Available', dotClass: 'bg-green-500' }
+    : { status: 'Recharging in Dhaka', dotClass: 'bg-amber-500' };
 }
+
+/** SSR renders the default; the live Dhaka status resolves after hydration. */
+function StatusDot() {
+  const [{ status, dotClass }, setState] = useState({ status: 'Available', dotClass: 'bg-green-500' });
+  useEffect(() => setState(getStatus()), []);
+  return (
+    <>
+      <span className="relative mr-2 flex h-2 w-2" aria-hidden="true">
+        <span className={`absolute inline-flex h-full w-full animate-ping rounded-full opacity-75 ${dotClass}`} />
+        <span className={`relative inline-flex h-2 w-2 rounded-full ${dotClass}`} />
+      </span>
+      <span className="whitespace-pre-wrap py-0.5 text-center text-xs font-semibold leading-none text-muted-foreground sm:text-sm">
+        {status}
+      </span>
+    </>
+  );
+}
+
+const contactIcons = [
+  { label: 'GitHub', href: profile.github, icon: GitHubIcon, aria: 'GitHub profile' },
+  { label: 'LinkedIn', href: profile.linkedin, icon: LinkedInIcon, aria: 'LinkedIn profile' },
+  { label: 'Email', href: `mailto:${profile.email}`, icon: EmailIcon, aria: 'Send an email' },
+];
 
 /**
- * Count-up numeral. SSR and first client render show the FINAL value (crawler
- * parity, no hydration mismatch); the count-up only runs after hydration.
+ * Hero (reference port): constellation dots, ASCII torus avatar in an
+ * animated glow ring, availability shimmer pill, animated name, and the
+ * "View my work" pill with a cursor-tracked glow + shimmer border.
  */
-function StatTicker({ raw }: { raw: string }) {
-  const ref = useRef<HTMLSpanElement>(null);
-  const inView = useInView(ref, { once: true, margin: '-10%' });
-  const reduced = useReducedMotion();
-  const [display, setDisplay] = useState(raw);
-
-  useEffect(() => {
-    if (!inView || reduced) return;
-    const { value, decimals, suffix } = parseStat(raw);
-    if (!value) return;
-    const duration = 1100;
-    let start: number | null = null;
-    let raf: number;
-    const tick = (t: number) => {
-      if (start === null) start = t;
-      const p = Math.min((t - start) / duration, 1);
-      const eased = 1 - Math.pow(1 - p, 4);
-      setDisplay(`${(value * eased).toFixed(decimals)}${suffix}`);
-      if (p < 1) raf = requestAnimationFrame(tick);
-      else setDisplay(raw);
-    };
-    raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
-  }, [inView, raw, reduced]);
-
-  return <span ref={ref}>{display}</span>;
-}
-
 export function Hero() {
-  const containerRef = useRef<HTMLElement>(null);
-  const isMobile = useMediaQuery('(max-width: 767px)');
-  const reduced = useReducedMotion();
+  const [wiggleIcon, setWiggleIcon] = useState<string | null>(null);
+  const ctaRef = useRef<HTMLAnchorElement>(null);
 
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ['start start', 'end start'],
-  });
-  const exitY = useTransform(scrollYProgress, [0, 1], [0, reduced || isMobile ? 0 : -80]);
-  const exitOpacity = useTransform(scrollYProgress, [0, 0.9], [1, reduced ? 1 : 0.15]);
+  const handleIconClick = (name: string) => {
+    setWiggleIcon(name);
+    setTimeout(() => setWiggleIcon(null), 600);
+  };
+
+  const handleCtaMove = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    const el = ctaRef.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    el.style.setProperty('--mx', `${e.clientX - rect.left}px`);
+    el.style.setProperty('--my', `${e.clientY - rect.top}px`);
+  };
 
   return (
-    <section
-      ref={containerRef}
-      className="relative min-h-[100svh] flex flex-col justify-start pt-24 sm:pt-28 lg:pt-32 pb-6"
-      aria-label="Introduction"
-    >
-      {/* Animated dither field — fades out toward the fold */}
-      <div
-        className="absolute inset-0 overflow-hidden"
-        style={{
-          WebkitMaskImage: 'linear-gradient(to bottom, black 55%, transparent 96%)',
-          maskImage: 'linear-gradient(to bottom, black 55%, transparent 96%)',
-        }}
-        aria-hidden="true"
-      >
-        {!isMobile && <DitherField />}
-        <div className="dither-veil" />
-      </div>
+    <div className="relative flex items-center justify-center overflow-hidden pb-16 pt-36 sm:pt-52">
+      <HeroConstellation desktopDots={220} mobileDots={70} />
 
-      <m.div
-        style={{ y: exitY, opacity: exitOpacity }}
-        className="relative mx-auto w-full max-w-[1400px] px-5 sm:px-8 lg:px-12 flex-1 flex flex-col"
-      >
-        {/* Masthead meta row */}
-        <div className="border-t border-b rule-strong py-2.5 flex items-center justify-between gap-4">
-          <span className="folio">Now · {profile.currentRole}</span>
-          <span className="folio hidden md:block">Deepchain Labs · BetaScript · BDTracks</span>
-          <span className="folio hidden sm:block">{profile.location}</span>
-        </div>
-
-        {/* Availability pill + name */}
-        <div className="hero-name-block relative mt-10 sm:mt-14 lg:mt-16">
-          {profile.available && (
-            <span className="stamp-in stamp mb-5 sm:mb-7 inline-flex items-center gap-2.5 px-4 py-2 text-[10px] sm:text-[11px]">
-              <span
-                className="h-2 w-2 rounded-full bg-green-400 animate-pulse-dot"
-                aria-hidden="true"
+      <BlurFade delay={0.005} inView>
+        <div className="relative flex-col space-y-1">
+          <div className="relative flex flex-col items-center justify-center">
+            {/* Portrait in an animated glow ring: grayscale until hover */}
+            <div className="group relative p-[4px]" data-cursor-emoji="👋">
+              <m.div
+                aria-hidden
+                className="absolute inset-1 z-[1] rounded-full opacity-40 blur-md transition duration-500 will-change-transform group-hover:opacity-100 bg-[radial-gradient(circle_farthest-side_at_0_100%,#7b61ff,transparent),radial-gradient(circle_farthest-side_at_100%_0,#5ee7f5,transparent),radial-gradient(circle_farthest-side_at_100%_100%,#ffc414,transparent),radial-gradient(circle_farthest-side_at_0_0,#ff6ec7,#141316)]"
+                style={{ backgroundSize: '400% 400%' }}
+                animate={{ backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'] }}
+                transition={{ duration: 5, repeat: Infinity, repeatType: 'reverse' }}
               />
-              Open to work · worldwide
-            </span>
-          )}
-          <p
-            className="rise-in font-display italic font-light text-vermilion-400 text-2xl sm:text-4xl lg:text-5xl leading-none mb-2 sm:mb-4"
-            style={{ '--rise-delay': '0.1s' } as CSSProperties}
-          >
-            {profile.title.toLowerCase()}
-          </p>
-          <h1 className="poster leading-[0.95]">
-            <span className="sr-only">{profile.name}</span>
-            <span className="hero-name-line block text-ink-950">
-              <FerroText text={profile.firstName} delay={0.05} stagger={0.035} />
-            </span>
-            <span className="hero-name-line block text-ink-950">
-              <FerroText
-                text={profile.lastName}
-                delay={0.3}
-                stagger={0.03}
-                suffix={<span className="text-vermilion-400">.</span>}
+              <img
+                src={profileHeroImage}
+                alt={profile.name}
+                width={96}
+                height={96}
+                fetchPriority="high"
+                className="relative z-10 h-20 w-20 rounded-full border border-white/10 object-cover grayscale transition-[filter,transform] duration-300 group-hover:scale-[1.03] group-hover:grayscale-0 sm:h-24 sm:w-24"
               />
-            </span>
-          </h1>
-        </div>
-
-        {/* Abstract + portrait */}
-        <div className="hero-abstract-grid mt-10 sm:mt-14 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
-          <div className="lg:col-span-7 xl:col-span-8">
-            <p
-              className="rise-in font-display font-light text-2xl sm:text-3xl xl:text-4xl leading-snug text-ink-800 max-w-[26ch] sm:max-w-[30ch]"
-              style={{ '--rise-delay': '0.45s' } as CSSProperties}
-            >
-              {profile.tagline}
-            </p>
-
-            {/* CTAs */}
-            <div
-              className="rise-in mt-9 sm:mt-12 flex flex-wrap items-center gap-3 sm:gap-4"
-              style={{ '--rise-delay': '0.65s' } as CSSProperties}
-            >
-              <MagneticHover strength={isMobile ? 0 : 18}>
-                <a href="#projects" className="btn-primary px-7 py-4">
-                  Selected work
-                  <span className="arrow-bounce" aria-hidden="true">→</span>
-                </a>
-              </MagneticHover>
-              <MagneticHover strength={isMobile ? 0 : 18}>
-                <a href="#contact" className="btn-glass px-7 py-4">
-                  Let’s talk
-                  <span aria-hidden="true">→</span>
-                </a>
-              </MagneticHover>
-              <span className="flex items-center gap-5 sm:ml-2">
-                <a href="#resume" className="link-ink folio !text-ink-700 py-2">
-                  Résumé
-                </a>
-                <a
-                  href="/resume.pdf"
-                  download="Ehsanul_Haque_Siam_Resume.pdf"
-                  className="link-ink folio !text-ink-700 py-2 inline-flex items-center gap-1.5"
-                >
-                  PDF <ArrowDownIcon className="w-3 h-3" />
-                </a>
-              </span>
             </div>
+
+            {/* Status pill (Dhaka-local, like the reference) */}
+            <ShimmerButton className="z-10 mt-8">
+              <StatusDot />
+            </ShimmerButton>
           </div>
 
-          {/* Signal torus — color ASCII animation on a glass plate */}
-          <figure
-            className="rise-in lg:col-span-5 xl:col-span-4 max-w-sm lg:max-w-none lg:justify-self-end w-full"
-            style={{ '--rise-delay': '0.3s' } as CSSProperties}
-          >
-            <div className="relative">
-              <div
-                className="absolute -inset-6 rounded-[2rem] opacity-60 blur-2xl"
-                style={{
-                  background:
-                    'radial-gradient(60% 60% at 60% 30%, rgba(139,124,255,0.25), transparent 70%)',
-                }}
-                aria-hidden="true"
-              />
-              <div className="glass reg-marks relative overflow-hidden">
-                <AsciiTorus className="aspect-square w-full" />
+          <div className="w-full space-y-6">
+            <BlurFade delay={0.005} inView>
+              <h1 className="whitespace-nowrap text-center text-5xl font-bold leading-[1.8] subpixel-antialiased sm:text-7xl">
+                <span className="sr-only">{profile.name}</span>
+                <span
+                  aria-hidden="true"
+                  className="inline-block bg-gradient-to-b from-zinc-500 to-zinc-950 bg-clip-text pb-2 text-transparent dark:from-zinc-50 dark:to-zinc-400"
+                >
+                  Hi. I&#39;m{' '}
+                  <span className="text-foreground [-webkit-text-fill-color:hsl(var(--foreground))]">
+                    <AnimatedName names={['Siam', 'Ehsanul']} className="script-accent" />
+                  </span>
+                </span>
+              </h1>
+              <p className="text-center text-base font-medium tracking-tight text-secondary-foreground subpixel-antialiased sm:text-2xl">
+                An AI Engineer &amp; Full-Stack Developer who likes{' '}
+                <span className="script-accent">building things</span>.
+              </p>
+              <p className="mt-3 text-center text-xs text-muted-foreground sm:text-sm">
+                Published researcher · 50K+ users served · {profile.location}
+              </p>
+            </BlurFade>
+
+            <BlurFade delay={0.01} direction="down" inView>
+              <div className="z-10 flex flex-row items-center justify-center gap-5">
+                {/* Contact icons */}
+                <div className="flex flex-row items-center justify-center space-x-6">
+                  {contactIcons.map(({ label, href, icon: Icon, aria }) => (
+                    <Tooltip key={label} label={label} side="bottom">
+                      <a
+                        href={href}
+                        target={href.startsWith('http') ? '_blank' : undefined}
+                        rel={href.startsWith('http') ? 'me noopener noreferrer' : undefined}
+                        aria-label={aria}
+                        onClick={() => handleIconClick(label)}
+                        className={`inline-flex text-secondary-foreground transition-transform duration-300 hover:scale-125 hover:animate-wiggle ${
+                          wiggleIcon === label ? 'scale-125 animate-wiggle' : ''
+                        }`}
+                      >
+                        <Icon className="h-6 w-6" />
+                      </a>
+                    </Tooltip>
+                  ))}
+                </div>
+
+                <span className="h-5 w-px bg-border" aria-hidden />
+
+                {/* View my work pill */}
+                <a
+                  ref={ctaRef}
+                  onMouseMove={handleCtaMove}
+                  href="#projects"
+                  className="group relative inline-flex items-center gap-2 overflow-hidden rounded-full border border-border/80 bg-background/40 px-4 py-1.5 text-sm font-medium text-secondary-foreground backdrop-blur-sm transition-colors hover:text-foreground"
+                >
+                  <span
+                    aria-hidden
+                    className="pointer-events-none absolute inset-0 rounded-full text-foreground opacity-0 transition-opacity duration-300 group-hover:opacity-20"
+                    style={{
+                      background:
+                        'radial-gradient(120px circle at var(--mx, 50%) var(--my, 50%), currentColor, transparent 60%)',
+                    }}
+                  />
+                  <span className="relative whitespace-nowrap">View my work</span>
+                  <ArrowRightIcon className="relative h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+                  <ShimmerBorder />
+                </a>
               </div>
-            </div>
-            <figcaption className="folio mt-3 flex justify-between gap-4">
-              <span>Fig. 00 · Signal, in orbit · click to flip</span>
-              <span className="hidden sm:inline">Dhaka, BD</span>
-            </figcaption>
-          </figure>
+            </BlurFade>
+          </div>
         </div>
-
-        {/* Stats colophon — proof, measured (X-Y-Z) */}
-        <dl
-          className="rise-in glass mt-12 sm:mt-16 grid grid-cols-2 md:grid-cols-4 overflow-hidden"
-          style={{ '--rise-delay': '0.85s' } as CSSProperties}
-        >
-          {profile.stats.map((stat, i) => (
-            <div
-              key={stat.label}
-              className={`flex flex-col py-5 sm:py-6 px-4 sm:px-6 ${i > 0 ? 'md:border-l md:rule' : ''} ${i % 2 === 1 ? 'max-md:border-l max-md:rule' : ''} ${i >= 2 ? 'max-md:border-t max-md:rule' : ''}`}
-            >
-              <dt className="folio order-2">{stat.label}</dt>
-              <dd className="order-1 font-display font-light text-3xl sm:text-4xl xl:text-5xl text-ink-950 mb-1">
-                <StatTicker raw={stat.value} />
-              </dd>
-            </div>
-          ))}
-        </dl>
-
-        {/* Scroll cue */}
-        <a
-          href="#about"
-          className="rise-in mt-auto pt-8 pb-2 inline-flex items-center gap-3 self-start folio !text-ink-700 group"
-          style={{ '--rise-delay': '1.2s' } as CSSProperties}
-        >
-          <span className="scroll-dot inline-block" aria-hidden="true">↓</span>
-          Scroll, the work speaks
-        </a>
-      </m.div>
-    </section>
+      </BlurFade>
+    </div>
   );
 }

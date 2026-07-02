@@ -1,182 +1,284 @@
-import { m } from 'framer-motion';
-import type { ReactNode } from 'react';
-import { profile, profileImage, hideImageOnError } from '../data/content';
-import { SectionHeader } from './ui/SectionHeader';
+import { useEffect, useState } from 'react';
+import { profile, skills } from '../data/content';
+import { SectionHeading, headingIconClass } from './ui/SectionHeading';
+import { GlowingEffect } from './ui/GlowingEffect';
+import { SpotlightGlow } from './ui/SpotlightGlow';
+import { NumberTicker } from './ui/NumberTicker';
+import { Marquee } from './ui/Marquee';
+import { Globe } from './ui/Globe';
 import { GitHubGraph } from './ui/GitHubGraph';
+import { ScratchToReveal } from './ui/ScratchToReveal';
+import { AsciiTorus } from './ui/AsciiTorus';
+import { Tooltip } from './ui/Tooltip';
+import {
+  MapPinIcon,
+  ToolIcon,
+  LinkIcon,
+  HeartIcon,
+  ShieldIcon,
+  UsersIcon,
+  TrendingUpIcon,
+  HandClickIcon,
+  SparklesIcon,
+  GitHubIcon,
+  LinkedInIcon,
+  EmailIcon,
+  ResumeIcon,
+} from './ui/Icons';
 
-const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
+const dashboardIconClass = 'h-4 w-4 sm:h-5 sm:w-5 text-foreground';
 
-/**
- * Phrases inside profile.bio that receive a permanent editorial underline.
- * Capped at the 3 strongest hire-signals — more underlines dilute all of them.
- * Matching is literal against the JSON string — if the data changes and a
- * phrase no longer appears, it simply renders unstyled (never breaks).
- */
-const KEY_PHRASES = [
-  'Taylor & Francis book chapter',
-  'IEEE QPAIN 2026',
-  '1.5x client revenue',
+// Fun sticker GIFs hidden under the scratch foil (same set as the reference).
+const SCRATCH_GIFS = [
+  'https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3YXJld3JyYXo1Z3d1Nnh1ZzFxbXU3ZzV5N3JiamNsa3ByMHBvam1vaiZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/eOjuCYIGqXSqfBy0MX/giphy.gif',
+  'https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3aGh0YmFybmt1d3d4ZGY0c2lyMDhmcTlnMTBkanozNGxuangydjluaSZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/AEDD6xjlOxNMgFsUmA/giphy.gif',
+  'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOWdnMDcycTF1ejAyNm1yamVuMTZpZTcxd3UwemhxbzcweGVsMDl5aSZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/LqgrTA39s77U8JKhJd/giphy.gif',
+  'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOTY3c293N2VhdDFsMmFkdG85MGpjcnRrd2xybHUwZnI2dGdwdnpzYSZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/xYPdnwsRPZDhCxXvOi/giphy.gif',
+  'https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3YXZjdjljYzM0NzhoOHNjajZldDQ2ZzU5YTF5MTExOXQxbGdpdjAxZSZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/20JY76TfKAhR20SfJu/giphy.gif',
+  'https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3YXZjdjljYzM0NzhoOHNjajZldDQ2ZzU5YTF5MTExOXQxbGdpdjAxZSZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/MxZKME5mbgeXckKp14/giphy.gif',
+  'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExZ2Y2N2FvYTl6bTkxeGlzanpxNmJrOXh1bXBuY3gyY2ljeHpweWVlMSZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/d9UAwX6gd6d3zYrTF5/giphy.gif',
+  'https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3amtteDRyNWx4OHpmODVlMXo3YnBlczd3dGRoMWVlcWE5MzJxMjA2cyZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/kimWBtJDjWcwFH2nRB/giphy.gif',
+  'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExaTNtcmFyajY4MzNldzVkanU5dHNzdTBnaWJibmo0d2wycm5xOWRzZCZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/GPWKoHhTMmjTYqOTVG/giphy.gif',
+  'https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3NzAwZmVqd2tyM2t4c28xZHprem00dzR3bW9vZDZ2d2FzZDV5dTkxNiZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/wMQTobBKTpmg5TLuZ5/giphy.gif',
+  'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExZmdtbDAxdjY3b2I2cm1naXRraGhpMm95MzA1dXkzank3dXg0MGcybSZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/yrYcBBMG9F9tLwSDrM/giphy.gif',
+  'https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3dXIxaXR2dzFhenZieXo1N2F0c2NpZmNza2ZwbnZpbm5vNHZ4ZWFwbyZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/LIcwKtctRdCtPaaaNO/giphy.gif',
+  'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExb3FqaHAwa2d1ZHB4ZTIwMXlka2FrNGNrbHRlamJxZ3AzbXVzdHpqMCZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/UmbybxMJ3sRvKBV5qw/giphy.gif',
 ];
 
-const PHRASE_CLASS =
-  'underline decoration-vermilion/70 decoration-[1.5px] underline-offset-[0.2em]';
-
-/** Typeset the bio: wrap key phrases in underlined spans (spans, not links). */
-function typesetBio(text: string): ReactNode[] {
-  const nodes: ReactNode[] = [];
-  let rest = text;
-  let key = 0;
-
-  while (rest.length > 0) {
-    let matchIdx = -1;
-    let matchPhrase = '';
-    for (const phrase of KEY_PHRASES) {
-      const idx = rest.indexOf(phrase);
-      if (idx !== -1 && (matchIdx === -1 || idx < matchIdx)) {
-        matchIdx = idx;
-        matchPhrase = phrase;
-      }
-    }
-    if (matchIdx === -1) {
-      nodes.push(rest);
-      break;
-    }
-    if (matchIdx > 0) {
-      nodes.push(rest.slice(0, matchIdx));
-    }
-    nodes.push(
-      <span key={key++} className={PHRASE_CLASS}>
-        {matchPhrase}
-      </span>,
-    );
-    rest = rest.slice(matchIdx + matchPhrase.length);
-  }
-
-  return nodes;
+interface GridItemProps {
+  area: string;
+  icon: React.ReactNode;
+  title: string;
+  children?: React.ReactNode;
+  tooltip?: string;
+  cursorEmoji?: string;
 }
 
-// Computed once at module scope — pure, deterministic, SSR-identical.
-const bioNodes = typesetBio(profile.bio);
-
-export function About() {
+/** Bento cell: glowing pointer-chasing border + cursor spotlight inside. */
+function GridItem({ area, icon, title, children, tooltip, cursorEmoji }: GridItemProps) {
   return (
-    <section id="about" className="relative py-24 sm:py-32">
-      <div className="mx-auto max-w-[1400px] px-5 sm:px-8 lg:px-12">
-        <SectionHeader
-          number="01"
-          name="ABOUT"
-          title={
-            <>
-              Research, <em>shipped</em>.
-            </>
-          }
-          annotation="EST. READ 2 MIN"
-        />
-
-        <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-12 lg:gap-10">
-          {/* ——— Left rail: portrait plate + ledger (sticky on lg) ——— */}
-          <m.div
-            className="lg:sticky lg:top-28 lg:col-span-4 lg:self-start"
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-10%' }}
-            transition={{ duration: 0.8, ease: EASE }}
-          >
-            <figure className="max-w-sm lg:max-w-none">
-              <div className="reg-marks relative p-2 sm:p-3">
-                <div
-                  className="absolute -inset-4 rounded-[2rem] opacity-50 blur-2xl"
-                  style={{
-                    background:
-                      'radial-gradient(60% 60% at 60% 35%, rgba(139,124,255,0.18), transparent 70%)',
-                  }}
-                  aria-hidden="true"
-                />
-                <div className="plate shadow-plate relative">
-                  <img
-                    src={profileImage}
-                    alt={profile.name}
-                    loading="lazy"
-                    decoding="async"
-                    width={640}
-                    height={800}
-                    sizes="(max-width: 1024px) 384px, 33vw"
-                    className="block aspect-[4/5] w-full object-cover"
-                    onError={hideImageOnError}
-                  />
-                </div>
-              </div>
-              <figcaption className="folio mt-3 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 px-2 sm:px-3">
-                <span>Fig. 01 · The author</span>
-                <span className="text-ink-500">{profile.name}</span>
-              </figcaption>
-            </figure>
-
-            {/* Ledger — mono rows with dotted leaders */}
-            <dl className="rule mt-10 divide-y divide-[color:var(--hairline)] border-b border-t">
-              <div className="flex items-baseline py-3.5">
-                <dt className="folio whitespace-nowrap">Based in</dt>
-                <span className="leader" aria-hidden="true" />
-                <dd className="text-right font-mono text-xs uppercase tracking-[0.14em] text-ink-900">
-                  {profile.location}
-                </dd>
-              </div>
-              <div className="flex items-baseline py-3.5">
-                <dt className="folio whitespace-nowrap">Focus</dt>
-                <span className="leader" aria-hidden="true" />
-                <dd className="text-right font-mono text-xs uppercase tracking-[0.14em] text-ink-900">
-                  AI × Full-Stack
-                </dd>
-              </div>
-              <div className="flex items-baseline py-3.5">
-                <dt className="folio whitespace-nowrap">Now</dt>
-                <span className="leader" aria-hidden="true" />
-                <dd className="text-right font-mono text-xs font-semibold uppercase tracking-[0.14em] text-vermilion-400">
-                  {profile.currentCompany.split(',')[0]}
-                </dd>
-              </div>
-            </dl>
-          </m.div>
-
-          {/* ——— Right column: drop-cap bio + contribution figure ——— */}
-          <div className="lg:col-span-7 lg:col-start-6">
-            <m.p
-              className="max-w-[40rem] font-display text-xl font-light leading-[1.65] text-ink-900 first-letter:float-left first-letter:-mt-1 first-letter:pr-3 first-letter:font-display first-letter:text-[4.25rem] first-letter:font-normal first-letter:leading-[0.8] first-letter:text-vermilion-400 sm:text-2xl sm:first-letter:-mt-2 sm:first-letter:pr-4 sm:first-letter:text-[5.25rem]"
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-10%' }}
-              transition={{ duration: 0.8, delay: 0.1, ease: EASE }}
-            >
-              {bioNodes}
-            </m.p>
-
-            <m.p
-              className="folio mt-8 max-w-[40rem] leading-[1.9]"
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-10%' }}
-              transition={{ duration: 0.7, delay: 0.18, ease: EASE }}
-            >
-              Currently · <span className="text-ink-900">{profile.currentRole}</span>{' '}
-              · {profile.currentCompany}
-            </m.p>
-
-            <m.figure
-              className="mt-14 sm:mt-16"
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-10%' }}
-              transition={{ duration: 0.8, delay: 0.25, ease: EASE }}
-            >
-              <GitHubGraph />
-              <figcaption className="folio mt-3 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
-                <span>Fig. 02 · Contribution density</span>
-                <span className="text-ink-500">52 weeks</span>
-              </figcaption>
-            </m.figure>
+    <li
+      className="min-h-[2rem] w-full list-none"
+      style={{ gridArea: area }}
+      data-cursor-emoji={cursorEmoji}
+      title={tooltip}
+    >
+      <div className="relative mx-auto h-full rounded-xl border p-2 md:rounded-2xl">
+        <GlowingEffect spread={40} glow proximity={64} inactiveZone={0.01} />
+        <div className="group/glow relative flex h-full flex-col justify-between gap-2 overflow-hidden rounded-lg bg-card/60 p-4 backdrop-blur-sm">
+          <SpotlightGlow />
+          <div className="relative flex flex-row items-center gap-2 sm:gap-3">
+            <div>{icon}</div>
+            <h3 className="text-start text-sm font-semibold tracking-tight text-foreground sm:text-base">
+              {title}
+            </h3>
           </div>
+          <div className="min-h-0 flex-1 pt-2">{children}</div>
         </div>
       </div>
+    </li>
+  );
+}
+
+const connect = [
+  { label: 'GitHub', href: profile.github, icon: GitHubIcon },
+  { label: 'LinkedIn', href: profile.linkedin, icon: LinkedInIcon },
+  { label: 'Email', href: `mailto:${profile.email}`, icon: EmailIcon },
+  { label: 'Resume', href: '#resume', icon: ResumeIcon },
+];
+
+// Flatten the categorized skills into one marquee-friendly icon strip.
+const marqueeTools = skills.categories
+  .flatMap((c) => c.skills)
+  .filter((s) => s.icon?.startsWith('http'))
+  .slice(0, 24);
+
+/**
+ * About: short bio + interactive bento dashboard (globe, GitHub heatmap,
+ * counters, scratch card, tools marquee).
+ */
+export function About() {
+  // Random GIF on mount (client-only to avoid a hydration mismatch), new
+  // random GIF after each completed scratch, like the reference.
+  const [gif, setGif] = useState<string | null>(null);
+  useEffect(() => {
+    setGif(SCRATCH_GIFS[Math.floor(Math.random() * SCRATCH_GIFS.length)]);
+  }, []);
+
+  const pickNewGif = () => {
+    setGif((current) => {
+      const rest = SCRATCH_GIFS.filter((g) => g !== current);
+      return rest[Math.floor(Math.random() * rest.length)];
+    });
+  };
+
+  return (
+    <section id="about" className="scroll-mt-28">
+      <SectionHeading icon={<SparklesIcon className={headingIconClass} />}>About Me</SectionHeading>
+
+      <p className="mx-auto mb-10 max-w-2xl text-center text-sm leading-relaxed text-muted-foreground sm:text-base">
+        {profile.bio}
+      </p>
+
+      <ul className="dashboard-grid w-full gap-4">
+        <GridItem
+          area="location"
+          icon={<MapPinIcon className={dashboardIconClass} />}
+          title="Dhaka, BD → Worldwide"
+          cursorEmoji="✈️"
+          tooltip="Drag the globe"
+        >
+          <div className="min-h-[200px]">
+            <Globe />
+          </div>
+        </GridItem>
+
+        <li className="min-h-[2rem] w-full list-none" style={{ gridArea: 'github' }} data-cursor-emoji="💻">
+          <GitHubGraph />
+        </li>
+
+        <GridItem
+          area="stats1"
+          icon={<UsersIcon className={dashboardIconClass} />}
+          title="Users Served"
+          cursorEmoji="👥"
+        >
+          <NumberTicker
+            value={50000}
+            suffix="+"
+            className="whitespace-pre-wrap text-3xl font-semibold tracking-tighter text-muted-foreground"
+          />
+        </GridItem>
+
+        <GridItem
+          area="stats2"
+          icon={<TrendingUpIcon className={dashboardIconClass} />}
+          title="Client Revenue"
+          tooltip="Measured post-launch at BetaScript"
+          cursorEmoji="📈"
+        >
+          <NumberTicker
+            value={1.5}
+            decimalPlaces={1}
+            suffix="x"
+            className="whitespace-pre-wrap text-3xl font-semibold tracking-tighter text-muted-foreground"
+          />
+        </GridItem>
+
+        <GridItem
+          area="favstack"
+          icon={<HeartIcon className={dashboardIconClass} />}
+          title="Signal"
+          tooltip="Color ASCII torus: hover to tilt, click to flip"
+          cursorEmoji="🌀"
+        >
+          <div className="relative h-28 overflow-hidden rounded-md border border-border/60 bg-[#05060a]">
+            <AsciiTorus className="h-full w-full" />
+          </div>
+        </GridItem>
+
+        <GridItem
+          area="ceh"
+          icon={<ShieldIcon className={dashboardIconClass} />}
+          title="Certified Ethical Hacker"
+          cursorEmoji="🛡️"
+        >
+          <p className="text-sm leading-relaxed text-muted-foreground">
+            EC-Council CEH. Security research at Deepchain Labs across blockchain and quantum cryptography.
+          </p>
+        </GridItem>
+
+        <GridItem
+          area="scratch"
+          icon={<HandClickIcon className={dashboardIconClass} />}
+          title="Scratch Me"
+        >
+          <div className="relative">
+            <ScratchToReveal
+              className="flex h-24 items-center justify-center rounded-md border border-border/60 bg-background"
+              minScratchPercentage={20}
+              resetKey={gif ?? 'ssr'}
+              onComplete={() => {
+                window.setTimeout(pickNewGif, 2400);
+              }}
+            >
+              {gif && (
+                <img
+                  src={gif}
+                  alt="Scratched-off surprise sticker"
+                  width={100}
+                  height={100}
+                  loading="lazy"
+                  decoding="async"
+                  className="h-16 object-contain"
+                />
+              )}
+            </ScratchToReveal>
+            <button
+              type="button"
+              onClick={pickNewGif}
+              onMouseDown={(e) => e.stopPropagation()}
+              aria-label="New surprise"
+              className="group absolute right-1 top-1 z-10 rounded-md p-1 text-muted-foreground transition-colors hover:bg-background/60 hover:text-foreground"
+            >
+              <svg
+                className="h-4 w-4 transition-transform duration-300 group-hover:rotate-180"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d="M20 11A8.1 8.1 0 0 0 4.5 9M4 5v4h4M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4" />
+              </svg>
+            </button>
+          </div>
+        </GridItem>
+
+        <GridItem
+          area="connect"
+          icon={<LinkIcon className={dashboardIconClass} />}
+          title="Connect"
+          cursorEmoji="🔗"
+        >
+          <div className="flex flex-col gap-3.5 sm:p-2">
+            {connect.map(({ href, label, icon: Icon }) => (
+              <a
+                key={label}
+                href={href}
+                target={href.startsWith('http') ? '_blank' : undefined}
+                rel={href.startsWith('http') ? 'me noopener noreferrer' : undefined}
+                className="group flex items-center gap-2"
+              >
+                <Icon className="h-5 w-5 text-muted-foreground transition-all group-hover:scale-125 group-hover:animate-wiggle group-hover:text-foreground" />
+                <span className="text-sm text-muted-foreground transition-all group-hover:font-semibold group-hover:text-foreground">
+                  {label}
+                </span>
+              </a>
+            ))}
+          </div>
+        </GridItem>
+
+        <GridItem
+          area="tools"
+          icon={<ToolIcon className={dashboardIconClass} />}
+          title="Tools"
+          cursorEmoji="🔧"
+        >
+          <div className="relative overflow-hidden">
+            <div className="fade-mask-left" />
+            <div className="fade-mask-right" />
+            <Marquee pauseOnHover className="[--duration:24s]">
+              <div className="flex items-center gap-6">
+                {marqueeTools.map(({ name, icon }) => (
+                  <Tooltip key={name} label={name}>
+                    <img src={icon} alt={name} className="h-8 w-8" loading="lazy" />
+                  </Tooltip>
+                ))}
+              </div>
+            </Marquee>
+          </div>
+        </GridItem>
+      </ul>
     </section>
   );
 }

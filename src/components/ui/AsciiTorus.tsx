@@ -79,7 +79,7 @@ export function AsciiTorus({ className = '' }: { className?: string }) {
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
       canvas.width = Math.round(w * dpr);
       canvas.height = Math.round(h * dpr);
-      cols = Math.max(24, Math.round(w / 9));
+      cols = Math.max(30, Math.round(w / 7));
       cellW = canvas.width / cols;
       cellH = cellW / CELL_ASPECT;
       rows = Math.max(1, Math.round(canvas.height / cellH));
@@ -107,15 +107,15 @@ export function AsciiTorus({ className = '' }: { className?: string }) {
       const cosB = Math.cos(B);
       const sinB = Math.sin(B);
       // screen scale: fit the torus inside the shorter cell axis
-      const K1 = (Math.min(cols, rows / CELL_ASPECT) * 0.36 * K2) / (R1 + R2);
+      const K1 = (Math.min(cols, rows / CELL_ASPECT) * 0.27 * K2) / (R1 + R2);
 
-      for (let theta = 0; theta < Math.PI * 2; theta += 0.07) {
+      for (let theta = 0; theta < Math.PI * 2; theta += 0.09) {
         const cosT = Math.cos(theta);
         const sinT = Math.sin(theta);
         const circleX = R2 + R1 * cosT;
         const circleY = R1 * sinT;
 
-        for (let phi = 0; phi < Math.PI * 2; phi += 0.02) {
+        for (let phi = 0; phi < Math.PI * 2; phi += 0.035) {
           const cosP = Math.cos(phi);
           const sinP = Math.sin(phi);
 
@@ -196,8 +196,12 @@ export function AsciiTorus({ className = '' }: { className?: string }) {
       }, 150);
     };
 
-    if (!layout()) return;
-    draw();
+    // Survive mounting inside a zero-size (content-visibility) box.
+    if (layout()) draw();
+    const ro = new ResizeObserver(() => {
+      if (layout()) draw();
+    });
+    ro.observe(wrap);
 
     let visible = false;
     const io = new IntersectionObserver(
@@ -226,6 +230,7 @@ export function AsciiTorus({ className = '' }: { className?: string }) {
     return () => {
       disposed = true;
       io.disconnect();
+      ro.disconnect();
       cancelAnimationFrame(raf);
       window.clearTimeout(resizeT);
       wrap.removeEventListener('pointermove', onPointerMove);

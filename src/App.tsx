@@ -1,8 +1,6 @@
-import { LazyMotion, domAnimation, MotionConfig, useReducedMotion } from 'framer-motion';
+import { LazyMotion, domAnimation, MotionConfig } from 'framer-motion';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
-import { SocialLinks } from './components/SocialLinks';
-import { CustomCursor, ScrollProgress, SmoothScroll, Marquee, CommandPalette, Spotlight } from './components/ui';
 // Direct (non-lazy) imports so Astro server-renders every section into the
 // static HTML at build time — critical for SEO/AEO/GEO crawlers.
 import { About } from './components/About';
@@ -19,97 +17,65 @@ import { Blog } from './components/Blog';
 import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
 import { Resume } from './components/Resume';
+import { SmoothScroll } from './components/ui/SmoothScroll';
+import { ScrollProgress } from './components/ui/ScrollProgress';
+import { CommandPalette } from './components/ui/CommandPalette';
+import { EmojiCursor } from './components/ui/EmojiCursor';
 
-/** Hairline-bounded mono ticker strip between editorial spreads. */
-function Ticker({ items, direction = 'left' }: { items: string[]; direction?: 'left' | 'right' }) {
-  return (
-    <div className="border-t border-b rule-strong py-3 sm:py-4" aria-hidden="true">
-      <Marquee speed={38} direction={direction} pauseOnHover={false}>
-        {items.map((item) => (
-          <span key={item} className="folio !text-ink-600 mx-6 inline-flex items-center gap-6">
-            {item}
-            <span className="text-vermilion">✦</span>
-          </span>
-        ))}
-      </Marquee>
-    </div>
-  );
-}
+const sections = [
+  About,
+  WhyMe,
+  Experience,
+  Skills,
+  Projects,
+  Testimonials,
+  Awards,
+  Publications,
+  Education,
+  FAQ,
+  Blog,
+  Contact,
+];
 
 function App() {
-  const shouldReduceMotion = useReducedMotion();
-
   return (
     <LazyMotion features={domAnimation} strict>
-    <MotionConfig reducedMotion="user">
-    <SmoothScroll>
-      <div className="relative">
-        {/* Ambient furniture: aurora glows + blueprint columns + film grain */}
-        <div className="aurora-backdrop" aria-hidden="true" />
-        <div className="ruled-columns" aria-hidden="true" />
-        <div className="grain-overlay" aria-hidden="true" />
-
-        {/* Custom cursor - only on desktop, disabled for reduced motion */}
-        {!shouldReduceMotion && <CustomCursor />}
-
-        {/* Scroll progress indicator */}
-        <ScrollProgress />
-
-        {/* Social links - fixed position, outside main content flow */}
-        <SocialLinks />
-
-        {/* Main content */}
-        <div className="relative z-10">
-          <Navbar />
-          <main id="main-content">
-            <Hero />
-            <Ticker
-              items={[
-                'AI engineering',
-                'LLM / RAG systems',
-                'Full-stack development',
-                'Published research',
-                'Dhaka to worldwide',
-              ]}
+      <MotionConfig reducedMotion="user">
+        <SmoothScroll>
+          <div className="relative min-h-screen w-full bg-background">
+            {/* Top ambient glow, echoing the reference's background ellipse */}
+            <div
+              className="bg-ellipse left-1/2 top-[-260px] h-[520px] w-[900px] max-w-[150vw] -translate-x-1/2"
+              aria-hidden="true"
             />
-            <div className="cv-auto"><About /></div>
-            <div className="cv-auto"><WhyMe /></div>
-            <div className="cv-auto"><Experience /></div>
-            <div className="cv-auto"><Skills /></div>
-            <Ticker
-              direction="right"
-              items={[
-                'Selected works',
-                'Since 2023',
-                'Shipped & measured',
-                '50,000+ users served',
-                'Production-grade',
-              ]}
-            />
-            <div className="dither-edge" aria-hidden="true" />
-            <div className="cv-auto"><Projects /></div>
-            <div className="dither-edge dither-edge-flip" aria-hidden="true" />
-            <div className="cv-auto"><Testimonials /></div>
-            <div className="cv-auto"><Awards /></div>
-            <div className="cv-auto"><Publications /></div>
-            <div className="cv-auto"><Education /></div>
-            <div className="cv-auto"><FAQ /></div>
-            <div className="cv-auto"><Blog /></div>
-            <div className="dither-edge" aria-hidden="true" />
-            <div className="cv-auto"><Contact /></div>
-          </main>
-          <Footer />
-        </div>
 
-        {/* Resume overlay - self-managed via URL hash */}
-        <Resume />
+            <ScrollProgress />
+            <Navbar />
+            <EmojiCursor />
 
-        {/* Ctrl/Cmd+K command palette + glass-card cursor spotlight */}
-        <CommandPalette />
-        <Spotlight />
-      </div>
-    </SmoothScroll>
-    </MotionConfig>
+            <main id="main-content" className="relative z-10">
+              <div className="mx-auto flex max-w-5xl flex-col space-y-24 px-4 pb-8 sm:space-y-32">
+                <section id="hero" aria-label="Introduction">
+                  <Hero />
+                </section>
+                {sections.map((Section, i) => (
+                  <div key={i} className={i > 1 ? 'cv-auto' : undefined}>
+                    <Section />
+                  </div>
+                ))}
+              </div>
+            </main>
+
+            <Footer />
+
+            {/* Resume overlay - self-managed via URL hash */}
+            <Resume />
+
+            {/* Ctrl/Cmd+K command palette */}
+            <CommandPalette />
+          </div>
+        </SmoothScroll>
+      </MotionConfig>
     </LazyMotion>
   );
 }

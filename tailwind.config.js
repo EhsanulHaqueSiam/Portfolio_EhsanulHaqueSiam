@@ -3,86 +3,132 @@ export default {
   content: [
     "./src/**/*.{astro,html,js,ts,jsx,tsx,mdx}",
   ],
+  darkMode: 'class',
   theme: {
     extend: {
       colors: {
-        // "Obsidian Signal" dark glass palette.
-        // NOTE: legacy token names kept ("paper" = dark surfaces, "ink" = light
-        // foreground) so the entire component layer re-themes from one place.
+        // Semantic theme tokens (shadcn-style, HSL triplets set in index.css;
+        // light + dark values swap on the html.dark class).
+        background: 'hsl(var(--background) / <alpha-value>)',
+        foreground: 'hsl(var(--foreground) / <alpha-value>)',
+        card: 'hsl(var(--card) / <alpha-value>)',
+        'card-foreground': 'hsl(var(--card-foreground) / <alpha-value>)',
+        primary: 'hsl(var(--primary) / <alpha-value>)',
+        'primary-foreground': 'hsl(var(--primary-foreground) / <alpha-value>)',
+        secondary: 'hsl(var(--secondary) / <alpha-value>)',
+        'secondary-foreground': 'hsl(var(--secondary-foreground) / <alpha-value>)',
+        muted: 'hsl(var(--muted) / <alpha-value>)',
+        'muted-foreground': 'hsl(var(--muted-foreground) / <alpha-value>)',
+        accent: 'hsl(var(--accent) / <alpha-value>)',
+        'accent-foreground': 'hsl(var(--accent-foreground) / <alpha-value>)',
+        border: 'hsl(var(--border) / <alpha-value>)',
+        input: 'hsl(var(--input) / <alpha-value>)',
+        ring: 'hsl(var(--ring) / <alpha-value>)',
+
+        // Legacy tokens kept so the Resume print overlay (intentionally
+        // paper-light) keeps compiling unchanged.
         'paper': {
-          DEFAULT: '#05060A',
-          50: '#0B0D14',   // raised glass base
-          100: '#05060A',  // page void
-          200: '#0E1118',  // recessed panel
-          300: '#161A26',  // elevated surface / hover
-          400: '#232939',  // highest surface
+          DEFAULT: '#F7F3EB',
+          50: '#FDFBF7',
+          100: '#F7F3EB',
+          200: '#EFE9DC',
+          300: '#E5DCC9',
+          400: '#D6C9AE',
         },
         'ink': {
-          DEFAULT: '#EEF1F8',
-          950: '#FFFFFF',
-          900: '#EEF1F8',  // primary text
-          800: '#D6DBE8',
-          700: '#AEB5C8',
-          600: '#8B92A8',
-          500: '#6E7488',  // muted
-          400: '#4E5468',
-          300: '#343A4C',
+          DEFAULT: '#191713',
+          950: '#0D0C0A',
+          900: '#191713',
+          800: '#2A2723',
+          700: '#3B372F',
+          600: '#575145',
+          500: '#6E6759',
+          400: '#8C8371',
+          300: '#B3A995',
         },
-        // Accent — electric iris violet (legacy name kept)
         'vermilion': {
-          DEFAULT: '#8B7CFF',
-          50: '#191633',   // violet-tinted dark surface
-          400: '#A99DFF',
-          500: '#8B7CFF',
-          600: '#6F5CF2',
-          700: '#5643D8',
+          DEFAULT: '#E34F27',
+          50: '#FCEDE7',
+          400: '#EE6B41',
+          500: '#E34F27',
+          600: '#C93E1B',
+          700: '#A33217',
         },
-        // Secondary accent — signal cyan (legacy name kept)
         'cobalt': {
-          DEFAULT: '#5EE7F5',
-          500: '#5EE7F5',
-          700: '#0E7490',
+          DEFAULT: '#1D4ED8',
+          500: '#1D4ED8',
+          700: '#1E3A8A',
         },
       },
       fontFamily: {
-        // Display grotesque — tight, Framer-like headlines (Archivo variable)
-        'poster': ['Archivo Variable', 'Archivo', 'Arial Black', 'sans-serif'],
-        // Serif voice — italic accents, pull quotes
-        'display': ['Fraunces Variable', 'Fraunces', 'Georgia', 'Times New Roman', 'serif'],
-        'body': ['Instrument Sans Variable', 'Instrument Sans', 'system-ui', 'sans-serif'],
-        'mono': ['Spline Sans Mono Variable', 'Spline Sans Mono', 'ui-monospace', 'SFMono-Regular', 'monospace'],
-      },
-      fontSize: {
-        // Fluid display scale
-        'display-xl': ['clamp(3.5rem, 11vw, 10rem)', { lineHeight: '0.95', letterSpacing: '-0.04em' }],
-        'display-lg': ['clamp(2.75rem, 7.5vw, 6.5rem)', { lineHeight: '0.98', letterSpacing: '-0.035em' }],
-        'display-md': ['clamp(2rem, 4.5vw, 3.75rem)', { lineHeight: '1.05', letterSpacing: '-0.025em' }],
-        'label': ['0.6875rem', { lineHeight: '1.4', letterSpacing: '0.14em' }],
+        sans: ['Geist Variable', 'Geist', 'system-ui', 'sans-serif'],
+        mono: ['Geist Mono Variable', 'Geist Mono', 'ui-monospace', 'SFMono-Regular', 'monospace'],
+        script: ['Pacifico', 'ui-rounded', 'cursive'],
+        body: ['Geist Variable', 'Geist', 'system-ui', 'sans-serif'],
       },
       animation: {
-        'spin-slow': 'spin 24s linear infinite',
-        'shimmer': 'shimmer 2s infinite',
-        'marquee-left': 'marquee-left 42s linear infinite',
-        'marquee-right': 'marquee-right 42s linear infinite',
-        'aurora-drift': 'aurora-drift 26s ease-in-out infinite alternate',
+        marquee: 'marquee var(--duration, 40s) linear infinite',
+        'marquee-vertical': 'marquee-vertical var(--duration, 40s) linear infinite',
+        'button-shine': 'button-shine var(--speed, 4.5s) ease-in-out infinite',
+        'shimmer-slide': 'shimmer-slide var(--speed, 3s) ease-in-out infinite alternate',
+        'spin-around': 'spin-around calc(var(--speed, 3s) * 2) infinite linear',
+        'border-beam': 'border-beam calc(var(--duration, 6) * 1s) infinite linear',
+        rainbow: 'rainbow var(--speed, 2s) infinite linear',
+        wiggle: 'wiggle 0.8s ease-out 1',
+        'spin-grow': 'spin-grow 0.5s cubic-bezier(0.22, 1, 0.36, 1)',
+        'sound-wave': 'sound-wave ease-in-out infinite alternate',
+        meteor: 'meteor 6s cubic-bezier(0.20, 0.1, 0.30, 1) infinite',
         'pulse-dot': 'pulse-dot 2.4s ease-in-out infinite',
       },
       keyframes: {
-        'shimmer': {
-          '0%': { transform: 'translateX(-100%)' },
-          '100%': { transform: 'translateX(100%)' },
+        marquee: {
+          from: { transform: 'translateX(0)' },
+          to: { transform: 'translateX(calc(-100% - var(--gap, 1rem)))' },
         },
-        'marquee-left': {
-          '0%': { transform: 'translateX(0)' },
-          '100%': { transform: 'translateX(-50%)' },
+        'marquee-vertical': {
+          from: { transform: 'translateY(0)' },
+          to: { transform: 'translateY(calc(-100% - var(--gap, 1rem)))' },
         },
-        'marquee-right': {
-          '0%': { transform: 'translateX(-50%)' },
-          '100%': { transform: 'translateX(0)' },
+        'button-shine': {
+          '0%': { transform: 'translateX(-150%) skewX(-20deg)' },
+          '30%, 100%': { transform: 'translateX(350%) skewX(-20deg)' },
         },
-        'aurora-drift': {
-          '0%': { transform: 'translate3d(-4%, -2%, 0) scale(1)' },
-          '100%': { transform: 'translate3d(4%, 3%, 0) scale(1.08)' },
+        'shimmer-slide': {
+          to: { transform: 'translate(calc(100cqw - 100%), 0)' },
+        },
+        'spin-around': {
+          '0%': { transform: 'translateZ(0) rotate(0)' },
+          '15%, 35%': { transform: 'translateZ(0) rotate(90deg)' },
+          '65%, 85%': { transform: 'translateZ(0) rotate(270deg)' },
+          '100%': { transform: 'translateZ(0) rotate(360deg)' },
+        },
+        'border-beam': {
+          '100%': { 'offset-distance': '100%' },
+        },
+        rainbow: {
+          '0%': { 'background-position': '0%' },
+          '100%': { 'background-position': '200%' },
+        },
+        wiggle: {
+          '0%': { transform: 'rotate(-15deg)' },
+          '20%': { transform: 'rotate(15deg)' },
+          '40%': { transform: 'rotate(-10deg)' },
+          '60%': { transform: 'rotate(10deg)' },
+          '80%': { transform: 'rotate(-5deg)' },
+          '100%': { transform: 'rotate(0deg)' },
+        },
+        'spin-grow': {
+          '0%': { transform: 'rotate(0deg)' },
+          '100%': { transform: 'rotate(360deg)' },
+        },
+        'sound-wave': {
+          '0%': { transform: 'scaleY(0.3)' },
+          '100%': { transform: 'scaleY(1)' },
+        },
+        meteor: {
+          '0%': { transform: 'rotate(var(--angle)) translateX(0)', opacity: '0.1' },
+          '70%': { opacity: '1' },
+          '100%': { transform: 'rotate(var(--angle)) translateX(-500px)', opacity: '0.1' },
         },
         'pulse-dot': {
           '0%, 100%': { opacity: '1', boxShadow: '0 0 0 0 rgba(74, 222, 128, 0.45)' },
@@ -92,18 +138,6 @@ export default {
       transitionTimingFunction: {
         'out-quart': 'cubic-bezier(0.25, 1, 0.5, 1)',
         'out-expo': 'cubic-bezier(0.16, 1, 0.3, 1)',
-        'editorial': 'cubic-bezier(0.65, 0, 0.35, 1)',
-      },
-      boxShadow: {
-        // Glass elevation + accent glows
-        'plate': '0 1px 0 rgba(255, 255, 255, 0.04) inset, 0 16px 40px -20px rgba(0, 0, 0, 0.8)',
-        'plate-lg': '0 1px 0 rgba(255, 255, 255, 0.06) inset, 0 40px 80px -32px rgba(0, 0, 0, 0.9)',
-        'glow': '0 0 0 1px rgba(139, 124, 255, 0.25), 0 8px 40px -8px rgba(139, 124, 255, 0.35)',
-        'glow-sm': '0 0 24px -6px rgba(139, 124, 255, 0.45)',
-        'glow-cyan': '0 0 32px -8px rgba(94, 231, 245, 0.4)',
-      },
-      backdropBlur: {
-        'glass': '20px',
       },
     },
   },

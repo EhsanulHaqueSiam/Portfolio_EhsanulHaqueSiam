@@ -43,9 +43,9 @@ export const META = {
   title: 'Ehsanul Haque Siam: AI Engineer & Full-Stack Developer',
   // ~155 chars, front-loaded (Google truncates ~160)
   description:
-    'AI Engineer & Full-Stack Developer in Dhaka. Research Assistant at Deepchain Labs; shipped 4 React apps driving 1.5x revenue at BetaScript. Open to AI/ML & full-stack roles.',
+    'AI Engineer & Full-Stack Developer in Dhaka. Research Assistant at Deepchain Labs; shipped 4 React apps driving 1.5x revenue at BetaScript. Published researcher, Certified Ethical Hacker.',
   ogDescription:
-    "AI Engineer & Full-Stack Developer. Research Assistant at Deepchain Labs, Solo Developer at BetaScript LLC (1.5x revenue), AI/Data Engineer at BDTracks. 3 peer-reviewed papers, 3× Dean's List, Certified Ethical Hacker. Open to work.",
+    "AI Engineer & Full-Stack Developer. Research Assistant at Deepchain Labs, Solo Developer at BetaScript LLC (1.5x revenue), AI/Data Engineer at BDTracks. 3 peer-reviewed papers, 3× Dean's List, Certified Ethical Hacker.",
   keywords: [
     'Ehsanul Haque Siam',
     'AI Engineer',

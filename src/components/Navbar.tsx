@@ -1,304 +1,120 @@
-import { useState, useEffect, useRef } from 'react';
-import { m, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
-import { navItems, profile } from '../data/content';
-import { ArrowUpRightIcon } from './ui/Icons';
+import { useEffect, useState } from 'react';
+import { AnimatePresence, m, useScroll, useMotionValueEvent } from 'framer-motion';
+import { navItems } from '../data/content';
+import { ThemeToggle } from './ui/ThemeToggle';
+import { GitHubIcon, StarIcon, CommandIcon } from './ui/Icons';
 
-const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
+const REPO_URL = 'https://github.com/EhsanulHaqueSiam/Portfolio_EhsanulHaqueSiam';
+const REPO_API = 'https://api.github.com/repos/EhsanulHaqueSiam/Portfolio_EhsanulHaqueSiam';
 
+// The bar shows a compact subset; everything is reachable via Cmd+K.
+const NAV_LABELS = ['About', 'Experience', 'Work', 'Research', 'Notes', 'Contact'];
+const barItems = navItems.filter((item) => NAV_LABELS.includes(item.label));
+
+/**
+ * Glass navbar (reference port): hides on scroll down, returns on scroll up.
+ * Logo, section links, GitHub star chip, command palette button, theme toggle.
+ */
 export function Navbar() {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState('');
-  const [isHidden, setIsHidden] = useState(false);
   const { scrollY } = useScroll();
-  const isHiddenRef = useRef(false);
-  const isScrolledRef = useRef(false);
-  const navRef = useRef<HTMLElement>(null);
+  const [visible, setVisible] = useState(true);
+  const [stars, setStars] = useState<number | null>(null);
 
-  useMotionValueEvent(scrollY, 'change', (latest) => {
+  useMotionValueEvent(scrollY, 'change', (current) => {
     const previous = scrollY.getPrevious() ?? 0;
-    const shouldHide = latest > previous && latest > 150;
-    const shouldShowScrolled = latest > 50;
-
-    if (shouldHide !== isHiddenRef.current) {
-      isHiddenRef.current = shouldHide;
-      setIsHidden(shouldHide);
-    }
-    if (shouldShowScrolled !== isScrolledRef.current) {
-      isScrolledRef.current = shouldShowScrolled;
-      setIsScrolled(shouldShowScrolled);
-    }
+    if (current < 50) setVisible(true);
+    else setVisible(current < previous);
   });
 
-  // Lock body scroll when the index (mobile menu) is open
   useEffect(() => {
-    if (isMobileMenuOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
-    return () => { document.body.style.overflow = ''; };
-  }, [isMobileMenuOpen]);
-
-  // Escape closes the index; Tab is trapped inside the nav while it's open
-  useEffect(() => {
-    if (!isMobileMenuOpen) return;
-    const nav = navRef.current;
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
-        setIsMobileMenuOpen(false);
-        return;
-      }
-      if (event.key !== 'Tab' || !nav) return;
-      const focusables = nav.querySelectorAll<HTMLElement>(
-        'a[href], button:not([disabled])'
-      );
-      if (!focusables.length) return;
-      const first = focusables[0];
-      const last = focusables[focusables.length - 1];
-      if (event.shiftKey && document.activeElement === first) {
-        event.preventDefault();
-        last.focus();
-      } else if (!event.shiftKey && document.activeElement === last) {
-        event.preventDefault();
-        first.focus();
-      }
-    };
-    window.addEventListener('keydown', onKeyDown);
-    return () => window.removeEventListener('keydown', onKeyDown);
-  }, [isMobileMenuOpen]);
-
-  // Active-section highlighting via IntersectionObserver
-  useEffect(() => {
-    if (typeof IntersectionObserver === 'undefined') {
-      setActiveSection(window.location.hash.replace('#', ''));
-      return;
-    }
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveSection(entry.target.id);
-          }
-        });
-      },
-      { rootMargin: '-50% 0px -50% 0px' }
-    );
-
-    navItems.forEach(({ href }) => {
-      const section = document.querySelector(href);
-      if (section) observer.observe(section);
-    });
-
-    return () => observer.disconnect();
+    const controller = new AbortController();
+    fetch(REPO_API, { signal: controller.signal })
+      .then((r) => (r.ok ? r.json() : null))
+      .then((json) => {
+        if (json && typeof json.stargazers_count === 'number') setStars(json.stargazers_count);
+      })
+      .catch(() => {});
+    return () => controller.abort();
   }, []);
 
+  const goTo = (href: string) => {
+    document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
+    history.replaceState(null, '', href);
+  };
+
+  const openPalette = () => {
+    window.dispatchEvent(new CustomEvent('open-command-palette'));
+  };
+
   return (
-    <m.nav
-      ref={navRef}
-      aria-label="Primary"
-      onFocus={() => {
-        if (isHiddenRef.current) {
-          isHiddenRef.current = false;
-          setIsHidden(false);
-        }
-      }}
-      initial={{ transform: 'translateY(-100px)' }}
-      animate={{
-        transform: isHidden && !isMobileMenuOpen ? 'translateY(-100px)' : 'translateY(0px)',
-      }}
-      transition={{ duration: 0.4, ease: EASE }}
-      className="fixed top-0 left-0 right-0 z-50"
-    >
-      <div
-        className={`mx-auto transition-all duration-500 ease-out-expo ${
-          isScrolled && !isMobileMenuOpen
-            ? 'glass-chrome mt-3 max-w-[1200px] rounded-full px-5 sm:px-7 mx-4 min-[1248px]:mx-auto'
-            : 'max-w-[1400px] bg-transparent px-5 sm:px-8 lg:px-12'
-        }`}
-      >
-        <div className="flex h-16 items-center justify-between gap-4">
-          {/* Wordmark */}
+    <AnimatePresence mode="wait">
+      {visible && (
+        <m.header
+          initial={{ y: -100, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          exit={{ y: -100, opacity: 0 }}
+          transition={{ duration: 0.2 }}
+          className="glass-chrome fixed inset-x-0 top-0 z-[500] mx-auto flex w-full max-w-5xl items-center justify-between px-4 py-3 sm:top-4 sm:rounded-xl sm:px-6"
+        >
+          {/* Logo */}
           <a
-            href="#"
-            aria-label="Go to top"
-            className="press-feedback inline-flex min-h-[44px] shrink-0 items-center font-mono text-xs uppercase tracking-[0.24em] text-ink-900 hover:text-vermilion-400"
+            href="#main-content"
+            onClick={(e) => {
+              e.preventDefault();
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+            title="Back to top"
+            className="script-accent select-none text-lg text-foreground transition-transform duration-300 hover:-rotate-6"
           >
-            <span className="hidden md:inline">Ehsanul&nbsp;Haque&nbsp;Siam</span>
-            <span className="md:hidden">E.H.S.</span>
+            es.
           </a>
 
-          {/* Desktop index */}
-          <ul className="hidden xl:flex items-center">
-            {navItems.map((item, i) => {
-              const isActive = activeSection === item.href.slice(1);
-              return (
-                <m.li
-                  key={item.href}
-                  initial={{ opacity: 0, y: -12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 0.15 + i * 0.04, ease: EASE }}
-                >
-                  <a
-                    href={item.href}
-                    aria-current={isActive ? 'location' : undefined}
-                    className={`group press-feedback inline-flex min-h-[44px] items-center gap-1.5 px-2 2xl:px-3 font-mono text-[11px] uppercase tracking-[0.14em] ${
-                      isActive ? 'text-vermilion-400' : 'text-ink-600 hover:text-ink-900'
-                    }`}
-                  >
-                    <span
-                      aria-hidden="true"
-                      className={isActive ? 'text-vermilion-400' : 'text-ink-400'}
-                    >
-                      {item.no}
-                    </span>
-                    <span className="link-ink group-hover:[background-size:100%_1px]">
-                      {item.label}
-                    </span>
-                  </a>
-                </m.li>
-              );
-            })}
-          </ul>
+          {/* Links */}
+          <nav aria-label="Primary" className="flex items-center gap-1 sm:gap-2">
+            {barItems.map((item) => (
+              <button
+                key={item.href}
+                type="button"
+                onClick={() => goTo(item.href)}
+                className="relative rounded-md px-1.5 py-1.5 text-[13px] font-semibold text-muted-foreground transition-colors duration-300 hover:text-foreground sm:px-2.5 sm:text-sm max-[480px]:[&:nth-child(n+4)]:hidden"
+              >
+                {item.label}
+              </button>
+            ))}
+          </nav>
 
-          <div className="flex items-center gap-2 sm:gap-3">
-            {/* Command palette trigger */}
-            <button
-              type="button"
-              onClick={() => window.dispatchEvent(new CustomEvent('open-command-palette'))}
-              className="press-feedback hidden md:inline-flex min-h-[44px] items-center gap-2.5 rounded-full border rule bg-white/[0.04] px-4 font-mono text-[11px] uppercase tracking-[0.14em] text-ink-600 hover:text-ink-900 hover:border-vermilion-500/40"
-              aria-label="Open command palette"
-            >
-              <svg className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-                <circle cx="11" cy="11" r="7" />
-                <path d="m20 20-3.5-3.5" strokeLinecap="round" />
-              </svg>
-              Search
-              <kbd className="rounded-md border rule px-1.5 py-0.5 text-[10px] normal-case tracking-normal text-ink-500">
-                Ctrl K
-              </kbd>
-            </button>
+          <div className="flex items-center gap-1.5 sm:gap-3">
+            <span aria-hidden className="hidden h-5 w-px bg-border sm:block" />
 
-            {/* [ HIRE ME ] */}
+            {/* GitHub star chip */}
             <a
-              href="#contact"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="btn-primary min-h-[44px] px-4 sm:px-6 text-[11px]"
+              href={REPO_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`Star this site on GitHub${stars !== null ? ` (${stars} stars)` : ''}`}
+              className="group hidden items-center gap-1.5 rounded-md border border-border/60 bg-background/40 px-2 py-1 text-xs text-muted-foreground transition-colors hover:border-border hover:bg-background/70 hover:text-foreground sm:inline-flex"
             >
-              <span aria-hidden="true">[&nbsp;</span>
-              Hire&nbsp;me
-              <span aria-hidden="true">&nbsp;]</span>
+              <GitHubIcon className="h-3.5 w-3.5" />
+              <span className="flex items-center gap-0.5 tabular-nums">
+                <StarIcon className="h-3 w-3 transition-colors group-hover:animate-spin-grow group-hover:text-amber-400" />
+                {stars ?? 0}
+              </span>
             </a>
 
-            {/* Index toggle (mobile / tablet) */}
+            {/* Command palette */}
             <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="press-feedback xl:hidden flex h-11 w-11 items-center justify-center rounded-full border rule text-ink-900 hover:text-vermilion-400 hover:border-vermilion-500/40"
-              aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
-              aria-expanded={isMobileMenuOpen}
-              aria-controls="mobile-menu"
+              type="button"
+              onClick={openPalette}
+              aria-label="Open command palette (Ctrl+K)"
+              className="flex h-9 w-9 items-center justify-center rounded-md text-muted-foreground transition-colors hover:text-foreground"
             >
-              <svg
-                className="h-5 w-5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                aria-hidden="true"
-              >
-                <m.path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={1.5}
-                  variants={{
-                    closed: { d: 'M4 8h16M4 16h16' },
-                    open: { d: 'M6 18L18 6M6 6l12 12' },
-                  }}
-                  initial="closed"
-                  animate={isMobileMenuOpen ? 'open' : 'closed'}
-                  transition={{ duration: 0.3, ease: EASE }}
-                />
-              </svg>
+              <CommandIcon className="h-5 w-5" />
             </button>
+
+            <ThemeToggle />
           </div>
-        </div>
-      </div>
-
-      {/* Full-screen paper index (mobile menu) */}
-      <AnimatePresence>
-        {isMobileMenuOpen && (
-          <m.div
-            id="mobile-menu"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.35, ease: EASE }}
-            className="xl:hidden absolute left-0 right-0 top-0 -z-10 h-screen bg-paper-100/90 backdrop-blur-2xl"
-          >
-            <div className="mx-auto flex h-full max-w-[1400px] flex-col overflow-y-auto px-5 pb-8 pt-24 sm:px-8 lg:px-12">
-              <p className="folio mb-4" aria-hidden="true">
-                Index · {profile.name}
-              </p>
-
-              <ul className="border-t rule">
-                {navItems.map((item, i) => {
-                  const isActive = activeSection === item.href.slice(1);
-                  return (
-                    <m.li
-                      key={item.href}
-                      initial={{ opacity: 0, y: 24 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0 }}
-                      transition={{ duration: 0.5, delay: 0.08 + i * 0.06, ease: EASE }}
-                      className="border-b rule"
-                    >
-                      <a
-                        href={item.href}
-                        onClick={() => setIsMobileMenuOpen(false)}
-                        aria-current={isActive ? 'location' : undefined}
-                        className="group press-feedback flex min-h-[64px] items-center gap-5 py-3"
-                      >
-                        <span
-                          aria-hidden="true"
-                          className="w-7 shrink-0 font-mono text-xs tracking-[0.14em] text-vermilion"
-                        >
-                          {item.no}
-                        </span>
-                        <span
-                          className={`font-display text-3xl font-light leading-none min-[420px]:text-4xl sm:text-5xl ${
-                            isActive ? 'italic text-vermilion' : 'text-ink-900'
-                          }`}
-                        >
-                          {item.label}
-                        </span>
-                        <ArrowUpRightIcon
-                          className="ml-auto h-5 w-5 shrink-0 text-ink-400 transition-colors duration-300 group-hover:text-vermilion"
-                        />
-                      </a>
-                    </m.li>
-                  );
-                })}
-              </ul>
-
-              <m.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.5, delay: 0.6, ease: EASE }}
-                className="mt-auto flex flex-wrap items-center justify-between gap-x-6 gap-y-2 border-t rule pt-5 font-mono text-[11px] uppercase tracking-[0.14em] text-ink-500"
-              >
-                <a
-                  href={`mailto:${profile.email}`}
-                  className="link-ink inline-flex min-h-[44px] items-center normal-case tracking-[0.06em] text-ink-700"
-                >
-                  {profile.email}
-                </a>
-                <span className="inline-flex min-h-[44px] items-center">{profile.location}</span>
-              </m.div>
-            </div>
-          </m.div>
-        )}
-      </AnimatePresence>
-    </m.nav>
+        </m.header>
+      )}
+    </AnimatePresence>
   );
 }

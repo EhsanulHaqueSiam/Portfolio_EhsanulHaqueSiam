@@ -73,16 +73,27 @@ scripts/generate-seo.mjs   # prebuild: regenerates public/{robots.txt,sitemap.xm
 
 ### Key Libraries
 - **Astro 7** — static site generator, React integration (`@astrojs/react`).
-- **Framer Motion 11** — all animations (islands hydrate to run them).
+- **Framer Motion 11** — all animations via `LazyMotion` + `m` (strict mode: import `m`, never `motion`).
 - **@studio-freight/lenis** — smooth scroll (`SmoothScroll`, browser-only, effect-guarded).
-- **TailwindCSS v3** — "Obsidian Signal" dark glass theme. IMPORTANT token remap:
-  legacy names kept but re-valued — `paper-*` = DARK surface scale (paper-100 = page
-  void `#05060A`, paper-50 = raised `#0B0D14`), `ink-*` = LIGHT foreground scale
-  (ink-900 = `#EEF1F8`), `vermilion` = iris violet `#8B7CFF`, `cobalt` = cyan.
-  Glass utilities in `src/index.css`: `.glass`, `.glass-card`, `.glass-chrome`,
-  `.btn-primary` (white pill), `.btn-glass`, `.text-iris` (gradient), `.dither-veil`,
-  `.aurora-backdrop`. Animated dither hero backdrop: `src/components/ui/DitherField.tsx`.
-  The Resume overlay sheet (`.resume-paper`) intentionally stays light for print.
+- **cobe** — WebGL globe in the About bento (Dhaka marker, drag to spin, IO-gated).
+- **TailwindCSS v3** — shadcn-style semantic tokens (July 2026 rebuild modeled on
+  shivypatel.com): `background/foreground/card/muted/secondary/border/ring` as HSL
+  triplets in `src/index.css` (`:root` light + `.dark` dark; class dark mode, default
+  dark, toggled via `ThemeToggle` with View Transition cross-fade, saved in
+  localStorage `theme`). Fonts: Geist (sans), Geist Mono, Pacifico (`.script-accent`).
+  Legacy `paper/ink/vermilion` color tokens remain ONLY for the Resume overlay sheet
+  (`.resume-paper`), which intentionally stays light for print.
+  Utilities in `index.css`: `.glass-chrome`, `.glass-card`, `.fade-mask-left/right`,
+  `.bg-ellipse`, `.dashboard-grid` (bento areas), `.btn-glass`, `.btn-primary`.
+- **Interactive ui/ components** (magicui/aceternity ports, all SSR-safe + IO/reduced-motion
+  gated): BlurFade, Marquee, NumberTicker, ShimmerButton/Border, SpotlightGlow,
+  GlowingEffect, BorderBeam, TracingBeam, HeroConstellation, RainbowButton, TiltCard,
+  ScrambleText, ScratchToReveal, AnimatedName, Globe, AsciiTorus, AsciiField, StudioCat
+  (footer cat), EmojiCursor (`data-cursor-emoji="…"`), CommandPalette (Ctrl/Cmd+K).
+- **Performance invariant (Lighthouse mobile ≥94)**: every canvas/WebGL/rAF loop MUST
+  pause offscreen (IntersectionObserver) and on `document.hidden`, and cap at ~30fps.
+  The cobe Globe uses `threshold: 0.25` — do not loosen; headless/software-GL renders
+  it on the CPU and it alone cost 60s of TBT.
 
 ### Image Handling
 - WebP in `public/images/` (projects/, achievements/, publications/, education/).

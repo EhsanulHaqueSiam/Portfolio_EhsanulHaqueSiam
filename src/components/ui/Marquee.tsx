@@ -1,56 +1,56 @@
-import { useEffect, useState } from 'react';
+import { cn } from '../../lib/utils';
+import type { ComponentPropsWithoutRef } from 'react';
 
-interface MarqueeProps {
-  children: React.ReactNode;
-  speed?: number;
-  direction?: 'left' | 'right';
+interface MarqueeProps extends ComponentPropsWithoutRef<'div'> {
   className?: string;
+  /** Reverse the animation direction */
+  reverse?: boolean;
+  /** Pause the animation on hover */
   pauseOnHover?: boolean;
+  children: React.ReactNode;
+  /** Animate vertically instead of horizontally */
+  vertical?: boolean;
+  /** Times the content repeats to fill the track */
+  repeat?: number;
 }
 
+/**
+ * Infinite marquee (magicui port). Configure speed/gap via CSS vars:
+ * className="[--duration:20s] [--gap:1rem]".
+ */
 export function Marquee({
+  className,
+  reverse = false,
+  pauseOnHover = false,
   children,
-  speed = 50,
-  direction = 'left',
-  className = '',
-  pauseOnHover = true,
+  vertical = false,
+  repeat = 4,
+  ...props
 }: MarqueeProps) {
-  const [canHover, setCanHover] = useState(false);
-  const [shouldReduceMotion, setShouldReduceMotion] = useState(false);
-
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-
-    const hoverQuery = window.matchMedia('(hover: hover) and (pointer: fine)');
-    const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const sync = () => {
-      setCanHover(hoverQuery.matches);
-      setShouldReduceMotion(motionQuery.matches);
-    };
-
-    sync();
-    hoverQuery.addEventListener('change', sync);
-    motionQuery.addEventListener('change', sync);
-    return () => {
-      hoverQuery.removeEventListener('change', sync);
-      motionQuery.removeEventListener('change', sync);
-    };
-  }, []);
-
   return (
     <div
-      className={`overflow-hidden whitespace-nowrap ${className}`}
-      style={{ maskImage: 'linear-gradient(to right, transparent, black 5%, black 95%, transparent)' }}
+      {...props}
+      className={cn(
+        'group flex overflow-hidden p-2 [--duration:40s] [--gap:1rem] [gap:var(--gap)]',
+        vertical ? 'flex-col' : 'flex-row',
+        className
+      )}
     >
-      <div
-        className={`inline-flex ${pauseOnHover && canHover ? 'hover:[animation-play-state:paused]' : ''}`}
-        style={{
-          animation: shouldReduceMotion ? 'none' : `marquee-${direction} ${speed}s linear infinite`,
-        }}
-      >
-        <span className="inline-flex">{children}</span>
-        <span className="inline-flex">{children}</span>
-      </div>
+      {Array(repeat)
+        .fill(0)
+        .map((_, i) => (
+          <div
+            key={i}
+            className={cn(
+              'flex shrink-0 justify-around [gap:var(--gap)]',
+              vertical ? 'animate-marquee-vertical flex-col' : 'animate-marquee flex-row',
+              pauseOnHover && 'group-hover:[animation-play-state:paused]',
+              reverse && '[animation-direction:reverse]'
+            )}
+          >
+            {children}
+          </div>
+        ))}
     </div>
   );
 }

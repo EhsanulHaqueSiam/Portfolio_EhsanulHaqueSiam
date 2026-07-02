@@ -67,22 +67,21 @@ function getMonthLabels(contributions: ContributionDay[], visibleWeeks: number):
   return labels;
 }
 
-// Signal ramp: empty cells are faint glass; activity brightens through
-// iris violet up to the full glowing impression.
+// Activity ramp: faint base, brightening through emerald like GitHub's own.
 const FILL_CLASSES = [
-  'fill-ink-900/[0.06]',
-  'fill-vermilion/25',
-  'fill-vermilion/45',
-  'fill-vermilion/70',
-  'fill-vermilion',
+  'fill-foreground/[0.07]',
+  'fill-emerald-500/30',
+  'fill-emerald-500/50',
+  'fill-emerald-500/75',
+  'fill-emerald-400',
 ];
 
 const LEGEND_BG = [
-  'bg-ink-900/[0.06]',
-  'bg-vermilion/25',
-  'bg-vermilion/45',
-  'bg-vermilion/70',
-  'bg-vermilion',
+  'bg-foreground/[0.07]',
+  'bg-emerald-500/30',
+  'bg-emerald-500/50',
+  'bg-emerald-500/75',
+  'bg-emerald-400',
 ];
 
 export function GitHubGraph() {
@@ -182,7 +181,7 @@ export function GitHubGraph() {
   return (
     <div
       ref={containerRef}
-      className="glass-card relative h-full p-4 sm:p-5"
+      className="glass-card relative flex h-full flex-col justify-center p-4 sm:p-5"
     >
       {/* Header */}
       <div className="mb-2.5 flex items-center justify-between gap-3">
@@ -190,14 +189,14 @@ export function GitHubGraph() {
           href={`https://github.com/${GITHUB_USERNAME}`}
           target="_blank"
           rel="me noopener noreferrer"
-          className="inline-flex min-h-[44px] items-center gap-1.5 px-1 font-mono text-[10px] uppercase tracking-[0.14em] text-ink-600 transition-colors hover:text-vermilion-400 sm:text-xs"
+          className="inline-flex min-h-[44px] items-center gap-1.5 px-1 font-mono text-[10px] uppercase tracking-[0.14em] text-muted-foreground transition-colors hover:text-foreground sm:text-xs"
           aria-label={`GitHub profile of ${GITHUB_USERNAME} (opens in new tab)`}
         >
           <GitHubIcon className="h-3.5 w-3.5" />
-          <span className="link-ink">@{GITHUB_USERNAME}</span>
+          <span className="link-underline">@{GITHUB_USERNAME}</span>
         </a>
         {totalContributions > 0 && (
-          <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-ink-500 sm:text-xs">
+          <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-muted-foreground sm:text-xs">
             {totalContributions.toLocaleString()} contributions
           </span>
         )}
@@ -217,7 +216,7 @@ export function GitHubGraph() {
                 key={`${label}-${i}`}
                 x={LABEL_W + col * STEP}
                 y={8}
-                className="fill-ink-500 font-mono"
+                className="fill-muted-foreground font-mono"
                 fontSize="8"
               >
                 {label}
@@ -231,7 +230,7 @@ export function GitHubGraph() {
                   key={i}
                   x={0}
                   y={14 + i * STEP + CELL * 0.75}
-                  className="fill-ink-500 font-mono"
+                  className="fill-muted-foreground font-mono"
                   fontSize="8"
                 >
                   {label}
@@ -246,7 +245,7 @@ export function GitHubGraph() {
                 y={14}
                 width={CELL + 2}
                 height={graphHeight}
-                className="fill-ink-900/[0.05]"
+                className="fill-foreground/[0.05]"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
@@ -265,7 +264,7 @@ export function GitHubGraph() {
 
                 return (
                   <g key={`${weekIdx}-${dayIdx}`}>
-                    {/* Registration ring — hairline vermilion frame on hovered cell */}
+                    {/* Hairline emerald ring on the hovered cell */}
                     {isHovered && level > 0 && (
                       <m.rect
                         x={x - 2}
@@ -273,7 +272,7 @@ export function GitHubGraph() {
                         rx={3}
                         width={CELL + 4}
                         height={CELL + 4}
-                        className="fill-transparent stroke-vermilion/50"
+                        className="fill-transparent stroke-emerald-400/60"
                         strokeWidth={1}
                         initial={{ opacity: 0, scale: 0.8 }}
                         animate={{ opacity: 1, scale: 1 }}
@@ -332,9 +331,9 @@ export function GitHubGraph() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.1 }}
                 >
-                  <div className="whitespace-nowrap rounded-md border border-[color:var(--hairline-strong)] bg-paper-300 px-2 py-1 shadow-plate">
-                    <span className="font-mono text-[8px] uppercase tracking-[0.06em] text-ink-700">
-                      <span className="font-semibold text-vermilion-400">{hoveredCell.count}</span>
+                  <div className="whitespace-nowrap rounded-md border border-border bg-card px-2 py-1 shadow-md">
+                    <span className="font-mono text-[8px] uppercase tracking-[0.06em] text-muted-foreground">
+                      <span className="font-semibold text-emerald-500">{hoveredCell.count}</span>
                       {' '}· {formatTooltipDate(hoveredCell.date)}
                     </span>
                   </div>
@@ -345,7 +344,7 @@ export function GitHubGraph() {
         ) : (
           /* Loading skeleton */
           <div className="flex h-[100px] items-center justify-center">
-            <span className={`font-mono text-xs uppercase tracking-[0.14em] text-ink-500 ${isLoading ? 'animate-pulse' : ''}`}>
+            <span className={`font-mono text-xs uppercase tracking-[0.14em] text-muted-foreground ${isLoading ? 'animate-pulse' : ''}`}>
               {isLoading
                 ? 'Loading contributions...'
                 : loadError
@@ -359,11 +358,11 @@ export function GitHubGraph() {
       {/* Legend */}
       {weeks.length > 0 && (
         <div className="mt-2 flex items-center justify-end gap-1">
-          <span className="mr-0.5 font-mono text-[9px] uppercase tracking-[0.14em] text-ink-500">Less</span>
+          <span className="mr-0.5 font-mono text-[9px] uppercase tracking-[0.14em] text-muted-foreground">Less</span>
           {LEGEND_BG.map((bg, i) => (
             <div key={i} className={`h-[9px] w-[9px] rounded-[2px] ${bg}`} />
           ))}
-          <span className="ml-0.5 font-mono text-[9px] uppercase tracking-[0.14em] text-ink-500">More</span>
+          <span className="ml-0.5 font-mono text-[9px] uppercase tracking-[0.14em] text-muted-foreground">More</span>
         </div>
       )}
     </div>

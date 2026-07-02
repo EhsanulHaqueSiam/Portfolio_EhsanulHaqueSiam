@@ -1,141 +1,87 @@
-import { m } from 'framer-motion';
 import { blogPosts } from '../data/content';
 import type { BlogPost } from '../data/types';
-import { SectionHeader } from './ui/SectionHeader';
-import { ArrowUpRightIcon } from './ui/Icons';
-
-const EASE = [0.16, 1, 0.3, 1] as const;
+import { SectionHeading, headingIconClass } from './ui/SectionHeading';
+import { BlurFade } from './ui/BlurFade';
+import { SpotlightGlow } from './ui/SpotlightGlow';
+import { PencilIcon, ArrowUpRightIcon } from './ui/Icons';
 
 const platformLabels: Record<BlogPost['platform'], string> = {
-  devto: 'DEV.TO',
-  medium: 'MEDIUM',
-  hashnode: 'HASHNODE',
-  other: 'BLOG',
+  devto: 'DEV.to',
+  medium: 'Medium',
+  hashnode: 'Hashnode',
+  other: 'Blog',
 };
 
-/**
- * 11 / Field Notes — writing rendered as a table-of-contents ledger.
- * Entries with url === '#' are unlinked rows carrying a mono IN PRESS
- * chip; live entries are external links with an arrow.
- */
-export function Blog() {
-  const inPressCount = blogPosts.filter((post) => post.url === '#').length;
-  const annotation =
-    inPressCount > 0
-      ? `${blogPosts.length} ENTRIES · ${inPressCount} IN PRESS`
-      : `${blogPosts.length} ENTRIES`;
+function WritingCard({ post }: { post: BlogPost }) {
+  const isComingSoon = post.url === '#';
+  const Wrapper = isComingSoon ? 'div' : 'a';
 
   return (
-    <section id="blog" className="py-24 sm:py-32">
-      <div className="mx-auto max-w-[1400px] px-5 sm:px-8 lg:px-12">
-        <SectionHeader
-          number="11"
-          name="FIELD NOTES"
-          title={
-            <>
-              Field <em>notes</em>
-            </>
+    <Wrapper
+      {...(!isComingSoon
+        ? {
+            href: post.url,
+            target: '_blank',
+            rel: 'noopener noreferrer',
+            'aria-label': `Read ${post.title} (opens in new tab)`,
           }
-          annotation={annotation}
-        />
-
-        <m.p
-          className="-mt-4 mb-12 max-w-2xl font-body text-base leading-relaxed text-ink-600 sm:-mt-8 sm:mb-16 sm:text-lg"
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-10%' }}
-          transition={{ duration: 0.7, ease: EASE }}
-        >
-          Technical deep-dives on the systems I build: architecture decisions,
-          performance wins, and lessons from production.
-        </m.p>
-
-        {/* Ledger — table of contents */}
-        <ol className="m-0 list-none border-t rule-strong p-0">
-          {blogPosts.map((post, i) => {
-            const isComingSoon = post.url === '#';
-            const Tag = isComingSoon ? 'div' : 'a';
-
-            return (
-              <li key={post.title} className="border-b rule">
-                <m.div
-                  initial={{ opacity: 0, y: 24 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: '-10%' }}
-                  transition={{ duration: 0.7, delay: i * 0.06, ease: EASE }}
-                >
-                  <Tag
-                    {...(!isComingSoon
-                      ? {
-                          href: post.url,
-                          target: '_blank',
-                          rel: 'noopener noreferrer',
-                          'aria-label': `Read ${post.title} (opens in new tab)`,
-                        }
-                      : {})}
-                    className={`group block -mx-2 rounded-2xl px-2 py-6 transition-colors duration-300 sm:-mx-4 sm:px-4 sm:py-8 ${
-                      isComingSoon ? '' : 'cursor-pointer hover:bg-white/[0.04]'
-                    }`}
-                  >
-                    <div className="flex flex-col gap-3 sm:grid sm:grid-cols-[4rem_1fr_auto] sm:items-baseline sm:gap-x-6">
-                      {/* Entry index */}
-                      <span className="folio text-[10px] sm:text-[11px]" aria-hidden="true">
-                        11.{String(i + 1).padStart(2, '0')}
-                      </span>
-
-                      {/* Title + dotted leader */}
-                      <div className="flex min-w-0 items-baseline">
-                        <h3
-                          className={`font-display font-light text-xl leading-snug text-ink-900 transition-colors duration-300 sm:text-2xl lg:text-3xl ${
-                            isComingSoon ? '' : 'group-hover:text-vermilion-400'
-                          }`}
-                        >
-                          {post.title}
-                        </h3>
-                        <span className="leader hidden sm:block" aria-hidden="true" />
-                      </div>
-
-                      {/* Right column: read time + status */}
-                      <div className="flex items-center gap-3 sm:justify-end sm:gap-4">
-                        {post.readTime && (
-                          <span className="whitespace-nowrap font-mono text-[10px] uppercase tracking-[0.16em] text-ink-500 sm:text-[11px]">
-                            {post.readTime}
-                          </span>
-                        )}
-                        {isComingSoon ? (
-                          <span className="whitespace-nowrap rounded-full border border-vermilion-500/40 bg-vermilion-50/60 px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.16em] text-vermilion-400 sm:text-[11px]">
-                            IN PRESS
-                          </span>
-                        ) : (
-                          <ArrowUpRightIcon className="h-4 w-4 shrink-0 text-ink-500 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-vermilion-400" />
-                        )}
-                      </div>
-
-                      {/* Abstract + citation line */}
-                      <div className="sm:col-span-2 sm:col-start-2 sm:mt-2">
-                        <p className="max-w-prose font-body text-sm leading-relaxed text-ink-500 sm:text-base">
-                          {post.description}
-                        </p>
-                        <p className="mt-3 font-mono text-[10px] uppercase tracking-[0.16em] text-ink-400 sm:text-[11px]">
-                          {platformLabels[post.platform]}
-                          <span aria-hidden="true"> · </span>
-                          {post.date}
-                          {post.tags.length > 0 && (
-                            <>
-                              <span aria-hidden="true"> · </span>
-                              {post.tags.join(' · ')}
-                            </>
-                          )}
-                        </p>
-                      </div>
-                    </div>
-                  </Tag>
-                </m.div>
-              </li>
-            );
-          })}
-        </ol>
+        : {})}
+      className="group block h-full"
+    >
+      <div className="group/glow relative flex h-full flex-col overflow-hidden rounded-xl border bg-card/60 p-4 backdrop-blur-sm transition-colors duration-300 hover:border-ring/60">
+        <SpotlightGlow />
+        <div className="flex items-start justify-between gap-3">
+          <h3 className="text-sm font-semibold leading-snug tracking-tight text-foreground sm:text-base">
+            <span className="bg-[linear-gradient(currentColor,currentColor)] bg-[length:0%_1px] bg-left-bottom bg-no-repeat pb-1 transition-[background-size] duration-300 group-hover:bg-[length:100%_1px]">
+              {post.title}
+            </span>
+            {!isComingSoon && (
+              <ArrowUpRightIcon className="ml-1 inline-block h-3.5 w-3.5 text-muted-foreground transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+            )}
+          </h3>
+          {isComingSoon && (
+            <span className="mt-0.5 shrink-0 rounded-full bg-amber-500/15 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-amber-600 dark:text-amber-400">
+              In press
+            </span>
+          )}
+        </div>
+        <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-muted-foreground">
+          {post.description}
+        </p>
+        <p className="mt-auto pt-3 text-xs tabular-nums text-muted-foreground">
+          {platformLabels[post.platform]}
+          <span className="mx-1" aria-hidden="true">
+            •
+          </span>
+          {post.readTime}
+          {post.tags.length > 0 && (
+            <>
+              <span className="mx-1" aria-hidden="true">
+                •
+              </span>
+              {post.tags.join(', ')}
+            </>
+          )}
+        </p>
       </div>
+    </Wrapper>
+  );
+}
+
+/** Writing: field notes on the systems behind the projects. */
+export function Blog() {
+  return (
+    <section id="blog" className="scroll-mt-28">
+      <SectionHeading icon={<PencilIcon className={headingIconClass} />}>Writing</SectionHeading>
+      <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {blogPosts.map((post, idx) => (
+          <li key={post.title} className="h-full list-none">
+            <BlurFade delay={0.05 + idx * 0.05} inView className="h-full">
+              <WritingCard post={post} />
+            </BlurFade>
+          </li>
+        ))}
+      </ul>
     </section>
   );
 }

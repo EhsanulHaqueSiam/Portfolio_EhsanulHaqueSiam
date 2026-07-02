@@ -80,7 +80,7 @@ export function CommandPalette() {
         label: copied ? 'Email copied' : 'Copy email address',
         hint: profile.email,
         keywords: 'mail clipboard contact',
-        icon: copied ? <CheckIcon className="h-4 w-4 text-green-400" /> : <CopyIcon className="h-4 w-4" />,
+        icon: copied ? <CheckIcon className="h-4 w-4 text-emerald-500" /> : <CopyIcon className="h-4 w-4" />,
         keepOpen: true,
         run: async () => {
           try {
@@ -226,7 +226,7 @@ export function CommandPalette() {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.18, ease: EASE }}
-          className="fixed inset-0 z-[90] flex items-start justify-center px-4 pt-[16vh] bg-paper-100/70 backdrop-blur-sm"
+          className="fixed inset-0 z-[90] flex items-start justify-center px-4 pt-[16vh] bg-background/70 backdrop-blur-sm"
           onMouseDown={(e) => {
             if (e.target === e.currentTarget) close();
           }}
@@ -242,8 +242,8 @@ export function CommandPalette() {
             className="glass-chrome w-full max-w-xl overflow-hidden rounded-2xl"
             onKeyDown={onKeyDown}
           >
-            <div className="flex items-center gap-3 border-b rule px-5">
-              <span className="text-ink-500" aria-hidden="true">
+            <div className="flex items-center gap-3 border-b border-border px-5">
+              <span className="text-muted-foreground" aria-hidden="true">
                 <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <circle cx="11" cy="11" r="7" />
                   <path d="m20 20-3.5-3.5" strokeLinecap="round" />
@@ -257,12 +257,12 @@ export function CommandPalette() {
                   setActive(0);
                 }}
                 placeholder="Jump to a section, copy email, open resume..."
-                className="h-14 w-full bg-transparent font-body text-sm text-ink-900 placeholder:text-ink-500 focus:outline-none"
+                className="h-14 w-full bg-transparent text-sm text-foreground placeholder:text-muted-foreground focus:outline-none"
                 aria-label="Search commands"
                 autoComplete="off"
                 spellCheck={false}
               />
-              <kbd className="folio hidden sm:block shrink-0 rounded-md border rule px-1.5 py-0.5 !text-[10px]">
+              <kbd className="hidden shrink-0 rounded-md border border-border px-1.5 py-0.5 font-mono text-[10px] uppercase tracking-wider text-muted-foreground sm:block">
                 esc
               </kbd>
             </div>
@@ -274,7 +274,7 @@ export function CommandPalette() {
               aria-label="Commands"
             >
               {filtered.length === 0 && (
-                <p className="px-5 py-8 text-center font-mono text-xs uppercase tracking-[0.14em] text-ink-500">
+                <p className="px-5 py-8 text-center font-mono text-xs uppercase tracking-[0.14em] text-muted-foreground">
                   No matches for "{query}"
                 </p>
               )}
@@ -284,7 +284,7 @@ export function CommandPalette() {
                 return (
                   <div key={cmd.id}>
                     {showGroup && (
-                      <p className="folio px-5 pb-1.5 pt-3 !text-[10px]" aria-hidden="true">
+                      <p className="px-5 pb-1.5 pt-3 font-mono text-[10px] uppercase tracking-wider text-muted-foreground" aria-hidden="true">
                         {cmd.group}
                       </p>
                     )}
@@ -296,20 +296,20 @@ export function CommandPalette() {
                       onMouseEnter={() => setActive(i)}
                       onClick={() => void cmd.run()}
                       className={`flex w-full items-center gap-3.5 px-5 py-3 text-left transition-colors duration-150 ${
-                        i === active ? 'bg-white/[0.06] text-ink-950' : 'text-ink-700'
+                        i === active ? 'bg-secondary/70 text-foreground' : 'text-muted-foreground'
                       }`}
                     >
-                      <span className={i === active ? 'text-vermilion-400' : 'text-ink-500'}>
+                      <span className={i === active ? 'text-foreground' : 'text-muted-foreground'}>
                         {cmd.icon}
                       </span>
-                      <span className="flex-1 font-body text-sm">{cmd.label}</span>
+                      <span className="flex-1 text-sm">{cmd.label}</span>
                       {cmd.hint && (
-                        <span className="hidden sm:block max-w-[200px] truncate font-mono text-[10px] uppercase tracking-[0.12em] text-ink-500">
+                        <span className="hidden max-w-[200px] truncate font-mono text-[10px] uppercase tracking-[0.12em] text-muted-foreground sm:block">
                           {cmd.hint}
                         </span>
                       )}
                       {i === active && (
-                        <kbd className="folio hidden sm:block rounded-md border rule px-1.5 py-0.5 !text-[10px] !text-ink-600">
+                        <kbd className="hidden rounded-md border border-border px-1.5 py-0.5 font-mono text-[10px] text-muted-foreground sm:block">
                           ↵
                         </kbd>
                       )}
@@ -319,9 +319,9 @@ export function CommandPalette() {
               })}
             </div>
 
-            <div className="flex items-center justify-between border-t rule px-5 py-2.5">
-              <span className="folio !text-[10px]">↑↓ navigate · ↵ select</span>
-              <span className="folio !text-[10px]">{profile.name}</span>
+            <div className="flex items-center justify-between border-t border-border px-5 py-2.5">
+              <span className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">↑↓ navigate · ↵ select</span>
+              <span className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">{profile.name}</span>
             </div>
           </m.div>
         </m.div>

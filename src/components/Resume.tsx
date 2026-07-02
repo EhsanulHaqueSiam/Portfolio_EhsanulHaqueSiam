@@ -196,7 +196,7 @@ export function Resume() {
           role="dialog"
           aria-modal="true"
           aria-label="Résumé"
-          className="fixed inset-0 z-[100] flex flex-col bg-paper-100/85 backdrop-blur-xl"
+          className="fixed inset-0 z-[100] flex flex-col bg-background/85 backdrop-blur-xl"
           style={{ touchAction: 'pan-y' }}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -208,7 +208,7 @@ export function Resume() {
             <button
               ref={backButtonRef}
               onClick={() => close(false)}
-              className="press-feedback flex items-center gap-2 -ml-1 px-2 py-2 font-mono text-xs uppercase tracking-[0.16em] text-ink-600 hover:text-ink-950 active:text-ink-950 min-h-[48px] min-w-[48px]"
+              className="press-feedback flex items-center gap-2 -ml-1 px-2 py-2 font-mono text-xs uppercase tracking-[0.16em] text-muted-foreground hover:text-foreground active:text-foreground min-h-[48px] min-w-[48px]"
               aria-label="Close resume"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24" aria-hidden="true">
@@ -248,7 +248,7 @@ export function Resume() {
             </div>
 
             {/* ESC hint – desktop only */}
-            <kbd className="hidden lg:inline font-mono text-[10px] tracking-[0.14em] text-ink-500 border rule rounded-md px-1.5 py-0.5">
+            <kbd className="hidden lg:inline font-mono text-[10px] tracking-[0.14em] text-muted-foreground border rule rounded-md px-1.5 py-0.5">
               ESC
             </kbd>
           </div>
@@ -260,11 +260,11 @@ export function Resume() {
           >
             <div className="px-3 sm:px-6 py-4 sm:py-8">
               {/* The white sheet – print contract root (.resume-paper) */}
-              <div className="resume-paper mx-auto w-full max-w-[760px] bg-white text-ink-900 shadow-plate-lg px-4 sm:px-8 pt-6 sm:pt-8 pb-7 sm:pb-10">
+              <div className="resume-paper mx-auto w-full max-w-[760px] bg-white text-ink-900 shadow-2xl px-4 sm:px-8 pt-6 sm:pt-8 pb-7 sm:pb-10">
 
                 {/* ── Header ── */}
                 <div className="resume-header-border text-center mb-6 pb-5 border-b rule">
-                  <div role="heading" aria-level={2} className="resume-name text-[1.35rem] sm:text-[1.7rem] md:text-[2rem] font-display font-semibold text-ink-950 tracking-[0.04em] uppercase leading-none mb-2">
+                  <div role="heading" aria-level={2} className="resume-name text-[1.35rem] sm:text-[1.7rem] md:text-[2rem] font-sans font-semibold text-ink-950 tracking-[0.04em] uppercase leading-none mb-2">
                     Ehsanul Haque Siam
                   </div>
                   <div className="resume-contact flex flex-wrap items-center justify-center gap-x-1.5 sm:gap-x-2.5 gap-y-0.5 text-[11px] sm:text-[12px] text-ink-600 leading-relaxed">

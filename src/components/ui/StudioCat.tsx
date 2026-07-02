@@ -67,11 +67,11 @@ export function StudioCat({ className = '' }: { className?: string }) {
       ref={rootRef}
       className={`relative inline-block select-none ${className}`}
       aria-hidden="true"
-      data-cursor="mrrp?"
+      data-cursor-emoji="🐾"
     >
       {/* speech bubble */}
       <span
-        className={`absolute -top-7 left-1/2 -translate-x-1/2 font-mono text-[10px] uppercase tracking-[0.18em] text-ink-500 transition-all duration-300 ${
+        className={`absolute -top-7 left-1/2 -translate-x-1/2 font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground transition-all duration-300 ${
           mrrp ? 'opacity-100 -translate-y-1' : 'opacity-0 translate-y-1'
         }`}
       >
@@ -90,7 +90,7 @@ export function StudioCat({ className = '' }: { className?: string }) {
           <path
             className="cat-tail"
             d="M52 56 C64 56 68 48 66 42"
-            stroke="#AEB5C8"
+            stroke="hsl(var(--muted-foreground))"
             strokeWidth="6"
             strokeLinecap="round"
             fill="none"
@@ -98,21 +98,21 @@ export function StudioCat({ className = '' }: { className?: string }) {
           {/* body */}
           <path
             d="M20 60 C14 44 18 32 30 28 L42 28 C54 32 58 44 52 60 Z"
-            fill="#AEB5C8"
+            fill="hsl(var(--muted-foreground))"
           />
           {/* chest patch */}
-          <path d="M32 60 C30 48 32 40 36 36 C40 40 42 48 40 60 Z" fill="#05060A" opacity="0.85" />
+          <path d="M32 60 C30 48 32 40 36 36 C40 40 42 48 40 60 Z" fill="hsl(var(--background))" opacity="0.85" />
           {/* head group (rotates toward cursor) */}
           <g ref={headRef} style={{ transformOrigin: '36px 24px', willChange: 'transform' }}>
             {/* ears */}
-            <path d="M24 16 L26 4 L34 12 Z" fill="#AEB5C8" />
-            <path d="M48 16 L46 4 L38 12 Z" fill="#AEB5C8" />
+            <path d="M24 16 L26 4 L34 12 Z" fill="hsl(var(--muted-foreground))" />
+            <path d="M48 16 L46 4 L38 12 Z" fill="hsl(var(--muted-foreground))" />
             {/* head */}
-            <ellipse cx="36" cy="18" rx="14" ry="12" fill="#AEB5C8" />
+            <ellipse cx="36" cy="18" rx="14" ry="12" fill="hsl(var(--muted-foreground))" />
             {/* eyes (blink via CSS scaleY) */}
             <g className="cat-eyes">
-              <circle cx="30.5" cy="17" r="1.8" fill="#05060A" />
-              <circle cx="41.5" cy="17" r="1.8" fill="#05060A" />
+              <circle cx="30.5" cy="17" r="1.8" fill="hsl(var(--background))" />
+              <circle cx="41.5" cy="17" r="1.8" fill="hsl(var(--background))" />
             </g>
             {/* nose */}
             <path d="M35 22 L37 22 L36 23.5 Z" fill="#8B7CFF" />

@@ -155,8 +155,13 @@ export function AsciiField({ className = '', cols = 64, surface = 'ink' }: Ascii
       }, 150);
     };
 
-    if (!layout()) return;
-    draw(t);
+    // The section may mount with zero size (content-visibility: auto);
+    // lay out again whenever the box materializes or changes.
+    if (layout()) draw(t);
+    const ro = new ResizeObserver(() => {
+      if (layout()) draw(t);
+    });
+    ro.observe(wrap);
 
     let visible = false;
     const io = new IntersectionObserver(
@@ -184,6 +189,7 @@ export function AsciiField({ className = '', cols = 64, surface = 'ink' }: Ascii
     return () => {
       disposed = true;
       io.disconnect();
+      ro.disconnect();
       cancelAnimationFrame(raf);
       window.clearTimeout(resizeT);
       canvas.removeEventListener('pointermove', onPointerMove);

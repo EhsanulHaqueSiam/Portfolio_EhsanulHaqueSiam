@@ -1,12 +1,9 @@
 ---
 // Self-hosted variable fonts (hashed into /_astro/ → immutable cache, CSP stays 'self')
-import archivoWoff2 from '@fontsource-variable/archivo/files/archivo-latin-wdth-normal.woff2?url';
-import frauncesItalicWoff2 from '@fontsource-variable/fraunces/files/fraunces-latin-opsz-italic.woff2?url';
-import '@fontsource-variable/archivo/wdth.css';
-import '@fontsource-variable/fraunces/opsz.css';
-import '@fontsource-variable/fraunces/opsz-italic.css';
-import '@fontsource-variable/instrument-sans';
-import '@fontsource-variable/spline-sans-mono';
+import geistWoff2 from '@fontsource-variable/geist/files/geist-latin-wght-normal.woff2?url';
+import '@fontsource-variable/geist';
+import '@fontsource-variable/geist-mono';
+import '@fontsource/pacifico';
 import '../index.css';
 import { SITE, META, buildJsonLd } from '../seo/schema';
 
@@ -27,13 +24,20 @@ const lastModified = new Date().toISOString().slice(0, 10);
 ---
 
 <!doctype html>
-<html lang="en" class="no-js" style="background:#05060a">
+<html lang="en" class="no-js dark">
   <head>
     <meta charset="UTF-8" />
-    <!-- Reveal SSR content immediately for JS-off; JS-on lets Framer Motion animate in -->
+    <!-- Reveal SSR content immediately for JS-off; JS-on lets Framer Motion animate in.
+         Also resolve the saved theme before first paint (default: dark). -->
     <script is:inline>
       document.documentElement.classList.remove('no-js');
       document.documentElement.classList.add('js');
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          if (t === 'light') document.documentElement.classList.remove('dark');
+        } catch (e) {}
+      })();
     </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 
@@ -74,8 +78,8 @@ const lastModified = new Date().toISOString().slice(0, 10);
     <meta name="twitter:description" content={META.ogDescription} />
     <meta name="twitter:image" content={META.ogImage} />
     <meta name="twitter:image:alt" content={META.ogImageAlt} />
-    <meta name="twitter:label1" content="Open to work" />
-    <meta name="twitter:data1" content="AI/ML · LLM · Full-Stack Engineer" />
+    <meta name="twitter:label1" content="Focus" />
+    <meta name="twitter:data1" content="AI/ML · LLM · Full-Stack Engineering" />
     <meta name="twitter:label2" content="Location" />
     <meta name="twitter:data2" content="Dhaka, Bangladesh · Remote" />
 
@@ -86,7 +90,7 @@ const lastModified = new Date().toISOString().slice(0, 10);
     <link rel="manifest" href="/site.webmanifest" />
 
     <!-- Theme & PWA -->
-    <meta name="theme-color" content="#05060a" />
+    <meta name="theme-color" content="#030712" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
@@ -97,14 +101,13 @@ const lastModified = new Date().toISOString().slice(0, 10);
     <meta name="geo.placename" content="Dhaka" />
     <meta name="language" content="English" />
 
-    <!-- Resource hints (fonts are self-hosted & bundled — no font CDN needed) -->
+    <!-- Resource hints (fonts are self-hosted and bundled, no font CDN needed) -->
     <link rel="dns-prefetch" href="https://github-contributions-api.jogruber.de" />
 
-    <!-- Above-the-fold font preloads (poster name + italic accent) -->
-    <link rel="preload" as="font" type="font/woff2" crossorigin href={archivoWoff2} />
-    <link rel="preload" as="font" type="font/woff2" crossorigin href={frauncesItalicWoff2} />
+    <!-- Above-the-fold font preload (hero name) -->
+    <link rel="preload" as="font" type="font/woff2" crossorigin href={geistWoff2} />
 
-    <!-- Hero image preload (LCP) -->
+    <!-- Hero avatar preload -->
     <link rel="preload" as="image" type="image/webp" href="/images/profile2-hero.webp" fetchpriority="high" />
 
     <!-- Structured Data -->
@@ -123,10 +126,10 @@ const lastModified = new Date().toISOString().slice(0, 10);
       }
     </style>
   </head>
-  <body style="background:#05060a;color:#eef1f8">
+  <body>
     <a
       href="#main-content"
-      class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[999] focus:px-4 focus:py-2 focus:bg-ink-900 focus:text-paper-50 focus:font-mono focus:uppercase focus:text-xs focus:outline-none"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[999] focus:px-4 focus:py-2 focus:bg-foreground focus:text-background focus:font-mono focus:uppercase focus:text-xs focus:outline-none"
     >
       Skip to main content
     </a>

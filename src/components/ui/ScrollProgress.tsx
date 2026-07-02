@@ -6,12 +6,8 @@ export function ScrollProgress() {
   return (
     <m.div
       aria-hidden="true"
-      className="fixed top-0 left-0 right-0 h-[2px] origin-left z-[100]"
-      style={{
-        scaleX: scrollYProgress,
-        background: '#8B7CFF',
-        boxShadow: '0 0 12px rgba(139,124,255,0.55)',
-      }}
+      className="fixed left-0 right-0 top-0 z-[600] h-[2px] origin-left bg-foreground/70"
+      style={{ scaleX: scrollYProgress }}
     />
   );
 }
