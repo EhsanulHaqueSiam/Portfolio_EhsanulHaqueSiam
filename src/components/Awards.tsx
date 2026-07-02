@@ -2,9 +2,15 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import { m, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { awards, getAchievementImage, hideImageOnError } from '../data/content';
 import { SectionHeader } from './ui/SectionHeader';
-import { MagneticHover } from './ui/ImageDistortion';
 import { OptimizedImage } from './ui/OptimizedImage';
-import { CloseIcon } from './ui/Icons';
+import { CloseIcon, PlusIcon, ArrowRightIcon } from './ui/Icons';
+
+const EASE = [0.16, 1, 0.3, 1] as const;
+
+/** Catalog number for the archival plates: 07-01, 07-02, … */
+const catNo = (index: number) => `07-${String(index + 1).padStart(2, '0')}`;
+
+const isCertifiedEthicalHacker = (name: string) => /certified ethical hacker/i.test(name);
 
 export function Awards() {
   const [selectedAward, setSelectedAward] = useState<number | null>(null);
@@ -12,12 +18,16 @@ export function Awards() {
   const [instantMotion, setInstantMotion] = useState(false);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const previousFocusRef = useRef<Element | null>(null);
+  const galleryDialogRef = useRef<HTMLDivElement>(null);
+  const lightboxDialogRef = useRef<HTMLDivElement>(null);
+  const lightboxCloseButtonRef = useRef<HTMLButtonElement>(null);
+  const lightboxPreviousFocusRef = useRef<Element | null>(null);
   const shouldReduceMotion = useReducedMotion();
 
   const isModalOpen = selectedAward !== null;
   const isLightboxOpen = lightboxIndex !== null;
 
-  // Lock body scroll and stop Lenis when modal is open
+  // Lock body scroll and stop Lenis while the gallery dialog is open
   useEffect(() => {
     if (isModalOpen) {
       document.body.style.overflow = 'hidden';
@@ -32,7 +42,7 @@ export function Awards() {
     };
   }, [isModalOpen]);
 
-  // Close modal resets lightbox
+  // Closing the dialog also resets the lightbox
   const closeModal = useCallback((instant = false) => {
     setInstantMotion(instant);
     setLightboxIndex(null);
@@ -54,7 +64,7 @@ export function Awards() {
     setLightboxIndex(prev => prev === null ? null : (prev - 1 + currentImages.length) % currentImages.length);
   }, [currentImages.length]);
 
-  // Keyboard support
+  // Keyboard support: Escape closes (lightbox first), arrows page the lightbox
   useEffect(() => {
     if (!isModalOpen) return;
 
@@ -77,11 +87,11 @@ export function Awards() {
     return () => window.removeEventListener('keydown', handleKey);
   }, [isModalOpen, isLightboxOpen, closeModal, goNext, goPrev]);
 
-  // Focus trap: save previous focus, focus close button, trap Tab, restore on close
+  // Focus management: save previous focus, focus close button, restore on close
   useEffect(() => {
     if (isModalOpen) {
       previousFocusRef.current = document.activeElement;
-      // Wait for animation frame so the modal is rendered
+      // Wait an animation frame so the dialog exists before focusing
       requestAnimationFrame(() => closeButtonRef.current?.focus());
     } else if (previousFocusRef.current instanceof HTMLElement) {
       previousFocusRef.current.focus();
@@ -89,12 +99,29 @@ export function Awards() {
     }
   }, [isModalOpen]);
 
+  // Lightbox focus management: focus its close button on open, restore focus
+  // back into the gallery when only the lightbox closes (the gallery-level
+  // effect above handles restoration when both close together)
+  useEffect(() => {
+    if (isLightboxOpen) {
+      lightboxPreviousFocusRef.current = document.activeElement;
+      // Wait an animation frame so the lightbox exists before focusing
+      requestAnimationFrame(() => lightboxCloseButtonRef.current?.focus());
+    } else {
+      if (isModalOpen && lightboxPreviousFocusRef.current instanceof HTMLElement) {
+        lightboxPreviousFocusRef.current.focus();
+      }
+      lightboxPreviousFocusRef.current = null;
+    }
+  }, [isLightboxOpen, isModalOpen]);
+
+  // Focus trap: keep Tab cycling inside the topmost open dialog
   useEffect(() => {
     if (!isModalOpen) return;
 
     const handleTabTrap = (e: KeyboardEvent) => {
       if (e.key !== 'Tab') return;
-      const modal = document.querySelector('[role="dialog"]');
+      const modal = isLightboxOpen ? lightboxDialogRef.current : galleryDialogRef.current;
       if (!modal) return;
       const focusable = modal.querySelectorAll<HTMLElement>(
         'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
@@ -113,35 +140,40 @@ export function Awards() {
 
     window.addEventListener('keydown', handleTabTrap);
     return () => window.removeEventListener('keydown', handleTabTrap);
-  }, [isModalOpen]);
+  }, [isModalOpen, isLightboxOpen]);
 
   return (
-    <section id="awards" className="py-16 sm:py-24 md:py-32 px-4 sm:px-6 md:px-12 lg:px-24 relative overflow-hidden">
-      {/* Background decoration */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-amber-500/5 rounded-full blur-3xl" />
-        <div className="absolute top-1/4 right-1/4 w-64 h-64 bg-violet-500/5 rounded-full blur-3xl" />
-      </div>
+    <section id="awards" className="relative py-24 sm:py-32">
+      <div className="mx-auto max-w-[1400px] px-5 sm:px-8 lg:px-12">
+        <SectionHeader
+          number="07"
+          name="AWARDS & CERTS"
+          title={
+            <>
+              Awards &amp; <em>honours</em>
+            </>
+          }
+          annotation={`CAT. ${catNo(0)} — ${catNo(awards.length - 1)} · ARCHIVE`}
+        />
 
-      <div className="max-w-7xl mx-auto relative z-10">
-        <SectionHeader number="07" title="Awards & Recognition" />
+        {/* Archival plate grid — asymmetric: first and last entries span two columns
+            (keeps the 3-col layout gapless with the current 4-entry archive) */}
+        <div className="grid auto-rows-max grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
+          {awards.map((award, index) => {
+            const spansTwo = index === 0 || index >= 3;
+            const certified = isCertifiedEthicalHacker(award.name);
 
-        {/* Awards masonry grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 auto-rows-max">
-          {awards.map((award, index) => (
-            <m.div
-              key={award.name}
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              className={index === 0 ? 'sm:col-span-2 lg:col-span-2' : index >= 3 ? 'sm:col-span-2 lg:col-span-2' : ''}
-            >
-              <MagneticHover strength={8}>
-                <m.button
+            return (
+              <m.div
+                key={award.name}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-10%' }}
+                transition={{ duration: 0.7, ease: EASE, delay: Math.min(index * 0.08, 0.32) }}
+                className={spansTwo ? 'sm:col-span-2 lg:col-span-2' : ''}
+              >
+                <button
                   type="button"
-                  aria-label={`Open ${award.name} gallery`}
-                  className="group relative h-full w-full rounded-2xl sm:rounded-3xl overflow-hidden cursor-pointer text-left focus-visible:ring-2 focus-visible:ring-violet-400 focus-visible:ring-offset-2 focus-visible:ring-offset-space-900"
                   onClick={() => {
                     if (selectedAward === index) {
                       closeModal(false);
@@ -150,75 +182,73 @@ export function Awards() {
                     setInstantMotion(false);
                     setSelectedAward(index);
                   }}
-                  whileHover={{ y: -5 }}
-                  transition={{ duration: 0.3 }}
+                  className="group press-feedback relative flex h-full w-full cursor-pointer flex-col rounded-none border rule bg-paper-50 text-left transition-[transform,box-shadow] duration-200 ease-out-expo hover:-translate-y-0.5 hover:shadow-plate focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vermilion focus-visible:ring-offset-2 focus-visible:ring-offset-paper-100"
                 >
-                  {/* Image background */}
-                  <div className={`relative ${index === 0 ? 'aspect-[4/3] sm:aspect-[16/10]' : 'aspect-[4/3]'} overflow-hidden`}>
-                    {award.images[0] && (
-                      <OptimizedImage
-                        src={getAchievementImage(award.images[0])}
-                        alt={award.name}
-                        fill
-                        className="transition-transform duration-300 group-hover:scale-110"
-                      />
+                  {/* Cover plate — duotone develops to colour on hover */}
+                  <div className="reg-marks relative m-3 sm:m-4">
+                    <div className={`plate relative w-full ${spansTwo ? 'aspect-[4/3] sm:aspect-[16/9]' : 'aspect-[4/3]'}`}>
+                      {award.images[0] && (
+                        <OptimizedImage
+                          src={getAchievementImage(award.images[0])}
+                          alt={award.name}
+                          fill
+                          className="grayscale transition-[filter] duration-700 ease-out-expo group-hover:grayscale-0"
+                        />
+                      )}
+                    </div>
+                    {certified && (
+                      <span
+                        aria-hidden="true"
+                        className="stamp absolute right-3 top-3 z-10 inline-block -rotate-6 bg-paper-100 px-3 py-1.5 text-[11px]"
+                      >
+                        Certified
+                      </span>
                     )}
-                    {/* Gradient overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-space-900 via-space-900/60 to-transparent" />
-
-                    {/* Shine effect on hover */}
-                    <m.div
-                      className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-500"
-                    />
                   </div>
 
-                  {/* Content overlay */}
-                  <div className="absolute inset-0 flex flex-col justify-end p-6 md:p-8">
-                    {/* Category badge */}
-                    <div className="absolute top-4 right-4">
-                      <span className="px-3 py-1 text-xs font-mono text-amber-400/90 bg-amber-500/20 rounded-full border border-amber-500/30 backdrop-blur-sm capitalize">
+                  {/* Catalog entry */}
+                  <div className="flex flex-1 flex-col px-4 pb-5 sm:px-5 sm:pb-6">
+                    <div className="mb-3 flex items-center justify-between gap-3">
+                      <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-vermilion-600">
+                        Cat. {catNo(index)}
+                      </span>
+                      <span className="border rule px-2 py-1 font-mono text-[10px] uppercase tracking-[0.16em] text-ink-600">
                         {award.category}
                       </span>
                     </div>
 
-                    {/* Award icon */}
-                    <m.div
-                      className="w-12 h-12 mb-4 rounded-2xl bg-gradient-to-br from-amber-500/30 to-amber-600/20 flex items-center justify-center border border-amber-500/30 backdrop-blur-sm"
-                      whileHover={{ rotate: 12, scale: 1.1 }}
+                    <span
+                      className={`block font-display font-medium text-ink-900 ${
+                        spansTwo ? 'text-2xl sm:text-3xl' : 'text-xl sm:text-2xl'
+                      }`}
                     >
-                      <span className="text-2xl">🏆</span>
-                    </m.div>
-
-                    {/* Title */}
-                    <h3 className={`font-display font-bold text-white mb-2 group-hover:text-amber-400 transition-colors ${index === 0 ? 'text-2xl md:text-3xl' : 'text-lg md:text-xl'}`}>
                       {award.name}
-                    </h3>
+                      <span className="sr-only"> — open gallery</span>
+                    </span>
 
-                    {/* Description - expandable */}
-                    <p className="text-gray-400 text-sm leading-relaxed line-clamp-2 group-hover:line-clamp-none transition-colors">
+                    <p className="mb-5 mt-2 max-w-prose text-sm leading-relaxed text-ink-500">
                       {award.desc}
                     </p>
 
-                    {/* Image count indicator */}
-                    {award.images.length > 1 && (
-                      <div className="mt-4 flex items-center gap-2 text-gray-400 text-xs">
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                        </svg>
-                        <span>{award.images.length} images</span>
-                      </div>
-                    )}
+                    <span className="mt-auto flex items-center gap-2 border-t rule pt-3 font-mono text-[11px] uppercase tracking-[0.16em] text-ink-600 transition-colors duration-200 group-hover:text-vermilion-600">
+                      <PlusIcon className="h-3.5 w-3.5" aria-hidden="true" />
+                      View gallery — {award.images.length} {award.images.length === 1 ? 'plate' : 'plates'}
+                    </span>
                   </div>
-
-                  {/* Hover border */}
-                  <div className="absolute inset-0 rounded-3xl border-2 border-transparent group-hover:border-amber-500/30 transition-colors duration-200 pointer-events-none" />
-                </m.button>
-              </MagneticHover>
-            </m.div>
-          ))}
+                </button>
+              </m.div>
+            );
+          })}
         </div>
 
-        {/* Image gallery modal */}
+        {/* Closing rule — end of catalogue */}
+        <div className="mt-10 flex items-baseline gap-0 border-t rule pt-3 sm:mt-12" aria-hidden="true">
+          <span className="folio">End of catalogue</span>
+          <span className="leader" />
+          <span className="folio">{awards.length} entries · verified originals</span>
+        </div>
+
+        {/* Gallery dialog — paper sheet over deep ink overlay */}
         <AnimatePresence>
           {selectedAward !== null && (
             <m.div
@@ -226,65 +256,83 @@ export function Awards() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: shouldReduceMotion || instantMotion ? 0 : 0.15 }}
+              ref={galleryDialogRef}
               role="dialog"
               aria-modal="true"
               aria-label={`${awards[selectedAward].name} gallery`}
-              className="fixed inset-0 z-[200] flex items-end sm:items-center justify-center bg-space-900/95 backdrop-blur-xl"
+              className="fixed inset-0 z-[200] flex items-end justify-center bg-ink-950/95 sm:items-center"
               onClick={() => closeModal(false)}
             >
               <m.div
-                initial={{ scale: 0.95, opacity: 0, transform: 'translateY(20px)' }}
+                initial={{ scale: 0.98, opacity: 0, transform: 'translateY(20px)' }}
                 animate={{ scale: 1, opacity: 1, transform: 'translateY(0px)' }}
-                exit={{ scale: 0.95, opacity: 0, transform: 'translateY(20px)' }}
-                transition={{ duration: shouldReduceMotion || instantMotion ? 0 : 0.25, ease: [0.22, 1, 0.36, 1] }}
-                className="relative w-full sm:max-w-5xl max-h-[85vh] sm:max-h-[90vh] overflow-auto rounded-t-3xl sm:rounded-3xl bg-space-800/95 sm:bg-space-800/90 border-t sm:border border-white/10 p-4 sm:p-6 sm:m-4"
+                exit={{ scale: 0.98, opacity: 0, transform: 'translateY(20px)' }}
+                transition={{ duration: shouldReduceMotion || instantMotion ? 0 : 0.25, ease: EASE }}
+                className="relative max-h-[85vh] w-full overflow-y-auto rounded-none bg-paper-100 p-5 shadow-plate-lg sm:m-4 sm:max-h-[90vh] sm:max-w-5xl sm:p-8"
                 onClick={(e) => e.stopPropagation()}
               >
-                {/* Mobile drag handle */}
-                <div className="w-12 h-1 bg-white/20 rounded-full mx-auto mb-4 sm:hidden" />
+                {/* Mobile pull bar */}
+                <div className="mx-auto mb-4 h-[3px] w-12 bg-ink-300 sm:hidden" aria-hidden="true" />
 
                 {/* Close button */}
                 <button
                   ref={closeButtonRef}
                   onClick={() => closeModal(false)}
                   aria-label="Close gallery"
-                  className="press-feedback absolute top-4 right-4 w-10 h-10 min-w-[44px] min-h-[44px] rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-white/20 z-10"
+                  className="press-feedback absolute right-4 top-4 z-10 flex h-11 w-11 min-h-[44px] min-w-[44px] items-center justify-center border rule-strong text-ink-900 hover:bg-ink-900 hover:text-paper-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vermilion"
                 >
                   <CloseIcon />
                 </button>
 
-                <h3 className="text-xl sm:text-2xl font-display font-bold text-white mb-3 sm:mb-4 pr-12">
-                  {awards[selectedAward].name}
-                </h3>
-                <p className="text-gray-400 text-sm sm:text-base mb-4 sm:mb-6">{awards[selectedAward].desc}</p>
+                {/* Catalog header */}
+                <div className="mb-6 border-b rule pb-5 pr-14">
+                  <p className="folio mb-3">
+                    <span className="text-vermilion-600">Cat. {catNo(selectedAward)}</span>
+                    <span aria-hidden="true"> — </span>
+                    {awards[selectedAward].category} · {currentImages.length}{' '}
+                    {currentImages.length === 1 ? 'plate' : 'plates'}
+                  </p>
+                  <h3 className="font-display text-2xl font-light text-ink-900 sm:text-3xl">
+                    {awards[selectedAward].name}
+                  </h3>
+                  <p className="mt-3 max-w-prose text-sm leading-relaxed text-ink-600 sm:text-base">
+                    {awards[selectedAward].desc}
+                  </p>
+                </div>
 
-                {/* Image gallery */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
+                {/* Plate index */}
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
                   {awards[selectedAward].images.map((img, i) => (
-                    <m.div
+                    <m.button
                       key={img}
-                      initial={{ opacity: 0, y: 20 }}
+                      type="button"
+                      initial={{ opacity: 0, y: 16 }}
                       animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: i * 0.1 }}
-                      className="aspect-video rounded-xl overflow-hidden bg-space-700 cursor-pointer group/img"
+                      transition={{
+                        duration: shouldReduceMotion || instantMotion ? 0 : 0.4,
+                        delay: shouldReduceMotion || instantMotion ? 0 : i * 0.05,
+                        ease: EASE,
+                      }}
                       onClick={() => {
                         setInstantMotion(false);
                         setLightboxIndex(i);
                       }}
+                      aria-label={`View plate ${i + 1} of ${currentImages.length} full size`}
+                      className="group press-feedback cursor-pointer rounded-none text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vermilion focus-visible:ring-offset-2 focus-visible:ring-offset-paper-100"
                     >
-                      <OptimizedImage
-                        src={getAchievementImage(img)}
-                        alt={`${awards[selectedAward].name} - ${i + 1}`}
-                        fill
-                        className="group-hover/img:scale-105 transition-transform duration-300"
-                      />
-                      {/* Hover overlay */}
-                      <div className="absolute inset-0 bg-black/0 group-hover/img:bg-black/20 transition-colors duration-300 flex items-center justify-center">
-                        <svg className="w-8 h-8 text-white opacity-0 group-hover/img:opacity-100 transition-opacity duration-300 drop-shadow-lg" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
-                        </svg>
+                      <div className="plate relative aspect-video border rule">
+                        <OptimizedImage
+                          src={getAchievementImage(img)}
+                          alt={`${awards[selectedAward].name} - ${i + 1}`}
+                          fill
+                          className="grayscale transition-[filter] duration-500 ease-out-expo group-hover:grayscale-0"
+                        />
                       </div>
-                    </m.div>
+                      <span className="mt-2 flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.16em] text-ink-500 transition-colors duration-200 group-hover:text-vermilion-600">
+                        <span>Plate {String(i + 1).padStart(2, '0')}</span>
+                        <PlusIcon className="h-3 w-3" aria-hidden="true" />
+                      </span>
+                    </m.button>
                   ))}
                 </div>
               </m.div>
@@ -292,7 +340,7 @@ export function Awards() {
           )}
         </AnimatePresence>
 
-        {/* Lightbox overlay */}
+        {/* Lightbox overlay — deepest ink, hairline chrome, mono controls */}
         <AnimatePresence>
           {selectedAward !== null && lightboxIndex !== null && (
             <m.div
@@ -300,25 +348,30 @@ export function Awards() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: shouldReduceMotion || instantMotion ? 0 : 0.2 }}
-              className="fixed inset-0 z-[210] flex items-center justify-center bg-black/95"
+              ref={lightboxDialogRef}
+              role="dialog"
+              aria-modal="true"
+              aria-label={`Plate ${lightboxIndex + 1} of ${currentImages.length}`}
+              className="fixed inset-0 z-[210] flex items-center justify-center bg-ink-950/95"
               onClick={() => {
                 setInstantMotion(false);
                 setLightboxIndex(null);
               }}
             >
-              {/* Image counter */}
-              <div className="absolute top-4 left-1/2 -translate-x-1/2 text-white/70 text-sm font-mono z-10">
-                {lightboxIndex + 1} / {currentImages.length}
+              {/* Plate counter */}
+              <div className="absolute left-1/2 top-5 z-10 -translate-x-1/2 font-mono text-xs uppercase tracking-[0.2em] text-paper-300">
+                Plate {String(lightboxIndex + 1).padStart(2, '0')} / {String(currentImages.length).padStart(2, '0')}
               </div>
 
               {/* Close button */}
               <button
+                ref={lightboxCloseButtonRef}
                 onClick={() => {
                   setInstantMotion(false);
                   setLightboxIndex(null);
                 }}
                 aria-label="Close lightbox"
-                className="press-feedback absolute top-4 right-4 w-10 h-10 min-w-[44px] min-h-[44px] rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-white/20 z-10"
+                className="press-feedback absolute right-4 top-4 z-10 flex h-11 w-11 min-h-[44px] min-w-[44px] items-center justify-center border rule-inverse text-paper-100 hover:bg-paper-100 hover:text-ink-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vermilion"
               >
                 <CloseIcon />
               </button>
@@ -328,11 +381,9 @@ export function Awards() {
                 <button
                   onClick={(e) => { e.stopPropagation(); goPrev(false); }}
                   aria-label="Previous image"
-                  className="press-feedback absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 min-w-[44px] min-h-[44px] rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white z-10"
+                  className="press-feedback absolute left-2 top-1/2 z-10 flex h-11 w-11 min-h-[44px] min-w-[44px] -translate-y-1/2 items-center justify-center border rule-inverse text-paper-100 hover:bg-paper-100 hover:text-ink-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vermilion sm:left-4 sm:h-12 sm:w-12"
                 >
-                  <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                  </svg>
+                  <ArrowRightIcon className="h-5 w-5 rotate-180" />
                 </button>
               )}
 
@@ -341,28 +392,26 @@ export function Awards() {
                 <button
                   onClick={(e) => { e.stopPropagation(); goNext(false); }}
                   aria-label="Next image"
-                  className="press-feedback absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 min-w-[44px] min-h-[44px] rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white z-10"
+                  className="press-feedback absolute right-2 top-1/2 z-10 flex h-11 w-11 min-h-[44px] min-w-[44px] -translate-y-1/2 items-center justify-center border rule-inverse text-paper-100 hover:bg-paper-100 hover:text-ink-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vermilion sm:right-4 sm:h-12 sm:w-12"
                 >
-                  <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
+                  <ArrowRightIcon className="h-5 w-5" />
                 </button>
               )}
 
-              {/* Full-size image */}
+              {/* Full-size plate */}
               <m.div
                 key={lightboxIndex}
-                initial={{ opacity: 0, scale: 0.95 }}
+                initial={{ opacity: 0, scale: 0.98 }}
                 animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.95 }}
-                transition={{ duration: shouldReduceMotion || instantMotion ? 0 : 0.2 }}
-                className="max-w-[90vw] max-h-[85vh] relative"
+                exit={{ opacity: 0, scale: 0.98 }}
+                transition={{ duration: shouldReduceMotion || instantMotion ? 0 : 0.2, ease: EASE }}
+                className="relative max-h-[85vh] max-w-[90vw]"
                 onClick={(e) => e.stopPropagation()}
               >
                 <img
                   src={getAchievementImage(currentImages[lightboxIndex])}
                   alt={`${awards[selectedAward].name} - ${lightboxIndex + 1}`}
-                  className="max-w-full max-h-[85vh] object-contain rounded-lg"
+                  className="max-h-[85vh] max-w-full rounded-none border rule-inverse object-contain"
                   onError={hideImageOnError}
                 />
               </m.div>

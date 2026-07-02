@@ -2,69 +2,84 @@ import { m } from 'framer-motion';
 import { testimonials } from '../data/content';
 import { SectionHeader } from './ui/SectionHeader';
 
-const ease = [0.22, 1, 0.36, 1];
+const EASE = [0.16, 1, 0.3, 1] as const;
 
-function QuoteIcon({ className = '' }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-      <path d="M4.583 17.321C3.553 16.227 3 15 3 13.011c0-3.5 2.457-6.637 6.03-8.188l.893 1.378c-3.335 1.804-3.987 4.145-4.247 5.621.537-.278 1.24-.375 1.929-.311C9.591 11.69 11 13.196 11 15c0 1.933-1.567 3.5-3.5 3.5-1.294 0-2.22-.418-2.917-1.179zM15.583 17.321C14.553 16.227 14 15 14 13.011c0-3.5 2.457-6.637 6.03-8.188l.893 1.378c-3.335 1.804-3.987 4.145-4.247 5.621.537-.278 1.24-.375 1.929-.311C20.591 11.69 22 13.196 22 15c0 1.933-1.567 3.5-3.5 3.5-1.294 0-2.22-.418-2.917-1.179z" />
-    </svg>
-  );
-}
-
+/**
+ * 06 / Testimonials — quotes typeset as letters of reference.
+ * Paper spread: one giant vermilion Fraunces opening quote hangs over
+ * the whole composition; each letter is set in Fraunces italic light
+ * with hanging punctuation, a mono signature block above a hairline,
+ * and an asymmetric two-column offset rhythm. Hairline frames appear
+ * on hover only — no card grid.
+ */
 export function Testimonials() {
   return (
-    <section id="testimonials" className="py-16 sm:py-24 md:py-32 px-4 sm:px-6 md:px-12 lg:px-24 relative overflow-hidden">
-      {/* Background accent */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] bg-violet-500/[0.03] rounded-full blur-3xl pointer-events-none" aria-hidden="true" />
+    <section id="testimonials" className="py-24 sm:py-32">
+      <div className="mx-auto max-w-[1400px] px-5 sm:px-8 lg:px-12">
+        <SectionHeader
+          number="06"
+          name="TESTIMONIALS"
+          title={
+            <>
+              Word gets <em>around</em>
+            </>
+          }
+          annotation={`${testimonials.length} LETTERS · ON FILE`}
+        />
 
-      <div className="max-w-7xl mx-auto relative">
-        <SectionHeader number="06" title="Testimonials" />
+        <div className="relative">
+          {/* Oversized opening quotation mark — hanging punctuation for the spread.
+              Sized as a true display glyph so it drops over the first letter's
+              top-left whitespace like a drop cap, without covering any text. */}
+          <span
+            aria-hidden="true"
+            className="pointer-events-none select-none absolute -top-6 -left-2 sm:-top-9 sm:-left-4 lg:-top-12 lg:-left-8 font-display font-light leading-none text-vermilion text-[8rem] sm:text-[12rem] lg:text-[16rem] opacity-90"
+          >
+            &ldquo;
+          </span>
 
-        {/* Testimonial grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-          {testimonials.map((testimonial, i) => (
-            <m.div
-              key={testimonial.name}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.7, delay: i * 0.15, ease }}
-              className="group relative"
-            >
-              {/* Card */}
-              <div className="relative h-full p-6 sm:p-8 rounded-3xl bg-gradient-to-br from-space-800/80 to-space-800/40 backdrop-blur-sm border border-white/5 hover:border-white/10 transition-colors duration-200 overflow-hidden">
-                {/* Hover glow */}
-                <div className="absolute -top-20 -right-20 w-40 h-40 bg-violet-500/10 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-250" />
+          <div className="relative grid grid-cols-1 gap-y-12 pt-14 sm:pt-20 lg:grid-cols-2 lg:items-start lg:gap-x-16 lg:gap-y-20 xl:gap-x-24">
+            {testimonials.map((testimonial, i) => (
+              <m.figure
+                key={testimonial.name}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{
+                  opacity: 1,
+                  y: 0,
+                  transition: { duration: 0.7, delay: (i % 2) * 0.1, ease: EASE },
+                }}
+                viewport={{ once: true, margin: '-10%' }}
+                whileHover={{ y: -2, transition: { duration: 0.15, ease: EASE } }}
+                transition={{ duration: 0.2, ease: EASE }}
+                className={`group relative m-0 border border-transparent p-5 sm:p-8 transition-[border-color,box-shadow] duration-200 ease-out-expo hover:border-[color:var(--hairline-strong)] hover:shadow-plate ${
+                  i % 2 === 1 ? 'lg:mt-16' : ''
+                }`}
+              >
+                {/* Letter folio */}
+                <span className="folio mb-5 block text-[10px] sm:mb-6">
+                  LETTER {String(i + 1).padStart(2, '0')}
+                </span>
 
-                {/* Quote mark */}
-                <QuoteIcon className="w-8 h-8 sm:w-10 sm:h-10 text-violet-500/20 mb-4 sm:mb-6" />
-
-                {/* Quote text */}
-                <blockquote className="relative z-10 mb-6 sm:mb-8">
-                  <p className="text-base sm:text-lg text-gray-300 leading-relaxed font-light italic">
-                    "{testimonial.quote}"
+                {/* The quote, typeset with hanging punctuation */}
+                <blockquote className="m-0">
+                  <p className="font-display italic font-light text-xl sm:text-2xl xl:text-[1.75rem] leading-[1.55] text-ink-900 indent-[-0.45em]">
+                    &ldquo;{testimonial.quote}&rdquo;
                   </p>
                 </blockquote>
 
-                {/* Author */}
-                <div className="relative z-10 flex items-center gap-3 sm:gap-4 pt-4 sm:pt-6 border-t border-white/5">
-                  {/* Avatar placeholder - gradient circle with initials */}
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-violet-500/30 to-amber-500/30 flex items-center justify-center flex-shrink-0 border border-white/10">
-                    <span className="text-white font-display font-bold text-sm sm:text-base">
-                      {testimonial.name.split(' ').map(n => n[0]).join('')}
-                    </span>
-                  </div>
-                  <div className="min-w-0">
-                    <p className="text-white font-medium text-sm sm:text-base truncate">{testimonial.name}</p>
-                    <p className="text-gray-400 text-xs sm:text-sm truncate">
-                      {testimonial.role}, <span className="text-violet-400/80">{testimonial.company}</span>
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </m.div>
-          ))}
+                {/* Signature block */}
+                <figcaption className="mt-7 border-t rule pt-4 font-mono text-[11px] uppercase tracking-[0.16em] leading-relaxed sm:mt-8 sm:text-xs">
+                  <span className="text-ink-900 transition-colors duration-200 group-hover:text-vermilion-600">
+                    — {testimonial.name}
+                  </span>
+                  <span className="text-ink-500">
+                    {' '}
+                    · {testimonial.role}, {testimonial.company}
+                  </span>
+                </figcaption>
+              </m.figure>
+            ))}
+          </div>
         </div>
       </div>
     </section>

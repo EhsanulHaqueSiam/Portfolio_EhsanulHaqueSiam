@@ -1,194 +1,137 @@
-import { useState, memo, useMemo } from 'react';
-import { m, AnimatePresence } from 'framer-motion';
-import { skills, categoryIcons, skillLevelToPercent } from '../data/content';
+import { memo } from 'react';
+import { m } from 'framer-motion';
+import { skills } from '../data/content';
 import { SectionHeader } from './ui/SectionHeader';
-import type { Skill } from '../data/types';
+import type { Skill, SkillCategory } from '../data/types';
 
-const SkillIcon = memo(function SkillIcon({ src, name }: { src: string; name: string }) {
-  const [hasError, setHasError] = useState(false);
+const EASE = [0.16, 1, 0.3, 1] as const;
 
-  if (hasError) {
-    return <span className="text-lg font-bold text-gray-400">{name.charAt(0)}</span>;
-  }
+/**
+ * Proficiency → ink weight. The specimen reads like a printed key:
+ * vermilion = expert, full ink = advanced, faded ink = intermediate.
+ */
+const LEVEL_CLASS: Record<Skill['level'], string> = {
+  expert: 'text-vermilion-600 font-medium',
+  advanced: 'text-ink-900',
+  intermediate: 'text-ink-500',
+  beginner: 'text-ink-500',
+};
+
+/** Spoken proficiency — the ink weights above are color-only, so AT gets words. */
+const LEVEL_SR: Record<Skill['level'], string> = {
+  expert: 'expert',
+  advanced: 'advanced',
+  intermediate: 'intermediate',
+  beginner: 'beginner',
+};
+
+const totalInstruments = skills.categories.reduce(
+  (acc, category) => acc + category.skills.length,
+  0,
+);
+
+const CategoryRow = memo(function CategoryRow({
+  category,
+  index,
+}: {
+  category: SkillCategory;
+  index: number;
+}) {
+  const count = category.skills.length;
+  const last = category.skills.length - 1;
 
   return (
-    <img
-      src={src}
-      alt={name}
-      className="w-8 h-8 object-contain"
-      onError={() => setHasError(true)}
-    />
-  );
-});
-
-const SkillCard = memo(function SkillCard({ skill, index }: { skill: Skill; index: number }) {
-  const [isHovered, setIsHovered] = useState(false);
-  const percent = skillLevelToPercent[skill.level];
-
-  return (
-    <m.div
-      initial={{ opacity: 0, y: 30 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: index * 0.05, duration: 0.4 }}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      className="group relative"
+    <m.li
+      className="group border-t rule transition-colors duration-200 hover:bg-paper-50"
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-10%' }}
+      transition={{ duration: 0.7, ease: EASE, delay: Math.min(index * 0.07, 0.35) }}
     >
-      <div className="relative p-6 rounded-2xl bg-space-800/50 border border-white/5 hover:border-violet-500/30 transition-[border-color] duration-200 overflow-hidden">
-        {/* Hover glow */}
-        <div
-          className={`absolute inset-0 bg-gradient-to-br from-violet-500/10 to-transparent transition-opacity duration-200 ${
-            isHovered ? 'opacity-100' : 'opacity-0'
-          }`}
-        />
-
-        <div className="relative z-10">
-          {/* Skill icon and name */}
-          <div className="flex items-center gap-4 mb-4">
-            <div className="w-12 h-12 rounded-xl bg-space-700/50 flex items-center justify-center overflow-hidden">
-              <SkillIcon src={skill.icon} name={skill.name} />
-            </div>
-            <div>
-              <h3 className="text-white font-medium">{skill.name}</h3>
-              <span className="text-xs text-gray-400 uppercase tracking-wider">
-                {skill.level}
-              </span>
-            </div>
-          </div>
-
-          {/* Progress bar */}
-          <div className="relative h-1.5 bg-space-700/50 rounded-full overflow-hidden">
-            <m.div
-              className="absolute inset-y-0 left-0 bg-gradient-to-r from-violet-500 to-amber-500 rounded-full"
-              initial={{ width: 0 }}
-              animate={{ width: `${percent}%` }}
-              transition={{ duration: 1, delay: index * 0.05 + 0.3, ease: [0.22, 1, 0.36, 1] }}
-            />
-            {/* Shimmer effect overlay */}
-            <div
-              className="absolute inset-y-0 left-0 w-full animate-shimmer"
-              style={{
-                background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent)',
-                backgroundSize: '200% 100%',
-              }}
-            />
-          </div>
-
-          {/* Percentage on hover */}
-          <m.div
-            className="absolute top-4 right-4 text-2xl font-display font-bold"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: isHovered ? 1 : 0 }}
-            transition={{ duration: 0.2 }}
+      <div className="py-8 sm:py-10">
+        {/* Ledger meta: mono index left, tool count right */}
+        <div className="mb-3 flex items-baseline justify-between gap-4 sm:mb-4">
+          <span
+            aria-hidden="true"
+            className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-500 transition-colors duration-200 group-hover:text-vermilion-600 sm:text-xs"
           >
-            <span className="gradient-text">{percent}%</span>
-          </m.div>
+            04.{index + 1}
+          </span>
+          <span className="text-right font-mono text-[11px] uppercase tracking-[0.18em] text-ink-500 transition-colors duration-200 group-hover:text-ink-900 sm:text-xs">
+            {count} {count === 1 ? 'Tool' : 'Tools'}
+          </span>
+        </div>
+
+        <div className="lg:grid lg:grid-cols-12 lg:gap-x-10">
+          <h3 className="font-display text-display-md font-light text-ink-900 lg:col-span-5">
+            {category.name}
+          </h3>
+
+          {/* Type specimen: every skill inline, weighted by proficiency */}
+          <p className="mt-4 font-mono text-sm uppercase leading-[2] tracking-[0.08em] lg:col-span-7 lg:mt-2">
+            {category.skills.map((skill, j) => (
+              <span key={skill.name}>
+                <span className={LEVEL_CLASS[skill.level]}>
+                  {skill.name}
+                  <span className="sr-only"> ({LEVEL_SR[skill.level]})</span>
+                </span>
+                {j < last && (
+                  <span aria-hidden="true" className="text-ink-300">
+                    {' · '}
+                  </span>
+                )}
+              </span>
+            ))}
+          </p>
         </div>
       </div>
-    </m.div>
+    </m.li>
   );
 });
 
 export function Skills() {
-  const [activeCategory, setActiveCategory] = useState(0);
-
   const categories = skills.categories;
 
-  const stats = useMemo(() => [
-    { label: 'Categories', value: categories.length, icon: '📚' },
-    { label: 'Technologies', value: categories.reduce((acc, cat) => acc + cat.skills.length, 0), icon: '⚡' },
-    { label: 'Expert Level', value: categories.reduce((acc, cat) => acc + cat.skills.filter(s => s.level === 'expert').length, 0), icon: '🏆' },
-    { label: 'Advanced Level', value: categories.reduce((acc, cat) => acc + cat.skills.filter(s => s.level === 'advanced').length, 0), icon: '🚀' },
-  ], [categories]);
-
   return (
-    <section id="skills" className="py-16 sm:py-24 md:py-32 px-4 sm:px-6 md:px-12 lg:px-24 relative overflow-hidden">
-      {/* Background decoration */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/4 -left-32 w-64 h-64 bg-violet-500/5 rounded-full blur-3xl" />
-        <div className="absolute bottom-1/4 -right-32 w-96 h-96 bg-amber-500/5 rounded-full blur-3xl" />
-      </div>
+    <section id="skills" className="relative py-24 sm:py-32">
+      <div className="mx-auto max-w-[1400px] px-5 sm:px-8 lg:px-12">
+        <SectionHeader
+          number="04"
+          name="SKILLS"
+          title={
+            <>
+              The <em>toolkit</em>
+            </>
+          }
+          annotation={`${categories.length} CATEGORIES · ${totalInstruments} TOOLS`}
+        />
 
-      <div className="max-w-7xl mx-auto">
-        <SectionHeader number="04" title="Skills & Expertise" />
-      </div>
-
-      <div className="max-w-7xl mx-auto">
-        {/* Category tabs - horizontally scrollable on mobile */}
-        <div className="relative mb-8 sm:mb-12 md:mb-16">
-          {/* Scroll fade indicators */}
-          <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-space-900 to-transparent z-10 pointer-events-none md:hidden" />
-          <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-space-900 to-transparent z-10 pointer-events-none md:hidden" />
-
-          <div className="flex gap-2 sm:gap-3 overflow-x-auto scrollbar-hide pb-2 -mx-6 px-6 md:mx-0 md:px-0 md:flex-wrap md:overflow-visible">
-            {categories.map((category, index) => (
-              <m.button
-                key={category.name}
-                onClick={() => setActiveCategory(index)}
-                className={`press-feedback relative px-4 sm:px-6 py-2.5 sm:py-3 rounded-full font-medium text-sm whitespace-nowrap flex-shrink-0 min-h-[44px] ${
-                  activeCategory === index
-                    ? 'text-white'
-                    : 'text-gray-400 hover:text-gray-300'
-                }`}
-                whileHover={{ scale: 1.01 }}
-                whileTap={{ scale: 0.97 }}
-              >
-                {/* Background pill */}
-                {activeCategory === index && (
-                  <m.div
-                    layoutId="activeCategory"
-                    className="absolute inset-0 bg-gradient-to-r from-violet-500/20 to-amber-500/10 rounded-full border border-violet-500/30"
-                    transition={{ type: 'spring', stiffness: 400, damping: 30 }}
-                  />
-                )}
-                <span className="relative z-10 flex items-center gap-2">
-                  <span>{categoryIcons[category.name] || '📦'}</span>
-                  <span className="hidden sm:inline">{category.name}</span>
-                  <span className="sm:hidden">{category.name.split(' ')[0]}</span>
-                </span>
-              </m.button>
-            ))}
-          </div>
-        </div>
-
-        {/* Skills grid */}
-        <AnimatePresence mode="wait">
-          <m.div
-            key={activeCategory}
-            initial={{ opacity: 0, transform: 'translateY(20px)' }}
-            animate={{ opacity: 1, transform: 'translateY(0px)', transition: { duration: 0.4 } }}
-            exit={{ opacity: 0, transform: 'translateY(-20px)', transition: { duration: 0.2 } }}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"
-          >
-            {categories[activeCategory].skills.map((skill, index) => (
-              <SkillCard key={skill.name} skill={skill} index={index} />
-            ))}
-          </m.div>
-        </AnimatePresence>
-
-        {/* Bottom stats */}
+        {/* Reading key for the specimen ink weights */}
         <m.div
-          className="mt-10 sm:mt-16 md:mt-20 grid grid-cols-2 md:grid-cols-4 gap-6"
-          initial={{ opacity: 0, y: 30 }}
+          className="mb-10 inline-flex flex-wrap items-baseline gap-x-6 gap-y-2 border rule px-4 py-3 sm:mb-14 sm:px-5"
+          initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
+          viewport={{ once: true, margin: '-10%' }}
+          transition={{ duration: 0.6, ease: EASE }}
         >
-          {stats.map((stat) => (
-            <div
-              key={stat.label}
-              className="text-center p-6 rounded-2xl bg-space-800/30 border border-white/5"
-            >
-              <div className="text-3xl mb-2">{stat.icon}</div>
-              <div className="text-4xl font-display font-bold gradient-text mb-1">
-                {stat.value}
-              </div>
-              <div className="text-gray-400 text-sm uppercase tracking-wider">
-                {stat.label}
-              </div>
-            </div>
-          ))}
+          <span className="folio">Key</span>
+          <span className="font-mono text-[11px] font-medium uppercase tracking-[0.16em] text-vermilion-600">
+            <span aria-hidden="true">● </span>Vermilion = Expert
+          </span>
+          <span className="font-mono text-[11px] uppercase tracking-[0.16em] text-ink-900">
+            <span aria-hidden="true">● </span>Ink = Advanced
+          </span>
+          <span className="font-mono text-[11px] uppercase tracking-[0.16em] text-ink-500">
+            <span aria-hidden="true">● </span>Faded = Intermediate
+          </span>
         </m.div>
+
+        {/* Open ledger: all 8 categories always rendered — no tabs, fully crawlable */}
+        <ul role="list" className="border-b rule">
+          {categories.map((category, index) => (
+            <CategoryRow key={category.name} category={category} index={index} />
+          ))}
+        </ul>
       </div>
     </section>
   );

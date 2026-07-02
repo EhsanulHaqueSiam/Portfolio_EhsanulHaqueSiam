@@ -1,337 +1,425 @@
-import { useState } from 'react';
-import { m, AnimatePresence } from 'framer-motion';
+import { useCallback, useRef, useState } from 'react';
+import type { MouseEvent as ReactMouseEvent } from 'react';
+import { m, useMotionValue, useReducedMotion, useSpring } from 'framer-motion';
 import { featuredProjects, profile, getProjectImage } from '../data/content';
+import type { Project } from '../data/types';
 import { SectionHeader } from './ui/SectionHeader';
-import { TiltCard } from './ui/TiltCard';
-import { MagneticHover } from './ui/ImageDistortion';
 import { OptimizedImage } from './ui/OptimizedImage';
-import { GitHubIcon, ExternalLinkIcon } from './ui/Icons';
+import { ArrowUpRightIcon } from './ui/Icons';
+import { useMediaQuery } from '../hooks/useMediaQuery';
 
-const categories = ['All', 'machine_learning', 'nlp', 'web', 'frontend', 'desktop_app', 'mobile', 'database', 'gamedev', 'graphics', 'web_scraping', 'automation'];
-const categoryLabels: Record<string, string> = {
-  'All': 'All Projects',
-  'machine_learning': 'AI/ML',
-  'nlp': 'NLP',
-  'web': 'Web',
-  'frontend': 'Frontend',
-  'desktop_app': 'Desktop',
-  'mobile': 'Mobile',
-  'database': 'Database',
-  'gamedev': 'Game Dev',
-  'graphics': 'Graphics',
-  'web_scraping': 'Scraping',
-  'automation': 'Automation',
-};
+const EASE = [0.16, 1, 0.3, 1] as const;
+
+/* The three works with the strongest case-study evidence open the spread as
+   large editorial plates; everything else files into the ledger index below. */
+const CASE_PLATE_NAMES = ['ScholarHub', 'Indian Claypit', 'TTT Autos'];
+
+const casePlates = CASE_PLATE_NAMES.map((name) =>
+  featuredProjects.find((p) => p.name === name)
+).filter((p): p is Project => Boolean(p));
+
+const indexProjects = featuredProjects.filter(
+  (p) => !CASE_PLATE_NAMES.includes(p.name)
+);
+
+const indexNumber = (i: number) =>
+  String(i + casePlates.length + 1).padStart(3, '0');
 
 const hasLiveDemo = (view?: string): view is string =>
   typeof view === 'string' && view.trim() !== '' && view !== '#';
 
-export function Projects() {
-  const [activeCategory, setActiveCategory] = useState('All');
+/* Floating preview plate dimensions (desktop cursor-follow) */
+const PREVIEW_W = 320;
+const PREVIEW_H = 200;
 
-  const filteredProjects =
-    activeCategory === 'All'
-      ? featuredProjects
-      : featuredProjects.filter((p) => p.categories.includes(activeCategory));
+/* Print crop corners drawn with inverse hairlines (reg marks on ink) */
+function RegMarksInverse() {
+  return (
+    <>
+      <span aria-hidden="true" className="pointer-events-none absolute -left-px -top-px h-4 w-4 border-l border-t rule-inverse" />
+      <span aria-hidden="true" className="pointer-events-none absolute -right-px -top-px h-4 w-4 border-r border-t rule-inverse" />
+      <span aria-hidden="true" className="pointer-events-none absolute -bottom-px -left-px h-4 w-4 border-b border-l rule-inverse" />
+      <span aria-hidden="true" className="pointer-events-none absolute -bottom-px -right-px h-4 w-4 border-b border-r rule-inverse" />
+    </>
+  );
+}
 
-  const featuredProject = filteredProjects[0];
-  const gridProjects = filteredProjects.slice(1);
+function CasePlate({ project, index }: { project: Project; index: number }) {
+  const flip = index % 2 === 1;
+  const liveHref = hasLiveDemo(project.links.view) ? project.links.view : undefined;
+  const codeHref = project.links.code;
+  const plateHref = liveHref ?? codeHref;
+  const plateLabel = `View ${project.name} ${liveHref ? 'live demo' : 'source code on GitHub'}`;
+
+  const chips: Array<{ label?: string; value: string }> =
+    project.caseStudy?.results?.slice(0, 3) ??
+    project.metrics.slice(0, 3).map((value) => ({ value }));
+
+  const image = project.images[0];
+
+  const plateInner = image && (
+    <OptimizedImage
+      src={getProjectImage(image)}
+      alt={`${project.name} — project interface`}
+      aspectRatio="16/10"
+      sizes="(max-width: 1024px) 100vw, 58vw"
+      className="h-full w-full"
+    />
+  );
 
   return (
-    <section id="projects" className="py-16 sm:py-24 md:py-32 px-4 sm:px-6 md:px-12 lg:px-24 relative overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/3 -right-32 w-96 h-96 bg-violet-500/5 rounded-full blur-3xl" />
-        <div className="absolute bottom-1/3 -left-32 w-64 h-64 bg-amber-500/5 rounded-full blur-3xl" />
-      </div>
+    <article className="group grid items-center gap-8 lg:grid-cols-12 lg:gap-14">
+      {/* Image plate + FIG caption */}
+      <m.div
+        className={`lg:col-span-7 ${flip ? 'lg:order-2' : ''}`}
+        initial={{ opacity: 0, y: 24 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-10%' }}
+        transition={{ duration: 0.8, ease: EASE }}
+      >
+        <div className="relative p-2 sm:p-3">
+          <RegMarksInverse />
+          {plateHref ? (
+            <a
+              href={plateHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={plateLabel}
+              className="plate block"
+            >
+              {plateInner}
+            </a>
+          ) : (
+            <div className="plate">{plateInner}</div>
+          )}
+        </div>
+        <div className="mt-2 flex items-baseline justify-between gap-4 px-2 sm:px-3">
+          <span className="folio-inverse">
+            FIG. 0{index + 1} — {project.name}
+          </span>
+          {project.tags[0] && (
+            <span className="folio-inverse hidden sm:block text-right">
+              {project.tags[0]}
+            </span>
+          )}
+        </div>
+      </m.div>
 
-      <div className="max-w-7xl mx-auto relative z-10">
-        <SectionHeader number="05" title="Featured Projects" />
+      {/* Titling, one-line brief, result chips, links */}
+      <m.div
+        className={`lg:col-span-5 ${flip ? 'lg:order-1' : ''}`}
+        initial={{ opacity: 0, y: 24 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-10%' }}
+        transition={{ duration: 0.8, delay: 0.12, ease: EASE }}
+      >
+        <span
+          aria-hidden="true"
+          className="pointer-events-none block select-none font-display font-light leading-none text-outline-inverse text-[clamp(3.5rem,8vw,6.5rem)]"
+        >
+          00{index + 1}
+        </span>
+        <h3 className="mt-2 font-display font-light leading-[0.98] text-paper-100 text-4xl sm:text-5xl xl:text-6xl">
+          {project.name}
+        </h3>
+        <p className="mt-4 max-w-prose text-base leading-relaxed text-ink-300 sm:mt-5 sm:text-lg">
+          {project.desc}
+        </p>
 
-        {/* Featured project spotlight */}
-        {featuredProject && (
-          <m.div
-            className="mb-12 sm:mb-16 md:mb-20"
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
+        <ul role="list" className="mt-6 flex flex-wrap gap-2 sm:mt-8">
+          {chips.map((chip) => (
+            <li
+              key={`${chip.value}-${chip.label ?? ''}`}
+              className="border rule-inverse px-3 py-2 font-mono text-xs uppercase tracking-[0.14em]"
+            >
+              <span className="font-semibold text-vermilion-400">{chip.value}</span>
+              {chip.label && <span className="text-ink-300"> {chip.label}</span>}
+            </li>
+          ))}
+        </ul>
+
+        <div className="mt-6 flex flex-wrap items-center gap-x-8 gap-y-1 sm:mt-8">
+          {liveHref && (
+            <a
+              href={liveHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`View ${project.name} live demo`}
+              className="link-ink press-feedback inline-flex min-h-[44px] items-center gap-1.5 font-mono text-xs uppercase tracking-[0.16em] text-paper-100 transition-colors hover:text-vermilion-400"
+            >
+              Live
+              <ArrowUpRightIcon className="h-3.5 w-3.5" />
+            </a>
+          )}
+          {codeHref && (
+            <a
+              href={codeHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`View ${project.name} source code on GitHub`}
+              className="link-ink press-feedback inline-flex min-h-[44px] items-center gap-1.5 font-mono text-xs uppercase tracking-[0.16em] text-paper-100 transition-colors hover:text-vermilion-400"
+            >
+              Code
+              <ArrowUpRightIcon className="h-3.5 w-3.5" />
+            </a>
+          )}
+        </div>
+      </m.div>
+    </article>
+  );
+}
+
+export function Projects() {
+  /* Cursor-following preview: desktop fine-pointer + motion-safe only.
+     `useMediaQuery` is false on the server, so nothing here affects SSR HTML —
+     the false branch renders the complete ledger with static thumbnails. */
+  const isFinePointer = useMediaQuery('(hover: hover) and (pointer: fine)');
+  const prefersReducedMotion = useReducedMotion();
+  const previewEnabled = isFinePointer && !prefersReducedMotion;
+
+  const ledgerRef = useRef<HTMLDivElement | null>(null);
+  const [activeRow, setActiveRow] = useState<number | null>(null);
+  const lastRowRef = useRef(0);
+
+  const px = useMotionValue(0);
+  const py = useMotionValue(0);
+  const springX = useSpring(px, { stiffness: 320, damping: 30, mass: 0.6 });
+  const springY = useSpring(py, { stiffness: 320, damping: 30, mass: 0.6 });
+
+  /* Position the plate near the pointer. The preview is absolutely positioned
+     inside the ledger wrapper (the section sits in a `cv-auto` container whose
+     layout containment would hijack `position: fixed`), so viewport coords are
+     translated into wrapper-local space. */
+  const placePreview = useCallback(
+    (e: ReactMouseEvent<HTMLDivElement>, jump = false) => {
+      const wrap = ledgerRef.current;
+      if (!wrap) return;
+      const rect = wrap.getBoundingClientRect();
+      const viewportX = Math.min(e.clientX + 32, window.innerWidth - PREVIEW_W - 24);
+      const x = viewportX - rect.left;
+      const y = Math.min(
+        Math.max(e.clientY - rect.top - PREVIEW_H * 0.55, -32),
+        rect.height - PREVIEW_H
+      );
+      if (jump) {
+        px.jump(x);
+        py.jump(y);
+      } else {
+        px.set(x);
+        py.set(y);
+      }
+    },
+    [px, py]
+  );
+
+  const showRow = useCallback((i: number) => {
+    lastRowRef.current = i;
+    setActiveRow(i);
+  }, []);
+
+  const shownIdx = activeRow ?? lastRowRef.current;
+  const shownProject = indexProjects[shownIdx];
+  const shownImage = shownProject?.images[0];
+
+  return (
+    <section
+      id="projects"
+      aria-label="Selected works and projects"
+      className="relative bg-ink-900 text-paper-100 py-24 sm:py-32"
+    >
+      <div className="mx-auto max-w-[1400px] px-5 sm:px-8 lg:px-12">
+        <SectionHeader
+          number="05"
+          name="SELECTED WORK"
+          title={
+            <>
+              Selected <em>work</em>
+            </>
+          }
+          annotation={`EXHIBITS 001—${String(featuredProjects.length).padStart(3, '0')}`}
+          inverse
+        />
+
+        {/* ————— Zone 1 · Case plates ————— */}
+        <div className="mb-8 flex items-baseline justify-between gap-4 border-t rule-inverse pt-3 sm:mb-12">
+          <span className="folio-inverse">
+            <span className="text-vermilion-400">05.1</span>
+            <span aria-hidden="true"> — </span>CASE PLATES
+          </span>
+          <span className="folio-inverse text-right">
+            {casePlates.length} SYSTEMS IN PRODUCTION
+          </span>
+        </div>
+
+        <div className="space-y-20 sm:space-y-28 lg:space-y-32">
+          {casePlates.map((project, i) => (
+            <CasePlate key={project.name} project={project} index={i} />
+          ))}
+        </div>
+
+        {/* ————— Zone 2 · The index ————— */}
+        <div className="mt-24 sm:mt-32">
+          <div className="flex items-baseline justify-between gap-4 border-t rule-inverse pt-3">
+            <span className="folio-inverse">
+              <span className="text-vermilion-400">05.2</span>
+              <span aria-hidden="true"> — </span>THE INDEX
+            </span>
+            <span className="folio-inverse text-right">
+              {indexProjects.length} FURTHER WORKS
+            </span>
+          </div>
+
+          <div
+            ref={ledgerRef}
+            className="relative mt-6 sm:mt-8"
+            onMouseEnter={previewEnabled ? (e) => placePreview(e, true) : undefined}
+            onMouseMove={previewEnabled ? (e) => placePreview(e) : undefined}
+            onMouseLeave={previewEnabled ? () => setActiveRow(null) : undefined}
           >
-            <TiltCard className="group" maxTilt={3}>
-              <div className="grid md:grid-cols-2 gap-6 sm:gap-8 p-4 sm:p-6 md:p-10 rounded-2xl sm:rounded-3xl bg-gradient-to-br from-space-800/80 to-space-800/40 border border-white/5 backdrop-blur-sm">
-                {/* Project image */}
-                <div className="relative overflow-hidden rounded-2xl group/image">
-                  <div className="aspect-video bg-gradient-to-br from-violet-500/20 to-amber-500/10 overflow-hidden">
-                    {featuredProject.images[0] && (
-                      <OptimizedImage
-                        src={getProjectImage(featuredProject.images[0])}
-                        alt={featuredProject.name}
-                        priority
-                        aspectRatio="16/9"
-                        sizes="(max-width: 1024px) 100vw, 50vw"
-                        className="w-full h-full transition-transform duration-300 group-hover/image:scale-105"
-                      />
-                    )}
-                    {/* Overlay gradient */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-space-900/60 via-transparent to-transparent opacity-0 group-hover/image:opacity-100 transition-opacity duration-200" />
-                  </div>
-                  {/* Featured badge */}
-                  <div className="absolute top-4 left-4 px-3 py-1 bg-amber-500/20 text-amber-400 text-xs font-medium rounded-full border border-amber-500/30 backdrop-blur-sm">
-                    Featured
-                  </div>
-                </div>
+            <ul role="list">
+              {indexProjects.map((project, i) => {
+                const isDemo = hasLiveDemo(project.links.view);
+                const href = isDemo ? project.links.view : project.links.code;
+                const thumb = project.images[0];
 
-                {/* Project details */}
-                <div className="flex flex-col justify-center">
-                  <h3 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold text-white mb-3 sm:mb-4">
-                    {featuredProject.name}
-                  </h3>
-                  <p className="text-sm sm:text-base text-gray-400 leading-relaxed mb-4 sm:mb-6">
-                    {featuredProject.desc}
-                  </p>
+                const rowInner = (
+                  <>
+                    <span className="w-9 shrink-0 font-mono text-[11px] tracking-[0.18em] text-ink-400 sm:w-12">
+                      {indexNumber(i)}
+                    </span>
 
-                  {/* Metrics */}
-                  <div className="grid grid-cols-2 gap-2 sm:gap-3 mb-4 sm:mb-6">
-                    {featuredProject.metrics.map((metric) => (
-                      <div
-                        key={metric}
-                        className="px-3 sm:px-4 py-2 bg-space-700/30 rounded-lg sm:rounded-xl text-xs sm:text-sm text-gray-300 border border-white/5"
-                      >
-                        {metric}
-                      </div>
-                    ))}
-                  </div>
+                    {/* Static thumbnail plate — the touch / no-JS / reduced-motion
+                        rendition; hidden once the cursor preview takes over. */}
+                    <span
+                      aria-hidden="true"
+                      className={`${previewEnabled ? 'hidden' : 'block'} plate h-12 w-16 shrink-0 sm:h-14 sm:w-20`}
+                    >
+                      {thumb && (
+                        <img
+                          src={getProjectImage(thumb)}
+                          alt=""
+                          loading="lazy"
+                          decoding="async"
+                          width={160}
+                          height={120}
+                          className="h-full w-full object-cover"
+                        />
+                      )}
+                    </span>
 
-                  {/* Tags */}
-                  <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-6 sm:mb-8">
-                    {featuredProject.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="px-2 sm:px-3 py-1 sm:py-1.5 text-xs sm:text-sm bg-violet-500/10 text-violet-400 rounded-md sm:rounded-lg border border-violet-500/20"
-                      >
-                        {tag}
+                    <span className="min-w-0 flex-1 md:flex-none">
+                      <span className="block font-display font-light leading-tight text-paper-100 transition-colors duration-200 group-hover:text-vermilion-400 text-2xl sm:text-3xl lg:text-4xl">
+                        {project.name}
                       </span>
-                    ))}
-                  </div>
+                      <span className="mt-1 block truncate font-mono text-[10px] uppercase tracking-[0.14em] text-ink-400 md:hidden">
+                        {project.tags.slice(0, 3).join(' · ')}
+                      </span>
+                    </span>
 
-                  {/* Links */}
-                  <div className="flex flex-wrap gap-3 sm:gap-4">
-                    {featuredProject.links.code && (
-                      <MagneticHover strength={20}>
-                        <a
-                          href={featuredProject.links.code}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="press-feedback inline-flex items-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 bg-white text-space-900 rounded-full font-medium hover:bg-gray-100 active:bg-gray-200 text-sm sm:text-base min-h-[44px]"
-                        >
-                          <GitHubIcon />
-                          View Code
-                        </a>
-                      </MagneticHover>
+                    <span className="leader leader-inverse hidden md:block" aria-hidden="true" />
+
+                    <span className="hidden shrink-0 items-baseline gap-4 font-mono text-[11px] uppercase tracking-[0.14em] text-ink-300 md:flex">
+                      {project.tags.slice(0, 3).map((tag) => (
+                        <span key={tag}>{tag}</span>
+                      ))}
+                    </span>
+
+                    <ArrowUpRightIcon className="h-5 w-5 shrink-0 text-ink-300 transition-all duration-300 ease-out-expo group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-vermilion-400 sm:h-6 sm:w-6" />
+                  </>
+                );
+
+                return (
+                  <m.li
+                    key={project.name}
+                    className="border-b rule-inverse"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: '-10%' }}
+                    transition={{ duration: 0.6, ease: EASE, delay: Math.min(i * 0.04, 0.24) }}
+                  >
+                    {href ? (
+                      <a
+                        href={href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`View ${project.name} ${isDemo ? 'live demo' : 'source code on GitHub'}`}
+                        className="group flex min-h-[44px] items-center gap-4 py-5 sm:gap-6 sm:py-6"
+                        onMouseEnter={previewEnabled ? () => showRow(i) : undefined}
+                      >
+                        {rowInner}
+                      </a>
+                    ) : (
+                      <div
+                        className="group flex min-h-[44px] items-center gap-4 py-5 sm:gap-6 sm:py-6"
+                        onMouseEnter={previewEnabled ? () => showRow(i) : undefined}
+                      >
+                        {rowInner}
+                      </div>
                     )}
-                    {hasLiveDemo(featuredProject.links.view) && (
-                      <MagneticHover strength={20}>
-                        <a
-                          href={featuredProject.links.view}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="press-feedback inline-flex items-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 border border-white/20 text-white rounded-full font-medium hover:bg-white/5 active:bg-white/10 text-sm sm:text-base min-h-[44px]"
-                        >
-                          <ExternalLinkIcon />
-                          Live Demo
-                        </a>
-                      </MagneticHover>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </TiltCard>
-          </m.div>
-        )}
+                  </m.li>
+                );
+              })}
+            </ul>
 
-        {/* Category filter - horizontally scrollable on mobile */}
-        <div className="relative mb-12">
-          <div className="absolute left-0 top-0 bottom-0 w-6 bg-gradient-to-r from-space-900 to-transparent z-10 pointer-events-none sm:hidden" />
-          <div className="absolute right-0 top-0 bottom-0 w-6 bg-gradient-to-l from-space-900 to-transparent z-10 pointer-events-none sm:hidden" />
-
-          <div className="flex gap-2 sm:gap-3 overflow-x-auto scrollbar-hide pb-2 -mx-6 px-6 sm:mx-0 sm:px-0 sm:flex-wrap sm:justify-center sm:overflow-visible">
-            {categories.map((category) => (
-              <m.button
-                key={category}
-                onClick={() => setActiveCategory(category)}
-                className={`press-feedback relative px-4 sm:px-5 py-2.5 rounded-full text-sm font-medium whitespace-nowrap flex-shrink-0 min-h-[44px] ${
-                  activeCategory === category
-                    ? 'text-white'
-                    : 'text-gray-400 hover:text-gray-300'
-                }`}
-                whileHover={{ scale: 1.01 }}
-                whileTap={{ scale: 0.97 }}
+            {/* Cursor-following floating plate (decorative, desktop only, never
+                rendered on the server since previewEnabled is false there). */}
+            {previewEnabled && shownProject && (
+              <m.div
+                aria-hidden="true"
+                className="pointer-events-none absolute left-0 top-0 z-30 hidden lg:block"
+                style={{ x: springX, y: springY, width: PREVIEW_W }}
+                initial={false}
+                animate={
+                  activeRow !== null
+                    ? { opacity: 1, scale: 1, rotate: 0 }
+                    : { opacity: 0, scale: 0.96, rotate: -1.5 }
+                }
+                transition={{ duration: 0.3, ease: EASE }}
               >
-                {activeCategory === category && (
-                  <m.div
-                    layoutId="activeProjectCategory"
-                    className="absolute inset-0 bg-violet-600 rounded-full"
-                    transition={{ type: 'spring', stiffness: 400, damping: 30 }}
-                  />
-                )}
-                <span className="relative z-10">{categoryLabels[category]}</span>
-              </m.button>
-            ))}
+                {/* Full color — no .plate duotone here: at 320px on the ink spread,
+                    dark app screenshots must stay legible. Static row thumbnails
+                    and case plates keep their duotone treatment. */}
+                <div className="relative overflow-hidden bg-paper-200 shadow-plate-lg">
+                  {shownImage && (
+                    <img
+                      key={shownProject.name}
+                      src={getProjectImage(shownImage)}
+                      alt=""
+                      loading="lazy"
+                      decoding="async"
+                      width={640}
+                      height={400}
+                      className="h-[200px] w-full object-cover"
+                    />
+                  )}
+                </div>
+                <div className="flex items-baseline justify-between gap-3 border border-t-0 rule-inverse bg-ink-950 px-3 py-2 font-mono text-[10px] uppercase tracking-[0.16em] text-paper-300">
+                  <span>{indexNumber(shownIdx)}</span>
+                  <span className="truncate">{shownProject.name}</span>
+                </div>
+              </m.div>
+            )}
           </div>
         </div>
 
-        {/* Projects grid */}
-        <m.div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <AnimatePresence mode="popLayout">
-            {gridProjects.map((project, index) => {
-              const hasDemo = hasLiveDemo(project.links.view);
-              const mobilePrimaryLink = hasDemo ? project.links.view : project.links.code;
-
-              return (
-                <m.div
-                  key={project.name}
-                  layout
-                  initial={{ opacity: 0, transform: 'scale(0.9) translateY(30px)' }}
-                  animate={{
-                    opacity: 1,
-                    transform: 'scale(1) translateY(0px)',
-                    transition: { duration: 0.4, delay: index * 0.08, ease: [0.22, 1, 0.36, 1] },
-                  }}
-                  exit={{
-                    opacity: 0,
-                    transform: 'scale(0.9) translateY(-30px)',
-                    transition: { duration: 0.2, ease: [0.22, 1, 0.36, 1] },
-                  }}
-                >
-                <TiltCard className="group h-full" maxTilt={5}>
-                  <div className="h-full flex flex-col rounded-2xl bg-space-800/50 border border-white/5 overflow-hidden hover:border-violet-500/30 transition-colors duration-200">
-                    {/* Project thumbnail */}
-                    <div className="relative aspect-video bg-gradient-to-br from-violet-500/10 to-amber-500/5 overflow-hidden">
-                      {project.images[0] ? (
-                        <OptimizedImage
-                          src={getProjectImage(project.images[0])}
-                          alt={project.name}
-                          aspectRatio="16/9"
-                          className="w-full h-full transition-transform duration-300 group-hover:scale-110"
-                        />
-                      ) : (
-                        <div className="absolute inset-0 flex items-center justify-center text-6xl">
-                          {project.categories.includes('machine_learning') && '🧠'}
-                          {project.categories.includes('desktop_app') && '🖥️'}
-                          {project.categories.includes('mobile') && '📱'}
-                          {project.categories.includes('gamedev') && '🎮'}
-                          {project.categories.includes('web_scraping') && '🕷️'}
-                          {project.categories.includes('graphics') && '🎨'}
-                        </div>
-                      )}
-
-                      {/* Overlay links */}
-                      <m.div
-                        className="absolute inset-0 hidden lg:flex items-center justify-center gap-4 bg-space-900/80 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-opacity duration-300"
-                      >
-                        {project.links.code && (
-                          <m.a
-                            href={project.links.code}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            aria-label={`View ${project.name} source code on GitHub`}
-                            className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-violet-500 transition-[transform,color,background-color,border-color] duration-150"
-                            whileHover={{ scale: 1.04 }}
-                            whileTap={{ scale: 0.97 }}
-                          >
-                            <GitHubIcon />
-                          </m.a>
-                        )}
-                        {hasLiveDemo(project.links.view) && (
-                          <m.a
-                            href={project.links.view}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            aria-label={`View ${project.name} live demo`}
-                            className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-amber-500 transition-[transform,color,background-color,border-color] duration-150"
-                            whileHover={{ scale: 1.04 }}
-                            whileTap={{ scale: 0.97 }}
-                          >
-                            <ExternalLinkIcon />
-                          </m.a>
-                        )}
-                      </m.div>
-                    </div>
-
-                    {/* Content */}
-                    <div className="p-6 flex-1 flex flex-col">
-                      <h3 className="text-lg font-display font-semibold text-white mb-2 group-hover:text-violet-400 transition-colors">
-                        {project.name}
-                      </h3>
-                      <p className="text-gray-400 text-sm leading-relaxed mb-4 flex-1 line-clamp-2">
-                        {project.desc}
-                      </p>
-                      <div className="flex flex-wrap gap-2">
-                        {project.tags.slice(0, 3).map((tag) => (
-                          <span
-                            key={tag}
-                            className="text-xs text-violet-400/70 font-mono"
-                          >
-                            #{tag.toLowerCase().replace(/\s+/g, '-')}
-                          </span>
-                        ))}
-                      </div>
-
-                      {/* Touch-device actions (mobile/tablet): avoid hover-only links */}
-                      {mobilePrimaryLink && (
-                        <div className="mt-4 flex flex-wrap gap-2 lg:hidden">
-                          <a
-                            href={mobilePrimaryLink}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            data-project-action="mobile-primary"
-                            className="press-feedback inline-flex items-center justify-center px-3 py-2 min-h-[44px] rounded-lg border border-white/10 text-sm text-white hover:bg-white/5 active:bg-white/10"
-                          >
-                            {hasDemo ? 'Open Demo' : 'View Code'}
-                          </a>
-                          {hasDemo && project.links.code && (
-                            <a
-                              href={project.links.code}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              data-project-action="mobile-code"
-                              className="press-feedback inline-flex items-center justify-center px-3 py-2 min-h-[44px] rounded-lg border border-white/10 text-sm text-gray-300 hover:bg-white/5 active:bg-white/10"
-                            >
-                              Code
-                            </a>
-                          )}
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                </TiltCard>
-              </m.div>
-              );
-            })}
-          </AnimatePresence>
-        </m.div>
-
-        {/* View more */}
+        {/* ————— Section footer ————— */}
         <m.div
-          className="text-center mt-16"
+          className="mt-16 flex justify-center sm:mt-20"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          viewport={{ once: true, margin: '-10%' }}
+          transition={{ duration: 0.6, ease: EASE }}
         >
-          <MagneticHover strength={20}>
-            <a
-              href={profile.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="press-feedback inline-flex items-center gap-3 px-8 py-4 border border-violet-500/30 text-violet-400 rounded-full font-medium hover:bg-violet-500/10"
-            >
-              View All on GitHub
-              <span className="inline-block arrow-bounce">
-                →
-              </span>
-            </a>
-          </MagneticHover>
+          <a
+            href={profile.github}
+            target="_blank"
+            rel="me noopener noreferrer"
+            aria-label="View the full project archive on GitHub"
+            className="press-feedback inline-flex min-h-[44px] items-center gap-2 border rule-inverse px-6 py-4 font-mono text-xs uppercase tracking-[0.16em] text-paper-100 transition-colors hover:border-vermilion hover:text-vermilion-400"
+          >
+            Full archive on GitHub
+            <ArrowUpRightIcon className="h-4 w-4" />
+          </a>
         </m.div>
       </div>
     </section>

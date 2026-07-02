@@ -1,234 +1,173 @@
 import { m } from 'framer-motion';
+import type { ReactNode } from 'react';
 import { profile, profileImage, hideImageOnError } from '../data/content';
 import { SectionHeader } from './ui/SectionHeader';
-import { ImageDistortion, MagneticHover } from './ui/ImageDistortion';
-import { Marquee } from './ui/Marquee';
 import { GitHubGraph } from './ui/GitHubGraph';
 
+const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
+
+/**
+ * Phrases inside profile.bio that receive a permanent editorial underline.
+ * Capped at the 3 strongest hire-signals — more underlines dilute all of them.
+ * Matching is literal against the JSON string — if the data changes and a
+ * phrase no longer appears, it simply renders unstyled (never breaks).
+ */
+const KEY_PHRASES = [
+  'Taylor & Francis book chapter',
+  'IEEE QPAIN 2026',
+  '1.5x client revenue',
+];
+
+const PHRASE_CLASS =
+  'underline decoration-vermilion/70 decoration-[1.5px] underline-offset-[0.2em]';
+
+/** Typeset the bio: wrap key phrases in underlined spans (spans, not links). */
+function typesetBio(text: string): ReactNode[] {
+  const nodes: ReactNode[] = [];
+  let rest = text;
+  let key = 0;
+
+  while (rest.length > 0) {
+    let matchIdx = -1;
+    let matchPhrase = '';
+    for (const phrase of KEY_PHRASES) {
+      const idx = rest.indexOf(phrase);
+      if (idx !== -1 && (matchIdx === -1 || idx < matchIdx)) {
+        matchIdx = idx;
+        matchPhrase = phrase;
+      }
+    }
+    if (matchIdx === -1) {
+      nodes.push(rest);
+      break;
+    }
+    if (matchIdx > 0) {
+      nodes.push(rest.slice(0, matchIdx));
+    }
+    nodes.push(
+      <span key={key++} className={PHRASE_CLASS}>
+        {matchPhrase}
+      </span>,
+    );
+    rest = rest.slice(matchIdx + matchPhrase.length);
+  }
+
+  return nodes;
+}
+
+// Computed once at module scope — pure, deterministic, SSR-identical.
+const bioNodes = typesetBio(profile.bio);
+
 export function About() {
-
   return (
-    <section id="about" className="py-16 sm:py-24 md:py-32 px-4 sm:px-6 md:px-12 lg:px-24 relative overflow-hidden">
-      <div className="max-w-7xl mx-auto">
-        <SectionHeader number="01" title="About Me" />
-      </div>
+    <section id="about" className="relative py-24 sm:py-32">
+      <div className="mx-auto max-w-[1400px] px-5 sm:px-8 lg:px-12">
+        <SectionHeader
+          number="01"
+          name="ABOUT"
+          title={
+            <>
+              Research, <em>shipped</em>.
+            </>
+          }
+          annotation="EST. READ 2 MIN"
+        />
 
-      {/* Bento Grid */}
-      <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-12 gap-4 md:gap-6">
-          {/* Main bio card - spans 8 columns */}
+        <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-12 lg:gap-10">
+          {/* ——— Left rail: portrait plate + ledger (sticky on lg) ——— */}
           <m.div
-            className="col-span-12 md:col-span-8"
-            initial={{ opacity: 0, y: 50 }}
+            className="lg:sticky lg:top-28 lg:col-span-4 lg:self-start"
+            initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
+            viewport={{ once: true, margin: '-10%' }}
+            transition={{ duration: 0.8, ease: EASE }}
           >
-            <ImageDistortion className="h-full">
-              <div className="h-full p-8 md:p-12 rounded-3xl bg-gradient-to-br from-space-800/80 to-space-800/40 backdrop-blur-sm border border-white/5 relative overflow-hidden">
-                {/* Background decoration */}
-                <div className="absolute top-0 right-0 w-64 h-64 bg-violet-500/10 rounded-full blur-3xl" />
-
-                <div className="relative z-10">
-                  <m.p
-                    className="text-2xl md:text-3xl lg:text-4xl text-gray-200 leading-relaxed font-light mb-8"
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.3 }}
-                  >
-                    I'm an <span className="text-violet-400 font-medium">AI Engineer & Full-Stack Developer</span> with
-                    a 3.89 CGPA, shipping production systems that drive real revenue.
-                  </m.p>
-                  <m.p
-                    className="text-lg text-gray-400 leading-relaxed max-w-2xl"
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.5 }}
-                  >
-                    From <span className="text-amber-400">4 production React websites</span> driving 1.5x revenue growth
-                    to <span className="text-violet-400">RAG pipelines</span> with LangChain and Pinecone — I focus on
-                    shipping high-performance systems. Published researcher in medical AI (Taylor & Francis)
-                    with 3x Dean's List at AIUB.
-                  </m.p>
-                </div>
-
-                {/* Code decoration — hidden from a11y tree & text extraction */}
-                <div aria-hidden="true" className="absolute bottom-6 right-6 text-violet-500/20 font-mono text-xs">
-                  {'</bio>'}
+            <figure className="max-w-sm lg:max-w-none">
+              <div className="reg-marks relative p-2 sm:p-3">
+                <div className="plate shadow-plate">
+                  <img
+                    src={profileImage}
+                    alt={profile.name}
+                    loading="lazy"
+                    decoding="async"
+                    width={640}
+                    height={800}
+                    sizes="(max-width: 1024px) 384px, 33vw"
+                    className="block aspect-[4/5] w-full object-cover"
+                    onError={hideImageOnError}
+                  />
                 </div>
               </div>
-            </ImageDistortion>
-          </m.div>
+              <figcaption className="folio mt-3 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 px-2 sm:px-3">
+                <span>Fig. 01 — The author</span>
+                <span className="text-ink-500">{profile.name}</span>
+              </figcaption>
+            </figure>
 
-          {/* Profile image card - spans 4 columns */}
-          <m.div
-            className="col-span-12 sm:col-span-6 md:col-span-4"
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.1 }}
-          >
-            <ImageDistortion className="h-full">
-              <div className="group h-full min-h-[300px] rounded-3xl bg-gradient-to-br from-violet-500/20 to-amber-500/10 border border-white/5 relative overflow-hidden">
-                <div className="absolute inset-0 flex items-center justify-center p-6">
-                  <div className="relative">
-                    {/* Glow effect */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-violet-500/30 to-amber-500/20 rounded-full blur-2xl scale-110 opacity-50 group-hover:opacity-80 transition-opacity duration-200" />
-
-                    {/* Image container */}
-                    <div className="relative w-40 h-40 md:w-48 md:h-48 rounded-full overflow-hidden border-2 border-white/10 group-hover:border-violet-500/50 transition-colors duration-200">
-                      <img
-                        src={profileImage}
-                        alt={profile.name}
-                        loading="eager"
-                        decoding="async"
-                        width={192}
-                        height={192}
-                        sizes="(max-width: 768px) 160px, 192px"
-                        className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
-                        onError={hideImageOnError}
-                      />
-                      {/* Overlay gradient */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-space-900/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
-                    </div>
-
-                    {/* Decorative ring */}
-                    <div
-                      className="absolute inset-0 rounded-full border border-violet-500/20 scale-[1.2] animate-[spin_20s_linear_infinite]"
-                    />
-                  </div>
-                </div>
-
-                {/* Name label */}
-                <div className="absolute bottom-4 left-0 right-0 text-center">
-                  <p className="text-gray-400 text-sm font-mono">{profile.name}</p>
-                </div>
-
-                {/* Animated hover border */}
-                <div className="absolute inset-0 rounded-3xl border border-violet-500/0 group-hover:border-violet-500/30 transition-colors duration-200 pointer-events-none" />
+            {/* Ledger — mono rows with dotted leaders */}
+            <dl className="rule mt-10 divide-y divide-[color:var(--hairline)] border-b border-t">
+              <div className="flex items-baseline py-3.5">
+                <dt className="folio whitespace-nowrap">Based in</dt>
+                <span className="leader" aria-hidden="true" />
+                <dd className="text-right font-mono text-xs uppercase tracking-[0.14em] text-ink-900">
+                  {profile.location}
+                </dd>
               </div>
-            </ImageDistortion>
+              <div className="flex items-baseline py-3.5">
+                <dt className="folio whitespace-nowrap">Focus</dt>
+                <span className="leader" aria-hidden="true" />
+                <dd className="text-right font-mono text-xs uppercase tracking-[0.14em] text-ink-900">
+                  AI × Full-Stack
+                </dd>
+              </div>
+              <div className="flex items-baseline py-3.5">
+                <dt className="folio whitespace-nowrap">Now</dt>
+                <span className="leader" aria-hidden="true" />
+                <dd className="text-right font-mono text-xs font-semibold uppercase tracking-[0.14em] text-vermilion-600">
+                  {profile.currentCompany.split(',')[0]}
+                </dd>
+              </div>
+            </dl>
           </m.div>
 
-          {/* GitHub contribution graph - fills the gap below bio */}
-          <m.div
-            className="col-span-12 md:col-span-8"
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.25 }}
-          >
-            <GitHubGraph />
-          </m.div>
+          {/* ——— Right column: drop-cap bio + contribution figure ——— */}
+          <div className="lg:col-span-7 lg:col-start-6">
+            <m.p
+              className="max-w-[40rem] font-display text-xl font-light leading-[1.65] text-ink-900 first-letter:float-left first-letter:-mt-1 first-letter:pr-3 first-letter:font-display first-letter:text-[4.25rem] first-letter:font-normal first-letter:leading-[0.8] first-letter:text-vermilion sm:text-2xl sm:first-letter:-mt-2 sm:first-letter:pr-4 sm:first-letter:text-[5.25rem]"
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-10%' }}
+              transition={{ duration: 0.8, delay: 0.1, ease: EASE }}
+            >
+              {bioNodes}
+            </m.p>
 
-          {/* Stats card - sits next to GitHub graph */}
-          <m.div
-            className="col-span-12 sm:col-span-6 md:col-span-4"
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-          >
-            <div className="h-full p-8 rounded-3xl bg-space-800/50 border border-white/5 flex flex-col justify-center">
-              <div className="grid grid-cols-2 gap-6">
-                {profile.stats.map((stat, i) => (
-                  <MagneticHover key={stat.label} strength={20}>
-                    <m.div
-                      className="text-center p-4 rounded-2xl bg-space-700/30 hover:bg-space-700/50 transition-colors cursor-default"
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      whileInView={{ opacity: 1, scale: 1 }}
-                      transition={{ delay: 0.3 + i * 0.1 }}
-                    >
-                      <div className="text-3xl md:text-4xl font-display font-bold gradient-text">
-                        {stat.value}
-                      </div>
-                      <div className="text-gray-400 text-xs mt-1 uppercase tracking-wider">
-                        {stat.label}
-                      </div>
-                    </m.div>
-                  </MagneticHover>
-                ))}
-              </div>
-            </div>
-          </m.div>
+            <m.p
+              className="folio mt-8 max-w-[40rem] leading-[1.9]"
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-10%' }}
+              transition={{ duration: 0.7, delay: 0.18, ease: EASE }}
+            >
+              Currently — <span className="text-ink-900">{profile.currentRole}</span>{' '}
+              · {profile.currentCompany}
+            </m.p>
 
-          {/* Location card */}
-          <m.div
-            className="col-span-6 md:col-span-4"
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-          >
-            <div className="h-full p-6 rounded-3xl bg-space-800/50 border border-white/5 flex flex-col justify-between min-h-[200px]">
-              <div className="text-5xl mb-4">🇧🇩</div>
-              <div>
-                <p className="text-gray-400 text-sm uppercase tracking-wider mb-1">Based in</p>
-                <p className="text-2xl font-display font-semibold text-white">{profile.location}</p>
-              </div>
-            </div>
-          </m.div>
-
-          {/* Currently card */}
-          <m.div
-            className="col-span-6 md:col-span-4"
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-          >
-            <div className="h-full p-6 rounded-3xl bg-gradient-to-br from-violet-500/10 to-transparent border border-violet-500/20 flex flex-col justify-between min-h-[200px]">
-              <div className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-                <span className="text-green-400 text-sm font-mono">Currently</span>
-              </div>
-              <div>
-                <p className="text-white font-medium">{profile.currentRole}</p>
-                <p className="text-gray-400 text-sm">@ {profile.currentCompany}</p>
-              </div>
-            </div>
-          </m.div>
-
-          {/* Tech stack card */}
-          <m.div
-            className="col-span-12 md:col-span-4"
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.5 }}
-          >
-            <div className="h-full p-6 rounded-3xl bg-space-800/50 border border-white/5">
-              <p className="text-gray-400 text-sm font-mono mb-4">// primary_stack</p>
-              <div className="flex flex-wrap gap-2">
-                {['Python', 'Java', 'PyTorch', 'TensorFlow', 'Android', 'MySQL', 'C++', 'Git'].map((tech) => (
-                  <m.span
-                    key={tech}
-                    className="px-3 py-1.5 text-sm bg-space-700/50 text-gray-300 rounded-lg border border-white/5 hover:border-violet-500/30 hover:text-white transition-colors duration-200 cursor-default"
-                    whileHover={{ scale: 1.05, y: -2 }}
-                  >
-                    {tech}
-                  </m.span>
-                ))}
-              </div>
-            </div>
-          </m.div>
+            <m.figure
+              className="mt-14 sm:mt-16"
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-10%' }}
+              transition={{ duration: 0.8, delay: 0.25, ease: EASE }}
+            >
+              <GitHubGraph />
+              <figcaption className="folio mt-3 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+                <span>Fig. 02 — Contribution density</span>
+                <span className="text-ink-500">52 weeks</span>
+              </figcaption>
+            </m.figure>
+          </div>
         </div>
-      </div>
-
-      {/* Bottom marquee */}
-      <div className="mt-10 sm:mt-16 md:mt-20 -mx-4 sm:-mx-6 md:-mx-12 lg:-mx-24">
-        <Marquee speed={30} direction="right" className="text-4xl sm:text-6xl md:text-8xl font-display font-bold text-white/[0.02] py-3 sm:py-4">
-          <span className="mx-4 sm:mx-8 md:mx-12">PROBLEM SOLVER</span>
-          <span className="mx-4 sm:mx-8 md:mx-12">•</span>
-          <span className="mx-4 sm:mx-8 md:mx-12">RESEARCHER</span>
-          <span className="mx-4 sm:mx-8 md:mx-12">•</span>
-          <span className="mx-4 sm:mx-8 md:mx-12">BUILDER</span>
-          <span className="mx-4 sm:mx-8 md:mx-12">•</span>
-          <span className="mx-4 sm:mx-8 md:mx-12">LEARNER</span>
-          <span className="mx-4 sm:mx-8 md:mx-12">•</span>
-        </Marquee>
       </div>
     </section>
   );

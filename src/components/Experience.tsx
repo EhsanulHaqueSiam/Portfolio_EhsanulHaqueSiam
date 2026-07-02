@@ -2,108 +2,168 @@ import { m } from 'framer-motion';
 import { featuredExperience, hideImageOnError } from '../data/content';
 import { SectionHeader } from './ui/SectionHeader';
 import { MagneticHover } from './ui/ImageDistortion';
+import { ArrowRightIcon } from './ui/Icons';
+
+const EASE = [0.16, 1, 0.3, 1] as const;
+
+interface ParsedRole {
+  /** Role with any parenthetical employment annotations removed */
+  title: string;
+  /** Mono ledger annotations, e.g. ["FULL-TIME", "REMOTE"] */
+  annotations: string[];
+}
+
+/**
+ * Splits "Research Assistant (Full-time, Remote)" into a clean role title plus
+ * uppercase mono annotations (FULL-TIME · REMOTE). Roles containing "Intern"
+ * without a parenthetical receive a derived INTERN annotation.
+ */
+function parseRole(role: string): ParsedRole {
+  const match = role.match(/^(.*?)\s*\(([^)]*)\)\s*$/);
+  const title = match ? match[1] : role;
+  const annotations = match
+    ? match[2]
+        .split(',')
+        .map((part) => part.trim())
+        .filter(Boolean)
+        .map((part) => part.toUpperCase())
+    : [];
+
+  if (annotations.length === 0 && /\bintern\b/i.test(title)) {
+    annotations.push('INTERN');
+  }
+
+  return { title, annotations };
+}
+
+/** "Apr 2026 - Present" → "Apr 2026 — Present" (uppercased via mono styling) */
+function formatDate(date: string): string {
+  return date.replace(/\s*-\s*/g, ' — ');
+}
 
 export function Experience() {
+  const years = featuredExperience
+    .flatMap((exp) => exp.date.match(/\d{4}/g) ?? [])
+    .map(Number);
+  const spanStart = years.length > 0 ? Math.min(...years) : null;
+  const spanEnd = featuredExperience.some((exp) => /present/i.test(exp.date))
+    ? 'PRESENT'
+    : years.length > 0
+      ? String(Math.max(...years))
+      : null;
+  const annotation =
+    spanStart !== null && spanEnd !== null
+      ? `${featuredExperience.length} ENTRIES · ${spanStart}—${spanEnd}`
+      : `${featuredExperience.length} ENTRIES`;
+
   return (
-    <section id="experience" className="py-16 sm:py-24 md:py-32 px-4 sm:px-6 md:px-12 lg:px-24 relative overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-violet-500/5 to-transparent" />
-      </div>
+    <section
+      id="experience"
+      aria-label="Records of employment"
+      className="relative py-24 sm:py-32"
+    >
+      <div className="mx-auto max-w-[1400px] px-5 sm:px-8 lg:px-12">
+        <SectionHeader
+          number="03"
+          name="EXPERIENCE"
+          title={
+            <>
+              The <em>record</em>
+            </>
+          }
+          annotation={annotation}
+        />
 
-      <div className="max-w-7xl mx-auto relative z-10">
-        <SectionHeader number="03" title="Experience" />
+        {/* Employment ledger — hairline-divided rows, not cards */}
+        <ol className="list-none border-b rule-strong">
+          {featuredExperience.map((exp, index) => {
+            const { title, annotations } = parseRole(exp.role);
+            const ongoing = /present/i.test(exp.date);
 
-        {/* Timeline */}
-        <div className="relative">
-          {/* Vertical line */}
-          <div className="absolute left-4 md:left-8 top-0 bottom-0 w-px bg-gradient-to-b from-violet-500 via-violet-500/50 to-transparent" />
-
-          <div className="space-y-12">
-            {featuredExperience.map((exp, index) => (
-              <m.div
-                key={exp.company + exp.role}
-                initial={{ opacity: 0, x: -30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: index * 0.15 }}
-                className="relative pl-12 md:pl-20"
+            return (
+              <m.li
+                key={`${exp.company}-${exp.role}`}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-10%' }}
+                transition={{ duration: 0.7, delay: index * 0.06, ease: EASE }}
+                className="group border-t rule transition-colors duration-200 hover:bg-paper-50"
               >
-                {/* Timeline dot */}
-                <div className="absolute left-4 md:left-8 top-2 w-4 h-4 -translate-x-1/2 rounded-full bg-violet-500 border-4 border-space-900 shadow-lg shadow-violet-500/50" />
-
-                {/* Card */}
-                <MagneticHover strength={8}>
-                  <div className="p-8 md:p-10 rounded-3xl bg-space-800/50 border border-white/5 hover:border-violet-500/30 transition-[border-color] duration-200">
-                    {/* Header */}
-                    <div className="flex flex-wrap items-start justify-between gap-4 mb-6">
-                      <div className="flex items-start gap-4">
-                        {exp.logo && (
-                          <img
-                            src={`/images/experience/${exp.logo}.webp`}
-                            alt={exp.company}
-                            loading="lazy"
-                            decoding="async"
-                            width={48}
-                            height={48}
-                            className="w-12 h-12 rounded-xl object-contain bg-white/10 p-1 flex-shrink-0"
-                            onError={hideImageOnError}
-                          />
-                        )}
-                        <div>
-                          <h3 className="text-2xl font-display font-semibold text-white mb-2">
-                            {exp.role}
-                          </h3>
-                          <p className="text-violet-400 font-medium">
-                            {exp.company}
-                          </p>
-                        </div>
-                      </div>
-                      <span className="px-4 py-2 text-sm font-mono text-gray-400 bg-space-700/50 rounded-xl border border-white/5">
-                        {exp.date}
+                <div className="grid grid-cols-1 gap-y-4 py-8 sm:py-10 lg:grid-cols-[11.5rem_minmax(0,1fr)] lg:gap-x-10">
+                  {/* Date column — fixed width on lg, inline row on mobile */}
+                  <div className="flex flex-wrap items-center gap-x-4 gap-y-2 lg:flex-col lg:items-start lg:gap-3 lg:pt-2">
+                    <span className="whitespace-nowrap font-mono text-[11px] uppercase tracking-[0.14em] text-ink-600">
+                      {formatDate(exp.date)}
+                    </span>
+                    {ongoing && (
+                      <span className="stamp inline-block -rotate-3 px-2.5 py-1.5 text-[10px] leading-none">
+                        Ongoing
                       </span>
-                    </div>
-
-                    {/* Description */}
-                    <p className="text-gray-400 leading-relaxed">
-                      {exp.desc}
-                    </p>
+                    )}
                   </div>
-                </MagneticHover>
-              </m.div>
-            ))}
-          </div>
-        </div>
 
-        {/* Resume CTA */}
+                  {/* Entry — optional logo plate + company/role ledger line + desc */}
+                  <div className="flex min-w-0 gap-4 sm:gap-6">
+                    {exp.logo && (
+                      <div className="plate h-10 w-10 shrink-0 sm:h-14 sm:w-14">
+                        <img
+                          src={`/images/experience/${exp.logo}.webp`}
+                          alt={`${exp.company} logo`}
+                          loading="lazy"
+                          decoding="async"
+                          width={56}
+                          height={56}
+                          className="h-full w-full object-contain p-1.5"
+                          onError={hideImageOnError}
+                        />
+                      </div>
+                    )}
+
+                    <div className="min-w-0 flex-1">
+                      <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1.5">
+                        <h3 className="font-display text-2xl font-light text-ink-900 transition-colors duration-200 group-hover:text-vermilion sm:text-3xl">
+                          {exp.company}
+                        </h3>
+                        <span className="font-body text-sm text-ink-700 sm:text-base">
+                          {title}
+                        </span>
+                        <span className="leader hidden sm:block" aria-hidden="true" />
+                        {annotations.length > 0 && (
+                          <span className="whitespace-nowrap font-mono text-[11px] uppercase tracking-[0.14em] text-ink-500">
+                            {annotations.join(' · ')}
+                          </span>
+                        )}
+                      </div>
+
+                      <p className="mt-3 max-w-prose text-sm leading-relaxed text-ink-500 sm:text-base">
+                        {exp.desc}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </m.li>
+            );
+          })}
+        </ol>
+
+        {/* Resume CTA — the record continues in the résumé overlay */}
         <m.div
-          className="mt-20 text-center"
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.3 }}
+          viewport={{ once: true, margin: '-10%' }}
+          transition={{ duration: 0.7, delay: 0.15, ease: EASE }}
+          className="mt-12 flex flex-col items-start justify-between gap-6 sm:mt-16 sm:flex-row sm:items-center"
         >
-          <MagneticHover strength={20}>
+          <MagneticHover strength={12}>
             <a
               href="#resume"
-              className="press-feedback inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-violet-500/20 to-amber-500/10 rounded-full border border-violet-500/30 hover:border-violet-500/50 font-medium text-white"
+              className="press-feedback inline-flex min-h-[44px] items-center gap-3 border border-ink-900 bg-ink-900 px-6 py-4 font-mono text-xs uppercase tracking-[0.16em] text-paper-50 transition-colors duration-200 hover:border-vermilion hover:bg-vermilion focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-vermilion"
             >
-              <svg
-                className="w-5 h-5 text-violet-400"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                />
-              </svg>
-              View Resume
+              View Full Record
+              <ArrowRightIcon className="arrow-bounce h-4 w-4" />
             </a>
           </MagneticHover>
+          <span className="folio">Record continues in résumé</span>
         </m.div>
       </div>
     </section>

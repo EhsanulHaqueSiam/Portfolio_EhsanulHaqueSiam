@@ -2,193 +2,202 @@ import { useState } from 'react';
 import { m, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { featuredPublications, getPublicationImage, hideImageOnError } from '../data/content';
 import { SectionHeader } from './ui/SectionHeader';
-import { MagneticHover } from './ui/ImageDistortion';
+import { ArrowUpRightIcon, PlusIcon } from './ui/Icons';
+
+const EASE = [0.16, 1, 0.3, 1] as const;
+
+type PublicationStatus = 'ACCEPTED' | 'PUBLISHED' | 'PRESENTED';
+
+/** Parse a publication's editorial status from its date/desc metadata. */
+function getStatus(date: string, desc: string): PublicationStatus {
+  const text = `${date} ${desc}`;
+  if (/accept/i.test(text)) return 'ACCEPTED';
+  if (/book chapter|taylor/i.test(text)) return 'PUBLISHED';
+  return 'PRESENTED';
+}
 
 export function Publications() {
   const [expandedPub, setExpandedPub] = useState<number | null>(null);
-  const [instantToggle, setInstantToggle] = useState(false);
   const shouldReduceMotion = useReducedMotion();
 
+  // Sequential figure numbers, assigned only to entries that carry a plate.
+  let figCounter = 0;
+  const entries = featuredPublications.map((pub) => {
+    const hasPlate = Boolean(pub.images && pub.images.length > 0);
+    if (hasPlate) figCounter += 1;
+    return {
+      pub,
+      status: getStatus(pub.date, pub.desc),
+      figNo: hasPlate ? figCounter : null,
+    };
+  });
+
   return (
-    <section id="publications" className="py-16 sm:py-24 md:py-32 px-4 sm:px-6 md:px-12 lg:px-24 relative overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/3 -left-32 w-96 h-96 bg-violet-500/5 rounded-full blur-3xl" />
-        <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-amber-500/5 rounded-full blur-3xl" />
-      </div>
+    <section id="publications" className="py-24 sm:py-32">
+      <div className="mx-auto max-w-[1400px] px-5 sm:px-8 lg:px-12">
+        <SectionHeader
+          number="08"
+          name="RESEARCH"
+          title={
+            <>
+              Published <em>research</em>
+            </>
+          }
+          annotation={`${featuredPublications.length} ENTRIES · PEER-REVIEWED`}
+        />
 
-      <div className="max-w-7xl mx-auto relative z-10">
-        <SectionHeader number="08" title="Publications" />
+        {/* Citation list — numbered, hanging-indent entries */}
+        <ol className="border-b rule">
+          {entries.map(({ pub, status, figNo }, index) => {
+            const isExpanded = expandedPub === index;
+            const hasPlate = figNo !== null && pub.images && pub.images[0];
 
-        {/* Publications grid */}
-        <div className="space-y-8">
-          {featuredPublications.map((pub, index) => (
-            <m.div
-              key={pub.title}
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: index * 0.15 }}
-            >
-              <MagneticHover strength={6}>
-                {/* Card is a div (not a button) so the nested "Read Paper" link
-                    and "View Image" button are valid HTML and hydrate cleanly. */}
-                <div
-                  className="group relative w-full text-left rounded-3xl bg-gradient-to-br from-space-800/80 to-space-800/40 border border-white/5 hover:border-violet-500/30 transition-[border-color] duration-200 overflow-hidden cursor-pointer"
-                  onClick={() => {
-                    setInstantToggle(false);
-                    setExpandedPub(expandedPub === index ? null : index);
-                  }}
-                >
-                  <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-0">
-                    {/* Publication image */}
-                    <div className="lg:col-span-2 relative overflow-hidden">
-                      <div className="aspect-[4/3] lg:aspect-auto lg:h-full min-h-[250px] bg-gradient-to-br from-violet-500/10 to-amber-500/5">
-                        {pub.images && pub.images[0] && (
-                          <img
-                            src={getPublicationImage(pub.images[0])}
-                            alt={pub.title}
-                            loading="lazy"
-                            decoding="async"
-                            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                            onError={hideImageOnError}
-                          />
-                        )}
-                        {/* Gradient overlay */}
-                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-space-800/80 lg:block hidden" />
-                        <div className="absolute inset-0 bg-gradient-to-t from-space-800/80 via-transparent to-transparent lg:hidden" />
+            return (
+              <m.li
+                key={pub.title}
+                className="border-t rule py-10 sm:py-12"
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-10%' }}
+                transition={{ duration: 0.7, ease: EASE, delay: index * 0.08 }}
+              >
+                <div className="grid grid-cols-[2.75rem_minmax(0,1fr)] gap-x-2 sm:grid-cols-[4.5rem_minmax(0,1fr)] sm:gap-x-4">
+                  {/* Hanging citation marker */}
+                  <span className="select-none pt-1 font-mono text-sm text-vermilion-600 sm:pt-1.5 sm:text-base">
+                    [{index + 1}]
+                  </span>
 
-                        {/* Shine effect */}
-                        <m.div
-                          className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-500"
-                        />
-                      </div>
-
-                      {/* Publication type badge */}
-                      <div className="absolute top-4 left-4">
-                        <span className="px-3 py-1.5 text-xs font-mono text-violet-400 bg-violet-500/20 rounded-full border border-violet-500/30 backdrop-blur-sm">
-                          Research Paper
-                        </span>
-                      </div>
-                    </div>
-
-                    {/* Content */}
-                    <div className="lg:col-span-3 p-8 md:p-10 flex flex-col justify-center">
-                      {/* Conference and date */}
-                      <div className="flex flex-wrap items-center gap-3 mb-4">
-                        <span className="px-4 py-2 text-sm font-medium bg-gradient-to-r from-violet-500/20 to-amber-500/10 text-violet-400 rounded-xl border border-violet-500/20">
-                          {pub.conference.split('(')[0].trim()}
-                        </span>
-                        <span className="text-gray-400 text-sm font-mono">{pub.date}</span>
-                      </div>
-
-                      {/* Title */}
-                      <h3 className="text-xl md:text-2xl lg:text-3xl font-display font-bold text-white mb-4 group-hover:text-violet-400 transition-colors leading-tight">
+                  <div className="min-w-0">
+                    {/* Title + status stamp */}
+                    <div className="flex flex-wrap items-start justify-between gap-x-6 gap-y-4">
+                      <h3 className="max-w-3xl font-display text-2xl font-light leading-[1.12] text-ink-900 sm:text-3xl">
                         {pub.title}
                       </h3>
+                      <span
+                        className={`stamp inline-block shrink-0 px-3 py-1.5 text-[10px] ${
+                          index % 2 === 0 ? '-rotate-3' : 'rotate-2'
+                        }`}
+                      >
+                        {status}
+                      </span>
+                    </div>
 
-                      {/* Description */}
-                      <p className="text-gray-400 leading-relaxed mb-6">
-                        {pub.desc}
-                      </p>
+                    {/* Mono citation line */}
+                    <p className="mt-4 font-mono text-[11px] uppercase leading-relaxed tracking-[0.16em] text-ink-500 sm:text-xs">
+                      {pub.conference}
+                      <span aria-hidden="true"> · </span>
+                      {pub.date}
+                    </p>
 
-                      {/* Actions */}
-                      <div className="flex flex-wrap items-center gap-4">
+                    {/* Abstract */}
+                    <p className="mt-4 max-w-[68ch] text-[15px] leading-relaxed text-ink-600 sm:text-base">
+                      {pub.desc}
+                    </p>
+
+                    {/* Actions */}
+                    {(pub.paperLink || hasPlate) && (
+                      <div className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-3">
                         {pub.paperLink && (
-                          <MagneticHover strength={15}>
-                            <m.a
-                              href={pub.paperLink}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                            onClick={(e) => e.stopPropagation()}
-                              className="press-feedback inline-flex items-center gap-2 px-5 py-2.5 bg-violet-500/20 text-violet-400 rounded-xl border border-violet-500/30 hover:bg-violet-500/30"
-                              whileHover={{ scale: 1.02 }}
-                              whileTap={{ scale: 0.97 }}
-                            >
-                              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                              </svg>
-                              <span>Read Paper</span>
-                            </m.a>
-                          </MagneticHover>
+                          <a
+                            href={pub.paperLink}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label={`Read paper: ${pub.title}`}
+                            className="press-feedback inline-flex min-h-[44px] items-center gap-2 border rule px-5 font-mono text-[11px] uppercase tracking-[0.16em] text-ink-900 transition-colors hover:border-vermilion hover:text-vermilion"
+                          >
+                            Read
+                            <ArrowUpRightIcon className="h-3.5 w-3.5" />
+                          </a>
                         )}
 
-                        {pub.images && pub.images.length > 0 && (
+                        {hasPlate && (
                           <button
                             type="button"
-                            aria-expanded={expandedPub === index}
-                            aria-label={`${expandedPub === index ? 'Hide' : 'View'} image for ${pub.title}`}
-                            className="press-feedback inline-flex items-center gap-2 px-2 min-h-[44px] text-gray-400 hover:text-white text-sm"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              setInstantToggle(false);
-                              setExpandedPub(expandedPub === index ? null : index);
-                            }}
+                            aria-expanded={isExpanded}
+                            aria-controls={`publication-plate-${index}`}
+                            aria-label={`${isExpanded ? 'Hide' : 'View'} plate for ${pub.title}`}
+                            onClick={() =>
+                              setExpandedPub(isExpanded ? null : index)
+                            }
+                            className="press-feedback inline-flex min-h-[44px] items-center gap-2.5 border rule px-5 font-mono text-[11px] uppercase tracking-[0.16em] text-ink-700 transition-colors hover:border-vermilion hover:text-vermilion"
                           >
-                            <span>{expandedPub === index ? 'Hide' : 'View'} Image</span>
-                            <m.svg
-                              className="w-4 h-4"
-                              fill="none"
-                              stroke="currentColor"
-                              viewBox="0 0 24 24"
-                              animate={{ rotate: expandedPub === index ? 180 : 0 }}
+                            <span>{isExpanded ? 'Hide plate' : 'View plate'}</span>
+                            <m.span
+                              className="inline-flex"
+                              aria-hidden="true"
+                              animate={{ rotate: isExpanded ? 45 : 0 }}
+                              transition={{ duration: 0.35, ease: EASE }}
                             >
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                            </m.svg>
+                              <PlusIcon className="h-3.5 w-3.5" />
+                            </m.span>
                           </button>
                         )}
                       </div>
+                    )}
+
+                    {/* Expandable plate */}
+                    <div id={`publication-plate-${index}`}>
+                      <AnimatePresence initial={false}>
+                        {isExpanded && hasPlate && (
+                          <m.div
+                            key="plate"
+                            className="overflow-hidden"
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{
+                              height: 'auto',
+                              opacity: 1,
+                              transition: {
+                                duration: shouldReduceMotion ? 0 : 0.5,
+                                ease: EASE,
+                              },
+                            }}
+                            exit={{
+                              height: 0,
+                              opacity: 0,
+                              transition: {
+                                duration: shouldReduceMotion ? 0 : 0.25,
+                                ease: EASE,
+                              },
+                            }}
+                          >
+                            <figure className="pt-8">
+                              <div className="plate reg-marks relative max-w-3xl shadow-plate">
+                                <img
+                                  src={getPublicationImage(pub.images[0])}
+                                  alt={`Figure ${figNo}: ${pub.title}`}
+                                  loading="lazy"
+                                  decoding="async"
+                                  className="h-auto w-full"
+                                  onError={hideImageOnError}
+                                />
+                              </div>
+                              <figcaption className="folio mt-3 max-w-3xl">
+                                FIG. {String(figNo).padStart(2, '0')} —{' '}
+                                {pub.conference}
+                              </figcaption>
+                            </figure>
+                          </m.div>
+                        )}
+                      </AnimatePresence>
                     </div>
                   </div>
-
-                  {/* Expanded image view */}
-                  <AnimatePresence>
-                    {expandedPub === index && pub.images && pub.images[0] && (
-                      <m.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: 'auto', opacity: 1, transition: { duration: shouldReduceMotion || instantToggle ? 0 : 0.4, ease: [0.22, 1, 0.36, 1] } }}
-                        exit={{ height: 0, opacity: 0, transition: { duration: shouldReduceMotion || instantToggle ? 0 : 0.2, ease: [0.22, 1, 0.36, 1] } }}
-                        className="overflow-hidden border-t border-white/5"
-                      >
-                        <div className="p-6 bg-space-900/50">
-                          <img
-                            src={getPublicationImage(pub.images[0])}
-                            alt={pub.title}
-                            loading="lazy"
-                            decoding="async"
-                            className="w-full max-w-4xl mx-auto rounded-2xl shadow-2xl shadow-violet-500/10"
-                            onError={hideImageOnError}
-                          />
-                        </div>
-                      </m.div>
-                    )}
-                  </AnimatePresence>
-
-                  {/* Decorative corner accent */}
-                  <div className="absolute top-0 right-0 w-32 h-32 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
-                    <div className="absolute top-4 right-4 w-8 h-8 border-t-2 border-r-2 border-violet-500/50 rounded-tr-xl" />
-                  </div>
                 </div>
-              </MagneticHover>
-            </m.div>
-          ))}
-        </div>
+              </m.li>
+            );
+          })}
+        </ol>
 
         {/* Research note */}
-        <m.div
-          className="mt-20 text-center"
-          initial={{ opacity: 0, y: 20 }}
+        <m.p
+          className="mt-12 flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.16em] text-ink-500 sm:mt-16 sm:text-xs"
+          initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.3 }}
+          viewport={{ once: true, margin: '-10%' }}
+          transition={{ duration: 0.6, ease: EASE, delay: 0.15 }}
         >
-          <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-space-800/50 border border-white/5">
-            <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse" />
-            <p className="text-gray-400 text-sm font-mono">
-              More research publications in progress...
-            </p>
-          </div>
-        </m.div>
+          <span className="h-2 w-2 shrink-0 bg-vermilion animate-pulse" aria-hidden="true" />
+          More research publications in progress...
+        </m.p>
       </div>
     </section>
   );

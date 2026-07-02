@@ -1,5 +1,6 @@
 import { useMemo, useState, useCallback, useRef, useEffect } from 'react';
 import { m, useInView } from 'framer-motion';
+import { GitHubIcon } from './Icons';
 
 const DAYS = 7;
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -66,20 +67,22 @@ function getMonthLabels(contributions: ContributionDay[], visibleWeeks: number):
   return labels;
 }
 
+// Print-like ink ramp: empty cells are blank paper with a hairline;
+// activity deepens through vermilion ink density to full impression.
 const FILL_CLASSES = [
-  'fill-white/[0.04]',
-  'fill-violet-500/25',
-  'fill-violet-500/45',
-  'fill-violet-400/65',
-  'fill-violet-400/90',
+  'fill-paper-200 stroke-[color:var(--hairline)]',
+  'fill-vermilion/25',
+  'fill-vermilion/45',
+  'fill-vermilion/70',
+  'fill-vermilion',
 ];
 
 const LEGEND_BG = [
-  'bg-white/[0.04]',
-  'bg-violet-500/25',
-  'bg-violet-500/45',
-  'bg-violet-400/65',
-  'bg-violet-400/90',
+  'bg-paper-200 shadow-[inset_0_0_0_1px_var(--hairline)]',
+  'bg-vermilion/25',
+  'bg-vermilion/45',
+  'bg-vermilion/70',
+  'bg-vermilion',
 ];
 
 export function GitHubGraph() {
@@ -177,31 +180,31 @@ export function GitHubGraph() {
   const graphHeight = DAYS * STEP - GAP;
 
   return (
-    <div ref={containerRef} className="group relative h-full p-4 sm:p-5 rounded-3xl bg-space-800/50 border border-white/5 hover:border-violet-500/20 transition-colors duration-200 overflow-hidden">
-      <div className="absolute -bottom-16 -right-16 w-40 h-40 bg-violet-500/[0.06] rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-250 pointer-events-none" />
-
+    <div
+      ref={containerRef}
+      className="rule relative h-full border bg-paper-50 p-4 transition-colors duration-300 hover:border-[color:var(--hairline-strong)] sm:p-5"
+    >
       {/* Header */}
-      <div className="flex items-center justify-between mb-2.5 relative z-10">
+      <div className="mb-2.5 flex items-center justify-between gap-3">
         <a
           href={`https://github.com/${GITHUB_USERNAME}`}
           target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center min-h-[44px] px-1 gap-1.5 text-gray-400 hover:text-violet-400 transition-colors"
+          rel="me noopener noreferrer"
+          className="inline-flex min-h-[44px] items-center gap-1.5 px-1 font-mono text-[10px] uppercase tracking-[0.14em] text-ink-600 transition-colors hover:text-vermilion-600 sm:text-xs"
+          aria-label={`GitHub profile of ${GITHUB_USERNAME} (opens in new tab)`}
         >
-          <svg className="w-3.5 h-3.5" viewBox="0 0 16 16" fill="currentColor">
-            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
-          </svg>
-          <span className="text-[10px] sm:text-xs font-mono tracking-wide">Activity</span>
+          <GitHubIcon className="h-3.5 w-3.5" />
+          <span className="link-ink">@{GITHUB_USERNAME}</span>
         </a>
         {totalContributions > 0 && (
-          <span className="text-gray-400 text-[10px] sm:text-xs font-mono">
+          <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-ink-500 sm:text-xs">
             {totalContributions.toLocaleString()} contributions
           </span>
         )}
       </div>
 
       {/* Graph */}
-      <div ref={graphAreaRef} className="relative z-10">
+      <div ref={graphAreaRef} className="relative">
         {weeks.length > 0 ? (
           <svg
             width="100%"
@@ -214,7 +217,7 @@ export function GitHubGraph() {
                 key={`${label}-${i}`}
                 x={LABEL_W + col * STEP}
                 y={8}
-                className="fill-gray-600 font-mono"
+                className="fill-ink-500 font-mono"
                 fontSize="8"
               >
                 {label}
@@ -228,7 +231,7 @@ export function GitHubGraph() {
                   key={i}
                   x={0}
                   y={14 + i * STEP + CELL * 0.75}
-                  className="fill-gray-600 font-mono"
+                  className="fill-ink-500 font-mono"
                   fontSize="8"
                 >
                   {label}
@@ -236,15 +239,14 @@ export function GitHubGraph() {
               ) : null,
             )}
 
-            {/* Column highlight — faint vertical line on hovered column */}
+            {/* Column highlight — faint ink wash on hovered column */}
             {hoveredCell && (
               <m.rect
                 x={LABEL_W + hoveredCell.week * STEP - 1}
                 y={14}
                 width={CELL + 2}
                 height={graphHeight}
-                rx={3}
-                className="fill-violet-500/[0.04]"
+                className="fill-ink-900/[0.05]"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
@@ -263,15 +265,14 @@ export function GitHubGraph() {
 
                 return (
                   <g key={`${weekIdx}-${dayIdx}`}>
-                    {/* Glow ring — soft violet halo behind hovered cell */}
+                    {/* Registration ring — hairline vermilion frame on hovered cell */}
                     {isHovered && level > 0 && (
                       <m.rect
                         x={x - 2}
                         y={y - 2}
                         width={CELL + 4}
                         height={CELL + 4}
-                        rx={4}
-                        className="fill-transparent stroke-violet-400/40"
+                        className="fill-transparent stroke-vermilion/50"
                         strokeWidth={1}
                         initial={{ opacity: 0, scale: 0.8 }}
                         animate={{ opacity: 1, scale: 1 }}
@@ -284,7 +285,7 @@ export function GitHubGraph() {
                       y={y}
                       width={CELL}
                       height={CELL}
-                      rx={2}
+                      strokeWidth={0.75}
                       className={`cursor-crosshair ${FILL_CLASSES[level]}`}
                       initial={{ opacity: 0 }}
                       animate={
@@ -292,7 +293,7 @@ export function GitHubGraph() {
                           ? {
                               opacity: neighbor && level > 0 ? 1 : 1,
                               scale: isHovered ? 1.35 : 1,
-                              filter: neighbor && level > 0 ? 'brightness(1.4)' : 'brightness(1)',
+                              filter: neighbor && level > 0 ? 'brightness(0.92)' : 'brightness(1)',
                             }
                           : { opacity: 0 }
                       }
@@ -329,9 +330,9 @@ export function GitHubGraph() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.1 }}
                 >
-                  <div className="px-2 py-0.5 rounded-md bg-space-700/95 border border-white/10 backdrop-blur-sm shadow-lg shadow-black/30 whitespace-nowrap">
-                    <span className="text-[8px] text-gray-300 font-mono">
-                      <span className="text-violet-400 font-semibold">{hoveredCell.count}</span>
+                  <div className="whitespace-nowrap bg-ink-900 px-2 py-1 shadow-plate">
+                    <span className="font-mono text-[8px] uppercase tracking-[0.06em] text-paper-300">
+                      <span className="font-semibold text-vermilion-400">{hoveredCell.count}</span>
                       {' '}· {formatTooltipDate(hoveredCell.date)}
                     </span>
                   </div>
@@ -341,8 +342,8 @@ export function GitHubGraph() {
           </svg>
         ) : (
           /* Loading skeleton */
-          <div className="h-[100px] flex items-center justify-center">
-            <span className={`text-gray-400 text-xs font-mono ${isLoading ? 'animate-pulse' : ''}`}>
+          <div className="flex h-[100px] items-center justify-center">
+            <span className={`font-mono text-xs uppercase tracking-[0.14em] text-ink-500 ${isLoading ? 'animate-pulse' : ''}`}>
               {isLoading
                 ? 'Loading contributions...'
                 : loadError
@@ -355,12 +356,12 @@ export function GitHubGraph() {
 
       {/* Legend */}
       {weeks.length > 0 && (
-        <div className="flex items-center justify-end gap-1 mt-1.5 relative z-10">
-          <span className="text-[9px] text-gray-400 font-mono mr-0.5">Less</span>
+        <div className="mt-2 flex items-center justify-end gap-1">
+          <span className="mr-0.5 font-mono text-[9px] uppercase tracking-[0.14em] text-ink-500">Less</span>
           {LEGEND_BG.map((bg, i) => (
-            <div key={i} className={`w-[9px] h-[9px] rounded-[2px] ${bg}`} />
+            <div key={i} className={`h-[9px] w-[9px] ${bg}`} />
           ))}
-          <span className="text-[9px] text-gray-400 font-mono ml-0.5">More</span>
+          <span className="ml-0.5 font-mono text-[9px] uppercase tracking-[0.14em] text-ink-500">More</span>
         </div>
       )}
     </div>

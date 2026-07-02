@@ -2,11 +2,25 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Design system easing curves */
+/* ============================================================
+   "PROOF OF WORK" — editorial print design system
+   Paper + ink + vermilion. Fraunces / Instrument Sans / Spline Sans Mono.
+   ============================================================ */
+
 :root {
-  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
-  --ease-out-strong: cubic-bezier(0.23, 1, 0.32, 1);
-  --ease-in-out-strong: cubic-bezier(0.77, 0, 0.175, 1);
+  --paper: #f5f1e8;
+  --paper-raised: #faf7f0;
+  --ink: #171412;
+  --ink-muted: #6b6152;
+  --vermilion: #d93a0d;
+  --cobalt: #2c45c9;
+  --hairline: rgba(23, 20, 18, 0.14);
+  --hairline-strong: rgba(23, 20, 18, 0.3);
+  --hairline-inverse: rgba(245, 241, 232, 0.16);
+
+  --ease-out: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-out-strong: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-strong: cubic-bezier(0.65, 0, 0.35, 1);
   --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
   --ease-float: cubic-bezier(0.45, 0.05, 0.55, 0.95);
   --ease-pulse: cubic-bezier(0.4, 0, 0.2, 1);
@@ -15,17 +29,14 @@
 @layer base {
   html {
     /* scroll-behavior handled by Lenis - CSS smooth conflicts with Chrome */
-    /* Safe area insets for notched devices */
     padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
   }
 
-  /* Prevent text size adjustment on orientation change */
   body {
     -webkit-text-size-adjust: 100%;
     text-size-adjust: 100%;
   }
 
-  /* Mobile scroll performance improvements */
   @media (max-width: 767px) {
     html, body {
       -webkit-overflow-scrolling: touch;
@@ -37,55 +48,56 @@
     }
   }
 
-  /* Ensure tap highlight is visible but subtle */
   * {
-    -webkit-tap-highlight-color: rgba(139, 92, 246, 0.1);
+    -webkit-tap-highlight-color: rgba(217, 58, 13, 0.12);
   }
 
-  /* Hide default cursor on desktop */
+  /* Hide default cursor on desktop — replaced by the crosshair cursor island */
   @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
-    html, body {
+    html.js, html.js body {
       cursor: none !important;
     }
 
-    a, button, input, textarea, select, [role="button"] {
+    html.js a, html.js button, html.js input, html.js textarea, html.js select, html.js [role="button"] {
       cursor: none !important;
     }
   }
 
-  /* Hide preloader once CSS+JS loaded */
   #preloader {
     display: none !important;
   }
 
   body {
-    @apply bg-space-900 text-gray-100 font-body antialiased;
+    @apply bg-paper-100 text-ink-900 font-body antialiased;
     overflow-x: hidden;
+    font-feature-settings: 'ss01' on, 'cv01' on;
   }
 
   ::selection {
-    @apply bg-violet-500/30 text-white;
+    background: rgba(217, 58, 13, 0.85);
+    color: #faf7f0;
   }
 
-  /* Premium scrollbar */
+  /* Ink hairline scrollbar */
   ::-webkit-scrollbar {
-    width: 6px;
+    width: 8px;
   }
 
   ::-webkit-scrollbar-track {
-    @apply bg-transparent;
+    background: transparent;
   }
 
   ::-webkit-scrollbar-thumb {
-    @apply bg-violet-500/30 rounded-full;
-    transition: background 0.3s;
+    background: rgba(23, 20, 18, 0.28);
+    border-radius: 0;
+    border-left: 3px solid var(--paper);
+    border-right: 3px solid var(--paper);
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    @apply bg-violet-500/50;
+    background: var(--vermilion);
   }
 
-  /* Hide scrollbar utility */
   .scrollbar-hide {
     -ms-overflow-style: none;
     scrollbar-width: none;
@@ -95,7 +107,6 @@
     display: none;
   }
 
-  /* Smooth font rendering */
   * {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -103,10 +114,166 @@
 }
 
 @layer components {
-  /* Gradient text */
-  .gradient-text {
-    @apply bg-gradient-to-r from-violet-400 via-violet-500 to-amber-400 bg-clip-text text-transparent;
-    -webkit-text-fill-color: transparent;
+  /* Poster type — cinematic headline voice: heavy, wide, uppercase Archivo.
+     An <em> inside flips to Fraunces italic (the "accent word"), vermilion. */
+  .poster {
+    font-family: 'Archivo Variable', 'Arial Black', sans-serif;
+    font-weight: 800;
+    font-stretch: 115%;
+    text-transform: uppercase;
+    letter-spacing: -0.015em;
+    line-height: 0.92;
+  }
+
+  .poster em {
+    font-family: 'Fraunces Variable', Georgia, serif;
+    font-style: italic;
+    font-weight: 420;
+    font-stretch: 100%;
+    text-transform: none;
+    letter-spacing: -0.01em;
+    color: var(--vermilion);
+  }
+
+  /* Mono editorial label — "01 / ABSTRACT" folios, captions, annotations */
+  .folio {
+    @apply font-mono text-label uppercase tracking-[0.18em] text-ink-500;
+  }
+
+  .folio-inverse {
+    @apply font-mono text-label uppercase tracking-[0.18em] text-paper-300;
+  }
+
+  /* Hairline rules */
+  .rule {
+    border-color: var(--hairline);
+  }
+
+  .rule-strong {
+    border-color: var(--hairline-strong);
+  }
+
+  .rule-inverse {
+    border-color: var(--hairline-inverse);
+  }
+
+  /* Ink link with underline that draws in from the left */
+  .link-ink {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-repeat: no-repeat;
+    background-position: 0 100%;
+    background-size: 0% 1px;
+    transition: background-size 0.45s var(--ease-out-strong), color 0.25s var(--ease-out);
+    padding-bottom: 2px;
+  }
+
+  .link-ink:hover,
+  .link-ink:focus-visible {
+    background-size: 100% 1px;
+  }
+
+  /* Permanent underline that retracts then redraws on hover */
+  .link-drawn {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-repeat: no-repeat;
+    background-position: 100% 100%;
+    background-size: 100% 1px;
+    transition: background-size 0.45s var(--ease-out-strong);
+    padding-bottom: 2px;
+  }
+
+  .link-drawn:hover,
+  .link-drawn:focus-visible {
+    background-position: 0 100%;
+    animation: link-redraw 0.7s var(--ease-out-strong);
+  }
+
+  /* Rubber stamp — rotated, double ring, vermilion ink */
+  .stamp {
+    @apply font-mono uppercase text-vermilion-600 border-2 border-vermilion;
+    letter-spacing: 0.14em;
+    box-shadow: inset 0 0 0 3px var(--paper), inset 0 0 0 4px var(--vermilion);
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.55' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.92 0.08'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E");
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.55' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.92 0.08'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .stamp-on-ink {
+    @apply text-vermilion-400;
+    box-shadow: inset 0 0 0 3px var(--ink), inset 0 0 0 4px var(--vermilion);
+  }
+
+  /* Duotone plate: wrap an <img> — grayscale below, paper tint blended above */
+  .plate {
+    @apply relative overflow-hidden bg-paper-200;
+  }
+
+  .plate img {
+    filter: grayscale(1) contrast(1.06) brightness(1.02);
+    transition: filter 0.6s var(--ease-out-strong), transform 0.8s var(--ease-out-strong);
+  }
+
+  .plate::after {
+    content: '';
+    @apply absolute inset-0 pointer-events-none;
+    background: var(--vermilion);
+    mix-blend-mode: soft-light;
+    opacity: 0.25;
+    transition: opacity 0.6s var(--ease-out-strong);
+  }
+
+  .plate:hover img,
+  .group:hover .plate img {
+    filter: grayscale(0) contrast(1) brightness(1);
+  }
+
+  .plate:hover::after,
+  .group:hover .plate::after {
+    opacity: 0;
+  }
+
+  /* Registration marks (print crop corners) — apply to a relatively-positioned box */
+  .reg-marks::before,
+  .reg-marks::after {
+    content: '';
+    @apply absolute w-4 h-4 pointer-events-none;
+  }
+
+  .reg-marks::before {
+    top: -1px;
+    left: -1px;
+    border-top: 1px solid var(--hairline-strong);
+    border-left: 1px solid var(--hairline-strong);
+  }
+
+  .reg-marks::after {
+    bottom: -1px;
+    right: -1px;
+    border-bottom: 1px solid var(--hairline-strong);
+    border-right: 1px solid var(--hairline-strong);
+  }
+
+  /* Dotted leader line for ledger/TOC rows */
+  .leader {
+    flex: 1 1 auto;
+    min-width: 2rem;
+    margin: 0 0.75em;
+    border-bottom: 1.5px dotted var(--hairline-strong);
+    transform: translateY(-0.35em);
+  }
+
+  .leader-inverse {
+    border-bottom-color: var(--hairline-inverse);
+  }
+
+  /* Outlined ghost display type (giant numerals, watermarks) */
+  .text-outline {
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(23, 20, 18, 0.3);
+  }
+
+  .text-outline-inverse {
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(245, 241, 232, 0.28);
   }
 
   /* Consistent tactile press feedback across interactive controls */
@@ -125,9 +292,240 @@
   }
 }
 
+@keyframes link-redraw {
+  0% { background-size: 0% 1px; background-position: 0 100%; }
+  100% { background-size: 100% 1px; background-position: 0 100%; }
+}
+
+/* Dither edge — halftone dot band dissolving paper into ink (print transition).
+   Place directly above an ink spread; add .dither-edge-flip below one. */
+.dither-edge {
+  height: 40px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='40'%3E%3Cg fill='%23171412'%3E%3Ccircle cx='4' cy='4' r='0.6'/%3E%3Ccircle cx='0' cy='12' r='1.2'/%3E%3Ccircle cx='8' cy='12' r='1.2'/%3E%3Ccircle cx='4' cy='20' r='2'/%3E%3Ccircle cx='0' cy='28' r='2.8'/%3E%3Ccircle cx='8' cy='28' r='2.8'/%3E%3Ccircle cx='4' cy='36' r='3.7'/%3E%3Ccircle cx='0' cy='36' r='1.4'/%3E%3Ccircle cx='8' cy='36' r='1.4'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: 8px 40px;
+  background-repeat: repeat-x;
+}
+
+.dither-edge-flip {
+  transform: scaleY(-1);
+}
+
+/* Paper grain — fixed full-viewport noise, sits above everything, very faint */
+.grain-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.5;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.09 0 0 0 0 0.08 0 0 0 0 0.07 0 0 0 0.05 0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23g)'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+}
+
+/* Ruled layout columns — faint vertical hairlines behind content (wide screens) */
+.ruled-columns {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .ruled-columns {
+    display: block;
+    background-image:
+      linear-gradient(to right, rgba(23, 20, 18, 0.055) 1px, transparent 1px);
+    background-size: calc(100% / 6) 100%;
+    background-position: 0 0;
+  }
+}
+
 /* Focus ring */
 :focus-visible {
-  @apply outline-none ring-2 ring-violet-500/50 ring-offset-2 ring-offset-space-900;
+  outline: 2px solid transparent; /* forced-colors fallback */
+  outline-offset: 2px;
+  box-shadow: 0 0 0 2px var(--paper-raised), 0 0 0 4px var(--vermilion);
+}
+
+/* Content-visibility for off-screen sections */
+.cv-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 800px;
+}
+
+.will-change-opacity {
+  will-change: opacity;
+}
+
+/* ===== Kinetic hero name — CSS-driven so it paints instantly (LCP) with no
+   JS/hydration dependency. Per-char rise for the masthead; mask-reveal for
+   accent lines. ===== */
+@keyframes kinetic-char-in {
+  from { opacity: 0; transform: translateY(0.55em) rotate(2.5deg); }
+  to { opacity: 1; transform: translateY(0) rotate(0deg); }
+}
+
+.kinetic-char {
+  display: inline-block;
+  animation-name: kinetic-char-in;
+  animation-duration: 0.62s;
+  animation-timing-function: var(--ease-out-strong);
+  animation-fill-mode: both;
+  will-change: transform, opacity;
+}
+
+@keyframes hero-mask-reveal {
+  from { transform: translateY(110%); }
+  to { transform: translateY(0); }
+}
+
+/* CSS-driven entrance for hero content — paints pre-hydration (LCP-safe),
+   staggered via --rise-delay. */
+@keyframes rise-in {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.rise-in {
+  animation: rise-in 0.7s var(--ease-out-strong) both;
+  animation-delay: var(--rise-delay, 0s);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rise-in {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* Short laptop viewports: cap the hero name by height too, so the tagline,
+   CTAs and stats clear a 720px fold. */
+.hero-name-line {
+  font-size: clamp(2.75rem, 10.5vw, 9.5rem);
+}
+
+@media (min-width: 768px) and (max-height: 800px) {
+  .hero-name-line {
+    font-size: clamp(2.5rem, min(10.5vw, 11.5vh), 9.5rem);
+  }
+
+  .hero-name-block {
+    margin-top: 1.5rem !important;
+  }
+
+  .hero-abstract-grid {
+    margin-top: 2rem !important;
+  }
+}
+
+.hero-mask-reveal {
+  display: inline-block;
+  animation: hero-mask-reveal 0.9s var(--ease-out-strong) 0.12s both;
+  will-change: transform;
+}
+
+/* Slow rubber-stamp thump-in for the hero availability stamp */
+@keyframes stamp-in {
+  0% { opacity: 0; transform: rotate(6deg) scale(1.6); }
+  60% { opacity: 1; transform: rotate(-4deg) scale(0.96); }
+  100% { opacity: 1; transform: rotate(-6deg) scale(1); }
+}
+
+.stamp-in {
+  animation: stamp-in 0.5s var(--ease-out-strong) 1s both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kinetic-char,
+  .hero-mask-reveal,
+  .stamp-in {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: rotate(-6deg) !important;
+  }
+
+  .kinetic-char,
+  .hero-mask-reveal {
+    transform: none !important;
+  }
+}
+
+/* ===== Studio cat ===== */
+@keyframes cat-tail-sway {
+  0%, 100% { transform: rotate(0deg); }
+  35% { transform: rotate(14deg); }
+  70% { transform: rotate(-6deg); }
+}
+
+.cat-tail {
+  transform-origin: 52px 56px;
+  animation: cat-tail-sway 3.4s var(--ease-float) infinite;
+}
+
+@keyframes cat-blink {
+  0%, 92%, 100% { transform: scaleY(1); }
+  95% { transform: scaleY(0.08); }
+}
+
+.cat-eyes {
+  transform-origin: 36px 17px;
+  animation: cat-blink 5.2s linear infinite;
+}
+
+@keyframes cat-hop-kf {
+  0% { transform: translateY(0); }
+  40% { transform: translateY(-9px); }
+  100% { transform: translateY(0); }
+}
+
+.cat-hop {
+  animation: cat-hop-kf 0.45s var(--ease-out-strong);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cat-tail,
+  .cat-eyes,
+  .cat-hop {
+    animation: none !important;
+  }
+}
+
+/* Scroll indicator dot animation */
+@keyframes scroll-dot {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(12px); }
+}
+
+.scroll-dot {
+  animation: scroll-dot 1.5s var(--ease-out-strong) infinite;
+}
+
+/* Arrow nudge on hover */
+@keyframes arrow-bounce {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(5px); }
+}
+
+.arrow-bounce {
+  animation: arrow-bounce 1.2s var(--ease-out-strong) infinite;
+  animation-play-state: paused;
+}
+
+.group:hover .arrow-bounce,
+a:hover .arrow-bounce {
+  animation-play-state: running;
+}
+
+/* Marquee CSS animations - GPU-composited via transform */
+@keyframes marquee-left {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes marquee-right {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
 }
 
 /* Reduced motion */
@@ -143,17 +541,11 @@
     animation-iteration-count: 1 !important;
   }
 
-  .hero-decorative-rotate,
-  .hero-decorative-pulse,
-  .hero-decorative-blink,
-  .hero-float,
-  .arrow-bounce,
   .scroll-dot,
-  .wave-hand,
-  .animate-shimmer,
-  .animate-\[spin_20s_linear_infinite\],
-  .animate-\[spin_90s_linear_infinite_reverse\],
-  .animate-\[spin_120s_linear_infinite\] {
+  .arrow-bounce,
+  .animate-marquee-left,
+  .animate-marquee-right,
+  .animate-spin-slow {
     animation: none !important;
   }
 
@@ -184,7 +576,6 @@
     cursor: auto !important;
   }
 
-  /* Prevent false-positive hover states on touch tap */
   .group:hover .group-hover\:scale-110,
   .group:hover .group-hover\:scale-105,
   .group\/image:hover .group-hover\/image\:scale-105 {
@@ -200,156 +591,6 @@
   }
 }
 
-/* Shimmer animation - GPU composited with transform */
-.animate-shimmer {
-  animation: shimmer 2s infinite linear;
-}
-
-/* Content-visibility for off-screen sections */
-.cv-auto {
-  content-visibility: auto;
-  contain-intrinsic-size: auto 800px;
-}
-
-.will-change-opacity {
-  will-change: opacity;
-}
-
-/* Hero decorative CSS animations - compositor-thread only, auto-paused by content-visibility */
-@keyframes hero-rotate {
-  0% { transform: rotate(0deg); }
-  50% { transform: rotate(90deg); }
-  100% { transform: rotate(0deg); }
-}
-
-@keyframes hero-pulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.2); }
-  100% { transform: scale(1); }
-}
-
-@keyframes hero-blink {
-  0% { opacity: 0.2; }
-  50% { opacity: 1; }
-  100% { opacity: 0.2; }
-}
-
-.hero-decorative-rotate {
-  animation: hero-rotate 20s linear infinite;
-}
-
-.hero-decorative-pulse {
-  animation: hero-pulse 4s var(--ease-pulse) infinite;
-}
-
-.hero-decorative-blink {
-  animation: hero-blink 2s var(--ease-pulse) infinite;
-}
-
-/* Hero float animation */
-@keyframes hero-float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
-}
-
-.hero-float {
-  animation: hero-float 6s var(--ease-float) infinite;
-}
-
-/* ===== Kinetic hero name — CSS-driven so it paints instantly (LCP) with no
-   JS/hydration dependency. Per-char spring for the first name; mask-reveal for
-   the gradient last name. ===== */
-@keyframes kinetic-char-in {
-  from { opacity: 0; transform: translateY(0.55em) rotate(3deg); }
-  to { opacity: 1; transform: translateY(0) rotate(0deg); }
-}
-.kinetic-char {
-  display: inline-block;
-  animation-name: kinetic-char-in;
-  animation-duration: 0.62s;
-  animation-timing-function: var(--ease-out-strong);
-  animation-fill-mode: both;
-  will-change: transform, opacity;
-}
-
-@keyframes hero-mask-reveal {
-  from { transform: translateY(110%); }
-  to { transform: translateY(0); }
-}
-.hero-mask-reveal {
-  display: inline-block;
-  animation: hero-mask-reveal 0.9s var(--ease-out-strong) 0.12s both;
-  will-change: transform;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .kinetic-char,
-  .hero-mask-reveal {
-    animation: none !important;
-    opacity: 1 !important;
-    transform: none !important;
-  }
-}
-
-/* Arrow bounce animation */
-@keyframes arrow-bounce {
-  0%, 100% { transform: translateX(0); }
-  50% { transform: translateX(5px); }
-}
-
-.arrow-bounce {
-  animation: arrow-bounce 1.2s var(--ease-out-strong) infinite;
-  animation-play-state: paused;
-}
-
-.group:hover .arrow-bounce,
-a:hover .arrow-bounce {
-  animation-play-state: running;
-}
-
-/* Scroll indicator dot animation */
-@keyframes scroll-dot {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(12px); }
-}
-
-.scroll-dot {
-  animation: scroll-dot 1.5s var(--ease-out-strong) infinite;
-}
-
-/* Waving hand animation */
-@keyframes wave-hand {
-  0%, 100% { transform: rotate(0deg); }
-  10% { transform: rotate(14deg); }
-  20% { transform: rotate(-8deg); }
-  30% { transform: rotate(14deg); }
-  40% { transform: rotate(-4deg); }
-  50% { transform: rotate(10deg); }
-  60% { transform: rotate(0deg); }
-}
-
-.wave-hand {
-  animation: wave-hand 2.2s var(--ease-out) infinite;
-  animation-play-state: paused;
-  display: inline-block;
-  transform-origin: 70% 70%;
-}
-
-.group:hover .wave-hand {
-  animation-play-state: running;
-}
-
-/* Marquee CSS animations - GPU-composited via transform */
-@keyframes marquee-left {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-
-@keyframes marquee-right {
-  0% { transform: translateX(-50%); }
-  100% { transform: translateX(0); }
-}
-
 /* Resume bullet points */
 .resume-bullets {
   list-style: disc;
@@ -358,7 +599,7 @@ a:hover .arrow-bounce {
 
 .resume-bullets li {
   font-size: 0.8125rem;
-  color: rgb(209 213 219);
+  color: rgb(59 52 43);
   margin-bottom: 0.125rem;
   line-height: 1.5;
 }

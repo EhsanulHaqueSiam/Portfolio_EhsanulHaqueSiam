@@ -40,15 +40,17 @@ export const featuredPublications = publications.filter(p => p.showInHome);
 export const featuredExperience = experience.filter(e => e.showInHome);
 
 // Navigation items
+// `no` mirrors each section's printed folio number — gaps are intentional
+// (the nav is an abridged index of the full 01–11 running order).
 export const navItems = [
-  { label: "About", href: "#about" },
-  { label: "Experience", href: "#experience" },
-  { label: "Skills", href: "#skills" },
-  { label: "Projects", href: "#projects" },
-  { label: "Testimonials", href: "#testimonials" },
-  { label: "Awards", href: "#awards" },
-  { label: "Publications", href: "#publications" },
-  { label: "Contact", href: "#contact" },
+  { no: "01", label: "About", href: "#about" },
+  { no: "03", label: "Experience", href: "#experience" },
+  { no: "04", label: "Skills", href: "#skills" },
+  { no: "05", label: "Work", href: "#projects" },
+  { no: "06", label: "Testimonials", href: "#testimonials" },
+  { no: "07", label: "Awards", href: "#awards" },
+  { no: "08", label: "Research", href: "#publications" },
+  { no: "11", label: "Contact", href: "#contact" },
 ];
 
 // FAQ — single source of truth for the visible FAQ section AND the JSON-LD

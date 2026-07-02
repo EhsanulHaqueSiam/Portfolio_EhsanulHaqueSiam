@@ -1,0 +1,198 @@
+import { useEffect, useRef } from 'react';
+
+interface AsciiFieldProps {
+  className?: string;
+  /** character grid columns */
+  cols?: number;
+  /** 'ink' = paper glyphs on an ink spread; 'paper' = ink glyphs on paper */
+  surface?: 'ink' | 'paper';
+}
+
+/** light → dense glyph ramp for the wave field */
+const RAMP = ' .·:~=+*#%@';
+const CELL_ASPECT = 0.6;
+const RADIUS = 150;
+const LERP = 0.15;
+
+/** warm print palette the cursor pulls out of the field: vermilion → amber → cobalt */
+const PALETTE: Array<[number, number, number]> = [
+  [217, 58, 13], // vermilion
+  [239, 93, 46], // vermilion-400
+  [224, 159, 62], // warm amber ink
+  [44, 69, 201], // cobalt
+];
+
+/**
+ * Abstract interactive ASCII art: a slowly drifting interference-wave field
+ * typeset in mono glyphs. Characters near the cursor flood with print colors
+ * (vermilion/amber/cobalt); the field breathes on its own. Pure decoration —
+ * client-only, aria-hidden, disabled for reduced motion (static frame).
+ */
+export function AsciiField({ className = '', cols = 64, surface = 'ink' }: AsciiFieldProps) {
+  const wrapRef = useRef<HTMLDivElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    const wrap = wrapRef.current;
+    const canvas = canvasRef.current;
+    if (!wrap || !canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+    let disposed = false;
+    let raf = 0;
+    let rows = 0;
+    let cellW = 0;
+    let cellH = 0;
+    let dpr = 1;
+    let t = Math.random() * 100;
+    let influence: Float32Array = new Float32Array(0);
+    let target: Float32Array = new Float32Array(0);
+    let pointerInside = false;
+    let lastFrame = 0;
+
+    const base =
+      surface === 'ink'
+        ? { r: 245, g: 241, b: 232, a: 0.34 } // paper glyphs on ink
+        : { r: 23, g: 20, b: 18, a: 0.5 }; // ink glyphs on paper
+
+    const layout = () => {
+      const w = wrap.clientWidth;
+      const h = wrap.clientHeight;
+      if (!w || !h) return false;
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = Math.round(w * dpr);
+      canvas.height = Math.round(h * dpr);
+      cellW = canvas.width / cols;
+      cellH = cellW / CELL_ASPECT;
+      rows = Math.max(1, Math.round(canvas.height / cellH));
+      cellH = canvas.height / rows;
+      ctx.font = `500 ${Math.ceil(cellH)}px 'Spline Sans Mono Variable', 'Spline Sans Mono', monospace`;
+      ctx.textBaseline = 'top';
+      influence = new Float32Array(cols * rows);
+      target = new Float32Array(cols * rows);
+      return true;
+    };
+
+    /** interference of three drifting waves, 0..1 */
+    const field = (x: number, y: number, time: number) => {
+      const u = x / cols;
+      const v = y / rows;
+      const s =
+        Math.sin(u * 6.3 + time * 0.7) +
+        Math.sin((u + v) * 4.1 - time * 0.45) +
+        Math.sin(Math.hypot(u - 0.6, v - 0.4) * 9 - time * 0.9);
+      return (s + 3) / 6;
+    };
+
+    const draw = (time: number) => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (let y = 0; y < rows; y++) {
+        for (let x = 0; x < cols; x++) {
+          const i = y * cols + x;
+          const v = field(x, y, time);
+          const ci = Math.min(RAMP.length - 1, Math.floor(v * RAMP.length));
+          const ch = RAMP[ci];
+          if (ch === ' ') continue;
+          const f = influence[i];
+          if (f > 0.02) {
+            const p = PALETTE[Math.min(PALETTE.length - 1, Math.floor(v * PALETTE.length))];
+            const rr = Math.round(base.r + (p[0] - base.r) * f);
+            const gg = Math.round(base.g + (p[1] - base.g) * f);
+            const bb = Math.round(base.b + (p[2] - base.b) * f);
+            ctx.fillStyle = `rgba(${rr},${gg},${bb},${Math.min(1, base.a + v * 0.3 + f * 0.75)})`;
+          } else {
+            ctx.fillStyle = `rgba(${base.r},${base.g},${base.b},${base.a * (0.35 + v * 0.65)})`;
+          }
+          ctx.fillText(ch, x * cellW, y * cellH);
+        }
+      }
+    };
+
+    const tick = (now: number) => {
+      if (disposed) return;
+      // ~30fps is plenty for a drifting field and keeps main thread light
+      if (now - lastFrame >= 33) {
+        lastFrame = now;
+        if (!reduced) t += 0.016;
+        for (let i = 0; i < influence.length; i++) {
+          influence[i] += (target[i] - influence[i]) * LERP;
+        }
+        draw(t);
+      }
+      raf = requestAnimationFrame(tick);
+    };
+
+    const onPointerMove = (e: PointerEvent) => {
+      pointerInside = true;
+      const rect = canvas.getBoundingClientRect();
+      const px = (e.clientX - rect.left) * (canvas.width / rect.width);
+      const py = (e.clientY - rect.top) * (canvas.height / rect.height);
+      const rad = RADIUS * dpr;
+      for (let y = 0; y < rows; y++) {
+        for (let x = 0; x < cols; x++) {
+          const d = Math.hypot(x * cellW + cellW / 2 - px, y * cellH + cellH / 2 - py);
+          target[y * cols + x] = d < rad ? Math.pow(1 - d / rad, 1.3) : 0;
+        }
+      }
+    };
+
+    const onPointerLeave = () => {
+      pointerInside = false;
+      target.fill(0);
+    };
+
+    let resizeT = 0;
+    const onResize = () => {
+      window.clearTimeout(resizeT);
+      resizeT = window.setTimeout(() => {
+        if (layout()) draw(t);
+      }, 150);
+    };
+
+    if (!layout()) return;
+    draw(t);
+
+    let visible = false;
+    const io = new IntersectionObserver(
+      (entries) => {
+        const nowVisible = entries[0]?.isIntersecting ?? false;
+        if (nowVisible && !visible && !reduced) {
+          visible = true;
+          lastFrame = 0;
+          raf = requestAnimationFrame(tick);
+        } else if (!nowVisible && visible) {
+          visible = false;
+          cancelAnimationFrame(raf);
+        }
+      },
+      { rootMargin: '80px' }
+    );
+    io.observe(wrap);
+
+    if (!reduced && finePointer) {
+      canvas.addEventListener('pointermove', onPointerMove, { passive: true });
+      canvas.addEventListener('pointerleave', onPointerLeave, { passive: true });
+    }
+    window.addEventListener('resize', onResize, { passive: true });
+
+    return () => {
+      disposed = true;
+      io.disconnect();
+      cancelAnimationFrame(raf);
+      window.clearTimeout(resizeT);
+      canvas.removeEventListener('pointermove', onPointerMove);
+      canvas.removeEventListener('pointerleave', onPointerLeave);
+      window.removeEventListener('resize', onResize);
+    };
+  }, [cols, surface]);
+
+  return (
+    <div ref={wrapRef} className={`relative ${className}`} aria-hidden="true" data-cursor="signal">
+      <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" />
+    </div>
+  );
+}

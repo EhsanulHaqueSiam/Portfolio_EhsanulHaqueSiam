@@ -3,7 +3,7 @@ const siteUrl = 'https://ehsanulhaquesiam.netlify.app';
 ---
 
 <!doctype html>
-<html lang="en" style="background:#0a0a0f">
+<html lang="en" style="background:#F5F1E8">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,25 +11,141 @@ const siteUrl = 'https://ehsanulhaquesiam.netlify.app';
     <meta name="robots" content="noindex, follow" />
     <link rel="canonical" href={siteUrl + '/'} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <style is:inline>
+      :root {
+        --paper: #F5F1E8;
+        --paper-raised: #FAF7F0;
+        --ink: #171412;
+        --ink-muted: #544A3E;
+        --ink-faint: #8D8371;
+        --hairline: rgba(23, 20, 18, 0.16);
+        --vermilion: #D93A0D;
+        --serif: Georgia, 'Times New Roman', serif;
+        --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem 1.25rem;
+        background: var(--paper);
+        color: var(--ink);
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        line-height: 1.6;
+      }
+      main {
+        width: 100%;
+        max-width: 40rem;
+      }
+      .folio {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        gap: 1rem;
+        border-top: 1px solid var(--ink);
+        padding-top: 0.75rem;
+        font-family: var(--mono);
+        font-size: 0.6875rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--ink-muted);
+      }
+      .folio strong { color: var(--ink); font-weight: 600; }
+      .display {
+        position: relative;
+        margin: 1.25rem 0 0;
+      }
+      .giant {
+        margin: 0;
+        font-family: var(--serif);
+        font-weight: 400;
+        font-size: clamp(7rem, 30vw, 13rem);
+        line-height: 0.9;
+        letter-spacing: -0.03em;
+        color: var(--ink);
+      }
+      .stamp {
+        position: absolute;
+        top: 14%;
+        right: 0;
+        transform: rotate(-8deg);
+        font-family: var(--mono);
+        font-size: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--vermilion);
+        border: 2px solid var(--vermilion);
+        outline: 1.5px solid var(--vermilion);
+        outline-offset: 3px;
+        padding: 0.5rem 0.9rem;
+        background: var(--paper);
+      }
+      h1 {
+        margin: 1.75rem 0 0.75rem;
+        font-family: var(--serif);
+        font-weight: 400;
+        font-size: clamp(1.5rem, 4.5vw, 2.25rem);
+        line-height: 1.15;
+        letter-spacing: -0.01em;
+      }
+      .desc {
+        color: var(--ink-muted);
+        max-width: 34rem;
+        margin: 0 0 2rem;
+      }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+        min-height: 44px;
+        padding: 0.85rem 1.6rem;
+        background: var(--ink);
+        color: var(--paper-raised);
+        text-decoration: none;
+        font-family: var(--mono);
+        font-size: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+      }
+      .btn:hover,
+      .btn:focus-visible {
+        background: var(--vermilion);
+        color: var(--paper-raised);
+      }
+      .colophon {
+        margin-top: 2.5rem;
+        border-top: 1px solid var(--hairline);
+        padding-top: 0.75rem;
+        font-family: var(--mono);
+        font-size: 0.625rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--ink-faint);
+      }
+    </style>
   </head>
-  <body
-    style="background:#0a0a0f;color:#e5e7eb;font-family:system-ui,-apple-system,sans-serif;min-height:100vh;display:flex;align-items:center;justify-content:center;margin:0;padding:2rem;text-align:center"
-  >
+  <body>
     <main>
-      <p style="font-size:5rem;font-weight:700;margin:0;background:linear-gradient(135deg,#a78bfa,#f59e0b);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent">
-        404
-      </p>
-      <h1 style="font-size:1.5rem;margin:0.5rem 0 1rem">This page wandered off.</h1>
-      <p style="color:#9ca3af;max-width:32rem;margin:0 auto 2rem">
+      <div class="folio">
+        <span><strong>Err. 404</strong> — Page not found</span>
+        <span aria-hidden="true">Proof of work</span>
+      </div>
+      <div class="display">
+        <p class="giant">404</p>
+        <span class="stamp" aria-hidden="true">Misprint</span>
+      </div>
+      <h1>This page wandered off the press.</h1>
+      <p class="desc">
         The page you're looking for doesn't exist — but the portfolio of Ehsanul Haque Siam,
         AI Engineer &amp; Full-Stack Developer, is one click away.
       </p>
-      <a
-        href="/"
-        style="display:inline-block;padding:0.75rem 1.75rem;background:#7c3aed;color:#fff;border-radius:0.75rem;text-decoration:none;font-weight:600"
-      >
-        ← Back to home
-      </a>
+      <a class="btn" href="/">&larr; Return to the front page</a>
+      <div class="colophon">Ehsanul Haque Siam — Dhaka, Bangladesh</div>
     </main>
   </body>
 </html>

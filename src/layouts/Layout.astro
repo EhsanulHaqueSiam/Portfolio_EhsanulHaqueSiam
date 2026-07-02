@@ -1,4 +1,12 @@
 ---
+// Self-hosted variable fonts (hashed into /_astro/ → immutable cache, CSP stays 'self')
+import archivoWoff2 from '@fontsource-variable/archivo/files/archivo-latin-wdth-normal.woff2?url';
+import frauncesItalicWoff2 from '@fontsource-variable/fraunces/files/fraunces-latin-opsz-italic.woff2?url';
+import '@fontsource-variable/archivo/wdth.css';
+import '@fontsource-variable/fraunces/opsz.css';
+import '@fontsource-variable/fraunces/opsz-italic.css';
+import '@fontsource-variable/instrument-sans';
+import '@fontsource-variable/spline-sans-mono';
 import '../index.css';
 import { SITE, META, buildJsonLd } from '../seo/schema';
 
@@ -19,7 +27,7 @@ const lastModified = new Date().toISOString().slice(0, 10);
 ---
 
 <!doctype html>
-<html lang="en" class="no-js" style="background:#0a0a0f">
+<html lang="en" class="no-js" style="background:#f5f1e8">
   <head>
     <meta charset="UTF-8" />
     <!-- Reveal SSR content immediately for JS-off; JS-on lets Framer Motion animate in -->
@@ -78,10 +86,10 @@ const lastModified = new Date().toISOString().slice(0, 10);
     <link rel="manifest" href="/site.webmanifest" />
 
     <!-- Theme & PWA -->
-    <meta name="theme-color" content="#0a0a0f" />
+    <meta name="theme-color" content="#f5f1e8" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <meta name="apple-mobile-web-app-title" content="Siam Portfolio" />
 
     <!-- Geo & Language -->
@@ -89,30 +97,15 @@ const lastModified = new Date().toISOString().slice(0, 10);
     <meta name="geo.placename" content="Dhaka" />
     <meta name="language" content="English" />
 
-    <!-- Resource hints -->
-    <link rel="dns-prefetch" href="https://api.fontshare.com" />
-    <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
-    <link rel="dns-prefetch" href="https://cdn.fontshare.com" />
-    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
+    <!-- Resource hints (fonts are self-hosted & bundled — no font CDN needed) -->
     <link rel="dns-prefetch" href="https://github-contributions-api.jogruber.de" />
 
-    <!-- Fonts - non-blocking with preload swap -->
-    <link
-      rel="preload"
-      href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&f[]=satoshi@400,500,700&display=swap"
-      as="style"
-      onload="this.onload=null;this.rel='stylesheet'"
-    />
-    <noscript>
-      <link
-        href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&f[]=satoshi@400,500,700&display=swap"
-        rel="stylesheet"
-      />
-    </noscript>
+    <!-- Above-the-fold font preloads (poster name + italic accent) -->
+    <link rel="preload" as="font" type="font/woff2" crossorigin href={archivoWoff2} />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href={frauncesItalicWoff2} />
 
-    <!-- Hero image preloads (LCP) -->
-    <link rel="preload" as="image" type="image/webp" href="/images/profile2.webp" />
-    <link rel="preload" as="image" type="image/webp" href="/images/profile2-hero.webp" fetchpriority="high" media="(min-width: 1024px)" />
+    <!-- Hero image preload (LCP) -->
+    <link rel="preload" as="image" type="image/webp" href="/images/profile2-hero.webp" fetchpriority="high" />
 
     <!-- Structured Data -->
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} is:inline />
@@ -121,17 +114,19 @@ const lastModified = new Date().toISOString().slice(0, 10);
       /* No-JS / pre-hydration fallback: reveal content that Framer Motion hides
          via inline opacity:0 so crawlers and JS-off visitors always see it. */
       html.no-js [style*='opacity:0'],
-      html.no-js [style*='opacity: 0'] {
+      html.no-js [style*='opacity: 0'],
+      html.no-js [style*='transform:translate'],
+      html.no-js [style*='transform: translate'] {
         opacity: 1 !important;
         transform: none !important;
         visibility: visible !important;
       }
     </style>
   </head>
-  <body style="background:#0a0a0f;color:#e5e7eb">
+  <body style="background:#f5f1e8;color:#171412">
     <a
       href="#main-content"
-      class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[999] focus:px-4 focus:py-2 focus:bg-violet-600 focus:text-white focus:rounded-lg focus:outline-none"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[999] focus:px-4 focus:py-2 focus:bg-ink-900 focus:text-paper-50 focus:font-mono focus:uppercase focus:text-xs focus:outline-none"
     >
       Skip to main content
     </a>

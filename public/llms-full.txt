@@ -1,14 +1,14 @@
 # Ehsanul Haque Siam — Full Profile
 
 > AI Engineer & Full-Stack Developer, Dhaka, Bangladesh. Published researcher who ships production systems — from blockchain R&D and RAG pipelines to e-commerce platforms serving 50,000+ users
-> Last updated: 2026-07-01. Contact: ehsanul.siamdev@gmail.com
+> Last updated: 2026-07-02. Contact: ehsanul.siamdev@gmail.com
 
 I bridge research and production. Research Assistant at Deepchain Labs driving R&D in blockchain, cybersecurity, and quantum cryptography. Published peer-reviewed research (a Taylor & Francis book chapter and an accepted IEEE QPAIN 2026 paper) while shipping 4 production websites that drove 1.5x client revenue at BetaScript LLC. Built 15+ web scrapers and Gemini-powered AI classification pipelines at BDTracks. Obsessed with turning complex problems into systems that scale.
 
 ## Experience
 
 ### Research Assistant (Full-time, Remote) — Deepchain Labs (Apr 2026 - Present)
-Contributing to R&D initiatives in blockchain, cybersecurity, and quantum cryptography at Deepchain Labs (deepchainlabs.com). Conducting advanced research, producing academic papers and technical documentation, and driving innovation-driven projects across multiple security domains.
+Researching blockchain, cybersecurity, and quantum cryptography at Deepchain Labs (deepchainlabs.com) — producing peer-review-ready papers, threat analyses, and technical documentation across multiple security domains.
 
 ### Solo Developer (Part-time, ~20 hrs/week) — BetaScript LLC (Jan 2026 - Present)
 Shipped 4 production React websites for this US-based digital agency, driving 1.5x client revenue growth measured by post-launch analytics and client billing. Full lifecycle ownership — design, React 19 + TanStack Start architecture, and Netlify deployment — across restaurant, e-commerce, and agency platforms serving 50,000+ end users.

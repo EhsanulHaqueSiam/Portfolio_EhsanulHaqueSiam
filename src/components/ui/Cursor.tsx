@@ -1,9 +1,15 @@
 import { useEffect, useRef, useState } from 'react';
 
+/**
+ * Crosshair cursor for the "Proof of Work" print aesthetic: a small square dot
+ * with a trailing square frame that rotates 45° over interactive elements.
+ * White + mix-blend-difference so it self-inverts on paper and ink spreads.
+ * All state lives outside React; positions are lerped in a single rAF loop.
+ */
 export function CustomCursor() {
   const [isTouchDevice, setIsTouchDevice] = useState(true);
   const dotRef = useRef<HTMLDivElement>(null);
-  const ringRef = useRef<HTMLDivElement>(null);
+  const frameRef = useRef<HTMLDivElement>(null);
   const textRef = useRef<HTMLSpanElement>(null);
   const rafRef = useRef<number>(0);
 
@@ -15,10 +21,10 @@ export function CustomCursor() {
   useEffect(() => {
     if (isTouchDevice) return;
 
-    if (!dotRef.current || !ringRef.current || !textRef.current) return;
+    if (!dotRef.current || !frameRef.current || !textRef.current) return;
 
     const dot = dotRef.current!;
-    const ring = ringRef.current!;
+    const frame = frameRef.current!;
     const text = textRef.current!;
 
     // ---- All cursor state lives outside React ----
@@ -26,69 +32,76 @@ export function CustomCursor() {
     let targetY = -100;
     let dotX = -100;
     let dotY = -100;
-    let ringX = -100;
-    let ringY = -100;
+    let frameX = -100;
+    let frameY = -100;
     let visible = false;
     let hovering = false;
 
-    // Scale targets — lerped in rAF to avoid the CSS scale+transform position bug.
-    // CSS `scale` property composes as: scale × transform, which scales the translation.
-    // By putting scale() inside the transform string AFTER translate, it only affects visual size.
     let dotScale = 1;
     let dotTargetScale = 1;
-    let ringScale = 1;
-    let ringTargetScale = 1;
+    let frameScale = 1;
+    let frameTargetScale = 1;
+    let frameRot = 0;
+    let frameTargetRot = 0;
 
-    const DOT_LERP = 1;        // Dot position: instant
-    const RING_LERP = 0.15;    // Ring position: trails behind
-    const SCALE_LERP = 0.2;    // Scale changes: smooth ~80ms
+    const DOT_LERP = 1;      // Dot position: instant
+    const FRAME_LERP = 0.16; // Frame trails behind
+    const SCALE_LERP = 0.2;
+    let running = false;
 
     function lerp(a: number, b: number, t: number) {
       return a + (b - a) * t;
     }
 
-    // ---- rAF loop ----
     function tick() {
       dotX = lerp(dotX, targetX, DOT_LERP);
       dotY = lerp(dotY, targetY, DOT_LERP);
-      ringX = lerp(ringX, targetX, RING_LERP);
-      ringY = lerp(ringY, targetY, RING_LERP);
+      frameX = lerp(frameX, targetX, FRAME_LERP);
+      frameY = lerp(frameY, targetY, FRAME_LERP);
       dotScale = lerp(dotScale, dotTargetScale, SCALE_LERP);
-      ringScale = lerp(ringScale, ringTargetScale, SCALE_LERP);
+      frameScale = lerp(frameScale, frameTargetScale, SCALE_LERP);
+      frameRot = lerp(frameRot, frameTargetRot, SCALE_LERP);
 
-      // Scale AFTER translate — only affects visual size, not position
+      // Scale/rotate AFTER translate — only affects visual size, not position
       dot.style.transform = `translate3d(${dotX}px, ${dotY}px, 0) translate(-50%, -50%) scale(${dotScale})`;
-      ring.style.transform = `translate3d(${ringX}px, ${ringY}px, 0) translate(-50%, -50%) scale(${ringScale})`;
+      frame.style.transform = `translate3d(${frameX}px, ${frameY}px, 0) translate(-50%, -50%) rotate(${frameRot}deg) scale(${frameScale})`;
 
+      // Settle: stop scheduling once everything has converged (battery-friendly)
+      const settled =
+        Math.abs(frameX - targetX) < 0.1 &&
+        Math.abs(frameY - targetY) < 0.1 &&
+        Math.abs(dotScale - dotTargetScale) < 0.005 &&
+        Math.abs(frameScale - frameTargetScale) < 0.005 &&
+        Math.abs(frameRot - frameTargetRot) < 0.05;
+      if (settled) {
+        running = false;
+        return;
+      }
       rafRef.current = requestAnimationFrame(tick);
     }
-    rafRef.current = requestAnimationFrame(tick);
 
-    // ---- Hover/click styling via direct DOM ----
+    function kickLoop() {
+      if (!running) {
+        running = true;
+        rafRef.current = requestAnimationFrame(tick);
+      }
+    }
+    kickLoop();
+
     function setHoverStyle(isHover: boolean, cursorText: string) {
       hovering = isHover;
-      dot.style.width = isHover ? '8px' : '12px';
-      dot.style.height = isHover ? '8px' : '12px';
       dotTargetScale = isHover ? 0.5 : 1;
-
-      ring.style.width = isHover ? '80px' : '40px';
-      ring.style.height = isHover ? '80px' : '40px';
-      ring.style.border = isHover
-        ? '2px solid rgba(139, 92, 246, 0.6)'
-        : '1px solid rgba(139, 92, 246, 0.25)';
-      ring.style.boxShadow = isHover
-        ? '0 0 20px rgba(139, 92, 246, 0.3), inset 0 0 20px rgba(139, 92, 246, 0.1)'
-        : 'none';
-      ring.style.backgroundColor = isHover ? 'rgba(139, 92, 246, 0.08)' : 'transparent';
+      frameTargetScale = isHover ? 2.4 : 1;
+      frameTargetRot = isHover ? 45 : 0;
+      frame.style.borderColor = isHover ? 'rgba(255,255,255,0.9)' : 'rgba(255,255,255,0.55)';
 
       text.textContent = cursorText;
       text.style.opacity = cursorText ? '1' : '0';
-      text.style.transform = cursorText ? 'scale(1)' : 'scale(0.5)';
     }
 
     function setClickStyle(isClick: boolean) {
-      dotTargetScale = isClick ? 0.5 : hovering ? 0.5 : 1;
-      ringTargetScale = isClick ? 0.85 : 1;
+      dotTargetScale = isClick ? 0.4 : hovering ? 0.5 : 1;
+      frameTargetScale = isClick ? (hovering ? 2.1 : 0.85) : hovering ? 2.4 : 1;
     }
 
     function setVisibility(show: boolean) {
@@ -96,37 +109,47 @@ export function CustomCursor() {
       visible = show;
       const opacity = show ? '1' : '0';
       dot.style.opacity = opacity;
-      ring.style.opacity = opacity;
+      frame.style.opacity = opacity;
     }
 
-    // ---- Event handlers ----
     const onMouseMove = (e: MouseEvent) => {
       targetX = e.clientX;
       targetY = e.clientY;
       setVisibility(true);
+      kickLoop();
     };
 
-    const onMouseDown = () => setClickStyle(true);
-    const onMouseUp = () => setClickStyle(false);
+    const onMouseDown = () => {
+      setClickStyle(true);
+      kickLoop();
+    };
+    const onMouseUp = () => {
+      setClickStyle(false);
+      kickLoop();
+    };
 
     const onMouseOver = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
       const interactive =
-        ['A', 'BUTTON', 'INPUT', 'TEXTAREA', 'SELECT'].includes(target.tagName) ||
-        target.closest('a, button, [data-cursor], [role="button"]') ||
+        ['A', 'BUTTON', 'INPUT', 'TEXTAREA', 'SELECT', 'SUMMARY'].includes(target.tagName) ||
+        target.closest('a, button, summary, [data-cursor], [role="button"]') ||
         target.classList.contains('cursor-pointer');
 
       if (interactive) {
         const cursorData = target.getAttribute('data-cursor') ||
                           target.closest('[data-cursor]')?.getAttribute('data-cursor') || '';
         setHoverStyle(true, cursorData);
+        kickLoop();
       }
     };
 
     const onMouseOut = (e: MouseEvent) => {
       const relatedTarget = e.relatedTarget as HTMLElement | null;
-      if (relatedTarget?.closest('a, button, [data-cursor], [role="button"]')) return;
-      if (hovering) setHoverStyle(false, '');
+      if (relatedTarget?.closest('a, button, summary, [data-cursor], [role="button"]')) return;
+      if (hovering) {
+        setHoverStyle(false, '');
+        kickLoop();
+      }
     };
 
     const onDocumentLeave = () => setVisibility(false);
@@ -158,35 +181,35 @@ export function CustomCursor() {
     <>
       <div
         ref={dotRef}
-        className="fixed top-0 left-0 rounded-full bg-white pointer-events-none z-[9999] mix-blend-difference"
+        className="fixed top-0 left-0 bg-white pointer-events-none z-[9999] mix-blend-difference"
         style={{
-          width: 12,
-          height: 12,
+          width: 5,
+          height: 5,
           opacity: 0,
-          transition: 'width 0.15s ease, height 0.15s ease, opacity 0.15s ease',
+          transition: 'opacity 0.15s ease',
           willChange: 'transform',
         }}
       />
 
       <div
-        ref={ringRef}
-        className="fixed top-0 left-0 rounded-full pointer-events-none z-[9998] flex items-center justify-center"
+        ref={frameRef}
+        className="fixed top-0 left-0 pointer-events-none z-[9998] mix-blend-difference flex items-center justify-center"
         style={{
-          width: 40,
-          height: 40,
-          border: '1px solid rgba(139, 92, 246, 0.25)',
+          width: 26,
+          height: 26,
+          border: '1px solid rgba(255,255,255,0.55)',
           opacity: 0,
-          transition: 'width 0.25s cubic-bezier(0.22, 1, 0.36, 1), height 0.25s cubic-bezier(0.22, 1, 0.36, 1), border 0.25s ease, box-shadow 0.3s ease, background-color 0.25s ease, opacity 0.15s ease',
+          transition: 'border-color 0.25s ease, opacity 0.15s ease',
           willChange: 'transform',
         }}
       >
         <span
           ref={textRef}
-          className="relative z-10 text-[11px] font-semibold text-violet-300 uppercase tracking-wider whitespace-nowrap"
+          className="text-[8px] font-mono font-medium text-white uppercase tracking-[0.2em] whitespace-nowrap"
           style={{
             opacity: 0,
-            transform: 'scale(0.5)',
-            transition: 'opacity 0.15s ease, transform 0.15s ease',
+            transform: 'rotate(-45deg)',
+            transition: 'opacity 0.15s ease',
           }}
         />
       </div>

@@ -2,7 +2,7 @@ import { LazyMotion, domAnimation, MotionConfig, useReducedMotion } from 'framer
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { SocialLinks } from './components/SocialLinks';
-import { CustomCursor, ScrollProgress, SmoothScroll } from './components/ui';
+import { CustomCursor, ScrollProgress, SmoothScroll, Marquee, StudioCat } from './components/ui';
 // Direct (non-lazy) imports so Astro server-renders every section into the
 // static HTML at build time — critical for SEO/AEO/GEO crawlers.
 import { About } from './components/About';
@@ -19,6 +19,22 @@ import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
 import { Resume } from './components/Resume';
 
+/** Hairline-bounded mono ticker strip between editorial spreads. */
+function Ticker({ items, direction = 'left' }: { items: string[]; direction?: 'left' | 'right' }) {
+  return (
+    <div className="border-t border-b rule-strong py-3 sm:py-4" aria-hidden="true">
+      <Marquee speed={38} direction={direction} pauseOnHover={false}>
+        {items.map((item) => (
+          <span key={item} className="folio !text-ink-700 mx-6 inline-flex items-center gap-6">
+            {item}
+            <span className="text-vermilion">✦</span>
+          </span>
+        ))}
+      </Marquee>
+    </div>
+  );
+}
+
 function App() {
   const shouldReduceMotion = useReducedMotion();
 
@@ -27,15 +43,9 @@ function App() {
     <MotionConfig reducedMotion="user">
     <SmoothScroll>
       <div className="relative">
-        {/* Fixed background gradients - uses GPU compositing instead of background-attachment: fixed */}
-        <div
-          className="fixed inset-0 -z-10 pointer-events-none"
-          aria-hidden="true"
-          style={{
-            backgroundImage:
-              'radial-gradient(ellipse at 20% 0%, rgba(139, 92, 246, 0.06) 0%, transparent 50%), radial-gradient(ellipse at 80% 100%, rgba(245, 158, 11, 0.04) 0%, transparent 50%)',
-          }}
-        />
+        {/* Print furniture: fixed ruled layout columns + paper grain */}
+        <div className="ruled-columns" aria-hidden="true" />
+        <div className="grain-overlay" aria-hidden="true" />
 
         {/* Custom cursor - only on desktop, disabled for reduced motion */}
         {!shouldReduceMotion && <CustomCursor />}
@@ -51,16 +61,44 @@ function App() {
           <Navbar />
           <main id="main-content">
             <Hero />
+            <Ticker
+              items={[
+                'AI engineering',
+                'LLM / RAG systems',
+                'Full-stack development',
+                'Published research',
+                'Dhaka → worldwide',
+              ]}
+            />
             <div className="cv-auto"><About /></div>
             <div className="cv-auto"><WhyMe /></div>
             <div className="cv-auto"><Experience /></div>
             <div className="cv-auto"><Skills /></div>
+            <Ticker
+              direction="right"
+              items={[
+                'Selected works',
+                '2023 — 2026',
+                'Shipped & measured',
+                '50,000+ users served',
+                'Production-grade',
+              ]}
+            />
+            <div className="dither-edge" aria-hidden="true" />
             <div className="cv-auto"><Projects /></div>
+            <div className="dither-edge dither-edge-flip" aria-hidden="true" />
             <div className="cv-auto"><Testimonials /></div>
             <div className="cv-auto"><Awards /></div>
             <div className="cv-auto"><Publications /></div>
             <div className="cv-auto"><Education /></div>
             <div className="cv-auto"><FAQ /></div>
+            {/* A quiet beat before the finale: the studio cat on its hairline */}
+            <div className="mx-auto max-w-[1400px] px-5 sm:px-8 lg:px-12" aria-hidden="true">
+              <div className="border-b rule-strong flex justify-end pr-[12%] sm:pr-[18%]">
+                <StudioCat className="translate-y-[3px]" />
+              </div>
+            </div>
+            <div className="dither-edge" aria-hidden="true" />
             <div className="cv-auto"><Contact /></div>
           </main>
           <Footer />

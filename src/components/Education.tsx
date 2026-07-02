@@ -1,7 +1,15 @@
 import { m } from 'framer-motion';
 import { hideImageOnError } from '../data/content';
 import { SectionHeader } from './ui/SectionHeader';
-import { MagneticHover } from './ui/ImageDistortion';
+
+const EASE = [0.16, 1, 0.3, 1] as const;
+
+interface LedgerRow {
+  label: string;
+  value: string;
+  /** Render the value in vermilion (key transcript data). */
+  accent?: boolean;
+}
 
 interface EducationItem {
   institution: string;
@@ -12,20 +20,31 @@ interface EducationItem {
   image: string;
 }
 
-const educationData: EducationItem[] = [
-  {
-    institution: 'American International University-Bangladesh',
-    degree: 'Bachelor of Science in Computer Science and Engineering',
-    location: 'AIUB',
-    period: '2022 - 2026',
-    status: 'Pursuing',
-    image: 'university',
-  },
+/** Primary record — rendered as the hairline-framed transcript excerpt. */
+const primaryRecord: EducationItem = {
+  institution: 'American International University-Bangladesh',
+  degree: 'Bachelor of Science in Computer Science and Engineering',
+  location: 'AIUB',
+  period: '2022 — 2026',
+  status: 'Pursuing',
+  image: 'university',
+};
+
+/** Honours ledger for the primary record (Dean's List data per achievements). */
+const primaryLedger: LedgerRow[] = [
+  { label: 'Location', value: 'AIUB' },
+  { label: "Dean's List", value: '3×', accent: true },
+  { label: 'Term CGPA', value: '3.95 · 3.89 · 3.75+' },
+  { label: 'Expected Graduation', value: '2026' },
+];
+
+/** Prior records — secondary ledger rows. */
+const priorRecords: EducationItem[] = [
   {
     institution: 'Govt. Azizul Haque College',
     degree: 'Higher Secondary School Certificate (HSC) in Science',
     location: 'Bogura',
-    period: '2019 - 2021',
+    period: '2019 — 2021',
     status: 'Completed',
     image: 'college',
   },
@@ -33,7 +52,7 @@ const educationData: EducationItem[] = [
     institution: 'Bogra Zilla School',
     degree: 'Secondary School Certificate (SSC) in Science',
     location: 'Bogura',
-    period: '2011 - 2019',
+    period: '2011 — 2019',
     status: 'Completed',
     image: 'school',
   },
@@ -41,100 +60,169 @@ const educationData: EducationItem[] = [
 
 export function Education() {
   return (
-    <section id="education" className="py-16 sm:py-24 md:py-32 px-4 sm:px-6 md:px-12 lg:px-24 relative overflow-hidden">
-      {/* Background decorations */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div
-          className="absolute -top-1/4 -right-1/4 w-[600px] h-[600px] border border-violet-500/10 rounded-full animate-[spin_120s_linear_infinite]"
+    <section id="education" className="py-24 sm:py-32">
+      <div className="mx-auto max-w-[1400px] px-5 sm:px-8 lg:px-12">
+        <SectionHeader
+          number="09"
+          name="EDUCATION"
+          title={
+            <>
+              Academic <em>record</em>
+            </>
+          }
+          annotation="3 INSTITUTIONS · 2011—2026"
         />
-        <div
-          className="absolute -bottom-1/4 -left-1/4 w-[500px] h-[500px] border border-amber-500/10 rounded-full animate-[spin_90s_linear_infinite_reverse]"
-        />
-      </div>
 
-      <div className="max-w-7xl mx-auto relative z-10">
-        <SectionHeader number="10" title="Education" />
+        {/* Primary record — hairline-framed transcript excerpt */}
+        <m.article
+          className="reg-marks relative border rule bg-paper-50 shadow-plate"
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-10%' }}
+          transition={{ duration: 0.7, ease: EASE }}
+          aria-label={`Academic record: ${primaryRecord.institution}`}
+        >
+          {/* Transcript header strip */}
+          <div className="flex items-baseline justify-between gap-4 border-b rule px-5 py-3 sm:px-8 lg:px-10">
+            <span className="folio">RECORD 09-01</span>
+            <span className="folio hidden sm:block text-right">
+              TRANSCRIPT EXCERPT · OFFICIAL COPY
+            </span>
+          </div>
 
-        {/* Education cards */}
-        <div className="grid gap-8">
-          {educationData.map((edu, index) => (
-            <m.div
-              key={edu.institution}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: index * 0.15 }}
-            >
-              <MagneticHover strength={6}>
-                <div className="group relative p-8 md:p-10 rounded-3xl bg-space-800/50 border border-white/5 hover:border-violet-500/30 transition-[border-color] duration-200 overflow-hidden">
-                  {/* Gradient overlay on hover */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-violet-500/5 via-transparent to-amber-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
+          <div className="grid gap-10 p-5 py-8 sm:p-8 lg:grid-cols-[minmax(0,1fr)_320px] lg:gap-14 lg:p-10">
+            <div className="min-w-0">
+              {/* Institution + status stamp */}
+              <div className="flex flex-wrap items-start justify-between gap-x-6 gap-y-5">
+                <h3 className="max-w-2xl font-display text-3xl font-light leading-[1.08] text-ink-900 sm:text-4xl">
+                  {primaryRecord.institution}
+                </h3>
+                <span className="stamp inline-block shrink-0 -rotate-3 px-3 py-1.5 text-[10px]">
+                  {primaryRecord.status}
+                </span>
+              </div>
 
-                  {/* Content */}
-                  <div className="relative z-10 flex flex-col md:flex-row md:items-center gap-6">
-                    {/* Logo/Icon */}
-                    <div className="flex-shrink-0">
-                      <div className="w-20 h-20 md:w-24 md:h-24 rounded-2xl bg-gradient-to-br from-violet-500/20 to-amber-500/10 border border-white/10 overflow-hidden">
-                        <img
-                          src={`/images/education/${edu.image}.webp`}
-                          alt={edu.institution}
-                          width={96}
-                          height={96}
-                          loading="lazy"
-                          className="w-full h-full object-cover"
-                          onError={hideImageOnError}
-                        />
-                      </div>
-                    </div>
+              {/* Degree + years — mono */}
+              <p className="mt-4 font-mono text-[11px] uppercase leading-relaxed tracking-[0.16em] text-ink-500 sm:text-xs">
+                {primaryRecord.degree}
+                <span aria-hidden="true"> · </span>
+                {primaryRecord.period}
+              </p>
 
-                    {/* Details */}
-                    <div className="flex-1 min-w-0">
-                      <div className="flex flex-wrap items-start justify-between gap-4 mb-3">
-                        <div>
-                          <h3 className="text-xl md:text-2xl font-display font-semibold text-white mb-1 group-hover:text-violet-300 transition-colors">
-                            {edu.degree}
-                          </h3>
-                          <p className="text-violet-400 font-medium">
-                            {edu.institution}
-                          </p>
-                        </div>
-                        <span className={`px-4 py-2 text-sm font-mono rounded-xl border ${
-                          edu.status === 'Pursuing'
-                            ? 'text-amber-400 bg-amber-500/10 border-amber-500/30'
-                            : 'text-green-400 bg-green-500/10 border-green-500/30'
-                        }`}>
-                          {edu.status}
-                        </span>
-                      </div>
-
-                      <div className="flex flex-wrap items-center gap-4 text-gray-400">
-                        <span className="flex items-center gap-2">
-                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                          </svg>
-                          {edu.location}
-                        </span>
-                        <span className="flex items-center gap-2">
-                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                          </svg>
-                          {edu.period}
-                        </span>
-                      </div>
-                    </div>
-
-                    {/* Decorative element */}
-                    <div className="hidden lg:block absolute right-8 top-1/2 -translate-y-1/2 opacity-10 group-hover:opacity-20 transition-opacity">
-                      <svg className="w-32 h-32 text-violet-500" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72L12 15l5-2.73v3.72z"/>
-                      </svg>
-                    </div>
+              {/* Honours ledger — dotted leaders */}
+              <dl className="mt-8 border-t rule sm:mt-10">
+                {primaryLedger.map((row) => (
+                  <div
+                    key={row.label}
+                    className="flex items-baseline border-b rule py-3.5"
+                  >
+                    <dt className="folio shrink-0">{row.label}</dt>
+                    <span className="leader" aria-hidden="true" />
+                    <dd
+                      className={`shrink-0 text-right font-mono text-xs uppercase tracking-[0.14em] ${
+                        row.accent
+                          ? 'font-medium text-vermilion-600'
+                          : 'text-ink-900'
+                      }`}
+                    >
+                      {row.value}
+                    </dd>
                   </div>
+                ))}
+              </dl>
+            </div>
+
+            {/* University plate */}
+            <figure className="group lg:pt-1">
+              <div className="plate reg-marks relative shadow-plate">
+                <img
+                  src={`/images/education/${primaryRecord.image}.webp`}
+                  alt={primaryRecord.institution}
+                  width={640}
+                  height={480}
+                  loading="lazy"
+                  decoding="async"
+                  className="aspect-[4/3] w-full object-cover"
+                  onError={hideImageOnError}
+                />
+              </div>
+              <figcaption className="folio mt-3">
+                FIG. 01 — THE UNIVERSITY · AIUB
+              </figcaption>
+            </figure>
+          </div>
+        </m.article>
+
+        {/* Prior records — secondary ledger */}
+        <div className="mt-16 sm:mt-20">
+          <m.div
+            className="flex items-baseline justify-between gap-4 border-t rule-strong pt-3"
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-10%' }}
+            transition={{ duration: 0.6, ease: EASE }}
+          >
+            <span className="folio">PRIOR RECORDS</span>
+            <span className="folio text-right">2011 — 2021</span>
+          </m.div>
+
+          <ul className="mt-2">
+            {priorRecords.map((edu, index) => (
+              <m.li
+                key={edu.institution}
+                className="group grid grid-cols-[3.5rem_minmax(0,1fr)] gap-x-4 border-b rule py-8 sm:grid-cols-[5rem_minmax(0,1fr)] sm:gap-x-6 sm:py-10"
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-10%' }}
+                transition={{ duration: 0.7, ease: EASE, delay: index * 0.08 }}
+              >
+                {/* Small plate */}
+                <div className="plate relative h-14 w-14 sm:h-20 sm:w-20">
+                  <img
+                    src={`/images/education/${edu.image}.webp`}
+                    alt={edu.institution}
+                    width={96}
+                    height={96}
+                    loading="lazy"
+                    decoding="async"
+                    className="h-full w-full object-cover"
+                    onError={hideImageOnError}
+                  />
                 </div>
-              </MagneticHover>
-            </m.div>
-          ))}
+
+                <div className="min-w-0">
+                  {/* Institution … period (dotted leader) */}
+                  <div className="flex items-baseline">
+                    <h4 className="font-display text-xl font-light leading-[1.15] text-ink-900 sm:text-2xl">
+                      {edu.institution}
+                    </h4>
+                    <span className="leader hidden sm:block" aria-hidden="true" />
+                    <span className="hidden shrink-0 font-mono text-xs uppercase tracking-[0.14em] text-ink-900 sm:block">
+                      {edu.period}
+                    </span>
+                  </div>
+
+                  {/* Degree — mono */}
+                  <p className="mt-3 font-mono text-[11px] uppercase leading-relaxed tracking-[0.16em] text-ink-500 sm:text-xs">
+                    RECORD 09-0{index + 2}
+                    <span aria-hidden="true"> · </span>
+                    {edu.degree}
+                  </p>
+
+                  {/* Location · period (mobile) · status */}
+                  <p className="mt-2 font-mono text-[11px] uppercase leading-relaxed tracking-[0.16em] text-ink-500 sm:text-xs">
+                    {edu.location}
+                    <span className="sm:hidden">
+                      <span aria-hidden="true"> · </span>
+                      {edu.period}
+                    </span>
+                    <span aria-hidden="true"> · </span>
+                    <span className="text-ink-700">{edu.status}</span>
+                  </p>
+                </div>
+              </m.li>
+            ))}
+          </ul>
         </div>
       </div>
     </section>

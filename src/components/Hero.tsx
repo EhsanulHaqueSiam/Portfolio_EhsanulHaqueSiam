@@ -1,297 +1,205 @@
-import { useRef } from 'react';
-import { m, useScroll, useTransform } from 'framer-motion';
+import { useEffect, useRef, useState } from 'react';
+import type { CSSProperties } from 'react';
+import { m, useScroll, useTransform, useReducedMotion, useInView } from 'framer-motion';
 import { profile, profileHeroImage } from '../data/content';
-import { RevealText } from './ui/SplitText';
-import { KineticText } from './ui/KineticText';
+import { FerroText } from './ui/FerroText';
 import { MagneticHover } from './ui/ImageDistortion';
-import { Marquee } from './ui/Marquee';
 import { OptimizedImage } from './ui/OptimizedImage';
-import { ResumeIcon } from './ui/Icons';
+import { ArrowDownIcon } from './ui/Icons';
 import { useMediaQuery } from '../hooks/useMediaQuery';
+
+/** Parses "1.5x" / "50K+" / "8+" into { value, decimals, suffix } for the ticker. */
+function parseStat(raw: string): { value: number; decimals: number; suffix: string } {
+  const match = raw.match(/^([\d.]+)(.*)$/);
+  if (!match) return { value: 0, decimals: 0, suffix: raw };
+  const num = parseFloat(match[1]);
+  const decimals = match[1].includes('.') ? match[1].split('.')[1].length : 0;
+  return { value: num, decimals, suffix: match[2] };
+}
+
+/**
+ * Count-up numeral. SSR and first client render show the FINAL value (crawler
+ * parity, no hydration mismatch); the count-up only runs after hydration.
+ */
+function StatTicker({ raw }: { raw: string }) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const inView = useInView(ref, { once: true, margin: '-10%' });
+  const reduced = useReducedMotion();
+  const [display, setDisplay] = useState(raw);
+
+  useEffect(() => {
+    if (!inView || reduced) return;
+    const { value, decimals, suffix } = parseStat(raw);
+    if (!value) return;
+    const duration = 1100;
+    let start: number | null = null;
+    let raf: number;
+    const tick = (t: number) => {
+      if (start === null) start = t;
+      const p = Math.min((t - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - p, 4);
+      setDisplay(`${(value * eased).toFixed(decimals)}${suffix}`);
+      if (p < 1) raf = requestAnimationFrame(tick);
+      else setDisplay(raw);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [inView, raw, reduced]);
+
+  return <span ref={ref}>{display}</span>;
+}
 
 export function Hero() {
   const containerRef = useRef<HTMLElement>(null);
   const isMobile = useMediaQuery('(max-width: 767px)');
+  const reduced = useReducedMotion();
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ['start start', 'end start'],
   });
-
-  const y2 = useTransform(scrollYProgress, [0, 1], [0, isMobile ? -50 : -200]);
-  const scale = useTransform(scrollYProgress, [0, 0.5], [1, isMobile ? 0.95 : 0.8]);
-  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+  const exitY = useTransform(scrollYProgress, [0, 1], [0, reduced || isMobile ? 0 : -80]);
+  const exitOpacity = useTransform(scrollYProgress, [0, 0.9], [1, reduced ? 1 : 0.15]);
 
   return (
     <section
       ref={containerRef}
-      className="relative min-h-[150vh] lg:min-h-[175vh] xl:min-h-[200vh]"
+      className="relative min-h-[100svh] flex flex-col justify-start pt-24 sm:pt-28 lg:pt-32 pb-6"
+      aria-label="Introduction"
     >
-      {/* Sticky hero content */}
-      <div className="sticky top-0 min-h-screen md:h-screen flex flex-col justify-center overflow-hidden pt-24 pb-20 md:pb-0">
-        {/* Animated gradient mesh background */}
-        <div className="absolute inset-0 pointer-events-none">
-          {/* Primary gradient orb - static, no per-frame recalc needed for blurred bg */}
-          <div
-            className="absolute w-[300px] h-[300px] md:w-[600px] md:h-[600px] lg:w-[800px] lg:h-[800px] rounded-full"
-            style={{
-              background: 'radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, transparent 70%)',
-              filter: isMobile ? 'blur(30px)' : 'blur(20px)',
-              top: '5%',
-              right: '-15%',
-            }}
-          />
-
-          {/* Secondary gradient orb - smaller on mobile */}
-          <m.div
-            className="absolute w-[250px] h-[250px] md:w-[400px] md:h-[400px] lg:w-[600px] lg:h-[600px] rounded-full"
-            style={{
-              y: isMobile ? 0 : y2,
-              background: 'radial-gradient(circle, rgba(245, 158, 11, 0.1) 0%, transparent 70%)',
-              filter: isMobile ? 'blur(30px)' : 'blur(20px)',
-              bottom: '5%',
-              left: '-10%',
-            }}
-          />
-
-          {/* Grid lines */}
-          <div
-            className="absolute inset-0 opacity-[0.03]"
-            style={{
-              backgroundImage: `
-                linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)
-              `,
-              backgroundSize: '100px 100px',
-            }}
-          />
-
-          {/* Decorative shapes - CSS animations (compositor-thread, auto-paused by content-visibility) */}
-          <div
-            className="hidden md:block absolute top-[20%] left-[10%] w-16 h-16 md:w-24 md:h-24 border border-violet-500/20 rounded-2xl hero-decorative-rotate"
-          />
-          <div
-            className="hidden md:block absolute bottom-[30%] right-[15%] w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-amber-500/10 to-transparent rounded-full hero-decorative-pulse"
-          />
-          <div
-            className="hidden md:block absolute top-[40%] right-[8%] w-2 h-2 bg-violet-500 rounded-full hero-decorative-blink"
-          />
-
-          {/* Floating profile image - visible from lg (1024px+) screens */}
-          <m.div
-            className="hidden lg:block absolute top-[20%] right-[8%] z-0"
-            style={{ y: y2 }}
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1, delay: 1 }}
-          >
-            <div className="relative">
-              {/* Glow backdrop - reduced blur */}
-              <div className="absolute inset-0 bg-gradient-to-br from-violet-500/30 to-amber-500/20 rounded-[2rem] blur-2xl scale-110" />
-
-              {/* Image container */}
-              <div
-                className="relative lg:w-48 lg:h-60 xl:w-64 xl:h-80 rounded-[2rem] overflow-hidden border border-white/10 hero-float"
-              >
-                <OptimizedImage
-                  src={profileHeroImage}
-                  alt={profile.name}
-                  priority
-                  width={256}
-                  height={320}
-                  className="w-full h-full"
-                />
-                {/* Gradient overlays */}
-                <div className="absolute inset-0 bg-gradient-to-t from-space-900/60 via-transparent to-transparent" />
-                <div className="absolute inset-0 bg-gradient-to-br from-violet-500/10 to-transparent mix-blend-overlay" />
-              </div>
-
-              {/* Staggered fade-in decorative elements */}
-              <div
-                className="absolute -top-4 -right-4 w-8 h-8 border-t-2 border-r-2 border-violet-500/50 rounded-tr-xl hero-decorative-blink"
-                style={{ animationDuration: '3s' }}
-              />
-              <div
-                className="absolute -bottom-4 -left-4 w-8 h-8 border-b-2 border-l-2 border-amber-500/50 rounded-bl-xl hero-decorative-blink"
-                style={{ animationDuration: '3s', animationDelay: '0.5s' }}
-              />
-            </div>
-          </m.div>
+      <m.div
+        style={{ y: exitY, opacity: exitOpacity }}
+        className="relative mx-auto w-full max-w-[1400px] px-5 sm:px-8 lg:px-12 flex-1 flex flex-col"
+      >
+        {/* Masthead meta row */}
+        <div className="border-t border-b rule-strong py-2.5 flex items-center justify-between gap-4">
+          <span className="folio">Now — {profile.currentRole}</span>
+          <span className="folio hidden md:block">Deepchain Labs · BetaScript · BDTracks</span>
+          <span className="folio hidden sm:block">{profile.location}</span>
         </div>
 
-        {/* Main content */}
-        <m.div
-          className="relative z-10 px-4 sm:px-6 md:px-12 lg:px-24"
-          style={{ scale: isMobile ? 1 : scale, opacity }}
-        >
-          {/* Eyebrow text */}
-          <m.div
-            className="mb-4 sm:mb-8"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
+        {/* Masthead name — italic serif accent over giant poster type */}
+        <div className="hero-name-block relative mt-10 sm:mt-14 lg:mt-16">
+          <p
+            className="rise-in font-display italic font-light text-vermilion text-2xl sm:text-4xl lg:text-5xl leading-none mb-2 sm:mb-4"
+            style={{ '--rise-delay': '0.1s' } as CSSProperties}
           >
-            <span className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full border border-violet-500/30 bg-violet-500/5 text-violet-400 text-xs sm:text-sm font-mono">
-              <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-green-500 animate-pulse" />
-              {profile.available ? 'Available for opportunities' : 'Currently busy'}
+            {profile.title.toLowerCase()}
+          </p>
+          <h1 className="poster leading-[0.9]">
+            <span className="sr-only">{profile.name}</span>
+            <span className="hero-name-line block text-ink-900">
+              <FerroText text={profile.firstName.toUpperCase()} delay={0.05} stagger={0.035} />
             </span>
-          </m.div>
+            <span className="hero-name-line block text-ink-900">
+              <FerroText
+                text={profile.lastName.toUpperCase()}
+                delay={0.3}
+                stagger={0.03}
+                suffix={<span className="text-vermilion">.</span>}
+              />
+            </span>
+          </h1>
+        </div>
 
-          {/* Giant name - main headline - better mobile sizing */}
-          <div className="mb-4 sm:mb-6">
-            <h1
-              aria-label={profile.name}
-              className="text-[clamp(2.5rem,10vw,9rem)] font-display font-bold leading-[0.92] tracking-[-0.035em] [text-wrap:balance]"
-            >
-              {/* Real, correctly-spaced name for crawlers/AI textContent */}
-              <span className="sr-only">{profile.name}</span>
-              {/* First name: per-char kinetic reveal (CSS — paints instantly) */}
-              <span className="block" aria-hidden="true">
-                <KineticText text={profile.firstName} className="text-white" />
-              </span>
-              {/* Last name: gradient mask-reveal (CSS — paints instantly) */}
-              <span className="block overflow-hidden pb-[0.08em]" aria-hidden="true">
-                <span className="hero-mask-reveal gradient-text">{profile.lastName}</span>
-              </span>
-            </h1>
-          </div>
-
-          {/* Key highlights for recruiters */}
-          <m.div
-            className="flex flex-wrap gap-x-4 sm:gap-x-6 gap-y-1 sm:gap-y-2 mb-4 sm:mb-6 md:mb-8"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 1 }}
-          >
-            {profile.stats.map((stat) => (
-              <span key={stat.label} className="text-sm text-gray-400">
-                <span className="text-white font-semibold">{stat.value}</span>{' '}
-                {stat.label}
-              </span>
-            ))}
-          </m.div>
-
-          {/* Role/title with reveal effect */}
-          <div className="mb-4 sm:mb-8 md:mb-12 overflow-hidden">
-            <RevealText delay={0.8} className="text-lg sm:text-2xl md:text-4xl text-gray-400 font-light">
-              {profile.title}
-            </RevealText>
-          </div>
-
-          {/* Description and CTA */}
-          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4 sm:gap-6 lg:gap-12 max-w-5xl">
-            {/* Description */}
+        {/* Abstract + portrait */}
+        <div className="hero-abstract-grid mt-10 sm:mt-14 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
+          <div className="lg:col-span-7 xl:col-span-8">
             <p
-              className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-400 max-w-sm sm:max-w-md leading-relaxed"
+              className="rise-in font-display font-light text-2xl sm:text-3xl xl:text-4xl leading-snug text-ink-800 max-w-[26ch] sm:max-w-[30ch]"
+              style={{ '--rise-delay': '0.45s' } as CSSProperties}
             >
-              {profile.tagline.split('AI').map((part, i) =>
-                i === 0 ? part : (
-                  <span key={`ai-${part.slice(0, 10)}`}>
-                    <span className="text-violet-400">AI</span>
-                    {part}
-                  </span>
-                )
-              )}
+              {profile.tagline}
             </p>
 
-            {/* CTA Buttons */}
-            <m.div
-              className="flex flex-row flex-wrap gap-3"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
+            {/* CTAs */}
+            <div
+              className="rise-in mt-9 sm:mt-12 flex flex-wrap items-center gap-3 sm:gap-4"
+              style={{ '--rise-delay': '0.65s' } as CSSProperties}
             >
-              <MagneticHover strength={isMobile ? 0 : 16}>
+              <MagneticHover strength={isMobile ? 0 : 18}>
                 <a
                   href="#projects"
-                  className="press-feedback group relative inline-flex items-center justify-center gap-2 sm:gap-3 px-5 sm:px-8 py-3 sm:py-4 bg-white text-space-900 rounded-full font-medium overflow-hidden md:hover:scale-105 text-sm sm:text-base min-h-[44px]"
+                  className="press-feedback inline-flex items-center gap-3 bg-ink-900 text-paper-50 font-mono text-xs uppercase tracking-[0.16em] px-6 py-4 hover:bg-vermilion transition-colors duration-300"
                 >
-                  <span className="relative z-10 group-hover:text-white transition-colors duration-300">View Work</span>
-                  <span
-                    className="relative z-10 group-hover:text-white transition-colors duration-300 inline-block arrow-bounce"
-                  >
-                    →
-                  </span>
-                  <div className="absolute inset-0 bg-gradient-to-r from-violet-500 to-amber-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  Selected work
+                  <span className="arrow-bounce" aria-hidden="true">→</span>
                 </a>
               </MagneticHover>
-
-              <MagneticHover strength={isMobile ? 0 : 16}>
+              <MagneticHover strength={isMobile ? 0 : 18}>
                 <a
                   href="#contact"
-                  className="press-feedback inline-flex items-center justify-center gap-2 sm:gap-3 px-5 sm:px-8 py-3 sm:py-4 border border-white/20 text-white rounded-full font-medium hover:bg-white/5 active:bg-white/10 hover:border-white/40 text-sm sm:text-base min-h-[44px]"
+                  className="press-feedback inline-flex items-center gap-3 bg-vermilion text-paper-50 font-mono text-xs uppercase tracking-[0.16em] px-6 py-4 hover:bg-ink-900 transition-colors duration-300"
                 >
-                  Let's Talk
+                  Let’s talk
+                  <span aria-hidden="true">→</span>
                 </a>
               </MagneticHover>
-
-              {/* Resume button - visible on all screens */}
-              <MagneticHover strength={isMobile ? 0 : 16}>
-                <a
-                  href="#resume"
-                  className="press-feedback group relative inline-flex items-center justify-center gap-2 px-5 sm:px-6 py-3 sm:py-4 border border-amber-500/30 text-amber-400 rounded-full font-medium hover:bg-amber-500/10 active:bg-amber-500/15 hover:border-amber-500/50 text-sm sm:text-base min-h-[44px]"
-                >
-                  <ResumeIcon className="w-4 h-4 sm:w-5 sm:h-5" />
-                  <span>Resume</span>
-                  {/* Subtle glow effect */}
-                  <span className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-r from-amber-500/5 to-transparent blur-xl" />
+              <span className="flex items-center gap-5 sm:ml-2">
+                <a href="#resume" className="link-ink folio !text-ink-700 py-2">
+                  Résumé
                 </a>
-              </MagneticHover>
-
-              {/* Direct PDF download */}
-              <MagneticHover strength={isMobile ? 0 : 16}>
                 <a
                   href="/resume.pdf"
                   download="Ehsanul_Haque_Siam_Resume.pdf"
-                  className="press-feedback inline-flex items-center justify-center gap-2 px-5 sm:px-6 py-3 sm:py-4 border border-white/10 text-gray-400 rounded-full font-medium hover:bg-white/5 hover:text-white hover:border-white/20 text-sm sm:text-base min-h-[44px]"
+                  className="link-ink folio !text-ink-700 py-2 inline-flex items-center gap-1.5"
                 >
-                  <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                    <polyline points="7 10 12 15 17 10" />
-                    <line x1="12" y1="15" x2="12" y2="3" />
-                  </svg>
-                  <span>PDF</span>
+                  PDF <ArrowDownIcon className="w-3 h-3" />
                 </a>
-              </MagneticHover>
-            </m.div>
+              </span>
+            </div>
           </div>
-        </m.div>
 
-        {/* Scroll indicator - hidden below sm (640px) breakpoint */}
-        <m.div
-          className="hidden sm:block absolute bottom-12 right-6 md:right-12 lg:right-24 z-10"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.6 }}
-        >
-          <a href="#about" className="flex flex-col items-center gap-2 text-gray-400 hover:text-white transition-colors">
-            <span className="text-xs font-mono tracking-widest uppercase">Scroll</span>
-            <m.div
-              className="w-6 h-10 rounded-full border border-current flex items-start justify-center p-2"
-              initial={{ opacity: 0.5 }}
-            >
-              <div
-                className="w-1 h-2 rounded-full bg-current scroll-dot"
+          {/* Portrait plate */}
+          <figure
+            className="rise-in lg:col-span-5 xl:col-span-4 max-w-sm lg:max-w-none lg:justify-self-end w-full"
+            style={{ '--rise-delay': '0.3s' } as CSSProperties}
+          >
+            <div className="plate reg-marks relative">
+              <OptimizedImage
+                src={profileHeroImage}
+                alt={profile.name}
+                priority
+                aspectRatio="954/960"
+                sizes="(min-width: 1024px) 420px, 90vw"
+                className="w-full"
               />
-            </m.div>
-          </a>
-        </m.div>
+            </div>
+            <figcaption className="folio mt-3 flex justify-between gap-4">
+              <span>Fig. 00 — The author</span>
+              <span className="hidden sm:inline">Dhaka, BD</span>
+            </figcaption>
+          </figure>
+        </div>
 
-      </div>
+        {/* Stats colophon — proof, measured (X-Y-Z) */}
+        <dl
+          className="rise-in mt-12 sm:mt-16 border-t border-b rule-strong grid grid-cols-2 md:grid-cols-4"
+          style={{ '--rise-delay': '0.85s' } as CSSProperties}
+        >
+          {profile.stats.map((stat, i) => (
+            <div
+              key={stat.label}
+              className={`flex flex-col py-5 sm:py-6 px-4 sm:px-6 ${i > 0 ? 'md:border-l md:rule' : ''} ${i % 2 === 1 ? 'max-md:border-l max-md:rule' : ''} ${i >= 2 ? 'max-md:border-t max-md:rule' : ''}`}
+            >
+              <dt className="folio order-2">{stat.label}</dt>
+              <dd className="order-1 font-display font-light text-3xl sm:text-4xl xl:text-5xl text-ink-900 mb-1">
+                <StatTicker raw={stat.value} />
+              </dd>
+            </div>
+          ))}
+        </dl>
 
-      {/* Marquee section after hero */}
-      <div className="absolute bottom-0 left-0 right-0 py-3 sm:py-6 md:py-8 bg-space-900/50 backdrop-blur-sm border-y border-white/5">
-        <Marquee speed={isMobile ? 20 : 30} className="text-3xl sm:text-5xl md:text-7xl lg:text-9xl font-display font-bold text-white/[0.03]">
-          <span className="mx-3 sm:mx-6 md:mx-8">AI ENGINEER</span>
-          <span className="mx-3 sm:mx-6 md:mx-8">•</span>
-          <span className="mx-3 sm:mx-6 md:mx-8">MACHINE LEARNING</span>
-          <span className="mx-3 sm:mx-6 md:mx-8">•</span>
-          <span className="mx-3 sm:mx-6 md:mx-8">SOFTWARE DEVELOPER</span>
-          <span className="mx-3 sm:mx-6 md:mx-8">•</span>
-          <span className="mx-3 sm:mx-6 md:mx-8">RESEARCHER</span>
-          <span className="mx-3 sm:mx-6 md:mx-8">•</span>
-        </Marquee>
-      </div>
+        {/* Scroll cue */}
+        <a
+          href="#about"
+          className="rise-in mt-auto pt-8 pb-2 inline-flex items-center gap-3 self-start folio !text-ink-700 group"
+          style={{ '--rise-delay': '1.2s' } as CSSProperties}
+        >
+          <span className="scroll-dot inline-block" aria-hidden="true">↓</span>
+          Scroll — the work speaks
+        </a>
+      </m.div>
     </section>
   );
 }
