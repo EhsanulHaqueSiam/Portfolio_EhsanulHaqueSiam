@@ -90,7 +90,7 @@ export function Contact() {
       <SectionHeading icon={<EmailIcon className={headingIconClass} />}>Contact</SectionHeading>
 
       <p className="mx-auto mb-10 max-w-xl text-center text-sm leading-relaxed text-muted-foreground sm:text-base">
-        Currently building AI systems at Deepchain Labs, BetaScript and BDTracks. I take on select
+        Currently a Software Engineer at Ledgercross, building across the stack. I take on select
         AI/ML and full-stack engagements. Direct lines below; replies within 24 hours (UTC+6).
       </p>
 

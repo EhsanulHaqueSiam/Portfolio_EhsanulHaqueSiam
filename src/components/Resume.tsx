@@ -401,6 +401,7 @@ export function Resume() {
                     </span>
                   </div>
                   <ul className="resume-bullets mt-1.5">
+                    <li>Cumulative CGPA 3.90 / 4.00</li>
                     <li>3x Dean's List Award for academic excellence (CGPA 3.95, 3.89, 3.75+)</li>
                     <li>1st Runner-Up at AIUB CS Fest 2024 App Showcase competing against 20+ teams</li>
                     <li>Certified Ethical Hacker (CEH) – Team Matrix; 29-module program covering OWASP Top 10, CTF &amp; bug bounty</li>

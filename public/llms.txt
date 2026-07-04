@@ -1,12 +1,10 @@
 # Ehsanul Haque Siam
 
-> AI Engineer & Full-Stack Developer based in Dhaka, Bangladesh. I bridge research and production. Research Assistant at Deepchain Labs driving R&D in blockchain, cybersecurity, and quantum cryptography. Published peer-reviewed research (a Taylor & Francis book chapter and an accepted IEEE QPAIN 2026 paper) while shipping 4 production websites that drove 1.5x client revenue at BetaScript LLC. Built 15+ web scrapers and Gemini-powered AI classification pipelines at BDTracks. Obsessed with turning complex problems into systems that scale.
+> AI Engineer & Full-Stack Developer based in Dhaka, Bangladesh. I bridge research and production. Software Engineer at Ledgercross, building across the stack: backend services, React Native and Flutter apps, AI features, and the CI/CD and cloud infrastructure that ship them. Published peer-reviewed research (a Taylor & Francis book chapter and an accepted IEEE QPAIN 2026 paper). Previously drove 1.5x client revenue shipping 4 production websites at BetaScript LLC and built 15+ web scrapers with Gemini-powered AI pipelines at BDTracks. Obsessed with turning complex problems into systems that scale.
 > Last updated: 2026-07-04. Contact: ehsanul.siamdev@gmail.com
 
 ## Now
-- **Research Assistant (Full-time, Remote), Deepchain Labs** (Apr 2026–Present)
-- **Solo Developer (Part-time, ~20 hrs/week), BetaScript LLC** (Jan 2026–Present)
-- **AI & Data Engineer (Part-time, ~15 hrs/week), BDTracks** (Aug 2025–Present)
+- **Software Engineer, Ledgercross** (Jun 2026–Present)
 
 ## Highlights
 - 1.5x: Revenue Growth

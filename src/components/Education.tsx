@@ -21,7 +21,7 @@ const records: EducationItem[] = [
     period: '2022 - 2026 (expected)',
     status: 'Pursuing',
     image: 'university',
-    highlights: ["3x Dean's List", 'Term CGPA 3.95 / 3.89 / 3.75+', 'Published researcher'],
+    highlights: ['CGPA 3.90 / 4.00', "3x Dean's List", 'Published researcher'],
   },
   {
     institution: 'Govt. Azizul Haque College, Bogura',

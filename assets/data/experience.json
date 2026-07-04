@@ -1,8 +1,16 @@
 [
   {
+    "company": "Ledgercross",
+    "role": "Software Engineer",
+    "date": "Jun 2026–Present",
+    "desc": "Full-stack + platform engineer at an early-stage software firm, owning work across the whole stack: backend services, React Native and Flutter apps, AI-powered features, and the CI/CD pipelines and cloud infrastructure that ship them. Startup-wide surface area with end-to-end ownership.",
+    "alignment": "left",
+    "showInHome": true
+  },
+  {
     "company": "Deepchain Labs",
     "role": "Research Assistant (Full-time, Remote)",
-    "date": "Apr 2026–Present",
+    "date": "Apr 2026–May 2026",
     "desc": "Researching blockchain, cybersecurity, and quantum cryptography at Deepchain Labs (deepchainlabs.com), producing peer-review-ready papers, threat analyses, and technical documentation across multiple security domains.",
     "alignment": "left",
     "showInHome": true,
@@ -11,7 +19,7 @@
   {
     "company": "BetaScript LLC",
     "role": "Solo Developer (Part-time, ~20 hrs/week)",
-    "date": "Jan 2026–Present",
+    "date": "Jan 2026–May 2026",
     "desc": "Shipped 4 production React websites for this US-based digital agency, driving 1.5x client revenue growth measured by post-launch analytics and client billing. Full lifecycle ownership spanning design, React 19 + TanStack Start architecture, and Netlify deployment across restaurant, e-commerce, and agency platforms serving 50,000+ end users.",
     "alignment": "right",
     "showInHome": true
@@ -19,7 +27,7 @@
   {
     "company": "BDTracks",
     "role": "AI & Data Engineer (Part-time, ~15 hrs/week)",
-    "date": "Aug 2025–Present",
+    "date": "Aug 2025–May 2026",
     "desc": "Powering Bangladesh's commodity and accident tracking platform (bdtracks.com). Built 15+ web scrapers and fine-tuned Google Gemini 2.5 Flash/Pro via Vertex AI for automated data classification. Engineered production pipelines processing daily feeds from multiple national sources into structured datasets serving live dashboards.",
     "alignment": "left",
     "showInHome": true

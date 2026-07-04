@@ -8,6 +8,7 @@ import { BriefcaseIcon } from './ui/Icons';
 
 // Skill chips per company (experience.json carries prose, not tags).
 const COMPANY_SKILLS: Record<string, string[]> = {
+  Ledgercross: ['Backend', 'React Native', 'Flutter', 'CI/CD', 'Infrastructure', 'AI'],
   'Deepchain Labs': ['Blockchain', 'Cybersecurity', 'Quantum Cryptography', 'Research'],
   'BetaScript LLC': ['React 19', 'TypeScript', 'TanStack Start', 'Netlify'],
   BDTracks: ['Python', 'Web Scraping', 'Gemini', 'Vertex AI'],
