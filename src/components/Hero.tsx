@@ -7,7 +7,7 @@ import { ShimmerButton } from './ui/ShimmerButton';
 import { ShimmerBorder } from './ui/ShimmerBorder';
 import { AnimatedName } from './ui/AnimatedName';
 import { Tooltip } from './ui/Tooltip';
-import { GitHubIcon, LinkedInIcon, EmailIcon, ArrowRightIcon } from './ui/Icons';
+import { GitHubIcon, LinkedInIcon, EmailIcon, ArrowRightIcon, ResumeIcon } from './ui/Icons';
 import { OPEN_PALETTE_EVENT } from './ui/CommandPalette';
 
 /** Dhaka-local status, like the reference: green while awake, amber after hours. */
@@ -17,13 +17,13 @@ function getStatus(): { status: string; dotClass: string } {
     10
   );
   return hour >= 8 && hour < 23
-    ? { status: 'Available', dotClass: 'bg-green-500' }
-    : { status: 'Building after dark', dotClass: 'bg-amber-500' };
+    ? { status: 'Available', dotClass: 'bg-signal-success' }
+    : { status: 'Building after dark', dotClass: 'bg-signal-pending' };
 }
 
 /** SSR renders the default; the live Dhaka status resolves after hydration. */
 function StatusDot() {
-  const [{ status, dotClass }, setState] = useState({ status: 'Available', dotClass: 'bg-green-500' });
+  const [{ status, dotClass }, setState] = useState({ status: 'Available', dotClass: 'bg-signal-success' });
   useEffect(() => setState(getStatus()), []);
   return (
     <>
@@ -106,7 +106,7 @@ export function Hero() {
                 <span className="sr-only">{profile.name}</span>
                 <span
                   aria-hidden="true"
-                  className="inline-block bg-gradient-to-b from-zinc-500 to-zinc-950 bg-clip-text pb-2 text-transparent dark:from-zinc-50 dark:to-zinc-400"
+                  className="inline-block pb-2 text-foreground"
                 >
                   Hi. I&#39;m{' '}
                   <span className="text-foreground [-webkit-text-fill-color:hsl(var(--foreground))]">
@@ -123,7 +123,7 @@ export function Hero() {
                 />
               </p>
               <p className="mt-3 px-4 text-center text-xs text-muted-foreground sm:text-sm">
-                Published researcher · Certified Ethical Hacker · 50K+ users served · {profile.location}
+                Published researcher · Certified Ethical Hacker · {profile.location}
               </p>
             </BlurFade>
 
@@ -151,7 +151,17 @@ export function Hero() {
 
                 <span className="hidden h-5 w-px bg-border sm:block" aria-hidden />
 
-                {/* View my work pill */}
+                {/* Primary CTA — résumé is the highest-value action for a
+                    recruiter; solid fill makes it the one focal element. */}
+                <a
+                  href="#resume"
+                  className="press-feedback inline-flex items-center gap-2 rounded-full bg-foreground px-4 py-1.5 text-sm font-semibold text-background"
+                >
+                  <ResumeIcon className="h-4 w-4" />
+                  <span className="whitespace-nowrap">View résumé</span>
+                </a>
+
+                {/* View my work pill (secondary) */}
                 <a
                   ref={ctaRef}
                   onMouseMove={handleCtaMove}

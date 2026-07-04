@@ -183,7 +183,7 @@ export function About() {
           <NumberTicker
             value={50000}
             suffix="+"
-            className="whitespace-pre-wrap text-3xl font-semibold tracking-tighter text-muted-foreground"
+            className="whitespace-pre-wrap text-3xl font-semibold tracking-tighter text-accent-emphasis"
           />
         </GridItem>
 
@@ -198,7 +198,7 @@ export function About() {
             value={1.5}
             decimalPlaces={1}
             suffix="x"
-            className="whitespace-pre-wrap text-3xl font-semibold tracking-tighter text-muted-foreground"
+            className="whitespace-pre-wrap text-3xl font-semibold tracking-tighter text-accent-emphasis"
           />
         </GridItem>
 
@@ -209,7 +209,7 @@ export function About() {
           tooltip="Color ASCII torus: hover to tilt, click to flip"
           cursorEmoji="🌀"
         >
-          <div className="relative h-28 overflow-hidden rounded-md border border-border/60 bg-[#05060a]">
+          <div className="relative h-28 overflow-hidden rounded-md border border-border/60 bg-ascii-surface">
             <AsciiTorus className="h-full w-full" />
           </div>
         </GridItem>

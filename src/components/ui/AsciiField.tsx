@@ -55,10 +55,23 @@ export function AsciiField({ className = '', cols = 64, surface = 'ink' }: Ascii
     let target: Float32Array = new Float32Array(0);
     let lastFrame = 0;
 
-    const base =
-      surface === 'ink'
-        ? { r: 238, g: 241, b: 248, a: 0.3 } // bright glyphs on raised panels
-        : { r: 174, g: 181, b: 200, a: 0.4 }; // softer glyphs on the page void
+    // Glyph base color, resolved per-frame from the active theme so the field
+    // flips the instant ThemeToggle toggles html.dark. Dark theme: near-white
+    // glyphs on the dark plate. Light theme: dark ink on the light plate —
+    // otherwise the near-white glyphs vanish on a white page (the reported
+    // "ascii is black/blank in white theme" bug). The cursor wake lerps from
+    // this base toward the saturated PALETTE in either theme.
+    const glyphBase = () => {
+      const dark = document.documentElement.classList.contains('dark');
+      if (surface === 'ink') {
+        return dark
+          ? { r: 238, g: 241, b: 248, a: 0.3 }
+          : { r: 24, g: 27, b: 38, a: 0.42 };
+      }
+      return dark
+        ? { r: 174, g: 181, b: 200, a: 0.4 }
+        : { r: 60, g: 66, b: 88, a: 0.5 };
+    };
 
     const layout = () => {
       const w = wrap.clientWidth;
@@ -90,6 +103,7 @@ export function AsciiField({ className = '', cols = 64, surface = 'ink' }: Ascii
     };
 
     const draw = (time: number) => {
+      const base = glyphBase();
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       for (let y = 0; y < rows; y++) {
         for (let x = 0; x < cols; x++) {
@@ -185,6 +199,24 @@ export function AsciiField({ className = '', cols = 64, surface = 'ink' }: Ascii
     );
     io.observe(wrap);
 
+    // Repaint immediately when the theme flips. The field may be paused
+    // offscreen or frozen mid-scroll, so the per-frame glyphBase() read alone
+    // won't fire — this forces one repaint on the html.dark toggle. Guarded on
+    // the actual dark state so the unrelated `is-scrolling` class toggle (also
+    // on <html>) doesn't trigger a wasted raster on every scroll gesture.
+    let lastDark = document.documentElement.classList.contains('dark');
+    const themeObserver = new MutationObserver(() => {
+      const nowDark = document.documentElement.classList.contains('dark');
+      if (nowDark !== lastDark) {
+        lastDark = nowDark;
+        draw(t);
+      }
+    });
+    themeObserver.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['class'],
+    });
+
     if (!reduced && finePointer) {
       canvas.addEventListener('pointermove', onPointerMove, { passive: true });
       canvas.addEventListener('pointerleave', onPointerLeave, { passive: true });
@@ -195,6 +227,7 @@ export function AsciiField({ className = '', cols = 64, surface = 'ink' }: Ascii
       disposed = true;
       io.disconnect();
       ro.disconnect();
+      themeObserver.disconnect();
       cancelAnimationFrame(raf);
       window.clearTimeout(resizeT);
       canvas.removeEventListener('pointermove', onPointerMove);

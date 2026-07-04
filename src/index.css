@@ -17,12 +17,33 @@
   --secondary: 220 14% 96%;
   --secondary-foreground: 221 39% 11%;
   --muted: 220 14% 96%;
-  --muted-foreground: 220 9% 46%;
+  /* 40% (was 46%) so small muted labels clear WCAG AA (~5.1:1) on the
+     tinted secondary/muted/signal-tint panels, not just on pure white. */
+  --muted-foreground: 220 9% 40%;
   --accent: 220 14% 96%;
   --accent-foreground: 221 39% 11%;
   --border: 220 13% 91%;
   --input: 220 13% 91%;
   --ring: 218 11% 65%;
+
+  /* Signal tokens.
+     One meaning per hue; light values are darkened so text/badges clear
+     WCAG AA on white and on their own /15 tint. The .dark block below
+     lifts each to a brighter shade for the dark surface. Consumed as
+     text-signal-{role} and bg-signal-{role}/15 tints (mapped in the config). */
+  --signal-success: 160 84% 24%;   /* live / published / available / positive */
+  --signal-pending: 28 90% 34%;    /* pending / after-hours / accepted-not-yet */
+  --signal-problem: 346 80% 42%;   /* problem / error / critical */
+  --signal-info: 200 90% 30%;      /* reserved: informational note */
+  --signal-star: 40 92% 42%;       /* featured / award / star (hover flourish) */
+
+  /* The ONE earned, non-status emphasis accent (iris-violet, borrowed from
+     the ASCII field glyph + ambient ellipse). Proof-metric numerals only. */
+  --accent-emphasis: 256 58% 50%;
+
+  /* Plate behind the ASCII field/torus - flips with the theme so it is
+     never a black box on a white page. Light ~= page; dark ~= old #05060a. */
+  --ascii-surface: 220 20% 97%;
 
   /* rainbow button bands */
   --color-1: oklch(95% 0.13 95);
@@ -51,6 +72,18 @@
   --border: 220 18% 14%;
   --input: 220 16% 18%;
   --ring: 220 9% 46%;
+
+  /* Signal tokens — brighter shades tuned for the dark surface. */
+  --signal-success: 158 64% 52%;
+  --signal-pending: 43 96% 56%;
+  --signal-problem: 351 95% 71%;
+  --signal-info: 190 90% 65%;
+  --signal-star: 43 96% 56%;
+
+  --accent-emphasis: 252 90% 78%;
+
+  /* ~= the old hardcoded #05060a so dark mode is visually unchanged. */
+  --ascii-surface: 222 40% 4%;
 }
 
 @layer base {
@@ -276,8 +309,8 @@
   filter: blur(64px);
   background: radial-gradient(
     ellipse at center,
-    hsl(var(--muted-foreground) / 0.22),
-    hsl(var(--muted-foreground) / 0.07) 45%,
+    hsl(256 58% 55% / 0.10),
+    hsl(215 60% 55% / 0.05) 45%,
     transparent 70%
   );
 }

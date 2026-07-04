@@ -4,7 +4,7 @@ import { GlowCard } from './ui/GlowCard';
 import { BorderBeam } from './ui/BorderBeam';
 import { NumberTicker } from './ui/NumberTicker';
 import { PeekCat } from './ui/PeekCat';
-import { SparklesIcon, FlaskIcon, TrendingUpIcon, ShieldIcon, TerminalIcon } from './ui/Icons';
+import { StarIcon, FlaskIcon, TrendingUpIcon, ShieldIcon, TerminalIcon } from './ui/Icons';
 
 const iconClass = 'h-5 w-5 text-foreground';
 
@@ -46,7 +46,7 @@ const stats = [
 export function WhyMe() {
   return (
     <section id="why-me" className="scroll-mt-28">
-      <SectionHeading icon={<SparklesIcon className={headingIconClass} />}>Why Me</SectionHeading>
+      <SectionHeading icon={<StarIcon className={headingIconClass} />}>Why Me</SectionHeading>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         {reasons.map((reason, i) => (
@@ -81,7 +81,7 @@ export function WhyMe() {
                   i >= 2 ? 'max-md:border-t max-md:border-border/60' : ''
                 }`}
               >
-                <dd className="text-2xl font-semibold tracking-tighter text-foreground transition-transform duration-300 group-hover:scale-110 sm:text-3xl">
+                <dd className="text-2xl font-semibold tracking-tighter text-accent-emphasis transition-transform duration-300 group-hover:scale-110 sm:text-3xl">
                   <NumberTicker value={stat.value} suffix={stat.suffix} decimalPlaces={stat.decimals ?? 0} />
                 </dd>
                 <dt className="mt-1 text-[11px] font-medium uppercase tracking-wider text-muted-foreground sm:text-xs">

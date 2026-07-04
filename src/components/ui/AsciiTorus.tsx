@@ -144,15 +144,31 @@ export function AsciiTorus({ className = '' }: { className?: string }) {
       }
 
       ctx.clearRect(0, 0, canvas.width, canvas.height);
+      // Resolved per-frame so the torus flips with ThemeToggle. Dark theme:
+      // the bright STOPS palette on the dark plate. Light theme: darken the
+      // palette and lower the glow floor so the colored glyphs keep readable
+      // contrast on the near-white plate instead of washing out.
+      const dark = document.documentElement.classList.contains('dark');
       for (let yc = 0; yc < rows; yc++) {
         for (let xc = 0; xc < cols; xc++) {
           const idx = yc * cols + xc;
           const lum = lumBuf[idx];
           if (lum < 0) continue;
           const ch = RAMP[Math.min(RAMP.length - 1, Math.floor(lum * RAMP.length))];
-          const [r, g, b] = paletteAt(hueBuf[idx]);
-          const glow = 0.35 + lum * 0.65;
-          ctx.fillStyle = `rgba(${Math.round(r * glow)},${Math.round(g * glow)},${Math.round(b * glow)},${Math.min(1, 0.35 + lum * 0.75)})`;
+          let [r, g, b] = paletteAt(hueBuf[idx]);
+          let glow: number;
+          let alpha: number;
+          if (dark) {
+            glow = 0.35 + lum * 0.65;
+            alpha = Math.min(1, 0.35 + lum * 0.75);
+          } else {
+            r *= 0.58;
+            g *= 0.58;
+            b *= 0.58;
+            glow = 0.12 + lum * 0.88;
+            alpha = Math.min(1, 0.55 + lum * 0.5);
+          }
+          ctx.fillStyle = `rgba(${Math.round(r * glow)},${Math.round(g * glow)},${Math.round(b * glow)},${alpha})`;
           ctx.fillText(ch, xc * cellW, yc * cellH);
         }
       }
@@ -225,6 +241,22 @@ export function AsciiTorus({ className = '' }: { className?: string }) {
     );
     io.observe(wrap);
 
+    // Repaint on theme toggle even while paused offscreen / frozen mid-scroll.
+    // Guarded on the actual dark state so the unrelated `is-scrolling` class
+    // toggle (also on <html>) doesn't trigger a wasted raster on every scroll.
+    let lastDark = document.documentElement.classList.contains('dark');
+    const themeObserver = new MutationObserver(() => {
+      const nowDark = document.documentElement.classList.contains('dark');
+      if (nowDark !== lastDark) {
+        lastDark = nowDark;
+        draw();
+      }
+    });
+    themeObserver.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['class'],
+    });
+
     if (finePointer && !reduced) {
       wrap.addEventListener('pointermove', onPointerMove, { passive: true });
       wrap.addEventListener('pointerleave', onPointerLeave, { passive: true });
@@ -236,6 +268,7 @@ export function AsciiTorus({ className = '' }: { className?: string }) {
       disposed = true;
       io.disconnect();
       ro.disconnect();
+      themeObserver.disconnect();
       cancelAnimationFrame(raf);
       window.clearTimeout(resizeT);
       wrap.removeEventListener('pointermove', onPointerMove);

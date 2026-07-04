@@ -12,10 +12,10 @@ import { FlaskIcon, ArrowUpRightIcon, ExpandIcon } from './ui/Icons';
 function statusOf(pub: Publication): { label: string; tone: string } {
   const date = pub.date.toLowerCase();
   if (date.includes('accepted')) {
-    return { label: 'Accepted', tone: 'bg-amber-500/15 text-amber-600 dark:text-amber-400' };
+    return { label: 'Accepted', tone: 'bg-signal-pending/15 text-signal-pending' };
   }
   if (date.includes('book chapter') || date.includes('published')) {
-    return { label: 'Published', tone: 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400' };
+    return { label: 'Published', tone: 'bg-signal-success/15 text-signal-success' };
   }
   return { label: 'Presented', tone: 'bg-secondary text-muted-foreground' };
 }

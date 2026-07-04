@@ -1,0 +1,145 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-07-05T00:00:00Z",
+  "title": "Design System: Ehsanul Haque Siam Portfolio",
+  "extensions": {
+    "colorMeta": {
+      "bg-dark": { "role": "neutral", "displayName": "After-Dark Slate", "canonical": "hsl(224 71% 4%)", "tonalRamp": ["#030712", "#0a0f1c", "#111827", "#1e2531", "#374151", "#6b7280", "#9099a8", "#cbd2dc"] },
+      "fg-dark": { "role": "primary", "displayName": "Screen White", "canonical": "hsl(210 20% 98%)", "tonalRamp": ["#1e2531", "#374151", "#4b5563", "#6b7280", "#9099a8", "#cbd2dc", "#e4e7ec", "#f8fafc"] },
+      "card-dark": { "role": "neutral", "displayName": "Lifted Slate", "canonical": "hsl(221 39% 11%)", "tonalRamp": ["#0a0f1c", "#111827", "#181d29", "#1e2531", "#2a3341", "#374151", "#4b5563", "#6b7280"] },
+      "muted-fg-dark": { "role": "neutral", "displayName": "Metadata Gray", "canonical": "hsl(218 11% 65%)", "tonalRamp": ["#374151", "#4b5563", "#6b7280", "#8089a1", "#9099a8", "#a8b0bd", "#c4cad4", "#e2e6ec"] },
+      "signal-success": { "role": "secondary", "displayName": "Signal Success", "canonical": "hsl(160 84% 24%)", "dark": "hsl(158 64% 52%)", "meaning": "live/published/available/positive; unifies the old green-500-vs-emerald drift", "tonalRamp": ["#04160f", "#052a1d", "#0a714e", "#0d9668", "#22c55e", "#4ade80", "#86efac", "#bbf7d0"] },
+      "signal-pending": { "role": "secondary", "displayName": "Signal Pending", "canonical": "hsl(28 90% 34%)", "dark": "hsl(43 96% 56%)", "meaning": "pending/after-hours/accepted/in-press", "tonalRamp": ["#3a1e05", "#5c3208", "#a55209", "#d97706", "#f59e0b", "#fbbf24", "#fcd34d", "#fde68a"] },
+      "signal-problem": { "role": "secondary", "displayName": "Signal Problem", "canonical": "hsl(346 80% 42%)", "dark": "hsl(351 95% 71%)", "meaning": "problem/error/critical; CaseStudies Problem label", "tonalRamp": ["#2a0512", "#54081f", "#c1153d", "#e11d48", "#f43f5e", "#fb7185", "#fda4af", "#fecdd3"] },
+      "signal-star": { "role": "secondary", "displayName": "Signal Star", "canonical": "hsl(40 92% 42%)", "dark": "hsl(43 96% 56%)", "meaning": "featured/award/GitHub-star hover flourish only", "tonalRamp": ["#3a2705", "#5c3d08", "#ce8c09", "#eab308", "#facc15", "#fde047", "#fef08a", "#fef9c3"] },
+      "accent-emphasis": { "role": "tertiary", "displayName": "Earned Accent (Iris-Violet)", "canonical": "hsl(256 58% 50%)", "dark": "hsl(252 90% 78%)", "meaning": "THE one earned non-status accent; proof-metric numerals only (About/WhyMe/CaseStudies)", "tonalRamp": ["#160f3a", "#241a5c", "#3a2b8f", "#5d36c9", "#7c5cff", "#a99dff", "#c9c1ff", "#e7e3ff"] },
+      "ascii-surface": { "role": "neutral", "displayName": "ASCII Plate", "canonical": "hsl(220 20% 97%)", "dark": "hsl(222 40% 4%)", "meaning": "theme-flipping plate behind AsciiField/AsciiTorus; dark value ~= old #05060a", "tonalRamp": ["#05060a", "#0a0f1c", "#1e2531", "#374151", "#6b7280", "#9ca3af", "#d1d5db", "#f5f6f8"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Hero H1 name only; largest scale on the page." },
+      "script": { "displayName": "Script Accent", "purpose": "Pacifico signature; first name + one hero word. Max two per viewport." },
+      "title": { "displayName": "Section Title", "purpose": "Centered icon + ScrambleText section headings; deliberately modest." },
+      "body": { "displayName": "Body", "purpose": "Paragraphs and descriptions; measure 65–75ch." },
+      "label": { "displayName": "Mono Label", "purpose": "Keycaps, metadata, skip link. Geist Mono. Reads as data." }
+    },
+    "shadows": [
+      { "name": "card-hover-lift", "value": "0 8px 30px -12px hsl(var(--foreground) / 0.18)", "purpose": "The only ambient shadow — appears on .glass-card:hover, paired with a border lift." },
+      { "name": "focus-ring", "value": "0 0 0 2px hsl(var(--background)), 0 0 0 4px hsl(var(--ring))", "purpose": "Background halo + ring so focus reads on any surface." }
+    ],
+    "motion": [
+      { "name": "ease-out-strong", "value": "cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "Default exponential ease-out for reveals, underlines, and state transitions." },
+      { "name": "ease-float", "value": "cubic-bezier(0.45, 0.05, 0.55, 0.95)", "purpose": "Slow ambient loops (studio cat tail sway)." },
+      { "name": "press-feedback", "value": "transform 140ms ease; :active scale(0.97)", "purpose": "Tactile press on every button." },
+      { "name": "theme-crossfade", "value": "0.3s cubic-bezier(0.4, 0, 0.2, 1) via View Transitions API", "purpose": "Light/dark toggle cross-fade; disabled under reduced-motion." }
+    ],
+    "breakpoints": [
+      { "name": "bento", "value": "700px" },
+      { "name": "sm", "value": "640px" },
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Highest-contrast, lowest-color affordance: foreground fill, background text.",
+      "html": "<button class=\"ds-btn-primary\">View resume</button>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; justify-content: center; border-radius: 9999px; padding: 0.5rem 1.25rem; font-size: 0.875rem; font-weight: 500; background: var(--foreground, #f8fafc); color: var(--background, #030712); border: none; transition: background 160ms ease, transform 140ms ease; } .ds-btn-primary:hover { background: color-mix(in srgb, var(--foreground, #f8fafc) 88%, transparent); } .ds-btn-primary:active { transform: scale(0.97); }"
+    },
+    {
+      "name": "Glass Button",
+      "kind": "button",
+      "refersTo": "button-glass",
+      "description": "Default secondary action: translucent card fill, hairline border, blur.",
+      "html": "<button class=\"ds-btn-glass\">Get in touch</button>",
+      "css": ".ds-btn-glass { display: inline-flex; align-items: center; justify-content: center; border-radius: 9999px; padding: 0.5rem 1.25rem; font-size: 0.875rem; font-weight: 500; color: var(--foreground, #f8fafc); background: color-mix(in srgb, var(--card, #181d29) 60%, transparent); border: 1px solid var(--border, #1e2531); backdrop-filter: blur(12px); transition: background 160ms ease, border-color 160ms ease, transform 140ms ease; } .ds-btn-glass:hover { border-color: color-mix(in srgb, var(--ring, #6b7280) 70%, transparent); background: color-mix(in srgb, var(--secondary, #1e2531) 80%, transparent); } .ds-btn-glass:active { transform: scale(0.97); }"
+    },
+    {
+      "name": "Glass Card",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "Flat-at-rest surface; shadow and border lift only on hover.",
+      "html": "<div class=\"ds-glass-card\"><h3>Project</h3><p>One tonal step off the page.</p></div>",
+      "css": ".ds-glass-card { border-radius: 0.75rem; padding: 1rem; color: var(--foreground, #f8fafc); background: color-mix(in srgb, var(--card, #181d29) 55%, transparent); border: 1px solid color-mix(in srgb, var(--border, #1e2531) 80%, transparent); backdrop-filter: blur(12px); transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease; } .ds-glass-card:hover { border-color: color-mix(in srgb, var(--ring, #6b7280) 60%, transparent); box-shadow: 0 8px 30px -12px rgba(248,250,252,0.18); } .ds-glass-card h3 { font-weight: 700; } .ds-glass-card p { color: var(--muted-fg, #9099a8); }"
+    },
+    {
+      "name": "Section Heading",
+      "kind": "custom",
+      "refersTo": "title",
+      "description": "Centered icon + title; the string decodes via ScrambleText on scroll-in. Deliberately modest.",
+      "html": "<div class=\"ds-section-heading\"><svg width=\"22\" height=\"22\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 2 2 7l10 5 10-5-10-5Z\"/><path d=\"m2 17 10 5 10-5\"/><path d=\"m2 12 10 5 10-5\"/></svg><h2>Projects</h2></div>",
+      "css": ".ds-section-heading { display: flex; align-items: center; justify-content: center; margin-bottom: 2rem; color: var(--secondary-fg, #f8fafc); } .ds-section-heading svg { width: 1.5rem; height: 1.5rem; margin-right: 0.5rem; } .ds-section-heading h2 { font-size: 1.5rem; font-weight: 700; }"
+    },
+    {
+      "name": "Status Pill",
+      "kind": "chip",
+      "refersTo": "signal-pending",
+      "description": "A semantic status dot + label; the dot uses a --signal-* token (here pending/after-hours). Status is one of the two sanctioned on-surface color kinds.",
+      "html": "<span class=\"ds-status\"><span class=\"ds-status-dot\"></span>Building after dark</span>",
+      "css": ".ds-status { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.75rem; font-weight: 600; color: var(--muted-fg, #9099a8); } .ds-status-dot { width: 0.5rem; height: 0.5rem; border-radius: 9999px; background: hsl(var(--signal-pending, 43 96% 56%)); box-shadow: 0 0 0 3px hsl(var(--signal-pending, 43 96% 56%) / 0.18); }"
+    },
+    {
+      "name": "Mono Keycap",
+      "kind": "custom",
+      "refersTo": "label",
+      "description": "Geist Mono keycap for the ⌘K command-palette hint; reads as machine data.",
+      "html": "<kbd class=\"ds-kbd\">⌘</kbd><kbd class=\"ds-kbd\">K</kbd>",
+      "css": ".ds-kbd { display: inline-block; border-radius: 0.375rem; border: 1px solid var(--border, #1e2531); background: var(--secondary, #1e2531); padding: 0.125rem 0.375rem; font-family: 'Geist Mono Variable', 'Geist Mono', ui-monospace, monospace; font-size: 10px; font-weight: 600; color: var(--secondary-fg, #f8fafc); transition: transform 200ms ease; } .ds-kbd:hover { transform: translateY(-2px); }"
+    },
+    {
+      "name": "Earned Accent Metric",
+      "kind": "custom",
+      "refersTo": "accent-emphasis",
+      "description": "A count-up proof metric: iris-violet numeral (the one earned accent), muted label. About/WhyMe/CaseStudies only. The number is the emphasis; the accent never touches the label.",
+      "html": "<div class=\"ds-metric\"><dd class=\"ds-metric-num\">50K+</dd><dt class=\"ds-metric-label\">Users Served</dt></div>",
+      "css": ".ds-metric { display: flex; flex-direction: column; align-items: center; text-align: center; } .ds-metric-num { font-size: 1.875rem; font-weight: 600; letter-spacing: -0.05em; color: hsl(var(--accent-emphasis, 252 90% 78%)); } .ds-metric-label { margin-top: 0.25rem; font-size: 0.6875rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; color: hsl(var(--muted-fg, 218 11% 65%)); }"
+    },
+    {
+      "name": "Rainbow Contact CTA",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The single sanctioned full-color moment — footer contact CTA only. Never reuse.",
+      "html": "<button class=\"ds-rainbow\">Say hello</button>",
+      "css": ".ds-rainbow { position: relative; display: inline-flex; align-items: center; justify-content: center; border-radius: 9999px; padding: 0.6rem 1.75rem; font-size: 0.9rem; font-weight: 600; color: #030712; border: none; cursor: pointer; background: linear-gradient(90deg, oklch(95% 0.13 95), oklch(87% 0.26 315), oklch(72% 0.24 280), oklch(88% 0.14 215), oklch(83% 0.15 210)); background-size: 200%; animation: ds-rainbow-move 2s infinite linear; } @keyframes ds-rainbow-move { 0% { background-position: 0%; } 100% { background-position: 200%; } } @media (prefers-reduced-motion: reduce) { .ds-rainbow { animation: none; } }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The After-Dark Workshop",
+    "overview": "This is the desk of an engineer who ships at night: the room is dark, the light is a screen, and everything on the surface is either information or a tool. The system is monochrome by conviction — a neutral slate grayscale carries every heading, paragraph, border, and surface; the near-black #030712 background is the default, and light mode is a first-class alternate. Depth comes from tonal layering, never heavy shadow. Color is rationed like a scarce resource: a unified theme-aware signal set (--signal-success/pending/problem/star) marks real status, ONE earned iris-violet accent (--accent-emphasis) lights only the count-up proof-metric numerals, and two sealed decorative moments remain — the single rainbow contact button and the theme-aware ASCII particle fields (--ascii-surface). The polish is the pitch; for a technical-hire audience, fast, quiet, and exact is more persuasive than loud.",
+    "keyCharacteristics": [
+      "Monochrome slate grayscale; default dark, light mode as a peer.",
+      "Color = unified semantic signal tokens + ONE earned accent (metrics) + two sealed decorative exceptions.",
+      "Depth by tonal layering, not shadow.",
+      "Geist (sans + mono) with Pacifico as a single script accent.",
+      "Motion is choreographed but gated: reduced-motion + offscreen pauses everywhere."
+    ],
+    "rules": [
+      { "name": "The Signal-Plus-One Rule", "body": "Color on the base surface must carry meaning: either a --signal-* status token (success/pending/problem/star) or the ONE earned --accent-emphasis on proof-metric numerals. Everything else is grayscale. No color for 'warmth', no third accent, no accent on labels/headings/body.", "section": "colors" },
+      { "name": "The Earned-Accent Rarity Rule", "body": "The iris-violet accent appears on exactly three surfaces (About/WhyMe/CaseStudies metric numerals) and nowhere else. All-or-nothing across those three; never a fourth place. Rarity is what makes it read as earned.", "section": "colors" },
+      { "name": "The Two Exceptions Rule", "body": "Exactly two full-color DECORATIVE moments are sanctioned: the single footer RainbowButton and the theme-aware AsciiField/AsciiTorus particle scenes. The GlowCard hover glow reuses the ASCII's sealed violet-to-cyan palette (not a third exception). Effects, not palette. Do not multiply them.", "section": "colors" },
+      { "name": "The One Flourish Rule", "body": "Pacifico appears at most twice per viewport and never in body copy or a section heading. It is a signature, not a typeface for the page.", "section": "typography" },
+      { "name": "The Quiet Heading Rule", "body": "Section headings stay at text-xl/text-2xl. Display scale is reserved for the hero. No section competes with the name.", "section": "typography" },
+      { "name": "The Flat-At-Rest Rule", "body": "Surfaces are flat by default. Elevation is a response to state (hover, focus), never a resting decoration.", "section": "elevation" },
+      { "name": "The Tonal-Depth Rule", "body": "To lift a surface, step its lightness toward the card token — do not reach for a shadow. In dark mode, higher = lighter, same hue and chroma.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do keep the base surface grayscale. Reach for foreground / muted-foreground / border before any hue.",
+      "Do use the --signal-* tokens (text-signal-success, bg-signal-pending/15, ...) for status — never raw amber-500/emerald-500/green-500/rose-500 literals. One hue, one meaning, theme-aware, WCAG-checked.",
+      "Do apply --accent-emphasis (iris-violet) only to count-up proof-metric numerals, on all three metric surfaces (About/WhyMe/CaseStudies) or none — never a subset.",
+      "Do convey depth by stepping the surface lightness toward the card token; add shadow only as a hover/focus response.",
+      "Do keep muted-foreground above 4.5:1 on its surface — light-gray-for-elegance is the single biggest reason a design reads as hard to use.",
+      "Do gate every animation behind prefers-reduced-motion and pause every canvas/rAF loop offscreen and on document.hidden (Lighthouse mobile ≥94 is a hard floor).",
+      "Do reserve Pacifico for at most two flourishes per viewport; reserve display scale for the hero name."
+    ],
+    "donts": [
+      "Don't let any hue OWN the surface. The one iris-violet accent is a scalpel on proof numerals, not a brand color — it never touches backgrounds, headings, body, or nav. Restrained-monochrome-plus-one-accent, not 'Committed-dark with violet'.",
+      "Don't ship the dark-mode-with-purple-gradients SaaS template, neon accents, or glassmorphism as decoration — glass is chrome-only and purposeful.",
+      "Don't use gradient text, side-stripe borders (border-left/right > 1px as an accent), or an all-caps tracked eyebrow above every section. Emphasis is weight and size.",
+      "Don't multiply the color exceptions. Exactly one RainbowButton (footer CTA) and the ASCII fields; nothing else earns full spectrum.",
+      "Don't let a section heading compete with the hero — headings stay text-xl/text-2xl.",
+      "Don't gate content visibility on a reveal transition; reveals must enhance already-visible, crawlable HTML (SSR/SEO invariant)."
+    ]
+  }
+}

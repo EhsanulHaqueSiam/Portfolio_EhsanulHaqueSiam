@@ -123,7 +123,7 @@ export function Contact() {
                     aria-label={copied ? 'Email copied' : 'Copy email address'}
                     className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md border border-border text-muted-foreground transition-colors hover:border-ring hover:text-foreground"
                   >
-                    {copied ? <CheckIcon className="h-4 w-4 text-emerald-500" /> : <CopyIcon className="h-4 w-4" />}
+                    {copied ? <CheckIcon className="h-4 w-4 text-signal-success" /> : <CopyIcon className="h-4 w-4" />}
                   </button>
                 )}
               </div>
@@ -149,7 +149,7 @@ export function Contact() {
         {/* Interactive ASCII signal */}
         <BlurFade delay={0.1} inView className="h-full">
           <figure className="flex h-full flex-col">
-            <div className="relative min-h-[240px] flex-1 overflow-hidden rounded-xl border bg-[#05060a]">
+            <div className="relative min-h-[240px] flex-1 overflow-hidden rounded-xl border bg-ascii-surface">
               <AsciiField className="h-full w-full" surface="ink" cols={72} />
             </div>
             <figcaption className="mt-2 flex justify-between text-[11px] text-muted-foreground">

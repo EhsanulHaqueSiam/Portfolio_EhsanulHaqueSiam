@@ -154,17 +154,20 @@ export const GlowingEffect = memo(
               '--active': '0',
               '--glowingeffect-border-width': `${borderWidth}px`,
               '--repeating-conic-gradient-times': '5',
-              '--gradient': `radial-gradient(circle, #dd7bbb 10%, #dd7bbb00 20%),
-                radial-gradient(circle at 40% 40%, #d79f1e 5%, #d79f1e00 15%),
-                radial-gradient(circle at 60% 60%, #5a922c 10%, #5a922c00 20%),
-                radial-gradient(circle at 40% 60%, #4c7894 10%, #4c789400 20%),
+              // Sealed signal palette (iris-violet → signal-cyan), matching the
+              // ASCII fields — keeps the card-hover glow on-identity instead of
+              // a 4-color rainbow (the brand has exactly two sealed exceptions).
+              '--gradient': `radial-gradient(circle, #8b7cff 10%, #8b7cff00 20%),
+                radial-gradient(circle at 40% 40%, #5ee7f5 5%, #5ee7f500 15%),
+                radial-gradient(circle at 60% 60%, #6ea8ff 10%, #6ea8ff00 20%),
+                radial-gradient(circle at 40% 60%, #a99dff 10%, #a99dff00 20%),
                 repeating-conic-gradient(
                   from 236.84deg at 50% 50%,
-                  #dd7bbb 0%,
-                  #d79f1e calc(25% / var(--repeating-conic-gradient-times)),
-                  #5a922c calc(50% / var(--repeating-conic-gradient-times)),
-                  #4c7894 calc(75% / var(--repeating-conic-gradient-times)),
-                  #dd7bbb calc(100% / var(--repeating-conic-gradient-times))
+                  #8b7cff 0%,
+                  #5ee7f5 calc(25% / var(--repeating-conic-gradient-times)),
+                  #6ea8ff calc(50% / var(--repeating-conic-gradient-times)),
+                  #a99dff calc(75% / var(--repeating-conic-gradient-times)),
+                  #8b7cff calc(100% / var(--repeating-conic-gradient-times))
                 )`,
             } as React.CSSProperties
           }

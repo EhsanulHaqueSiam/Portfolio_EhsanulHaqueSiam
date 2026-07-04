@@ -52,7 +52,7 @@ export function AnimatedName({
       <AnimatePresence mode="popLayout" initial={false}>
         <m.span
           key={names[index]}
-          className="whitespace-nowrap text-center [grid-area:1/1]"
+          className="whitespace-nowrap text-left [grid-area:1/1]"
           initial={{ opacity: 0, y: 14, filter: 'blur(6px)' }}
           animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
           exit={{ opacity: 0, y: -14, filter: 'blur(6px)' }}

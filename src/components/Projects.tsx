@@ -12,7 +12,7 @@ function ProjectCard({ project }: { project: Project }) {
   const image = project.images?.[0] ? getProjectImage(project.images[0]) : null;
 
   return (
-    <a href={href} target="_blank" rel="noopener noreferrer" className="group block h-full">
+    <div className="group relative block h-full">
       <GlowCard
         className="transition-[transform,box-shadow,border-color] duration-300 ease-out hover:-translate-y-0.5 hover:shadow-lg hover:shadow-foreground/5"
         cursorEmoji="🚀"
@@ -41,7 +41,19 @@ function ProjectCard({ project }: { project: Project }) {
 
         {/* Body */}
         <div className="flex flex-1 flex-col p-4">
-          <h3 className="text-base font-semibold tracking-tight text-foreground">{project.name}</h3>
+          <h3 className="text-base font-semibold tracking-tight text-foreground">
+            {/* Stretched primary link: covers the whole card via ::after, so
+                the card is one link without wrapping (and swallowing) the
+                secondary "Code" link inside an outer anchor. */}
+            <a
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="outline-none after:absolute after:inset-0 after:z-0 after:content-['']"
+            >
+              {project.name}
+            </a>
+          </h3>
           <p className="mt-2 line-clamp-4 text-pretty text-sm text-muted-foreground">{project.desc}</p>
 
           {project.tags && project.tags.length > 0 && (
@@ -57,8 +69,8 @@ function ProjectCard({ project }: { project: Project }) {
             </div>
           )}
 
-          {/* Links */}
-          <div className="mt-auto flex items-center gap-2 pt-4">
+          {/* Links (sit above the stretched card link) */}
+          <div className="relative z-10 mt-auto flex items-center gap-2 pt-4">
             {project.links?.view && (
               <span className="inline-flex items-center gap-1.5 rounded-md bg-primary px-2 py-1 text-[11px] font-semibold text-primary-foreground">
                 <ExternalLinkIcon className="h-3 w-3" />
@@ -66,27 +78,15 @@ function ProjectCard({ project }: { project: Project }) {
               </span>
             )}
             {project.links?.code && (
-              // biome-ignore lint/a11y/useSemanticElements: a real <a> cannot nest inside the card's <a>; span[role=link] keeps it keyboard-operable
-              <span
-                role="link"
-                tabIndex={0}
-                onClick={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  window.open(project.links!.code!, '_blank', 'noopener');
-                }}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    window.open(project.links!.code!, '_blank', 'noopener');
-                  }
-                }}
-                className="inline-flex cursor-pointer items-center gap-1.5 rounded-md border border-border px-2 py-1 text-[11px] font-semibold text-muted-foreground transition-colors hover:border-ring hover:text-foreground"
+              <a
+                href={project.links.code}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="relative inline-flex items-center gap-1.5 rounded-md border border-border px-2 py-1 text-[11px] font-semibold text-muted-foreground transition-colors hover:border-ring hover:text-foreground"
               >
                 <GitHubIcon className="h-3 w-3" />
                 Code
-              </span>
+              </a>
             )}
             {project.metrics?.[1] && (
               <span className="ml-auto hidden truncate text-[11px] text-muted-foreground sm:block">
@@ -96,7 +96,7 @@ function ProjectCard({ project }: { project: Project }) {
           </div>
         </div>
       </GlowCard>
-    </a>
+    </div>
   );
 }
 

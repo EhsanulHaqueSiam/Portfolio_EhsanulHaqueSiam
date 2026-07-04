@@ -39,7 +39,7 @@ function WritingCard({ post }: { post: BlogPost }) {
             )}
           </h3>
           {isComingSoon && (
-            <span className="mt-0.5 shrink-0 rounded-full bg-amber-500/15 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-amber-600 dark:text-amber-400">
+            <span className="mt-0.5 shrink-0 rounded-full bg-signal-pending/15 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-signal-pending">
               In press
             </span>
           )}

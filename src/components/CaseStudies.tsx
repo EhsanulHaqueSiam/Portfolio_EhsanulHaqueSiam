@@ -65,13 +65,13 @@ function StudyArticle({ project }: { project: Project }) {
         <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-[1fr_260px]">
           <div className="space-y-5">
             <div>
-              <p className="text-[11px] font-semibold uppercase tracking-wider text-rose-500 dark:text-rose-400">
+              <p className="text-[11px] font-semibold uppercase tracking-wider text-signal-problem">
                 Problem
               </p>
               <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">{cs.problem}</p>
             </div>
             <div>
-              <p className="text-[11px] font-semibold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
+              <p className="text-[11px] font-semibold uppercase tracking-wider text-signal-success">
                 Approach
               </p>
               <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">{cs.solution}</p>
@@ -127,7 +127,7 @@ function StudyArticle({ project }: { project: Project }) {
                   i >= 2 ? 'max-sm:border-t max-sm:border-border/60' : ''
                 }`}
               >
-                <dd className="text-xl font-semibold tracking-tighter text-foreground sm:text-2xl">
+                <dd className="text-xl font-semibold tracking-tighter text-accent-emphasis sm:text-2xl">
                   {r.value}
                 </dd>
                 <dt className="mt-1 text-[10px] font-medium uppercase tracking-wider text-muted-foreground sm:text-[11px]">

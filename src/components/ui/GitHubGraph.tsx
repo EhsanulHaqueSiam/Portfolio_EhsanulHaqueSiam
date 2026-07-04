@@ -70,21 +70,24 @@ function getMonthLabels(contributions: ContributionDay[], visibleWeeks: number):
   return labels;
 }
 
-// Activity ramp: faint base, brightening through emerald like GitHub's own.
+// Activity ramp: faint base, brightening through the success signal. Alpha
+// steps on the theme-aware --signal-success token so the ramp reads in BOTH
+// themes — a dark-green → pale ramp on white, a faint → bright ramp on the
+// dark card — instead of collapsing to near-white in light mode.
 const FILL_CLASSES = [
   'fill-foreground/[0.07]',
-  'fill-emerald-500/30',
-  'fill-emerald-500/50',
-  'fill-emerald-500/75',
-  'fill-emerald-400',
+  'fill-signal-success/25',
+  'fill-signal-success/45',
+  'fill-signal-success/70',
+  'fill-signal-success',
 ];
 
 const LEGEND_BG = [
   'bg-foreground/[0.07]',
-  'bg-emerald-500/30',
-  'bg-emerald-500/50',
-  'bg-emerald-500/75',
-  'bg-emerald-400',
+  'bg-signal-success/25',
+  'bg-signal-success/45',
+  'bg-signal-success/70',
+  'bg-signal-success',
 ];
 
 interface Hovered { week: number; day: number; count: number; date: string }
@@ -352,7 +355,7 @@ export function GitHubGraph() {
                   <div className="flex items-center justify-center">
                     <div className="whitespace-nowrap rounded-md border border-border bg-card px-2 py-1 shadow-md">
                       <span className="font-mono text-[8px] uppercase tracking-[0.06em] text-muted-foreground">
-                        <span className="font-semibold text-emerald-500">{hoveredCell.count}</span>
+                        <span className="font-semibold text-signal-success">{hoveredCell.count}</span>
                         {' '}· {formatTooltipDate(hoveredCell.date)}
                       </span>
                     </div>

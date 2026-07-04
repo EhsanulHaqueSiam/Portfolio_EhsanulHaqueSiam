@@ -25,6 +25,18 @@ export default {
         input: 'hsl(var(--input) / <alpha-value>)',
         ring: 'hsl(var(--ring) / <alpha-value>)',
 
+        // Semantic signal tokens (one meaning per hue, theme-aware via the
+        // CSS vars in index.css). Used as text-signal-* and bg-signal-*/15.
+        'signal-success': 'hsl(var(--signal-success) / <alpha-value>)',
+        'signal-pending': 'hsl(var(--signal-pending) / <alpha-value>)',
+        'signal-problem': 'hsl(var(--signal-problem) / <alpha-value>)',
+        'signal-info': 'hsl(var(--signal-info) / <alpha-value>)',
+        'signal-star': 'hsl(var(--signal-star) / <alpha-value>)',
+        // The one earned emphasis accent (proof-metric numerals only).
+        'accent-emphasis': 'hsl(var(--accent-emphasis) / <alpha-value>)',
+        // Theme-flipping plate behind the ASCII field/torus.
+        'ascii-surface': 'hsl(var(--ascii-surface) / <alpha-value>)',
+
         // Legacy tokens kept so the Resume print overlay (intentionally
         // paper-light) keeps compiling unchanged.
         'paper': {
@@ -131,8 +143,8 @@ export default {
           '100%': { transform: 'rotate(var(--angle)) translateX(-500px)', opacity: '0.1' },
         },
         'pulse-dot': {
-          '0%, 100%': { opacity: '1', boxShadow: '0 0 0 0 rgba(74, 222, 128, 0.45)' },
-          '50%': { opacity: '0.75', boxShadow: '0 0 0 5px rgba(74, 222, 128, 0)' },
+          '0%, 100%': { opacity: '1', boxShadow: '0 0 0 0 hsl(var(--signal-success) / 0.45)' },
+          '50%': { opacity: '0.75', boxShadow: '0 0 0 5px hsl(var(--signal-success) / 0)' },
         },
       },
       transitionTimingFunction: {

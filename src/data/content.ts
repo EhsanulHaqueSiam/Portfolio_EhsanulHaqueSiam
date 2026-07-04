@@ -53,12 +53,12 @@ export const navItems = [
   { no: "01", label: "About", href: "#about" },
   { no: "03", label: "Experience", href: "#experience" },
   { no: "04", label: "Skills", href: "#skills" },
-  { no: "05", label: "Work", href: "#projects" },
+  { no: "05", label: "Projects", href: "#projects" },
   { no: "06", label: "Case Studies", href: "#case-studies" },
   { no: "07", label: "Testimonials", href: "#testimonials" },
   { no: "08", label: "Awards", href: "#awards" },
   { no: "09", label: "Research", href: "#publications" },
-  { no: "12", label: "Notes", href: "#blog" },
+  { no: "12", label: "Writing", href: "#blog" },
   { no: "13", label: "Contact", href: "#contact" },
 ];
 

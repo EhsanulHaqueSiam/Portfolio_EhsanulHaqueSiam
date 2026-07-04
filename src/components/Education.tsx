@@ -68,7 +68,7 @@ function EducationCard({ item, cat = false }: { item: EducationItem; cat?: boole
         <span
           className={`ml-auto mt-1 h-fit shrink-0 rounded-full px-2 py-0.5 text-[11px] font-semibold ${
             item.status === 'Pursuing'
-              ? 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400'
+              ? 'bg-signal-success/15 text-signal-success'
               : 'bg-secondary text-muted-foreground'
           }`}
         >

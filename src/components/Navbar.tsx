@@ -3,7 +3,7 @@ import { AnimatePresence, m, useScroll, useMotionValueEvent } from 'framer-motio
 import { navItems } from '../data/content';
 import { scrollToSection } from '../lib/scrollToSection';
 import { ThemeToggle } from './ui/ThemeToggle';
-import { GitHubIcon, StarIcon, CommandIcon, MenuIcon, CloseIcon } from './ui/Icons';
+import { GitHubIcon, StarIcon, CommandIcon, MenuIcon, CloseIcon, ResumeIcon } from './ui/Icons';
 
 const GITHUB_USER = 'EhsanulHaqueSiam';
 const PROFILE_URL = `https://github.com/${GITHUB_USER}`;
@@ -38,7 +38,7 @@ async function fetchTotalStars(signal: AbortSignal): Promise<number | null> {
 }
 
 // The bar shows a compact subset; everything is reachable via Cmd+K.
-const NAV_LABELS = ['About', 'Experience', 'Work', 'Research', 'Notes', 'Contact'];
+const NAV_LABELS = ['About', 'Experience', 'Projects', 'Research', 'Writing', 'Contact'];
 const barItems = navItems.filter((item) => NAV_LABELS.includes(item.label));
 
 /**
@@ -51,6 +51,7 @@ export function Navbar() {
   const [visible, setVisible] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
   const [stars, setStars] = useState<number | null>(null);
+  const [activeHref, setActiveHref] = useState<string | null>(null);
 
   useMotionValueEvent(scrollY, 'change', (current) => {
     const previous = scrollY.getPrevious() ?? 0;
@@ -82,9 +83,32 @@ export function Navbar() {
     return () => controller.abort();
   }, []);
 
+  // Scroll-spy: mark the bar item whose section is crossing the upper third,
+  // so a reader always knows where they are on the long page. Only the bar's
+  // own sections are observed, so the last-passed bar item stays active while
+  // scrolling through in-between sections (Skills, Case Studies, …).
+  useEffect(() => {
+    const sections = barItems
+      .map((item) => document.getElementById(item.href.slice(1)))
+      .filter((el): el is HTMLElement => el !== null);
+    if (!sections.length) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const inView = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+        if (inView[0]) setActiveHref(`#${inView[0].target.id}`);
+      },
+      { rootMargin: '-45% 0px -50% 0px' }
+    );
+    sections.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
+
   const goTo = (href: string) => {
     scrollToSection(href);
     history.replaceState(null, '', href);
+    setActiveHref(href);
   };
 
   const openPalette = () => {
@@ -117,16 +141,28 @@ export function Navbar() {
 
           {/* Links (desktop) */}
           <nav aria-label="Primary" className="hidden items-center gap-2 md:flex">
-            {barItems.map((item) => (
-              <button
-                key={item.href}
-                type="button"
-                onClick={() => goTo(item.href)}
-                className="relative rounded-md px-2.5 py-1.5 text-sm font-semibold text-muted-foreground transition-colors duration-300 hover:text-foreground"
-              >
-                {item.label}
-              </button>
-            ))}
+            {barItems.map((item) => {
+              const active = activeHref === item.href;
+              return (
+                <button
+                  key={item.href}
+                  type="button"
+                  onClick={() => goTo(item.href)}
+                  aria-current={active ? 'true' : undefined}
+                  className={`relative rounded-md px-2.5 py-1.5 text-sm font-semibold transition-colors duration-300 ${
+                    active ? 'text-foreground' : 'text-muted-foreground hover:text-foreground'
+                  }`}
+                >
+                  {item.label}
+                  {active && (
+                    <span
+                      aria-hidden="true"
+                      className="absolute inset-x-2.5 -bottom-0.5 h-0.5 rounded-full bg-foreground"
+                    />
+                  )}
+                </button>
+              );
+            })}
           </nav>
 
           <div className="flex items-center gap-1.5 sm:gap-3">
@@ -143,10 +179,20 @@ export function Navbar() {
               <GitHubIcon className="h-3.5 w-3.5" />
               {stars !== null && (
                 <span className="flex items-center gap-0.5 tabular-nums">
-                  <StarIcon className="h-3 w-3 transition-colors group-hover:animate-spin-grow group-hover:text-amber-400" />
+                  <StarIcon className="h-3 w-3 transition-colors group-hover:animate-spin-grow group-hover:text-signal-star" />
                   {stars.toLocaleString()}
                 </span>
               )}
+            </a>
+
+            {/* Résumé — always one click away for a recruiter */}
+            <a
+              href="#resume"
+              aria-label="View résumé"
+              className="hidden items-center gap-1.5 rounded-md border border-border bg-foreground/[0.04] px-2.5 py-1 text-xs font-semibold text-foreground transition-colors hover:bg-secondary sm:inline-flex"
+            >
+              <ResumeIcon className="h-3.5 w-3.5" />
+              Résumé
             </a>
 
             {/* Command palette */}
@@ -184,21 +230,29 @@ export function Navbar() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -8 }}
                 transition={{ duration: 0.18 }}
-                className="glass-chrome absolute inset-x-3 top-full mt-2 grid grid-cols-2 gap-1 rounded-xl bg-background/90 p-3 sm:inset-x-0 md:hidden"
+                className="glass-chrome absolute inset-x-3 top-full mt-2 grid grid-cols-2 gap-1 rounded-xl bg-background p-3 sm:inset-x-0 md:hidden"
               >
-                {navItems.map((item) => (
-                  <button
-                    key={item.href}
-                    type="button"
-                    onClick={() => {
-                      setMenuOpen(false);
-                      goTo(item.href);
-                    }}
-                    className="rounded-md px-3 py-2.5 text-left text-sm font-semibold text-muted-foreground transition-colors hover:bg-secondary/60 hover:text-foreground"
-                  >
-                    {item.label}
-                  </button>
-                ))}
+                {navItems.map((item) => {
+                  const active = activeHref === item.href;
+                  return (
+                    <button
+                      key={item.href}
+                      type="button"
+                      onClick={() => {
+                        setMenuOpen(false);
+                        goTo(item.href);
+                      }}
+                      aria-current={active ? 'true' : undefined}
+                      className={`rounded-md px-3 py-2.5 text-left text-sm font-semibold transition-colors ${
+                        active
+                          ? 'bg-secondary/60 text-foreground'
+                          : 'text-muted-foreground hover:bg-secondary/60 hover:text-foreground'
+                      }`}
+                    >
+                      {item.label}
+                    </button>
+                  );
+                })}
               </m.nav>
             )}
           </AnimatePresence>

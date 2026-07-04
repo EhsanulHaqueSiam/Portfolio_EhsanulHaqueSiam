@@ -82,7 +82,7 @@ export function CommandPalette() {
         label: copied ? 'Email copied' : 'Copy email address',
         hint: profile.email,
         keywords: 'mail clipboard contact',
-        icon: copied ? <CheckIcon className="h-4 w-4 text-emerald-500" /> : <CopyIcon className="h-4 w-4" />,
+        icon: copied ? <CheckIcon className="h-4 w-4 text-signal-success" /> : <CopyIcon className="h-4 w-4" />,
         keepOpen: true,
         run: async () => {
           try {

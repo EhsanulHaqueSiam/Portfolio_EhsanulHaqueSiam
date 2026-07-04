@@ -39,7 +39,7 @@ export const TracingBeam = ({ children, className }: { children: React.ReactNode
     <m.div ref={ref} className={cn('relative mx-auto h-full w-full', className)}>
       <div className="absolute top-8 -left-11 md:-left-12 lg:-left-16 max-md:hidden">
         <div className="ml-[30px] sm:ml-[31px] flex h-2.5 w-2.5 sm:h-2 sm:w-2 items-center justify-center rounded-full border border-border shadow-sm">
-          <div className="h-1 w-1 rounded-full border animate-pulse border-emerald-500 bg-emerald-400" />
+          <div className="h-1 w-1 rounded-full border animate-pulse border-signal-success bg-signal-success" />
         </div>
         <svg
           viewBox={`0 0 20 ${svgHeight}`}
