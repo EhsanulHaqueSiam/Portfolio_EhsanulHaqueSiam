@@ -1,5 +1,5 @@
 # robots.txt for ehsanulhaquesiam.netlify.app
-# Generated 2026-07-04 from assets/data. Do not edit by hand.
+# Generated 2026-07-05 from assets/data. Do not edit by hand.
 
 User-agent: *
 Allow: /

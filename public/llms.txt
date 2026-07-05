@@ -1,10 +1,11 @@
 # Ehsanul Haque Siam
 
 > AI Engineer & Full-Stack Developer based in Dhaka, Bangladesh. I bridge research and production. Software Engineer at Ledgercross, building across the stack: backend services, React Native and Flutter apps, AI features, and the CI/CD and cloud infrastructure that ship them. Published peer-reviewed research (a Taylor & Francis book chapter and an accepted IEEE QPAIN 2026 paper). Previously drove 1.5x client revenue shipping 4 production websites at BetaScript LLC and built 15+ web scrapers with Gemini-powered AI pipelines at BDTracks. Obsessed with turning complex problems into systems that scale.
-> Last updated: 2026-07-04. Contact: ehsanul.siamdev@gmail.com
+> Last updated: 2026-07-05. Contact: ehsanul.siamdev@gmail.com
 
 ## Now
 - **Software Engineer, Ledgercross** (Jun 2026–Present)
+- **Lead Researcher — NLP & LLMs, Arché Intelligence Lab** (Jul 2026–Present)
 
 ## Highlights
 - 1.5x: Revenue Growth
