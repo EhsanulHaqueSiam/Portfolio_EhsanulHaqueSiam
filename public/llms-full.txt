@@ -10,7 +10,7 @@ I bridge research and production. Software Engineer at Ledgercross, building acr
 ### Software Engineer at Ledgercross (Jun 2026–Present)
 Full-stack + platform engineer at an early-stage software firm, owning work across the whole stack: backend services, React Native and Flutter apps, AI-powered features, and the CI/CD pipelines and cloud infrastructure that ship them. Startup-wide surface area with end-to-end ownership.
 
-### Lead Researcher — NLP & LLMs at Arché Intelligence Lab (Jul 2026–Present)
+### Lead Researcher — NLP & LLMs at Arché Intelligence Lab (Jun 2026–Present)
 Leading NLP and LLM research at Arché (arche-lab.org), a student-led AI research group at AIUB. Driving work on large language models and natural language processing—including Bengali NLP—toward peer-reviewed publications alongside a distributed team of researchers across AIUB, BUET, BRAC, and RUET.
 
 ### Research Assistant (Full-time, Remote) at Deepchain Labs (Apr 2026–May 2026)
