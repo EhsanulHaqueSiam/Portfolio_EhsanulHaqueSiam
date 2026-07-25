@@ -73,7 +73,7 @@ export function Hero() {
       <BlurFade delay={0.005} inView>
         <div className="relative flex-col space-y-4 sm:space-y-6">
           <div className="relative flex flex-col items-center justify-center">
-            {/* Portrait in an animated glow ring: grayscale until hover */}
+            {/* Portrait in an animated glow ring */}
             <div className="group relative p-[4px]" data-cursor-emoji="👋">
               {/* transform-only rotation: compositor animation, no repaints */}
               <m.div
@@ -90,7 +90,7 @@ export function Hero() {
                 // React 18 DOM needs the lowercase form; the camelCase prop
                 // triggers an unknown-prop warning and gets dropped.
                 {...({ fetchpriority: 'high' } as Record<string, string>)}
-                className="relative z-10 h-20 w-20 rounded-full border border-white/10 object-cover grayscale transition-[filter,transform] duration-300 group-hover:scale-[1.03] group-hover:grayscale-0 sm:h-24 sm:w-24"
+                className="relative z-10 h-20 w-20 rounded-full border border-white/10 object-cover transition-transform duration-300 group-hover:scale-[1.03] sm:h-24 sm:w-24"
               />
             </div>
 
