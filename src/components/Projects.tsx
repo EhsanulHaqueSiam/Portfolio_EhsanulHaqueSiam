@@ -2,7 +2,6 @@ import { featuredProjects, getProjectImage } from '../data/content';
 import type { Project } from '../data/types';
 import { SectionHeading, headingIconClass } from './ui/SectionHeading';
 import { BlurFade } from './ui/BlurFade';
-import { TiltCard } from './ui/TiltCard';
 import { GlowCard } from './ui/GlowCard';
 import { OptimizedImage } from './ui/OptimizedImage';
 import { BrushIcon, GitHubIcon, ExternalLinkIcon, ArrowUpRightIcon } from './ui/Icons';
@@ -108,9 +107,7 @@ export function Projects() {
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         {featuredProjects.map((project, index) => (
           <BlurFade key={project.name} delay={0.08 + index * 0.05} inView className="h-full">
-            <TiltCard>
-              <ProjectCard project={project} />
-            </TiltCard>
+            <ProjectCard project={project} />
           </BlurFade>
         ))}
       </div>

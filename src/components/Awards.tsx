@@ -7,7 +7,6 @@ import { BlurFade } from './ui/BlurFade';
 import { GlowCard } from './ui/GlowCard';
 import { Lightbox } from './ui/Lightbox';
 import { OptimizedImage } from './ui/OptimizedImage';
-import { TiltCard } from './ui/TiltCard';
 import { AwardIcon, ShieldIcon, ExpandIcon } from './ui/Icons';
 
 const categoryLabel: Record<string, string> = {
@@ -119,9 +118,7 @@ export function Awards() {
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {awards.map((item, i) => (
           <BlurFade key={item.name} delay={0.06 + i * 0.04} inView className="h-full">
-            <TiltCard>
-              <AwardCard item={item} />
-            </TiltCard>
+            <AwardCard item={item} />
           </BlurFade>
         ))}
       </div>

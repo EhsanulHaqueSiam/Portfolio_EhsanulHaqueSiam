@@ -87,7 +87,7 @@ scripts/generate-seo.mjs   # prebuild: regenerates public/{robots.txt,sitemap.xm
   `.bg-ellipse`, `.dashboard-grid` (bento areas), `.btn-glass`, `.btn-primary`.
 - **Interactive ui/ components** (magicui/aceternity ports, all SSR-safe + IO/reduced-motion
   gated): BlurFade, Marquee, NumberTicker, ShimmerButton/Border, SpotlightGlow,
-  GlowingEffect, BorderBeam, TracingBeam, HeroConstellation, RainbowButton, TiltCard,
+  GlowingEffect, BorderBeam, TracingBeam, HeroConstellation, RainbowButton,
   ScrambleText, ScratchToReveal, AnimatedName, Globe, AsciiTorus, AsciiField, StudioCat
   (footer cat), EmojiCursor (`data-cursor-emoji="…"`), CommandPalette (Ctrl/Cmd+K).
 - **Performance invariant (Lighthouse mobile ≥94)**: every canvas/WebGL/rAF loop MUST
