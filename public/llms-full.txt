@@ -180,7 +180,7 @@ Presented a historical and statistical analysis of cyclone losses in Bangladesh 
 - **GitHub Open Source - 60+ Stars** (achievement): Accumulated 60+ GitHub stars across 26 repositories with the top project (Student Management System) earning 17 stars and 8 forks by building well-documented, production-grade open source projects with comprehensive Wikis.
 - **Mario's Multiverse Adventure - Game Dev** (project): Led a team of 5 to ship a 2D platformer with 3 unique levels and a physics engine earning 4 GitHub forks by building a custom OpenGL rendering engine with SFML audio and SQLite persistence in C++.
 - **Spotify Sentiment Analysis - 85-90% Accuracy** (project): Classified sentiment of 52,702 Spotify reviews with 85-90% accuracy benchmarked against precision/recall/F1 metrics by building a 17-task ML pipeline with TF-IDF vectorization and Multinomial Naive Bayes.
-- **Certified Ethical Hacker - Team Matrix** (certificate): Certified Ethical Hacker through a 4-month, 29-module offensive security program passing 3 exams (theoretical, lab, viva) by performing penetration tests on live servers, exploiting OWASP Top 10 vulnerabilities, and completing CTF and bug bounty engagements.
+- **Certified Ethical Hacker - Team Matrix** (certificate): Completed the Team Matrix 4-month, 29-module offensive security program, passing 3 exams (theoretical, lab, viva) by performing penetration tests on live servers, exploiting OWASP Top 10 vulnerabilities, and completing CTF and bug bounty engagements.
 - **54+ Android Development Lessons** (learning): Completed comprehensive Android development curriculum from beginner to advanced. Mastered MVVM architecture, Retrofit, Hilt, RxJava3, Room Database, and Firebase integration.
 
 ## Skills
