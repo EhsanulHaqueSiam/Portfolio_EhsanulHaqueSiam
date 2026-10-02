@@ -5,15 +5,23 @@
     "date": "Jun 2026–Present",
     "desc": "Full-stack + platform engineer at an early-stage software firm, owning work across the whole stack: backend services, React Native and Flutter apps, AI-powered features, and the CI/CD pipelines and cloud infrastructure that ship them. Startup-wide surface area with end-to-end ownership.",
     "alignment": "left",
-    "showInHome": true
+    "showInHome": true,
+    "highlights": [
+      "Built InvoicePilot, audit-ready invoice operations sealed on-chain: React 19, Fastify, PostgreSQL, a FastAPI OCR service and Solidity contracts, with a 700-test backend suite and QuickBooks, Xero, NetSuite and Sage integrations",
+      "Rebuilt Veritas (KYC-as-a-service) on serverless GCP (Cloud Run, Document AI + Gemini, Terraform) with a three-tier extraction ladder that sends only disagreements to expensive processors"
+    ]
   },
   {
     "company": "Arché Intelligence Lab",
-    "role": "Lead Researcher — NLP & LLMs",
+    "role": "Lead Researcher (NLP & LLMs)",
     "date": "Jun 2026–Present",
-    "desc": "Leading NLP and LLM research at Arché (arche-lab.org), a student-led AI research group at AIUB. Driving work on large language models and natural language processing—including Bengali NLP—toward peer-reviewed publications alongside a distributed team of researchers across AIUB, BUET, BRAC, and RUET.",
+    "desc": "Leading NLP and LLM research at Arché (arche-lab.org), a student-led AI research group at AIUB. Driving work on large language models and natural language processing, including Bengali NLP, toward peer-reviewed publications alongside a distributed team of researchers across AIUB, BUET, BRAC, and RUET.",
     "alignment": "right",
-    "showInHome": true
+    "showInHome": true,
+    "highlights": [
+      "Leading NLP and LLM research, including Bengali NLP, toward peer-reviewed publications",
+      "Coordinating a distributed team of researchers across AIUB, BUET, BRAC and RUET"
+    ]
   },
   {
     "company": "Deepchain Labs",
@@ -22,7 +30,12 @@
     "desc": "Researching blockchain, cybersecurity, and quantum cryptography at Deepchain Labs (deepchainlabs.com), producing peer-review-ready papers, threat analyses, and technical documentation across multiple security domains.",
     "alignment": "left",
     "showInHome": true,
-    "logo": "deepchain"
+    "logo": "deepchain",
+    "highlights": [
+      "Driving R&D initiatives in blockchain, cybersecurity, and quantum cryptography",
+      "Producing academic papers and technical documentation across multiple security domains"
+    ],
+    "location": "Remote"
   },
   {
     "company": "BetaScript LLC",
@@ -30,7 +43,12 @@
     "date": "Jan 2026–May 2026",
     "desc": "Shipped 4 production React websites for this US-based digital agency, driving 1.5x client revenue growth measured by post-launch analytics and client billing. Full lifecycle ownership spanning design, React 19 + TanStack Start architecture, and Netlify deployment across restaurant, e-commerce, and agency platforms serving 50,000+ end users.",
     "alignment": "right",
-    "showInHome": true
+    "showInHome": true,
+    "highlights": [
+      "Shipped 4 production React websites driving 1.5x revenue growth, serving 50,000+ users across 3 industries",
+      "Owned full lifecycle with React 19, TanStack Start, and TailwindCSS from design to Netlify deployment"
+    ],
+    "location": "Remote"
   },
   {
     "company": "BDTracks",
@@ -38,7 +56,12 @@
     "date": "Aug 2025–May 2026",
     "desc": "Powering Bangladesh's commodity and accident tracking platform (bdtracks.com). Built 15+ web scrapers and fine-tuned Google Gemini 2.5 Flash/Pro via Vertex AI for automated data classification. Engineered production pipelines processing daily feeds from multiple national sources into structured datasets serving live dashboards.",
     "alignment": "left",
-    "showInHome": true
+    "showInHome": true,
+    "highlights": [
+      "Developed 15+ web scrapers powering Bangladesh's commodity and accident tracking platform",
+      "Fine-tuned Gemini 2.5 Flash/Pro via Vertex AI for automated data classification across daily national feeds"
+    ],
+    "location": "Dhaka, Bangladesh"
   },
   {
     "company": "Unies",
@@ -47,7 +70,12 @@
     "desc": "Built production RAG pipelines for academic resource retrieval using Pinecone, ChromaDB, LangChain, and LlamaIndex. Engineered automated LLM evaluation pipelines and FastAPI backends powering curriculum-aligned tutoring systems. Benchmarked embedding quality across vector databases to optimize retrieval accuracy.",
     "alignment": "right",
     "showInHome": true,
-    "logo": "unies"
+    "logo": "unies",
+    "highlights": [
+      "Developed RAG pipelines with Pinecone, ChromaDB, LangChain, and LlamaIndex for academic retrieval",
+      "Implemented LLM evaluation pipelines and FastAPI backends for curriculum-aligned tutoring systems"
+    ],
+    "location": "Remote"
   },
   {
     "company": "AIUB",
@@ -55,6 +83,11 @@
     "date": "Oct 2024–Dec 2024",
     "desc": "Led a team of 5 developers to ship a 2D platformer with 3 levels, a custom OpenGL rendering engine, SFML audio, and SQLite persistence, all within a 3-month deadline. Earned 4 GitHub forks and a YouTube demo.",
     "alignment": "left",
-    "showInHome": true
+    "showInHome": true,
+    "highlights": [
+      "Led 5-developer team shipping a 2D platformer with 3 levels and 4 GitHub forks in 3 months",
+      "Built custom OpenGL rendering engine with SFML audio and SQLite persistence in C++"
+    ],
+    "location": "Dhaka, Bangladesh"
   }
 ]

@@ -147,6 +147,20 @@
           "value": "10+"
         }
       ]
+    },
+    "cv": {
+      "tech": [
+        "React",
+        "TypeScript",
+        "TanStack Start",
+        "Drizzle ORM",
+        "SQLite",
+        "Spline 3D"
+      ],
+      "highlights": [
+        "Shipped dealership platform with 3D Spline showcases, admin CRUD dashboard, and 7 indexed database tables",
+        "Designed polymorphic inventory supporting 3 vehicle types with multi-filter search across 12+ facets"
+      ]
     }
   },
   {
@@ -176,6 +190,19 @@
     ],
     "links": {
       "code": "https://github.com/EhsanulHaqueSiam/kaajkormo"
+    },
+    "cv": {
+      "tech": [
+        "React",
+        "TypeScript",
+        "Rust/Axum",
+        "PostgreSQL",
+        "Clerk Auth"
+      ],
+      "highlights": [
+        "Created job portal with swipe-to-apply UX and AI-powered CV parsing with skill-match scoring",
+        "Architected full-stack with React 19 frontend and Rust Axum backend serving PostgreSQL 17"
+      ]
     }
   },
   {
@@ -243,7 +270,7 @@
     "desc": "Most e-commerce sites leave money on the table with poor mobile UX. Built a conversion-optimized streetwear platform using sales psychology such as exit-intent recovery, urgency indicators, and trust signals, plus pixel-perfect responsive coverage from 320px to 1920px. SSR via Nitro 3 for instant page loads. React 19 + TanStack Start.",
     "metrics": [
       "SSR with Nitro 3",
-      "320px\u20131920px responsive",
+      "320px–1920px responsive",
       "Sales psychology UX",
       "React 19 + TanStack Start"
     ],
@@ -270,10 +297,10 @@
   },
   {
     "name": "Indian Claypit",
-    "desc": "A restaurant needed to move from phone-only orders to a digital platform without losing the personal touch that earned their reputation. Built the full-stack solution: frontend ordering experience, backend order processing, event booking, and catering integration, now serving 50,000+ customers with a 4.9\u2605 rating from 2,847 Google Reviews.",
+    "desc": "A restaurant needed to move from phone-only orders to a digital platform without losing the personal touch that earned their reputation. Built the full-stack solution: frontend ordering experience, backend order processing, event booking, and catering integration, now serving 50,000+ customers with a 4.9★ rating from 2,847 Google Reviews.",
     "metrics": [
       "50,000+ customers served",
-      "4.9\u2605 (2,847 reviews)",
+      "4.9★ (2,847 reviews)",
       "Full-stack ordering system",
       "Production revenue platform"
     ],
@@ -328,7 +355,7 @@
         },
         {
           "label": "Rating",
-          "value": "4.9\u2605"
+          "value": "4.9★"
         },
         {
           "label": "Reviews",
@@ -434,6 +461,19 @@
         "before": "assets/images/projects/sms-1.png",
         "after": "assets/images/projects/sms-2.png"
       }
+    },
+    "cv": {
+      "tech": [
+        "Java",
+        "MySQL",
+        "JDBC",
+        "Design Patterns"
+      ],
+      "highlights": [
+        "Reduced query time from 50ms to 7ms (7x faster) via 3NF normalization and connection pooling",
+        "Served 45+ active university users with centralized admin and student dashboards"
+      ],
+      "badge": "17 Stars"
     }
   },
   {
@@ -530,11 +570,11 @@
   },
   {
     "name": "BD News Scraper & Analytics",
-    "desc": "Automated daily scraping of 74+ Bangladeshi news sources with 82 spiders publishing a live Kaggle dataset updated daily via GitHub Actions by engineering a production pipeline with Scrapy, Playwright, ML-powered sentiment analysis, and Docker deployment.",
+    "desc": "Automated daily scraping of 95+ Bangladeshi and international news sources (English and Bangla) by engineering an open-source Scrapy and Playwright pipeline with ML-powered sentiment analysis, GitHub Actions scheduling and Docker deployment.",
     "metrics": [
-      "74+ news sources daily",
-      "82 spiders automated",
-      "Live Kaggle dataset",
+      "95+ newspaper spiders",
+      "English, Bangla and international sources",
+      "GitHub Actions automation",
       "ML analytics pipeline"
     ],
     "images": [
@@ -552,20 +592,18 @@
       "FastAPI",
       "Docker",
       "GitHub Actions",
-      "Kaggle",
       "scikit-learn"
     ],
     "links": {
-      "view": "https://www.kaggle.com/datasets/ehsanulhaquesiam/bangladesh-news-articles",
       "code": "https://github.com/EhsanulHaqueSiam/BDNewsPaperScraper"
     },
     "caseStudy": {
       "problem": "Bangladesh lacks a comprehensive, up-to-date news dataset for research and NLP applications, with no automated pipeline for continuous data collection and analysis.",
-      "solution": "Built a production-grade news aggregation platform with 74+ spiders, automated daily scraping via GitHub Actions, ML-powered analytics, and public Kaggle dataset for the research community.",
+      "solution": "Built a production-grade news aggregation platform with 95+ spiders, automated daily scraping via GitHub Actions, ML-powered analytics, and an open-source codebase for the research community.",
       "process": [
         {
           "title": "Enterprise Scraping",
-          "desc": "Developed 82 spider files with Playwright integration, Cloudflare bypass, rotating proxies, and smart fallback architecture.",
+          "desc": "Developed 95+ spider files with Playwright integration, Cloudflare bypass, rotating proxies, and smart fallback architecture.",
           "icon": "fas fa-spider"
         },
         {
@@ -575,7 +613,7 @@
         },
         {
           "title": "Automated Infrastructure",
-          "desc": "GitHub Actions daily scraping at 12:00 PM BDT, auto-upload to Kaggle, Docker/Kubernetes deployment, multi-format exports.",
+          "desc": "GitHub Actions daily scraping at 12:00 PM BDT, Docker/Kubernetes deployment, multi-format exports.",
           "icon": "fas fa-robot"
         },
         {
@@ -587,20 +625,29 @@
       "results": [
         {
           "label": "Sources",
-          "value": "74+"
+          "value": "95+"
         },
         {
-          "label": "Spiders",
-          "value": "82"
+          "label": "Languages",
+          "value": "EN + BN"
         },
         {
           "label": "Daily Auto",
           "value": "✓"
-        },
-        {
-          "label": "Kaggle",
-          "value": "Live"
         }
+      ]
+    },
+    "cv": {
+      "tech": [
+        "Python",
+        "Scrapy",
+        "FastAPI",
+        "Docker",
+        "GitHub Actions"
+      ],
+      "highlights": [
+        "Automated daily scraping of 95+ English and Bangla news sources with Scrapy and Playwright spiders",
+        "Built ML sentiment analysis with TF-IDF clustering and GitHub Actions CI/CD pipeline"
       ]
     }
   },

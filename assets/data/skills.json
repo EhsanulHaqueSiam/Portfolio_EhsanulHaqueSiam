@@ -303,5 +303,70 @@
         }
       ]
     }
+  ],
+  "cv": [
+    {
+      "label": "Languages",
+      "skills": [
+        "Java",
+        "Python",
+        "C++",
+        "JavaScript",
+        "TypeScript",
+        "Kotlin",
+        "C#",
+        "SQL"
+      ]
+    },
+    {
+      "label": "AI/ML",
+      "skills": [
+        "scikit-learn",
+        "TensorFlow",
+        "PyTorch",
+        "LLMs",
+        "BERT",
+        "NLP",
+        "RAG",
+        "LangChain",
+        "LlamaIndex",
+        "Computer Vision"
+      ]
+    },
+    {
+      "label": "Web & Mobile",
+      "skills": [
+        "React",
+        "TailwindCSS",
+        "FastAPI",
+        "TanStack Start/Router",
+        "REST APIs",
+        "Android SDK",
+        "Firebase"
+      ]
+    },
+    {
+      "label": "Databases",
+      "skills": [
+        "MySQL",
+        "PostgreSQL",
+        "SQLite",
+        "SQL Server",
+        "Drizzle ORM",
+        "Room Database"
+      ]
+    },
+    {
+      "label": "DevOps & Tools",
+      "skills": [
+        "Git",
+        "Docker",
+        "Linux",
+        "Vertex AI",
+        "GitHub Actions",
+        "Scrapy",
+        "Jupyter"
+      ]
+    }
   ]
 }

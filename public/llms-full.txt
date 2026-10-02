@@ -10,8 +10,8 @@ I bridge research and production. Software Engineer at Ledgercross, building acr
 ### Software Engineer at Ledgercross (Jun 2026–Present)
 Full-stack + platform engineer at an early-stage software firm, owning work across the whole stack: backend services, React Native and Flutter apps, AI-powered features, and the CI/CD pipelines and cloud infrastructure that ship them. Startup-wide surface area with end-to-end ownership.
 
-### Lead Researcher — NLP & LLMs at Arché Intelligence Lab (Jun 2026–Present)
-Leading NLP and LLM research at Arché (arche-lab.org), a student-led AI research group at AIUB. Driving work on large language models and natural language processing—including Bengali NLP—toward peer-reviewed publications alongside a distributed team of researchers across AIUB, BUET, BRAC, and RUET.
+### Lead Researcher (NLP & LLMs) at Arché Intelligence Lab (Jun 2026–Present)
+Leading NLP and LLM research at Arché (arche-lab.org), a student-led AI research group at AIUB. Driving work on large language models and natural language processing, including Bengali NLP, toward peer-reviewed publications alongside a distributed team of researchers across AIUB, BUET, BRAC, and RUET.
 
 ### Research Assistant (Full-time, Remote) at Deepchain Labs (Apr 2026–May 2026)
 Researching blockchain, cybersecurity, and quantum cryptography at Deepchain Labs (deepchainlabs.com), producing peer-review-ready papers, threat analyses, and technical documentation across multiple security domains.
@@ -92,9 +92,8 @@ Live: https://www.youtube.com/watch?v=wK7qjTRkStg
 Code: https://github.com/EhsanulHaqueSiam/MarioMultiverseAdventures
 
 ### BD News Scraper & Analytics
-Automated daily scraping of 74+ Bangladeshi news sources with 82 spiders publishing a live Kaggle dataset updated daily via GitHub Actions by engineering a production pipeline with Scrapy, Playwright, ML-powered sentiment analysis, and Docker deployment.
-Tech: Python, Scrapy, FastAPI, Docker, GitHub Actions, Kaggle, scikit-learn
-Live: https://www.kaggle.com/datasets/ehsanulhaquesiam/bangladesh-news-articles
+Automated daily scraping of 95+ Bangladeshi and international news sources (English and Bangla) by engineering an open-source Scrapy and Playwright pipeline with ML-powered sentiment analysis, GitHub Actions scheduling and Docker deployment.
+Tech: Python, Scrapy, FastAPI, Docker, GitHub Actions, scikit-learn
 Code: https://github.com/EhsanulHaqueSiam/BDNewsPaperScraper
 
 ### Hotel Management System
@@ -147,9 +146,9 @@ Code: https://github.com/EhsanulHaqueSiam/PharmacyManagementSystem
 
 ### BD News Scraper & Analytics
 **Problem:** Bangladesh lacks a comprehensive, up-to-date news dataset for research and NLP applications, with no automated pipeline for continuous data collection and analysis.
-**Approach:** Built a production-grade news aggregation platform with 74+ spiders, automated daily scraping via GitHub Actions, ML-powered analytics, and public Kaggle dataset for the research community.
-**Process:** Enterprise Scraping — Developed 82 spider files with Playwright integration, Cloudflare bypass, rotating proxies, and smart fallback architecture. | ML Analytics Pipeline — Implemented sentiment analysis, TF-IDF topic clustering, breaking news detection via spike analysis, and duplicate detection. | Automated Infrastructure — GitHub Actions daily scraping at 12:00 PM BDT, auto-upload to Kaggle, Docker/Kubernetes deployment, multi-format exports. | API & Dashboards — FastAPI REST + GraphQL endpoints, Streamlit dashboards, Leaflet.js geo-visualization, real-time notifications (Telegram/Slack/Discord).
-**Measured results:** Sources: 74+, Spiders: 82, Daily Auto: ✓, Kaggle: Live
+**Approach:** Built a production-grade news aggregation platform with 95+ spiders, automated daily scraping via GitHub Actions, ML-powered analytics, and an open-source codebase for the research community.
+**Process:** Enterprise Scraping — Developed 95+ spider files with Playwright integration, Cloudflare bypass, rotating proxies, and smart fallback architecture. | ML Analytics Pipeline — Implemented sentiment analysis, TF-IDF topic clustering, breaking news detection via spike analysis, and duplicate detection. | Automated Infrastructure — GitHub Actions daily scraping at 12:00 PM BDT, Docker/Kubernetes deployment, multi-format exports. | API & Dashboards — FastAPI REST + GraphQL endpoints, Streamlit dashboards, Leaflet.js geo-visualization, real-time notifications (Telegram/Slack/Discord).
+**Measured results:** Sources: 95+, Languages: EN + BN, Daily Auto: ✓
 
 ### Hotel Management System
 **Problem:** Manual hotel operations (booking, check-in/out) are slow, error-prone, and lack secure payment integration.
