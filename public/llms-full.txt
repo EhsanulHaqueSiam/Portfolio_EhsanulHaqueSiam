@@ -167,14 +167,14 @@ Compared K-Means, hierarchical clustering and DBSCAN for unsupervised topic mode
 International Conference on Intelligent Data Analysis and Applications (IDAA 2025), Dec 2025 | Book Chapter (Taylor & Francis)
 Benchmarked domain-specific Medical BERT models for multi-label adverse drug reaction classification demonstrating improved performance over general BERT on the PsyTAR dataset by fine-tuning BioBERT and PubMedBERT architectures with multi-label classification heads.
 
-### Unfolding Emerging Issues in the Context of Changing Climatic Scenario
-2nd South Asian Conference on Climate, Sep 2024 | Statistical Analysis & Presentation
-Presented statistical analysis of emerging climate issues to an international audience contributing to South Asian regional understanding of environmental trends by collecting, modeling, and visualizing climate data with statistical methods.
+### Cyclones and Calamity: A Historical and Statistical Unmasking of Losses in Bangladesh
+South Asian Climate Conference 2024, Sep 2024 | Statistical Analysis & Presentation
+Presented a historical and statistical analysis of cyclone losses in Bangladesh to an international audience, by collecting, modeling, and visualizing climate data with statistical methods.
 
 ## Awards, Certifications & Achievements
 
-- **Dean's List Awards - 3x Academic Excellence** (award): Earned 3 Dean's List Awards for academic excellence with CGPA of 3.95, 3.89, and 3.75+ across consecutive semesters by maintaining top performance while building 15+ projects and publishing research.
-- **Web & Data Summit 2024 - Participation** (certificate): Participated in the Web & Data Summit 2024, gaining insights into cutting-edge web technologies and data science practices from industry experts.
+- **Dean's List Awards - 3x Academic Excellence** (award): Earned 3 Dean's List Honors at AIUB for semester GPAs of 3.75 (Fall 2023-24), 3.89 (Spring 2023-24) and 4.00 (Fall 2024-25), while building 15+ projects and publishing research.
+- **Web & Data Summit 2025 - Participation** (certificate): Participated in the Web & Data Summit 2025 by Interactive Cares, gaining insights into cutting-edge web technologies and data science practices from industry experts.
 - **AIUB CS FEST 2024 - 1st Runner Up** (award): Won 1st Runner-Up at AIUB CS FEST 2024 App Showcase competing against 20+ teams evaluated by industry judges by demonstrating innovative mobile development with polished UI/UX and presentation.
 - **Published Research - Taylor & Francis (IDAA 2025)** (publication): Published a Taylor & Francis Book Chapter on medical AI at IDAA 2025, an international conference indexed by major databases, by benchmarking BioBERT, PubMedBERT, and BERT for multi-label adverse drug reaction classification.
 - **South Asian Climate Conference 2024** (certificate): Presented original climate research at an international conference demonstrating statistical findings on South Asian climate trends by conducting data collection, statistical modeling, and visualization of regional environmental data.

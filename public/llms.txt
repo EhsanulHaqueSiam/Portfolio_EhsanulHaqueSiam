@@ -22,7 +22,7 @@
 ## Publications
 - [Decoding Research Trends: A Clustering Based Topic Modeling Framework](https://doi.org/10.1109/QPAIN69676.2026.11545814): IEEE QPAIN 2026 (Apr 2026 | Published (IEEE Xplore, Scopus Indexed))
 - Beyond NER: A Comparative Benchmark of Medical BERTS for Multi-Label Adverse Drug Reaction Classification: International Conference on Intelligent Data Analysis and Applications (IDAA 2025) (Dec 2025 | Book Chapter (Taylor & Francis))
-- Unfolding Emerging Issues in the Context of Changing Climatic Scenario: 2nd South Asian Conference on Climate (Sep 2024 | Statistical Analysis & Presentation)
+- Cyclones and Calamity: A Historical and Statistical Unmasking of Losses in Bangladesh: South Asian Climate Conference 2024 (Sep 2024 | Statistical Analysis & Presentation)
 
 ## Contact
 - Email: ehsanul.siamdev@gmail.com

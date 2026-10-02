@@ -1,10 +1,11 @@
 [
   {
     "name": "Dean's List Awards - 3x Academic Excellence",
-    "desc": "Earned 3 Dean's List Awards for academic excellence with CGPA of 3.95, 3.89, and 3.75+ across consecutive semesters by maintaining top performance while building 15+ projects and publishing research.",
+    "desc": "Earned 3 Dean's List Honors at AIUB for semester GPAs of 3.75 (Fall 2023-24), 3.89 (Spring 2023-24) and 4.00 (Fall 2024-25), while building 15+ projects and publishing research.",
     "images": [
       "deans-award-cert-fall-2023-24.webp",
       "deans-award-cert-spring-2023-24.webp",
+      "deans-award-cert-fall-2024-25.webp",
       "deans-award-fall-2023-24.webp",
       "deans-award-spring-2023-24.webp",
       "receiving-deans-awards-1.webp",
@@ -16,8 +17,8 @@
     "showInHome": true
   },
   {
-    "name": "Web & Data Summit 2024 - Participation",
-    "desc": "Participated in the Web & Data Summit 2024, gaining insights into cutting-edge web technologies and data science practices from industry experts.",
+    "name": "Web & Data Summit 2025 - Participation",
+    "desc": "Participated in the Web & Data Summit 2025 by Interactive Cares, gaining insights into cutting-edge web technologies and data science practices from industry experts.",
     "images": [
       "web-data-summit-cert.webp"
     ],

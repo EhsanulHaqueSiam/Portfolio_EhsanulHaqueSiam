@@ -1,33 +1,33 @@
 [
-    {
-        "title": "Decoding Research Trends: A Clustering Based Topic Modeling Framework",
-        "conference": "IEEE QPAIN 2026",
-        "date": "Apr 2026 | Published (IEEE Xplore, Scopus Indexed)",
-        "desc": "Compared K-Means, hierarchical clustering and DBSCAN for unsupervised topic modeling on 10,000 arXiv \"Artificial Intelligence\" abstracts (TF-IDF + PCA), finding the AI literature skews toward societal issues such as ethics and security, and that no single method fits all: K-Means suits broad summaries while DBSCAN surfaces the core-periphery structure of emerging research. With A. P. Neteish and A. Salam.",
-        "images": [],
-        "showInHome": true,
-        "paperLink": "https://doi.org/10.1109/QPAIN69676.2026.11545814"
-    },
-    {
-        "title": "Beyond NER: A Comparative Benchmark of Medical BERTS for Multi-Label Adverse Drug Reaction Classification",
-        "conference": "International Conference on Intelligent Data Analysis and Applications (IDAA 2025)",
-        "date": "Dec 2025 | Book Chapter (Taylor & Francis)",
-        "desc": "Benchmarked domain-specific Medical BERT models for multi-label adverse drug reaction classification demonstrating improved performance over general BERT on the PsyTAR dataset by fine-tuning BioBERT and PubMedBERT architectures with multi-label classification heads.",
-        "images": [
-            "pub1.png"
-        ],
-        "showInHome": true,
-        "paperLink": null
-    },
-    {
-        "title": "Unfolding Emerging Issues in the Context of Changing Climatic Scenario",
-        "conference": "2nd South Asian Conference on Climate",
-        "date": "Sep 2024 | Statistical Analysis & Presentation",
-        "desc": "Presented statistical analysis of emerging climate issues to an international audience contributing to South Asian regional understanding of environmental trends by collecting, modeling, and visualizing climate data with statistical methods.",
-        "images": [
-            "cpecertificate.png"
-        ],
-        "showInHome": true,
-        "paperLink": null
-    }
+  {
+    "title": "Decoding Research Trends: A Clustering Based Topic Modeling Framework",
+    "conference": "IEEE QPAIN 2026",
+    "date": "Apr 2026 | Published (IEEE Xplore, Scopus Indexed)",
+    "desc": "Compared K-Means, hierarchical clustering and DBSCAN for unsupervised topic modeling on 10,000 arXiv \"Artificial Intelligence\" abstracts (TF-IDF + PCA), finding the AI literature skews toward societal issues such as ethics and security, and that no single method fits all: K-Means suits broad summaries while DBSCAN surfaces the core-periphery structure of emerging research. With A. P. Neteish and A. Salam.",
+    "images": [],
+    "showInHome": true,
+    "paperLink": "https://doi.org/10.1109/QPAIN69676.2026.11545814"
+  },
+  {
+    "title": "Beyond NER: A Comparative Benchmark of Medical BERTS for Multi-Label Adverse Drug Reaction Classification",
+    "conference": "International Conference on Intelligent Data Analysis and Applications (IDAA 2025)",
+    "date": "Dec 2025 | Book Chapter (Taylor & Francis)",
+    "desc": "Benchmarked domain-specific Medical BERT models for multi-label adverse drug reaction classification demonstrating improved performance over general BERT on the PsyTAR dataset by fine-tuning BioBERT and PubMedBERT architectures with multi-label classification heads.",
+    "images": [
+      "pub1.png"
+    ],
+    "showInHome": true,
+    "paperLink": null
+  },
+  {
+    "title": "Cyclones and Calamity: A Historical and Statistical Unmasking of Losses in Bangladesh",
+    "conference": "South Asian Climate Conference 2024",
+    "date": "Sep 2024 | Statistical Analysis & Presentation",
+    "desc": "Presented a historical and statistical analysis of cyclone losses in Bangladesh to an international audience, by collecting, modeling, and visualizing climate data with statistical methods.",
+    "images": [
+      "cpecertificate.png"
+    ],
+    "showInHome": true,
+    "paperLink": null
+  }
 ]
