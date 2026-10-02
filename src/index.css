@@ -419,8 +419,8 @@ html.is-scrolling #main-content {
   }
 }
 
-/* Touch targets on mobile */
-@media (max-width: 767px) {
+/* Touch targets on mobile (screen only: a 720px print page would match too) */
+@media screen and (max-width: 767px) {
   a, button {
     min-height: 44px;
     min-width: 44px;
@@ -457,9 +457,26 @@ html.is-scrolling #main-content {
     visibility: visible !important;
   }
 
+  /* color-scheme: dark (the site default) would paint the page margins dark */
+  html.resume-printing,
   html.resume-printing body {
+    color-scheme: light !important;
     background: white !important;
     overflow: visible !important;
+  }
+
+  /* Print only the sheet: drop everything that neither holds it nor sits inside it, and un-fix
+     its ancestors. Otherwise the hidden page still sets the page count and the fixed overlay
+     repeats (clipped) on every page. */
+  html.resume-printing body *:not(:has(.resume-paper), .resume-paper, .resume-paper *) {
+    display: none !important;
+  }
+
+  html.resume-printing :has(.resume-paper) {
+    position: static !important;
+    overflow: visible !important;
+    height: auto !important;
+    backdrop-filter: none !important;
   }
 
   html.resume-printing .resume-paper {

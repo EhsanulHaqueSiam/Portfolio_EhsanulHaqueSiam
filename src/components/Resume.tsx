@@ -1,6 +1,8 @@
 import { useState, useEffect, useCallback, useRef, type ReactNode } from 'react';
 import { m, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { DownloadIcon, ExternalLinkIcon } from './ui/Icons';
+import { profile, experience, cvProjects, education, publications, skills } from '../data/content';
+import type { Experience, SkillsData } from '../data/types';
 
 /* ------------------------------------------------------------------ */
 /*  Typographic sub-components                                         */
@@ -20,57 +22,48 @@ function Section({ title, children }: { title: string; children: ReactNode }) {
   );
 }
 
-function Entry({
-  position, company, period, location, bullets, isLast,
-}: {
-  position: string; company: string; period: string; location: string;
-  bullets: string[]; isLast?: boolean;
-}) {
+/** One role from experience.json; `date` is "Mon YYYY–Mon YYYY", spaced out for print. */
+function Entry({ role, company, date, location, highlights, desc }: Experience) {
   return (
-    <div className={isLast ? '' : 'mb-3'}>
+    <div className="mb-3 last:mb-0 break-inside-avoid">
       <div className="flex justify-between items-baseline gap-3">
-        <span className="font-semibold text-[#111008] text-[13px] leading-tight">{position}</span>
-        <span className="text-[#79705f] text-[10.5px] shrink-0 font-mono tracking-wide">{period}</span>
+        <span className="font-semibold text-[#111008] text-[13px] leading-tight">{role}</span>
+        <span className="text-[#79705f] text-[10.5px] shrink-0 font-mono tracking-wide">{date.replace('–', ' – ')}</span>
       </div>
       <div className="flex justify-between items-baseline gap-3 mt-px">
         <span className="text-[#5c5346] italic text-[12px]">{company}</span>
         <span className="text-[#5c5346] italic text-[10.5px] shrink-0">{location}</span>
       </div>
       <ul className="resume-bullets mt-1.5">
-        {bullets.map((b, i) => <li key={i}>{b}</li>)}
+        {(highlights ?? [desc]).map((b) => <li key={b}>{b}</li>)}
       </ul>
     </div>
   );
 }
 
-function Project({
-  name, tech, extra, bullets, isLast,
-}: {
-  name: string; tech: string; extra?: string;
-  bullets: string[]; isLast?: boolean;
-}) {
+function Project({ name, tech, badge, highlights }: (typeof cvProjects)[number]) {
   return (
-    <div className={isLast ? '' : 'mb-2.5'}>
+    <div className="mb-2.5 last:mb-0 break-inside-avoid">
       <div className="flex justify-between items-baseline gap-3">
         <span className="text-[13px] leading-tight">
           <span className="font-semibold text-[#111008]">{name}</span>
           <span className="text-[#c2b9a6] mx-1.5">|</span>
-          <span className="text-[#5c5346] italic text-[11px]">{tech}</span>
+          <span className="text-[#5c5346] italic text-[11px]">{tech.join(', ')}</span>
         </span>
-        {extra && <span className="text-[#6f5cf2] text-[10.5px] shrink-0 font-mono">{extra}</span>}
+        {badge && <span className="text-[#6f5cf2] text-[10.5px] shrink-0 font-mono">{badge}</span>}
       </div>
       <ul className="resume-bullets mt-1">
-        {bullets.map((b, i) => <li key={i}>{b}</li>)}
+        {highlights.map((b) => <li key={b}>{b}</li>)}
       </ul>
     </div>
   );
 }
 
-function SkillRow({ label, value }: { label: string; value: string }) {
+function SkillRow({ label, skills }: SkillsData['cv'][number]) {
   return (
     <div className="leading-snug">
       <span className="font-semibold text-[#111008]">{label}: </span>
-      <span className="text-[#5c5346]">{value}</span>
+      <span className="text-[#5c5346]">{skills.join(', ')}</span>
     </div>
   );
 }
@@ -79,8 +72,19 @@ function SkillRow({ label, value }: { label: string; value: string }) {
 /*  Resume overlay                                                     */
 /* ------------------------------------------------------------------ */
 
+/**
+ * URL hash -> overlay state. `#resume` opens the overlay; `#resume-print` opens it with no fade and
+ * the print stylesheet engaged, so `chromium --headless=new --print-to-pdf <site>/#resume-print`
+ * renders the same PDF as the Print button.
+ */
+type View = 'closed' | 'screen' | 'print';
+const viewFor = (hash: string): View =>
+  hash === '#resume-print' ? 'print' : hash === '#resume' ? 'screen' : 'closed';
+
 export function Resume() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [view, setView] = useState<View>('closed');
+  const isOpen = view !== 'closed';
+  const printing = view === 'print';
   const [instantClose, setInstantClose] = useState(false);
   const overlayRef = useRef<HTMLDivElement>(null);
   const backButtonRef = useRef<HTMLButtonElement>(null);
@@ -90,20 +94,21 @@ export function Resume() {
   /* ── hash sync ── */
   useEffect(() => {
     const sync = () => {
-      const nextIsOpen = window.location.hash === '#resume';
-      if (nextIsOpen) setInstantClose(false);
-      setIsOpen(nextIsOpen);
+      const next = viewFor(window.location.hash);
+      if (next !== 'closed') setInstantClose(false);
+      setView(next);
     };
     sync();
     window.addEventListener('hashchange', sync);
     return () => window.removeEventListener('hashchange', sync);
   }, []);
 
-  /* ── lock body + <html> (the real scroller) + stop Lenis ── */
+  /* ── lock body + <html> (the real scroller) + stop Lenis; the print view also scopes the print rules ── */
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
       document.documentElement.style.overflow = 'hidden';
+      if (printing) document.documentElement.classList.add('resume-printing');
       window.dispatchEvent(new Event('lenis:stop'));
     } else {
       document.body.style.overflow = '';
@@ -116,7 +121,7 @@ export function Resume() {
       document.documentElement.classList.remove('resume-printing');
       window.dispatchEvent(new Event('lenis:start'));
     };
-  }, [isOpen]);
+  }, [isOpen, printing]);
 
   /* ── CRITICAL: block wheel/touch propagation to Lenis ── */
   useEffect(() => {
@@ -201,7 +206,7 @@ export function Resume() {
           aria-label="Résumé"
           className="fixed inset-0 z-[100] flex flex-col bg-background/85 backdrop-blur-xl"
           style={{ touchAction: 'pan-y' }}
-          initial={{ opacity: 0 }}
+          initial={printing ? false : { opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: shouldReduceMotion || instantClose ? 0 : 0.2 }}
@@ -270,18 +275,18 @@ export function Resume() {
                 {/* ── Header ── */}
                 <div className="resume-header-border text-center mb-6 pb-5 border-b rule">
                   <h2 className="resume-name text-[1.35rem] sm:text-[1.7rem] md:text-[2rem] font-sans font-semibold text-ink-950 tracking-[0.04em] uppercase leading-none mb-2">
-                    Ehsanul Haque Siam
+                    {profile.name}
                   </h2>
                   <div className="resume-contact flex flex-wrap items-center justify-center gap-x-1.5 sm:gap-x-2.5 gap-y-0.5 text-[11px] sm:text-[12px] text-ink-600 leading-relaxed">
-                    <a href="mailto:ehsanul.siamdev@gmail.com" className="press-feedback text-ink-700 hover:text-vermilion-600 active:text-vermilion-600 underline decoration-ink-900/20 underline-offset-2">
-                      ehsanul.siamdev@gmail.com
+                    <a href={`mailto:${profile.email}`} className="press-feedback text-ink-700 hover:text-vermilion-600 active:text-vermilion-600 underline decoration-ink-900/20 underline-offset-2">
+                      {profile.email}
                     </a>
                     <span className="text-ink-300">/</span>
-                    <a href="https://linkedin.com/in/EhsanulHaqueSiam" target="_blank" rel="me noopener noreferrer" className="press-feedback text-ink-700 hover:text-vermilion-600 active:text-vermilion-600 underline decoration-ink-900/20 underline-offset-2">
+                    <a href={profile.linkedin} target="_blank" rel="me noopener noreferrer" className="press-feedback text-ink-700 hover:text-vermilion-600 active:text-vermilion-600 underline decoration-ink-900/20 underline-offset-2">
                       LinkedIn
                     </a>
                     <span className="text-ink-300">/</span>
-                    <a href="https://github.com/EhsanulHaqueSiam" target="_blank" rel="me noopener noreferrer" className="press-feedback text-ink-700 hover:text-vermilion-600 active:text-vermilion-600 underline decoration-ink-900/20 underline-offset-2">
+                    <a href={profile.github} target="_blank" rel="me noopener noreferrer" className="press-feedback text-ink-700 hover:text-vermilion-600 active:text-vermilion-600 underline decoration-ink-900/20 underline-offset-2">
                       GitHub
                     </a>
                     <span className="text-ink-300">/</span>
@@ -293,147 +298,55 @@ export function Resume() {
 
                 {/* ── Experience ── */}
                 <Section title="Experience">
-                  <Entry
-                    position="Research Assistant"
-                    company="Deepchain Labs"
-                    period="Apr 2026 – Present"
-                    location="Remote"
-                    bullets={[
-                      'Driving R&D initiatives in blockchain, cybersecurity, and quantum cryptography',
-                      'Producing academic papers and technical documentation across multiple security domains',
-                    ]}
-                  />
-                  <Entry
-                    position="AI Engineering Intern"
-                    company="Unies"
-                    period="Feb 2026 – May 2026"
-                    location="Remote"
-                    bullets={[
-                      'Developed RAG pipelines with Pinecone, ChromaDB, LangChain, and LlamaIndex for academic retrieval',
-                      'Implemented LLM evaluation pipelines and FastAPI backends for curriculum-aligned tutoring systems',
-                    ]}
-                  />
-                  <Entry
-                    position="Solo Developer"
-                    company="BetaScript LLC (US-based)"
-                    period="Jan 2026 – Present"
-                    location="Remote"
-                    bullets={[
-                      'Shipped 4 production React websites driving 1.5x revenue growth, serving 50,000+ users across 3 industries',
-                      'Owned full lifecycle with React 19, TanStack Start, and TailwindCSS from design to Netlify deployment',
-                    ]}
-                  />
-                  <Entry
-                    position="AI & Data Engineer"
-                    company="BDTracks"
-                    period="Aug 2025 – Present"
-                    location="Dhaka, Bangladesh"
-                    bullets={[
-                      'Developed 15+ web scrapers powering Bangladesh\'s commodity and accident tracking platform',
-                      'Fine-tuned Gemini 2.5 Flash/Pro via Vertex AI for automated data classification across daily national feeds',
-                    ]}
-                  />
-                  <Entry
-                    position="Team Lead – Game Development"
-                    company="AIUB Computer Graphics Course"
-                    period="Oct 2024 – Dec 2024"
-                    location="Dhaka, Bangladesh"
-                    bullets={[
-                      'Led 5-developer team shipping a 2D platformer with 3 levels and 4 GitHub forks in 3 months',
-                      'Built custom OpenGL rendering engine with SFML audio and SQLite persistence in C++',
-                    ]}
-                    isLast
-                  />
+                  {experience.map((role) => <Entry key={role.company} {...role} />)}
                 </Section>
 
                 {/* ── Projects ── */}
                 <Section title="Projects">
-                  <Project
-                    name="TTT Autos"
-                    tech="React, TypeScript, TanStack Start, Drizzle ORM, SQLite, Spline 3D"
-                    bullets={[
-                      'Shipped dealership platform with 3D Spline showcases, admin CRUD dashboard, and 7 indexed database tables',
-                      'Designed polymorphic inventory supporting 3 vehicle types with multi-filter search across 12+ facets',
-                    ]}
-                  />
-                  <Project
-                    name="KaajKormo"
-                    tech="React, TypeScript, Rust/Axum, PostgreSQL, Clerk Auth"
-                    bullets={[
-                      'Created job portal with swipe-to-apply UX and AI-powered CV parsing with skill-match scoring',
-                      'Architected full-stack with React 19 frontend and Rust Axum backend serving PostgreSQL 17',
-                    ]}
-                  />
-                  <Project
-                    name="Student Management System"
-                    tech="Java, MySQL, JDBC, Design Patterns"
-                    extra="17 Stars"
-                    bullets={[
-                      'Reduced query time from 50ms to 7ms (7x faster) via 3NF normalization and connection pooling',
-                      'Served 45+ active university users with centralized admin and student dashboards',
-                    ]}
-                  />
-                  <Project
-                    name="BD News Scraper & Analytics"
-                    tech="Python, Scrapy, FastAPI, Docker, GitHub Actions"
-                    bullets={[
-                      'Automated daily scraping of 74+ news sources with 82 spiders and live Kaggle dataset',
-                      'Built ML sentiment analysis with TF-IDF clustering and GitHub Actions CI/CD pipeline',
-                    ]}
-                    isLast
-                  />
+                  {cvProjects.map((project) => <Project key={project.name} {...project} />)}
                 </Section>
 
                 {/* ── Education ── */}
                 <Section title="Education">
-                  <div className="flex justify-between items-baseline gap-3">
-                    <span className="font-semibold text-ink-950 text-[13px]">
-                      American International University-Bangladesh (AIUB)
-                    </span>
-                    <span className="text-ink-500 text-[10.5px] shrink-0">Dhaka, Bangladesh</span>
-                  </div>
-                  <div className="flex justify-between items-baseline gap-3 mt-px">
-                    <span className="text-ink-600 italic text-[12px]">
-                      Bachelor of Science in Computer Science and Engineering
-                    </span>
-                    <span className="text-ink-600 italic text-[10.5px] shrink-0 font-mono tracking-wide">
-                      2022 – 2026
-                    </span>
-                  </div>
-                  <ul className="resume-bullets mt-1.5">
-                    <li>Cumulative CGPA 3.90 / 4.00</li>
-                    <li>3x Dean's List Award for academic excellence (CGPA 3.95, 3.89, 3.75+)</li>
-                    <li>1st Runner-Up at AIUB CS Fest 2024 App Showcase competing against 20+ teams</li>
-                    <li>Certified Ethical Hacker (CEH) – Team Matrix; 29-module program covering OWASP Top 10, CTF &amp; bug bounty</li>
-                  </ul>
+                  {education.map(({ institution, degree, location, start, end, details }) => (
+                    <div key={institution} className="mb-3 last:mb-0 break-inside-avoid">
+                      <div className="flex justify-between items-baseline gap-3">
+                        <span className="font-semibold text-ink-950 text-[13px]">{institution}</span>
+                        <span className="text-ink-500 text-[10.5px] shrink-0">{location}</span>
+                      </div>
+                      <div className="flex justify-between items-baseline gap-3 mt-px">
+                        <span className="text-ink-600 italic text-[12px]">{degree}</span>
+                        <span className="text-ink-600 italic text-[10.5px] shrink-0 font-mono tracking-wide">
+                          {start} – {end}
+                        </span>
+                      </div>
+                      <ul className="resume-bullets mt-1.5">
+                        {details.map((d) => <li key={d}>{d}</li>)}
+                      </ul>
+                    </div>
+                  ))}
                 </Section>
 
                 {/* ── Publications ── */}
+                {/* publications.json `date` is "<when> | <status note>"; the CV prints the note */}
                 <Section title="Publications">
                   <ul className="resume-pub-list list-none pl-0 space-y-1.5 text-[12px] leading-relaxed">
-                    <li>
-                      <span className="text-ink-950 font-medium">"Decoding Research Trends: A Clustering Based Topic Modeling Framework"</span>
-                      <span className="text-ink-600"> – IEEE QPAIN 2026 (Accepted, IEEE Xplore/Scopus)</span>
-                    </li>
-                    <li>
-                      <span className="text-ink-950 font-medium">"Beyond NER: Medical BERTs for Multi-Label ADR Classification"</span>
-                      <span className="text-ink-600"> – Taylor &amp; Francis, IDAA 2025</span>
-                    </li>
-                    <li>
-                      <span className="text-ink-950 font-medium">"Unfolding Emerging Issues in Changing Climatic Scenario"</span>
-                      <span className="text-ink-600"> – 2nd South Asian Climate Conference, 2024</span>
-                    </li>
+                    {publications.map(({ title, conference, date }) => {
+                      const [, note] = date.split(' | ');
+                      return (
+                        <li key={title}>
+                          <span className="text-ink-950 font-medium">"{title}"</span>
+                          <span className="text-ink-600"> – {note ? `${conference}, ${note}` : conference}</span>
+                        </li>
+                      );
+                    })}
                   </ul>
                 </Section>
 
                 {/* ── Technical Skills ── */}
                 <Section title="Technical Skills">
                   <div className="space-y-0.5 text-[12px]">
-                    <SkillRow label="Languages" value="Java, Python, C++, JavaScript, TypeScript, Kotlin, C#, SQL" />
-                    <SkillRow label="AI/ML" value="scikit-learn, TensorFlow, PyTorch, LLMs, BERT, NLP, RAG, LangChain, LlamaIndex, Computer Vision" />
-                    <SkillRow label="Web & Mobile" value="React, TailwindCSS, FastAPI, TanStack Start/Router, REST APIs, Android SDK, Firebase" />
-                    <SkillRow label="Databases" value="MySQL, PostgreSQL, SQLite, SQL Server, Drizzle ORM, Room Database" />
-                    <SkillRow label="DevOps & Tools" value="Git, Docker, Linux, Vertex AI, GitHub Actions, Scrapy, Jupyter" />
+                    {skills.cv.map((row) => <SkillRow key={row.label} {...row} />)}
                   </div>
                 </Section>
 

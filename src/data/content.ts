@@ -4,6 +4,7 @@ import type {
   SkillsData,
   Project,
   Experience,
+  Education,
   Achievement,
   Publication,
   Testimonial,
@@ -14,6 +15,7 @@ import type {
 import skillsData from '../../assets/data/skills.json';
 import projectsData from '../../assets/data/projects.json';
 import experienceData from '../../assets/data/experience.json';
+import educationData from '../../assets/data/education.json';
 import achievementsData from '../../assets/data/achievements.json';
 import publicationsData from '../../assets/data/publications.json';
 import testimonialsData from '../../assets/data/testimonials.json';
@@ -27,6 +29,7 @@ export const profile: Profile = profileData as Profile;
 export const skills = skillsData as SkillsData;
 export const projects = projectsData as Project[];
 export const experience = experienceData as Experience[];
+export const education = educationData as Education[];
 export const achievements = achievementsData as Achievement[];
 export const publications = publicationsData as Publication[];
 export const testimonials = testimonialsData as Testimonial[];
@@ -34,6 +37,8 @@ export const blogPosts = blogData as BlogPost[];
 
 // Filtered exports for homepage
 export const featuredProjects = projects.filter(p => p.showInHome);
+// CV projects: the ones with a `cv` block, flattened for the Resume overlay
+export const cvProjects = projects.flatMap(({ name, cv }) => (cv ? [{ name, ...cv }] : []));
 
 // Deep-dive case studies: the two strongest "problem → approach → measured
 // result" stories (technical depth + business impact).
