@@ -122,6 +122,9 @@ ${publications.map((p) => `- ${p.paperLink ? `[${p.title}](${p.paperLink})` : p.
 - Email: ${profile.email}
 - GitHub: ${profile.github}
 - LinkedIn: ${profile.linkedin}
+- ORCID: ${profile.orcid}
+- Google Scholar: ${profile.scholar}
+- IEEE Xplore: ${profile.ieeeXplore}
 
 ## Availability
 Open to AI/ML engineering, LLM/RAG, and full-stack roles: full-time, part-time, or freelance; remote or Dhaka, Bangladesh.
@@ -198,7 +201,7 @@ ${section(
       : ''
   }${section(
     'Links',
-    `- Portfolio: ${SITE}/\n- Hire me: ${SITE}/hire-me.html\n- Résumé: ${SITE}/resume.pdf\n- GitHub: ${profile.github}\n- LinkedIn: ${profile.linkedin}\n- Kaggle: https://www.kaggle.com/ehsanulhaquesiam`,
+    `- Portfolio: ${SITE}/\n- Hire me: ${SITE}/hire-me.html\n- Résumé: ${SITE}/resume.pdf\n- GitHub: ${profile.github}\n- LinkedIn: ${profile.linkedin}\n- ORCID: ${profile.orcid}\n- Google Scholar: ${profile.scholar}\n- IEEE Xplore: ${profile.ieeeXplore}\n- ResearchGate: ${profile.researchgate}\n- Kaggle: ${profile.kaggle}\n- X: ${profile.x}`,
   )}`,
 );
 

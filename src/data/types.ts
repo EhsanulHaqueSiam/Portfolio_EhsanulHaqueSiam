@@ -109,6 +109,12 @@ export interface Profile {
   email: string;
   github: string;
   linkedin: string;
+  orcid: string;
+  scholar: string;
+  ieeeXplore: string;
+  researchgate: string;
+  kaggle: string;
+  x: string;
   resume: string;
   location: string;
   currentRole: string;

@@ -13,6 +13,8 @@ import {
   LinkedInIcon,
   ResumeIcon,
   ArrowUpRightIcon,
+  FlaskIcon,
+  LinkIcon,
 } from './ui/Icons';
 
 const recruiterBody = [
@@ -51,6 +53,18 @@ const rows = [
     value: 'in/EhsanulHaqueSiam',
     href: profile.linkedin,
     icon: LinkedInIcon,
+  },
+  {
+    label: 'Google Scholar',
+    value: 'Publications and citations',
+    href: profile.scholar,
+    icon: FlaskIcon,
+  },
+  {
+    label: 'ORCID',
+    value: '0009-0004-8811-1094',
+    href: profile.orcid,
+    icon: LinkIcon,
   },
   {
     label: 'Resume',

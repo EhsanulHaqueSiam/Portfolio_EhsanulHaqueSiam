@@ -240,7 +240,12 @@ export function buildJsonLd() {
         sameAs: [
           profile.github,
           profile.linkedin,
-          'https://www.kaggle.com/ehsanulhaquesiam',
+          profile.orcid,
+          profile.scholar,
+          profile.ieeeXplore,
+          profile.researchgate,
+          profile.kaggle,
+          profile.x,
         ],
         subjectOf: publicationArticles.map((p) => ({ '@id': p['@id'] })),
         seeks: {

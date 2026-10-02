@@ -2,11 +2,11 @@
     {
         "title": "Decoding Research Trends: A Clustering Based Topic Modeling Framework",
         "conference": "IEEE QPAIN 2026",
-        "date": "2026 | Accepted (IEEE Xplore, Scopus Indexed)",
-        "desc": "Proposed a clustering-based topic modeling framework for decoding research trends accepted with minor revision for IEEE Xplore and Scopus indexing by developing novel clustering algorithms applied to academic publication data.",
+        "date": "Apr 2026 | Published (IEEE Xplore, Scopus Indexed)",
+        "desc": "Compared K-Means, hierarchical clustering and DBSCAN for unsupervised topic modeling on 10,000 arXiv \"Artificial Intelligence\" abstracts (TF-IDF + PCA), finding the AI literature skews toward societal issues such as ethics and security, and that no single method fits all: K-Means suits broad summaries while DBSCAN surfaces the core-periphery structure of emerging research. With A. P. Neteish and A. Salam.",
         "images": [],
         "showInHome": true,
-        "paperLink": null
+        "paperLink": "https://doi.org/10.1109/QPAIN69676.2026.11545814"
     },
     {
         "title": "Beyond NER: A Comparative Benchmark of Medical BERTS for Multi-Label Adverse Drug Reaction Classification",

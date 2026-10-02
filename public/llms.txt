@@ -1,7 +1,7 @@
 # Ehsanul Haque Siam
 
-> AI Engineer & Full-Stack Developer based in Dhaka, Bangladesh. I bridge research and production. Software Engineer at Ledgercross, building across the stack: backend services, React Native and Flutter apps, AI features, and the CI/CD and cloud infrastructure that ship them. Published peer-reviewed research (a Taylor & Francis book chapter and an accepted IEEE QPAIN 2026 paper). Previously drove 1.5x client revenue shipping 4 production websites at BetaScript LLC and built 15+ web scrapers with Gemini-powered AI pipelines at BDTracks. Obsessed with turning complex problems into systems that scale.
-> Last updated: 2026-07-25. Contact: ehsanul.siamdev@gmail.com
+> AI Engineer & Full-Stack Developer based in Dhaka, Bangladesh. I bridge research and production. Software Engineer at Ledgercross, building across the stack: backend services, React Native and Flutter apps, AI features, and the CI/CD and cloud infrastructure that ship them. Published peer-reviewed research (a Taylor & Francis book chapter and an IEEE QPAIN 2026 paper in IEEE Xplore). Previously drove 1.5x client revenue shipping 4 production websites at BetaScript LLC and built 15+ web scrapers with Gemini-powered AI pipelines at BDTracks. Obsessed with turning complex problems into systems that scale.
+> Last updated: 2026-10-02. Contact: ehsanul.siamdev@gmail.com
 
 ## Now
 - **Software Engineer, Ledgercross** (Jun 2026–Present)
@@ -20,7 +20,7 @@
 - [Full profile for LLMs](https://ehsanulhaquesiam.netlify.app/llms-full.txt): complete structured detail
 
 ## Publications
-- Decoding Research Trends: A Clustering Based Topic Modeling Framework: IEEE QPAIN 2026 (2026 | Accepted (IEEE Xplore, Scopus Indexed))
+- [Decoding Research Trends: A Clustering Based Topic Modeling Framework](https://doi.org/10.1109/QPAIN69676.2026.11545814): IEEE QPAIN 2026 (Apr 2026 | Published (IEEE Xplore, Scopus Indexed))
 - Beyond NER: A Comparative Benchmark of Medical BERTS for Multi-Label Adverse Drug Reaction Classification: International Conference on Intelligent Data Analysis and Applications (IDAA 2025) (Dec 2025 | Book Chapter (Taylor & Francis))
 - Unfolding Emerging Issues in the Context of Changing Climatic Scenario: 2nd South Asian Conference on Climate (Sep 2024 | Statistical Analysis & Presentation)
 
@@ -28,6 +28,9 @@
 - Email: ehsanul.siamdev@gmail.com
 - GitHub: https://github.com/EhsanulHaqueSiam
 - LinkedIn: https://www.linkedin.com/in/EhsanulHaqueSiam/
+- ORCID: https://orcid.org/0009-0004-8811-1094
+- Google Scholar: https://scholar.google.com/citations?user=oX8D-pEAAAAJ&hl=en
+- IEEE Xplore: https://ieeexplore.ieee.org/author/37089519186
 
 ## Availability
 Open to AI/ML engineering, LLM/RAG, and full-stack roles: full-time, part-time, or freelance; remote or Dhaka, Bangladesh.
