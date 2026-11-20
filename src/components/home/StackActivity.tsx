@@ -17,6 +17,7 @@ const TABS: Record<string, string> = {
 
 export function Stack() {
   const [tab, setTab] = useState('All');
+  const [changed, setChanged] = useState(false);
   // "All" keeps the strongest skills so the strip stays short; a tab shows its whole category.
   const shown = skills.categories
     .filter((c) => tab === 'All' || TABS[c.name] === tab)
@@ -34,6 +35,7 @@ export function Stack() {
           onValueChange={(next) => {
             if (typeof next !== 'string') return;
             setTab(next);
+            setChanged(true);
             sound.click();
             haptic('selection');
           }}
@@ -51,9 +53,10 @@ export function Stack() {
       <p aria-hidden="true" className="-mt-1 mb-2 hidden font-mono text-[11px] text-muted-foreground [@media(hover:hover)_and_(pointer:fine)]:block">
         ( hover to play )
       </p>
-      <ul className="flex flex-wrap gap-1.5">
+      {/* Keyed by tab so a new filter re-staggers every chip in. */}
+      <ul key={tab} className="flex flex-wrap gap-1.5">
         {unique.map((name, i) => (
-          <li key={name}>
+          <li key={name} className={changed ? 'swap-in' : undefined} style={{ '--n': Math.min(i, 16) } as React.CSSProperties}>
             {/* biome-ignore lint/a11y/noStaticElementInteractions: hover/tap only plays a note; the chip has no action */}
             <span
               onMouseEnter={() => sound.note(i)}
@@ -78,13 +81,14 @@ const USER = profile.github.split('/').pop() ?? '';
 const FILL = ['hsl(var(--foreground)/0.07)', 'hsl(var(--foreground)/0.22)', 'hsl(var(--foreground)/0.42)', 'hsl(var(--foreground)/0.68)', 'hsl(var(--foreground)/0.95)'];
 const fmt = new Intl.DateTimeFormat('en', { weekday: 'short', month: 'short', day: 'numeric' });
 
-/** Last year of GitHub contributions; hovering a day plays a note for its level. */
+/** Last year of GitHub contributions; hovering a day rings it, names its count and plays a note for its level. */
 export function Activity() {
   const [days, setDays] = useState<Day[] | null>(null);
   const [total, setTotal] = useState(0);
   const [failed, setFailed] = useState(false);
-  const [hover, setHover] = useState<Day | null>(null);
   const ref = useRef<HTMLDivElement>(null);
+  const ring = useRef<SVGRectElement>(null);
+  const tip = useRef<HTMLSpanElement>(null);
 
   // Fetch once the grid nears the viewport; the API is third-party and not needed above the fold.
   useEffect(() => {
@@ -111,65 +115,83 @@ export function Activity() {
   const weeks: Day[][] = [];
   if (days) for (let i = 0; i < days.length; i += 7) weeks.push(days.slice(i, i + 7));
 
+  // One ring and one tooltip travel to the day under the pointer (after Bencho's stacked bars).
+  // Both are moved by hand, so sweeping the grid never re-renders its 365 cells.
+  const point = (target: EventTarget) => {
+    if (!(target instanceof SVGRectElement)) return;
+    const day = days?.[Number(target.dataset.i)];
+    const r = ring.current;
+    const t = tip.current;
+    const box = ref.current;
+    if (!day || !r || !t || !box) return;
+    const fresh = t.dataset.on !== 'true';
+    for (const el of [r, t]) if (fresh) el.style.transition = 'none';
+    r.style.transform = `translate(${target.getAttribute('x')}px, ${target.getAttribute('y')}px)`;
+    t.textContent = `${day.count === 0 ? 'No' : day.count} contribution${day.count === 1 ? '' : 's'} on ${fmt.format(new Date(`${day.date}T00:00:00`))}`;
+    const cell = target.getBoundingClientRect();
+    const b = box.getBoundingClientRect();
+    // Centred over the cell, kept inside the section.
+    const x = Math.min(Math.max(cell.left + cell.width / 2 - b.left - t.offsetWidth / 2, 0), b.width - t.offsetWidth);
+    t.style.transform = `translate(${x}px, ${cell.top - b.top - t.offsetHeight - 6}px)`;
+    if (fresh) {
+      void t.offsetWidth;
+      for (const el of [r, t]) el.style.transition = '';
+    }
+    r.dataset.on = t.dataset.on = 'true';
+    if (day.count) sound.note(day.level * 2);
+  };
+  const leave = () => {
+    if (ring.current) ring.current.dataset.on = 'false';
+    if (tip.current) tip.current.dataset.on = 'false';
+  };
+
   return (
     <Section id="github" title="GitHub Activity" aside={<HeaderLink href={profile.github}>@{USER}</HeaderLink>}>
-      <div ref={ref} className="min-h-[120px]">
+      <div ref={ref} className="relative">
         {failed && <p className="text-[13px] text-muted-foreground">Couldn’t load contributions right now. Try the GitHub link above.</p>}
-        {!days && !failed && (
-          <div className="overflow-x-auto pb-1" aria-hidden="true">
-            <svg viewBox="0 0 636 84" aria-hidden="true" className="block h-auto w-full min-w-[520px]">
-              <defs>
-                <pattern id="gh-cell" width="12" height="12" patternUnits="userSpaceOnUse">
-                  <rect width="10" height="10" rx="2" fill={FILL[0]} />
-                </pattern>
-              </defs>
-              <rect width="636" height="84" fill="url(#gh-cell)" />
-            </svg>
-          </div>
-        )}
-        {days && (
+        {!failed && (
           <>
-            {/* biome-ignore lint/a11y/noStaticElementInteractions: leaving the grid only clears the hover caption */}
+            {/* biome-ignore lint/a11y/noStaticElementInteractions: the pointer only rings a day and plays a note; the svg's label carries the total */}
             <div
-              className="overflow-x-auto pb-1"
+              // 2px of room on every side so the hover ring is not clipped by the scroller.
+              className="-m-0.5 overflow-x-auto p-0.5 pb-1.5"
               ref={(el) => {
                 // Narrow screens open on the most recent weeks (once, so later renders don't yank it back).
-                if (el && !el.dataset.scrolled) {
+                if (el && days && !el.dataset.scrolled) {
                   el.scrollLeft = el.scrollWidth;
                   el.dataset.scrolled = '1';
                 }
               }}
-              onMouseLeave={() => setHover(null)}
+              onPointerOver={(e) => point(e.target)}
+              onMouseLeave={leave}
+              onScroll={leave}
             >
-              <svg viewBox={`0 0 ${weeks.length * 12} 84`} className="block h-auto w-full min-w-[520px]" role="img" aria-label={`${total} contributions in the last year`}>
-                {weeks.map((w, x) =>
-                  w.map((d, y) => (
-                    // biome-ignore lint/a11y/noStaticElementInteractions: hover shows the day's count below and plays a note; the svg's label carries the total
-                    <rect
-                      key={d.date}
-                      x={x * 12}
-                      y={y * 12}
-                      width={10}
-                      height={10}
-                      rx={2}
-                      fill={FILL[d.level] ?? FILL[0]}
-                      onMouseEnter={() => {
-                        setHover(d);
-                        if (d.count) sound.note(d.level * 2);
-                      }}
-                    />
-                  )),
-                )}
-              </svg>
+              {days ? (
+                <svg viewBox={`0 0 ${weeks.length * 12} 84`} className="block h-auto w-full min-w-[520px] overflow-visible" role="img" aria-label={`${total} contributions in the last year`}>
+                  {weeks.map((w, x) => w.map((d, y) => <rect key={d.date} data-i={x * 7 + y} x={x * 12} y={y * 12} width={10} height={10} rx={2} fill={FILL[d.level] ?? FILL[0]} />))}
+                  <rect ref={ring} className="gh-ring" x={-1.5} y={-1.5} width={13} height={13} rx={3} />
+                </svg>
+              ) : (
+                // The empty grid, at the loaded grid's exact size, so nothing moves when the data lands.
+                <svg viewBox="0 0 636 84" aria-hidden="true" className="block h-auto w-full min-w-[520px]">
+                  <defs>
+                    <pattern id="gh-cell" width="12" height="12" patternUnits="userSpaceOnUse">
+                      <rect width="10" height="10" rx="2" fill={FILL[0]} />
+                    </pattern>
+                  </defs>
+                  <rect width="636" height="84" fill="url(#gh-cell)" />
+                </svg>
+              )}
             </div>
+            <span ref={tip} aria-hidden="true" className="gh-tip" />
             <div className="mt-2 flex items-center justify-between gap-3 text-[12px] text-muted-foreground">
               <span className="tabular-nums">
-                {hover ? (
-                  `${hover.count} on ${fmt.format(new Date(`${hover.date}T00:00:00`))}`
-                ) : (
+                {days ? (
                   <>
                     <RollNumber value={total} /> contributions in the last year
                   </>
+                ) : (
+                  'Loading contributions…'
                 )}
               </span>
               <span className="flex items-center gap-1">

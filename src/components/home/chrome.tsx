@@ -1,5 +1,5 @@
 import { type ReactNode, useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { AnimatePresence, type MotionValue, m, useMotionValue, useReducedMotion, useSpring, useTransform } from 'framer-motion';
+import { type MotionValue, m, useMotionValue, useMotionValueEvent, useReducedMotion, useSpring, useTransform } from 'framer-motion';
 import { profile } from '../../data/content';
 import { haptic } from '../../lib/haptics';
 import { sound, toggleSound, useSoundState } from '../../lib/sound';
@@ -168,9 +168,8 @@ const DOCK_BASE = 36;
 const DOCK_MAX = 54;
 const DOCK_RANGE = 120;
 
-function DockItem({ item, i, mouseX }: { item: (typeof links)[number]; i: number; mouseX: MotionValue<number> }) {
+function DockItem({ item, i, mouseX, tip }: { item: (typeof links)[number]; i: number; mouseX: MotionValue<number>; tip: DockTip }) {
   const ref = useRef<HTMLAnchorElement>(null);
-  const [tip, setTip] = useState(false);
   const distance = useTransform(mouseX, (x) => {
     const r = ref.current?.getBoundingClientRect();
     return r ? x - (r.left + r.width / 2) : Number.POSITIVE_INFINITY;
@@ -181,6 +180,8 @@ function DockItem({ item, i, mouseX }: { item: (typeof links)[number]; i: number
     damping: 13,
   });
   const glyph = useTransform(size, [DOCK_BASE, DOCK_MAX], [1, 1.3]);
+  // Magnifying any item moves the others, so the label re-centres on its item as sizes settle.
+  useMotionValueEvent(size, 'change', tip.follow);
 
   return (
     <m.a
@@ -188,31 +189,18 @@ function DockItem({ item, i, mouseX }: { item: (typeof links)[number]; i: number
       href={item.href}
       {...ext(item.href)}
       aria-label={item.label}
+      data-dock-item=""
       style={{ width: size, height: size }}
       whileTap={{ scale: 0.9 }}
       onMouseEnter={() => {
-        setTip(true);
+        tip.show(i);
         sound.note(i);
       }}
-      onMouseLeave={() => setTip(false)}
-      onFocus={() => setTip(true)}
-      onBlur={() => setTip(false)}
+      onFocus={() => tip.show(i)}
+      onBlur={() => tip.show(null)}
       onClick={() => haptic()}
       className="relative grid shrink-0 place-items-center rounded-[10px] text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring"
     >
-      <AnimatePresence>
-        {tip && (
-          <m.span
-            initial={{ opacity: 0, y: 6, x: '-50%', filter: 'blur(3px)' }}
-            animate={{ opacity: 1, y: 0, x: '-50%', filter: 'blur(0px)' }}
-            exit={{ opacity: 0, y: 4, x: '-50%', filter: 'blur(3px)' }}
-            transition={{ type: 'spring', bounce: 0, duration: 0.25 }}
-            className="pointer-events-none absolute -top-8 left-1/2 whitespace-nowrap rounded-md border border-border bg-card px-2 py-1 text-[11px] text-foreground"
-          >
-            {item.label}
-          </m.span>
-        )}
-      </AnimatePresence>
       <m.span style={{ scale: glyph }} className="block h-[17px] w-[17px]">
         {item.icon}
       </m.span>
@@ -220,23 +208,73 @@ function DockItem({ item, i, mouseX }: { item: (typeof links)[number]; i: number
   );
 }
 
+type DockTip = { show: (i: number | null) => void; follow: () => void };
+
+/**
+ * One label for the whole dock (after Bencho's dock tip): it slides to the item under the
+ * pointer or focus and resizes to fit the new word, instead of a label per item blinking
+ * on and off. Positioned by hand so a sweep across the dock never re-renders React.
+ */
+function useDockTip(): [React.RefObject<HTMLSpanElement | null>, DockTip] {
+  const el = useRef<HTMLSpanElement>(null);
+  const at = useRef<number | null>(null);
+  const place = useCallback((i: number) => {
+    const tip = el.current;
+    const nav = tip?.parentElement;
+    const item = nav?.querySelectorAll<HTMLElement>('[data-dock-item]')[i];
+    if (!tip || !nav || !item) return;
+    const word = tip.firstElementChild as HTMLElement;
+    if (word.textContent !== links[i].label) word.textContent = links[i].label;
+    const w = Math.ceil(word.scrollWidth) + 16;
+    const r = item.getBoundingClientRect();
+    const x = r.left + r.width / 2 - nav.getBoundingClientRect().left - nav.clientLeft - w / 2;
+    // The first placing jumps into position; only later moves slide.
+    const fresh = tip.dataset.on !== 'true';
+    if (fresh) tip.style.transition = 'none';
+    tip.style.width = `${w}px`;
+    tip.style.transform = `translateX(${x}px)`;
+    if (fresh) {
+      void tip.offsetWidth;
+      tip.style.transition = '';
+    }
+    tip.dataset.on = 'true';
+  }, []);
+  const tip = useRef<DockTip>({
+    show: (i) => {
+      at.current = i;
+      if (i === null) {
+        if (el.current) el.current.dataset.on = 'false';
+      } else place(i);
+    },
+    follow: () => at.current !== null && place(at.current),
+  });
+  return [el, tip.current];
+}
+
 /** Floating bottom dock; icons magnify under the cursor on desktop, static on touch. */
 export function Dock() {
   const mouseX = useMotionValue(Number.POSITIVE_INFINITY);
   const reduce = useReducedMotion();
+  const [tipEl, tip] = useDockTip();
   return (
     <nav
       aria-label="Elsewhere"
       onMouseMove={(e) => !reduce && matchMedia('(hover: hover) and (pointer: fine)').matches && mouseX.set(e.clientX)}
-      onMouseLeave={() => mouseX.set(Number.POSITIVE_INFINITY)}
+      onMouseLeave={() => {
+        mouseX.set(Number.POSITIVE_INFINITY);
+        tip.show(null);
+      }}
       className="fixed bottom-4 left-1/2 z-40 flex h-[50px] -translate-x-1/2 items-end gap-1 rounded-2xl border border-border bg-card/95 px-1.5 pb-[6px] shadow-[0_10px_30px_rgb(0_0_0/0.35)] print:hidden"
     >
       {links.map((item, i) => (
         <span key={item.label} className="contents">
           {item.sep && <span aria-hidden="true" className="mx-0.5 mb-1.5 h-6 w-px self-end bg-border" />}
-          <DockItem item={item} i={i} mouseX={mouseX} />
+          <DockItem item={item} i={i} mouseX={mouseX} tip={tip} />
         </span>
       ))}
+      <span ref={tipEl} aria-hidden="true" className="dock-tip">
+        <span />
+      </span>
     </nav>
   );
 }

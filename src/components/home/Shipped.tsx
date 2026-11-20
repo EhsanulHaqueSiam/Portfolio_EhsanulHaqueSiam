@@ -222,6 +222,7 @@ function ProjectList({ rows }: { rows: Project[] }) {
 export function Shipped() {
   const [view, setView] = useState<'cards' | 'list'>('cards');
   const [all, setAll] = useState(false);
+  const [changed, setChanged] = useState(false);
   const limit = view === 'cards' ? COLLAPSED_CARDS : COLLAPSED_ROWS;
   const items = all ? featuredProjects : featuredProjects.slice(0, limit);
 
@@ -236,6 +237,7 @@ export function Shipped() {
           onValueChange={(next) => {
             if (next !== 'cards' && next !== 'list') return;
             setView(next);
+            setChanged(true);
             sound.click();
             haptic('selection');
           }}
@@ -246,7 +248,9 @@ export function Shipped() {
         </SegmentedControl>
       }
     >
-      {view === 'cards' ? <ProjectCards items={items} /> : <ProjectList rows={items} />}
+      <div key={view} className={changed ? 'swap-in' : undefined}>
+        {view === 'cards' ? <ProjectCards items={items} /> : <ProjectList rows={items} />}
+      </div>
 
       {featuredProjects.length > limit && (
         <button

@@ -105,10 +105,15 @@ Tokens live in `src/index.css` as HSL triplets (`:root` light, `.dark` dark). Da
   screenshot (slides out with a light sheen on hover), a reach ribbon when a metric names
   users/customers/clients, title, the project's first sentence, chips, site and code icons.
   Cards | List is a ui-sdk Segmented Control; List is the pile plus rows with a hover preview.
+  The new view settles in (240ms fade and 4px rise, only after a switch).
 - **Open Source:** ui-sdk Collapsible per repo; the panel height animates from
   `--collapsible-panel-height`. Star counts roll in with NumberFlow.
-- **Tech stack:** ui-sdk Segmented Control filter; chips play a pitched tick on hover.
-- **Dock:** magnifies under the cursor (spring), tooltip with blur-in, pitched tick per item.
+- **Tech stack:** ui-sdk Segmented Control filter; chips play a pitched tick on hover and
+  stagger in (16ms apart) after a filter change.
+- **GitHub grid:** a static empty grid at the loaded size while it fetches; on hover one ring
+  and one tooltip travel to the day (moved by hand, no re-render), with a pitched note.
+- **Dock:** magnifies under the cursor (spring); one label slides between items and resizes
+  to each word (no per-item tooltip, no blur); pitched tick per item.
 
 ## 6. Motion, sound and haptics
 
