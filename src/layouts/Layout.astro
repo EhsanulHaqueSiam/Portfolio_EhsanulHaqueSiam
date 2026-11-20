@@ -123,7 +123,8 @@ const lastModified = new Date().toISOString().slice(0, 10);
     {preloadBanner && <link rel="preload" as="image" type="image/webp" href="/images/banner-anim.webp" fetchpriority="high" media="(prefers-reduced-motion: no-preference)" />}
 
     <!-- Structured Data -->
-    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} is:inline />
+    {/* Escape `<` so third-party text (Crossref authors) can never close the script tag. */}
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd).replace(/</g, '\\u003c')} is:inline />
 
     <style is:global>
       /* No-JS / pre-hydration fallback: reveal content that Framer Motion hides
