@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { SegmentedControl, SegmentedControlIndicator, SegmentedControlItem } from '@ui-sdk/react/segmented-control';
-import { profile, quote, skills } from '../../data/content';
+import { profile, quotes, skills } from '../../data/content';
 import { haptic } from '../../lib/haptics';
 import { sound } from '../../lib/sound';
 import { HeaderLink, Section } from './chrome';
@@ -244,19 +244,23 @@ export function Outro() {
   );
 }
 
-/** Closing quote, after samworks: the one on Siam's Ledgercross team page. */
+/** Closing quotes, after samworks: Dijkstra (from Siam's Ledgercross team page), then Luffy. */
 export function Quote() {
   return (
-    <figure className="border-t border-dashed border-border px-4 py-12 text-center">
+    <div className="border-t border-dashed border-border px-4 py-12 text-center">
       <svg viewBox="0 0 24 24" aria-hidden="true" className="mx-auto h-6 w-6 text-muted-foreground" fill="currentColor">
         <path d="M7.2 6C4.9 7.2 3.5 9.3 3.5 12.3V18h6v-6H6.7c.1-1.8 1-3 2.6-3.8L7.2 6zm10 0c-2.3 1.2-3.7 3.3-3.7 6.3V18h6v-6h-2.8c.1-1.8 1-3 2.6-3.8L17.2 6z" />
       </svg>
-      <blockquote className="mx-auto mt-4 max-w-[28ch] text-balance font-serif text-[30px] italic leading-[1.2]">“{quote.text}”</blockquote>
-      <figcaption className="mt-5 flex items-center justify-center gap-3 font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
-        <span className="h-px w-10 bg-border" aria-hidden="true" />
-        {quote.by}
-        <span className="h-px w-10 bg-border" aria-hidden="true" />
-      </figcaption>
-    </figure>
+      {quotes.map((q, i) => (
+        <figure key={q.by} className={i > 0 ? 'mt-10' : 'mt-4'}>
+          <blockquote className="mx-auto max-w-[28ch] text-balance font-serif text-[30px] italic leading-[1.2]">“{q.text}”</blockquote>
+          <figcaption className="mt-5 flex items-center justify-center gap-3 font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
+            <span className="h-px w-10 bg-border" aria-hidden="true" />
+            {q.by}
+            <span className="h-px w-10 bg-border" aria-hidden="true" />
+          </figcaption>
+        </figure>
+      ))}
+    </div>
   );
 }

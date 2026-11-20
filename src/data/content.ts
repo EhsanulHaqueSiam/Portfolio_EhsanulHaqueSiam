@@ -7,7 +7,7 @@ import educationData from '../../assets/data/education.json';
 import achievementsData from '../../assets/data/achievements.json';
 import publicationsData from '../../assets/data/publications.json';
 import profileData from '../../assets/data/profile.json';
-// Hand-kept presentation data (icons, employer links, quote); facts stay in the hq-generated files.
+// Hand-kept presentation data (icons, employer links, quotes); facts stay in the hq-generated files.
 import siteData from '../../assets/data/site.json';
 
 // Single source of truth: profile lives in assets/data/profile.json so the
@@ -49,12 +49,12 @@ export const workSlug = (e: Experience) => slugify(e.company);
 type Site = {
   projectIcons: Record<string, string>;
   companies: Record<string, { logo?: string; link?: { label: string; href: string } }>;
-  quote: { text: string; by: string };
+  quotes: Array<{ text: string; by: string }>;
   roles: string[];
   stickers: Array<{ label: string; mark: 't3' | 'betterAuth' | 'neovim' | 'linux'; href?: string }>;
 };
 const site = siteData as Site;
-export const quote = site.quote;
+export const quotes = site.quotes;
 /** Phrases the profile's role line cycles through; each restates a fact (title, Arché role, open-source PRs). */
 export const roles = site.roles;
 /** Tiles beside the name: projects Siam contributes to (linked) and tools from skills.json. */
