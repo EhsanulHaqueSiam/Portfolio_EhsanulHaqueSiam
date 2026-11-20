@@ -1,5 +1,6 @@
-import type { ReactNode } from 'react';
-import { profile, profileImage } from '../../data/content';
+import { type ReactNode, useEffect, useState } from 'react';
+import { AnimatePresence, m, useReducedMotion } from 'framer-motion';
+import { profile, profileImage, roles } from '../../data/content';
 import { haptic } from '../../lib/haptics';
 import { sound } from '../../lib/sound';
 import { MapPinIcon } from '../ui/Icons';
@@ -24,8 +25,7 @@ function Stickers() {
             aria-label={s.label}
             style={{ '--r': s.r } as React.CSSProperties}
             onMouseEnter={() => sound.note(i + 2)}
-            onPointerUp={(e) => {
-              if (e.pointerType === 'mouse') return;
+            onClick={(e) => {
               const el = e.currentTarget;
               el.classList.add('lift');
               sound.note(i + 2);
@@ -39,6 +39,51 @@ function Stickers() {
         </li>
       ))}
     </ul>
+  );
+}
+
+/**
+ * The role line under the name, after samworks: every 3s the phrase swaps, each
+ * letter rising out of a blur 30ms after the one before. Screen readers get the
+ * full title once; reduced motion keeps the first phrase still.
+ */
+function RollingRole() {
+  const [i, setI] = useState(0);
+  const reduce = useReducedMotion();
+  useEffect(() => {
+    if (reduce) return;
+    const id = setInterval(() => !document.hidden && setI((n) => (n + 1) % roles.length), 3000);
+    return () => clearInterval(id);
+  }, [reduce]);
+  const phrase = roles[i];
+  return (
+    <p className="mt-1 h-[18px] overflow-hidden font-mono text-[12px] uppercase tracking-[0.14em] text-foreground/80">
+      <span className="sr-only">{profile.title}</span>
+      <AnimatePresence mode="popLayout" initial={false}>
+        <m.span
+          key={phrase}
+          aria-hidden="true"
+          className="inline-flex"
+          initial={{ opacity: 0, y: 5 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -5 }}
+          transition={{ duration: 0.4 }}
+        >
+          {Array.from(phrase).map((ch, n) => (
+            <m.span
+              key={n}
+              className="roll-char"
+              initial={{ opacity: 0, y: 5, filter: 'blur(5px)' }}
+              animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+              exit={{ opacity: 0, y: -5, filter: 'blur(5px)' }}
+              transition={{ delay: 0.03 * n, duration: 0.3 }}
+            >
+              {ch === ' ' ? '\u00a0' : ch}
+            </m.span>
+          ))}
+        </m.span>
+      </AnimatePresence>
+    </p>
   );
 }
 
@@ -70,7 +115,7 @@ export function Profile() {
             <h1 className="font-serif text-[30px] leading-[1.05] tracking-[-0.01em] sm:text-[34px]">{profile.name}</h1>
             <Stickers />
           </div>
-          <p className="mt-1 font-mono text-[12px] uppercase tracking-[0.14em] text-foreground/80">{profile.title}.</p>
+          <RollingRole />
           <p className="mt-0.5 flex items-center gap-1 text-xs text-muted-foreground">
             <MapPinIcon className="h-3 w-3" />
             {profile.location}

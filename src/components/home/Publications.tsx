@@ -78,7 +78,7 @@ export function PublicationsList() {
               return (
                 <li key={p.title}>
                   <a
-                    href={`/publications/${paperSlug(p)}`}
+                    href={`/publications/${paperSlug(p)}/`}
                     onMouseEnter={sound.tick}
                     onClick={haptic}
                     className="group -mx-2 block rounded-lg px-2 py-4 transition-colors hover:bg-secondary/60"

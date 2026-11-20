@@ -10,6 +10,6 @@ export function getStaticPaths() {
 const { slug, company, role } = Astro.props;
 ---
 
-<Layout title={`${role} at ${company} · Ehsanul Haque Siam`} description={`What Ehsanul Haque Siam did as ${role} at ${company}.`} canonical={`${SITE.url}/work/${slug}`}>
+<Layout title={`${role} at ${company} · Ehsanul Haque Siam`} description={`What Ehsanul Haque Siam did as ${role} at ${company}.`} canonical={`${SITE.url}/work/${slug}/`}>
   <App client:load page="work" slug={slug} />
 </Layout>

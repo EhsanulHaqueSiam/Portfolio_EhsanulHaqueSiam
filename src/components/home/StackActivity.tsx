@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
-import { profile, skills } from '../../data/content';
+import { SegmentedControl, SegmentedControlIndicator, SegmentedControlItem } from '@ui-sdk/react/segmented-control';
+import { profile, quote, skills } from '../../data/content';
 import { haptic } from '../../lib/haptics';
 import { sound } from '../../lib/sound';
 import { HeaderLink, Section } from './chrome';
@@ -30,24 +31,24 @@ export function Stack() {
         </>
       }
       aside={
-        <fieldset className="flex flex-wrap justify-end gap-0.5">
-          <legend className="sr-only">Filter skills</legend>
+        <SegmentedControl
+          aria-label="Filter skills"
+          value={tab}
+          onValueChange={(next) => {
+            if (typeof next !== 'string') return;
+            setTab(next);
+            sound.click();
+            haptic();
+          }}
+          className="flex-wrap"
+        >
+          <SegmentedControlIndicator />
           {['All', ...Object.values(TABS)].map((t) => (
-            <button
-              key={t}
-              type="button"
-              aria-pressed={tab === t}
-              onClick={() => {
-                setTab(t);
-                sound.click();
-                haptic();
-              }}
-              className="rounded-md px-2 py-1 text-[11px] text-muted-foreground transition-colors hover:text-foreground aria-pressed:bg-secondary aria-pressed:text-foreground"
-            >
+            <SegmentedControlItem key={t} value={t}>
               {t}
-            </button>
+            </SegmentedControlItem>
           ))}
-        </fieldset>
+        </SegmentedControl>
       }
     >
       <ul className="flex flex-wrap gap-1.5">
@@ -114,6 +115,15 @@ export function Activity() {
     <Section id="github" title="GitHub Activity" aside={<HeaderLink href={profile.github}>@{USER}</HeaderLink>}>
       <div ref={ref} className="min-h-[120px]">
         {failed && <p className="text-[13px] text-muted-foreground">Couldn’t load contributions right now. Try the GitHub link above.</p>}
+        {!days && !failed && (
+          <div className="overflow-x-auto pb-1" aria-hidden="true">
+            <svg viewBox="0 0 636 84" aria-hidden="true" className="block h-auto w-full min-w-[520px]">
+              {Array.from({ length: 53 * 7 }, (_, k) => (
+                <rect key={k} x={Math.floor(k / 7) * 12} y={(k % 7) * 12} width={10} height={10} rx={2} fill={FILL[0]} />
+              ))}
+            </svg>
+          </div>
+        )}
         {days && (
           <>
             <div className="overflow-x-auto pb-1">
@@ -176,5 +186,22 @@ export function Outro() {
         </a>
       </div>
     </section>
+  );
+}
+
+/** Closing quote, after samworks: the one on Siam's Ledgercross team page. */
+export function Quote() {
+  return (
+    <figure className="border-t border-dashed border-border px-4 py-12 text-center">
+      <svg viewBox="0 0 24 24" aria-hidden="true" className="mx-auto h-6 w-6 text-muted-foreground" fill="currentColor">
+        <path d="M7.2 6C4.9 7.2 3.5 9.3 3.5 12.3V18h6v-6H6.7c.1-1.8 1-3 2.6-3.8L7.2 6zm10 0c-2.3 1.2-3.7 3.3-3.7 6.3V18h6v-6h-2.8c.1-1.8 1-3 2.6-3.8L17.2 6z" />
+      </svg>
+      <blockquote className="mx-auto mt-4 max-w-[28ch] text-balance font-serif text-[30px] italic leading-[1.2]">“{quote.text}”</blockquote>
+      <figcaption className="mt-5 flex items-center justify-center gap-3 font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
+        <span className="h-px w-10 bg-border" aria-hidden="true" />
+        {quote.by}
+        <span className="h-px w-10 bg-border" aria-hidden="true" />
+      </figcaption>
+    </figure>
   );
 }

@@ -64,10 +64,10 @@ Sitemap: ${SITE}/sitemap.xml
 // ---------------------------------------------------------------------------
 const urls = [
   { loc: `${SITE}/`, changefreq: 'weekly', priority: '1.0' },
-  { loc: `${SITE}/publications`, changefreq: 'monthly', priority: '0.8' },
+  { loc: `${SITE}/publications/`, changefreq: 'monthly', priority: '0.8' },
   // Same slugs as src/data/content.ts (slugify, paperSlug, workSlug).
-  ...publications.map((p) => ({ loc: `${SITE}/publications/${slugify(p.title.split(':')[0])}`, changefreq: 'yearly', priority: '0.6' })),
-  ...experience.filter((e) => e.showInHome).map((e) => ({ loc: `${SITE}/work/${slugify(e.company)}`, changefreq: 'yearly', priority: '0.5' })),
+  ...publications.map((p) => ({ loc: `${SITE}/publications/${slugify(p.title.split(':')[0])}/`, changefreq: 'yearly', priority: '0.6' })),
+  ...experience.filter((e) => e.showInHome).map((e) => ({ loc: `${SITE}/work/${slugify(e.company)}/`, changefreq: 'yearly', priority: '0.5' })),
   { loc: `${SITE}/hire-me.html`, changefreq: 'monthly', priority: '0.9' },
   { loc: `${SITE}/resume.pdf`, changefreq: 'monthly', priority: '0.7' },
 ];

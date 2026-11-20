@@ -11,7 +11,7 @@ import { Profile } from './components/home/Profile';
 import { PublicationsList } from './components/home/Publications';
 import { Education, Experience, Research } from './components/home/Rows';
 import { Shipped } from './components/home/Shipped';
-import { Activity, Outro, Stack } from './components/home/StackActivity';
+import { Activity, Outro, Quote, Stack } from './components/home/StackActivity';
 import { Resume } from './components/Resume';
 
 type Props =
@@ -38,7 +38,7 @@ function App(props: Props) {
     <LazyMotion features={domAnimation} strict>
       <MotionConfig reducedMotion="user">
         <div className="rails min-h-screen bg-background">
-          <Nav current={props.page === 'paper' ? 'publications' : props.page === 'work' ? 'home' : props.page} />
+          <Nav current={props.page} />
           <main id="main-content">
             {props.page === 'work' ? (
               <WorkPage e={findWork(props.slug)} />
@@ -58,6 +58,7 @@ function App(props: Props) {
                 <Activity key="activity" />,
                 <Education key="edu" />,
                 <Outro key="outro" />,
+                <Quote key="quote" />,
               ].map((block, n) => (
                 <div key={block.key} className="enter" style={{ '--n': Math.min(n, 6) } as CSSProperties}>
                   {block}

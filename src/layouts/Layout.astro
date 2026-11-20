@@ -38,7 +38,13 @@ const lastModified = new Date().toISOString().slice(0, 10);
       (function () {
         try {
           var t = localStorage.getItem('theme');
-          if (t === 'light') document.documentElement.classList.remove('dark');
+          if (t === 'light') {
+            document.documentElement.classList.remove('dark');
+            document.addEventListener('DOMContentLoaded', function () {
+              var m = document.querySelector('meta[name="theme-color"]');
+              if (m) m.setAttribute('content', '#ffffff');
+            });
+          }
         } catch (e) {}
       })();
     </script>

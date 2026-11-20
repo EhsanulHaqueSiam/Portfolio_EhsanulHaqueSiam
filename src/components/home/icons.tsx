@@ -30,11 +30,11 @@ export function SpeakerIcon({ on, ...p }: P & { on: boolean }) {
   );
 }
 
-export function BoxIcon(p: P) {
+export function GlobeIcon(p: P) {
   return (
     <svg viewBox="0 0 24 24" aria-hidden="true" {...stroke} {...p}>
-      <path d="M21 8 12 3 3 8v8l9 5 9-5z" />
-      <path d="M3 8l9 5 9-5M12 13v8" />
+      <circle cx="12" cy="12" r="9" />
+      <path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18" />
     </svg>
   );
 }

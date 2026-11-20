@@ -4,12 +4,15 @@ import { featuredProjects, getProjectImage, projectIcon } from '../../data/conte
 import type { Project } from '../../data/types';
 import { haptic } from '../../lib/haptics';
 import { sound } from '../../lib/sound';
-import { ChevronIcon } from './icons';
+import { GitHubIcon } from '../ui/Icons';
+import { SegmentedControl, SegmentedControlIndicator, SegmentedControlItem } from '@ui-sdk/react/segmented-control';
+import { ChevronIcon, GlobeIcon } from './icons';
 import { StatusIcon } from './StatusIcon';
 import { ext, Section } from './chrome';
 
 const PILE = 5;
-const COLLAPSED = 8;
+const COLLAPSED_ROWS = 8;
+const COLLAPSED_CARDS = 4;
 // Resting tilts for the stacked prints, and the fanned-out tilt step.
 const TILT = [-7, 4, -2, 6, -4];
 
@@ -21,7 +24,7 @@ const pitch = (p: Project) => p.metrics[0] ?? p.desc.split('. ')[0];
 function Pile({ items }: { items: Project[] }) {
   const mid = (items.length - 1) / 2;
   return (
-    <div className="pile" onPointerEnter={(e) => e.pointerType === 'mouse' && sound.paper(true)} onPointerLeave={(e) => e.pointerType === 'mouse' && sound.paper(false)}>
+    <div className="pile" onPointerEnter={(e) => e.pointerType === 'mouse' && sound.open(true)} onPointerLeave={(e) => e.pointerType === 'mouse' && sound.open(false)}>
       {items.map((p, i) => (
         <a
           key={p.name}
@@ -57,17 +60,92 @@ function usePreview() {
   return { shown, setShown, y, sy };
 }
 
-export function Shipped() {
-  const [all, setAll] = useState(false);
+// Backdrops for the cards, cycled by position (after samworks' tinted corners).
+const GRADIENTS = [
+  'linear-gradient(135deg, #ffffff 0%, #a3e635 45%, #0f172a 100%)',
+  'linear-gradient(135deg, #ffffff 0%, #60a5fa 45%, #1e3a8a 100%)',
+  'linear-gradient(135deg, #ffffff 0%, #fb923c 45%, #7c2d12 100%)',
+  'linear-gradient(135deg, #ffffff 0%, #38bdf8 40%, #4ade80 100%)',
+  'linear-gradient(135deg, #ffffff 0%, #c084fc 45%, #3b0764 100%)',
+  'linear-gradient(135deg, #ffffff 0%, #fb7185 45%, #4c0519 100%)',
+];
+/** A reach number for the corner ribbon: "12,000+ scholarships indexed daily" -> "12,000+ scholarships". */
+const ribbon = (p: Project) => {
+  for (const m of p.metrics) {
+    // Only reach numbers earn a ribbon (people, scale), not feature counts.
+    const hit = m.match(/^[\d,.]+\+?\s+(?:[A-Za-z]+\s+)?(?:users|customers|clients|scholarships|reviews|spiders)\b/i);
+    if (hit) return hit[0];
+  }
+  return null;
+};
+
+function ProjectCards({ items }: { items: Project[] }) {
+  return (
+    <ul className="grid gap-3 sm:grid-cols-2">
+      {items.map((p, i) => {
+        const shot = cover(p);
+        const tag = ribbon(p);
+        return (
+          <li key={p.name} className="group flex flex-col border border-dashed border-border p-3" onMouseEnter={sound.tick}>
+            <a href={href(p)} {...ext(href(p))} onClick={haptic} aria-label={`${p.name} (${p.links.view ? 'live site' : 'source code'})`} className="pcard-art block" style={{ background: GRADIENTS[i % GRADIENTS.length] }}>
+              {shot && <img src={shot} alt="" loading="lazy" decoding="async" width={560} height={350} className="pcard-shot" />}
+              <span className="pcard-sheen" aria-hidden="true" />
+              {tag && (
+                <span className="pcard-ribbon" aria-hidden="true">
+                  {tag}
+                </span>
+              )}
+            </a>
+            <div className="mt-3 flex items-start justify-between gap-3">
+              <div className="min-w-0">
+                <h3 className="text-[16px] font-medium leading-tight">{p.name}</h3>
+                <p className="mt-0.5 truncate text-[12px] text-muted-foreground">{pitch(p)}</p>
+              </div>
+              {p.links.view ? (
+                <span className="flex shrink-0 items-center gap-1.5 text-[12px] text-signal-success">
+                  <span className="h-1.5 w-1.5 rounded-full bg-current" aria-hidden="true" />
+                  Live
+                </span>
+              ) : (
+                <span className="shrink-0 text-[12px] text-muted-foreground">Code</span>
+              )}
+            </div>
+            <p className="mt-2 line-clamp-3 text-[13px] leading-relaxed text-foreground/70">{p.desc}</p>
+            <div className="mt-auto flex items-center justify-between gap-2 pt-3">
+              <ul className="flex flex-wrap gap-1.5" aria-label={`${p.name} stack`}>
+                {p.tags.slice(0, 3).map((t) => (
+                  <li key={t} className="rounded-md border border-border bg-card px-2 py-0.5 text-[11px] text-foreground/80">
+                    {t}
+                  </li>
+                ))}
+              </ul>
+              <span className="flex shrink-0 items-center gap-1 text-muted-foreground">
+                {p.links.view && (
+                  <a href={p.links.view} {...ext(p.links.view)} onMouseEnter={sound.tick} onClick={haptic} aria-label={`${p.name} website`} className="press group/i grid h-7 w-7 place-items-center rounded-md transition-colors hover:text-foreground">
+                    <GlobeIcon className="icon-pop h-4 w-4" />
+                  </a>
+                )}
+                {p.links.code && (
+                  <a href={p.links.code} {...ext(p.links.code)} onMouseEnter={sound.tick} onClick={haptic} aria-label={`${p.name} source on GitHub`} className="press grid h-7 w-7 place-items-center rounded-md transition-colors hover:text-foreground">
+                    <GitHubIcon className="h-4 w-4" />
+                  </a>
+                )}
+              </span>
+            </div>
+          </li>
+        );
+      })}
+    </ul>
+  );
+}
+
+function ProjectList({ rows }: { rows: Project[] }) {
   const listRef = useRef<HTMLUListElement>(null);
   const reduce = useReducedMotion();
   const { shown, setShown, y, sy } = usePreview();
-  const withCovers = featuredProjects.filter(cover);
-  const rows = all ? featuredProjects : featuredProjects.slice(0, COLLAPSED);
-
   return (
-    <Section id="projects" title="Things I’ve shipped" aside={<span className="font-mono">{featuredProjects.length} projects</span>}>
-      <Pile items={withCovers.slice(0, PILE)} />
+    <>
+      <Pile items={featuredProjects.filter(cover).slice(0, PILE)} />
       <p className="mb-3 mt-1 hidden text-center text-[11px] text-muted-foreground [@media(hover:hover)_and_(pointer:fine)]:block">Hover the pile to spread it.</p>
 
       <div className="relative">
@@ -131,13 +209,46 @@ export function Shipped() {
         </AnimatePresence>
       </div>
 
-      {featuredProjects.length > COLLAPSED && (
+    </>
+  );
+}
+
+export function Shipped() {
+  const [view, setView] = useState<'cards' | 'list'>('cards');
+  const [all, setAll] = useState(false);
+  const limit = view === 'cards' ? COLLAPSED_CARDS : COLLAPSED_ROWS;
+  const items = all ? featuredProjects : featuredProjects.slice(0, limit);
+
+  return (
+    <Section
+      id="projects"
+      title="Things I’ve shipped"
+      aside={
+        <SegmentedControl
+          aria-label="Project view"
+          value={view}
+          onValueChange={(next) => {
+            if (next !== 'cards' && next !== 'list') return;
+            setView(next);
+            sound.click();
+            haptic();
+          }}
+        >
+          <SegmentedControlIndicator />
+          <SegmentedControlItem value="cards">Cards</SegmentedControlItem>
+          <SegmentedControlItem value="list">List</SegmentedControlItem>
+        </SegmentedControl>
+      }
+    >
+      {view === 'cards' ? <ProjectCards items={items} /> : <ProjectList rows={items} />}
+
+      {featuredProjects.length > limit && (
         <button
           type="button"
           aria-expanded={all}
           onClick={() => {
             setAll(!all);
-            sound.paper(!all);
+            sound.open(!all);
             haptic();
           }}
           className="press group mt-3 inline-flex items-center gap-1 text-[12px] text-muted-foreground transition-colors hover:text-foreground"

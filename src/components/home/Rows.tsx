@@ -68,7 +68,7 @@ export function Experience() {
       <ul className="divide-y divide-border">
         {featuredExperience.map((e) => (
           <li key={e.company}>
-            <LinkRow href={`/work/${workSlug(e)}`} mark={<CompanyMark e={e} />} title={e.company} sub={shortRole(e)} right={shortRange(e.date)} />
+            <LinkRow href={`/work/${workSlug(e)}/`} mark={<CompanyMark e={e} />} title={e.company} sub={shortRole(e)} right={shortRange(e.date)} />
           </li>
         ))}
       </ul>
@@ -84,13 +84,13 @@ export const PaperMark = () => (
 
 export function Research() {
   return (
-    <Section id="publications" title="Research" aside={<HeaderLink href="/publications">All publications</HeaderLink>}>
+    <Section id="publications" title="Research" aside={<HeaderLink href="/publications/">All publications</HeaderLink>}>
       <ul className="divide-y divide-border">
         {featuredPublications.map((p) => {
           const { year, status } = pubMeta(p);
           return (
             <li key={p.title}>
-              <LinkRow href={`/publications/${paperSlug(p)}`} mark={<PaperMark />} title={p.title} sub={[p.conference, status].filter(Boolean).join(' · ')} right={year} />
+              <LinkRow href={`/publications/${paperSlug(p)}/`} mark={<PaperMark />} title={p.title} sub={[p.conference, status].filter(Boolean).join(' · ')} right={year} />
             </li>
           );
         })}

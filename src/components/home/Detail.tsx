@@ -1,5 +1,5 @@
 import { type ReactNode, useState } from 'react';
-import { companyLinks, experience, paperSlug, profile, publications, workSlug } from '../../data/content';
+import { companyLink, experience, getPublicationImage, paperSlug, profile, publications, workSlug } from '../../data/content';
 import type { PaperDetail } from '../../data/papers';
 import type { Experience } from '../../data/types';
 import { haptic } from '../../lib/haptics';
@@ -66,7 +66,7 @@ function SayHi() {
 
 /** /work/[slug]: one role, its summary and highlights, then the other roles. */
 export function WorkPage({ e }: { e: Experience }) {
-  const site = companyLinks[e.company];
+  const site = companyLink(e);
   return (
     <div className="px-4 pb-6 pt-6">
       <Crumbs trail={[['Siam', '/'], ['Work', '/#experience'], [e.company]]} />
@@ -105,7 +105,7 @@ export function WorkPage({ e }: { e: Experience }) {
             .filter((x) => x.showInHome && x.company !== e.company)
             .map((x) => (
               <li key={x.company}>
-                <LinkRow href={`/work/${workSlug(x)}`} mark={<CompanyMark e={x} />} title={x.company} sub={shortRole(x)} right={shortRange(x.date)} />
+                <LinkRow href={`/work/${workSlug(x)}/`} mark={<CompanyMark e={x} />} title={x.company} sub={shortRole(x)} right={shortRange(x.date)} />
               </li>
             ))}
         </ul>
@@ -144,16 +144,21 @@ export function PaperPage({ paper }: { paper: PaperDetail }) {
   const { pub, doi, authors, venue, publisher, pages, bibtex } = paper;
   const { when, year, status } = pubMeta(pub);
   const short = pub.title.split(':')[0];
-  const position = authors.findIndex(isSiam);
   return (
     <div className="px-4 pb-6 pt-6">
-      <Crumbs trail={[['Siam', '/'], ['Publications', '/publications'], [short]]} />
+      <Crumbs trail={[['Siam', '/'], ['Publications', '/publications/'], [short]]} />
       <p className="enter mt-5 font-mono text-[12px] text-muted-foreground" style={{ '--n': 1 } as React.CSSProperties}>
         {status || 'paper'} · {year}
       </p>
       <h1 className="enter mt-2 text-balance font-serif text-[32px] leading-[1.1] tracking-[-0.01em]" style={{ '--n': 1 } as React.CSSProperties}>
         {pub.title}
       </h1>
+
+      {pub.images[0] && (
+        <figure className="enter mt-7 overflow-hidden rounded-lg border border-border" style={{ '--n': 2 } as React.CSSProperties}>
+          <img src={getPublicationImage(pub.images[0])} alt={`Certificate for ${short} from ${pub.conference}`} width={1200} height={848} loading="lazy" className="block h-auto w-full" />
+        </figure>
+      )}
 
       <Block title="Summary" n={2}>
         <p className="text-[15px] leading-relaxed text-foreground/85">{pub.desc}</p>
@@ -173,11 +178,6 @@ export function PaperPage({ paper }: { paper: PaperDetail }) {
                   {isSiam(a) ? <strong className="font-medium text-foreground">{a}</strong> : <span className="text-foreground/80">{a}</span>}
                 </span>
               ))}
-            </Fact>
-          )}
-          {position >= 0 && (
-            <Fact k="Siam's part">
-              {position + 1} of {authors.length} authors
             </Fact>
           )}
           {doi && (
@@ -209,7 +209,7 @@ export function PaperPage({ paper }: { paper: PaperDetail }) {
             .filter((p) => p.title !== pub.title)
             .map((p) => (
               <li key={p.title}>
-                <LinkRow href={`/publications/${paperSlug(p)}`} mark={<PaperMark />} title={p.title} sub={p.conference} right={pubMeta(p).year} />
+                <LinkRow href={`/publications/${paperSlug(p)}/`} mark={<PaperMark />} title={p.title} sub={p.conference} right={pubMeta(p).year} />
               </li>
             ))}
         </ul>

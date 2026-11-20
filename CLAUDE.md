@@ -8,11 +8,15 @@ This repository **is the primary, standalone project** and is what deploys to Ne
 It was migrated from a Vite React SPA to **Astro 7 (static output, no SSR)**.
 
 - The whole site is one React island (`<App client:load page=... />`) mounted by
-  `src/pages/index.astro` and `src/pages/publications.astro`. Astro server-renders it to
+  every page in `src/pages/` (home, `publications/`, `publications/[slug]`, `work/[slug]`).
+  Astro server-renders it to
   static HTML at build time (SEO/AEO/GEO), then hydrates it for sounds, the dock, the
   project pile and the Resume overlay.
 - **No SSR / no adapter** — `output: 'static'`. Netlify serves the pre-built `dist/`.
-- React 18, Tailwind v3 (via PostCSS), framer-motion 11.
+- React 19, Tailwind v3 (via PostCSS), framer-motion 11, ui-sdk (`@ui-sdk/react`, beta) for
+  controls with real keyboard/ARIA behaviour (Segmented Control, Collapsible).
+- Every internal link ends in `/` (`trailingSlash: 'always'`): pages are folders, and the
+  tailnet preview server 404s on slashless folder URLs.
 - The legacy Vite SPA lives in `/home/siam/Personal/portfolio` (now stale — do not
   copy from it; work directly in this repo).
 
@@ -24,6 +28,7 @@ bun run dev          # Astro dev server (http://localhost:4321)
 bun run build        # regenerate SEO files (scripts/generate-seo.mjs) + astro build → dist/
 bun run preview      # serve the production build locally
 bun run seo:gen      # regenerate public SEO files only
+bun run test         # vitest + jsdom: wiring tests and the ui-sdk agent test (src/**/*.test.tsx)
 ```
 
 Uses Bun locally; Netlify runs `npm run build` with `NODE_VERSION=22.12.0` (see netlify.toml).
@@ -52,7 +57,8 @@ Astro 7 + React islands + TailwindCSS + Framer Motion.
 ```
 src/
 ├── pages/index.astro         # home; fetches open-source stars/PR states at build (loadOpenSource)
-├── pages/publications.astro  # /publications
+├── pages/publications/       # index.astro (/publications/) and [slug].astro (DOI-backed paper pages)
+├── pages/work/[slug].astro   # one page per role in experience.json
 ├── pages/404.astro           # static 404 (noindex)
 ├── layouts/Layout.astro      # <head>: meta, OG/Twitter, JSON-LD, fonts, favicons, no-JS reveal
 ├── seo/schema.ts             # builds full JSON-LD @graph + META from content.ts (data-driven)
@@ -78,6 +84,11 @@ scripts/generate-seo.mjs      # prebuild: regenerates public/{robots.txt,sitemap
   an `html.no-js` fallback + inline JS so JS-off visitors and crawlers still see all content.
 
 ### Key Libraries and design
+- ui-sdk: follow `node_modules/@ui-sdk/core/skills/ui-sdk/SKILL.md` (matches the installed
+  version). Its components are unstyled; their CSS is in `index.css` under `[data-slot=...]`,
+  and `@layer ui-sdk;` is declared at the top of that file.
+- `assets/data/site.json` is hand-kept presentation data: project icons, employer logos and
+  links, the role-line phrases and the closing quote. Facts stay in the hq-generated JSON.
 - **Astro 7** static output with `@astrojs/react`. **Framer Motion 11** via `LazyMotion` + `m`
   (strict mode: import `m`, never `motion`).
 - **TailwindCSS v3**, shadcn-style HSL tokens in `src/index.css` (`:root` light, `.dark` true

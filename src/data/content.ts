@@ -1,16 +1,4 @@
-import type React from 'react';
-import type {
-  Skill,
-  SkillsData,
-  Project,
-  Experience,
-  Education,
-  Achievement,
-  Publication,
-  Testimonial,
-  BlogPost,
-  Profile,
-} from './types';
+import type { SkillsData, Project, Experience, Education, Achievement, Publication, Profile } from './types';
 
 import skillsData from '../../assets/data/skills.json';
 import projectsData from '../../assets/data/projects.json';
@@ -18,9 +6,9 @@ import experienceData from '../../assets/data/experience.json';
 import educationData from '../../assets/data/education.json';
 import achievementsData from '../../assets/data/achievements.json';
 import publicationsData from '../../assets/data/publications.json';
-import testimonialsData from '../../assets/data/testimonials.json';
-import blogData from '../../assets/data/blog.json';
 import profileData from '../../assets/data/profile.json';
+// Hand-kept presentation data (icons, employer links, quote); facts stay in the hq-generated files.
+import siteData from '../../assets/data/site.json';
 
 // Single source of truth: profile lives in assets/data/profile.json so the
 // SEO generator (scripts/generate-seo.mjs) and the UI read identical data.
@@ -32,40 +20,12 @@ export const experience = experienceData as Experience[];
 export const education = educationData as Education[];
 export const achievements = achievementsData as Achievement[];
 export const publications = publicationsData as Publication[];
-export const testimonials = testimonialsData as Testimonial[];
-export const blogPosts = blogData as BlogPost[];
 
-// Filtered exports for homepage
-export const featuredProjects = projects.filter(p => p.showInHome);
+export const featuredProjects = projects.filter((p) => p.showInHome);
 // CV projects: the ones with a `cv` block, flattened for the Resume overlay
 export const cvProjects = projects.flatMap(({ name, cv }) => (cv ? [{ name, ...cv }] : []));
-
-// Deep-dive case studies: the two strongest "problem → approach → measured
-// result" stories (technical depth + business impact).
-const CASE_STUDY_NAMES = ['ScholarHub', 'Indian Claypit'];
-export const caseStudies = CASE_STUDY_NAMES
-  .map(name => projects.find(p => p.name === name))
-  .filter((p): p is Project => Boolean(p?.caseStudy));
-export const featuredAchievements = achievements.filter(a => a.showInHome);
-export const awards = achievements.filter(a => (a.category === 'award' || a.category === 'certificate') && a.showInHome);
-export const featuredPublications = publications.filter(p => p.showInHome);
-export const featuredExperience = experience.filter(e => e.showInHome);
-
-// Navigation items
-// `no` mirrors each section's printed folio number — gaps are intentional
-// (the nav is an abridged index of the full 01-12 running order).
-export const navItems = [
-  { no: "01", label: "About", href: "#about" },
-  { no: "03", label: "Experience", href: "#experience" },
-  { no: "04", label: "Skills", href: "#skills" },
-  { no: "05", label: "Projects", href: "#projects" },
-  { no: "06", label: "Case Studies", href: "#case-studies" },
-  { no: "07", label: "Testimonials", href: "#testimonials" },
-  { no: "08", label: "Awards", href: "#awards" },
-  { no: "09", label: "Research", href: "#publications" },
-  { no: "12", label: "Writing", href: "#blog" },
-  { no: "13", label: "Contact", href: "#contact" },
-];
+export const featuredPublications = publications.filter((p) => p.showInHome);
+export const featuredExperience = experience.filter((e) => e.showInHome);
 
 // FAQ — single source of truth for the visible FAQ section AND the JSON-LD
 // FAQPage (Google requires FAQ markup to have matching on-page content).
@@ -97,42 +57,9 @@ export const faqItems: Array<{ question: string; answer: string }> = [
   },
 ];
 
-// Skill level to percentage mapping
-export const skillLevelToPercent: Record<Skill['level'], number> = {
-  beginner: 40,
-  intermediate: 60,
-  advanced: 80,
-  expert: 95,
-};
-
-// Category icons mapping
-export const categoryIcons: Record<string, string> = {
-  'AI & Machine Learning': '🧠',
-  'Web Development': '🌐',
-  'Programming Languages': '💻',
-  'Backend & Databases': '🗄️',
-  'Mobile Development': '📱',
-  'Graphics & Game Dev': '🎮',
-  'Web Scraping': '🕷️',
-  'Tools & Platforms': '🛠️',
-};
-
-// Image path helpers
-export const getProjectImage = (imageName: string): string => {
-  const cleanName = imageName.replace(/\.(webp|png|jpg|jpeg)$/i, '');
-  return `/images/projects/${cleanName}.webp`;
-};
-
-export const getAchievementImage = (imageName: string): string => {
-  // Strip any image extension before appending .webp
-  const cleanName = imageName.replace(/\.(webp|png|jpg|jpeg)$/i, '');
-  return `/images/achievements/${cleanName}.webp`;
-};
-
-export const getPublicationImage = (imageName: string): string => {
-  const cleanName = imageName.replace(/\.(webp|png|jpg|jpeg)$/i, '');
-  return `/images/publications/${cleanName}.webp`;
-};
+const stripExt = (name: string) => name.replace(/\.(webp|png|jpg|jpeg)$/i, '');
+export const getProjectImage = (name: string) => `/images/projects/${stripExt(name)}.webp`;
+export const getPublicationImage = (name: string) => `/images/publications/${stripExt(name)}.webp`;
 
 export const profileImage = '/images/profile2.webp';
 
@@ -149,44 +76,22 @@ export const slugify = (s: string) =>
 export const paperSlug = (p: Publication) => slugify(p.title.split(':')[0]);
 export const workSlug = (e: Experience) => slugify(e.company);
 
-// Square icons in public/images/icons: real logos where the brand has one, generated tiles otherwise.
-const PROJECT_ICONS: Record<string, string> = {
-  ScholarHub: 'scholarhub.webp',
-  'TTT Autos': 'ttt-autos.webp',
-  KaajKormo: 'kaajkormo.webp',
-  OfferLagbe: 'offerlagbe.webp',
-  'Aurum Gold': 'aurum-gold.svg',
-  'Void Threads': 'void-threads.webp',
-  'Indian Claypit': 'claypit.webp',
-  BetaScript: 'betascript.webp',
-  'Student Management System': 'student-management.webp',
-  'Spotify Sentiment Analysis': 'spotify-sentiment.webp',
-  "Mario's Multiverse Adventure": 'mario-multiverse.webp',
-  'BD News Scraper & Analytics': 'bd-news-scraper.webp',
-  'Hotel Management System': 'hotel-management.webp',
-  'Android Development Journey': 'android-journey.webp',
-  'Pharmacy Management System': 'pharmacy-management.webp',
+type Site = {
+  projectIcons: Record<string, string>;
+  companies: Record<string, { logo?: string; link?: { label: string; href: string } }>;
+  quote: { text: string; by: string };
+  roles: string[];
 };
-const COMPANY_LOGOS: Record<string, string> = {
-  Ledgercross: '/images/icons/ledgercross.webp',
-  'Arché Intelligence Lab': '/images/icons/arche.webp',
-  BetaScript: '/images/icons/betascript.webp',
-  'BetaScript LLC': '/images/icons/betascript.webp',
-  BDTracks: '/images/icons/bdtracks.webp',
-  AIUB: '/images/icons/aiub.webp',
-};
-/** Public pages for each employer, shown on its /work page. */
-export const companyLinks: Record<string, { label: string; href: string }> = {
-  Ledgercross: { label: 'Siam on the Ledgercross team page', href: 'https://www.ledgercross.com/team/EhsanulHaqueSiam' },
-  'Arché Intelligence Lab': { label: 'arche-lab.org', href: 'https://arche-lab.org' },
-  'Deepchain Labs': { label: 'deepchainlabs.com', href: 'https://deepchainlabs.com' },
-  'BetaScript LLC': { label: 'betascript.online', href: 'https://betascript.online' },
-  BDTracks: { label: 'bdtracks.com', href: 'https://bdtracks.com' },
-  AIUB: { label: 'aiub.edu', href: 'https://www.aiub.edu' },
-};
-export const projectIcon = (name: string) => (PROJECT_ICONS[name] ? `/images/icons/${PROJECT_ICONS[name]}` : null);
-export const companyLogo = (e: Experience) => COMPANY_LOGOS[e.company] ?? (e.logo ? `/images/experience/${e.logo}.webp` : null);
+const site = siteData as Site;
+export const quote = site.quote;
+/** Phrases the profile's role line cycles through; each restates a fact (title, Arché role, open-source PRs). */
+export const roles = site.roles;
 
-export const hideImageOnError = (e: React.SyntheticEvent<HTMLImageElement>) => {
-  e.currentTarget.style.display = 'none';
+/** Square icons in public/images/icons: real logos where the brand has one, generated tiles otherwise. */
+export const projectIcon = (name: string) => (site.projectIcons[name] ? `/images/icons/${site.projectIcons[name]}` : null);
+export const companyLogo = (e: Experience) => {
+  const logo = site.companies[e.company]?.logo;
+  return logo ? `/images/icons/${logo}` : e.logo ? `/images/experience/${e.logo}.webp` : null;
 };
+/** Public page for an employer, shown on its /work page. */
+export const companyLink = (e: Experience) => site.companies[e.company]?.link ?? null;

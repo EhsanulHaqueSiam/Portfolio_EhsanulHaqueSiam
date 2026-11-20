@@ -1,3 +1,6 @@
+/* ui-sdk components style through this layer (see node_modules/@ui-sdk/core/skills). */
+@layer ui-sdk;
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -53,6 +56,16 @@
   --color-5: oklch(83% 0.15 210);
 
   --ease-out-strong: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Motion tokens (transitions.dev scale). */
+  --duration-stagger: 40ms;
+  --duration-quick: 150ms;
+  --duration-fast: 250ms;
+  --duration-slow: 400ms;
+  --duration-very-slow: 500ms;
+  --ease-smooth-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --blur-small: 2px;
+  --blur-medium: 3px;
   --ease-float: cubic-bezier(0.45, 0.05, 0.55, 0.95);
 }
 
@@ -678,6 +691,14 @@ html.is-scrolling #main-content {
   animation: none;
   mix-blend-mode: normal;
 }
+.theme-vt::view-transition-new(root) {
+  clip-path: var(--vt-from);
+}
+.theme-vt *,
+.theme-vt *::before,
+.theme-vt *::after {
+  transition: none !important;
+}
 
 /* Page entrance: blocks blur and rise in, staggered by --n (set inline). */
 @media (prefers-reduced-motion: no-preference) {
@@ -725,9 +746,6 @@ html.is-scrolling #main-content {
   margin-right: 7px;
   opacity: 1;
 }
-.st-live .st-core { fill: currentColor; transform-origin: 12px 12px; }
-.st-live .st-halo { fill: currentColor; opacity: 0.12; transform-origin: 12px 12px; }
-.st-live .st-ring { fill: none; stroke: currentColor; stroke-width: 1.3px; opacity: 0; transform-origin: 12px 12px; vector-effect: non-scaling-stroke; }
 .st-shipped .st-face { stroke: currentColor; stroke-width: 1.4px; stroke-linejoin: round; }
 .st-shipped .st-top { fill: color-mix(in srgb, currentColor 38%, transparent); }
 .st-shipped .st-left { fill: color-mix(in srgb, currentColor 22%, transparent); }
@@ -739,10 +757,6 @@ html.is-scrolling #main-content {
 .st-shipped .st-box { transform-origin: 11px 21px; }
 .st-shipped .st-badge { transform-origin: 18.5px 17.5px; }
 @media (prefers-reduced-motion: no-preference) {
-  .st-live .st-core { animation: st-beat 2s cubic-bezier(0.3, 0, 0.3, 1) infinite; }
-  .st-live .st-halo { animation: st-halo 2s ease-in-out infinite; }
-  .st-live .st-ring { animation: st-ring 2s cubic-bezier(0.2, 0.6, 0.35, 1) infinite; }
-  .st-live .st-ring2 { animation-delay: 0.26s; }
   /* Shipped plays once when scrolled into view, and again on row hover. */
   .st-shipped[data-seen] .st-box { animation: st-drop 620ms cubic-bezier(0.3, 0, 0.2, 1) both; }
   .st-shipped[data-seen] .st-badge { animation: st-pop 520ms cubic-bezier(0.3, 1.6, 0.5, 1) 420ms both; }
@@ -751,9 +765,6 @@ html.is-scrolling #main-content {
   /* Off-screen rows pause their loops. */
   .st[data-off] * { animation-play-state: paused !important; }
 }
-@keyframes st-beat { 0%, 100% { transform: scale(1); } 6% { transform: scale(1.3); } 13% { transform: scale(0.94); } 19% { transform: scale(1.16); } 30% { transform: scale(1); } }
-@keyframes st-ring { 0% { opacity: 0.85; transform: scale(1); } 55%, 100% { opacity: 0; transform: scale(2.9); } }
-@keyframes st-halo { 0%, 100% { opacity: 0.06; transform: scale(0.7); } 10% { opacity: 0.2; transform: scale(1.1); } 60% { opacity: 0.08; transform: scale(0.85); } }
 @keyframes st-drop { 0% { opacity: 0; transform: translateY(-9px) scale(0.9, 1.08); } 45% { opacity: 1; transform: translateY(0) scale(0.9, 1.08); } 62% { transform: translateY(0) scale(1.12, 0.84); } 80% { transform: translateY(0) scale(0.97, 1.03); } 100% { transform: none; } }
 @keyframes st-pop { 0% { transform: scale(0.3) rotate(-40deg); } 100% { transform: none; } }
 @keyframes st-draw { 0% { stroke-dashoffset: 1; } 100% { stroke-dashoffset: 0; } }
@@ -768,5 +779,159 @@ html.is-scrolling #main-content {
     color: #e3a008;
     rotate: 144deg;
     scale: 1.15;
+  }
+}
+
+/* Live mark: plain spans so the pulse runs on the compositor (transform/opacity only). */
+.st-dot {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+}
+.st-dot i {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  border-radius: 9999px;
+  background: currentColor;
+}
+.st-dot i:first-child {
+  opacity: 0;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .st-dot i:first-child {
+    animation: st-ping 2s cubic-bezier(0.2, 0.6, 0.35, 1) infinite;
+  }
+  .st-dot i:last-child {
+    animation: st-beat 2s cubic-bezier(0.3, 0, 0.3, 1) infinite;
+  }
+  .st[data-off] .st-dot i {
+    animation-play-state: paused;
+  }
+}
+@keyframes st-ping { 0% { opacity: 0.6; transform: scale(1); } 60%, 100% { opacity: 0; transform: scale(2.8); } }
+@keyframes st-beat { 0%, 100% { transform: scale(1); } 8% { transform: scale(1.3); } 16% { transform: scale(0.94); } 24% { transform: scale(1.12); } 34% { transform: scale(1); } }
+
+/* ui-sdk Segmented Control: the indicator slides (tabs-sliding timing). */
+[data-slot="segmented-control"] {
+  position: relative;
+  display: inline-flex;
+  isolation: isolate;
+  gap: 2px;
+  padding: 2px;
+  border: 1px solid hsl(var(--border));
+  border-radius: 8px;
+  background: hsl(var(--card));
+}
+[data-slot="segmented-control-item"] {
+  position: relative;
+  padding: 3px 9px;
+  border-radius: 6px;
+  font-size: 11.5px;
+  color: hsl(var(--muted-foreground));
+  transition: color var(--duration-fast) var(--ease-smooth-out);
+}
+[data-slot="segmented-control-item"]:hover,
+[data-slot="segmented-control-item"][data-checked] {
+  color: hsl(var(--foreground));
+}
+[data-slot="segmented-control-item"]:focus-visible {
+  outline: 2px solid hsl(var(--ring));
+  outline-offset: 1px;
+}
+[data-slot="segmented-control-indicator"] {
+  position: absolute;
+  z-index: -1;
+  top: var(--segmented-control-indicator-top);
+  left: var(--segmented-control-indicator-left);
+  width: var(--segmented-control-indicator-width);
+  height: var(--segmented-control-indicator-height);
+  border-radius: 6px;
+  background: hsl(var(--secondary));
+  transition-property: top, left, width, height;
+  transition-duration: var(--duration-fast);
+  transition-timing-function: var(--ease-smooth-out);
+}
+[data-slot="segmented-control-indicator"][data-activation-direction="none"] {
+  transition: none;
+}
+
+/* ui-sdk Collapsible: height from its measured variable (accordion timing). */
+[data-slot="collapsible-panel"] {
+  height: var(--collapsible-panel-height);
+  overflow: hidden;
+  transition: height var(--duration-fast) var(--ease-smooth-out);
+}
+[data-slot="collapsible-panel"][data-starting-style],
+[data-slot="collapsible-panel"][data-ending-style] {
+  height: 0;
+}
+
+/* Project cards (after samworks /projects): the shot sits in a gradient corner,
+   slides out on hover while a light sheen sweeps across. */
+.pcard-art {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  aspect-ratio: 16 / 10;
+}
+.pcard-shot {
+  position: absolute;
+  right: -12%;
+  bottom: -9%;
+  width: 92%;
+  border: 4px solid rgb(255 255 255 / 0.2);
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgb(0 0 0 / 0.35);
+  transition: transform var(--duration-fast) var(--ease-smooth-out);
+}
+.pcard-sheen {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 64px;
+  background: linear-gradient(90deg, transparent, rgb(255 255 255 / 0.45), transparent);
+  transform: translateX(-100%) skewX(-20deg);
+  pointer-events: none;
+}
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .group:hover .pcard-shot {
+    transform: translate(-4%, -4%);
+  }
+  .group:hover .pcard-sheen {
+    transform: translateX(560px) skewX(-20deg);
+    transition: transform 1s ease-out;
+  }
+}
+.pcard-ribbon {
+  position: absolute;
+  top: 18px;
+  right: -40px;
+  z-index: 2;
+  width: 160px;
+  transform: rotate(40deg);
+  background: #e8ff59;
+  color: #000;
+  text-align: center;
+  font: 600 10px/1 'Geist Mono Variable', ui-monospace, monospace;
+  padding: 6px 0;
+}
+
+/* Nav dot: positioned by Nav() from the link's offset; CSS owns the tween. */
+.nav-dot {
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  width: 4px;
+  height: 4px;
+  border-radius: 9999px;
+  background: hsl(var(--foreground));
+  opacity: 0;
+  transition: transform var(--duration-fast) var(--ease-smooth-out), opacity var(--duration-quick) ease;
+}
+@media (prefers-reduced-motion: reduce) {
+  .nav-dot {
+    transition: opacity var(--duration-quick) ease;
   }
 }

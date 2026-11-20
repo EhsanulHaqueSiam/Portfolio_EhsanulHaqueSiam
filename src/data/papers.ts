@@ -38,7 +38,7 @@ async function bibtex(doi: string) {
   const res = await fetch(`https://doi.org/${doi}`, { headers: { Accept: 'application/x-bibtex' }, signal: AbortSignal.timeout(8000) });
   if (!res.ok) throw new Error(`bibtex ${res.status}`);
   // One field per line reads far better than doi.org's single-line output.
-  return decodeEntities((await res.text()).trim()).replace(/, (?=[a-zA-Z]+=)/g, ',\n  ').replace(/ }$/, '\n}').replace('&', '\\&');
+  return decodeEntities((await res.text()).trim()).replace(/, (?=[a-zA-Z]+=)/g, ',\n  ').replace(/ }$/, '\n}').replace(/(?<!\\)&/g, '\\&');
 }
 
 /**

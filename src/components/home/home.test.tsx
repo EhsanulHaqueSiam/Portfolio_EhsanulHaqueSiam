@@ -1,0 +1,129 @@
+import { act, render, screen, within } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { createAgent } from '@ui-sdk/react/agent';
+import { domAnimation, LazyMotion } from 'framer-motion';
+import type { ReactNode } from 'react';
+import { describe, expect, test } from 'vitest';
+import { featuredProjects } from '../../data/content';
+import type { OpenSourceRepo } from '../../data/opensource';
+import { Nav } from './chrome';
+import { OpenSource } from './OpenSource';
+import { shortRange } from './Rows';
+import { Shipped } from './Shipped';
+import { Stack } from './StackActivity';
+
+const wrap = (ui: ReactNode) => render(<LazyMotion features={domAnimation}>{ui}</LazyMotion>);
+
+const repos: OpenSourceRepo[] = [
+  { name: 'T3 Code', repo: 'pingdotgg/t3code', logo: 't3', stars: 1, prs: [{ number: 1, title: 'fix: one', state: 'merged' }] },
+  { name: 'Better Auth', repo: 'better-auth/better-auth', logo: 'betterAuth', stars: 1, prs: [{ number: 2, title: 'feat: two', state: 'merged', note: 'co-author' }] },
+];
+
+describe('projects', () => {
+  test('cards show first; the view control switches to the list and back', async () => {
+    const user = userEvent.setup();
+    wrap(<Shipped />);
+    const view = screen.getByRole('radiogroup', { name: 'Project view' });
+    expect(within(view).getByRole('radio', { name: 'Cards' })).toBeChecked();
+    expect(screen.getAllByRole('heading', { level: 3 })).toHaveLength(4);
+
+    await user.click(within(view).getByRole('radio', { name: 'List' }));
+    expect(screen.queryAllByRole('heading', { level: 3 })).toHaveLength(0);
+    expect(screen.getByRole('link', { name: /12,000\+ scholarships indexed daily/ })).toHaveAttribute('href', 'https://thescholarhub.netlify.app/');
+
+    await user.keyboard('{ArrowLeft}');
+    expect(within(view).getByRole('radio', { name: 'Cards' })).toBeChecked();
+  });
+
+  test('show all expands the cards to every featured project', async () => {
+    const user = userEvent.setup();
+    wrap(<Shipped />);
+    const more = screen.getByRole('button', { name: `Show all ${featuredProjects.length}` });
+    expect(more).toHaveAttribute('aria-expanded', 'false');
+    await user.click(more);
+    expect(screen.getAllByRole('heading', { level: 3 })).toHaveLength(featuredProjects.length);
+    expect(screen.getByRole('button', { name: 'Show fewer' })).toHaveAttribute('aria-expanded', 'true');
+  });
+});
+
+describe('open source', () => {
+  test('the first repo starts open and each trigger toggles its pull requests', async () => {
+    const user = userEvent.setup();
+    wrap(<OpenSource repos={repos} />);
+    const t3 = screen.getByRole('button', { name: 'T3 Code pull requests' });
+    const ba = screen.getByRole('button', { name: 'Better Auth pull requests' });
+    expect(t3).toHaveAttribute('aria-expanded', 'true');
+    expect(ba).toHaveAttribute('aria-expanded', 'false');
+    expect(screen.getByRole('link', { name: 'fix: one, merged pull request #1' })).toHaveAttribute('href', 'https://github.com/pingdotgg/t3code/pull/1');
+
+    await user.click(ba);
+    expect(ba).toHaveAttribute('aria-expanded', 'true');
+    expect(await screen.findByRole('link', { name: 'feat: two (co-author), merged pull request #2' })).toBeInTheDocument();
+  });
+});
+
+describe('tech stack', () => {
+  test('a category filter narrows the chips', async () => {
+    const user = userEvent.setup();
+    wrap(<Stack />);
+    const filter = screen.getByRole('radiogroup', { name: 'Filter skills' });
+    const before = screen.getAllByRole('listitem').length;
+    await user.click(within(filter).getByRole('radio', { name: 'Mobile' }));
+    expect(screen.getByText('Android SDK')).toBeInTheDocument();
+    expect(screen.queryByText('PyTorch')).not.toBeInTheDocument();
+    expect(screen.getAllByRole('listitem').length).not.toBe(before);
+  });
+});
+
+describe('nav', () => {
+  test('only the page itself is marked current; detail pages mark their parent as current', () => {
+    const { rerender } = wrap(<Nav current="publications" />);
+    expect(screen.getByRole('link', { name: 'Research' })).toHaveAttribute('aria-current', 'page');
+    expect(screen.getByRole('link', { name: 'Home' })).not.toHaveAttribute('aria-current');
+
+    rerender(
+      <LazyMotion features={domAnimation}>
+        <Nav current="paper" />
+      </LazyMotion>,
+    );
+    expect(screen.getByRole('link', { name: 'Research' })).toHaveAttribute('aria-current', 'true');
+  });
+});
+
+describe('helpers', () => {
+  test('shortRange folds a shared year and says now for present roles', () => {
+    expect(shortRange('Jun 2026–Present')).toBe('Jun 2026 – now');
+    expect(shortRange('Apr 2026–May 2026')).toBe('Apr – May 2026');
+    expect(shortRange('Aug 2025–May 2026')).toBe('Aug 2025 – May 2026');
+  });
+});
+
+test('an agent can find and use every ui-sdk control on the page', async () => {
+  const agent = createAgent();
+  wrap(
+    <>
+      <Shipped />
+      <OpenSource repos={repos} />
+      <Stack />
+    </>,
+  );
+  const entries = agent.snapshot().filter((e) => !e.offPage && e.component !== 'more');
+  for (const e of entries) expect(e.label, `${e.component} ${e.ref} has no name`).toBeTruthy();
+  const labels = entries.map((e) => e.label);
+  for (const label of ['Project view', 'Filter skills', 'T3 Code pull requests', 'Better Auth pull requests']) {
+    expect(labels, `${label} is missing`).toContain(label);
+  }
+
+  let result: Awaited<ReturnType<typeof agent.act>> | undefined;
+  await act(async () => {
+    result = await agent.act({
+      steps: [
+        { ref: 'Project view', action: 'setValue', args: ['list'] },
+        { ref: 'Filter skills', action: 'setValue', args: ['Tools'] },
+      ],
+    });
+  });
+  expect(result?.ok, result?.error?.message).toBe(true);
+  expect(screen.getByRole('radio', { name: 'List' })).toBeChecked();
+  expect(screen.getByRole('radio', { name: 'Tools' })).toBeChecked();
+});

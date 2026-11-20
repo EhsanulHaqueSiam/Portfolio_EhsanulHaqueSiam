@@ -1,8 +1,8 @@
-import { type ReactNode, useRef, useState } from 'react';
+import { type ReactNode, useLayoutEffect, useRef, useState } from 'react';
 import { AnimatePresence, type MotionValue, m, useMotionValue, useReducedMotion, useSpring, useTransform } from 'framer-motion';
 import { profile } from '../../data/content';
 import { haptic } from '../../lib/haptics';
-import { setSoundEnabled, sound, useSoundEnabled } from '../../lib/sound';
+import { sound, toggleSound, useSoundState } from '../../lib/sound';
 import { ArrowUpRightIcon, EmailIcon, GitHubIcon, LinkedInIcon, ResumeIcon } from '../ui/Icons';
 import { ThemeToggle } from '../ui/ThemeToggle';
 import { Brand, SpeakerIcon } from './icons';
@@ -56,30 +56,64 @@ export function HeaderLink({ href, children }: { href: string; children: ReactNo
 }
 
 export function SoundToggle() {
-  const on = useSoundEnabled();
+  const state = useSoundState();
+  const label = state === 'off' ? 'Turn sounds on' : state === 'locked' ? 'Sound is on. Click anywhere to hear it' : 'Mute sounds';
   return (
     <button
       type="button"
-      aria-pressed={on}
-      aria-label={on ? 'Mute sounds' : 'Turn sounds on'}
+      aria-pressed={state !== 'off'}
+      aria-label={label}
+      title={label}
       onClick={() => {
-        setSoundEnabled(!on);
+        toggleSound();
         haptic();
       }}
       className="press group grid h-8 w-8 place-items-center rounded-md border border-border text-muted-foreground transition-colors hover:text-foreground"
     >
-      <SpeakerIcon on={on} className="icon-pop h-4 w-4" />
+      <SpeakerIcon on={state !== 'off'} className={`icon-pop h-4 w-4 transition-opacity ${state === 'locked' ? 'opacity-50' : ''}`} />
     </button>
   );
 }
 
-export function Nav({ current }: { current: 'home' | 'publications' }) {
-  const items = [
-    { label: 'Home', href: '/', key: 'home' },
-    { label: 'Projects', href: '/#projects' },
-    { label: 'Research', href: '/publications', key: 'publications' },
-    { label: 'CV', href: '#resume' },
-  ];
+export type Page = 'home' | 'publications' | 'work' | 'paper';
+
+const NAV = [
+  { label: 'Home', href: '/', page: 'home' },
+  { label: 'Projects', href: '/#projects' },
+  { label: 'Research', href: '/publications/', page: 'publications' },
+  { label: 'CV', href: '#resume' },
+] as const;
+// Detail pages light up their parent link without claiming to be that page.
+const PARENT: Record<Page, string> = { home: 'Home', publications: 'Research', work: 'Home', paper: 'Research' };
+
+/**
+ * The dot under the active link slides to whichever link is hovered (the
+ * transitions.dev tabs-sliding pattern: measure the link, let CSS tween the dot).
+ */
+export function Nav({ current }: { current: Page }) {
+  const [hovered, setHovered] = useState<string | null>(null);
+  const listRef = useRef<HTMLUListElement>(null);
+  const dotRef = useRef<HTMLSpanElement>(null);
+  const placed = useRef(false);
+  const active = PARENT[current];
+  const target = hovered ?? active;
+
+  useLayoutEffect(() => {
+    const dot = dotRef.current;
+    const link = listRef.current?.querySelector<HTMLElement>(`[data-nav="${target}"]`);
+    if (!dot || !link || !link.offsetParent) return;
+    const x = link.offsetLeft + link.offsetWidth / 2 - 2;
+    // First placement snaps; later moves animate.
+    if (!placed.current) {
+      dot.style.transition = 'none';
+      dot.style.transform = `translateX(${x}px)`;
+      void dot.offsetWidth;
+      dot.style.transition = '';
+      placed.current = true;
+    } else dot.style.transform = `translateX(${x}px)`;
+    dot.style.opacity = '1';
+  }, [target]);
+
   return (
     <header className="sticky top-0 z-40 border-b border-border bg-background">
       <nav aria-label="Primary" className="flex items-center justify-between gap-3 px-4 py-2.5">
@@ -87,19 +121,24 @@ export function Nav({ current }: { current: 'home' | 'publications' }) {
           Siam
         </a>
         <div className="flex items-center gap-1 sm:gap-3">
-          <ul className="flex items-center gap-3 text-[13px] sm:gap-4">
-            {items.map((it) => (
+          <ul ref={listRef} className="relative flex items-center gap-3 text-[13px] sm:gap-4" onMouseLeave={() => setHovered(null)}>
+            {NAV.map((it) => (
               <li key={it.label} className={it.label === 'Projects' ? 'hidden sm:block' : undefined}>
                 <a
                   href={it.href}
-                  aria-current={it.key === current ? 'page' : undefined}
-                  onMouseEnter={sound.tick}
-                  className="text-muted-foreground transition-colors hover:text-foreground aria-[current=page]:text-foreground"
+                  data-nav={it.label}
+                  aria-current={'page' in it && it.page === current ? 'page' : it.label === active ? 'true' : undefined}
+                  onMouseEnter={() => {
+                    setHovered(it.label);
+                    sound.tick();
+                  }}
+                  className="block py-1 text-muted-foreground transition-colors hover:text-foreground aria-[current]:text-foreground"
                 >
                   {it.label}
                 </a>
               </li>
             ))}
+            <span ref={dotRef} aria-hidden="true" className="nav-dot" />
           </ul>
           <div className="ml-1 flex items-center gap-1.5">
             <SoundToggle />

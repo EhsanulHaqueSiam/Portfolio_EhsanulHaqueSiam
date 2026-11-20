@@ -15,7 +15,8 @@ import react from '@astrojs/react';
 export default defineConfig({
   site: 'https://ehsanulhaquesiam.netlify.app',
   output: 'static',
-  trailingSlash: 'ignore',
+  // Pages are folders (work/aiub/index.html), so every internal link ends in a slash.
+  trailingSlash: 'always',
   integrations: [react()],
   build: {
     // Emit hashed assets under /_astro/ (matched by netlify.toml cache headers)

@@ -1,0 +1,72 @@
+{
+  "projectIcons": {
+    "ScholarHub": "scholarhub.webp",
+    "TTT Autos": "ttt-autos.webp",
+    "KaajKormo": "kaajkormo.webp",
+    "OfferLagbe": "offerlagbe.webp",
+    "Aurum Gold": "aurum-gold.svg",
+    "Void Threads": "void-threads.webp",
+    "Indian Claypit": "claypit.webp",
+    "BetaScript": "betascript.webp",
+    "Student Management System": "student-management.webp",
+    "Spotify Sentiment Analysis": "spotify-sentiment.webp",
+    "Mario's Multiverse Adventure": "mario-multiverse.webp",
+    "BD News Scraper & Analytics": "bd-news-scraper.webp",
+    "Hotel Management System": "hotel-management.webp",
+    "Android Development Journey": "android-journey.webp",
+    "Pharmacy Management System": "pharmacy-management.webp"
+  },
+  "companies": {
+    "Ledgercross": {
+      "logo": "ledgercross.webp",
+      "link": {
+        "label": "Siam on the Ledgercross team page",
+        "href": "https://www.ledgercross.com/team/EhsanulHaqueSiam"
+      }
+    },
+    "Arché Intelligence Lab": {
+      "logo": "arche.webp",
+      "link": {
+        "label": "arche-lab.org",
+        "href": "https://arche-lab.org"
+      }
+    },
+    "Deepchain Labs": {
+      "link": {
+        "label": "deepchainlabs.com",
+        "href": "https://deepchainlabs.com"
+      }
+    },
+    "BetaScript LLC": {
+      "logo": "betascript.webp",
+      "link": {
+        "label": "betascript.online",
+        "href": "https://betascript.online"
+      }
+    },
+    "BDTracks": {
+      "logo": "bdtracks.webp",
+      "link": {
+        "label": "bdtracks.com",
+        "href": "https://bdtracks.com"
+      }
+    },
+    "AIUB": {
+      "logo": "aiub.webp",
+      "link": {
+        "label": "aiub.edu",
+        "href": "https://www.aiub.edu"
+      }
+    }
+  },
+  "quote": {
+    "text": "Simplicity is prerequisite for reliability.",
+    "by": "Edsger W. Dijkstra"
+  },
+  "roles": [
+    "AI Engineer.",
+    "Full-Stack Developer.",
+    "NLP & LLM Researcher.",
+    "Open-source Contributor."
+  ]
+}
