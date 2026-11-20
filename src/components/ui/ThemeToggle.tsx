@@ -35,7 +35,7 @@ export function ThemeToggle({ className = '' }: { className?: string }) {
       }
     };
     sound.whoosh();
-    haptic();
+    haptic('nudge');
 
     const doc = document as VTDocument;
     if (!doc.startViewTransition || matchMedia('(prefers-reduced-motion: reduce)').matches) return apply();

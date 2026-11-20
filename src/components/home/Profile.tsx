@@ -1,5 +1,5 @@
 import { type ReactNode, useEffect, useRef, useState } from 'react';
-import { AnimatePresence, m, useReducedMotion } from 'framer-motion';
+import { useReducedMotion } from 'framer-motion';
 import { profile, profileImage, roles, stickers } from '../../data/content';
 import { haptic } from '../../lib/haptics';
 import { sound } from '../../lib/sound';
@@ -41,14 +41,18 @@ function Stickers() {
 }
 
 /**
- * The role line under the name, after samworks: every 3s the phrase swaps, each
- * letter rising out of a blur 30ms after the one before. Screen readers get the
- * full title once; reduced motion keeps the first phrase still.
+ * The role line under the name. Every 3s the phrase changes by rolling: each
+ * letter column slides up, the old character out and the new one in, 22ms after
+ * its neighbour (after superinteractions.com's text roll). Monospace keeps the
+ * columns aligned. Screen readers get the title once; reduced motion stays still.
  */
 function RollingRole() {
-  const [i, setI] = useState(0);
+  const [from, setFrom] = useState(0);
+  const [to, setTo] = useState(0);
   const reduce = useReducedMotion();
   const ref = useRef<HTMLParagraphElement>(null);
+  const width = Math.max(...roles.map((r) => r.length));
+
   useEffect(() => {
     if (reduce || !ref.current) return;
     let visible = true;
@@ -56,38 +60,35 @@ function RollingRole() {
       visible = e.isIntersecting;
     });
     io.observe(ref.current);
-    const id = setInterval(() => visible && !document.hidden && setI((n) => (n + 1) % roles.length), 3000);
+    const id = setInterval(() => {
+      if (visible && !document.hidden) setTo((n) => (n + 1) % roles.length);
+    }, 3000);
     return () => {
       clearInterval(id);
       io.disconnect();
     };
   }, [reduce]);
-  const phrase = roles[i];
+
+  // Once the last column has landed, the new phrase becomes the resting one.
+  useEffect(() => {
+    if (to === from) return;
+    const done = setTimeout(() => setFrom(to), 400 + 22 * width);
+    return () => clearTimeout(done);
+  }, [to, from, width]);
+
+  const rolling = to !== from;
+  const pad = (s: string, i: number) => (s[i] === undefined || s[i] === ' ' ? '\u00a0' : s[i]);
   return (
-    <p ref={ref} className="relative mt-1 h-[18px] overflow-hidden font-mono text-[12px] uppercase tracking-[0.14em] text-foreground/80">
+    <p ref={ref} className="mt-1 h-[18px] overflow-hidden font-mono text-[12px] uppercase leading-[18px] tracking-[0.14em] text-foreground/80">
       <span className="sr-only">{profile.title}</span>
-      <AnimatePresence mode="popLayout" initial={false}>
-        <m.span
-          key={phrase}
-          aria-hidden="true"
-          className="inline-flex"
-          initial={{ opacity: 0, y: 5 }}
-          animate={{ opacity: 1, y: 0, transition: { duration: 0.4 } }}
-          exit={{ opacity: 0, y: -5, transition: { duration: 0.15 } }}
-        >
-          {Array.from(phrase).map((ch, n) => (
-            <m.span
-              key={n}
-              className="roll-char"
-              initial={{ opacity: 0, y: 5, filter: 'blur(5px)' }}
-              animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-              transition={{ delay: 0.03 * n, duration: 0.3 }}
-            >
-              {ch === ' ' ? '\u00a0' : ch}
-            </m.span>
-          ))}
-        </m.span>
-      </AnimatePresence>
+      <span aria-hidden="true" className={`roll ${rolling ? 'is-rolling' : ''}`}>
+        {Array.from({ length: width }, (_, i) => (
+          <span key={i} className="roll-col" style={{ '--i': i } as React.CSSProperties}>
+            <span>{pad(roles[from], i)}</span>
+            <span>{pad(roles[to], i)}</span>
+          </span>
+        ))}
+      </span>
     </p>
   );
 }

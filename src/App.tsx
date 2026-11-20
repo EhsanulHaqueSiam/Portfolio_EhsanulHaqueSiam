@@ -45,7 +45,7 @@ function App(props: Props) {
             ) : props.page === 'paper' ? (
               <PaperPage paper={props.paper} />
             ) : props.page === 'home' ? (
-              // Each block blurs and rises in on load, 70ms apart (.enter in index.css).
+              // Each block fades and rises in on load, 70ms apart (.enter in index.css).
               [
                 <Profile key="profile" />,
                 <About key="about" />,

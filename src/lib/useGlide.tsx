@@ -2,8 +2,8 @@ import { type ReactNode, useRef } from 'react';
 
 /**
  * A list whose hover highlight glides from row to row (motion-primitives'
- * Animated Background, done with one measured element and a CSS transition so
- * it costs no layout animation). Rows are the direct `<li>` children; the
+ * Animated Background, done with one measured element and CSS transitions on
+ * transform and height instead of a layout animation). Mouse and keyboard only. Rows are the direct `<li>` children; the
  * highlight is a hidden last `<li>` so divide-y borders stay on the rows.
  */
 export function GlideList({ children, className = '' }: { children: ReactNode; className?: string }) {
@@ -30,10 +30,11 @@ export function GlideList({ children, className = '' }: { children: ReactNode; c
   return (
     <ul
       className={`relative isolate ${className}`}
-      onMouseOver={(e) => moveTo(e.target)}
+      onPointerOver={(e) => e.pointerType === 'mouse' && moveTo(e.target)}
       onFocus={(e) => moveTo(e.target)}
       onMouseLeave={hide}
       onBlur={hide}
+      onPointerDown={hide}
     >
       {children}
       <li ref={glide} role="presentation" aria-hidden="true" className="glide !border-0" />

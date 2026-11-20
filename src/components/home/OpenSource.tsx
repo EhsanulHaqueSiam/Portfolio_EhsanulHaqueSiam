@@ -2,6 +2,7 @@ import { Collapsible, CollapsiblePanel, CollapsibleTrigger } from '@ui-sdk/react
 import type { OpenSourceRepo } from '../../data/opensource';
 import { haptic } from '../../lib/haptics';
 import { sound } from '../../lib/sound';
+import { GlideList } from '../../lib/useGlide';
 import { ArrowUpRightIcon } from '../ui/Icons';
 import { Brand, ChevronIcon, MergeIcon, StarOutlineIcon, T3Mark } from './icons';
 import { Section } from './chrome';
@@ -17,12 +18,12 @@ function RepoCard({ r, defaultOpen }: { r: OpenSourceRepo; defaultOpen: boolean 
       defaultOpen={defaultOpen}
       onOpenChange={(open) => {
         sound.open(open);
-        haptic();
+        haptic('nudge');
       }}
       className="border-b border-border last:border-b-0"
     >
       <CollapsibleTrigger
-        aria-label={`${r.name}: ${compact.format(r.stars)} stars, ${r.prs.length} pull request${r.prs.length > 1 ? 's' : ''}, ${merged} merged`}
+        aria-label={`${r.name}: ${compact.format(r.stars)} star${r.stars === 1 ? '' : 's'}, ${r.prs.length} pull request${r.prs.length > 1 ? 's' : ''}, ${merged} merged`}
         onMouseEnter={sound.tick}
         className="group -mx-2 flex w-[calc(100%+1rem)] items-center gap-3 rounded-lg px-2 py-3 text-left transition-colors hover:bg-secondary/60"
       >
@@ -43,8 +44,8 @@ function RepoCard({ r, defaultOpen }: { r: OpenSourceRepo; defaultOpen: boolean 
         <ChevronIcon className="h-4 w-4 text-muted-foreground transition-transform duration-[250ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-data-[open]:rotate-180" />
       </CollapsibleTrigger>
 
-      <CollapsiblePanel>
-        <ul className="mb-3 ml-[52px] divide-y divide-border border-t border-border">
+      <CollapsiblePanel keepMounted>
+        <GlideList className="mb-3 ml-[52px] divide-y divide-border border-t border-border">
           {r.prs.map((p) => (
             <li key={p.number}>
               <a
@@ -54,7 +55,7 @@ function RepoCard({ r, defaultOpen }: { r: OpenSourceRepo; defaultOpen: boolean 
                 rel="noopener noreferrer"
                 onMouseEnter={sound.tick}
                 onClick={haptic}
-                className="group -mx-2 grid grid-cols-[16px_1fr_auto] items-start gap-3 rounded-md px-2 py-2.5 transition-colors hover:bg-secondary/60"
+                className="group -mx-2 grid grid-cols-[16px_1fr_auto] items-start gap-3 rounded-md px-2 py-2.5"
               >
                 <MergeIcon className={`icon-pop mt-0.5 h-4 w-4 ${p.state === 'merged' ? 'text-[#a78bfa]' : 'text-signal-success'}`} />
                 <span className="text-[13.5px] leading-snug">
@@ -69,7 +70,7 @@ function RepoCard({ r, defaultOpen }: { r: OpenSourceRepo; defaultOpen: boolean 
               </a>
             </li>
           ))}
-        </ul>
+        </GlideList>
       </CollapsiblePanel>
     </Collapsible>
   );

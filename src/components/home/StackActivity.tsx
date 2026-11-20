@@ -35,7 +35,7 @@ export function Stack() {
             if (typeof next !== 'string') return;
             setTab(next);
             sound.click();
-            haptic();
+            haptic('nudge');
           }}
           className="flex-wrap"
         >
@@ -118,9 +118,12 @@ export function Activity() {
         {!days && !failed && (
           <div className="overflow-x-auto pb-1" aria-hidden="true">
             <svg viewBox="0 0 636 84" aria-hidden="true" className="block h-auto w-full min-w-[520px]">
-              {Array.from({ length: 53 * 7 }, (_, k) => (
-                <rect key={k} x={Math.floor(k / 7) * 12} y={(k % 7) * 12} width={10} height={10} rx={2} fill={FILL[0]} />
-              ))}
+              <defs>
+                <pattern id="gh-cell" width="12" height="12" patternUnits="userSpaceOnUse">
+                  <rect width="10" height="10" rx="2" fill={FILL[0]} />
+                </pattern>
+              </defs>
+              <rect width="636" height="84" fill="url(#gh-cell)" />
             </svg>
           </div>
         )}
@@ -190,7 +193,7 @@ export function Outro() {
       <div className="hatch" aria-hidden="true" />
       <div className="px-4 py-12 text-center">
         <h2 id="outro-title" className="font-serif text-[30px] leading-none">
-          Scrolled too far
+          Scrolled Too Far
         </h2>
         <p className="mx-auto mt-3 max-w-[34ch] text-[14px] text-muted-foreground">If you read this far, you might like what I build. My inbox is open.</p>
         <a

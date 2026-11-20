@@ -30,7 +30,6 @@ export const featuredExperience = experience.filter((e) => e.showInHome);
 
 const stripExt = (name: string) => name.replace(/\.(webp|png|jpg|jpeg)$/i, '');
 export const getProjectImage = (name: string) => `/images/projects/${stripExt(name)}.webp`;
-export const getPublicationImage = (name: string) => `/images/publications/${stripExt(name)}.webp`;
 
 export const profileImage = '/images/profile2.webp';
 

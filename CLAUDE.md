@@ -76,7 +76,7 @@ scripts/generate-seo.mjs      # prebuild: regenerates public/{robots.txt,sitemap
 
 ### SEO / AEO / GEO
 - `src/seo/schema.ts` → JSON-LD `@graph` (Person, ProfilePage, WebSite, 3× ScholarlyArticle,
-  ItemList of projects, ProfessionalService, BreadcrumbList, FAQPage, WebPage) + meta config,
+  ItemList of projects, ProfessionalService, BreadcrumbList, WebPage) + meta config,
   all generated from `assets/data`. Rendered in `Layout.astro`.
 - `scripts/generate-seo.mjs` regenerates `robots.txt`, `sitemap.xml`, `llms.txt`,
   `llms-full.txt` from the same data on every build — keep it in sync when data changes.

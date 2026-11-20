@@ -39,13 +39,17 @@ const ORG_URLS: Record<string, string> = {
 // ---------------------------------------------------------------------------
 // Meta tags
 // ---------------------------------------------------------------------------
+// Built from the data so the description can never outlive a role (it used to name
+// ended roles as current).
+const nowRoles = experience
+  .filter((e) => /present/i.test(e.date))
+  .map((e) => `${e.role.replace(/\s*\(.*\)$/, '')} at ${e.company}`);
+const papers = publications.filter((p) => /published|chapter/i.test(p.date)).length;
+
 export const META = {
   title: 'Ehsanul Haque Siam: AI Engineer & Full-Stack Developer',
-  // ~155 chars, front-loaded (Google truncates ~160)
-  description:
-    'AI Engineer & Full-Stack Developer in Dhaka. Research Assistant at Deepchain Labs; shipped 4 React apps driving 1.5x revenue at BetaScript. Published researcher, Certified Ethical Hacker.',
-  ogDescription:
-    "AI Engineer & Full-Stack Developer. Research Assistant at Deepchain Labs, Solo Developer at BetaScript LLC (1.5x revenue), AI/Data Engineer at BDTracks. 3 peer-reviewed papers, 3× Dean's List, Certified Ethical Hacker.",
+  description: `${profile.title} in Dhaka. ${nowRoles.join('; ')}. ${papers} peer-reviewed publications.`,
+  ogDescription: `${profile.title}. ${nowRoles.join('; ')}. ${papers} peer-reviewed publications and upstream contributions to T3 Code and Better Auth.`,
   keywords: [
     'Ehsanul Haque Siam',
     'AI Engineer',
@@ -54,14 +58,10 @@ export const META = {
     'Machine Learning Engineer',
     'RAG pipelines',
     'React Developer',
-    'Research Assistant',
-    'Deepchain Labs',
-    'BDTracks',
     'AIUB',
     'Dhaka',
     'Bangladesh',
     'Published Researcher',
-    'Certified Ethical Hacker',
     'Python',
     'TypeScript',
     'Hire AI Engineer',

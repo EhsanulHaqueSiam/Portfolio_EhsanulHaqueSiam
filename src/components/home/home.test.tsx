@@ -6,6 +6,7 @@ import type { ReactNode } from 'react';
 import { describe, expect, test } from 'vitest';
 import { featuredProjects } from '../../data/content';
 import type { OpenSourceRepo } from '../../data/opensource';
+import { GlideList } from '../../lib/useGlide';
 import { Nav } from './chrome';
 import { OpenSource } from './OpenSource';
 import { shortRange } from './Rows';
@@ -52,7 +53,7 @@ describe('open source', () => {
   test('the first repo starts open and each trigger toggles its pull requests', async () => {
     const user = userEvent.setup();
     wrap(<OpenSource repos={repos} />);
-    const t3 = screen.getByRole('button', { name: /^T3 Code: 1 stars, 1 pull request, 1 merged/ });
+    const t3 = screen.getByRole('button', { name: /^T3 Code: 1 star, 1 pull request, 1 merged/ });
     const ba = screen.getByRole('button', { name: /^Better Auth:/ });
     expect(t3).toHaveAttribute('aria-expanded', 'true');
     expect(ba).toHaveAttribute('aria-expanded', 'false');
@@ -91,6 +92,26 @@ describe('nav', () => {
   });
 });
 
+describe('glide highlight', () => {
+  test('follows keyboard focus between rows and hides when focus leaves', () => {
+    render(
+      <GlideList>
+        <li>
+          <a href="#a">A</a>
+        </li>
+        <li>
+          <a href="#b">B</a>
+        </li>
+      </GlideList>,
+    );
+    const pill = document.querySelector<HTMLElement>('.glide');
+    act(() => screen.getByRole('link', { name: 'B' }).focus());
+    expect(pill?.style.opacity).toBe('1');
+    act(() => screen.getByRole('link', { name: 'B' }).blur());
+    expect(pill?.style.opacity).toBe('0');
+  });
+});
+
 describe('helpers', () => {
   test('ribbons show reach numbers only', () => {
     const p = (metrics: string[]) => ({ metrics }) as Project;
@@ -124,7 +145,7 @@ test('an agent can find and use every ui-sdk control on the page', async () => {
   const entries = agent.snapshot().filter((e) => !e.offPage && e.component !== 'more');
   for (const e of entries) expect(e.label, `${e.component} ${e.ref} has no name`).toBeTruthy();
   const labels = entries.map((e) => e.label);
-  for (const label of ['Project view', 'Filter skills', 'T3 Code: 1 stars, 1 pull request, 1 merged', 'Better Auth: 1 stars, 1 pull request, 1 merged']) {
+  for (const label of ['Project view', 'Filter skills', 'T3 Code: 1 star, 1 pull request, 1 merged', 'Better Auth: 1 star, 1 pull request, 1 merged']) {
     expect(labels, `${label} is missing`).toContain(label);
   }
 

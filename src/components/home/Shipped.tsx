@@ -114,7 +114,7 @@ function ProjectCards({ items }: { items: Project[] }) {
                   Live
                 </span>
               ) : (
-                <span className="shrink-0 text-[12px] text-muted-foreground">Code</span>
+                <span className="shrink-0 text-[12px] text-muted-foreground">Shipped</span>
               )}
             </div>
             <div className="mt-auto flex items-center justify-between gap-2 pt-3">
@@ -157,7 +157,7 @@ function ProjectList({ rows }: { rows: Project[] }) {
       <div className="relative">
         <ul
           ref={listRef}
-          className="divide-y divide-border"
+          className="relative isolate divide-y divide-border"
           onMouseMove={(e) => {
             const top = listRef.current?.getBoundingClientRect().top ?? 0;
             y.set(e.clientY - top - 60);
@@ -237,7 +237,7 @@ export function Shipped() {
             if (next !== 'cards' && next !== 'list') return;
             setView(next);
             sound.click();
-            haptic();
+            haptic('nudge');
           }}
         >
           <SegmentedControlIndicator />
@@ -259,7 +259,7 @@ export function Shipped() {
             haptic();
             if (collapsing) e.currentTarget.closest('section')?.scrollIntoView({ block: 'start', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
           }}
-          className="press group mt-3 inline-flex items-center gap-1 text-[12px] text-muted-foreground transition-colors hover:text-foreground"
+          className="press group -my-2 mt-1 inline-flex items-center gap-1 py-2 text-[12px] text-muted-foreground transition-colors hover:text-foreground"
         >
           {all ? 'Show fewer' : `Show all ${featuredProjects.length}`}
           <ChevronIcon className={`h-3.5 w-3.5 transition-transform duration-200 ${all ? 'rotate-180' : ''}`} />

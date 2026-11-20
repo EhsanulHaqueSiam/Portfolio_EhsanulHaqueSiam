@@ -48,7 +48,7 @@ export function Section({ id, title, aside, children, flush }: { id?: string; ti
 /** Small "Label ↗" link used in section headers. */
 export function HeaderLink({ href, children }: { href: string; children: ReactNode }) {
   return (
-    <a href={href} {...ext(href)} onMouseEnter={sound.tick} className="group inline-flex items-center gap-1 transition-colors hover:text-foreground">
+    <a href={href} {...ext(href)} onMouseEnter={sound.tick} className="group -my-1.5 inline-flex items-center gap-1 py-1.5 transition-colors hover:text-foreground">
       {children}
       <ArrowUpRightIcon className="icon-arrow h-3 w-3" />
     </a>
@@ -66,7 +66,7 @@ export function SoundToggle() {
       title={hint}
       onClick={() => {
         toggleSound();
-        haptic();
+        haptic('nudge');
       }}
       className="press group grid h-8 w-8 place-items-center rounded-md border border-border text-muted-foreground transition-colors hover:text-foreground"
     >

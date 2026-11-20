@@ -133,13 +133,10 @@ export const sound = {
 
 const state = (): SoundState => (!enabled ? 'off' : running ? 'on' : 'locked');
 
-/**
- * The speaker button's click. The same click that unlocks audio must not also
- * mute it, so a press within a moment of unlocking keeps sound on.
- */
+/** The speaker button's click. A press that began while audio was locked starts it and keeps sound on. */
 export function toggleSound() {
-  // The press that started audio must not also mute it.
-  enabled = pressStartedLocked && enabled ? true : !enabled;
+  // Only when audio can actually start; otherwise a dead context would make the button unable to mute.
+  enabled = pressStartedLocked && enabled && getCtx() ? true : !enabled;
   pressStartedLocked = false;
   try {
     localStorage.setItem(KEY, enabled ? 'on' : 'off');

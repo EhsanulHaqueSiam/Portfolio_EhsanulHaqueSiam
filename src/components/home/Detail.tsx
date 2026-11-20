@@ -1,5 +1,5 @@
 import { type ReactNode, useState } from 'react';
-import { companyLink, experience, getPublicationImage, paperSlug, profile, publications, workSlug } from '../../data/content';
+import { companyLink, experience, paperSlug, profile, publications, workSlug } from '../../data/content';
 import type { PaperDetail } from '../../data/papers';
 import type { Experience } from '../../data/types';
 import { haptic } from '../../lib/haptics';
@@ -127,7 +127,7 @@ function CopyBib({ text }: { text: string }) {
           .then(() => {
             setDone('ok');
             sound.click();
-            haptic();
+            haptic('success');
           })
           .catch(() => setDone('failed'))
           .finally(reset);
@@ -147,19 +147,40 @@ const isSiam = (name: string) => /ehsanul/i.test(name) && /haque/i.test(name);
 export function PaperPage({ paper }: { paper: PaperDetail }) {
   const { pub, doi, authors, venue, publisher, pages, bibtex } = paper;
   const { when, year, status } = pubMeta(pub);
+  const kind = /presentation|talk/i.test(status) ? 'Talk' : /chapter/i.test(status) ? 'Book chapter' : 'Conference paper';
   const short = pub.title.split(':')[0];
   return (
     <div className="px-4 pb-6 pt-6">
       <Crumbs trail={[['Siam', '/'], ['Publications', '/publications/'], [short]]} />
-      <p className="enter mt-5 font-mono text-[12px] text-muted-foreground" style={{ '--n': 1 } as React.CSSProperties}>
-        {status || 'paper'} · {year}
-      </p>
-      <h1 className="enter mt-2 text-balance font-serif text-[32px] leading-[1.1] tracking-[-0.01em]" style={{ '--n': 1 } as React.CSSProperties}>
-        {pub.title}
-      </h1>
+      <article
+        className="enter mt-6 rounded-xl border border-border bg-card px-6 py-7 sm:px-9 sm:py-9"
+        style={{ '--n': 1 } as React.CSSProperties}
+        aria-labelledby="paper-title"
+      >
+        <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-muted-foreground">
+          {kind} · {pub.conference.includes(year) ? pub.conference : `${pub.conference} · ${year}`}
+        </p>
+        <h1 id="paper-title" className="mt-4 text-balance font-serif text-[30px] leading-[1.12] tracking-[-0.01em] sm:text-[34px]">
+          {pub.title}
+        </h1>
+        {authors.length > 0 && (
+          <p className="mt-4 text-[14px] text-foreground/80">
+            {authors.map((a, i) => (
+              <span key={a}>
+                {i > 0 && ', '}
+                {isSiam(a) ? <strong className="font-medium text-foreground">{a}</strong> : a}
+              </span>
+            ))}
+          </p>
+        )}
+        <div className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 border-t border-border pt-4 text-[13px]">
+          <span className="text-muted-foreground">{status || kind}</span>
+          {doi && <Out href={`https://doi.org/${doi}`}>DOI {doi}</Out>}
+        </div>
+      </article>
 
 
-      <Block title="Summary" n={2}>
+      <Block title={kind === 'Talk' ? 'What the talk covered' : 'What it does and finds'} n={2}>
         <p className="text-[15px] leading-relaxed text-foreground/85">{pub.desc}</p>
       </Block>
 
@@ -187,26 +208,17 @@ export function PaperPage({ paper }: { paper: PaperDetail }) {
         </dl>
       </Block>
 
-      {pub.images[0] && (
-        <figure className="enter mt-9" style={{ '--n': 4 } as React.CSSProperties}>
-          <img
-            src={getPublicationImage(pub.images[0])}
-            alt={`Certificate for ${short} from ${pub.conference}`}
-            width={1200}
-            height={848}
-            loading="lazy"
-            className="block h-auto w-full rounded-lg border border-border"
-          />
-          <figcaption className="mt-2 text-[12px] text-muted-foreground">Certificate from {pub.conference}</figcaption>
-        </figure>
-      )}
-
       {pub.paperLink && (
         <Block title="Read it" n={4}>
           <Out href={pub.paperLink}>{new URL(pub.paperLink).hostname.replace(/^www\./, '')}</Out>
         </Block>
       )}
 
+      {!bibtex && kind !== 'Talk' && (
+        <Block title="Cite it" n={5}>
+          <p className="text-[14px] text-muted-foreground">A citation will appear here once the {kind.toLowerCase()} is indexed with a DOI.</p>
+        </Block>
+      )}
       {bibtex && (
         <Block title="Cite it" n={5}>
           <div className="mb-2 flex justify-end">

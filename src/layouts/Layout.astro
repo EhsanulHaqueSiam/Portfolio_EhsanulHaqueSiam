@@ -67,9 +67,9 @@ const lastModified = new Date().toISOString().slice(0, 10);
 
     <!-- Open Graph -->
     <meta property="og:type" content="profile" />
-    <meta property="og:url" content={SITE.url + '/'} />
+    <meta property="og:url" content={canonical} />
     <meta property="og:title" content={title} />
-    <meta property="og:description" content={META.ogDescription} />
+    <meta property="og:description" content={canonical === `${SITE.url}/` ? META.ogDescription : description} />
     <meta property="og:image" content={META.ogImage} />
     <meta property="og:image:type" content="image/jpeg" />
     <meta property="og:image:width" content="1200" />
@@ -82,9 +82,9 @@ const lastModified = new Date().toISOString().slice(0, 10);
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:url" content={SITE.url + '/'} />
+    <meta name="twitter:url" content={canonical} />
     <meta name="twitter:title" content={title} />
-    <meta name="twitter:description" content={META.ogDescription} />
+    <meta name="twitter:description" content={canonical === `${SITE.url}/` ? META.ogDescription : description} />
     <meta name="twitter:image" content={META.ogImage} />
     <meta name="twitter:image:alt" content={META.ogImageAlt} />
     <meta name="twitter:label1" content="Focus" />
