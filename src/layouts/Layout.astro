@@ -13,6 +13,7 @@ interface Props {
   canonical?: string;
   /** Home only: preload the animated banner (the LCP image). */
   preloadBanner?: boolean;
+  ogType?: 'profile' | 'article';
 }
 
 const {
@@ -20,6 +21,7 @@ const {
   description = META.description,
   canonical = `${SITE.url}/`,
   preloadBanner = false,
+  ogType = 'profile',
 } = Astro.props;
 
 const jsonLd = buildJsonLd();
@@ -66,7 +68,7 @@ const lastModified = new Date().toISOString().slice(0, 10);
     <link rel="me" href="https://www.linkedin.com/in/EhsanulHaqueSiam/" />
 
     <!-- Open Graph -->
-    <meta property="og:type" content="profile" />
+    <meta property="og:type" content={ogType} />
     <meta property="og:url" content={canonical} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={canonical === `${SITE.url}/` ? META.ogDescription : description} />

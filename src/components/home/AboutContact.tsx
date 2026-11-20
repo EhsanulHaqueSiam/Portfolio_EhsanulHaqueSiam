@@ -42,7 +42,7 @@ export function Contact() {
               href={l.href}
               {...ext(l.href)}
               onMouseEnter={() => sound.note(i)}
-              onClick={haptic}
+              onClick={() => haptic()}
               className="press group inline-flex items-center gap-2 rounded-lg border border-border bg-card py-1.5 pl-1.5 pr-2.5 text-[13px] transition-colors hover:border-foreground/25"
             >
               <span className="grid h-6 w-6 place-items-center rounded-md bg-secondary text-foreground/80">

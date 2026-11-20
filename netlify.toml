@@ -66,3 +66,9 @@
   [headers.values]
     Cache-Control = "public, max-age=604800"
     Content-Type = "application/manifest+json"
+
+# The old recruiter page had stale facts; old links land on the home page.
+[[redirects]]
+  from = "/hire-me.html"
+  to = "/"
+  status = 301

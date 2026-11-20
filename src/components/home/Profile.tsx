@@ -25,7 +25,7 @@ function Stickers() {
         return (
           <li key={s.label} className="-ml-1.5 first:ml-0" onMouseEnter={() => sound.note(i + 2)}>
             {s.href ? (
-              <a href={s.href} title={s.label} aria-label={s.label} style={style} className={cls} onClick={haptic}>
+              <a href={s.href} title={s.label} aria-label={s.label} style={style} className={cls} onClick={() => haptic()}>
                 {tile.mark}
               </a>
             ) : (

@@ -35,7 +35,7 @@ export function Stack() {
             if (typeof next !== 'string') return;
             setTab(next);
             sound.click();
-            haptic('nudge');
+            haptic('selection');
           }}
           className="flex-wrap"
         >
@@ -199,7 +199,7 @@ export function Outro() {
         <a
           href={`mailto:${profile.email}`}
           onMouseEnter={sound.tick}
-          onClick={haptic}
+          onClick={() => haptic()}
           className="press group mt-5 inline-flex items-center gap-1.5 rounded-full bg-foreground px-5 py-2 text-[13px] font-medium text-background"
         >
           Let’s talk <span className="icon-nudge">→</span>

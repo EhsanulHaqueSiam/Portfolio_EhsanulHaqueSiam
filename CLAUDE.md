@@ -69,7 +69,7 @@ src/
 ├── components/Resume.tsx     # CV overlay: #resume, and #resume-print for hq's PDF printer
 ├── components/ui/            # Icons, ThemeToggle (still used)
 ├── lib/sound.ts              # synthesized Web Audio UI sounds, toggle persisted in localStorage `sound`
-├── lib/haptics.ts            # haptic(): Vibration API, or the iOS `<input switch>` trick
+├── lib/haptics.ts            # haptic(): web-haptics presets (rigid, selection, success), touch only
 └── data/                     # content.ts (typed JSON hub), opensource.ts, types.ts
 scripts/generate-seo.mjs      # prebuild: regenerates public/{robots.txt,sitemap.xml,llms.txt,llms-full.txt}
 ```

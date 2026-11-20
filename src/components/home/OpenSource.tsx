@@ -18,7 +18,7 @@ function RepoCard({ r, defaultOpen }: { r: OpenSourceRepo; defaultOpen: boolean 
       defaultOpen={defaultOpen}
       onOpenChange={(open) => {
         sound.open(open);
-        haptic('nudge');
+        haptic('selection');
       }}
       className="border-b border-border last:border-b-0"
     >
@@ -54,7 +54,7 @@ function RepoCard({ r, defaultOpen }: { r: OpenSourceRepo; defaultOpen: boolean 
                 target="_blank"
                 rel="noopener noreferrer"
                 onMouseEnter={sound.tick}
-                onClick={haptic}
+                onClick={() => haptic()}
                 className="group -mx-2 grid grid-cols-[16px_1fr_auto] items-start gap-3 rounded-md px-2 py-2.5"
               >
                 <MergeIcon className={`icon-pop mt-0.5 h-4 w-4 ${p.state === 'merged' ? 'text-[#a78bfa]' : 'text-signal-success'}`} />

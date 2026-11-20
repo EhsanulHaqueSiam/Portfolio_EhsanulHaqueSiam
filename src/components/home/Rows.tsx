@@ -47,8 +47,8 @@ export function LinkRow({ href, mark, title, sub, right }: { href: string; mark:
       href={href}
       {...ext(href)}
       onMouseEnter={sound.tick}
-      onClick={haptic}
-      className="group -mx-2 grid grid-cols-[28px_1fr_auto] items-center gap-3 rounded-lg px-2 py-2.5"
+      onClick={() => haptic()}
+      className="group -mx-2 grid grid-cols-[28px_1fr_auto] items-center gap-3 rounded-lg px-2 py-2.5 active:bg-secondary/60"
     >
       {mark}
       <span className="min-w-0">

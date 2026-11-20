@@ -12,6 +12,6 @@ export async function getStaticPaths() {
 const { paper } = Astro.props;
 ---
 
-<Layout title={`${paper.pub.title} · Ehsanul Haque Siam`} description={paper.pub.desc.slice(0, 155)} canonical={`${SITE.url}/publications/${paper.slug}/`}>
+<Layout ogType="article" title={`${paper.pub.title} · Ehsanul Haque Siam`} description={paper.pub.desc.length > 155 ? `${paper.pub.desc.slice(0, 154).replace(/\s+\S*$/, '')}…` : paper.pub.desc} canonical={`${SITE.url}/publications/${paper.slug}/`}>
   <App client:load page="paper" paper={paper} />
 </Layout>

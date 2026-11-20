@@ -66,7 +66,7 @@ export function SoundToggle() {
       title={hint}
       onClick={() => {
         toggleSound();
-        haptic('nudge');
+        haptic('selection');
       }}
       className="press group grid h-8 w-8 place-items-center rounded-md border border-border text-muted-foreground transition-colors hover:text-foreground"
     >
@@ -197,7 +197,7 @@ function DockItem({ item, i, mouseX }: { item: (typeof links)[number]; i: number
       onMouseLeave={() => setTip(false)}
       onFocus={() => setTip(true)}
       onBlur={() => setTip(false)}
-      onClick={haptic}
+      onClick={() => haptic()}
       className="relative grid shrink-0 place-items-center rounded-[10px] text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring"
     >
       <AnimatePresence>

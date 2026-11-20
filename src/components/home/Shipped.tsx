@@ -37,7 +37,7 @@ function Pile({ items }: { items: Project[] }) {
           tabIndex={-1}
           aria-label={p.name}
           onMouseEnter={() => sound.note(i)}
-          onClick={haptic}
+          onClick={() => haptic()}
           className="print"
           style={
             {
@@ -94,7 +94,7 @@ function ProjectCards({ items }: { items: Project[] }) {
         return (
           <li key={p.name} className="group flex flex-col rounded-[10px] border border-border p-3" onMouseEnter={sound.tick}>
             {/* biome-ignore lint/a11y/useAnchorContent: mouse-only shortcut; the site and code icons are the accessible links */}
-            <a href={href(p)} {...ext(href(p))} onClick={haptic} tabIndex={-1} aria-hidden="true" className="pcard-art block" style={{ background: GRADIENTS[i % GRADIENTS.length] }}>
+            <a href={href(p)} {...ext(href(p))} onClick={() => haptic()} tabIndex={-1} aria-hidden="true" className="pcard-art block" style={{ background: GRADIENTS[i % GRADIENTS.length] }}>
               {shot && <img src={shot} alt="" loading="lazy" decoding="async" width={560} height={350} className="pcard-shot" />}
               <span className="pcard-sheen" aria-hidden="true" />
               {tag && (
@@ -127,12 +127,12 @@ function ProjectCards({ items }: { items: Project[] }) {
               </ul>
               <span className="flex shrink-0 items-center gap-1 text-muted-foreground">
                 {p.links.view && (
-                  <a href={p.links.view} {...ext(p.links.view)} onMouseEnter={sound.tick} onClick={haptic} aria-label={`${p.name} website`} className="press grid h-7 w-7 place-items-center rounded-md transition-colors hover:text-foreground">
+                  <a href={p.links.view} {...ext(p.links.view)} onMouseEnter={sound.tick} onClick={() => haptic()} aria-label={`${p.name} website`} className="press grid h-7 w-7 place-items-center rounded-md transition-colors hover:text-foreground">
                     <GlobeIcon className="h-4 w-4" />
                   </a>
                 )}
                 {p.links.code && (
-                  <a href={p.links.code} {...ext(p.links.code)} onMouseEnter={sound.tick} onClick={haptic} aria-label={`${p.name} source on GitHub`} className="press grid h-7 w-7 place-items-center rounded-md transition-colors hover:text-foreground">
+                  <a href={p.links.code} {...ext(p.links.code)} onMouseEnter={sound.tick} onClick={() => haptic()} aria-label={`${p.name} source on GitHub`} className="press grid h-7 w-7 place-items-center rounded-md transition-colors hover:text-foreground">
                     <GitHubIcon className="h-4 w-4" />
                   </a>
                 )}
@@ -175,7 +175,7 @@ function ProjectList({ rows }: { rows: Project[] }) {
                     sound.tick();
                     if (matchMedia('(hover: hover) and (pointer: fine)').matches) setShown(cover(p) ? p : null);
                   }}
-                  onClick={haptic}
+                  onClick={() => haptic()}
                   className="group -mx-2 grid grid-cols-[24px_1fr_auto] items-center gap-3 rounded-lg px-2 py-2.5 transition-colors hover:bg-secondary/60"
                 >
                   {projectIcon(p.name) ? (
@@ -237,7 +237,7 @@ export function Shipped() {
             if (next !== 'cards' && next !== 'list') return;
             setView(next);
             sound.click();
-            haptic('nudge');
+            haptic('selection');
           }}
         >
           <SegmentedControlIndicator />

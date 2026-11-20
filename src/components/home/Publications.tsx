@@ -79,7 +79,7 @@ export function PublicationsList() {
                   <a
                     href={`/publications/${paperSlug(p)}/`}
                     onMouseEnter={sound.tick}
-                    onClick={haptic}
+                    onClick={() => haptic()}
                     aria-labelledby={`t-${paperSlug(p)}`}
                     className="group -mx-2 block rounded-lg px-2 py-4"
                   >

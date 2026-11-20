@@ -125,7 +125,9 @@ const publicationArticles = publications.map((p, i) => {
   };
 });
 
+// hq rule: never "CEH"; that entry is the Team Matrix course, not a certification.
 const credentialAwards = achievements
+  .filter((a) => !/ethical hacker/i.test(a.name))
   .filter((a) => ['award', 'certificate', 'publication'].includes(a.category))
   .map((a) => ({
     '@type': 'EducationalOccupationalCredential',
@@ -283,7 +285,6 @@ export function buildJsonLd() {
             '@type': 'ContactPoint',
             contactType: 'recruiting',
             email: profile.email,
-            url: `${SITE.url}/hire-me.html`,
             availableLanguage: ['English', 'Bengali'],
             areaServed: 'Worldwide',
           },
@@ -294,24 +295,12 @@ export function buildJsonLd() {
         '@id': `${SITE.url}/#breadcrumb`,
         itemListElement: [
           ['Home', '/'],
-          ['Hire Me', '/hire-me.html'],
         ].map(([name, path], i) => ({
           '@type': 'ListItem',
           position: i + 1,
           name,
           item: abs(path),
         })),
-      },
-      {
-        '@type': 'WebPage',
-        '@id': `${SITE.url}/hire-me.html#webpage`,
-        url: `${SITE.url}/hire-me.html`,
-        name: 'Hire Ehsanul Haque Siam: AI Engineer & Full-Stack Developer',
-        description:
-          'Recruiter-friendly hiring page for AI engineering, LLM applications, and full-stack product development.',
-        isPartOf: { '@id': WEBSITE_ID },
-        about: { '@id': PERSON_ID },
-        inLanguage: SITE.lang,
       },
     ],
   };

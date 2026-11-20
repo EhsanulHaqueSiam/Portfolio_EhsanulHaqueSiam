@@ -31,7 +31,7 @@ export function GlideList({ children, className = '' }: { children: ReactNode; c
     <ul
       className={`relative isolate ${className}`}
       onPointerOver={(e) => e.pointerType === 'mouse' && moveTo(e.target)}
-      onFocus={(e) => moveTo(e.target)}
+      onFocus={(e) => e.target.matches(':focus-visible') && moveTo(e.target)}
       onMouseLeave={hide}
       onBlur={hide}
       onPointerDown={hide}

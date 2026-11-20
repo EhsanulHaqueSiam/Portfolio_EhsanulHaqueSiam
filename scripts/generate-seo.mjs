@@ -20,7 +20,8 @@ const profile = read('profile.json');
 const experience = read('experience.json');
 const projects = read('projects.json');
 const publications = read('publications.json');
-const achievements = read('achievements.json');
+// hq rule: never "CEH"; the Team Matrix entry is a course, not a certification.
+const achievements = read('achievements.json').filter((a) => !/ethical hacker/i.test(a.name));
 const skills = read('skills.json');
 const testimonials = read('testimonials.json');
 // Only surface real, published posts (drop "Coming Soon" / "#" placeholders)
@@ -68,7 +69,6 @@ const urls = [
   // Same slugs as src/data/content.ts (slugify, paperSlug, workSlug).
   ...publications.map((p) => ({ loc: `${SITE}/publications/${slugify(p.title.split(':')[0])}/`, changefreq: 'yearly', priority: '0.6' })),
   ...experience.filter((e) => e.showInHome).map((e) => ({ loc: `${SITE}/work/${slugify(e.company)}/`, changefreq: 'yearly', priority: '0.5' })),
-  { loc: `${SITE}/hire-me.html`, changefreq: 'monthly', priority: '0.9' },
   { loc: `${SITE}/resume.pdf`, changefreq: 'monthly', priority: '0.7' },
 ];
 write(
@@ -117,7 +117,6 @@ ${profile.stats.map((s) => `- ${s.value}: ${s.label}`).join('\n')}
 
 ## Key pages
 - [Portfolio home](${SITE}/): full experience, projects, publications, skills
-- [Hire me](${SITE}/hire-me.html): recruiter-focused summary and contact
 - [Résumé (PDF)](${SITE}/resume.pdf): downloadable CV
 - [Full profile for LLMs](${SITE}/llms-full.txt): complete structured detail
 
@@ -207,7 +206,7 @@ ${section(
       : ''
   }${section(
     'Links',
-    `- Portfolio: ${SITE}/\n- Hire me: ${SITE}/hire-me.html\n- Résumé: ${SITE}/resume.pdf\n- GitHub: ${profile.github}\n- LinkedIn: ${profile.linkedin}\n- ORCID: ${profile.orcid}\n- Google Scholar: ${profile.scholar}\n- IEEE Xplore: ${profile.ieeeXplore}\n- ResearchGate: ${profile.researchgate}\n- Kaggle: ${profile.kaggle}\n- X: ${profile.x}`,
+    `- Portfolio: ${SITE}/\n- Résumé: ${SITE}/resume.pdf\n- GitHub: ${profile.github}\n- LinkedIn: ${profile.linkedin}\n- ORCID: ${profile.orcid}\n- Google Scholar: ${profile.scholar}\n- IEEE Xplore: ${profile.ieeeXplore}\n- ResearchGate: ${profile.researchgate}\n- Kaggle: ${profile.kaggle}\n- X: ${profile.x}`,
   )}`,
 );
 

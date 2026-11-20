@@ -15,7 +15,6 @@
 
 ## Key pages
 - [Portfolio home](https://ehsanulhaquesiam.netlify.app/): full experience, projects, publications, skills
-- [Hire me](https://ehsanulhaquesiam.netlify.app/hire-me.html): recruiter-focused summary and contact
 - [Résumé (PDF)](https://ehsanulhaquesiam.netlify.app/resume.pdf): downloadable CV
 - [Full profile for LLMs](https://ehsanulhaquesiam.netlify.app/llms-full.txt): complete structured detail
 

@@ -58,7 +58,7 @@ export function SayHi({ title = 'Have something in mind?', line = 'My inbox is o
         <p className="text-[15px] font-medium">{title}</p>
         <p className="text-[13px] text-muted-foreground">{line}</p>
       </div>
-      <a href={`mailto:${profile.email}`} onClick={haptic} onMouseEnter={sound.tick} className="press shrink-0 rounded-full bg-foreground px-4 py-2 text-[13px] font-medium text-background">
+      <a href={`mailto:${profile.email}`} onClick={() => haptic()} onMouseEnter={sound.tick} className="press shrink-0 rounded-full bg-foreground px-4 py-2 text-[13px] font-medium text-background">
         Say hi
       </a>
     </div>
@@ -184,31 +184,16 @@ export function PaperPage({ paper }: { paper: PaperDetail }) {
         <p className="text-[15px] leading-relaxed text-foreground/85">{pub.desc}</p>
       </Block>
 
-      <Block title="Publication facts" n={3}>
+      <Block title={kind === 'Talk' ? 'Talk facts' : 'Publication facts'} n={3}>
         <dl className="divide-y divide-border">
-          <Fact k="Published in">{venue ?? pub.conference}</Fact>
+          <Fact k={kind === 'Talk' ? 'Presented at' : 'Published in'}>{venue ?? pub.conference}</Fact>
           {publisher && <Fact k="Publisher">{publisher}</Fact>}
           <Fact k="Date">{when}</Fact>
           {pages && <Fact k="Pages">{pages}</Fact>}
-          {authors.length > 0 && (
-            <Fact k="Authors">
-              {authors.map((a, i) => (
-                <span key={a}>
-                  {i > 0 && ', '}
-                  {isSiam(a) ? <strong className="font-medium text-foreground">{a}</strong> : <span className="text-foreground/80">{a}</span>}
-                </span>
-              ))}
-            </Fact>
-          )}
-          {doi && (
-            <Fact k="DOI">
-              <Out href={`https://doi.org/${doi}`}>{doi}</Out>
-            </Fact>
-          )}
         </dl>
       </Block>
 
-      {pub.paperLink && (
+      {pub.paperLink && !(doi && pub.paperLink.includes(doi)) && (
         <Block title="Read it" n={4}>
           <Out href={pub.paperLink}>{new URL(pub.paperLink).hostname.replace(/^www\./, '')}</Out>
         </Block>
@@ -224,7 +209,7 @@ export function PaperPage({ paper }: { paper: PaperDetail }) {
           <div className="mb-2 flex justify-end">
             <CopyBib text={bibtex} />
           </div>
-          <pre className="overflow-x-auto rounded-lg border border-border bg-card p-3 font-mono text-[12px] leading-relaxed text-foreground/85">{bibtex}</pre>
+          <pre tabIndex={0} role="region" aria-label="BibTeX citation" className="overflow-x-auto rounded-lg border border-border bg-card p-3 font-mono text-[12px] leading-relaxed text-foreground/85">{bibtex}</pre>
         </Block>
       )}
 
