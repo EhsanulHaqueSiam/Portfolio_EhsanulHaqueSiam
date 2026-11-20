@@ -1,21 +1,18 @@
 // Tiny synthesized UI sounds (Web Audio, no files), tuned after samworks.vercel.app:
 // one short sine tick that glides down, played at different pitches.
-// Browsers start audio only inside a click, tap or key press, so sound is
-// "locked" until the first one; hovering before that stays silent.
-// The on/off choice persists in localStorage `sound`.
+// Sound is on by default and the speaker is a plain on/off switch, saved in localStorage `sound`.
+// Browsers start audio only inside a click, tap or key press, so hovers stay silent until the
+// first one; the client router (Layout.astro) keeps this module, and its running audio, alive
+// across internal links, so that happens once per visit, not once per page.
 import { useSyncExternalStore } from 'react';
 
 const KEY = 'sound';
 // C major pentatonic: any run of notes from it sounds fine.
 const SCALE = [523.25, 587.33, 659.25, 783.99, 880, 1046.5, 1174.66, 1318.51, 1567.98, 1760];
 
-export type SoundState = 'off' | 'locked' | 'on';
-
 let ctx: AudioContext | null = null;
 let enabled = true;
 let running = false;
-// Whether the press now in progress began while audio was still locked.
-let pressStartedLocked = false;
 let lastTick = 0;
 const listeners = new Set<() => void>();
 const emit = () => {
@@ -29,7 +26,6 @@ function getCtx(): AudioContext | null {
     ctx = new Ctor();
     ctx.addEventListener('statechange', () => {
       running = ctx?.state === 'running';
-      emit();
     });
   }
   return ctx;
@@ -40,16 +36,6 @@ if (typeof window !== 'undefined') {
     enabled = localStorage.getItem(KEY) !== 'off';
   } catch {
     /* storage blocked: keep default */
-  }
-  // Registered before unlock, so it records whether audio was locked as this press began.
-  for (const t of ['pointerdown', 'keydown'] as const) {
-    addEventListener(
-      t,
-      () => {
-        pressStartedLocked = !running;
-      },
-      { capture: true, passive: true },
-    );
   }
   // iOS Safari only unlocks once something actually plays inside the gesture.
   const types = ['pointerdown', 'pointerup', 'click', 'touchend', 'keydown'] as const;
@@ -131,13 +117,9 @@ export const sound = {
   },
 };
 
-const state = (): SoundState => (!enabled ? 'off' : running ? 'on' : 'locked');
-
-/** The speaker button's click. A press that began while audio was locked starts it and keeps sound on. */
+/** The speaker button's click: on becomes off, off becomes on. */
 export function toggleSound() {
-  // Only when audio can actually start; otherwise a dead context would make the button unable to mute.
-  enabled = pressStartedLocked && enabled && getCtx() ? true : !enabled;
-  pressStartedLocked = false;
+  enabled = !enabled;
   try {
     localStorage.setItem(KEY, enabled ? 'on' : 'off');
   } catch {
@@ -155,13 +137,14 @@ export function toggleSound() {
   }
 }
 
-export function useSoundState(): SoundState {
+/** Whether sound is on (the saved choice, not whether the browser has unlocked audio yet). */
+export function useSoundOn(): boolean {
   return useSyncExternalStore(
     (l) => {
       listeners.add(l);
       return () => listeners.delete(l);
     },
-    state,
-    () => 'locked',
+    () => enabled,
+    () => true,
   );
 }

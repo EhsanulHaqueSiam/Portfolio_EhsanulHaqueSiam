@@ -5,6 +5,7 @@ import '@fontsource-variable/geist';
 import '@fontsource-variable/geist-mono';
 import '@fontsource/instrument-serif';
 import '../index.css';
+import { ClientRouter } from 'astro:transitions';
 import { SITE, META, buildJsonLd } from '../seo/schema';
 
 interface Props {
@@ -37,23 +38,33 @@ const lastModified = new Date().toISOString().slice(0, 10);
   <head>
     <meta charset="UTF-8" />
     <!-- Reveal SSR content immediately for JS-off; JS-on lets Framer Motion animate in.
-         Also resolve the saved theme before first paint (default: dark). -->
+         Also resolve the saved theme before first paint (default: dark), and again on every
+         page the client router swaps in, since it copies that page's <html> class. -->
     <script is:inline>
-      document.documentElement.classList.remove('no-js');
-      document.documentElement.classList.add('js');
       (function () {
-        try {
-          var t = localStorage.getItem('theme');
-          if (t === 'light') {
-            document.documentElement.classList.remove('dark');
-            document.addEventListener('DOMContentLoaded', function () {
-              var m = document.querySelector('meta[name="theme-color"]');
+        function prep(doc) {
+          var root = doc.documentElement;
+          root.classList.remove('no-js');
+          root.classList.add('js');
+          try {
+            if (localStorage.getItem('theme') !== 'light') return;
+            root.classList.remove('dark');
+            var tint = function () {
+              var m = doc.querySelector('meta[name="theme-color"]');
               if (m) m.setAttribute('content', '#ffffff');
-            });
-          }
-        } catch (e) {}
+            };
+            if (doc.querySelector('meta[name="theme-color"]')) tint();
+            else doc.addEventListener('DOMContentLoaded', tint);
+          } catch (e) {}
+        }
+        prep(document);
+        document.addEventListener('astro:before-swap', function (e) {
+          prep(e.newDocument);
+        });
       })();
     </script>
+    <!-- Internal links swap pages in place, so running audio (and its unlock) survives navigation. -->
+    <ClientRouter />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 
     <!-- Primary Meta Tags -->

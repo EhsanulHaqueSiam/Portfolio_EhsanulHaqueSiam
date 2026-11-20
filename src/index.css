@@ -265,6 +265,39 @@
   }
 }
 
+/* RollNumber (RollNumber.tsx): each digit is a 0-9 strip one line tall, moved by transform. */
+.odo {
+  font-variant-numeric: tabular-nums;
+}
+.odo-digit {
+  display: inline-block;
+  height: 1lh;
+  overflow: hidden;
+  vertical-align: top;
+}
+.odo-strip {
+  display: block;
+  transition: transform 700ms var(--ease-out-strong);
+}
+.odo-ch::before {
+  content: attr(data-ch);
+}
+.odo-strip::before {
+  content: '0\a 1\a 2\a 3\a 4\a 5\a 6\a 7\a 8\a 9';
+  white-space: pre;
+}
+/* A digit that just appeared rolls up from 0 instead of popping in at its value. */
+@starting-style {
+  .odo-strip {
+    transform: translateY(0);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .odo-strip {
+    transition: none;
+  }
+}
+
 /* Theme cross-fade via the View Transitions API (toggle only) */
 @media (prefers-reduced-motion: no-preference) {
   ::view-transition-old(root),

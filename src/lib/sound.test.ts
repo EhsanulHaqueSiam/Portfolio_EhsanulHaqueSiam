@@ -35,35 +35,27 @@ beforeEach(() => {
 
 const press = () => window.dispatchEvent(new Event('pointerdown'));
 
-test('the click that unlocks audio on the speaker keeps sound on; the next one mutes', async () => {
-  const { toggleSound, useSoundState } = await import('./sound');
-  const { result } = renderHook(() => useSoundState());
-  expect(result.current).toBe('locked');
+test('sound is on by default and the speaker flips it between on and off only', async () => {
+  const { toggleSound, useSoundOn } = await import('./sound');
+  const { result } = renderHook(() => useSoundOn());
+  // On before any press, even though the browser has not unlocked audio yet.
+  expect(result.current).toBe(true);
 
   await act(async () => {
     press();
     toggleSound();
   });
-  expect(result.current).toBe('on');
-
-  await act(async () => {
-    press();
-    toggleSound();
-  });
-  expect(result.current).toBe('off');
+  expect(result.current).toBe(false);
   expect(localStorage.getItem('sound')).toBe('off');
+
+  await act(async () => toggleSound());
+  expect(result.current).toBe(true);
+  expect(localStorage.getItem('sound')).toBe('on');
 });
 
-test('once audio already runs, the speaker toggles at once, even right after another click', async () => {
-  const { toggleSound, useSoundState } = await import('./sound');
-  const { result } = renderHook(() => useSoundState());
-  await act(async () => {
-    press(); // a click elsewhere unlocks audio
-  });
-  expect(result.current).toBe('on');
-  await act(async () => {
-    press();
-    toggleSound();
-  });
-  expect(result.current).toBe('off');
+test('a saved off survives a reload', async () => {
+  localStorage.setItem('sound', 'off');
+  const { useSoundOn } = await import('./sound');
+  const { result } = renderHook(() => useSoundOn());
+  expect(result.current).toBe(false);
 });

@@ -2,7 +2,7 @@ import { type ReactNode, useCallback, useEffect, useLayoutEffect, useRef, useSta
 import { type MotionValue, m, useMotionValue, useMotionValueEvent, useReducedMotion, useSpring, useTransform } from 'framer-motion';
 import { profile } from '../../data/content';
 import { haptic } from '../../lib/haptics';
-import { sound, toggleSound, useSoundState } from '../../lib/sound';
+import { sound, toggleSound, useSoundOn } from '../../lib/sound';
 import { ArrowUpRightIcon, EmailIcon, GitHubIcon, LinkedInIcon, ResumeIcon } from '../ui/Icons';
 import { ThemeToggle } from '../ui/ThemeToggle';
 import { Brand, SpeakerIcon } from './icons';
@@ -56,21 +56,20 @@ export function HeaderLink({ href, children }: { href: string; children: ReactNo
 }
 
 export function SoundToggle() {
-  const state = useSoundState();
-  const hint = state === 'off' ? 'Sound off' : state === 'locked' ? 'Sound on: click anywhere to hear it' : 'Sound on';
+  const on = useSoundOn();
   return (
     <button
       type="button"
-      aria-pressed={state !== 'off'}
+      aria-pressed={on}
       aria-label="Sound"
-      title={hint}
+      title={on ? 'Sound on' : 'Sound off'}
       onClick={() => {
         toggleSound();
         haptic('selection');
       }}
       className="press group grid h-8 w-8 place-items-center rounded-md border border-border text-muted-foreground transition-colors hover:text-foreground"
     >
-      <SpeakerIcon on={state !== 'off'} className={`icon-pop h-4 w-4 transition-opacity ${state === 'locked' ? 'opacity-50' : ''}`} />
+      <SpeakerIcon on={on} className="icon-pop h-4 w-4" />
     </button>
   );
 }

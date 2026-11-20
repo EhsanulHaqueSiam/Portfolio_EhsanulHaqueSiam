@@ -107,7 +107,7 @@ Tokens live in `src/index.css` as HSL triplets (`:root` light, `.dark` dark). Da
   Cards | List is a ui-sdk Segmented Control; List is the pile plus rows with a hover preview.
   The new view settles in (240ms fade and 4px rise, only after a switch).
 - **Open Source:** ui-sdk Collapsible per repo; the panel height animates from
-  `--collapsible-panel-height`. Star counts roll in with NumberFlow.
+  `--collapsible-panel-height`. Star counts roll in like an odometer (RollNumber: CSS digit strips, no shadow DOM).
 - **Tech stack:** ui-sdk Segmented Control filter; chips play a pitched tick on hover and
   stagger in (16ms apart) after a filter change.
 - **GitHub grid:** a static empty grid at the loaded size while it fetches; on hover one ring
@@ -124,8 +124,9 @@ Tokens live in `src/index.css` as HSL triplets (`:root` light, `.dark` dark). Da
 - Theme switch: a circle grows from the toggle (View Transitions, ease-in-out 600ms); the new
   snapshot starts clipped in CSS so no frame flashes.
 - Sound (`src/lib/sound.ts`): one sine tick (1000 to 800Hz, 45ms) after samworks, pitched for
-  chips and the dock; a whoosh for the theme. Locked until the first press; a press that
-  unlocks audio on the speaker keeps it on.
+  chips and the dock; a whoosh for the theme. On by default; the speaker is a plain on/off
+  switch. Browsers keep audio silent until the first click on the site; internal links use
+  Astro's client router, so audio stays running from page to page after that.
 - Haptics (`src/lib/haptics.ts`) fire only on coarse pointers, on taps that do something.
 - Everything moving is gated by `prefers-reduced-motion`; hover-only motion by `(hover: hover)`.
 

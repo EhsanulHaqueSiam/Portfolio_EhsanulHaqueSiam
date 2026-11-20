@@ -1,12 +1,15 @@
-import NumberFlow, { type Format } from '@number-flow/react';
 import { useEffect, useRef, useState } from 'react';
 
 /**
- * A number whose digits roll up (NumberFlow) the first time it scrolls into view.
- * The server HTML carries the real value; only numbers still below the fold
- * reset to 0 on hydration so they have something to roll from.
+ * A number whose digits roll up like an odometer the first time it scrolls into view
+ * (after Bencho's rolling counter): each digit is a 0-9 strip (CSS generated content, so the
+ * page text holds only the real number) moved by a CSS transition,
+ * and digits that appear start from 0 (`@starting-style` in index.css). Commas, the
+ * decimal point and the "K" of compact numbers are drawn the same way, without a strip.
+ * The server HTML carries the real value; only numbers still below the fold reset to 0
+ * on hydration so they have something to roll from.
  */
-export function RollNumber({ value, format, className }: { value: number; format?: Format; className?: string }) {
+export function RollNumber({ value, format, className = '' }: { value: number; format?: Intl.NumberFormatOptions; className?: string }) {
   const [shown, setShown] = useState(value);
   const ref = useRef<HTMLSpanElement>(null);
 
@@ -23,9 +26,24 @@ export function RollNumber({ value, format, className }: { value: number; format
     return () => io.disconnect();
   }, [value]);
 
+  const text = new Intl.NumberFormat('en', format).format(shown);
+  const chars = [...text];
   return (
-    <span ref={ref} className={className}>
-      <NumberFlow value={shown} format={format} />
+    <span ref={ref} className={`odo ${className}`}>
+      <span className="sr-only">{text}</span>
+      <span aria-hidden="true">
+        {chars.map((ch, i) => {
+          // Keyed from the right, so the ones digit stays the ones digit as the number grows.
+          const place = chars.length - i;
+          return /\d/.test(ch) ? (
+            <span key={place} className="odo-digit">
+              <span className="odo-strip" style={{ transform: `translateY(${-Number(ch)}lh)`, transitionDelay: `${(place - 1) * 40}ms` }} />
+            </span>
+          ) : (
+            <span key={place} className="odo-ch" data-ch={ch} />
+          );
+        })}
+      </span>
     </span>
   );
 }
