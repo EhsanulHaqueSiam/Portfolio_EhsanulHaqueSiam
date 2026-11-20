@@ -45,12 +45,12 @@ function Stickers() {
 export function Profile() {
   return (
     <div>
-      {/* 8-frame loop (river shimmer, lantern flicker, stars); the still frame for reduced motion. */}
+      {/* 10-frame loop (falling water, foam, twinkling fireflies); the still frame for reduced motion. */}
       <picture>
         <source media="(prefers-reduced-motion: reduce)" srcSet="/images/banner.webp" />
         <img
           src="/images/banner-anim.webp"
-          alt="Pixel-art night view of Dhaka from the Buriganga river, boats and a rickshaw on the bank"
+          alt="Pixel-art night scene: a waterfall under a full moon and aurora, with fireflies and glowing plants"
           width={1360}
           height={453}
           fetchPriority="high"
