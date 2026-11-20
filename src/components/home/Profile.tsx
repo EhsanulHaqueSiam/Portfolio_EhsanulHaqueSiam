@@ -45,14 +45,18 @@ function Stickers() {
 export function Profile() {
   return (
     <div>
-      <img
-        src="/images/banner.webp"
-        alt="Pixel-art night view of Dhaka from the Buriganga river, boats and a rickshaw on the bank"
-        width={1360}
-        height={453}
-        fetchPriority="high"
-        className="block aspect-[1360/453] w-full border-b border-border object-cover"
-      />
+      {/* 8-frame loop (river shimmer, lantern flicker, stars); the still frame for reduced motion. */}
+      <picture>
+        <source media="(prefers-reduced-motion: reduce)" srcSet="/images/banner.webp" />
+        <img
+          src="/images/banner-anim.webp"
+          alt="Pixel-art night view of Dhaka from the Buriganga river, boats and a rickshaw on the bank"
+          width={1360}
+          height={453}
+          fetchPriority="high"
+          className="block aspect-[1360/453] w-full border-b border-border object-cover"
+        />
+      </picture>
       <div className="flex items-center gap-4 px-4 py-4">
         <img
           src={profileImage}

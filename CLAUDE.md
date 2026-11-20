@@ -95,5 +95,6 @@ scripts/generate-seo.mjs      # prebuild: regenerates public/{robots.txt,sitemap
 ### Image Handling
 - WebP in `public/images/` (projects/, achievements/, publications/, education/).
 - Helpers in `content.ts`: `getProjectImage()`, `getAchievementImage()`, `getPublicationImage()`.
-- `public/images/banner.webp` is the header banner (pixel art, generated Nov 2026); it is the LCP
-  image and is preloaded in `Layout.astro`.
+- Header banner (pixel art, generated Nov 2026): `public/images/banner-anim.webp` is an 8-frame
+  loop (river shimmer, lantern flicker, star twinkle) made from the still `banner.webp`, which
+  reduced-motion visitors get instead. The loop is the LCP image, preloaded in `Layout.astro`.
