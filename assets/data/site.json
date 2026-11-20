@@ -68,5 +68,25 @@
     "Full-Stack Developer.",
     "NLP & LLM Researcher.",
     "Open-source Contributor."
+  ],
+  "stickers": [
+    {
+      "label": "T3 Code contributor",
+      "mark": "t3",
+      "href": "#open-source"
+    },
+    {
+      "label": "Better Auth contributor",
+      "mark": "betterAuth",
+      "href": "#open-source"
+    },
+    {
+      "label": "Neovim",
+      "mark": "neovim"
+    },
+    {
+      "label": "Linux",
+      "mark": "linux"
+    }
   ]
 }

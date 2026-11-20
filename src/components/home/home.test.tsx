@@ -9,7 +9,9 @@ import type { OpenSourceRepo } from '../../data/opensource';
 import { Nav } from './chrome';
 import { OpenSource } from './OpenSource';
 import { shortRange } from './Rows';
-import { Shipped } from './Shipped';
+import { formatBibtex } from '../../data/papers';
+import type { Project } from '../../data/types';
+import { ribbon, Shipped } from './Shipped';
 import { Stack } from './StackActivity';
 
 const wrap = (ui: ReactNode) => render(<LazyMotion features={domAnimation}>{ui}</LazyMotion>);
@@ -50,8 +52,8 @@ describe('open source', () => {
   test('the first repo starts open and each trigger toggles its pull requests', async () => {
     const user = userEvent.setup();
     wrap(<OpenSource repos={repos} />);
-    const t3 = screen.getByRole('button', { name: 'T3 Code pull requests' });
-    const ba = screen.getByRole('button', { name: 'Better Auth pull requests' });
+    const t3 = screen.getByRole('button', { name: /^T3 Code: 1 stars, 1 pull request, 1 merged/ });
+    const ba = screen.getByRole('button', { name: /^Better Auth:/ });
     expect(t3).toHaveAttribute('aria-expanded', 'true');
     expect(ba).toHaveAttribute('aria-expanded', 'false');
     expect(screen.getByRole('link', { name: 'fix: one, merged pull request #1' })).toHaveAttribute('href', 'https://github.com/pingdotgg/t3code/pull/1');
@@ -67,11 +69,10 @@ describe('tech stack', () => {
     const user = userEvent.setup();
     wrap(<Stack />);
     const filter = screen.getByRole('radiogroup', { name: 'Filter skills' });
-    const before = screen.getAllByRole('listitem').length;
+    expect(screen.getByText('Scikit-learn')).toBeInTheDocument();
     await user.click(within(filter).getByRole('radio', { name: 'Mobile' }));
     expect(screen.getByText('Android SDK')).toBeInTheDocument();
-    expect(screen.queryByText('PyTorch')).not.toBeInTheDocument();
-    expect(screen.getAllByRole('listitem').length).not.toBe(before);
+    expect(screen.queryByText('Scikit-learn')).not.toBeInTheDocument();
   });
 });
 
@@ -91,6 +92,19 @@ describe('nav', () => {
 });
 
 describe('helpers', () => {
+  test('ribbons show reach numbers only', () => {
+    const p = (metrics: string[]) => ({ metrics }) as Project;
+    expect(ribbon(p(['12,000+ scholarships indexed daily']))).toBe('12,000+ scholarships');
+    expect(ribbon(p(['45+ active users']))).toBe('45+ active users');
+    expect(ribbon(p(['12+ filter facets with pagination']))).toBeNull();
+    expect(ribbon(p(['React 19 + Rust/Axum']))).toBeNull();
+  });
+
+  test('BibTeX from doi.org gets one field per line and every ampersand escaped', () => {
+    const raw = ' @inproceedings{X_2026, title={A &amp;amp; B}, booktitle={C &amp; D}, year={2026} }';
+    expect(formatBibtex(raw)).toBe('@inproceedings{X_2026,\n  title={A \\& B},\n  booktitle={C \\& D},\n  year={2026}\n}');
+  });
+
   test('shortRange folds a shared year and says now for present roles', () => {
     expect(shortRange('Jun 2026–Present')).toBe('Jun 2026 – now');
     expect(shortRange('Apr 2026–May 2026')).toBe('Apr – May 2026');
@@ -110,7 +124,7 @@ test('an agent can find and use every ui-sdk control on the page', async () => {
   const entries = agent.snapshot().filter((e) => !e.offPage && e.component !== 'more');
   for (const e of entries) expect(e.label, `${e.component} ${e.ref} has no name`).toBeTruthy();
   const labels = entries.map((e) => e.label);
-  for (const label of ['Project view', 'Filter skills', 'T3 Code pull requests', 'Better Auth pull requests']) {
+  for (const label of ['Project view', 'Filter skills', 'T3 Code: 1 stars, 1 pull request, 1 merged', 'Better Auth: 1 stars, 1 pull request, 1 merged']) {
     expect(labels, `${label} is missing`).toContain(label);
   }
 

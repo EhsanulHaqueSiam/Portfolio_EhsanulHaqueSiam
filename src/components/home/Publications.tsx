@@ -5,6 +5,8 @@ import { sound } from '../../lib/sound';
 import { ArrowUpRightIcon } from '../ui/Icons';
 import { ext } from './chrome';
 import { ChevronIcon } from './icons';
+import { Crumbs, SayHi } from './Detail';
+import { RollNumber } from './RollNumber';
 import { pubMeta } from './Rows';
 
 /** Groups by what the work is, read from its status line in publications.json. */
@@ -27,19 +29,14 @@ const Pill = ({ href, children }: { href: string; children: string }) => (
     className="press group inline-flex items-center gap-1 rounded-full border border-border px-3 py-1 text-[12px] transition-colors hover:border-foreground/30"
   >
     {children}
-    <ArrowUpRightIcon className="icon-nudge h-3 w-3" />
+    <ArrowUpRightIcon className="icon-arrow h-3 w-3" />
   </a>
 );
 
 export function PublicationsList() {
   return (
     <div className="px-4 pb-6 pt-6">
-      <p className="text-[13px] text-muted-foreground">
-        <a href="/" className="transition-colors hover:text-foreground">
-          Siam
-        </a>{' '}
-        / <span className="text-foreground">Publications</span>
-      </p>
+      <Crumbs trail={[['Siam', '/'], ['Publications']]} />
       <h1 className="mt-4 font-serif text-[40px] leading-none tracking-[-0.01em]">Publications</h1>
       <p className="mt-3 max-w-[60ch] text-[15px] leading-relaxed text-muted-foreground">
         NLP and applied machine learning: medical language models, topic modeling of research trends, and statistics on climate losses in Bangladesh.
@@ -53,7 +50,9 @@ export function PublicationsList() {
           ].map(([n, label]) => (
             <div key={label} className="flex flex-col-reverse">
               <dt className="mt-1 text-[12px] text-muted-foreground">{label}</dt>
-              <dd className="font-serif text-[34px] leading-none tabular-nums">{n}</dd>
+              <dd className="font-serif text-[34px] leading-none tabular-nums">
+                <RollNumber value={Number(n)} />
+              </dd>
             </div>
           ))}
         </dl>
@@ -97,15 +96,7 @@ export function PublicationsList() {
         </section>
       ))}
 
-      <div className="mt-12 flex items-center justify-between gap-4 border-t border-border pt-5">
-        <div>
-          <p className="text-[15px] font-medium">Working on something similar?</p>
-          <p className="text-[13px] text-muted-foreground">Happy to talk research and collaborations.</p>
-        </div>
-        <a href={`mailto:${profile.email}`} className="press shrink-0 rounded-full bg-foreground px-4 py-2 text-[13px] font-medium text-background">
-          Say hi
-        </a>
-      </div>
+      <SayHi title="Working on something similar?" line="Happy to talk research and collaborations." />
     </div>
   );
 }

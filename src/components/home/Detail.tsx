@@ -4,11 +4,12 @@ import type { PaperDetail } from '../../data/papers';
 import type { Experience } from '../../data/types';
 import { haptic } from '../../lib/haptics';
 import { sound } from '../../lib/sound';
+import { GlideList } from '../../lib/useGlide';
 import { ArrowUpRightIcon, CheckIcon, CopyIcon } from '../ui/Icons';
 import { ext } from './chrome';
 import { CompanyMark, LinkRow, PaperMark, pubMeta, shortRange, shortRole } from './Rows';
 
-function Crumbs({ trail }: { trail: Array<[string, string?]> }) {
+export function Crumbs({ trail }: { trail: Array<[string, string?]> }) {
   return (
     <nav aria-label="Breadcrumb" className="enter text-[13px] text-muted-foreground">
       {trail.map(([label, href], i) => (
@@ -46,16 +47,16 @@ const Fact = ({ k, children }: { k: string; children: ReactNode }) => (
 const Out = ({ href, children }: { href: string; children: ReactNode }) => (
   <a href={href} {...ext(href)} onMouseEnter={sound.tick} className="group inline-flex items-center gap-1 underline decoration-foreground/30 underline-offset-[3px] hover:decoration-foreground">
     {children}
-    <ArrowUpRightIcon className="icon-nudge h-3 w-3 text-muted-foreground" />
+    <ArrowUpRightIcon className="icon-arrow h-3 w-3 text-muted-foreground" />
   </a>
 );
 
-function SayHi() {
+export function SayHi({ title = 'Have something in mind?', line = 'My inbox is open.' }: { title?: string; line?: string }) {
   return (
     <div className="mt-12 flex items-center justify-between gap-4 border-t border-border pt-5">
       <div>
-        <p className="text-[15px] font-medium">Have something in mind?</p>
-        <p className="text-[13px] text-muted-foreground">My inbox is open.</p>
+        <p className="text-[15px] font-medium">{title}</p>
+        <p className="text-[13px] text-muted-foreground">{line}</p>
       </div>
       <a href={`mailto:${profile.email}`} onClick={haptic} onMouseEnter={sound.tick} className="press shrink-0 rounded-full bg-foreground px-4 py-2 text-[13px] font-medium text-background">
         Say hi
@@ -100,7 +101,7 @@ export function WorkPage({ e }: { e: Experience }) {
         </Block>
       )}
       <Block title="More work" n={5}>
-        <ul className="divide-y divide-border">
+        <GlideList className="divide-y divide-border">
           {experience
             .filter((x) => x.showInHome && x.company !== e.company)
             .map((x) => (
@@ -108,7 +109,7 @@ export function WorkPage({ e }: { e: Experience }) {
                 <LinkRow href={`/work/${workSlug(x)}/`} mark={<CompanyMark e={x} />} title={x.company} sub={shortRole(x)} right={shortRange(x.date)} />
               </li>
             ))}
-        </ul>
+        </GlideList>
       </Block>
       <SayHi />
     </div>
@@ -116,22 +117,25 @@ export function WorkPage({ e }: { e: Experience }) {
 }
 
 function CopyBib({ text }: { text: string }) {
-  const [done, setDone] = useState(false);
+  const [done, setDone] = useState<'idle' | 'ok' | 'failed'>('idle');
   return (
     <button
       type="button"
       onClick={() => {
-        navigator.clipboard?.writeText(text).then(() => {
-          setDone(true);
-          sound.click();
-          haptic();
-          setTimeout(() => setDone(false), 1600);
-        });
+        const reset = () => setTimeout(() => setDone('idle'), 1600);
+        Promise.resolve(navigator.clipboard?.writeText(text) ?? Promise.reject(new Error('no clipboard')))
+          .then(() => {
+            setDone('ok');
+            sound.click();
+            haptic();
+          })
+          .catch(() => setDone('failed'))
+          .finally(reset);
       }}
       className="press group inline-flex items-center gap-1.5 rounded-md border border-border px-2.5 py-1 text-[12px] text-muted-foreground transition-colors hover:text-foreground"
     >
-      {done ? <CheckIcon className="h-3.5 w-3.5 text-signal-success" /> : <CopyIcon className="icon-pop h-3.5 w-3.5" />}
-      <span aria-live="polite">{done ? 'Copied' : 'Copy BibTeX'}</span>
+      {done === 'ok' ? <CheckIcon className="h-3.5 w-3.5 text-signal-success" /> : <CopyIcon className="icon-pop h-3.5 w-3.5" />}
+      <span aria-live="polite">{done === 'ok' ? 'Copied' : done === 'failed' ? 'Copy failed' : 'Copy BibTeX'}</span>
     </button>
   );
 }
@@ -154,11 +158,6 @@ export function PaperPage({ paper }: { paper: PaperDetail }) {
         {pub.title}
       </h1>
 
-      {pub.images[0] && (
-        <figure className="enter mt-7 overflow-hidden rounded-lg border border-border" style={{ '--n': 2 } as React.CSSProperties}>
-          <img src={getPublicationImage(pub.images[0])} alt={`Certificate for ${short} from ${pub.conference}`} width={1200} height={848} loading="lazy" className="block h-auto w-full" />
-        </figure>
-      )}
 
       <Block title="Summary" n={2}>
         <p className="text-[15px] leading-relaxed text-foreground/85">{pub.desc}</p>
@@ -188,6 +187,20 @@ export function PaperPage({ paper }: { paper: PaperDetail }) {
         </dl>
       </Block>
 
+      {pub.images[0] && (
+        <figure className="enter mt-9" style={{ '--n': 4 } as React.CSSProperties}>
+          <img
+            src={getPublicationImage(pub.images[0])}
+            alt={`Certificate for ${short} from ${pub.conference}`}
+            width={1200}
+            height={848}
+            loading="lazy"
+            className="block h-auto w-full rounded-lg border border-border"
+          />
+          <figcaption className="mt-2 text-[12px] text-muted-foreground">Certificate from {pub.conference}</figcaption>
+        </figure>
+      )}
+
       {pub.paperLink && (
         <Block title="Read it" n={4}>
           <Out href={pub.paperLink}>{new URL(pub.paperLink).hostname.replace(/^www\./, '')}</Out>
@@ -204,7 +217,7 @@ export function PaperPage({ paper }: { paper: PaperDetail }) {
       )}
 
       <Block title="More research" n={6}>
-        <ul className="divide-y divide-border">
+        <GlideList className="divide-y divide-border">
           {publications
             .filter((p) => p.title !== pub.title)
             .map((p) => (
@@ -212,7 +225,7 @@ export function PaperPage({ paper }: { paper: PaperDetail }) {
                 <LinkRow href={`/publications/${paperSlug(p)}/`} mark={<PaperMark />} title={p.title} sub={p.conference} right={pubMeta(p).year} />
               </li>
             ))}
-        </ul>
+        </GlideList>
       </Block>
       <SayHi />
     </div>

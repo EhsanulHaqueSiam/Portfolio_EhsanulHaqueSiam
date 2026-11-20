@@ -49,7 +49,7 @@ export function Contact() {
                 <span className="icon-pop block h-3.5 w-3.5">{l.icon}</span>
               </span>
               {l.label === 'Google Scholar' ? 'Scholar' : l.label}
-              <ArrowUpRightIcon className="icon-nudge h-3 w-3 text-muted-foreground" />
+              <ArrowUpRightIcon className="icon-arrow h-3 w-3 text-muted-foreground" />
             </a>
           </li>
         ))}

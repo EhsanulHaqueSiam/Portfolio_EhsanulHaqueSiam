@@ -27,35 +27,6 @@ export const cvProjects = projects.flatMap(({ name, cv }) => (cv ? [{ name, ...c
 export const featuredPublications = publications.filter((p) => p.showInHome);
 export const featuredExperience = experience.filter((e) => e.showInHome);
 
-// FAQ — single source of truth for the visible FAQ section AND the JSON-LD
-// FAQPage (Google requires FAQ markup to have matching on-page content).
-export const faqItems: Array<{ question: string; answer: string }> = [
-  {
-    question: 'Who is Ehsanul Haque Siam?',
-    answer:
-      'Ehsanul Haque Siam is an AI Engineer and Full-Stack Developer based in Dhaka, Bangladesh. He is a Research Assistant at Deepchain Labs (blockchain, cybersecurity, and quantum cryptography R&D), a Solo Developer at BetaScript LLC where he shipped 4 production React websites driving 1.5x client revenue, and an AI & Data Engineer at BDTracks building web scrapers and Gemini-based data-classification pipelines. He has published peer-reviewed research (Taylor & Francis; IEEE QPAIN 2026, accepted), is a 3× Dean’s List awardee at AIUB, and is a Certified Ethical Hacker.',
-  },
-  {
-    question: 'Is Ehsanul Haque Siam available for hire?',
-    answer:
-      'Yes. He is open to AI/ML engineering, LLM/RAG, and full-stack development roles: full-time, part-time, or freelance, remote or based in Dhaka, Bangladesh. Reach him at ehsanul.siamdev@gmail.com or via the hire page at /hire-me.html.',
-  },
-  {
-    question: "What are Ehsanul Haque Siam's technical skills?",
-    answer:
-      'He works in Python, Java, C++, TypeScript, and Kotlin. His AI/ML stack covers LLMs and medical BERTs (BioBERT, PubMedBERT), RAG pipelines (LangChain, LlamaIndex, Pinecone, ChromaDB), NLP, scikit-learn, TensorFlow, and PyTorch, plus fine-tuning Google Gemini via Vertex AI. He builds production React apps with TanStack and TailwindCSS, FastAPI backends, MySQL/SQLite databases, and Scrapy/Playwright scraping pipelines, working with Docker, Git, and Linux.',
-  },
-  {
-    question: 'What research has Ehsanul Haque Siam published?',
-    answer:
-      'A Taylor & Francis book chapter, "Beyond NER: A Comparative Benchmark of Medical BERTs for Multi-Label Adverse Drug Reaction Classification" (IDAA 2025), is published; "Decoding Research Trends: A Clustering-Based Topic Modeling Framework" is accepted at IEEE QPAIN 2026 (IEEE Xplore, Scopus); and he presented climate research at the 2nd South Asian Conference on Climate (2024).',
-  },
-  {
-    question: 'What is Ehsanul Haque Siam working on now?',
-    answer:
-      'Research Assistant at Deepchain Labs (blockchain, cybersecurity, quantum cryptography), Solo Developer at BetaScript LLC (production React apps), and AI & Data Engineer at BDTracks (scrapers and Gemini-powered data classification).',
-  },
-];
 
 const stripExt = (name: string) => name.replace(/\.(webp|png|jpg|jpeg)$/i, '');
 export const getProjectImage = (name: string) => `/images/projects/${stripExt(name)}.webp`;
@@ -81,11 +52,14 @@ type Site = {
   companies: Record<string, { logo?: string; link?: { label: string; href: string } }>;
   quote: { text: string; by: string };
   roles: string[];
+  stickers: Array<{ label: string; mark: 't3' | 'betterAuth' | 'neovim' | 'linux'; href?: string }>;
 };
 const site = siteData as Site;
 export const quote = site.quote;
 /** Phrases the profile's role line cycles through; each restates a fact (title, Arché role, open-source PRs). */
 export const roles = site.roles;
+/** Tiles beside the name: projects Siam contributes to (linked) and tools from skills.json. */
+export const stickers = site.stickers;
 
 /** Square icons in public/images/icons: real logos where the brand has one, generated tiles otherwise. */
 export const projectIcon = (name: string) => (site.projectIcons[name] ? `/images/icons/${site.projectIcons[name]}` : null);

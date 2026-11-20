@@ -5,6 +5,7 @@ import { sound } from '../../lib/sound';
 import { ArrowUpRightIcon } from '../ui/Icons';
 import { Brand, ChevronIcon, MergeIcon, StarOutlineIcon, T3Mark } from './icons';
 import { Section } from './chrome';
+import { RollNumber } from './RollNumber';
 
 const compact = new Intl.NumberFormat('en', { notation: 'compact', maximumFractionDigits: 1 });
 
@@ -21,7 +22,7 @@ function RepoCard({ r, defaultOpen }: { r: OpenSourceRepo; defaultOpen: boolean 
       className="border-b border-border last:border-b-0"
     >
       <CollapsibleTrigger
-        aria-label={`${r.name} pull requests`}
+        aria-label={`${r.name}: ${compact.format(r.stars)} stars, ${r.prs.length} pull request${r.prs.length > 1 ? 's' : ''}, ${merged} merged`}
         onMouseEnter={sound.tick}
         className="group -mx-2 flex w-[calc(100%+1rem)] items-center gap-3 rounded-lg px-2 py-3 text-left transition-colors hover:bg-secondary/60"
       >
@@ -34,7 +35,7 @@ function RepoCard({ r, defaultOpen }: { r: OpenSourceRepo; defaultOpen: boolean 
         </span>
         <span className="flex items-center gap-1 text-[13px] tabular-nums">
           <StarOutlineIcon className="star h-3.5 w-3.5 text-muted-foreground" />
-          {compact.format(r.stars)}
+          <RollNumber value={r.stars} format={{ notation: 'compact', maximumFractionDigits: 1 }} />
         </span>
         <span className="hidden text-[12px] text-muted-foreground sm:inline">
           {r.prs.length} PR{r.prs.length > 1 ? 's' : ''}, {merged} merged
@@ -63,7 +64,7 @@ function RepoCard({ r, defaultOpen }: { r: OpenSourceRepo; defaultOpen: boolean 
                 <span className="flex items-center gap-2 whitespace-nowrap text-[12px]">
                   <span className={p.state === 'merged' ? 'text-[#a78bfa]' : 'text-signal-success'}>{p.state === 'merged' ? 'Merged' : 'Open'}</span>
                   <span className="font-mono text-muted-foreground">#{p.number}</span>
-                  <ArrowUpRightIcon className="icon-nudge h-3 w-3 text-muted-foreground" />
+                  <ArrowUpRightIcon className="icon-arrow h-3 w-3 text-muted-foreground" />
                 </span>
               </a>
             </li>
@@ -76,7 +77,7 @@ function RepoCard({ r, defaultOpen }: { r: OpenSourceRepo; defaultOpen: boolean 
 
 export function OpenSource({ repos }: { repos: OpenSourceRepo[] }) {
   return (
-    <Section id="open-source" title="Open source" aside="Upstream pull requests">
+    <Section id="open-source" title="Open Source" aside="Upstream pull requests">
       {repos.map((r, i) => (
         <RepoCard key={r.repo} r={r} defaultOpen={i === 0} />
       ))}

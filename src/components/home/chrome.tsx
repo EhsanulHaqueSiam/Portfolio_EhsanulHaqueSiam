@@ -1,4 +1,4 @@
-import { type ReactNode, useLayoutEffect, useRef, useState } from 'react';
+import { type ReactNode, useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { AnimatePresence, type MotionValue, m, useMotionValue, useReducedMotion, useSpring, useTransform } from 'framer-motion';
 import { profile } from '../../data/content';
 import { haptic } from '../../lib/haptics';
@@ -33,7 +33,7 @@ export function Section({ id, title, aside, children, flush }: { id?: string; ti
     <section id={id} aria-labelledby={id && `${id}-title`} className="scroll-mt-16">
       <div className="hatch" aria-hidden="true" />
       <div className={flush ? 'pt-4' : 'px-4 py-5'}>
-        <div className={`mb-3 flex items-baseline justify-between gap-3 ${flush ? 'px-4' : ''}`}>
+        <div className={`mb-3 flex flex-wrap items-baseline justify-between gap-x-3 gap-y-2 ${flush ? 'px-4' : ''}`}>
           <h2 id={id && `${id}-title`} className="text-balance font-serif text-[28px] leading-none tracking-[-0.01em]">
             {title}
           </h2>
@@ -50,20 +50,20 @@ export function HeaderLink({ href, children }: { href: string; children: ReactNo
   return (
     <a href={href} {...ext(href)} onMouseEnter={sound.tick} className="group inline-flex items-center gap-1 transition-colors hover:text-foreground">
       {children}
-      <ArrowUpRightIcon className="icon-nudge h-3 w-3" />
+      <ArrowUpRightIcon className="icon-arrow h-3 w-3" />
     </a>
   );
 }
 
 export function SoundToggle() {
   const state = useSoundState();
-  const label = state === 'off' ? 'Turn sounds on' : state === 'locked' ? 'Sound is on. Click anywhere to hear it' : 'Mute sounds';
+  const hint = state === 'off' ? 'Sound off' : state === 'locked' ? 'Sound on: click anywhere to hear it' : 'Sound on';
   return (
     <button
       type="button"
       aria-pressed={state !== 'off'}
-      aria-label={label}
-      title={label}
+      aria-label="Sound"
+      title={hint}
       onClick={() => {
         toggleSound();
         haptic();
@@ -98,13 +98,15 @@ export function Nav({ current }: { current: Page }) {
   const active = PARENT[current];
   const target = hovered ?? active;
 
-  useLayoutEffect(() => {
+  const targetRef = useRef(target);
+  targetRef.current = target;
+
+  const place = useCallback((snap: boolean) => {
     const dot = dotRef.current;
-    const link = listRef.current?.querySelector<HTMLElement>(`[data-nav="${target}"]`);
-    if (!dot || !link || !link.offsetParent) return;
+    const link = listRef.current?.querySelector<HTMLElement>(`[data-nav="${targetRef.current}"]`);
+    if (!dot || !link?.offsetParent) return;
     const x = link.offsetLeft + link.offsetWidth / 2 - 2;
-    // First placement snaps; later moves animate.
-    if (!placed.current) {
+    if (snap || !placed.current) {
       dot.style.transition = 'none';
       dot.style.transform = `translateX(${x}px)`;
       void dot.offsetWidth;
@@ -112,7 +114,19 @@ export function Nav({ current }: { current: Page }) {
       placed.current = true;
     } else dot.style.transform = `translateX(${x}px)`;
     dot.style.opacity = '1';
-  }, [target]);
+  }, []);
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: place reads the target through a ref; re-run when it changes
+  useLayoutEffect(() => place(false), [target, place]);
+  // Links move when the webfont swaps in or the "Projects" link appears at sm: snap the dot back under.
+  useEffect(() => {
+    const ul = listRef.current;
+    if (!ul) return;
+    const ro = new ResizeObserver(() => place(true));
+    ro.observe(ul);
+    document.fonts?.ready.then(() => place(true));
+    return () => ro.disconnect();
+  }, [place]);
 
   return (
     <header className="sticky top-0 z-40 border-b border-border bg-background">

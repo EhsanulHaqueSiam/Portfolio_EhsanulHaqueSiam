@@ -38,8 +38,15 @@ async function bibtex(doi: string) {
   const res = await fetch(`https://doi.org/${doi}`, { headers: { Accept: 'application/x-bibtex' }, signal: AbortSignal.timeout(8000) });
   if (!res.ok) throw new Error(`bibtex ${res.status}`);
   // One field per line reads far better than doi.org's single-line output.
-  return decodeEntities((await res.text()).trim()).replace(/, (?=[a-zA-Z]+=)/g, ',\n  ').replace(/ }$/, '\n}').replace(/(?<!\\)&/g, '\\&');
+  return formatBibtex(await res.text());
 }
+
+/** doi.org returns one line with HTML-escaped ampersands: decode, one field per line, TeX-escape every &. */
+export const formatBibtex = (raw: string) =>
+  decodeEntities(raw.trim())
+    .replace(/, (?=[a-zA-Z]+=)/g, ',\n  ')
+    .replace(/ }$/, '\n}')
+    .replace(/(?<!\\)&/g, '\\&');
 
 /**
  * Detail for every publication page, built at build time. Papers with a DOI get

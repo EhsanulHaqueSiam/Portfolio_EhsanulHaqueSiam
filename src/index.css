@@ -428,13 +428,6 @@ html.is-scrolling #main-content {
   }
 }
 
-/* Touch targets on mobile (screen only: a 720px print page would match too) */
-@media screen and (max-width: 767px) {
-  a, button {
-    min-height: 44px;
-    min-width: 44px;
-  }
-}
 
 /* Resume bullet points (on-screen resume overlay stays light/paper for print parity) */
 .resume-bullets {
@@ -585,11 +578,11 @@ html.is-scrolling #main-content {
     animation: icon-pop 420ms var(--ease-out-strong);
   }
   .group:hover .icon-nudge {
-    transform: translate(2px, -2px);
+    translate: 2px -2px;
   }
 }
 .icon-nudge {
-  transition: transform 200ms var(--ease-out-strong);
+  transition: translate 200ms var(--ease-out-strong);
 }
 @keyframes icon-pop {
   30% { transform: rotate(-12deg) scale(1.15); }
@@ -710,7 +703,6 @@ html.is-scrolling #main-content {
 @keyframes enter {
   from {
     opacity: 0;
-    filter: blur(6px);
     transform: translateY(8px);
   }
 }
@@ -774,7 +766,7 @@ html.is-scrolling #main-content {
 .star {
   transition: rotate 700ms var(--ease-out-strong), scale 700ms var(--ease-out-strong), color 300ms ease;
 }
-@media (hover: hover) and (pointer: fine) {
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
   .group:hover .star {
     color: #e3a008;
     rotate: 144deg;
@@ -906,10 +898,10 @@ html.is-scrolling #main-content {
 }
 .pcard-ribbon {
   position: absolute;
-  top: 18px;
-  right: -40px;
+  top: 30px;
+  right: -64px;
   z-index: 2;
-  width: 160px;
+  width: 240px;
   transform: rotate(40deg);
   background: #e8ff59;
   color: #000;
@@ -934,4 +926,45 @@ html.is-scrolling #main-content {
   .nav-dot {
     transition: opacity var(--duration-quick) ease;
   }
+}
+
+/* Focus rings as outlines: these carry their own box-shadow, which would hide the global ring. */
+.sticker:focus-visible,
+.print:focus-visible {
+  outline: 2px solid hsl(var(--ring));
+  outline-offset: 2px;
+}
+
+/* Rolling role letters need a box for their transform. */
+.roll-char {
+  display: inline-block;
+}
+
+/* Gliding row highlight (after motion-primitives' Animated Background): one pill
+   behind a list, moved to the hovered row by useGlide(); CSS owns the tween. */
+.glide {
+  position: absolute;
+  left: -8px;
+  right: -8px;
+  top: 0;
+  border-radius: 8px;
+  z-index: -1;
+  background: hsl(var(--secondary) / 0.6);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform var(--duration-fast) var(--ease-smooth-out), height var(--duration-fast) var(--ease-smooth-out), opacity var(--duration-quick) ease;
+}
+@media (prefers-reduced-motion: reduce) {
+  .glide {
+    transition: opacity var(--duration-quick) ease;
+  }
+}
+/* Arrow nudge after lucide-animated's arrow-up-right: dips toward the corner and springs back. */
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .group:hover .icon-arrow {
+    animation: icon-arrow 500ms ease-in-out;
+  }
+}
+@keyframes icon-arrow {
+  50% { transform: translate(-3px, 3px) scale(0.85); }
 }

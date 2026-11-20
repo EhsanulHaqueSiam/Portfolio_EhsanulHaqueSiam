@@ -4,6 +4,7 @@ import { profile, quote, skills } from '../../data/content';
 import { haptic } from '../../lib/haptics';
 import { sound } from '../../lib/sound';
 import { HeaderLink, Section } from './chrome';
+import { RollNumber } from './RollNumber';
 
 // Short tab labels for the skills.json categories; unlisted ones show only under "All".
 const TABS: Record<string, string> = {
@@ -25,11 +26,7 @@ export function Stack() {
   return (
     <Section
       id="stack"
-      title={
-        <>
-          Tech Stack <span className="align-middle font-mono text-[11px] tracking-normal text-muted-foreground">( hover to play )</span>
-        </>
-      }
+      title="Tech Stack"
       aside={
         <SegmentedControl
           aria-label="Filter skills"
@@ -51,6 +48,9 @@ export function Stack() {
         </SegmentedControl>
       }
     >
+      <p aria-hidden="true" className="-mt-1 mb-2 hidden font-mono text-[11px] text-muted-foreground [@media(hover:hover)_and_(pointer:fine)]:block">
+        ( hover to play )
+      </p>
       <ul className="flex flex-wrap gap-1.5">
         {unique.map((name, i) => (
           <li key={name}>
@@ -62,7 +62,7 @@ export function Stack() {
                 sound.note(i);
                 haptic();
               }}
-              className="press inline-block cursor-default rounded-md border border-border bg-card px-2.5 py-1 text-[12.5px] text-foreground/85 transition-colors hover:border-foreground/30 hover:text-foreground active:scale-95"
+              className="press inline-block cursor-default rounded-md border border-border bg-card px-2.5 py-1 text-[12.5px] text-foreground/85 transition-colors hover:border-foreground/30 hover:text-foreground"
             >
               {name}
             </span>
@@ -126,7 +126,18 @@ export function Activity() {
         )}
         {days && (
           <>
-            <div className="overflow-x-auto pb-1">
+            {/* biome-ignore lint/a11y/noStaticElementInteractions: leaving the grid only clears the hover caption */}
+            <div
+              className="overflow-x-auto pb-1"
+              ref={(el) => {
+                // Narrow screens open on the most recent weeks (once, so later renders don't yank it back).
+                if (el && !el.dataset.scrolled) {
+                  el.scrollLeft = el.scrollWidth;
+                  el.dataset.scrolled = '1';
+                }
+              }}
+              onMouseLeave={() => setHover(null)}
+            >
               <svg viewBox={`0 0 ${weeks.length * 12} 84`} className="block h-auto w-full min-w-[520px]" role="img" aria-label={`${total} contributions in the last year`}>
                 {weeks.map((w, x) =>
                   w.map((d, y) => (
@@ -150,7 +161,13 @@ export function Activity() {
             </div>
             <div className="mt-2 flex items-center justify-between gap-3 text-[12px] text-muted-foreground">
               <span className="tabular-nums">
-                {hover ? `${hover.count} on ${fmt.format(new Date(`${hover.date}T00:00:00`))}` : `${total.toLocaleString()} contributions in the last year`}
+                {hover ? (
+                  `${hover.count} on ${fmt.format(new Date(`${hover.date}T00:00:00`))}`
+                ) : (
+                  <>
+                    <RollNumber value={total} /> contributions in the last year
+                  </>
+                )}
               </span>
               <span className="flex items-center gap-1">
                 Less

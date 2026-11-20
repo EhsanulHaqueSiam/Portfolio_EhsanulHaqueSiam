@@ -94,30 +94,40 @@ Tokens live in `src/index.css` as HSL triplets (`:root` light, `.dark` dark). Da
 
 ## 5. Components
 
-- **Nav:** serif "Siam", text links, sound toggle and theme toggle (32px bordered squares).
-- **Profile:** banner image, boxed 88px avatar, name + sticker strip, mono role, location.
-- **Stickers:** tilted 28px tiles with a paper border; lift on hover or tap with a note.
-- **Contact chips:** icon tile + label + ↗; icon pops and arrow nudges on hover.
-- **Project pile:** five tilted prints that fan out on hover (desktop) or scroll-snap (touch).
-- **Rows:** mark tile, title, sub, right meta; hover tints the row `secondary/60`.
-- **Repo card:** logo, name, slug, stars, PR count, chevron; expands a PR list (grid-rows 0fr→1fr).
-- **Tech chips:** filter buttons (`aria-pressed`) and chips that play a note on hover.
-- **Dock:** magnifies under the cursor (spring), tooltip with blur-in, note per item.
+- **Nav:** serif "Siam", text links with a 4px dot under the current one that slides to the
+  hovered link (CSS transform from a measured offset), a sound button ("Sound", pressed/not)
+  and the theme toggle.
+- **Profile:** animated pixel banner, boxed 88px avatar, name + stickers (contribution tiles
+  link to Open Source, tool tiles are labelled images), rolling role line, location.
+- **Rows:** mark tile, title, sub, right meta. One highlight glides under the hovered or
+  focused row (`GlideList`, after motion-primitives' Animated Background).
+- **Project cards (default view):** hairline-bordered card, gradient corner with the inset
+  screenshot (slides out with a light sheen on hover), a reach ribbon when a metric names
+  users/customers/clients, title, the project's first sentence, chips, site and code icons.
+  Cards | List is a ui-sdk Segmented Control; List is the pile plus rows with a hover preview.
+- **Open Source:** ui-sdk Collapsible per repo; the panel height animates from
+  `--collapsible-panel-height`. Star counts roll in with NumberFlow.
+- **Tech stack:** ui-sdk Segmented Control filter; chips play a pitched tick on hover.
+- **Dock:** magnifies under the cursor (spring), tooltip with blur-in, pitched tick per item.
 
 ## 6. Motion, sound and haptics
 
-- Easing `cubic-bezier(0.23, 1, 0.32, 1)` / `--ease-out-strong`; UI motion under 300ms,
-  the pile fan 450ms. Press feedback `scale(0.97)`.
-- Hover motion is gated behind `(hover: hover) and (pointer: fine)` and removed under
-  `prefers-reduced-motion`.
-- Sounds (`src/lib/sound.ts`) are synthesized: tick on hover, notes on a pentatonic scale for
-  item sweeps, paper rustle for the pile and expanders, a two-tone toggle. Silent until the
-  first gesture and while muted.
+- Tokens follow transitions.dev: `--duration-fast` 250ms with `--ease-smooth-out` for
+  indicators and panels, 30-40ms letter stagger. Press feedback `scale(0.97)`.
+- Loops that run while visible are cheap: the banner is an animated image, the live mark and
+  ping animate transform/opacity only, the rolling role pauses off screen.
+- Theme switch: a circle grows from the toggle (View Transitions, ease-in-out 600ms); the new
+  snapshot starts clipped in CSS so no frame flashes.
+- Sound (`src/lib/sound.ts`): one sine tick (1000 to 800Hz, 45ms) after samworks, pitched for
+  chips and the dock; a whoosh for the theme. Locked until the first press; a press that
+  unlocks audio on the speaker keeps it on.
 - Haptics (`src/lib/haptics.ts`) fire only on coarse pointers, on taps that do something.
+- Everything moving is gated by `prefers-reduced-motion`; hover-only motion by `(hover: hover)`.
 
 ## 7. Do and don't
 
-- **Do** keep new sections inside `Section` so the hatching and title rhythm stay consistent.
-- **Do** keep facts in `assets/data` (generated from hq); components only format them.
-- **Don't** add gradients, glass blur or glow; the banner and project shots carry the color.
-- **Don't** animate on keyboard actions or loop animations continuously.
+- **Do** keep new sections inside `Section` so hatching and title rhythm stay consistent.
+- **Do** keep facts in `assets/data` (generated from hq); presentation data in `site.json`.
+- **Do** use ui-sdk for any control with a role (tabs, radios, disclosure) instead of hand ARIA.
+- **Don't** add glow, glass blur or gradient borders; gradients live only in card corners.
+- **Don't** animate on keyboard actions, and don't loop anything that repaints layout or paint.

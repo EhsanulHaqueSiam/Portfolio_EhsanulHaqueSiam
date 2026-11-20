@@ -11,7 +11,6 @@ import {
   experience,
   publications,
   achievements,
-  faqItems,
 } from '../data/content';
 
 export const SITE = {
@@ -301,15 +300,6 @@ export function buildJsonLd() {
           position: i + 1,
           name,
           item: abs(path),
-        })),
-      },
-      {
-        '@type': 'FAQPage',
-        '@id': `${SITE.url}/#faq`,
-        mainEntity: faqItems.map((f) => ({
-          '@type': 'Question',
-          name: f.question,
-          acceptedAnswer: { '@type': 'Answer', text: f.answer },
         })),
       },
       {

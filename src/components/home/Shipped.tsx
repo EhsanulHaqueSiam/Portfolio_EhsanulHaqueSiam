@@ -20,17 +20,22 @@ const href = (p: Project) => p.links.view ?? p.links.code ?? '#';
 const cover = (p: Project) => (p.images[0] ? getProjectImage(p.images[0]) : null);
 /** One-line pitch: the first metric reads better in a dense row than the long problem statement. */
 const pitch = (p: Project) => p.metrics[0] ?? p.desc.split('. ')[0];
+/** The card's one line: the project's first sentence (what problem it answers). */
+const summary = (p: Project) => p.desc.split(/(?<=\.)\s/)[0];
 
 function Pile({ items }: { items: Project[] }) {
   const mid = (items.length - 1) / 2;
   return (
-    <div className="pile" onPointerEnter={(e) => e.pointerType === 'mouse' && sound.open(true)} onPointerLeave={(e) => e.pointerType === 'mouse' && sound.open(false)}>
-      {items.map((p, i) => (
+    // Prints are mouse-only shortcuts; the rows below carry the same links for keyboards and screen readers.
+    <div className="pile" aria-hidden="true" onPointerEnter={(e) => e.pointerType === 'mouse' && sound.open(true)} onPointerLeave={(e) => e.pointerType === 'mouse' && sound.open(false)}>
+      {items.map((p, i) => {
+        return (
         <a
           key={p.name}
           href={href(p)}
           {...ext(href(p))}
-          aria-label={`${p.name} (${p.links.view ? 'live site' : 'source code'})`}
+          tabIndex={-1}
+          aria-label={p.name}
           onMouseEnter={() => sound.note(i)}
           onClick={haptic}
           className="print"
@@ -47,7 +52,8 @@ function Pile({ items }: { items: Project[] }) {
           <img src={cover(p) ?? ''} alt="" loading="lazy" decoding="async" width={184} height={115} />
           <span>{p.name}</span>
         </a>
-      ))}
+        );
+      })}
     </div>
   );
 }
@@ -70,7 +76,7 @@ const GRADIENTS = [
   'linear-gradient(135deg, #ffffff 0%, #fb7185 45%, #4c0519 100%)',
 ];
 /** A reach number for the corner ribbon: "12,000+ scholarships indexed daily" -> "12,000+ scholarships". */
-const ribbon = (p: Project) => {
+export const ribbon = (p: Project) => {
   for (const m of p.metrics) {
     // Only reach numbers earn a ribbon (people, scale), not feature counts.
     const hit = m.match(/^[\d,.]+\+?\s+(?:[A-Za-z]+\s+)?(?:users|customers|clients|scholarships|reviews|spiders)\b/i);
@@ -86,8 +92,9 @@ function ProjectCards({ items }: { items: Project[] }) {
         const shot = cover(p);
         const tag = ribbon(p);
         return (
-          <li key={p.name} className="group flex flex-col border border-dashed border-border p-3" onMouseEnter={sound.tick}>
-            <a href={href(p)} {...ext(href(p))} onClick={haptic} aria-label={`${p.name} (${p.links.view ? 'live site' : 'source code'})`} className="pcard-art block" style={{ background: GRADIENTS[i % GRADIENTS.length] }}>
+          <li key={p.name} className="group flex flex-col rounded-[10px] border border-border p-3" onMouseEnter={sound.tick}>
+            {/* biome-ignore lint/a11y/useAnchorContent: mouse-only shortcut; the site and code icons are the accessible links */}
+            <a href={href(p)} {...ext(href(p))} onClick={haptic} tabIndex={-1} aria-hidden="true" className="pcard-art block" style={{ background: GRADIENTS[i % GRADIENTS.length] }}>
               {shot && <img src={shot} alt="" loading="lazy" decoding="async" width={560} height={350} className="pcard-shot" />}
               <span className="pcard-sheen" aria-hidden="true" />
               {tag && (
@@ -99,7 +106,7 @@ function ProjectCards({ items }: { items: Project[] }) {
             <div className="mt-3 flex items-start justify-between gap-3">
               <div className="min-w-0">
                 <h3 className="text-[16px] font-medium leading-tight">{p.name}</h3>
-                <p className="mt-0.5 truncate text-[12px] text-muted-foreground">{pitch(p)}</p>
+                <p className="mt-1 line-clamp-2 text-[13px] leading-snug text-muted-foreground">{summary(p)}</p>
               </div>
               {p.links.view ? (
                 <span className="flex shrink-0 items-center gap-1.5 text-[12px] text-signal-success">
@@ -110,7 +117,6 @@ function ProjectCards({ items }: { items: Project[] }) {
                 <span className="shrink-0 text-[12px] text-muted-foreground">Code</span>
               )}
             </div>
-            <p className="mt-2 line-clamp-3 text-[13px] leading-relaxed text-foreground/70">{p.desc}</p>
             <div className="mt-auto flex items-center justify-between gap-2 pt-3">
               <ul className="flex flex-wrap gap-1.5" aria-label={`${p.name} stack`}>
                 {p.tags.slice(0, 3).map((t) => (
@@ -121,8 +127,8 @@ function ProjectCards({ items }: { items: Project[] }) {
               </ul>
               <span className="flex shrink-0 items-center gap-1 text-muted-foreground">
                 {p.links.view && (
-                  <a href={p.links.view} {...ext(p.links.view)} onMouseEnter={sound.tick} onClick={haptic} aria-label={`${p.name} website`} className="press group/i grid h-7 w-7 place-items-center rounded-md transition-colors hover:text-foreground">
-                    <GlobeIcon className="icon-pop h-4 w-4" />
+                  <a href={p.links.view} {...ext(p.links.view)} onMouseEnter={sound.tick} onClick={haptic} aria-label={`${p.name} website`} className="press grid h-7 w-7 place-items-center rounded-md transition-colors hover:text-foreground">
+                    <GlobeIcon className="h-4 w-4" />
                   </a>
                 )}
                 {p.links.code && (
@@ -222,7 +228,7 @@ export function Shipped() {
   return (
     <Section
       id="projects"
-      title="Things I’ve shipped"
+      title="Things I’ve Shipped"
       aside={
         <SegmentedControl
           aria-label="Project view"
@@ -246,10 +252,12 @@ export function Shipped() {
         <button
           type="button"
           aria-expanded={all}
-          onClick={() => {
+          onClick={(e) => {
+            const collapsing = all;
             setAll(!all);
             sound.open(!all);
             haptic();
+            if (collapsing) e.currentTarget.closest('section')?.scrollIntoView({ block: 'start', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
           }}
           className="press group mt-3 inline-flex items-center gap-1 text-[12px] text-muted-foreground transition-colors hover:text-foreground"
         >

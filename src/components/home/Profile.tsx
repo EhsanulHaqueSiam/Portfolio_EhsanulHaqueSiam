@@ -1,43 +1,41 @@
-import { type ReactNode, useEffect, useState } from 'react';
+import { type ReactNode, useEffect, useRef, useState } from 'react';
 import { AnimatePresence, m, useReducedMotion } from 'framer-motion';
-import { profile, profileImage, roles } from '../../data/content';
+import { profile, profileImage, roles, stickers } from '../../data/content';
 import { haptic } from '../../lib/haptics';
 import { sound } from '../../lib/sound';
 import { MapPinIcon } from '../ui/Icons';
 import { Brand, T3Mark } from './icons';
 
-// Tools Siam contributes to or lives in. `r` is the resting tilt.
-const stickers: Array<{ label: string; r: string; mark: ReactNode; tile: string }> = [
-  { label: 'T3 Code contributor', r: '-8deg', mark: <T3Mark className="h-full w-full text-[11px]" />, tile: '' },
-  { label: 'Better Auth contributor', r: '5deg', mark: <Brand name="betterAuth" className="h-3.5 w-3.5" />, tile: 'bg-white text-black' },
-  { label: 'Neovim', r: '-4deg', mark: <Brand name="neovim" className="h-3.5 w-3.5" />, tile: 'bg-[#0f1a12] text-[#57a143]' },
-  { label: 'Arch Linux (Omarchy)', r: '7deg', mark: <Brand name="arch" className="h-3.5 w-3.5" />, tile: 'bg-[#0b1520] text-[#1793d1]' },
-];
+const TILTS = ['-8deg', '5deg', '-4deg', '7deg'];
+const TILE: Record<(typeof stickers)[number]['mark'], { cls: string; mark: ReactNode }> = {
+  t3: { cls: '', mark: <T3Mark className="h-full w-full text-[11px]" /> },
+  betterAuth: { cls: 'bg-white text-black', mark: <Brand name="betterAuth" className="h-3.5 w-3.5" /> },
+  neovim: { cls: 'bg-[#0f1a12] text-[#57a143]', mark: <Brand name="neovim" className="h-3.5 w-3.5" /> },
+  linux: { cls: 'bg-[#1a1a1a] text-[#f4f4f1]', mark: <Brand name="linux" className="h-3.5 w-3.5" /> },
+};
 
+/** Tilted tiles that lift and play a note on hover. Contributions link to the Open Source section. */
 function Stickers() {
   return (
-    <ul aria-label="Tools I contribute to and use" className="flex items-center pl-1">
-      {stickers.map((s, i) => (
-        <li key={s.label} className="-ml-1.5 first:ml-0">
-          <button
-            type="button"
-            title={s.label}
-            aria-label={s.label}
-            style={{ '--r': s.r } as React.CSSProperties}
-            onMouseEnter={() => sound.note(i + 2)}
-            onClick={(e) => {
-              const el = e.currentTarget;
-              el.classList.add('lift');
-              sound.note(i + 2);
-              haptic();
-              setTimeout(() => el.classList.remove('lift'), 650);
-            }}
-            className={`sticker grid h-7 w-7 place-items-center overflow-hidden rounded-[8px] border-2 border-[#f4f4f1] shadow-[0_3px_8px_rgb(0_0_0/0.4)] ${s.tile}`}
-          >
-            {s.mark}
-          </button>
-        </li>
-      ))}
+    <ul aria-label="Projects I contribute to and tools I use" className="flex items-center pl-1">
+      {stickers.map((s, i) => {
+        const tile = TILE[s.mark];
+        const cls = `sticker grid h-7 w-7 place-items-center overflow-hidden rounded-[8px] border-2 border-[#f4f4f1] shadow-[0_3px_8px_rgb(0_0_0/0.4)] ${tile.cls}`;
+        const style = { '--r': TILTS[i % TILTS.length] } as React.CSSProperties;
+        return (
+          <li key={s.label} className="-ml-1.5 first:ml-0" onMouseEnter={() => sound.note(i + 2)}>
+            {s.href ? (
+              <a href={s.href} title={s.label} aria-label={s.label} style={style} className={cls} onClick={haptic}>
+                {tile.mark}
+              </a>
+            ) : (
+              <span role="img" title={s.label} aria-label={s.label} style={style} className={cls}>
+                {tile.mark}
+              </span>
+            )}
+          </li>
+        );
+      })}
     </ul>
   );
 }
@@ -50,14 +48,23 @@ function Stickers() {
 function RollingRole() {
   const [i, setI] = useState(0);
   const reduce = useReducedMotion();
+  const ref = useRef<HTMLParagraphElement>(null);
   useEffect(() => {
-    if (reduce) return;
-    const id = setInterval(() => !document.hidden && setI((n) => (n + 1) % roles.length), 3000);
-    return () => clearInterval(id);
+    if (reduce || !ref.current) return;
+    let visible = true;
+    const io = new IntersectionObserver(([e]) => {
+      visible = e.isIntersecting;
+    });
+    io.observe(ref.current);
+    const id = setInterval(() => visible && !document.hidden && setI((n) => (n + 1) % roles.length), 3000);
+    return () => {
+      clearInterval(id);
+      io.disconnect();
+    };
   }, [reduce]);
   const phrase = roles[i];
   return (
-    <p className="mt-1 h-[18px] overflow-hidden font-mono text-[12px] uppercase tracking-[0.14em] text-foreground/80">
+    <p ref={ref} className="relative mt-1 h-[18px] overflow-hidden font-mono text-[12px] uppercase tracking-[0.14em] text-foreground/80">
       <span className="sr-only">{profile.title}</span>
       <AnimatePresence mode="popLayout" initial={false}>
         <m.span
@@ -65,9 +72,8 @@ function RollingRole() {
           aria-hidden="true"
           className="inline-flex"
           initial={{ opacity: 0, y: 5 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -5 }}
-          transition={{ duration: 0.4 }}
+          animate={{ opacity: 1, y: 0, transition: { duration: 0.4 } }}
+          exit={{ opacity: 0, y: -5, transition: { duration: 0.15 } }}
         >
           {Array.from(phrase).map((ch, n) => (
             <m.span
@@ -75,7 +81,6 @@ function RollingRole() {
               className="roll-char"
               initial={{ opacity: 0, y: 5, filter: 'blur(5px)' }}
               animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-              exit={{ opacity: 0, y: -5, filter: 'blur(5px)' }}
               transition={{ delay: 0.03 * n, duration: 0.3 }}
             >
               {ch === ' ' ? '\u00a0' : ch}

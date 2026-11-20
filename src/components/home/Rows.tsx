@@ -3,6 +3,7 @@ import { companyLogo, education, featuredExperience, featuredPublications, paper
 import type { Experience as Exp, Publication } from '../../data/types';
 import { haptic } from '../../lib/haptics';
 import { sound } from '../../lib/sound';
+import { GlideList } from '../../lib/useGlide';
 import { ResumeIcon } from '../ui/Icons';
 import { ext, HeaderLink, Section } from './chrome';
 import { ChevronIcon } from './icons';
@@ -47,7 +48,7 @@ export function LinkRow({ href, mark, title, sub, right }: { href: string; mark:
       {...ext(href)}
       onMouseEnter={sound.tick}
       onClick={haptic}
-      className="group -mx-2 grid grid-cols-[28px_1fr_auto] items-center gap-3 rounded-lg px-2 py-2.5 transition-colors hover:bg-secondary/60"
+      className="group -mx-2 grid grid-cols-[28px_1fr_auto] items-center gap-3 rounded-lg px-2 py-2.5"
     >
       {mark}
       <span className="min-w-0">
@@ -65,13 +66,13 @@ export function LinkRow({ href, mark, title, sub, right }: { href: string; mark:
 export function Experience() {
   return (
     <Section id="experience" title="Experience" aside={<HeaderLink href="#resume">CV</HeaderLink>}>
-      <ul className="divide-y divide-border">
+      <GlideList className="divide-y divide-border">
         {featuredExperience.map((e) => (
           <li key={e.company}>
             <LinkRow href={`/work/${workSlug(e)}/`} mark={<CompanyMark e={e} />} title={e.company} sub={shortRole(e)} right={shortRange(e.date)} />
           </li>
         ))}
-      </ul>
+      </GlideList>
     </Section>
   );
 }
@@ -85,7 +86,7 @@ export const PaperMark = () => (
 export function Research() {
   return (
     <Section id="publications" title="Research" aside={<HeaderLink href="/publications/">All publications</HeaderLink>}>
-      <ul className="divide-y divide-border">
+      <GlideList className="divide-y divide-border">
         {featuredPublications.map((p) => {
           const { year, status } = pubMeta(p);
           return (
@@ -94,7 +95,7 @@ export function Research() {
             </li>
           );
         })}
-      </ul>
+      </GlideList>
     </Section>
   );
 }

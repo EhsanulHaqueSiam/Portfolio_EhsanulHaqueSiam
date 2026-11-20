@@ -14,7 +14,8 @@ export type SoundState = 'off' | 'locked' | 'on';
 let ctx: AudioContext | null = null;
 let enabled = true;
 let running = false;
-let lockedGestureAt = -Infinity;
+// Whether the press now in progress began while audio was still locked.
+let pressStartedLocked = false;
 let lastTick = 0;
 const listeners = new Set<() => void>();
 const emit = () => {
@@ -40,11 +41,20 @@ if (typeof window !== 'undefined') {
   } catch {
     /* storage blocked: keep default */
   }
+  // Registered before unlock, so it records whether audio was locked as this press began.
+  for (const t of ['pointerdown', 'keydown'] as const) {
+    addEventListener(
+      t,
+      () => {
+        pressStartedLocked = !running;
+      },
+      { capture: true, passive: true },
+    );
+  }
   // iOS Safari only unlocks once something actually plays inside the gesture.
   const types = ['pointerdown', 'pointerup', 'click', 'touchend', 'keydown'] as const;
   const unlock = (e: Event) => {
     if (e instanceof KeyboardEvent && e.key === 'Escape') return;
-    if (!running && (e.type === 'pointerdown' || e.type === 'keydown')) lockedGestureAt = performance.now();
     const a = getCtx();
     if (!a) return;
     if (a.state !== 'running') a.resume().catch(() => {});
@@ -66,17 +76,13 @@ function tone(freq: number, dur: number, gain: number, glide = 0.8) {
   if (!a) return;
   const t = a.currentTime;
   const osc = a.createOscillator();
-  const filter = a.createBiquadFilter();
   const amp = a.createGain();
   osc.type = 'sine';
   osc.frequency.setValueAtTime(freq, t);
   osc.frequency.exponentialRampToValueAtTime(freq * glide, t + dur);
-  filter.type = 'lowpass';
-  filter.frequency.value = 3000;
-  filter.Q.value = 0.7;
   amp.gain.setValueAtTime(gain, t);
   amp.gain.exponentialRampToValueAtTime(0.0001, t + dur);
-  osc.connect(filter).connect(amp).connect(a.destination);
+  osc.connect(amp).connect(a.destination);
   osc.start(t);
   osc.stop(t + dur + 0.01);
 }
@@ -132,10 +138,9 @@ const state = (): SoundState => (!enabled ? 'off' : running ? 'on' : 'locked');
  * mute it, so a press within a moment of unlocking keeps sound on.
  */
 export function toggleSound() {
-  // The click that starts audio began while it was still locked: keep sound on.
-  const unlockingClick = performance.now() - lockedGestureAt < 1000;
-  lockedGestureAt = -Infinity;
-  enabled = unlockingClick ? true : !enabled;
+  // The press that started audio must not also mute it.
+  enabled = pressStartedLocked && enabled ? true : !enabled;
+  pressStartedLocked = false;
   try {
     localStorage.setItem(KEY, enabled ? 'on' : 'off');
   } catch {
@@ -160,6 +165,6 @@ export function useSoundState(): SoundState {
       return () => listeners.delete(l);
     },
     state,
-    () => 'on',
+    () => 'locked',
   );
 }
