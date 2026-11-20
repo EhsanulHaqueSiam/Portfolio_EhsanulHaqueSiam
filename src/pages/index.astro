@@ -7,7 +7,7 @@ import { loadOpenSource } from '../data/opensource';
 const openSource = await loadOpenSource();
 ---
 
-<Layout preloadBanner>
+<Layout ogType="profile" preloadBanner>
   {/* One React island: Astro server-renders it to static HTML at build (SEO/AEO/GEO),
       then client:load hydrates it for sounds, the dock, the pile and the overlays. */}
   <App client:load page="home" openSource={openSource} />

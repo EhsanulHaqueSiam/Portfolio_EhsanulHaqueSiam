@@ -187,7 +187,7 @@ export function Resume() {
           role="dialog"
           aria-modal="true"
           aria-label="Résumé"
-          className="fixed inset-0 z-[100] flex flex-col bg-background/85 backdrop-blur-xl"
+          className="fixed inset-0 z-[100] flex flex-col bg-background"
           style={{ touchAction: 'pan-y' }}
           initial={printing ? false : { opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -195,7 +195,7 @@ export function Resume() {
           transition={{ duration: shouldReduceMotion || instantClose ? 0 : 0.2 }}
         >
           {/* ═══ TOP BAR ═══ */}
-          <div className="glass-chrome shrink-0 flex items-center justify-between gap-2 px-3 sm:px-5 h-12 sm:h-14 !rounded-none border-x-0 border-t-0">
+          <div className="shrink-0 flex items-center justify-between gap-2 px-3 sm:px-5 h-12 sm:h-14 border-b border-border bg-background">
             <button
               ref={backButtonRef}
               type="button"
@@ -214,7 +214,7 @@ export function Resume() {
               <button
                 type="button"
                 onClick={handlePrint}
-                className="btn-glass gap-2 px-4 py-2 min-h-[44px]"
+                className="press-feedback inline-flex items-center justify-center gap-2 rounded-full border border-border bg-card px-4 py-2 min-h-[44px] text-sm font-medium text-foreground hover:bg-secondary"
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={1.75} viewBox="0 0 24 24" aria-hidden="true">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M6 9V3h12v6M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2M6 14h12v7H6v-7z" />
@@ -225,7 +225,7 @@ export function Resume() {
                 href="/resume.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-glass gap-2 px-4 py-2 min-h-[44px]"
+                className="press-feedback inline-flex items-center justify-center gap-2 rounded-full border border-border bg-card px-4 py-2 min-h-[44px] text-sm font-medium text-foreground hover:bg-secondary"
               >
                 <ExternalLinkIcon className="w-4 h-4" />
                 View PDF

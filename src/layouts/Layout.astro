@@ -13,9 +13,11 @@ interface Props {
   canonical?: string;
   /** Home only: preload the animated banner (the LCP image). */
   preloadBanner?: boolean;
-  ogType?: 'profile' | 'article';
-  /** Inner pages pass their own graph (seo/schema.ts pageJsonLd); home gets the full profile graph. */
-  jsonLd?: object;
+  ogType?: 'profile' | 'article' | 'website';
+  /** Keep the page out of search results (the 404). */
+  noindex?: boolean;
+  /** Inner pages pass their own graph (seo/schema.ts pageJsonLd); home gets the full profile graph; null for none. */
+  jsonLd?: object | null;
 }
 
 const {
@@ -23,7 +25,8 @@ const {
   description = META.description,
   canonical = `${SITE.url}/`,
   preloadBanner = false,
-  ogType = 'profile',
+  ogType = 'website',
+  noindex = false,
   jsonLd = buildJsonLd(),
 } = Astro.props;
 const lastModified = new Date().toISOString().slice(0, 10);
@@ -58,8 +61,8 @@ const lastModified = new Date().toISOString().slice(0, 10);
     <meta name="title" content={title} />
     <meta name="description" content={description} />
     <meta name="author" content="Ehsanul Haque Siam" />
-    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-    <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'} />
+    {!noindex && <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />}
     <meta name="keywords" content={META.keywords} />
     <meta name="application-name" content={SITE.name} />
     <meta name="last-modified" content={lastModified} />
@@ -124,7 +127,7 @@ const lastModified = new Date().toISOString().slice(0, 10);
 
     <!-- Structured Data -->
     {/* Escape `<` so third-party text (Crossref authors) can never close the script tag. */}
-    <script type="application/ld+json" set:html={JSON.stringify(jsonLd).replace(/</g, '\\u003c')} is:inline />
+    {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd).replace(/</g, '\\u003c')} is:inline />}
 
     <style is:global>
       /* No-JS / pre-hydration fallback: reveal content that Framer Motion hides

@@ -229,3 +229,26 @@ export function PaperPage({ paper }: { paper: PaperDetail }) {
     </div>
   );
 }
+
+/** The 404, inside the site's own shell so the nav and dock still work. */
+export function NotFound() {
+  return (
+    <div className="px-4 pb-6 pt-16">
+      <p className="enter font-mono text-[11px] uppercase tracking-[0.16em] text-muted-foreground">Error 404</p>
+      <h1 className="enter mt-3 font-serif text-[44px] leading-none tracking-[-0.01em]" style={{ '--n': 1 } as React.CSSProperties}>
+        Nothing lives here.
+      </h1>
+      <p className="enter mt-4 text-[15px] text-foreground/85" style={{ '--n': 2 } as React.CSSProperties}>
+        The link may be old, or the page moved.
+      </p>
+      <div className="enter mt-8 flex items-center gap-4" style={{ '--n': 3 } as React.CSSProperties}>
+        <a href="/" onClick={() => haptic()} onMouseEnter={sound.tick} className="press rounded-full bg-foreground px-4 py-2 text-[13px] font-medium text-background">
+          Back home
+        </a>
+        <a href="/publications/" onMouseEnter={sound.tick} className="text-[13px] text-muted-foreground transition-colors hover:text-foreground">
+          Research
+        </a>
+      </div>
+    </div>
+  );
+}

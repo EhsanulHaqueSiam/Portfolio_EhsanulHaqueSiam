@@ -5,7 +5,7 @@ import type { OpenSourceRepo } from './data/opensource';
 import type { PaperDetail } from './data/papers';
 import { About, Contact } from './components/home/AboutContact';
 import { Dock, Footer, Nav } from './components/home/chrome';
-import { PaperPage, WorkPage } from './components/home/Detail';
+import { NotFound, PaperPage, WorkPage } from './components/home/Detail';
 import { OpenSource } from './components/home/OpenSource';
 import { Profile } from './components/home/Profile';
 import { PublicationsList } from './components/home/Publications';
@@ -18,7 +18,8 @@ type Props =
   | { page: 'home'; openSource: OpenSourceRepo[] }
   | { page: 'publications' }
   | { page: 'work'; slug: string }
-  | { page: 'paper'; paper: PaperDetail };
+  | { page: 'paper'; paper: PaperDetail }
+  | { page: 'notfound' };
 
 /**
  * The whole site is one React island (server-rendered by Astro, then hydrated).
@@ -64,6 +65,8 @@ function App(props: Props) {
                   {block}
                 </div>
               ))
+            ) : props.page === 'notfound' ? (
+              <NotFound />
             ) : (
               <PublicationsList />
             )}

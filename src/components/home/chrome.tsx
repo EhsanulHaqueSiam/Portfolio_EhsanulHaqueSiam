@@ -75,7 +75,7 @@ export function SoundToggle() {
   );
 }
 
-export type Page = 'home' | 'publications' | 'work' | 'paper';
+export type Page = 'home' | 'publications' | 'work' | 'paper' | 'notfound';
 
 const NAV = [
   { label: 'Home', href: '/', page: 'home' },
@@ -84,7 +84,7 @@ const NAV = [
   { label: 'CV', href: '#resume' },
 ] as const;
 // Detail pages light up their parent link without claiming to be that page.
-const PARENT: Record<Page, string> = { home: 'Home', publications: 'Research', work: 'Home', paper: 'Research' };
+const PARENT: Record<Page, string> = { home: 'Home', publications: 'Research', work: 'Home', paper: 'Research', notfound: '' };
 
 /**
  * The dot under the active link slides to whichever link is hovered (the
@@ -104,7 +104,12 @@ export function Nav({ current }: { current: Page }) {
   const place = useCallback((snap: boolean) => {
     const dot = dotRef.current;
     const link = listRef.current?.querySelector<HTMLElement>(`[data-nav="${targetRef.current}"]`);
-    if (!dot || !link?.offsetParent) return;
+    if (!dot) return;
+    // No current link (the 404): the dot only shows under a hovered one.
+    if (!link?.offsetParent) {
+      dot.style.opacity = '0';
+      return;
+    }
     const x = link.offsetLeft + link.offsetWidth / 2 - 2;
     if (snap || !placed.current) {
       dot.style.transition = 'none';
@@ -192,14 +197,16 @@ function DockItem({ item, i, mouseX, tip }: { item: (typeof links)[number]; i: n
       data-dock-item=""
       style={{ width: size, height: size }}
       whileTap={{ scale: 0.9 }}
-      onMouseEnter={() => {
+      // Mouse only: a tap would show the label and leave it up after the link opens a new tab.
+      onPointerEnter={(e) => {
+        if (e.pointerType !== 'mouse') return;
         tip.show(i);
         sound.note(i);
       }}
-      onFocus={() => tip.show(i)}
+      onFocus={(e) => e.currentTarget.matches(':focus-visible') && tip.show(i)}
       onBlur={() => tip.show(null)}
       onClick={() => haptic()}
-      className="relative grid shrink-0 place-items-center rounded-[10px] text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring"
+      className="relative grid shrink-0 place-items-center rounded-[10px] text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
     >
       <m.span style={{ scale: glyph }} className="block h-[17px] w-[17px]">
         {item.icon}
@@ -218,6 +225,9 @@ type DockTip = { show: (i: number | null) => void; follow: () => void };
 function useDockTip(): [React.RefObject<HTMLSpanElement | null>, DockTip] {
   const el = useRef<HTMLSpanElement>(null);
   const at = useRef<number | null>(null);
+  const frame = useRef(0);
+  // Label widths by item, measured once: the words never change.
+  const widths = useRef<number[]>([]);
   const place = useCallback((i: number) => {
     const tip = el.current;
     const nav = tip?.parentElement;
@@ -225,7 +235,8 @@ function useDockTip(): [React.RefObject<HTMLSpanElement | null>, DockTip] {
     if (!tip || !nav || !item) return;
     const word = tip.firstElementChild as HTMLElement;
     if (word.textContent !== links[i].label) word.textContent = links[i].label;
-    const w = Math.ceil(word.scrollWidth) + 16;
+    widths.current[i] ??= Math.ceil(word.scrollWidth) + 16;
+    const w = widths.current[i];
     const r = item.getBoundingClientRect();
     const x = r.left + r.width / 2 - nav.getBoundingClientRect().left - nav.clientLeft - w / 2;
     // The first placing jumps into position; only later moves slide.
@@ -246,7 +257,14 @@ function useDockTip(): [React.RefObject<HTMLSpanElement | null>, DockTip] {
         if (el.current) el.current.dataset.on = 'false';
       } else place(i);
     },
-    follow: () => at.current !== null && place(at.current),
+    // Every item's spring calls this; one measurement per frame is enough.
+    follow: () => {
+      if (frame.current || at.current === null) return;
+      frame.current = requestAnimationFrame(() => {
+        frame.current = 0;
+        if (at.current !== null) place(at.current);
+      });
+    },
   });
   return [el, tip.current];
 }
@@ -264,7 +282,7 @@ export function Dock() {
         mouseX.set(Number.POSITIVE_INFINITY);
         tip.show(null);
       }}
-      className="fixed bottom-4 left-1/2 z-40 flex h-[50px] -translate-x-1/2 items-end gap-1 rounded-2xl border border-border bg-card/95 px-1.5 pb-[6px] shadow-[0_10px_30px_rgb(0_0_0/0.35)] print:hidden"
+      className="fixed bottom-4 left-1/2 z-40 flex h-[50px] -translate-x-1/2 items-end gap-1 rounded-2xl border border-border bg-card px-1.5 pb-[6px] shadow-[0_10px_30px_rgb(0_0_0/0.35)] print:hidden"
     >
       {links.map((item, i) => (
         <span key={item.label} className="contents">

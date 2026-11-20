@@ -201,9 +201,9 @@ function ProjectList({ rows }: { rows: Project[] }) {
             <m.div
               key="preview"
               aria-hidden="true"
-              initial={{ opacity: 0, scale: 0.96, filter: 'blur(4px)' }}
-              animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
-              exit={{ opacity: 0, scale: 0.97, filter: 'blur(4px)' }}
+              initial={{ opacity: 0, scale: 0.96 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.97 }}
               transition={{ duration: 0.18, ease: [0.23, 1, 0.32, 1] }}
               style={{ y: reduce ? y : sy }}
               className="pointer-events-none absolute left-full top-0 z-30 ml-6 hidden w-[260px] origin-left rounded-md bg-[#f4f4f1] p-1.5 pb-6 shadow-[0_14px_36px_rgb(0_0_0/0.5)] xl:block"
@@ -222,7 +222,9 @@ function ProjectList({ rows }: { rows: Project[] }) {
 export function Shipped() {
   const [view, setView] = useState<'cards' | 'list'>('cards');
   const [all, setAll] = useState(false);
+  // Settle-in only after a pointer change; keyboard changes stay instant (DESIGN.md: no motion on keyboard actions).
   const [changed, setChanged] = useState(false);
+  const byPointer = useRef(false);
   const limit = view === 'cards' ? COLLAPSED_CARDS : COLLAPSED_ROWS;
   const items = all ? featuredProjects : featuredProjects.slice(0, limit);
 
@@ -232,12 +234,18 @@ export function Shipped() {
       title="Things I’ve Shipped"
       aside={
         <SegmentedControl
+          onPointerDown={() => {
+            byPointer.current = true;
+          }}
+          onKeyDown={() => {
+            byPointer.current = false;
+          }}
           aria-label="Project view"
           value={view}
           onValueChange={(next) => {
             if (next !== 'cards' && next !== 'list') return;
             setView(next);
-            setChanged(true);
+            setChanged(byPointer.current);
             sound.click();
             haptic('selection');
           }}

@@ -177,7 +177,7 @@ ${section(
       .map((p) => {
         const cs = p.caseStudy;
         return `### ${p.name}\n**Problem:** ${cs.problem}\n**Approach:** ${cs.solution}\n**Process:** ${cs.process
-          .map((s) => `${s.title} — ${s.desc}`)
+          .map((s) => `${s.title}: ${s.desc}`)
           .join(' | ')}\n**Measured results:** ${cs.results
           .map((r) => `${r.label}: ${r.value}`)
           .join(', ')}`;

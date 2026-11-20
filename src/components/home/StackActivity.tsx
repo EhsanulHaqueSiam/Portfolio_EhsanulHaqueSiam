@@ -17,7 +17,9 @@ const TABS: Record<string, string> = {
 
 export function Stack() {
   const [tab, setTab] = useState('All');
+  // Settle-in only after a pointer change; keyboard changes stay instant (DESIGN.md: no motion on keyboard actions).
   const [changed, setChanged] = useState(false);
+  const byPointer = useRef(false);
   // "All" keeps the strongest skills so the strip stays short; a tab shows its whole category.
   const shown = skills.categories
     .filter((c) => tab === 'All' || TABS[c.name] === tab)
@@ -30,12 +32,18 @@ export function Stack() {
       title="Tech Stack"
       aside={
         <SegmentedControl
+          onPointerDown={() => {
+            byPointer.current = true;
+          }}
+          onKeyDown={() => {
+            byPointer.current = false;
+          }}
           aria-label="Filter skills"
           value={tab}
           onValueChange={(next) => {
             if (typeof next !== 'string') return;
             setTab(next);
-            setChanged(true);
+            setChanged(byPointer.current);
             sound.click();
             haptic('selection');
           }}
@@ -79,7 +87,8 @@ export function Stack() {
 type Day = { date: string; count: number; level: number };
 const USER = profile.github.split('/').pop() ?? '';
 const FILL = ['hsl(var(--foreground)/0.07)', 'hsl(var(--foreground)/0.22)', 'hsl(var(--foreground)/0.42)', 'hsl(var(--foreground)/0.68)', 'hsl(var(--foreground)/0.95)'];
-const fmt = new Intl.DateTimeFormat('en', { weekday: 'short', month: 'short', day: 'numeric' });
+// The grid spans two calendar years, so the year disambiguates days at either end.
+const fmt = new Intl.DateTimeFormat('en', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' });
 
 /** Last year of GitHub contributions; hovering a day rings it, names its count and plays a note for its level. */
 export function Activity() {
@@ -151,10 +160,14 @@ export function Activity() {
         {failed && <p className="text-[13px] text-muted-foreground">Couldn’t load contributions right now. Try the GitHub link above.</p>}
         {!failed && (
           <>
-            {/* biome-ignore lint/a11y/noStaticElementInteractions: the pointer only rings a day and plays a note; the svg's label carries the total */}
+            {/* biome-ignore lint/a11y/useSemanticElements: a fieldset implies form controls; this only names the scroller */}
             <div
-              // 2px of room on every side so the hover ring is not clipped by the scroller.
-              className="-m-0.5 overflow-x-auto p-0.5 pb-1.5"
+              // biome-ignore lint/a11y/noNoninteractiveTabindex: the grid overflows on phones, so its scroller must take focus for keyboard scrolling (WCAG 2.1.1)
+              tabIndex={0}
+              role="group"
+              aria-label="Contribution grid, scrollable"
+              // 3px of room on every side so the hover ring and its stroke are not clipped by the scroller.
+              className="-m-[3px] overflow-x-auto p-[3px] pb-1.5"
               ref={(el) => {
                 // Narrow screens open on the most recent weeks (once, so later renders don't yank it back).
                 if (el && days && !el.dataset.scrolled) {

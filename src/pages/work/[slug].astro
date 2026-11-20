@@ -2,16 +2,16 @@
 import Layout from '../../layouts/Layout.astro';
 import App from '../../App';
 import { featuredExperience, workSlug } from '../../data/content';
-import { SITE, pageJsonLd } from '../../seo/schema';
+import { SITE, metaDescription, pageJsonLd, plainRole } from '../../seo/schema';
 
 export function getStaticPaths() {
-  return featuredExperience.map((e) => ({ params: { slug: workSlug(e) }, props: { slug: workSlug(e), company: e.company, role: e.role } }));
+  return featuredExperience.map((e) => ({ params: { slug: workSlug(e) }, props: { slug: workSlug(e), company: e.company, role: e.role, desc: e.desc } }));
 }
-const { slug, company, role } = Astro.props;
+const { slug, company, role, desc } = Astro.props;
 const path = `/work/${slug}/`;
-const title = `${role} at ${company} · Ehsanul Haque Siam`;
-const description = `What Ehsanul Haque Siam did as ${role} at ${company}.`;
-const jsonLd = pageJsonLd({ path, name: title, description, crumbs: [['Work', '/#experience'], [company, path]] });
+const title = `${plainRole(role)} at ${company} · Ehsanul Haque Siam`;
+const description = metaDescription(desc);
+const jsonLd = pageJsonLd({ path, name: title, description, crumbs: [[company, path]] });
 ---
 
 <Layout title={title} description={description} canonical={`${SITE.url}${path}`} jsonLd={jsonLd}>

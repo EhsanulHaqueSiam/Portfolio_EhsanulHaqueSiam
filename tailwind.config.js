@@ -33,9 +33,7 @@ export default {
         'signal-info': 'hsl(var(--signal-info) / <alpha-value>)',
         'signal-star': 'hsl(var(--signal-star) / <alpha-value>)',
         // The one earned emphasis accent (proof-metric numerals only).
-        'accent-emphasis': 'hsl(var(--accent-emphasis) / <alpha-value>)',
         // Theme-flipping plate behind the ASCII field/torus.
-        'ascii-surface': 'hsl(var(--ascii-surface) / <alpha-value>)',
 
         // Legacy tokens kept so the Resume print overlay (intentionally
         // paper-light) keeps compiling unchanged.

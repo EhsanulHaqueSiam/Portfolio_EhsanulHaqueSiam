@@ -11,6 +11,7 @@ import {
   experience,
   publications,
   achievements,
+  paperSlug,
 } from '../data/content';
 import type { PaperDetail } from '../data/papers';
 
@@ -23,6 +24,13 @@ export const SITE = {
 } as const;
 
 const abs = (path: string) => new URL(path, SITE.url).href;
+
+/** Cut copy to a meta description: under 155 characters, at a word, no dangling comma or colon before the ellipsis. */
+export const metaDescription = (text: string) =>
+  text.length > 155 ? `${text.slice(0, 154).replace(/\s+\S*$/, '').replace(/[\s,;:]+$/, '')}…` : text;
+
+/** A role without its parenthetical ("AI & Data Engineer (Part-time)" → "AI & Data Engineer"). */
+export const plainRole = (role: string) => role.replace(/\s*\(.*\)$/, '');
 
 const PERSON_ID = `${SITE.url}/#person`;
 const WEBSITE_ID = `${SITE.url}/#website`;
@@ -44,7 +52,7 @@ const ORG_URLS: Record<string, string> = {
 // ended roles as current).
 const nowRoles = experience
   .filter((e) => /present/i.test(e.date))
-  .map((e) => `${e.role.replace(/\s*\(.*\)$/, '')} at ${e.company}`);
+  .map((e) => `${plainRole(e.role)} at ${e.company}`);
 const papers = publications.filter((p) => /published|chapter/i.test(p.date)).length;
 
 export const META = {
@@ -103,26 +111,35 @@ const isoDate = (date: string): string => {
 const isPublished = (date: string): boolean =>
   !/accept|in press|under review|submitted|pending/i.test(date);
 
-const publicationArticles = publications.map((p, i) => {
+// Each paper's node lives at its own page; home and the paper page share the same @id.
+// A talk is a CreativeWork, not an article: no publisher or publication date (hq: "presentation, not a paper").
+const publicationArticles = publications.map((p) => {
+  const page = abs(`/publications/${paperSlug(p)}/`);
+  const talk = /presentation|talk/i.test(p.date);
   const published = isPublished(p.date);
   const publisherName = /taylor|francis/i.test(p.date + p.conference)
     ? 'Taylor & Francis'
-    : /ieee/i.test(p.conference)
+    : /ieee/i.test(p.date + p.conference)
       ? 'IEEE'
       : p.conference;
   return {
-    '@type': 'ScholarlyArticle',
-    '@id': `${SITE.url}/#publication-${i + 1}`,
+    '@type': talk ? 'CreativeWork' : 'ScholarlyArticle',
+    '@id': `${page}#article`,
     headline: p.title,
     name: p.title,
+    url: page,
     author: { '@id': PERSON_ID },
-    ...(published && isoDate(p.date) ? { datePublished: isoDate(p.date) } : {}),
-    ...(!published ? { creativeWorkStatus: 'Accepted, pending publication' } : {}),
-    isPartOf: { '@type': 'PublicationVolume', name: p.conference },
-    ...(p.paperLink ? { url: p.paperLink } : {}),
+    ...(talk
+      ? { genre: 'Conference presentation', ...(isoDate(p.date) ? { dateCreated: isoDate(p.date) } : {}), locationCreated: { '@type': 'Event', name: p.conference } }
+      : {
+          ...(published && isoDate(p.date) ? { datePublished: isoDate(p.date) } : {}),
+          ...(!published ? { creativeWorkStatus: 'Accepted, pending publication' } : {}),
+          isPartOf: { '@type': 'PublicationVolume', name: p.conference },
+          publisher: { '@type': 'Organization', name: publisherName },
+        }),
+    ...(p.paperLink ? { sameAs: p.paperLink } : {}),
     description: p.desc,
     inLanguage: SITE.lang,
-    publisher: { '@type': 'Organization', name: publisherName },
   };
 });
 
@@ -328,22 +345,28 @@ export function pageJsonLd({ path, name, description, crumbs, main }: {
         '@id': `${url}#breadcrumb`,
         itemListElement: [['Home', '/'], ...crumbs].map(([n, p], i) => ({ '@type': 'ListItem', position: i + 1, name: n, item: abs(p) })),
       },
+      // Named stubs so a validator reading this page alone sees who and what the @ids are.
+      { '@type': 'Person', '@id': PERSON_ID, name: profile.name, url: `${SITE.url}/` },
+      { '@type': 'WebSite', '@id': WEBSITE_ID, name: SITE.name, url: `${SITE.url}/` },
       ...(main ? [main] : []),
     ],
   };
 }
 
-/** The ScholarlyArticle for one paper page, enriched with what the DOI registry knows. */
-export function paperJsonLd(paper: PaperDetail, path: string) {
+/** One paper's node for its own page: the home node plus what the DOI registry adds. */
+export function paperJsonLd(paper: PaperDetail) {
   const base = publicationArticles.find((a) => a.name === paper.pub.title);
+  if (!base) throw new Error(`No publication node for ${paper.pub.title}`);
   return {
     ...base,
-    '@id': `${abs(path)}#article`,
-    url: abs(path),
-    ...(paper.doi ? { identifier: { '@type': 'PropertyValue', propertyID: 'DOI', value: paper.doi } } : {}),
-    ...(paper.doi || paper.pub.paperLink ? { sameAs: paper.doi ? `https://doi.org/${paper.doi}` : paper.pub.paperLink } : {}),
-    ...(paper.authors.length ? { author: paper.authors.map((a) => (/ehsanul/i.test(a) && /haque/i.test(a) ? { '@id': PERSON_ID } : { '@type': 'Person', name: a })) } : {}),
-    ...(paper.publisher ? { publisher: { '@type': 'Organization', name: paper.publisher } } : {}),
+    ...(paper.doi
+      ? { sameAs: `https://doi.org/${paper.doi}`, identifier: { '@type': 'PropertyValue', propertyID: 'DOI', value: paper.doi } }
+      : {}),
+    ...(paper.authors.length
+      ? { author: paper.authors.map((a) => (/ehsanul/i.test(a) && /haque/i.test(a) ? { '@id': PERSON_ID } : { '@type': 'Person', name: a })) }
+      : {}),
+    ...(paper.venue && 'isPartOf' in base ? { isPartOf: { '@type': 'PublicationVolume', name: paper.venue } } : {}),
+    ...(paper.publisher && 'publisher' in base ? { publisher: { '@type': 'Organization', name: paper.publisher } } : {}),
     ...(paper.pages ? { pagination: paper.pages } : {}),
   };
 }

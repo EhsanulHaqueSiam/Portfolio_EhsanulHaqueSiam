@@ -42,11 +42,9 @@
 
   /* The ONE earned, non-status emphasis accent (iris-violet, borrowed from
      the ASCII field glyph + ambient ellipse). Proof-metric numerals only. */
-  --accent-emphasis: 256 58% 50%;
 
   /* Plate behind the ASCII field/torus - flips with the theme so it is
      never a black box on a white page. Light ~= page; dark ~= old #05060a. */
-  --ascii-surface: 220 20% 97%;
 
   /* rainbow button bands */
   --color-1: oklch(95% 0.13 95);
@@ -94,10 +92,8 @@
   --signal-info: 190 90% 65%;
   --signal-star: 43 96% 56%;
 
-  --accent-emphasis: 252 90% 78%;
 
   /* ~= the old hardcoded #05060a so dark mode is visually unchanged. */
-  --ascii-surface: 222 40% 4%;
 }
 
 @layer base {
@@ -156,73 +152,14 @@
     background: hsl(var(--muted-foreground) / 0.6);
   }
 
-  .scrollbar-hide {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
-
-  .scrollbar-hide::-webkit-scrollbar {
-    display: none;
-  }
-
   :focus-visible {
     outline: 2px solid transparent;
     outline-offset: 2px;
     box-shadow: 0 0 0 2px hsl(var(--background)), 0 0 0 4px hsl(var(--ring));
   }
-
-  #preloader {
-    display: none !important;
-  }
 }
 
 @layer components {
-  /* Glass panel (navbar, palette, floating chrome) */
-  .glass-chrome {
-    background: hsl(var(--background) / 0.6);
-    border: 1px solid hsl(var(--border) / 0.7);
-    backdrop-filter: blur(16px) saturate(140%);
-    -webkit-backdrop-filter: blur(16px) saturate(140%);
-  }
-
-  /* Glass card surface used across sections */
-  .glass-card {
-    background: hsl(var(--card) / 0.55);
-    border: 1px solid hsl(var(--border) / 0.8);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-radius: 0.75rem;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
-  }
-
-  .glass-card:hover {
-    border-color: hsl(var(--ring) / 0.6);
-    box-shadow: 0 8px 30px -12px hsl(var(--foreground) / 0.18);
-  }
-
-  /* Marquee edge fades that track the theme background */
-  .fade-mask-left {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 18%;
-    height: 100%;
-    background: linear-gradient(to right, hsl(var(--background)), transparent);
-    pointer-events: none;
-    z-index: 10;
-  }
-
-  .fade-mask-right {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 18%;
-    height: 100%;
-    background: linear-gradient(to left, hsl(var(--background)), transparent);
-    pointer-events: none;
-    z-index: 10;
-  }
-
   /* Compat utilities used by the Resume overlay chrome */
   .rule {
     border-color: hsl(var(--border));
@@ -242,19 +179,6 @@
     transform: scale(0.97);
   }
 
-  .btn-glass {
-    @apply press-feedback inline-flex items-center justify-center rounded-full text-sm font-medium text-foreground;
-    background: hsl(var(--card) / 0.6);
-    border: 1px solid hsl(var(--border));
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-  }
-
-  .btn-glass:hover {
-    border-color: hsl(var(--ring) / 0.7);
-    background: hsl(var(--secondary) / 0.8);
-  }
-
   .btn-primary {
     @apply press-feedback inline-flex items-center justify-center rounded-full bg-primary text-sm font-medium text-primary-foreground;
   }
@@ -263,20 +187,6 @@
     background: hsl(var(--primary) / 0.88);
   }
 
-  /* Animated underline that draws in on hover */
-  .link-underline {
-    background-image: linear-gradient(currentColor, currentColor);
-    background-repeat: no-repeat;
-    background-position: 0 100%;
-    background-size: 0% 1px;
-    transition: background-size 0.3s var(--ease-out-strong);
-    padding-bottom: 2px;
-  }
-
-  .link-underline:hover,
-  .link-underline:focus-visible {
-    background-size: 100% 1px;
-  }
 }
 
 /* The dock's one travelling label (chrome.tsx useDockTip): slides and resizes between items. */
@@ -372,60 +282,6 @@
   }
 }
 
-/* Content-visibility for off-screen sections */
-.cv-auto {
-  content-visibility: auto;
-  contain-intrinsic-size: auto 700px;
-}
-
-/* While actively scrolling (SmoothScroll tags <html>), skip hit-testing
-   inside the content column: no :hover recomputation, no transition storms,
-   no glow/spotlight work as cards slide under a stationary cursor. Pointer
-   events return ~140ms after the last scroll tick. */
-html.is-scrolling #main-content {
-  pointer-events: none;
-}
-
-/* ===== Studio cat ===== */
-@keyframes cat-tail-sway {
-  0%, 100% { transform: rotate(0deg); }
-  35% { transform: rotate(14deg); }
-  70% { transform: rotate(-6deg); }
-}
-
-.cat-tail {
-  transform-origin: 52px 56px;
-  animation: cat-tail-sway 3.4s var(--ease-float) infinite;
-}
-
-@keyframes cat-blink {
-  0%, 92%, 100% { transform: scaleY(1); }
-  95% { transform: scaleY(0.08); }
-}
-
-.cat-eyes {
-  transform-origin: 36px 17px;
-  animation: cat-blink 5.2s linear infinite;
-}
-
-@keyframes cat-hop-kf {
-  0% { transform: translateY(0); }
-  40% { transform: translateY(-9px); }
-  100% { transform: translateY(0); }
-}
-
-.cat-hop {
-  animation: cat-hop-kf 0.45s var(--ease-out-strong);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .cat-tail,
-  .cat-eyes,
-  .cat-hop {
-    animation: none !important;
-  }
-}
-
 /* Reduced motion global guard */
 @media (prefers-reduced-motion: reduce) {
   html:focus-within {
@@ -437,16 +293,6 @@ html.is-scrolling #main-content {
   *::after {
     animation-duration: 200ms !important;
     animation-iteration-count: 1 !important;
-  }
-
-  .animate-marquee,
-  .animate-marquee-vertical,
-  .animate-button-shine,
-  .animate-shimmer-slide,
-  .animate-spin-around,
-  .animate-border-beam,
-  .animate-rainbow {
-    animation: none !important;
   }
 }
 
