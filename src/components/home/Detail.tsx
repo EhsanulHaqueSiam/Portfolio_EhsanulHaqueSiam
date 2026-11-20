@@ -209,7 +209,8 @@ export function PaperPage({ paper }: { paper: PaperDetail }) {
           <div className="mb-2 flex justify-end">
             <CopyBib text={bibtex} />
           </div>
-          <pre tabIndex={0} role="region" aria-label="BibTeX citation" className="overflow-x-auto rounded-lg border border-border bg-card p-3 font-mono text-[12px] leading-relaxed text-foreground/85">{bibtex}</pre>
+          {/* biome-ignore lint/a11y/noNoninteractiveTabindex: scrollable code must take focus so keyboards can scroll it (WCAG 2.1.1) */}
+          <pre tabIndex={0} className="overflow-x-auto rounded-lg border border-border bg-card p-3 font-mono text-[12px] leading-relaxed text-foreground/85">{bibtex}</pre>
         </Block>
       )}
 
