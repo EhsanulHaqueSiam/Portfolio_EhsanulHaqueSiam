@@ -35,7 +35,7 @@ function RepoCard({ r, defaultOpen }: { r: OpenSourceRepo; defaultOpen: boolean 
           <span className="block truncate font-mono text-[12px] text-muted-foreground">{r.repo}</span>
         </span>
         <span className="flex items-center gap-1 text-[13px] tabular-nums">
-          <StarOutlineIcon className="h-3.5 w-3.5 text-signal-star" />
+          <StarOutlineIcon className="star h-3.5 w-3.5 text-muted-foreground" />
           {compact.format(r.stars)}
         </span>
         <span className="hidden text-[12px] text-muted-foreground sm:inline">

@@ -12,6 +12,8 @@ const ROOT = process.cwd();
 const SITE = 'https://ehsanulhaquesiam.netlify.app';
 const TODAY = new Date().toISOString().slice(0, 10);
 
+const slugify = (s) =>
+  s.normalize('NFKD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 const read = (p) => JSON.parse(readFileSync(join(ROOT, 'assets/data', p), 'utf8'));
 
 const profile = read('profile.json');
@@ -63,6 +65,9 @@ Sitemap: ${SITE}/sitemap.xml
 const urls = [
   { loc: `${SITE}/`, changefreq: 'weekly', priority: '1.0' },
   { loc: `${SITE}/publications`, changefreq: 'monthly', priority: '0.8' },
+  // Same slugs as src/data/content.ts (slugify, paperSlug, workSlug).
+  ...publications.map((p) => ({ loc: `${SITE}/publications/${slugify(p.title.split(':')[0])}`, changefreq: 'yearly', priority: '0.6' })),
+  ...experience.filter((e) => e.showInHome).map((e) => ({ loc: `${SITE}/work/${slugify(e.company)}`, changefreq: 'yearly', priority: '0.5' })),
   { loc: `${SITE}/hire-me.html`, changefreq: 'monthly', priority: '0.9' },
   { loc: `${SITE}/resume.pdf`, changefreq: 'monthly', priority: '0.7' },
 ];

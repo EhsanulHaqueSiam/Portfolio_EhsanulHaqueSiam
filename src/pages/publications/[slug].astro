@@ -1,0 +1,17 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import App from '../../App';
+import { loadPapers } from '../../data/papers';
+import { SITE } from '../../seo/schema';
+
+// Authors, venue and BibTeX come from the DOI registry at build time (see data/papers.ts).
+export async function getStaticPaths() {
+  const papers = await loadPapers();
+  return papers.map((paper) => ({ params: { slug: paper.slug }, props: { paper } }));
+}
+const { paper } = Astro.props;
+---
+
+<Layout title={`${paper.pub.title} · Ehsanul Haque Siam`} description={paper.pub.desc.slice(0, 155)} canonical={`${SITE.url}/publications/${paper.slug}`}>
+  <App client:load page="paper" paper={paper} />
+</Layout>

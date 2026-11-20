@@ -20,13 +20,21 @@ if (typeof window !== 'undefined') {
   } catch {
     /* storage blocked: keep default */
   }
-  const unlock = () => {
+  // Browsers only start audio inside a gesture, and iOS Safari only once something
+  // actually plays in it. So every gesture until audio runs plays one silent sample.
+  const types = ['pointerdown', 'pointerup', 'click', 'touchend', 'keydown'] as const;
+  const unlock = (e: Event) => {
+    if (e instanceof KeyboardEvent && e.key === 'Escape') return;
     unlocked = true;
-    if (enabled) audio();
+    const a = audio();
+    if (!a) return;
+    const blip = a.createBufferSource();
+    blip.buffer = a.createBuffer(1, 1, a.sampleRate);
+    blip.connect(a.destination);
+    blip.start(0);
+    if (a.state === 'running') for (const t of types) removeEventListener(t, unlock, true);
   };
-  for (const type of ['pointerdown', 'keydown', 'touchend'] as const) {
-    addEventListener(type, unlock, { capture: true, passive: true, once: true });
-  }
+  for (const t of types) addEventListener(t, unlock, { capture: true, passive: true });
 }
 
 function audio(): AudioContext | null {
@@ -99,6 +107,29 @@ export const sound = {
   paper: (open: boolean) => {
     burst(open ? 900 : 650, 0.12, 0.6);
     setTimeout(() => burst(open ? 1100 : 820, 0.06, 0.7), 50);
+  },
+  /** Soft filtered-noise sweep for the theme reveal. */
+  whoosh: () => {
+    const a = audio();
+    if (!a) return;
+    const len = Math.ceil(a.sampleRate * 0.45);
+    const buf = a.createBuffer(1, len, a.sampleRate);
+    const data = buf.getChannelData(0);
+    for (let i = 0; i < len; i++) data[i] = Math.random() * 2 - 1;
+    const src = a.createBufferSource();
+    const filter = a.createBiquadFilter();
+    const amp = a.createGain();
+    const t = a.currentTime;
+    src.buffer = buf;
+    filter.type = 'bandpass';
+    filter.Q.value = 0.9;
+    filter.frequency.setValueAtTime(400, t);
+    filter.frequency.exponentialRampToValueAtTime(2400, t + 0.4);
+    amp.gain.setValueAtTime(0, t);
+    amp.gain.linearRampToValueAtTime(0.05, t + 0.08);
+    amp.gain.exponentialRampToValueAtTime(0.0001, t + 0.45);
+    src.connect(filter).connect(amp).connect(a.destination);
+    src.start(t);
   },
   toggle: (on: boolean) => {
     tone(on ? 660 : 520, { dur: 0.12, gain: 0.03 });

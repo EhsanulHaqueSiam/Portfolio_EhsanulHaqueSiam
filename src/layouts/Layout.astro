@@ -11,12 +11,15 @@ interface Props {
   title?: string;
   description?: string;
   canonical?: string;
+  /** Home only: preload the animated banner (the LCP image). */
+  preloadBanner?: boolean;
 }
 
 const {
   title = META.title,
   description = META.description,
   canonical = `${SITE.url}/`,
+  preloadBanner = false,
 } = Astro.props;
 
 const jsonLd = buildJsonLd();
@@ -108,7 +111,7 @@ const lastModified = new Date().toISOString().slice(0, 10);
     <link rel="preload" as="font" type="font/woff2" crossorigin href={geistWoff2} />
 
     <!-- LCP image: the banner above the profile row -->
-    <link rel="preload" as="image" type="image/webp" href="/images/banner-anim.webp" fetchpriority="high" media="(prefers-reduced-motion: no-preference)" />
+    {preloadBanner && <link rel="preload" as="image" type="image/webp" href="/images/banner-anim.webp" fetchpriority="high" media="(prefers-reduced-motion: no-preference)" />}
 
     <!-- Structured Data -->
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} is:inline />

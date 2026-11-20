@@ -1,8 +1,10 @@
-import { profile, publications } from '../../data/content';
+import { paperSlug, profile, publications } from '../../data/content';
+import { haptic } from '../../lib/haptics';
 import type { Publication } from '../../data/types';
 import { sound } from '../../lib/sound';
 import { ArrowUpRightIcon } from '../ui/Icons';
 import { ext } from './chrome';
+import { ChevronIcon } from './icons';
 import { pubMeta } from './Rows';
 
 /** Groups by what the work is, read from its status line in publications.json. */
@@ -73,18 +75,21 @@ export function PublicationsList() {
           <ul className="divide-y divide-border">
             {g.items.map((p) => {
               const { when, status } = pubMeta(p);
-              const Title = p.paperLink ? 'a' : 'span';
               return (
-                <li key={p.title} className="py-4">
-                  <Title
-                    {...(p.paperLink ? { href: p.paperLink, target: '_blank', rel: 'noopener noreferrer', onMouseEnter: sound.tick } : {})}
-                    className={`group text-[15px] font-medium leading-snug ${p.paperLink ? 'transition-colors hover:text-foreground/80' : ''}`}
+                <li key={p.title}>
+                  <a
+                    href={`/publications/${paperSlug(p)}`}
+                    onMouseEnter={sound.tick}
+                    onClick={haptic}
+                    className="group -mx-2 block rounded-lg px-2 py-4 transition-colors hover:bg-secondary/60"
                   >
-                    {p.title}
-                    {p.paperLink && <ArrowUpRightIcon className="icon-nudge ml-1 inline h-3 w-3 align-baseline text-muted-foreground" />}
-                  </Title>
-                  <p className="mt-1 text-[12.5px] text-muted-foreground">{[p.conference, when, status].filter(Boolean).join(' · ')}</p>
-                  <p className="mt-2 text-[13.5px] leading-relaxed text-foreground/75">{p.desc}</p>
+                    <span className="text-[15px] font-medium leading-snug">
+                      {p.title}
+                      <ChevronIcon className="icon-nudge ml-1 inline h-3.5 w-3.5 -rotate-90 align-[-2px] text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100" />
+                    </span>
+                    <span className="mt-1 block text-[12.5px] text-muted-foreground">{[p.conference, when, status].filter(Boolean).join(' · ')}</span>
+                    <span className="mt-2 block text-[13.5px] leading-relaxed text-foreground/75">{p.desc}</span>
+                  </a>
                 </li>
               );
             })}

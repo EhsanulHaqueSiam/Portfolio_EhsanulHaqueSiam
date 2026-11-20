@@ -1,10 +1,11 @@
 import { type CSSProperties, useRef, useState } from 'react';
 import { AnimatePresence, m, useMotionValue, useReducedMotion, useSpring } from 'framer-motion';
-import { featuredProjects, getProjectImage } from '../../data/content';
+import { featuredProjects, getProjectImage, projectIcon } from '../../data/content';
 import type { Project } from '../../data/types';
 import { haptic } from '../../lib/haptics';
 import { sound } from '../../lib/sound';
-import { BoxIcon, ChevronIcon } from './icons';
+import { ChevronIcon } from './icons';
+import { StatusIcon } from './StatusIcon';
 import { ext, Section } from './chrome';
 
 const PILE = 5;
@@ -93,24 +94,18 @@ export function Shipped() {
                   onClick={haptic}
                   className="group -mx-2 grid grid-cols-[24px_1fr_auto] items-center gap-3 rounded-lg px-2 py-2.5 transition-colors hover:bg-secondary/60"
                 >
-                  <span aria-hidden="true" className="grid h-6 w-6 place-items-center rounded-md border border-border bg-card text-[11px] font-semibold">
-                    {p.name[0]}
-                  </span>
+                  {projectIcon(p.name) ? (
+                    <img src={projectIcon(p.name) ?? ''} alt="" width={24} height={24} loading="lazy" className="h-6 w-6 rounded-[6px] object-cover" />
+                  ) : (
+                    <span aria-hidden="true" className="grid h-6 w-6 place-items-center rounded-md border border-border bg-card text-[11px] font-semibold">
+                      {p.name[0]}
+                    </span>
+                  )}
                   <span className="min-w-0 sm:flex sm:items-baseline sm:gap-2">
                     <span className="block shrink-0 text-[14px] font-medium">{p.name}</span>
                     <span className="block truncate text-[13px] text-muted-foreground">{pitch(p)}</span>
                   </span>
-                  {live ? (
-                    <span className="flex items-center gap-2 text-[12px] text-signal-success">
-                      <span aria-hidden="true" className="hidden opacity-0 transition-opacity group-hover:opacity-100 sm:inline">live</span>
-                      <span role="img" aria-label="Live" className="h-[7px] w-[7px] rounded-full bg-current shadow-[0_0_0_3px_hsl(var(--signal-success)/0.18)]" />
-                    </span>
-                  ) : (
-                    <span className="flex items-center gap-2 text-[12px] text-muted-foreground">
-                      <span aria-hidden="true" className="hidden opacity-0 transition-opacity group-hover:opacity-100 sm:inline">code</span>
-                      <BoxIcon aria-label="Source code" className="icon-pop h-4 w-4" />
-                    </span>
-                  )}
+                  <StatusIcon status={live ? 'live' : 'shipped'} />
                 </a>
               </li>
             );

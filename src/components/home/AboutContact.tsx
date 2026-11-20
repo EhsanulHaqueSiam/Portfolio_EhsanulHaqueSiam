@@ -3,7 +3,7 @@ import { education, profile } from '../../data/content';
 import { haptic } from '../../lib/haptics';
 import { sound } from '../../lib/sound';
 import { ArrowUpRightIcon } from '../ui/Icons';
-import { ext, links, Section } from './chrome';
+import { ext, links, moreLinks, Section } from './chrome';
 
 const U = ({ href, children }: { href: string; children: ReactNode }) => (
   <a href={href} {...ext(href)} className="font-medium text-foreground underline decoration-foreground/30 underline-offset-[3px] transition-colors hover:decoration-foreground">
@@ -36,7 +36,7 @@ export function Contact() {
   return (
     <Section id="contact" title="Contact">
       <ul className="flex flex-wrap gap-2">
-        {links.map((l, i) => (
+        {[...links, ...moreLinks].map((l, i) => (
           <li key={l.label}>
             <a
               href={l.href}

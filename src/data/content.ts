@@ -136,6 +136,57 @@ export const getPublicationImage = (imageName: string): string => {
 
 export const profileImage = '/images/profile2.webp';
 
+/** URL-safe slug: "Arché Intelligence Lab" -> "arche-intelligence-lab". */
+export const slugify = (s: string) =>
+  s
+    .normalize('NFKD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '');
+
+/** Paper slug from the part of the title before its colon. */
+export const paperSlug = (p: Publication) => slugify(p.title.split(':')[0]);
+export const workSlug = (e: Experience) => slugify(e.company);
+
+// Square icons in public/images/icons: real logos where the brand has one, generated tiles otherwise.
+const PROJECT_ICONS: Record<string, string> = {
+  ScholarHub: 'scholarhub.webp',
+  'TTT Autos': 'ttt-autos.webp',
+  KaajKormo: 'kaajkormo.webp',
+  OfferLagbe: 'offerlagbe.webp',
+  'Aurum Gold': 'aurum-gold.svg',
+  'Void Threads': 'void-threads.webp',
+  'Indian Claypit': 'claypit.webp',
+  BetaScript: 'betascript.webp',
+  'Student Management System': 'student-management.webp',
+  'Spotify Sentiment Analysis': 'spotify-sentiment.webp',
+  "Mario's Multiverse Adventure": 'mario-multiverse.webp',
+  'BD News Scraper & Analytics': 'bd-news-scraper.webp',
+  'Hotel Management System': 'hotel-management.webp',
+  'Android Development Journey': 'android-journey.webp',
+  'Pharmacy Management System': 'pharmacy-management.webp',
+};
+const COMPANY_LOGOS: Record<string, string> = {
+  Ledgercross: '/images/icons/ledgercross.webp',
+  'Arché Intelligence Lab': '/images/icons/arche.webp',
+  BetaScript: '/images/icons/betascript.webp',
+  'BetaScript LLC': '/images/icons/betascript.webp',
+  BDTracks: '/images/icons/bdtracks.webp',
+  AIUB: '/images/icons/aiub.webp',
+};
+/** Public pages for each employer, shown on its /work page. */
+export const companyLinks: Record<string, { label: string; href: string }> = {
+  Ledgercross: { label: 'Siam on the Ledgercross team page', href: 'https://www.ledgercross.com/team/EhsanulHaqueSiam' },
+  'Arché Intelligence Lab': { label: 'arche-lab.org', href: 'https://arche-lab.org' },
+  'Deepchain Labs': { label: 'deepchainlabs.com', href: 'https://deepchainlabs.com' },
+  'BetaScript LLC': { label: 'betascript.online', href: 'https://betascript.online' },
+  BDTracks: { label: 'bdtracks.com', href: 'https://bdtracks.com' },
+  AIUB: { label: 'aiub.edu', href: 'https://www.aiub.edu' },
+};
+export const projectIcon = (name: string) => (PROJECT_ICONS[name] ? `/images/icons/${PROJECT_ICONS[name]}` : null);
+export const companyLogo = (e: Experience) => COMPANY_LOGOS[e.company] ?? (e.logo ? `/images/experience/${e.logo}.webp` : null);
+
 export const hideImageOnError = (e: React.SyntheticEvent<HTMLImageElement>) => {
   e.currentTarget.style.display = 'none';
 };

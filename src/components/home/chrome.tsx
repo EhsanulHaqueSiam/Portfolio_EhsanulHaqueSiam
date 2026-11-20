@@ -18,6 +18,12 @@ export const links = [
   { label: 'CV', href: '#resume', icon: <ResumeIcon className="h-full w-full" />, sep: true },
 ];
 
+/** Extra profiles shown as Contact chips but kept out of the dock. */
+export const moreLinks = [
+  { label: 'ResearchGate', href: profile.researchgate, icon: <Brand name="researchgate" className="h-full w-full" /> },
+  { label: 'Kaggle', href: profile.kaggle, icon: <Brand name="kaggle" className="h-full w-full" /> },
+];
+
 export const isExternal = (href: string) => href.startsWith('http');
 export const ext = (href: string) => (isExternal(href) ? { target: '_blank', rel: 'noopener noreferrer' } : {});
 

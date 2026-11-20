@@ -30,7 +30,8 @@ export function Stack() {
         </>
       }
       aside={
-        <div role="group" aria-label="Filter skills" className="flex flex-wrap justify-end gap-0.5">
+        <fieldset className="flex flex-wrap justify-end gap-0.5">
+          <legend className="sr-only">Filter skills</legend>
           {['All', ...Object.values(TABS)].map((t) => (
             <button
               key={t}
@@ -46,7 +47,7 @@ export function Stack() {
               {t}
             </button>
           ))}
-        </div>
+        </fieldset>
       }
     >
       <ul className="flex flex-wrap gap-1.5">

@@ -1,8 +1,11 @@
-import { education, featuredExperience, featuredPublications } from '../../data/content';
-import type { Publication } from '../../data/types';
+import type { ReactNode } from 'react';
+import { companyLogo, education, featuredExperience, featuredPublications, paperSlug, workSlug } from '../../data/content';
+import type { Experience as Exp, Publication } from '../../data/types';
+import { haptic } from '../../lib/haptics';
 import { sound } from '../../lib/sound';
 import { ResumeIcon } from '../ui/Icons';
-import { HeaderLink, Section } from './chrome';
+import { ext, HeaderLink, Section } from './chrome';
+import { ChevronIcon } from './icons';
 
 /** "Jun 2026–Present" -> "Jun 2026 – now"; "Apr 2026–May 2026" -> "Apr – May 2026". */
 export function shortRange(date: string) {
@@ -13,32 +16,49 @@ export function shortRange(date: string) {
   return fy && fy === ty ? `${fm} – ${tm} ${ty}` : `${from} – ${to}`;
 }
 
-/** "Apr 2026 | Published (IEEE Xplore, Scopus Indexed)" -> { when, status } */
+/** "Apr 2026 | Published (IEEE Xplore, Scopus Indexed)" -> { when, year, status } */
 export function pubMeta(p: Publication) {
   const [when, status = ''] = p.date.split('|').map((s) => s.trim());
   return { when, year: when.split(' ').pop() ?? when, status };
 }
 
-function Row({ mark, title, sub, right, href }: { mark: React.ReactNode; title: string; sub: string; right: string; href?: string | null }) {
-  const body = (
-    <>
-      <span aria-hidden="true" className="grid h-7 w-7 shrink-0 place-items-center overflow-hidden rounded-[7px] border border-border bg-card text-[12px] font-semibold">
-        {mark}
-      </span>
+/** Role without the "(Part-time, ~20 hrs/week)" tail, for dense rows. */
+export const shortRole = (e: Exp) => e.role.replace(/\s*\(.*\)$/, '');
+
+/** Logo tile for a company: its real logo when we have one, else the initial. */
+export function CompanyMark({ e, size = 28 }: { e: Exp; size?: number }) {
+  const logo = companyLogo(e);
+  return (
+    <span
+      aria-hidden="true"
+      style={{ width: size, height: size }}
+      className="grid shrink-0 place-items-center overflow-hidden rounded-[7px] border border-border bg-card text-[12px] font-semibold"
+    >
+      {logo ? <img src={logo} alt="" width={size} height={size} loading="lazy" className="h-full w-full object-cover" /> : e.company[0]}
+    </span>
+  );
+}
+
+/** A dense list row (mark, title + sub, right meta) that links somewhere, with tick sound and haptic. */
+export function LinkRow({ href, mark, title, sub, right }: { href: string; mark: ReactNode; title: string; sub: string; right: string }) {
+  return (
+    <a
+      href={href}
+      {...ext(href)}
+      onMouseEnter={sound.tick}
+      onClick={haptic}
+      className="group -mx-2 grid grid-cols-[28px_1fr_auto] items-center gap-3 rounded-lg px-2 py-2.5 transition-colors hover:bg-secondary/60"
+    >
+      {mark}
       <span className="min-w-0">
         <span className="block text-[14px] font-medium leading-snug">{title}</span>
         <span className="block text-[13px] text-muted-foreground">{sub}</span>
       </span>
-      <span className="whitespace-nowrap text-right font-mono text-[12px] text-muted-foreground">{right}</span>
-    </>
-  );
-  const cls = 'grid grid-cols-[28px_1fr_auto] items-center gap-3 py-2.5';
-  return href ? (
-    <a href={href} target="_blank" rel="noopener noreferrer" onMouseEnter={sound.tick} className={`${cls} -mx-2 rounded-lg px-2 transition-colors hover:bg-secondary/60`}>
-      {body}
+      <span className="flex items-center gap-1.5 whitespace-nowrap font-mono text-[12px] text-muted-foreground">
+        {right}
+        <ChevronIcon className="icon-nudge h-3.5 w-3.5 -rotate-90 opacity-0 transition-opacity group-hover:opacity-100" />
+      </span>
     </a>
-  ) : (
-    <div className={cls}>{body}</div>
   );
 }
 
@@ -48,18 +68,19 @@ export function Experience() {
       <ul className="divide-y divide-border">
         {featuredExperience.map((e) => (
           <li key={e.company}>
-            <Row
-              mark={e.logo ? <img src={`/images/experience/${e.logo}.webp`} alt="" width={28} height={28} loading="lazy" className="h-full w-full object-cover" /> : e.company[0]}
-              title={e.company}
-              sub={e.role.replace(/\s*\(.*\)$/, '')}
-              right={shortRange(e.date)}
-            />
+            <LinkRow href={`/work/${workSlug(e)}`} mark={<CompanyMark e={e} />} title={e.company} sub={shortRole(e)} right={shortRange(e.date)} />
           </li>
         ))}
       </ul>
     </Section>
   );
 }
+
+export const PaperMark = () => (
+  <span aria-hidden="true" className="grid h-7 w-7 shrink-0 place-items-center rounded-[7px] border border-border bg-card">
+    <ResumeIcon className="h-3.5 w-3.5 text-muted-foreground" />
+  </span>
+);
 
 export function Research() {
   return (
@@ -69,7 +90,7 @@ export function Research() {
           const { year, status } = pubMeta(p);
           return (
             <li key={p.title}>
-              <Row mark={<ResumeIcon className="h-3.5 w-3.5 text-muted-foreground" />} title={p.title} sub={[p.conference, status].filter(Boolean).join(' · ')} right={year} href={p.paperLink} />
+              <LinkRow href={`/publications/${paperSlug(p)}`} mark={<PaperMark />} title={p.title} sub={[p.conference, status].filter(Boolean).join(' · ')} right={year} />
             </li>
           );
         })}
