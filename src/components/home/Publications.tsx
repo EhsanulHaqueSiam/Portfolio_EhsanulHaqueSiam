@@ -81,7 +81,7 @@ export function PublicationsList() {
                     onMouseEnter={sound.tick}
                     onClick={() => haptic()}
                     aria-labelledby={`t-${paperSlug(p)}`}
-                    className="group -mx-2 block rounded-lg px-2 py-4"
+                    className="group -mx-2 block rounded-lg px-2 py-4 active:bg-secondary/60"
                   >
                     <span id={`t-${paperSlug(p)}`} className="text-[15px] font-medium leading-snug">
                       {p.title}

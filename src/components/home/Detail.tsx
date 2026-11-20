@@ -179,7 +179,6 @@ export function PaperPage({ paper }: { paper: PaperDetail }) {
         </div>
       </article>
 
-
       <Block title={kind === 'Talk' ? 'What the talk covered' : 'What it does and finds'} n={2}>
         <p className="text-[15px] leading-relaxed text-foreground/85">{pub.desc}</p>
       </Block>
@@ -210,7 +209,8 @@ export function PaperPage({ paper }: { paper: PaperDetail }) {
             <CopyBib text={bibtex} />
           </div>
           {/* biome-ignore lint/a11y/noNoninteractiveTabindex: scrollable code must take focus so keyboards can scroll it (WCAG 2.1.1) */}
-          <pre tabIndex={0} className="overflow-x-auto rounded-lg border border-border bg-card p-3 font-mono text-[12px] leading-relaxed text-foreground/85">{bibtex}</pre>
+          {/* biome-ignore lint/a11y/useSemanticElements: the focusable scroller itself needs a name, so the region role sits on the pre, not a wrapping section */}
+          <pre tabIndex={0} role="region" aria-label="BibTeX" className="overflow-x-auto rounded-lg border border-border bg-card p-3 font-mono text-[12px] leading-relaxed text-foreground/85">{bibtex}</pre>
         </Block>
       )}
 

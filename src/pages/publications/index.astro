@@ -1,13 +1,18 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import App from '../../App';
-import { SITE } from '../../seo/schema';
+import { SITE, pageJsonLd } from '../../seo/schema';
+
+const title = 'Publications · Ehsanul Haque Siam';
+const description = 'Peer-reviewed papers, book chapters and talks by Ehsanul Haque Siam: NLP, medical language models and topic modeling.';
+const jsonLd = pageJsonLd({ path: '/publications/', name: title, description, crumbs: [['Publications', '/publications/']] });
 ---
 
 <Layout
-  title="Publications · Ehsanul Haque Siam"
-  description="Peer-reviewed papers, book chapters and talks by Ehsanul Haque Siam: NLP, medical language models and topic modeling."
+  title={title}
+  description={description}
   canonical={`${SITE.url}/publications/`}
+  jsonLd={jsonLd}
 >
   <App client:load page="publications" />
 </Layout>

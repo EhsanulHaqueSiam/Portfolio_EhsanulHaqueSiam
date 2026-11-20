@@ -12,6 +12,7 @@ import {
   publications,
   achievements,
 } from '../data/content';
+import type { PaperDetail } from '../data/papers';
 
 export const SITE = {
   url: 'https://ehsanulhaquesiam.netlify.app',
@@ -138,7 +139,7 @@ const credentialAwards = achievements
         ? 'Academic Honor / Competition Award'
         : a.category === 'publication'
           ? 'Peer-Reviewed Publication'
-          : 'Professional Certification',
+          : 'Certificate',
   }));
 
 const knowsAbout = [
@@ -290,18 +291,59 @@ export function buildJsonLd() {
           },
         ],
       },
+    ],
+  };
+}
+
+/**
+ * JSON-LD for an inner page: the page, its breadcrumb trail from Home, and what it is about.
+ * `main` is the page's own entity (a ScholarlyArticle for a paper); the Person is referenced
+ * by @id and fully described on the home page.
+ */
+export function pageJsonLd({ path, name, description, crumbs, main }: {
+  path: string;
+  name: string;
+  description: string;
+  crumbs: Array<[string, string]>;
+  main?: Record<string, unknown>;
+}) {
+  const url = abs(path);
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': main ? 'ItemPage' : 'WebPage',
+        '@id': `${url}#webpage`,
+        url,
+        name,
+        description,
+        isPartOf: { '@id': WEBSITE_ID },
+        about: { '@id': PERSON_ID },
+        breadcrumb: { '@id': `${url}#breadcrumb` },
+        ...(main ? { mainEntity: { '@id': main['@id'] } } : {}),
+        inLanguage: SITE.lang,
+      },
       {
         '@type': 'BreadcrumbList',
-        '@id': `${SITE.url}/#breadcrumb`,
-        itemListElement: [
-          ['Home', '/'],
-        ].map(([name, path], i) => ({
-          '@type': 'ListItem',
-          position: i + 1,
-          name,
-          item: abs(path),
-        })),
+        '@id': `${url}#breadcrumb`,
+        itemListElement: [['Home', '/'], ...crumbs].map(([n, p], i) => ({ '@type': 'ListItem', position: i + 1, name: n, item: abs(p) })),
       },
+      ...(main ? [main] : []),
     ],
+  };
+}
+
+/** The ScholarlyArticle for one paper page, enriched with what the DOI registry knows. */
+export function paperJsonLd(paper: PaperDetail, path: string) {
+  const base = publicationArticles.find((a) => a.name === paper.pub.title);
+  return {
+    ...base,
+    '@id': `${abs(path)}#article`,
+    url: abs(path),
+    ...(paper.doi ? { identifier: { '@type': 'PropertyValue', propertyID: 'DOI', value: paper.doi } } : {}),
+    ...(paper.doi || paper.pub.paperLink ? { sameAs: paper.doi ? `https://doi.org/${paper.doi}` : paper.pub.paperLink } : {}),
+    ...(paper.authors.length ? { author: paper.authors.map((a) => (/ehsanul/i.test(a) && /haque/i.test(a) ? { '@id': PERSON_ID } : { '@type': 'Person', name: a })) } : {}),
+    ...(paper.publisher ? { publisher: { '@type': 'Organization', name: paper.publisher } } : {}),
+    ...(paper.pages ? { pagination: paper.pages } : {}),
   };
 }

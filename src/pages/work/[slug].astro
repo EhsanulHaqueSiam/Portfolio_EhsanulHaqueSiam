@@ -2,14 +2,18 @@
 import Layout from '../../layouts/Layout.astro';
 import App from '../../App';
 import { featuredExperience, workSlug } from '../../data/content';
-import { SITE } from '../../seo/schema';
+import { SITE, pageJsonLd } from '../../seo/schema';
 
 export function getStaticPaths() {
   return featuredExperience.map((e) => ({ params: { slug: workSlug(e) }, props: { slug: workSlug(e), company: e.company, role: e.role } }));
 }
 const { slug, company, role } = Astro.props;
+const path = `/work/${slug}/`;
+const title = `${role} at ${company} · Ehsanul Haque Siam`;
+const description = `What Ehsanul Haque Siam did as ${role} at ${company}.`;
+const jsonLd = pageJsonLd({ path, name: title, description, crumbs: [['Work', '/#experience'], [company, path]] });
 ---
 
-<Layout title={`${role} at ${company} · Ehsanul Haque Siam`} description={`What Ehsanul Haque Siam did as ${role} at ${company}.`} canonical={`${SITE.url}/work/${slug}/`}>
+<Layout title={title} description={description} canonical={`${SITE.url}${path}`} jsonLd={jsonLd}>
   <App client:load page="work" slug={slug} />
 </Layout>

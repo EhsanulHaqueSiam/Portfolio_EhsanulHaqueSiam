@@ -14,6 +14,8 @@ interface Props {
   /** Home only: preload the animated banner (the LCP image). */
   preloadBanner?: boolean;
   ogType?: 'profile' | 'article';
+  /** Inner pages pass their own graph (seo/schema.ts pageJsonLd); home gets the full profile graph. */
+  jsonLd?: object;
 }
 
 const {
@@ -22,9 +24,8 @@ const {
   canonical = `${SITE.url}/`,
   preloadBanner = false,
   ogType = 'profile',
+  jsonLd = buildJsonLd(),
 } = Astro.props;
-
-const jsonLd = buildJsonLd();
 const lastModified = new Date().toISOString().slice(0, 10);
 ---
 
@@ -79,8 +80,8 @@ const lastModified = new Date().toISOString().slice(0, 10);
     <meta property="og:image:alt" content={META.ogImageAlt} />
     <meta property="og:site_name" content={SITE.name} />
     <meta property="og:locale" content={SITE.locale} />
-    <meta property="profile:first_name" content="Ehsanul" />
-    <meta property="profile:last_name" content="Haque Siam" />
+    {ogType === 'profile' && <meta property="profile:first_name" content="Ehsanul" />}
+    {ogType === 'profile' && <meta property="profile:last_name" content="Haque Siam" />}
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
