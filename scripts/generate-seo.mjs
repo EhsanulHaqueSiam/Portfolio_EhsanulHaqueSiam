@@ -62,6 +62,7 @@ Sitemap: ${SITE}/sitemap.xml
 // ---------------------------------------------------------------------------
 const urls = [
   { loc: `${SITE}/`, changefreq: 'weekly', priority: '1.0' },
+  { loc: `${SITE}/publications`, changefreq: 'monthly', priority: '0.8' },
   { loc: `${SITE}/hire-me.html`, changefreq: 'monthly', priority: '0.9' },
   { loc: `${SITE}/resume.pdf`, changefreq: 'monthly', priority: '0.7' },
 ];

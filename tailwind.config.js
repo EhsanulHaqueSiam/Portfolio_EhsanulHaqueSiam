@@ -75,7 +75,7 @@ export default {
       fontFamily: {
         sans: ['Geist Variable', 'Geist', 'system-ui', 'sans-serif'],
         mono: ['Geist Mono Variable', 'Geist Mono', 'ui-monospace', 'SFMono-Regular', 'monospace'],
-        script: ['Pacifico', 'ui-rounded', 'cursive'],
+        serif: ['Instrument Serif', 'Georgia', 'serif'],
         body: ['Geist Variable', 'Geist', 'system-ui', 'sans-serif'],
       },
       animation: {

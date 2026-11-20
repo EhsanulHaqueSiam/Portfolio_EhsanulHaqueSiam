@@ -3,7 +3,7 @@
 import geistWoff2 from '@fontsource-variable/geist/files/geist-latin-wght-normal.woff2?url';
 import '@fontsource-variable/geist';
 import '@fontsource-variable/geist-mono';
-import '@fontsource/pacifico';
+import '@fontsource/instrument-serif';
 import '../index.css';
 import { SITE, META, buildJsonLd } from '../seo/schema';
 
@@ -90,7 +90,7 @@ const lastModified = new Date().toISOString().slice(0, 10);
     <link rel="manifest" href="/site.webmanifest" />
 
     <!-- Theme & PWA -->
-    <meta name="theme-color" content="#030712" />
+    <meta name="theme-color" content="#000000" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
@@ -107,8 +107,8 @@ const lastModified = new Date().toISOString().slice(0, 10);
     <!-- Above-the-fold font preload (hero name) -->
     <link rel="preload" as="font" type="font/woff2" crossorigin href={geistWoff2} />
 
-    <!-- Hero avatar preload -->
-    <link rel="preload" as="image" type="image/webp" href="/images/profile2-hero.webp" fetchpriority="high" />
+    <!-- LCP image: the banner above the profile row -->
+    <link rel="preload" as="image" type="image/webp" href="/images/banner.webp" fetchpriority="high" />
 
     <!-- Structured Data -->
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} is:inline />

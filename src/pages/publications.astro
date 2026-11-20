@@ -1,0 +1,13 @@
+---
+import Layout from '../layouts/Layout.astro';
+import App from '../App';
+import { SITE } from '../seo/schema';
+---
+
+<Layout
+  title="Publications · Ehsanul Haque Siam"
+  description="Peer-reviewed papers, book chapters and talks by Ehsanul Haque Siam: NLP, medical language models and topic modeling."
+  canonical={`${SITE.url}/publications`}
+>
+  <App client:load page="publications" />
+</Layout>

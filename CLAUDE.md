@@ -7,12 +7,12 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 This repository **is the primary, standalone project** and is what deploys to Netlify.
 It was migrated from a Vite React SPA to **Astro 7 (static output, no SSR)**.
 
-- The entire React + Framer Motion experience mounts as a **single Astro island**
-  (`src/pages/index.astro` → `<App client:load />`). Astro server-renders it to
-  static HTML at build time (SEO/AEO/GEO), then hydrates it in the browser so every
-  animation, Lenis smooth-scroll, and interaction works exactly as before.
+- The whole site is one React island (`<App client:load page=... />`) mounted by
+  `src/pages/index.astro` and `src/pages/publications.astro`. Astro server-renders it to
+  static HTML at build time (SEO/AEO/GEO), then hydrates it for sounds, the dock, the
+  project pile and the Resume overlay.
 - **No SSR / no adapter** — `output: 'static'`. Netlify serves the pre-built `dist/`.
-- React 18, Tailwind v3 (via PostCSS), framer-motion 11, `@studio-freight/lenis`.
+- React 18, Tailwind v3 (via PostCSS), framer-motion 11.
 - The legacy Vite SPA lives in `/home/siam/Personal/portfolio` (now stale — do not
   copy from it; work directly in this repo).
 
@@ -51,15 +51,21 @@ Astro 7 + React islands + TailwindCSS + Framer Motion.
 ### Astro structure
 ```
 src/
-├── pages/index.astro     # mounts <App client:load /> inside Layout
-├── pages/404.astro       # static 404 (noindex)
-├── layouts/Layout.astro  # <head>: meta, OG/Twitter, JSON-LD, fonts, favicons, no-JS reveal
-├── seo/schema.ts         # builds full JSON-LD @graph + META from content.ts (data-driven)
-├── App.tsx               # composes all sections (static imports so they SSR into HTML)
-├── index.css             # global styles + Tailwind directives (imported by Layout)
-├── components/            # section components + ui/ (animation/effect components)
-└── hooks/                 # useMediaQuery, useMousePosition (all SSR-safe / effect-guarded)
-scripts/generate-seo.mjs   # prebuild: regenerates public/{robots.txt,sitemap.xml,llms.txt,llms-full.txt}
+├── pages/index.astro         # home; fetches open-source stars/PR states at build (loadOpenSource)
+├── pages/publications.astro  # /publications
+├── pages/404.astro           # static 404 (noindex)
+├── layouts/Layout.astro      # <head>: meta, OG/Twitter, JSON-LD, fonts, favicons, no-JS reveal
+├── seo/schema.ts             # builds full JSON-LD @graph + META from content.ts (data-driven)
+├── App.tsx                   # one column between dashed rails; picks home or publications
+├── components/home/          # Nov 2026 redesign: chrome (Nav, Section, Dock), Profile, Shipped,
+│                             #   OpenSource, Rows (Experience/Research/Education), StackActivity,
+│                             #   Publications, icons + brandPaths (Simple Icons, CC0)
+├── components/Resume.tsx     # CV overlay: #resume, and #resume-print for hq's PDF printer
+├── components/ui/            # Icons, ThemeToggle (still used)
+├── lib/sound.ts              # synthesized Web Audio UI sounds, toggle persisted in localStorage `sound`
+├── lib/haptics.ts            # haptic(): Vibration API, or the iOS `<input switch>` trick
+└── data/                     # content.ts (typed JSON hub), opensource.ts, types.ts
+scripts/generate-seo.mjs      # prebuild: regenerates public/{robots.txt,sitemap.xml,llms.txt,llms-full.txt}
 ```
 
 ### SEO / AEO / GEO
@@ -71,32 +77,23 @@ scripts/generate-seo.mjs   # prebuild: regenerates public/{robots.txt,sitemap.xm
 - SSR-hidden content: Framer Motion emits `opacity:0` inline until hydration. Layout injects
   an `html.no-js` fallback + inline JS so JS-off visitors and crawlers still see all content.
 
-### Key Libraries
-- **Astro 7** — static site generator, React integration (`@astrojs/react`).
-- **Framer Motion 11** — all animations via `LazyMotion` + `m` (strict mode: import `m`, never `motion`).
-- **@studio-freight/lenis** — smooth scroll (`SmoothScroll`, browser-only, effect-guarded).
-- **cobe** — WebGL globe in the About bento (Dhaka marker, drag to spin, IO-gated).
-- **TailwindCSS v3** — shadcn-style semantic tokens (July 2026 rebuild modeled on
-  shivypatel.com): `background/foreground/card/muted/secondary/border/ring` as HSL
-  triplets in `src/index.css` (`:root` light + `.dark` dark; class dark mode, default
-  dark, toggled via `ThemeToggle` with View Transition cross-fade, saved in
-  localStorage `theme`). Fonts: Geist (sans), Geist Mono, Pacifico (`.script-accent`).
-  Legacy `paper/ink/vermilion` color tokens remain ONLY for the Resume overlay sheet
-  (`.resume-paper`), which intentionally stays light for print.
-  Utilities in `index.css`: `.glass-chrome`, `.glass-card`, `.fade-mask-left/right`,
-  `.bg-ellipse`, `.dashboard-grid` (bento areas), `.btn-glass`, `.btn-primary`.
-- **Interactive ui/ components** (magicui/aceternity ports, all SSR-safe + IO/reduced-motion
-  gated): BlurFade, Marquee, NumberTicker, ShimmerButton/Border, SpotlightGlow,
-  GlowingEffect, BorderBeam, TracingBeam, HeroConstellation, RainbowButton,
-  ScrambleText, ScratchToReveal, AnimatedName, Globe, AsciiTorus, AsciiField, StudioCat
-  (footer cat), EmojiCursor (`data-cursor-emoji="…"`), CommandPalette (Ctrl/Cmd+K).
-- **Performance invariant (Lighthouse mobile ≥94)**: every canvas/WebGL/rAF loop MUST
-  pause offscreen (IntersectionObserver) and on `document.hidden`, and cap at ~30fps.
-  The cobe Globe uses `threshold: 0.25` — do not loosen; headless/software-GL renders
-  it on the CPU and it alone cost 60s of TBT.
+### Key Libraries and design
+- **Astro 7** static output with `@astrojs/react`. **Framer Motion 11** via `LazyMotion` + `m`
+  (strict mode: import `m`, never `motion`).
+- **TailwindCSS v3**, shadcn-style HSL tokens in `src/index.css` (`:root` light, `.dark` true
+  black). Class dark mode, default dark, `ThemeToggle` saves localStorage `theme`.
+- Fonts: Geist (sans), Geist Mono, Instrument Serif (`font-serif`, display titles).
+- Shell utilities in `index.css`: `.rails` (680px column, dashed sides), `.hatch` (section band),
+  `.press`, `.icon-pop` / `.icon-nudge` (hover micro-animations), `.sticker`, `.pile` / `.print`.
+- Open source section: `assets/data/opensource.json` is hand-kept (PR numbers, titles, fallback
+  stars); `loadOpenSource()` refreshes stars and merged/open state from the GitHub API at build
+  (set `GITHUB_TOKEN` to lift the 60 req/h limit) and drops closed-unmerged PRs.
+- GitHub activity grid fetches `github-contributions-api.jogruber.de` client-side (CSP allows it).
+- Every hover/tap sound goes through `sound.*`; it stays silent until the first user gesture
+  and while muted. Haptics only fire on coarse pointers.
 
 ### Image Handling
 - WebP in `public/images/` (projects/, achievements/, publications/, education/).
 - Helpers in `content.ts`: `getProjectImage()`, `getAchievementImage()`, `getPublicationImage()`.
-- `OptimizedImage` lazy-loads via IntersectionObserver (non-priority images are absent from
-  static HTML — use `priority` for anything that must be crawlable/LCP).
+- `public/images/banner.webp` is the header banner (pixel art, generated Nov 2026); it is the LCP
+  image and is preloaded in `Layout.astro`.

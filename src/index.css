@@ -57,21 +57,22 @@
 }
 
 .dark {
-  --background: 224 71% 4%;
-  --foreground: 210 20% 98%;
-  --card: 221 39% 11%;
-  --card-foreground: 210 20% 98%;
-  --primary: 220 13% 91%;
-  --primary-foreground: 221 39% 11%;
-  --secondary: 215 28% 17%;
-  --secondary-foreground: 210 20% 98%;
-  --muted: 215 28% 17%;
-  --muted-foreground: 218 11% 65%;
-  --accent: 215 28% 17%;
-  --accent-foreground: 210 20% 98%;
-  --border: 220 18% 14%;
-  --input: 220 16% 18%;
-  --ring: 220 9% 46%;
+  /* True black, neutral grays (Nov 2026 redesign). */
+  --background: 0 0% 0%;
+  --foreground: 0 0% 100%;
+  --card: 0 0% 4%;
+  --card-foreground: 0 0% 100%;
+  --primary: 0 0% 92%;
+  --primary-foreground: 0 0% 4%;
+  --secondary: 0 0% 9%;
+  --secondary-foreground: 0 0% 98%;
+  --muted: 0 0% 9%;
+  --muted-foreground: 0 0% 60%;
+  --accent: 0 0% 9%;
+  --accent-foreground: 0 0% 98%;
+  --border: 0 0% 13%;
+  --input: 0 0% 15%;
+  --ring: 0 0% 45%;
 
   /* Signal tokens — brighter shades tuned for the dark surface. */
   --signal-success: 158 64% 52%;
@@ -97,6 +98,10 @@
 
   html.dark {
     color-scheme: dark;
+  }
+
+  html {
+    touch-action: manipulation;
   }
 
   body {
@@ -157,15 +162,6 @@
 }
 
 @layer components {
-  /* Script accent voice (Pacifico) used inside headings */
-  .script-accent {
-    font-family: 'Pacifico', ui-rounded, cursive;
-    font-weight: 400;
-    font-size: 1.05em;
-    line-height: 1;
-    vertical-align: baseline;
-  }
-
   /* Glass panel (navbar, palette, floating chrome) */
   .glass-chrome {
     background: hsl(var(--background) / 0.6);
@@ -543,5 +539,135 @@ html.is-scrolling #main-content {
   @page {
     margin: 0.4in 0.5in;
     size: letter;
+  }
+}
+
+
+/* ============================================================
+   Redesign shell (Nov 2026): dashed side rails, hatched section
+   bands, sticker strip, project pile, hover micro-animations.
+   ============================================================ */
+.rails {
+  max-width: 680px;
+  margin-inline: auto;
+  border-inline: 1px dashed hsl(var(--border));
+}
+
+.hatch {
+  height: 28px;
+  border-block: 1px solid hsl(var(--border));
+  background: repeating-linear-gradient(-45deg, hsl(var(--foreground) / 0.08) 0 1px, transparent 1px 9px);
+}
+
+.press {
+  transition: transform 160ms var(--ease-out-strong);
+}
+.press:active {
+  transform: scale(0.97);
+}
+
+/* Icon micro-animation, played when its .group parent is hovered. */
+@media (hover: hover) and (pointer: fine) {
+  .group:hover .icon-pop {
+    animation: icon-pop 420ms var(--ease-out-strong);
+  }
+  .group:hover .icon-nudge {
+    transform: translate(2px, -2px);
+  }
+}
+.icon-nudge {
+  transition: transform 200ms var(--ease-out-strong);
+}
+@keyframes icon-pop {
+  30% { transform: rotate(-12deg) scale(1.15); }
+  65% { transform: rotate(6deg) scale(1.04); }
+  100% { transform: none; }
+}
+
+/* Sticker strip next to the name: tilted tiles that lift on hover or tap. */
+.sticker {
+  transform: rotate(var(--r));
+  transition: transform 260ms var(--ease-out-strong);
+}
+.sticker.lift {
+  transform: translateY(-6px) rotate(0deg) scale(1.12);
+}
+@media (hover: hover) and (pointer: fine) {
+  .sticker:hover {
+    transform: translateY(-6px) rotate(0deg) scale(1.12);
+  }
+}
+
+/* Project pile: stacked prints that fan out while the pile is hovered. */
+.pile {
+  position: relative;
+  height: 196px;
+}
+.print {
+  position: absolute;
+  left: 50%;
+  top: 14px;
+  width: 196px;
+  margin-left: -98px;
+  padding: 6px 6px 24px;
+  border-radius: 4px;
+  background: #f4f4f1;
+  box-shadow: 0 10px 28px rgb(0 0 0 / 0.45);
+  transform: translateX(var(--x)) rotate(var(--r));
+  transition: transform 450ms var(--ease-out-strong);
+}
+.print img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  border-radius: 2px;
+}
+.print span {
+  position: absolute;
+  left: 8px;
+  bottom: 5px;
+  font: 500 11px/1 'Geist Mono Variable', ui-monospace, monospace;
+  color: #111;
+}
+@media (hover: hover) and (pointer: fine) {
+  .pile:hover .print {
+    transform: translateX(var(--sx)) rotate(var(--sr));
+  }
+  .pile .print:hover {
+    z-index: 10;
+    transform: translateX(var(--sx)) translateY(-10px) rotate(0deg) scale(1.05);
+  }
+}
+@media (max-width: 640px), (hover: none) {
+  .pile {
+    display: flex;
+    gap: 14px;
+    height: auto;
+    padding: 14px 16px 18px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+  .print {
+    position: relative;
+    left: auto;
+    top: auto;
+    flex: 0 0 68%;
+    margin: 0;
+    scroll-snap-align: center;
+    transform: rotate(calc(var(--r) / 2));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .print,
+  .sticker,
+  .press,
+  .icon-nudge {
+    transition: none;
+  }
+  .group:hover .icon-pop {
+    animation: none;
   }
 }

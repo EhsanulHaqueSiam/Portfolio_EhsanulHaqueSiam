@@ -1,0 +1,191 @@
+import { type ReactNode, useRef, useState } from 'react';
+import { AnimatePresence, type MotionValue, m, useMotionValue, useReducedMotion, useSpring, useTransform } from 'framer-motion';
+import { profile } from '../../data/content';
+import { haptic } from '../../lib/haptics';
+import { setSoundEnabled, sound, useSoundEnabled } from '../../lib/sound';
+import { ArrowUpRightIcon, EmailIcon, GitHubIcon, LinkedInIcon, ResumeIcon } from '../ui/Icons';
+import { ThemeToggle } from '../ui/ThemeToggle';
+import { Brand, SpeakerIcon } from './icons';
+
+/** Every place to reach Siam, in dock order. `sep` puts a divider before the item. */
+export const links = [
+  { label: 'Email', href: `mailto:${profile.email}`, icon: <EmailIcon className="h-full w-full" /> },
+  { label: 'GitHub', href: profile.github, icon: <GitHubIcon className="h-full w-full" /> },
+  { label: 'X', href: profile.x, icon: <Brand name="x" className="h-full w-full" /> },
+  { label: 'LinkedIn', href: profile.linkedin, icon: <LinkedInIcon className="h-full w-full" /> },
+  { label: 'Google Scholar', href: profile.scholar, icon: <Brand name="scholar" className="h-full w-full" /> },
+  { label: 'ORCID', href: profile.orcid, icon: <Brand name="orcid" className="h-full w-full" /> },
+  { label: 'CV', href: '#resume', icon: <ResumeIcon className="h-full w-full" />, sep: true },
+];
+
+export const isExternal = (href: string) => href.startsWith('http');
+export const ext = (href: string) => (isExternal(href) ? { target: '_blank', rel: 'noopener noreferrer' } : {});
+
+/** A titled block between hatched bands. `aside` sits right of the title (a link or a hint). */
+export function Section({ id, title, aside, children, flush }: { id?: string; title: ReactNode; aside?: ReactNode; children: ReactNode; flush?: boolean }) {
+  return (
+    <section id={id} aria-labelledby={id && `${id}-title`} className="scroll-mt-16">
+      <div className="hatch" aria-hidden="true" />
+      <div className={flush ? 'pt-4' : 'px-4 py-5'}>
+        <div className={`mb-3 flex items-baseline justify-between gap-3 ${flush ? 'px-4' : ''}`}>
+          <h2 id={id && `${id}-title`} className="text-balance font-serif text-[28px] leading-none tracking-[-0.01em]">
+            {title}
+          </h2>
+          {aside && <div className="text-xs text-muted-foreground">{aside}</div>}
+        </div>
+        {children}
+      </div>
+    </section>
+  );
+}
+
+/** Small "Label ↗" link used in section headers. */
+export function HeaderLink({ href, children }: { href: string; children: ReactNode }) {
+  return (
+    <a href={href} {...ext(href)} onMouseEnter={sound.tick} className="group inline-flex items-center gap-1 transition-colors hover:text-foreground">
+      {children}
+      <ArrowUpRightIcon className="icon-nudge h-3 w-3" />
+    </a>
+  );
+}
+
+export function SoundToggle() {
+  const on = useSoundEnabled();
+  return (
+    <button
+      type="button"
+      aria-pressed={on}
+      aria-label={on ? 'Mute sounds' : 'Turn sounds on'}
+      onClick={() => {
+        setSoundEnabled(!on);
+        haptic();
+      }}
+      className="press group grid h-8 w-8 place-items-center rounded-md border border-border text-muted-foreground transition-colors hover:text-foreground"
+    >
+      <SpeakerIcon on={on} className="icon-pop h-4 w-4" />
+    </button>
+  );
+}
+
+export function Nav({ current }: { current: 'home' | 'publications' }) {
+  const items = [
+    { label: 'Home', href: '/', key: 'home' },
+    { label: 'Projects', href: '/#projects' },
+    { label: 'Research', href: '/publications', key: 'publications' },
+    { label: 'CV', href: '#resume' },
+  ];
+  return (
+    <header className="sticky top-0 z-40 border-b border-border bg-background">
+      <nav aria-label="Primary" className="flex items-center justify-between gap-3 px-4 py-2.5">
+        <a href="/" className="font-serif text-[26px] leading-none" onMouseEnter={sound.tick}>
+          Siam
+        </a>
+        <div className="flex items-center gap-1 sm:gap-3">
+          <ul className="flex items-center gap-3 text-[13px] sm:gap-4">
+            {items.map((it) => (
+              <li key={it.label} className={it.label === 'Projects' ? 'hidden sm:block' : undefined}>
+                <a
+                  href={it.href}
+                  aria-current={it.key === current ? 'page' : undefined}
+                  onMouseEnter={sound.tick}
+                  className="text-muted-foreground transition-colors hover:text-foreground aria-[current=page]:text-foreground"
+                >
+                  {it.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+          <div className="ml-1 flex items-center gap-1.5">
+            <SoundToggle />
+            <ThemeToggle className="!h-8 !w-8 border border-border" />
+          </div>
+        </div>
+      </nav>
+    </header>
+  );
+}
+
+const DOCK_BASE = 36;
+const DOCK_MAX = 54;
+const DOCK_RANGE = 120;
+
+function DockItem({ item, i, mouseX }: { item: (typeof links)[number]; i: number; mouseX: MotionValue<number> }) {
+  const ref = useRef<HTMLAnchorElement>(null);
+  const [tip, setTip] = useState(false);
+  const distance = useTransform(mouseX, (x) => {
+    const r = ref.current?.getBoundingClientRect();
+    return r ? x - (r.left + r.width / 2) : Number.POSITIVE_INFINITY;
+  });
+  const size = useSpring(useTransform(distance, [-DOCK_RANGE, 0, DOCK_RANGE], [DOCK_BASE, DOCK_MAX, DOCK_BASE]), {
+    mass: 0.12,
+    stiffness: 190,
+    damping: 13,
+  });
+  const glyph = useTransform(size, [DOCK_BASE, DOCK_MAX], [1, 1.3]);
+
+  return (
+    <m.a
+      ref={ref}
+      href={item.href}
+      {...ext(item.href)}
+      aria-label={item.label}
+      style={{ width: size, height: size }}
+      whileTap={{ scale: 0.9 }}
+      onMouseEnter={() => {
+        setTip(true);
+        sound.note(i);
+      }}
+      onMouseLeave={() => setTip(false)}
+      onFocus={() => setTip(true)}
+      onBlur={() => setTip(false)}
+      onClick={haptic}
+      className="relative grid shrink-0 place-items-center rounded-[10px] text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring"
+    >
+      <AnimatePresence>
+        {tip && (
+          <m.span
+            initial={{ opacity: 0, y: 6, x: '-50%', filter: 'blur(3px)' }}
+            animate={{ opacity: 1, y: 0, x: '-50%', filter: 'blur(0px)' }}
+            exit={{ opacity: 0, y: 4, x: '-50%', filter: 'blur(3px)' }}
+            transition={{ type: 'spring', bounce: 0, duration: 0.25 }}
+            className="pointer-events-none absolute -top-8 left-1/2 whitespace-nowrap rounded-md border border-border bg-card px-2 py-1 text-[11px] text-foreground"
+          >
+            {item.label}
+          </m.span>
+        )}
+      </AnimatePresence>
+      <m.span style={{ scale: glyph }} className="block h-[17px] w-[17px]">
+        {item.icon}
+      </m.span>
+    </m.a>
+  );
+}
+
+/** Floating bottom dock; icons magnify under the cursor on desktop, static on touch. */
+export function Dock() {
+  const mouseX = useMotionValue(Number.POSITIVE_INFINITY);
+  const reduce = useReducedMotion();
+  return (
+    <nav
+      aria-label="Elsewhere"
+      onMouseMove={(e) => !reduce && matchMedia('(hover: hover) and (pointer: fine)').matches && mouseX.set(e.clientX)}
+      onMouseLeave={() => mouseX.set(Number.POSITIVE_INFINITY)}
+      className="fixed bottom-4 left-1/2 z-40 flex h-[50px] -translate-x-1/2 items-end gap-1 rounded-2xl border border-border bg-card/95 px-1.5 pb-[6px] shadow-[0_10px_30px_rgb(0_0_0/0.35)] print:hidden"
+    >
+      {links.map((item, i) => (
+        <span key={item.label} className="contents">
+          {item.sep && <span aria-hidden="true" className="mx-0.5 mb-1.5 h-6 w-px self-end bg-border" />}
+          <DockItem item={item} i={i} mouseX={mouseX} />
+        </span>
+      ))}
+    </nav>
+  );
+}
+
+export function Footer() {
+  return (
+    <footer className="border-t border-border px-4 pb-24 pt-5 font-mono text-[11px] text-muted-foreground">
+      © {new Date().getFullYear()} {profile.name}. Dhaka, Bangladesh.
+    </footer>
+  );
+}

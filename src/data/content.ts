@@ -135,7 +135,6 @@ export const getPublicationImage = (imageName: string): string => {
 };
 
 export const profileImage = '/images/profile2.webp';
-export const profileHeroImage = '/images/profile2-hero.webp';
 
 export const hideImageOnError = (e: React.SyntheticEvent<HTMLImageElement>) => {
   e.currentTarget.style.display = 'none';

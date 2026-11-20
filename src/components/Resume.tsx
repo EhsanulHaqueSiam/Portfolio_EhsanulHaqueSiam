@@ -103,39 +103,22 @@ export function Resume() {
     return () => window.removeEventListener('hashchange', sync);
   }, []);
 
-  /* ── lock body + <html> (the real scroller) + stop Lenis; the print view also scopes the print rules ── */
+  /* ── lock body + <html> (the real scroller); the print view also scopes the print rules ── */
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
       document.documentElement.style.overflow = 'hidden';
       if (printing) document.documentElement.classList.add('resume-printing');
-      window.dispatchEvent(new Event('lenis:stop'));
     } else {
       document.body.style.overflow = '';
       document.documentElement.style.overflow = '';
-      window.dispatchEvent(new Event('lenis:start'));
     }
     return () => {
       document.body.style.overflow = '';
       document.documentElement.style.overflow = '';
       document.documentElement.classList.remove('resume-printing');
-      window.dispatchEvent(new Event('lenis:start'));
     };
   }, [isOpen, printing]);
-
-  /* ── CRITICAL: block wheel/touch propagation to Lenis ── */
-  useEffect(() => {
-    const el = overlayRef.current;
-    if (!isOpen || !el) return;
-    const stop = (e: Event) => e.stopPropagation();
-    // passive: true – we don't call preventDefault, just stop bubbling
-    el.addEventListener('wheel', stop, { passive: true });
-    el.addEventListener('touchmove', stop, { passive: true });
-    return () => {
-      el.removeEventListener('wheel', stop);
-      el.removeEventListener('touchmove', stop);
-    };
-  }, [isOpen]);
 
   const close = useCallback((instant = false) => {
     setInstantClose(instant);
