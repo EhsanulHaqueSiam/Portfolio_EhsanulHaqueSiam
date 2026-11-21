@@ -5,7 +5,9 @@ import { haptic } from '../../lib/haptics';
 import { sound, toggleSound, useSoundOn } from '../../lib/sound';
 import { ArrowUpRightIcon, EmailIcon, GitHubIcon, LinkedInIcon, ResumeIcon } from '../ui/Icons';
 import { ThemeToggle } from '../ui/ThemeToggle';
+import { CommandMenu } from './CommandMenu';
 import { Brand, SpeakerIcon } from './icons';
+import { PixelCat } from './PixelCat';
 
 /** Every place to reach Siam, in dock order. `sep` puts a divider before the item. */
 export const links = [
@@ -166,6 +168,7 @@ export function Nav({ current }: { current: Page }) {
             <span ref={dotRef} aria-hidden="true" className="nav-dot" />
           </ul>
           <div className="ml-1 flex items-center gap-1.5">
+            <CommandMenu />
             <SoundToggle />
             <ThemeToggle className="!h-8 !w-8 border border-border" />
           </div>
@@ -299,6 +302,7 @@ export function Dock() {
       <span ref={tipEl} aria-hidden="true" className="dock-tip">
         <span />
       </span>
+      <PixelCat />
     </nav>
   );
 }

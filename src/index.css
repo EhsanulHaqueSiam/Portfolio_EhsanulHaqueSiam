@@ -323,6 +323,87 @@
   transition-delay: calc(120ms + var(--w, 0) * 30ms);
 }
 
+/* The signature (Signature.tsx) is uncovered left to right like a pen when the closing
+   section reveals. Only a block that waited animates; otherwise it is simply there. */
+@media (prefers-reduced-motion: no-preference) {
+  [data-reveal='wait'] .sig {
+    clip-path: inset(0 100% 0 0);
+  }
+  [data-reveal='in'] .sig {
+    animation: sig-write 1.3s 0.5s cubic-bezier(0.65, 0, 0.35, 1) backwards;
+  }
+}
+@keyframes sig-write {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+/* The hand-drawn underline under a link in About (Scribbled): the stroke draws in once,
+   after the block has entered. pathLength=1 on the path makes the dash maths unitless. */
+.scribble path {
+  fill: none;
+  stroke: currentColor;
+  stroke-opacity: 0.55;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
+.scribble:hover path {
+  stroke-opacity: 1;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .scribble path {
+    stroke-dasharray: 1;
+    animation: scribble-draw 0.9s 0.7s cubic-bezier(0.65, 0, 0.35, 1) backwards;
+  }
+}
+@keyframes scribble-draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* The pixel cat on the dock (PixelCat.tsx): two frames, swapped on hover or a tap. */
+.cat .cat-flick,
+.cat .cat-blink,
+.cat:hover .cat-tail,
+.cat:hover .cat-eyes,
+.cat[data-pet] .cat-tail,
+.cat[data-pet] .cat-eyes {
+  display: none;
+}
+.cat:hover .cat-flick,
+.cat:hover .cat-blink,
+.cat[data-pet] .cat-flick,
+.cat[data-pet] .cat-blink {
+  display: inline;
+}
+
+/* The ⌘K menu (CommandMenu.tsx): a plain dimmed backdrop (no blur), and a quick scale-in
+   from the top on open. Closing is instant. */
+.cmdk::backdrop {
+  background: rgb(0 0 0 / 0.6);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .cmdk[open] {
+    animation: cmdk-in 160ms var(--ease-out-strong);
+    transform-origin: 50% 0;
+  }
+}
+@keyframes cmdk-in {
+  from {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+}
+
 /* Theme cross-fade via the View Transitions API (toggle only) */
 @media (prefers-reduced-motion: no-preference) {
   ::view-transition-old(root),

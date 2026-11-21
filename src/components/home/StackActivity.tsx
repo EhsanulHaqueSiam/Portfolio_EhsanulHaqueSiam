@@ -4,7 +4,9 @@ import { profile, quote, skills } from '../../data/content';
 import { haptic } from '../../lib/haptics';
 import { sound } from '../../lib/sound';
 import { HeaderLink, Section } from './chrome';
+import { Badge } from './Badge';
 import { RollNumber } from './RollNumber';
+import { Signature } from './Signature';
 
 // Short tab labels for the skills.json categories; unlisted ones show only under "All".
 const TABS: Record<string, string> = {
@@ -226,7 +228,10 @@ export function Outro() {
   return (
     <section aria-labelledby="outro-title">
       <div className="hatch" aria-hidden="true" />
-      <div className="px-4 py-12 text-center">
+      {/* Phones: the badge hangs centred above the heading, which moves down to make room.
+          sm and up: it hangs in the right-hand gutter beside the text. */}
+      <div className="relative px-4 pb-10 pt-[320px] text-center sm:pt-12">
+        <Badge />
         <h2 id="outro-title" className="font-serif text-[30px] leading-none">
           Scrolled Too Far
         </h2>
@@ -239,6 +244,7 @@ export function Outro() {
         >
           Let’s talk <span className="icon-nudge">→</span>
         </a>
+        <Signature className="mx-auto mt-7 block w-[132px] text-foreground/85" />
       </div>
     </section>
   );

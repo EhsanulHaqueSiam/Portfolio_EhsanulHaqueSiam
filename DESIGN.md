@@ -95,10 +95,19 @@ Tokens live in `src/index.css` as HSL triplets (`:root` light, `.dark` dark). Da
 ## 5. Components
 
 - **Nav:** serif "Siam", text links with a 4px dot under the current one that slides to the
-  hovered link (CSS transform from a measured offset), a sound button ("Sound", pressed/not)
-  and the theme toggle.
-- **Profile:** animated pixel banner, boxed 88px avatar, name + stickers (contribution tiles
-  link to Open Source, tool tiles are labelled images), rolling role line, location.
+  hovered link (CSS transform from a measured offset), a search button that opens the ⌘K menu,
+  a sound button ("Sound", pressed/not) and the theme toggle.
+- **⌘K menu:** a native `<dialog>` (⌘K / Ctrl K anywhere, or the search button): a combobox
+  over a listbox of sections, papers, roles and actions (copy email, CV, sound, theme,
+  GitHub), grouped, with key hints in the footer. Plain dimmed backdrop, no blur; scales in
+  from 0.97 in 160ms, closes instantly. Pattern from incident.io, Searchable and Base44.
+- **Profile:** animated pixel banner, boxed 88px avatar you can grab and pull (follows a third
+  of the way, stretches along the pull, springs back with a wobble), name + stickers
+  (contribution tiles link to Open Source, tool tiles are labelled images), rolling role line,
+  and a status line: a green dot and "Open to work" (hq's `available`), then Dhaka time,
+  re-read once a minute with no animation.
+- **About:** the current company's link carries a hand-drawn wavy underline that draws once on
+  load (`.scribble`).
 - **Rows:** mark tile, title, sub, right meta. One highlight glides under the hovered or
   focused row (`GlideList`, after motion-primitives' Animated Background).
 - **Project cards (default view):** hairline-bordered card, gradient corner with the inset
@@ -117,7 +126,13 @@ Tokens live in `src/index.css` as HSL triplets (`:root` light, `.dark` dark). Da
   hydration, in print, or with reduced motion.
 - **Paper pages:** a 1px reading-progress bar on the header's bottom edge.
 - **Dock:** magnifies under the cursor (spring); one label slides between items and resizes
-  to each word (no per-item tooltip, no blur); pitched tick per item.
+  to each word (no per-item tooltip, no blur); pitched tick per item. A 17x14 pixel cat sits on
+  its top edge and blinks and flicks its tail on hover or tap (two CSS frames).
+- **Closing section:** an ID badge hangs on a lanyard from the section's top edge (right
+  gutter on sm+, centred above the heading on phones). Drag it anywhere; an underdamped spring
+  swings it home (`usePull` in `src/lib/pull.ts`, since `domAnimation` has no drag). Under
+  "Let's talk", a "Siam" signature (Herr Von Muellerhoff outlines, OFL, plus a swash) is
+  wiped in left to right when the section scrolls in.
 
 ## 6. Motion, sound and haptics
 

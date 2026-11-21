@@ -11,6 +11,16 @@ const U = ({ href, children }: { href: string; children: ReactNode }) => (
   </a>
 );
 
+/** A link underlined by hand: a wavy pen stroke that draws itself in once on load (.scribble in index.css). */
+const Scribbled = ({ href, children }: { href: string; children: ReactNode }) => (
+  <a href={href} {...ext(href)} className="scribble relative inline-block font-medium text-foreground">
+    {children}
+    <svg viewBox="0 0 100 9" preserveAspectRatio="none" aria-hidden="true" className="absolute -bottom-[5px] -left-0.5 h-[7px] w-[calc(100%+4px)] overflow-visible">
+      <path d="M1 5 C 12 1, 20 8, 32 4 S 55 2, 66 5 S 88 7, 99 3" pathLength={1} />
+    </svg>
+  </a>
+);
+
 const cgpa = education[0]?.details.find((d) => d.startsWith('Cumulative CGPA'))?.replace('Cumulative ', '');
 
 export function About() {
@@ -18,7 +28,7 @@ export function About() {
     <Section id="about" title="About">
       <ul className="grid gap-2.5 text-[15px] leading-relaxed text-foreground/85">
         <li className="relative pl-4 before:absolute before:left-0 before:top-[0.7em] before:h-1 before:w-1 before:rounded-full before:bg-muted-foreground">
-          {profile.currentRole} at <U href="https://ledgercross.com">{profile.currentCompany}</U>: backend services, React Native and Flutter apps, AI features, and the CI/CD and cloud
+          {profile.currentRole} at <Scribbled href="https://ledgercross.com">{profile.currentCompany}</Scribbled>: backend services, React Native and Flutter apps, AI features, and the CI/CD and cloud
           infrastructure that ship them.
         </li>
         <li className="relative pl-4 before:absolute before:left-0 before:top-[0.7em] before:h-1 before:w-1 before:rounded-full before:bg-muted-foreground">
