@@ -55,15 +55,12 @@ type Site = {
   projectIcons: Record<string, string>;
   companies: Record<string, { logo?: string; link?: { label: string; href: string } }>;
   quote: { text: string; by: string };
-  roles: string[];
   /** Highlights picked for "AI in Production": the role's highlights whose text starts with or contains `match`. */
   aiWork: Array<{ title: string; company: string; match: string[] }>;
   stickers: Array<{ label: string; mark: 't3' | 'betterAuth' | 'neovim' | 'linux'; href?: string }>;
 };
 const site = siteData as Site;
 export const quote = site.quote;
-/** Roles that roll after "Open to work" in the hero status line; each restates a fact (title, Arché role). */
-export const roles = site.roles;
 /** The AI work rows, each resolved to its role (for the link and dates) and the quoted highlights. */
 export const aiWork = site.aiWork.flatMap((w) => {
   const role = experience.find((e) => e.company === w.company);

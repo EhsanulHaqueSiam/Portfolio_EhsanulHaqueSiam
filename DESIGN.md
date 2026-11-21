@@ -101,12 +101,10 @@ Tokens live in `src/index.css` as HSL triplets (`:root` light, `.dark` dark). Da
   over a listbox of sections, papers, roles and actions (copy email, CV, sound, theme,
   GitHub), grouped, with key hints in the footer. Plain dimmed backdrop, no blur; scales in
   from 0.97 in 160ms, closes instantly. Pattern from incident.io, Searchable and Base44.
-- **Profile:** animated pixel banner, boxed 88px avatar you can grab and pull, name + stickers,
-  a fixed headline (hq `title`), and a status line: green dot, "Open to work" (hq `available`),
-  the rolling role (site.json `roles`, the only motion here), and Dhaka time. Then hq's tagline,
-  "Email me" and "View CV", and hq's four stats in a row that rolls up once on load (odometer,
-  sans figures). Read against the hiring bar: the first screen says one role, what Siam does,
-  the numbers, and the next step, with no waiting.
+- **Profile:** three things, like samworks: name + stickers, the role (hq `title`, muted sans),
+  and one quiet line, a green dot, "Open to work" (hq `available`) and Dhaka time. Pixel banner
+  above, a pullable 104px photo beside. No tagline, buttons or rolling text: the hero must not
+  feel crammed. hq's four stats close the About section as a quiet row that rolls up once.
 - **AI in Production** (right after About): picked role highlights quoted verbatim (site.json
   `aiWork`), each opening its /work page, plus T3 Code's merged PR count from GitHub. Home order
   then runs Contact, Experience, Shipped, Open Source, Research.

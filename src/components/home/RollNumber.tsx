@@ -13,11 +13,11 @@ export function RollNumber({ value, format, fromZero = false, className = '' }: 
   const [shown, setShown] = useState(value);
   const ref = useRef<HTMLSpanElement>(null);
 
-  // fromZero: numbers that start on screen (the hero stats) still roll up once after load.
-  // Snap to 0 with transitions off, then roll to the value a moment later.
+  // fromZero: a number already on screen at load still rolls up once (the About stats on a
+  // tall screen). Snap to 0 with transitions off, then roll to the value a moment later.
   useEffect(() => {
     const el = ref.current;
-    if (!fromZero || !el) return;
+    if (!fromZero || !el || el.getBoundingClientRect().top >= innerHeight) return;
     el.dataset.instant = '';
     setShown(0);
     const id = setTimeout(() => {
@@ -29,7 +29,7 @@ export function RollNumber({ value, format, fromZero = false, className = '' }: 
 
   useEffect(() => {
     const el = ref.current;
-    if (fromZero || !el || el.getBoundingClientRect().top < innerHeight) return;
+    if (!el || el.getBoundingClientRect().top < innerHeight) return;
     setShown(0);
     const io = new IntersectionObserver(([e]) => {
       if (!e.isIntersecting) return;
@@ -38,7 +38,7 @@ export function RollNumber({ value, format, fromZero = false, className = '' }: 
     });
     io.observe(el);
     return () => io.disconnect();
-  }, [value, fromZero]);
+  }, [value]);
 
   const text = new Intl.NumberFormat('en', format).format(shown);
   const chars = [...text];

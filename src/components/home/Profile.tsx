@@ -1,14 +1,11 @@
-import { type ReactNode, useEffect, useRef, useState } from 'react';
-import { m, useReducedMotion, useTransform } from 'framer-motion';
-import { profile, profileImage, roles, stickers } from '../../data/content';
+import { type ReactNode, useEffect, useState } from 'react';
+import { m, useTransform } from 'framer-motion';
+import { profile, profileImage, stickers } from '../../data/content';
 import { haptic } from '../../lib/haptics';
-import { isPlain } from '../../lib/plain';
 import { usePull } from '../../lib/pull';
 import { sound } from '../../lib/sound';
-import { MapPinIcon } from '../ui/Icons';
 import { Brand, T3Mark } from './icons';
 import { HiddenCat } from './PixelCat';
-import { RollNumber } from './RollNumber';
 
 const TILTS = ['-8deg', '5deg', '-4deg', '7deg'];
 const TILE: Record<(typeof stickers)[number]['mark'], { cls: string; mark: ReactNode }> = {
@@ -45,59 +42,6 @@ function Stickers() {
 }
 
 /**
- * The rolling role in the status line ("Open to work · AI Engineer"). Every 3s the phrase
- * changes by rolling: each letter column slides up, the old character out and the new one
- * in, 22ms after its neighbour (after superinteractions.com's text roll). Monospace keeps the
- * columns aligned. The fixed headline above carries the title for the 30-second read, so this
- * is a flourish: screen readers skip it; reduced motion and the plain version stay still.
- */
-function RollingRole() {
-  const [from, setFrom] = useState(0);
-  const [to, setTo] = useState(0);
-  const reduce = useReducedMotion();
-  const ref = useRef<HTMLSpanElement>(null);
-  const width = Math.max(...roles.map((r) => r.length));
-
-  useEffect(() => {
-    if (reduce || isPlain() || !ref.current) return;
-    let visible = true;
-    const io = new IntersectionObserver(([e]) => {
-      visible = e.isIntersecting;
-    });
-    io.observe(ref.current);
-    const id = setInterval(() => {
-      if (visible && !document.hidden) setTo((n) => (n + 1) % roles.length);
-    }, 3000);
-    return () => {
-      clearInterval(id);
-      io.disconnect();
-    };
-  }, [reduce]);
-
-  // Once the last column has landed, the new phrase becomes the resting one.
-  useEffect(() => {
-    if (to === from) return;
-    const done = setTimeout(() => setFrom(to), 400 + 22 * width);
-    return () => clearTimeout(done);
-  }, [to, from, width]);
-
-  const rolling = to !== from;
-  const pad = (s: string, i: number) => (s[i] === undefined || s[i] === ' ' ? '\u00a0' : s[i]);
-  return (
-    <span ref={ref} aria-hidden="true" className="inline-block h-[16px] overflow-hidden align-middle font-mono text-[11px] leading-[16px] text-foreground/80">
-      <span className={`roll ${rolling ? 'is-rolling' : ''}`}>
-        {Array.from({ length: width }, (_, i) => (
-          <span key={i} className="roll-col" style={{ '--i': i } as React.CSSProperties}>
-            <span>{pad(roles[from], i)}</span>
-            <span>{pad(roles[to], i)}</span>
-          </span>
-        ))}
-      </span>
-    </span>
-  );
-}
-
-/**
  * The hero photo, which you can grab and pull (the gentle version of rameerez.com's face):
  * it follows the pointer a little, stretching along the pull, and springs back with a
  * wobble on release. Squashes slightly while pressed. Nothing moves until it is touched.
@@ -126,7 +70,7 @@ function PullablePhoto() {
       data-pull=""
       whileTap={{ scale: 0.95 }}
       style={{ x, y, scaleX, scaleY }}
-      className="relative z-10 h-[88px] w-[88px] shrink-0 cursor-grab touch-none select-none rounded-xl border border-border bg-card object-cover p-[3px] active:cursor-grabbing"
+      className="relative z-10 h-[88px] w-[88px] shrink-0 sm:h-[104px] sm:w-[104px] cursor-grab touch-none select-none rounded-xl border border-border bg-card object-cover p-[3px] active:cursor-grabbing"
     />
   );
 }
@@ -134,7 +78,7 @@ function PullablePhoto() {
 const dhaka = new Intl.DateTimeFormat('en', { hour: 'numeric', minute: '2-digit', timeZone: 'Asia/Dhaka' });
 
 /**
- * "Open to work · 12:40 PM in Dhaka". Availability is hq's `available` flag. The time is
+ * "Open to work · 12:40 PM in Dhaka", one quiet line. Availability is hq's `available` flag. The time is
  * Siam's local time (his location is Dhaka), filled in after hydration so the static HTML
  * never shows a stale build-time clock, and re-read on each minute boundary: a text
  * change once a minute, no animation.
@@ -158,10 +102,8 @@ function Status() {
           <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-signal-success" />
           <span className="text-foreground/80">Open to work</span>
           <span aria-hidden="true">·</span>
-          <RollingRole />
         </>
       )}
-      <MapPinIcon className="h-3 w-3" />
       {time ? (
         <span>
           <span className="tabular-nums text-foreground/80">{time}</span> in {city}
@@ -192,56 +134,18 @@ export function Profile() {
       {/* A hidden cat on the dark ledge left of the waterfall. */}
       <HiddenCat id="banner" pose="sit" className="absolute bottom-[27%] left-[30%] h-[14px] w-[17px]" />
       </div>
-      <div className="flex items-center gap-4 px-4 py-4">
+      {/* Three things, like samworks: name, role, and where and whether he's available. */}
+      <div className="flex items-center gap-5 px-4 py-6">
         <PullablePhoto />
         <div className="min-w-0">
           <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5">
-            <h1 className="font-serif text-[30px] leading-[1.05] tracking-[-0.01em] sm:text-[34px]">{profile.name}</h1>
+            <h1 className="font-serif text-[30px] leading-[1.05] tracking-[-0.01em] sm:text-[36px]">{profile.name}</h1>
             <Stickers />
           </div>
-          <p className="mt-1 font-mono text-[12px] uppercase leading-[18px] tracking-[0.14em] text-foreground/80">{profile.title}</p>
+          <p className="mt-1.5 text-[14px] font-medium leading-snug text-muted-foreground sm:text-[17px] sm:font-semibold">{profile.title}</p>
           <Status />
         </div>
       </div>
-      <p className="px-4 text-[14.5px] leading-relaxed text-foreground/85">{profile.tagline.replace(/\.?$/, '.')}</p>
-      <div className="flex flex-wrap gap-2 px-4 pt-4">
-        <a href={`mailto:${profile.email}`} onClick={() => haptic()} onMouseEnter={sound.tick} className="press rounded-full bg-foreground px-4 py-2 text-[13px] font-medium text-background">
-          Email me
-        </a>
-        <a href="#resume" onMouseEnter={sound.tick} className="press rounded-full border border-border px-4 py-2 text-[13px] text-foreground/85 transition-colors hover:border-foreground/30 hover:text-foreground">
-          View CV
-        </a>
-      </div>
-      <HeroStats />
     </div>
-  );
-}
-
-/** hq's headline stats ("1.5x revenue growth", ...): the 30-second read. Numbers roll up once on load. */
-function HeroStats() {
-  if (!profile.stats?.length) return null;
-  return (
-    <dl className="mx-4 mb-4 mt-5 grid grid-cols-2 overflow-hidden rounded-xl border border-border sm:grid-cols-4">
-      {profile.stats.map((s, i) => {
-        // "1.5x" -> 1.5 + "x", "50K+" -> 50 + "K+"; anything without a leading number shows as is.
-        const m = s.value.match(/^([\d.]+)(.*)$/);
-        return (
-          <div key={s.label} className={`flex flex-col-reverse px-3 py-3 ${i % 2 === 0 ? 'border-r' : ''} ${i < 2 ? 'border-b sm:border-b-0' : ''} ${i === 1 ? 'sm:border-r' : ''} border-border`}>
-            <dt className="mt-1 font-mono text-[10px] uppercase tracking-[0.1em] text-muted-foreground">{s.label}</dt>
-            {/* Sans, not the serif: the odometer needs fixed-width figures, which the serif lacks. */}
-            <dd className="text-[24px] font-medium leading-none tracking-[-0.02em]">
-              {m ? (
-                <>
-                  <RollNumber value={Number(m[1])} format={{ maximumFractionDigits: 1 }} fromZero />
-                  {m[2]}
-                </>
-              ) : (
-                s.value
-              )}
-            </dd>
-          </div>
-        );
-      })}
-    </dl>
   );
 }
