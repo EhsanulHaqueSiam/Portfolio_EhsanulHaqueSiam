@@ -1,17 +1,18 @@
 import { type CSSProperties, useRef } from 'react';
 import { domAnimation, LazyMotion, MotionConfig } from 'framer-motion';
-import { experience, workSlug } from './data/content';
+import { caseStudies, experience, projectSlug, workSlug } from './data/content';
 import type { OpenSourceRepo } from './data/opensource';
 import type { PaperDetail } from './data/papers';
 import { About, Contact } from './components/home/AboutContact';
 import { Dock, Footer, Nav } from './components/home/chrome';
-import { NotFound, PaperPage, WorkPage } from './components/home/Detail';
+import { NotFound, PaperPage, ProjectPage, WorkPage } from './components/home/Detail';
 import { OpenSource } from './components/home/OpenSource';
 import { Profile } from './components/home/Profile';
 import { PublicationsList } from './components/home/Publications';
 import { Education, Experience, Research } from './components/home/Rows';
 import { Shipped } from './components/home/Shipped';
 import { Activity, Outro, Quote, Stack } from './components/home/StackActivity';
+import { CatToast, PeekingCat, useConsoleCat } from './components/home/PixelCat';
 import { Resume } from './components/Resume';
 import { useReveal } from './lib/reveal';
 
@@ -20,6 +21,7 @@ type Props =
   | { page: 'publications' }
   | { page: 'work'; slug: string }
   | { page: 'paper'; paper: PaperDetail }
+  | { page: 'project'; slug: string }
   | { page: 'notfound' };
 
 /**
@@ -35,9 +37,16 @@ function findWork(slug: string) {
   return work;
 }
 
+function findProject(slug: string) {
+  const p = caseStudies.find((x) => projectSlug(x) === slug);
+  if (!p) throw new Error(`No case study for /projects/${slug}`);
+  return p;
+}
+
 function App(props: Props) {
   const main = useRef<HTMLElement>(null);
   useReveal(main);
+  useConsoleCat();
   return (
     <LazyMotion features={domAnimation} strict>
       <MotionConfig reducedMotion="user">
@@ -46,6 +55,8 @@ function App(props: Props) {
           <main id="main-content" ref={main}>
             {props.page === 'work' ? (
               <WorkPage e={findWork(props.slug)} />
+            ) : props.page === 'project' ? (
+              <ProjectPage p={findProject(props.slug)} />
             ) : props.page === 'paper' ? (
               <PaperPage paper={props.paper} />
             ) : props.page === 'home' ? (
@@ -78,6 +89,8 @@ function App(props: Props) {
           <Footer />
         </div>
         <Dock />
+        <CatToast />
+        {props.page === 'home' && <PeekingCat />}
         <Resume />
       </MotionConfig>
     </LazyMotion>

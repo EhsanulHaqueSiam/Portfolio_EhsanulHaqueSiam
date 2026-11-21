@@ -47,6 +47,8 @@ const lastModified = new Date().toISOString().slice(0, 10);
           root.classList.remove('no-js');
           root.classList.add('js');
           try {
+            // The plain version (lib/plain.ts): set before paint so no motion or extras flash in.
+            if (localStorage.getItem('plain') === 'on') root.setAttribute('data-plain', '');
             if (localStorage.getItem('theme') !== 'light') return;
             root.classList.remove('dark');
             var tint = function () {

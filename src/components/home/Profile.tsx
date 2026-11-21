@@ -2,10 +2,12 @@ import { type ReactNode, useEffect, useRef, useState } from 'react';
 import { m, useReducedMotion, useTransform } from 'framer-motion';
 import { profile, profileImage, roles, stickers } from '../../data/content';
 import { haptic } from '../../lib/haptics';
+import { isPlain } from '../../lib/plain';
 import { usePull } from '../../lib/pull';
 import { sound } from '../../lib/sound';
 import { MapPinIcon } from '../ui/Icons';
 import { Brand, T3Mark } from './icons';
+import { HiddenCat } from './PixelCat';
 
 const TILTS = ['-8deg', '5deg', '-4deg', '7deg'];
 const TILE: Record<(typeof stickers)[number]['mark'], { cls: string; mark: ReactNode }> = {
@@ -55,7 +57,7 @@ function RollingRole() {
   const width = Math.max(...roles.map((r) => r.length));
 
   useEffect(() => {
-    if (reduce || !ref.current) return;
+    if (reduce || isPlain() || !ref.current) return;
     let visible = true;
     const io = new IntersectionObserver(([e]) => {
       visible = e.isIntersecting;
@@ -120,6 +122,7 @@ function PullablePhoto() {
       height={88}
       draggable={false}
       {...handlers}
+      data-pull=""
       whileTap={{ scale: 0.95 }}
       style={{ x, y, scaleX, scaleY }}
       className="relative z-10 h-[88px] w-[88px] shrink-0 cursor-grab touch-none select-none rounded-xl border border-border bg-card object-cover p-[3px] active:cursor-grabbing"
@@ -172,6 +175,7 @@ export function Profile() {
   return (
     <div>
       {/* 10-frame loop (falling water, foam, twinkling fireflies); the still frame for reduced motion. */}
+      <div data-playful="" className="relative">
       <picture>
         <source media="(prefers-reduced-motion: reduce)" srcSet="/images/banner.webp" />
         <img
@@ -183,6 +187,9 @@ export function Profile() {
           className="block aspect-[1360/453] w-full border-b border-border object-cover"
         />
       </picture>
+      {/* A hidden cat on the dark ledge left of the waterfall. */}
+      <HiddenCat id="banner" pose="sit" className="absolute bottom-[27%] left-[30%] h-[14px] w-[17px]" />
+      </div>
       <div className="flex items-center gap-4 px-4 py-4">
         <PullablePhoto />
         <div className="min-w-0">

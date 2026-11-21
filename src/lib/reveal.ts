@@ -10,7 +10,7 @@ import { type RefObject, useEffect } from 'react';
 export function useReveal(root: RefObject<HTMLElement | null>) {
   useEffect(() => {
     const el = root.current;
-    if (!el || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (!el || matchMedia('(prefers-reduced-motion: reduce)').matches || document.documentElement.hasAttribute('data-plain')) return;
     const below = [...el.querySelectorAll<HTMLElement>('[data-reveal]')].filter((b) => b.getBoundingClientRect().top > innerHeight);
     const io = new IntersectionObserver(
       (entries) => {

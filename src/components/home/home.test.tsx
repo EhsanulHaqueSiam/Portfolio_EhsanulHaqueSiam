@@ -32,7 +32,7 @@ describe('projects', () => {
 
     await user.click(within(view).getByRole('radio', { name: 'List' }));
     expect(screen.queryAllByRole('heading', { level: 3 })).toHaveLength(0);
-    expect(screen.getByRole('link', { name: /12,000\+ scholarships indexed daily/ })).toHaveAttribute('href', 'https://thescholarhub.netlify.app/');
+    expect(screen.getByRole('link', { name: /12,000\+ scholarships indexed daily/ })).toHaveAttribute('href', '/projects/scholarhub/'); // has a case study, so it opens that
 
     await user.keyboard('{ArrowLeft}');
     expect(within(view).getByRole('radio', { name: 'Cards' })).toBeChecked();

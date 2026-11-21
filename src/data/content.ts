@@ -45,6 +45,11 @@ export const slugify = (s: string) =>
 /** Paper slug from the part of the title before its colon. */
 export const paperSlug = (p: Publication) => slugify(p.title.split(':')[0]);
 export const workSlug = (e: Experience) => slugify(e.company);
+export const projectSlug = (p: Project) => slugify(p.name);
+/** Projects with a case study in hq; each gets a /projects/<slug>/ page. */
+export const caseStudies = featuredProjects.filter((p) => p.caseStudy);
+/** Where a project row or card goes: its case study when it has one, else the live site or the code. */
+export const projectHref = (p: Project) => (p.caseStudy ? `/projects/${projectSlug(p)}/` : (p.links.view ?? p.links.code ?? '#'));
 
 type Site = {
   projectIcons: Record<string, string>;

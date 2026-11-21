@@ -1,6 +1,6 @@
 import { type CSSProperties, useRef, useState } from 'react';
 import { AnimatePresence, m, useMotionValue, useReducedMotion, useSpring } from 'framer-motion';
-import { featuredProjects, getProjectImage, projectIcon } from '../../data/content';
+import { featuredProjects, getProjectImage, projectHref, projectIcon } from '../../data/content';
 import type { Project } from '../../data/types';
 import { haptic } from '../../lib/haptics';
 import { sound } from '../../lib/sound';
@@ -16,7 +16,7 @@ const COLLAPSED_CARDS = 4;
 // Resting tilts for the stacked prints, and the fanned-out tilt step.
 const TILT = [-7, 4, -2, 6, -4];
 
-const href = (p: Project) => p.links.view ?? p.links.code ?? '#';
+const href = projectHref;
 const cover = (p: Project) => (p.images[0] ? getProjectImage(p.images[0]) : null);
 /** One-line pitch: the first metric reads better in a dense row than the long problem statement. */
 const pitch = (p: Project) => p.metrics[0] ?? p.desc.split('. ')[0];
@@ -105,7 +105,15 @@ function ProjectCards({ items }: { items: Project[] }) {
             </a>
             <div className="mt-3 flex items-start justify-between gap-3">
               <div className="min-w-0">
-                <h3 className="text-[16px] font-medium leading-tight">{p.name}</h3>
+                <h3 className="text-[16px] font-medium leading-tight">
+                  {p.caseStudy ? (
+                    <a href={href(p)} onClick={() => haptic()} className="underline decoration-foreground/0 underline-offset-[3px] transition-colors hover:decoration-foreground/40">
+                      {p.name}
+                    </a>
+                  ) : (
+                    p.name
+                  )}
+                </h3>
                 <p className="mt-1 line-clamp-2 text-[13px] leading-snug text-muted-foreground">{summary(p)}</p>
               </div>
               {p.links.view ? (

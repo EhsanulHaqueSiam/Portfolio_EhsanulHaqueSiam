@@ -1,0 +1,36 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import App from '../../App';
+import { caseStudies, getProjectImage, projectSlug } from '../../data/content';
+import { SITE, metaDescription, pageJsonLd } from '../../seo/schema';
+
+// One page per project that has a case study in hq.
+export function getStaticPaths() {
+  return caseStudies.map((p) => ({ params: { slug: projectSlug(p) }, props: { slug: projectSlug(p), name: p.name, desc: p.desc, image: p.images[0], links: p.links } }));
+}
+const { slug, name, desc, image, links } = Astro.props;
+const path = `/projects/${slug}/`;
+const title = `${name}: case study · Ehsanul Haque Siam`;
+const description = metaDescription(desc);
+const url = `${SITE.url}${path}`;
+const jsonLd = pageJsonLd({
+  path,
+  name: title,
+  description,
+  crumbs: [['Projects', '/#projects'], [name, path]],
+  main: {
+    '@type': 'CreativeWork',
+    '@id': `${url}#project`,
+    name,
+    description,
+    url,
+    creator: { '@id': `${SITE.url}/#person` },
+    ...(image ? { image: `${SITE.url}${getProjectImage(image)}` } : {}),
+    ...(links.view ? { sameAs: [links.view, ...(links.code ? [links.code] : [])] } : links.code ? { sameAs: [links.code] } : {}),
+  },
+});
+---
+
+<Layout title={title} description={description} canonical={url} jsonLd={jsonLd}>
+  <App client:load page="project" slug={slug} />
+</Layout>

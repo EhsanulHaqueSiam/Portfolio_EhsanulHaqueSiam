@@ -330,7 +330,7 @@
     clip-path: inset(0 100% 0 0);
   }
   [data-reveal='in'] .sig {
-    animation: sig-write 1.3s 0.5s cubic-bezier(0.65, 0, 0.35, 1) backwards;
+    animation: sig-write 1.3s 1s cubic-bezier(0.65, 0, 0.35, 1) backwards;
   }
 }
 @keyframes sig-write {
@@ -370,21 +370,97 @@
   }
 }
 
-/* The pixel cat on the dock (PixelCat.tsx): two frames, swapped on hover or a tap. */
+/* Pixel cats (PixelCat.tsx): two frames, swapped on hover, focus or press. */
+.cat-host {
+  display: block;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
 .cat .cat-flick,
 .cat .cat-blink,
-.cat:hover .cat-tail,
-.cat:hover .cat-eyes,
-.cat[data-pet] .cat-tail,
-.cat[data-pet] .cat-eyes {
+.cat-host:is(:hover, :focus-visible, :active) .cat-tail,
+.cat-host:is(:hover, :focus-visible, :active) .cat-eyes {
   display: none;
 }
-.cat:hover .cat-flick,
-.cat:hover .cat-blink,
-.cat[data-pet] .cat-flick,
-.cat[data-pet] .cat-blink {
+.cat-host:is(:hover, :focus-visible, :active) .cat-flick,
+.cat-host:is(:hover, :focus-visible, :active) .cat-blink {
   display: inline;
 }
+/* The peeking cat sits behind a hatched band's top edge, ears and eyes showing; hover and it ducks. */
+.hatch {
+  position: relative;
+}
+.peek-slot {
+  position: absolute;
+  bottom: 100%;
+  left: 22%;
+  height: 18px;
+  overflow: hidden;
+}
+.peek-cat {
+  transition: transform 220ms var(--ease-out-strong);
+}
+.peek-slot:hover .peek-cat {
+  transform: translateY(70%);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .cat-bubble {
+    animation: cat-pop 160ms var(--ease-out-strong);
+    transform-origin: 90% 100%;
+  }
+  .cat-toast {
+    animation: cat-rise 220ms var(--ease-out-strong);
+  }
+}
+@keyframes cat-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.94);
+  }
+}
+@keyframes cat-rise {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+/* The hand edit in the closing section (ShipEdit): a pen strike through the word and "ship"
+   written above, uncovered like the signature but just before it. */
+.hand-strike {
+  position: relative;
+}
+.hand-strike::after {
+  content: '';
+  position: absolute;
+  left: -2px;
+  right: -2px;
+  top: 55%;
+  height: 1.5px;
+  background: hsl(var(--foreground) / 0.85);
+  transform: rotate(-4deg);
+  transform-origin: left center;
+}
+@media (prefers-reduced-motion: no-preference) {
+  [data-reveal='wait'] .hand-strike::after {
+    transform: rotate(-4deg) scaleX(0);
+  }
+  [data-reveal='in'] .hand-strike::after {
+    animation: hand-strike 0.35s 0.2s cubic-bezier(0.65, 0, 0.35, 1) backwards;
+  }
+  [data-reveal='wait'] .hand-fix {
+    clip-path: inset(0 100% 0 0);
+  }
+  [data-reveal='in'] .hand-fix {
+    animation: sig-write 0.6s 0.5s cubic-bezier(0.65, 0, 0.35, 1) backwards;
+  }
+}
+@keyframes hand-strike {
+  from {
+    transform: rotate(-4deg) scaleX(0);
+  }
+}
+
 
 /* The ⌘K menu (CommandMenu.tsx): a plain dimmed backdrop (no blur), and a quick scale-in
    from the top on open. Closing is instant. */
@@ -1018,4 +1094,19 @@
   [class*="group-data-[open]:rotate"] {
     transition: none !important;
   }
+}
+
+/* The plain version (lib/plain.ts): no motion anywhere and none of the playful extras.
+   Text, links and layout stay as they are. */
+html[data-plain] *,
+html[data-plain] *::before,
+html[data-plain] *::after {
+  animation: none !important;
+  transition: none !important;
+}
+html[data-plain] [data-playful] {
+  display: none !important;
+}
+html[data-plain] [data-pull] {
+  pointer-events: none;
 }

@@ -33,7 +33,7 @@ export function Badge() {
   const rope = useTransform([x, y], ([dx, dy]: number[]) => `M0 0 Q${dx * 0.45} ${(ROPE + dy) / 2 + 6} ${dx} ${ROPE + dy}`);
 
   return (
-    <div aria-hidden="true" className="pointer-events-none absolute left-1/2 top-0 sm:left-[calc(100%-84px)] print:hidden">
+    <div aria-hidden="true" data-playful="" className="pointer-events-none absolute left-1/2 top-0 sm:left-[calc(100%-84px)] print:hidden">
       <svg aria-hidden="true" className="absolute left-0 top-0 overflow-visible" width="1" height="1">
         <m.path d={rope} className="fill-none stroke-border" strokeWidth={5} strokeLinecap="round" />
       </svg>

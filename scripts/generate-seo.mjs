@@ -69,6 +69,7 @@ const urls = [
   // Same slugs as src/data/content.ts (slugify, paperSlug, workSlug).
   ...publications.map((p) => ({ loc: `${SITE}/publications/${slugify(p.title.split(':')[0])}/`, changefreq: 'yearly', priority: '0.6' })),
   ...experience.filter((e) => e.showInHome).map((e) => ({ loc: `${SITE}/work/${slugify(e.company)}/`, changefreq: 'yearly', priority: '0.5' })),
+  ...projects.filter((p) => p.showInHome && p.caseStudy).map((p) => ({ loc: `${SITE}/projects/${slugify(p.name)}/`, changefreq: 'yearly', priority: '0.6' })),
   { loc: `${SITE}/resume.pdf`, changefreq: 'monthly', priority: '0.7' },
 ];
 write(

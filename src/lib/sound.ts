@@ -59,7 +59,8 @@ if (typeof window !== 'undefined') {
 }
 
 function live(): AudioContext | null {
-  return enabled && running ? ctx : null;
+  // The plain version (lib/plain.ts) is silent.
+  return enabled && running && !document.documentElement.hasAttribute('data-plain') ? ctx : null;
 }
 
 function tone(freq: number, dur: number, gain: number, glide = 0.8) {
@@ -97,6 +98,24 @@ export const sound = {
   },
   /** Opening rises, closing falls. */
   open: (isOpen: boolean) => tone(isOpen ? 760 : 560, 0.07, 0.06, isOpen ? 1.25 : 0.8),
+  /** A tiny synthesized meow for the hidden cats: a quick rise, then a longer fall. */
+  meow: () => {
+    const a = live();
+    if (!a) return;
+    const t = a.currentTime;
+    const osc = a.createOscillator();
+    const amp = a.createGain();
+    osc.type = 'triangle';
+    osc.frequency.setValueAtTime(620, t);
+    osc.frequency.linearRampToValueAtTime(980, t + 0.07);
+    osc.frequency.exponentialRampToValueAtTime(540, t + 0.32);
+    amp.gain.setValueAtTime(0.0001, t);
+    amp.gain.linearRampToValueAtTime(0.05, t + 0.04);
+    amp.gain.exponentialRampToValueAtTime(0.0001, t + 0.34);
+    osc.connect(amp).connect(a.destination);
+    osc.start(t);
+    osc.stop(t + 0.36);
+  },
   /** Soft filtered-noise sweep for the theme reveal. */
   whoosh: () => {
     const a = live();

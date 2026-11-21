@@ -125,6 +125,19 @@ Tokens live in `src/index.css` as HSL triplets (`:root` light, `.dark` dark). Da
   into view (600ms); the closing quote's words follow 30ms apart. Never hidden before
   hydration, in print, or with reduced motion.
 - **Paper pages:** a 1px reading-progress bar on the header's bottom edge.
+- **Case studies** (`/projects/<slug>/`, projects with `caseStudy` in hq): results as a stat
+  row first, then the problem, what was built, numbered steps, stack, other case studies.
+  Cards and rows for these projects open the case study; the rest link out.
+- **Cats** (`PixelCat.tsx`, `lib/cats.ts`): the dock cat says one true fact per click
+  (`data/catFacts.ts`, built from site data). Five more hide: on the banner's ledge, peeking
+  over a random hatched band, on a paper's card, asleep on the 404, and a "Pet the cat" ⌘K
+  command that only appears when the query says "cat". Each find meows and shows "n of 5
+  cats found"; finds are kept in localStorage. A cat greets developers in the console.
+- **Plain version** (`lib/plain.ts`, footer link and ⌘K): `data-plain` on <html>, set before
+  paint, kills all animation and transition, hides `[data-playful]` (banner, cats, badge),
+  silences sound and stops the role roll, reveals and dock magnification.
+- **Hand edit:** "what I ~~build~~ ship" in the closing line; the strike and the word write in
+  just before the signature.
 - **Dock:** magnifies under the cursor (spring); one label slides between items and resizes
   to each word (no per-item tooltip, no blur); pitched tick per item. A 17x14 pixel cat sits on
   its top edge and blinks and flicks its tail on hover or tap (two CSS frames).

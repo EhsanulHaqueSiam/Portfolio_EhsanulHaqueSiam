@@ -34,7 +34,7 @@ export function toggleTheme(from?: { x: number; y: number }) {
   haptic('selection');
 
   const doc = document as VTDocument;
-  if (!doc.startViewTransition || matchMedia('(prefers-reduced-motion: reduce)').matches) return apply();
+  if (!doc.startViewTransition || matchMedia('(prefers-reduced-motion: reduce)').matches || root.hasAttribute('data-plain')) return apply();
 
   const x = from?.x ?? innerWidth / 2;
   const y = from?.y ?? 0;

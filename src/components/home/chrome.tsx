@@ -2,12 +2,13 @@ import { type ReactNode, useCallback, useEffect, useLayoutEffect, useRef, useSta
 import { type MotionValue, m, useMotionValue, useMotionValueEvent, useReducedMotion, useScroll, useSpring, useTransform } from 'framer-motion';
 import { profile } from '../../data/content';
 import { haptic } from '../../lib/haptics';
+import { togglePlain, usePlain } from '../../lib/plain';
 import { sound, toggleSound, useSoundOn } from '../../lib/sound';
 import { ArrowUpRightIcon, EmailIcon, GitHubIcon, LinkedInIcon, ResumeIcon } from '../ui/Icons';
 import { ThemeToggle } from '../ui/ThemeToggle';
 import { CommandMenu } from './CommandMenu';
 import { Brand, SpeakerIcon } from './icons';
-import { PixelCat } from './PixelCat';
+import { DockCat } from './PixelCat';
 
 /** Every place to reach Siam, in dock order. `sep` puts a divider before the item. */
 export const links = [
@@ -82,7 +83,7 @@ function ReadingProgress() {
   return <m.div aria-hidden="true" className="absolute inset-x-0 -bottom-px h-px origin-left bg-foreground" style={{ scaleX: scrollYProgress }} />;
 }
 
-export type Page = 'home' | 'publications' | 'work' | 'paper' | 'notfound';
+export type Page = 'home' | 'publications' | 'work' | 'paper' | 'project' | 'notfound';
 
 const NAV = [
   { label: 'Home', href: '/', page: 'home' },
@@ -91,7 +92,7 @@ const NAV = [
   { label: 'CV', href: '#resume' },
 ] as const;
 // Detail pages light up their parent link without claiming to be that page.
-const PARENT: Record<Page, string> = { home: 'Home', publications: 'Research', work: 'Home', paper: 'Research', notfound: '' };
+const PARENT: Record<Page, string> = { home: 'Home', publications: 'Research', work: 'Home', paper: 'Research', project: 'Projects', notfound: '' };
 
 /**
  * The dot under the active link slides to whichever link is hovered (the
@@ -282,11 +283,12 @@ function useDockTip(): [React.RefObject<HTMLSpanElement | null>, DockTip] {
 export function Dock() {
   const mouseX = useMotionValue(Number.POSITIVE_INFINITY);
   const reduce = useReducedMotion();
+  const plain = usePlain();
   const [tipEl, tip] = useDockTip();
   return (
     <nav
       aria-label="Elsewhere"
-      onMouseMove={(e) => !reduce && matchMedia('(hover: hover) and (pointer: fine)').matches && mouseX.set(e.clientX)}
+      onMouseMove={(e) => !reduce && !plain && matchMedia('(hover: hover) and (pointer: fine)').matches && mouseX.set(e.clientX)}
       onMouseLeave={() => {
         mouseX.set(Number.POSITIVE_INFINITY);
         tip.show(null);
@@ -302,15 +304,22 @@ export function Dock() {
       <span ref={tipEl} aria-hidden="true" className="dock-tip">
         <span />
       </span>
-      <PixelCat />
+      <DockCat />
     </nav>
   );
 }
 
 export function Footer() {
+  const plain = usePlain();
   return (
-    <footer className="border-t border-border px-4 pb-24 pt-5 font-mono text-[11px] text-muted-foreground">
-      © {new Date().getFullYear()} {profile.name}. Dhaka, Bangladesh.
+    <footer className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2 border-t border-border px-4 pb-24 pt-5 font-mono text-[11px] text-muted-foreground">
+      <span>
+        © {new Date().getFullYear()} {profile.name}. Dhaka, Bangladesh.
+      </span>
+      {/* The plain version (lib/plain.ts): same page, no motion, sound or playful extras. */}
+      <button type="button" onClick={togglePlain} aria-pressed={plain} className="underline decoration-foreground/25 underline-offset-[3px] transition-colors hover:text-foreground hover:decoration-foreground">
+        {plain ? 'Full version' : 'Plain version'}
+      </button>
     </footer>
   );
 }

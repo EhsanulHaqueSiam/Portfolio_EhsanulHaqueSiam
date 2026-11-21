@@ -6,7 +6,7 @@ import { sound } from '../../lib/sound';
 import { HeaderLink, Section } from './chrome';
 import { Badge } from './Badge';
 import { RollNumber } from './RollNumber';
-import { Signature } from './Signature';
+import { ShipEdit, Signature } from './Signature';
 
 // Short tab labels for the skills.json categories; unlisted ones show only under "All".
 const TABS: Record<string, string> = {
@@ -235,7 +235,7 @@ export function Outro() {
         <h2 id="outro-title" className="font-serif text-[30px] leading-none">
           Scrolled Too Far
         </h2>
-        <p className="mx-auto mt-3 max-w-[34ch] text-[14px] text-muted-foreground">If you read this far, you might like what I build. My inbox is open.</p>
+        <p className="mx-auto mt-3 max-w-[34ch] text-[14px] leading-[2.1] text-muted-foreground">If you read this far, you might like what I <ShipEdit>build</ShipEdit>. My inbox is open.</p>
         <a
           href={`mailto:${profile.email}`}
           onMouseEnter={sound.tick}

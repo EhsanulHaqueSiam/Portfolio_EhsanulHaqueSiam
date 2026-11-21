@@ -1,13 +1,15 @@
 import { useEffect, useId, useRef, useState, useSyncExternalStore } from 'react';
 import { navigate } from 'astro:transitions/client';
-import { experience, paperSlug, profile, publications, workSlug } from '../../data/content';
+import { caseStudies, experience, paperSlug, profile, projectSlug, publications, workSlug } from '../../data/content';
+import { findCat } from '../../lib/cats';
 import { haptic } from '../../lib/haptics';
+import { togglePlain, usePlain } from '../../lib/plain';
 import { sound, toggleSound, useSoundOn } from '../../lib/sound';
 import { isDark, subscribeTheme, toggleTheme } from '../ui/ThemeToggle';
 
-type Group = 'Go to' | 'Papers' | 'Work' | 'Actions';
+type Group = 'Go to' | 'Projects' | 'Papers' | 'Work' | 'Actions';
 /** `run` may return a word to show in place of the hint before the menu closes ("Copied"). */
-type Command = { group: Group; label: string; hint?: string; run: () => string | undefined | Promise<string | undefined> };
+type Command = { group: Group; label: string; hint?: string; secret?: boolean; run: () => string | undefined | Promise<string | undefined> };
 
 const go = (href: string) => () => {
   navigate(href);
@@ -23,9 +25,10 @@ const SECTIONS: Array<[string, string]> = [
   ['Contact', '/#contact'],
 ];
 
-function commands(soundOn: boolean, dark: boolean): Command[] {
+function commands(soundOn: boolean, dark: boolean, plain: boolean): Command[] {
   return [
     ...SECTIONS.map(([label, href]): Command => ({ group: 'Go to', label, run: go(href) })),
+    ...caseStudies.map((p): Command => ({ group: 'Projects', label: p.name, hint: 'case study', run: go(`/projects/${projectSlug(p)}/`) })),
     ...publications.map((p): Command => ({ group: 'Papers', label: p.title, run: go(`/publications/${paperSlug(p)}/`) })),
     ...experience.filter((e) => e.showInHome).map((e): Command => ({ group: 'Work', label: e.company, hint: e.role, run: go(`/work/${workSlug(e)}/`) })),
     {
@@ -56,6 +59,25 @@ function commands(soundOn: boolean, dark: boolean): Command[] {
     },
     {
       group: 'Actions',
+      label: plain ? 'Full version' : 'Plain version',
+      hint: plain ? 'motion and sound back on' : 'no motion, sound or extras',
+      run: () => {
+        togglePlain();
+        return undefined;
+      },
+    },
+    // Only shows when the query mentions it: one of the hidden cats (lib/cats.ts).
+    {
+      group: 'Actions',
+      label: 'Pet the cat',
+      secret: true,
+      run: () => {
+        findCat('menu');
+        return 'meow';
+      },
+    },
+    {
+      group: 'Actions',
       label: dark ? 'Switch to light theme' : 'Switch to dark theme',
       run: () => {
         toggleTheme();
@@ -74,8 +96,9 @@ function commands(soundOn: boolean, dark: boolean): Command[] {
   ];
 }
 
-/** Every word of the query must appear somewhere in the command. */
+/** Every word of the query must appear somewhere in the command; secret commands need the query to name them. */
 const matches = (c: Command, q: string) => {
+  if (c.secret && !/\bcat/i.test(q)) return false;
   const hay = `${c.label} ${c.group} ${c.hint ?? ''}`.toLowerCase();
   return q
     .toLowerCase()
@@ -98,9 +121,13 @@ export function CommandMenu() {
   const [done, setDone] = useState<{ label: string; word: string } | null>(null);
   const soundOn = useSoundOn();
   const dark = useSyncExternalStore(subscribeTheme, isDark, () => true);
+  const plain = usePlain();
   const id = useId();
 
-  const shown = commands(soundOn, dark).filter((c) => matches(c, query.trim()));
+  // A secret command the query names goes first, so Enter runs it.
+  const shown = commands(soundOn, dark, plain)
+    .filter((c) => matches(c, query.trim()))
+    .sort((x, y) => Number(Boolean(y.secret)) - Number(Boolean(x.secret)));
   const at = Math.min(active, Math.max(shown.length - 1, 0));
 
   const open = () => {
