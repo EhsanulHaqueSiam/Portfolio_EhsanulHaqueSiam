@@ -31,7 +31,7 @@ bun run seo:gen      # regenerate public SEO files only
 bun run test         # vitest + jsdom: wiring tests and the ui-sdk agent test (src/**/*.test.tsx)
 ```
 
-Uses Bun locally; Netlify runs `npm run build` with `NODE_VERSION=22.12.0` (see netlify.toml).
+Uses Bun locally; Netlify runs `npm run build` with `NODE_VERSION=24` (see netlify.toml; Astro 7 needs Node >=22.23.4, and an older pin fails every deploy).
 
 ## Git / Deploy Process
 
