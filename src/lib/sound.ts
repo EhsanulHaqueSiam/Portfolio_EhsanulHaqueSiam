@@ -1,8 +1,8 @@
 // Tiny synthesized UI sounds (Web Audio, no files), tuned after samworks.vercel.app:
 // one short sine tick that glides down, played at different pitches.
 // Sound is on by default and the speaker is a plain on/off switch, saved in localStorage `sound`.
-// Browsers start audio only inside a click, tap or key press, so hovers stay silent until the
-// first one; the client router (Layout.astro) keeps this module, and its running audio, alive
+// Unless the browser already allows audio on this site, it starts audio only inside a click, tap
+// or key press, so hovers stay silent until the first one; the client router (Layout.astro) keeps this module, and its running audio, alive
 // across internal links, so that happens once per visit, not once per page.
 import { useSyncExternalStore } from 'react';
 
@@ -51,6 +51,11 @@ if (typeof window !== 'undefined') {
     if (a.state === 'running') for (const t of types) removeEventListener(t, unlock, true);
   };
   for (const t of types) addEventListener(t, unlock, { capture: true, passive: true });
+  // Start at load when the browser already allows audio here (Chrome for sites a visitor often
+  // plays sound on, Firefox when autoplay is allowed), so hovers play before any click.
+  // Where it doesn't, the context just waits suspended for the first gesture above.
+  const policy = (navigator as Navigator & { getAutoplayPolicy?: (t: 'audiocontext') => string }).getAutoplayPolicy;
+  if (enabled && (!policy || policy.call(navigator, 'audiocontext') === 'allowed')) getCtx()?.resume().catch(() => {});
 }
 
 function live(): AudioContext | null {

@@ -129,7 +129,7 @@ Tokens live in `src/index.css` as HSL triplets (`:root` light, `.dark` dark). Da
   snapshot starts clipped in CSS so no frame flashes.
 - Sound (`src/lib/sound.ts`): one sine tick (1000 to 800Hz, 45ms) after samworks, pitched for
   chips and the dock; a whoosh for the theme. On by default; the speaker is a plain on/off
-  switch. Browsers keep audio silent until the first click on the site; internal links use
+  switch. Audio starts at load when the browser allows it, otherwise on the first click; internal links use
   Astro's client router, so audio stays running from page to page after that.
 - Haptics (`src/lib/haptics.ts`) fire only on coarse pointers, on taps that do something.
 - Everything moving is gated by `prefers-reduced-motion`; hover-only motion by `(hover: hover)`.

@@ -59,3 +59,21 @@ test('a saved off survives a reload', async () => {
   const { result } = renderHook(() => useSoundOn());
   expect(result.current).toBe(false);
 });
+
+test('hovers play before any press when the browser already allows audio, and stay silent when it does not', async () => {
+  const osc = vi.spyOn(FakeAudioContext.prototype, 'createOscillator');
+  Object.assign(navigator, { getAutoplayPolicy: () => 'allowed' });
+  const allowed = await import('./sound');
+  await Promise.resolve();
+  allowed.sound.tick();
+  expect(osc).toHaveBeenCalledTimes(1);
+
+  vi.resetModules();
+  osc.mockClear();
+  Object.assign(navigator, { getAutoplayPolicy: () => 'allowed-muted' });
+  const blocked = await import('./sound');
+  await Promise.resolve();
+  blocked.sound.tick();
+  expect(osc).not.toHaveBeenCalled();
+  Reflect.deleteProperty(navigator, 'getAutoplayPolicy');
+});
