@@ -115,6 +115,9 @@ function ProjectCards({ items }: { items: Project[] }) {
                   )}
                 </h3>
                 <p className="mt-1 line-clamp-2 text-[13px] leading-snug text-muted-foreground">{summary(p)}</p>
+                {(p.myPart || p.years) && (
+                  <p className="mt-1.5 font-mono text-[11px] text-muted-foreground">{[p.years, p.myPart?.split(':')[0].split(';')[0].replace(/\.$/, '')].filter(Boolean).join(' · ')}</p>
+                )}
               </div>
               {p.links.view ? (
                 <span className="flex shrink-0 items-center gap-1.5 text-[12px] text-signal-success">

@@ -18,6 +18,7 @@ const go = (href: string) => () => {
 
 const SECTIONS: Array<[string, string]> = [
   ['Home', '/'],
+  ['AI in Production', '/#ai-work'],
   ['Projects', '/#projects'],
   ['Open Source', '/#open-source'],
   ['Experience', '/#experience'],

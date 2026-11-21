@@ -53,6 +53,10 @@ export interface Project {
   tags: string[];
   links: ProjectLink;
   caseStudy?: CaseStudy;
+  /** What Siam personally owned ("Solo build: all 508 commits."), from hq with a source. */
+  myPart?: string;
+  /** When it was built ("2026", "2024–2026"), from hq. */
+  years?: string;
   /** Present = listed on the CV (in projects.json order) with this tech line and these bullets. */
   cv?: {
     tech: string[];

@@ -101,11 +101,15 @@ Tokens live in `src/index.css` as HSL triplets (`:root` light, `.dark` dark). Da
   over a listbox of sections, papers, roles and actions (copy email, CV, sound, theme,
   GitHub), grouped, with key hints in the footer. Plain dimmed backdrop, no blur; scales in
   from 0.97 in 160ms, closes instantly. Pattern from incident.io, Searchable and Base44.
-- **Profile:** animated pixel banner, boxed 88px avatar you can grab and pull (follows a third
-  of the way, stretches along the pull, springs back with a wobble), name + stickers
-  (contribution tiles link to Open Source, tool tiles are labelled images), rolling role line,
-  and a status line: a green dot and "Open to work" (hq's `available`), then Dhaka time,
-  re-read once a minute with no animation.
+- **Profile:** animated pixel banner, boxed 88px avatar you can grab and pull, name + stickers,
+  a fixed headline (hq `title`), and a status line: green dot, "Open to work" (hq `available`),
+  the rolling role (site.json `roles`, the only motion here), and Dhaka time. Then hq's tagline,
+  "Email me" and "View CV", and hq's four stats in a row that rolls up once on load (odometer,
+  sans figures). Read against the hiring bar: the first screen says one role, what Siam does,
+  the numbers, and the next step, with no waiting.
+- **AI in Production** (right after About): picked role highlights quoted verbatim (site.json
+  `aiWork`), each opening its /work page, plus T3 Code's merged PR count from GitHub. Home order
+  then runs Contact, Experience, Shipped, Open Source, Research.
 - **About:** the current company's link carries a hand-drawn wavy underline that draws once on
   load (`.scribble`).
 - **Rows:** mark tile, title, sub, right meta. One highlight glides under the hovered or
@@ -125,8 +129,9 @@ Tokens live in `src/index.css` as HSL triplets (`:root` light, `.dark` dark). Da
   into view (600ms); the closing quote's words follow 30ms apart. Never hidden before
   hydration, in print, or with reduced motion.
 - **Paper pages:** a 1px reading-progress bar on the header's bottom edge.
-- **Case studies** (`/projects/<slug>/`, projects with `caseStudy` in hq): results as a stat
-  row first, then the problem, what was built, numbered steps, stack, other case studies.
+- **Case studies** (`/projects/<slug>/`, projects with `caseStudy` in hq): "My part" and
+  "When" (hq `my_part`, `years`, each sourced, e.g. commit counts) under the title, results as a stat
+  row, then the problem, what was built, numbered steps, stack, other case studies.
   Cards and rows for these projects open the case study; the rest link out.
 - **Cats** (`PixelCat.tsx`, `lib/cats.ts`): the dock cat says one true fact per click
   (`data/catFacts.ts`, built from site data). Five more hide: on the banner's ledge, peeking

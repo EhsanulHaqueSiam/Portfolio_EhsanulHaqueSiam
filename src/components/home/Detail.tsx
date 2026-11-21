@@ -249,6 +249,22 @@ export function ProjectPage({ p }: { p: Project }) {
       <header className="enter mt-5" style={{ '--n': 1 } as React.CSSProperties}>
         <h1 className="text-balance font-serif text-[38px] leading-none tracking-[-0.01em]">{p.name}</h1>
         <p className="mt-2 text-[15px] text-foreground/85">{p.desc.split(/(?<=\.)\s/)[0]}</p>
+        {(p.myPart || p.years) && (
+          <dl className="mt-4 grid grid-cols-[auto_1fr] gap-x-4 gap-y-1 border-y border-border py-2.5 text-[13.5px]">
+            {p.myPart && (
+              <>
+                <dt className="text-muted-foreground">My part</dt>
+                <dd>{p.myPart}</dd>
+              </>
+            )}
+            {p.years && (
+              <>
+                <dt className="text-muted-foreground">When</dt>
+                <dd className="tabular-nums">{p.years}</dd>
+              </>
+            )}
+          </dl>
+        )}
         {(p.links.view || p.links.code) && (
           <p className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-[13px]">
             {p.links.view && <Out href={p.links.view}>Live site</Out>}

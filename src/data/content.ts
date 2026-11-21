@@ -56,12 +56,20 @@ type Site = {
   companies: Record<string, { logo?: string; link?: { label: string; href: string } }>;
   quote: { text: string; by: string };
   roles: string[];
+  /** Highlights picked for "AI in Production": the role's highlights whose text starts with or contains `match`. */
+  aiWork: Array<{ title: string; company: string; match: string[] }>;
   stickers: Array<{ label: string; mark: 't3' | 'betterAuth' | 'neovim' | 'linux'; href?: string }>;
 };
 const site = siteData as Site;
 export const quote = site.quote;
-/** Phrases the profile's role line cycles through; each restates a fact (title, Arché role, open-source PRs). */
+/** Roles that roll after "Open to work" in the hero status line; each restates a fact (title, Arché role). */
 export const roles = site.roles;
+/** The AI work rows, each resolved to its role (for the link and dates) and the quoted highlights. */
+export const aiWork = site.aiWork.flatMap((w) => {
+  const role = experience.find((e) => e.company === w.company);
+  const lines = role?.highlights?.filter((h) => w.match.some((m) => h.includes(m))) ?? [];
+  return role && lines.length ? [{ title: w.title, role, lines }] : [];
+});
 /** Tiles beside the name: projects Siam contributes to (linked) and tools from skills.json. */
 export const stickers = site.stickers;
 

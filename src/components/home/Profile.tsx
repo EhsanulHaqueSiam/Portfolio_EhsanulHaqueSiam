@@ -8,6 +8,7 @@ import { sound } from '../../lib/sound';
 import { MapPinIcon } from '../ui/Icons';
 import { Brand, T3Mark } from './icons';
 import { HiddenCat } from './PixelCat';
+import { RollNumber } from './RollNumber';
 
 const TILTS = ['-8deg', '5deg', '-4deg', '7deg'];
 const TILE: Record<(typeof stickers)[number]['mark'], { cls: string; mark: ReactNode }> = {
@@ -44,16 +45,17 @@ function Stickers() {
 }
 
 /**
- * The role line under the name. Every 3s the phrase changes by rolling: each
- * letter column slides up, the old character out and the new one in, 22ms after
- * its neighbour (after superinteractions.com's text roll). Monospace keeps the
- * columns aligned. Screen readers get the title once; reduced motion stays still.
+ * The rolling role in the status line ("Open to work · AI Engineer"). Every 3s the phrase
+ * changes by rolling: each letter column slides up, the old character out and the new one
+ * in, 22ms after its neighbour (after superinteractions.com's text roll). Monospace keeps the
+ * columns aligned. The fixed headline above carries the title for the 30-second read, so this
+ * is a flourish: screen readers skip it; reduced motion and the plain version stay still.
  */
 function RollingRole() {
   const [from, setFrom] = useState(0);
   const [to, setTo] = useState(0);
   const reduce = useReducedMotion();
-  const ref = useRef<HTMLParagraphElement>(null);
+  const ref = useRef<HTMLSpanElement>(null);
   const width = Math.max(...roles.map((r) => r.length));
 
   useEffect(() => {
@@ -82,9 +84,8 @@ function RollingRole() {
   const rolling = to !== from;
   const pad = (s: string, i: number) => (s[i] === undefined || s[i] === ' ' ? '\u00a0' : s[i]);
   return (
-    <p ref={ref} className="mt-1 h-[18px] overflow-hidden font-mono text-[12px] uppercase leading-[18px] tracking-[0.14em] text-foreground/80">
-      <span className="sr-only">{profile.title}</span>
-      <span aria-hidden="true" className={`roll ${rolling ? 'is-rolling' : ''}`}>
+    <span ref={ref} aria-hidden="true" className="inline-block h-[16px] overflow-hidden align-middle font-mono text-[11px] leading-[16px] text-foreground/80">
+      <span className={`roll ${rolling ? 'is-rolling' : ''}`}>
         {Array.from({ length: width }, (_, i) => (
           <span key={i} className="roll-col" style={{ '--i': i } as React.CSSProperties}>
             <span>{pad(roles[from], i)}</span>
@@ -92,7 +93,7 @@ function RollingRole() {
           </span>
         ))}
       </span>
-    </p>
+    </span>
   );
 }
 
@@ -157,6 +158,7 @@ function Status() {
           <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-signal-success" />
           <span className="text-foreground/80">Open to work</span>
           <span aria-hidden="true">·</span>
+          <RollingRole />
         </>
       )}
       <MapPinIcon className="h-3 w-3" />
@@ -197,10 +199,49 @@ export function Profile() {
             <h1 className="font-serif text-[30px] leading-[1.05] tracking-[-0.01em] sm:text-[34px]">{profile.name}</h1>
             <Stickers />
           </div>
-          <RollingRole />
+          <p className="mt-1 font-mono text-[12px] uppercase leading-[18px] tracking-[0.14em] text-foreground/80">{profile.title}</p>
           <Status />
         </div>
       </div>
+      <p className="px-4 text-[14.5px] leading-relaxed text-foreground/85">{profile.tagline.replace(/\.?$/, '.')}</p>
+      <div className="flex flex-wrap gap-2 px-4 pt-4">
+        <a href={`mailto:${profile.email}`} onClick={() => haptic()} onMouseEnter={sound.tick} className="press rounded-full bg-foreground px-4 py-2 text-[13px] font-medium text-background">
+          Email me
+        </a>
+        <a href="#resume" onMouseEnter={sound.tick} className="press rounded-full border border-border px-4 py-2 text-[13px] text-foreground/85 transition-colors hover:border-foreground/30 hover:text-foreground">
+          View CV
+        </a>
+      </div>
+      <HeroStats />
     </div>
+  );
+}
+
+/** hq's headline stats ("1.5x revenue growth", ...): the 30-second read. Numbers roll up once on load. */
+function HeroStats() {
+  if (!profile.stats?.length) return null;
+  return (
+    <dl className="mx-4 mb-4 mt-5 grid grid-cols-2 overflow-hidden rounded-xl border border-border sm:grid-cols-4">
+      {profile.stats.map((s, i) => {
+        // "1.5x" -> 1.5 + "x", "50K+" -> 50 + "K+"; anything without a leading number shows as is.
+        const m = s.value.match(/^([\d.]+)(.*)$/);
+        return (
+          <div key={s.label} className={`flex flex-col-reverse px-3 py-3 ${i % 2 === 0 ? 'border-r' : ''} ${i < 2 ? 'border-b sm:border-b-0' : ''} ${i === 1 ? 'sm:border-r' : ''} border-border`}>
+            <dt className="mt-1 font-mono text-[10px] uppercase tracking-[0.1em] text-muted-foreground">{s.label}</dt>
+            {/* Sans, not the serif: the odometer needs fixed-width figures, which the serif lacks. */}
+            <dd className="text-[24px] font-medium leading-none tracking-[-0.02em]">
+              {m ? (
+                <>
+                  <RollNumber value={Number(m[1])} format={{ maximumFractionDigits: 1 }} fromZero />
+                  {m[2]}
+                </>
+              ) : (
+                s.value
+              )}
+            </dd>
+          </div>
+        );
+      })}
+    </dl>
   );
 }

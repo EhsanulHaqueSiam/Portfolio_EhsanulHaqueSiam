@@ -64,10 +64,9 @@
     "by": "Monkey D. Luffy"
   },
   "roles": [
-    "AI Engineer.",
-    "Full-Stack Developer.",
-    "NLP & LLM Researcher.",
-    "Open-source Contributor."
+    "AI Engineer",
+    "Full-Stack Developer",
+    "NLP & LLM Researcher"
   ],
   "stickers": [
     {
@@ -87,6 +86,30 @@
     {
       "label": "Linux",
       "mark": "linux"
+    }
+  ],
+  "aiWork": [
+    {
+      "title": "Veritas KYC on GCP",
+      "company": "Ledgercross",
+      "match": [
+        "Veritas"
+      ]
+    },
+    {
+      "title": "Gemini fine-tuning",
+      "company": "BDTracks",
+      "match": [
+        "Fine-tuned Gemini"
+      ]
+    },
+    {
+      "title": "RAG and LLM evaluation",
+      "company": "Unies",
+      "match": [
+        "RAG pipelines",
+        "LLM evaluation"
+      ]
     }
   ]
 }

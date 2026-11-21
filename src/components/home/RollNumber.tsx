@@ -9,13 +9,27 @@ import { useEffect, useRef, useState } from 'react';
  * The server HTML carries the real value; only numbers still below the fold reset to 0
  * on hydration so they have something to roll from.
  */
-export function RollNumber({ value, format, className = '' }: { value: number; format?: Intl.NumberFormatOptions; className?: string }) {
+export function RollNumber({ value, format, fromZero = false, className = '' }: { value: number; format?: Intl.NumberFormatOptions; fromZero?: boolean; className?: string }) {
   const [shown, setShown] = useState(value);
   const ref = useRef<HTMLSpanElement>(null);
 
+  // fromZero: numbers that start on screen (the hero stats) still roll up once after load.
+  // Snap to 0 with transitions off, then roll to the value a moment later.
   useEffect(() => {
     const el = ref.current;
-    if (!el || el.getBoundingClientRect().top < innerHeight) return;
+    if (!fromZero || !el) return;
+    el.dataset.instant = '';
+    setShown(0);
+    const id = setTimeout(() => {
+      delete el.dataset.instant;
+      setShown(value);
+    }, 260);
+    return () => clearTimeout(id);
+  }, [fromZero, value]);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (fromZero || !el || el.getBoundingClientRect().top < innerHeight) return;
     setShown(0);
     const io = new IntersectionObserver(([e]) => {
       if (!e.isIntersecting) return;
@@ -24,7 +38,7 @@ export function RollNumber({ value, format, className = '' }: { value: number; f
     });
     io.observe(el);
     return () => io.disconnect();
-  }, [value]);
+  }, [value, fromZero]);
 
   const text = new Intl.NumberFormat('en', format).format(shown);
   const chars = [...text];

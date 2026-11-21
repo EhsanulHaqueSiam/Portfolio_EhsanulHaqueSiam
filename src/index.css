@@ -286,6 +286,9 @@
   content: '0\a 1\a 2\a 3\a 4\a 5\a 6\a 7\a 8\a 9';
   white-space: pre;
 }
+.odo[data-instant] .odo-strip {
+  transition: none;
+}
 /* A digit that just appeared rolls up from 0 instead of popping in at its value. */
 @starting-style {
   .odo-strip {

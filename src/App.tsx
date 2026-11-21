@@ -4,6 +4,7 @@ import { caseStudies, experience, projectSlug, workSlug } from './data/content';
 import type { OpenSourceRepo } from './data/opensource';
 import type { PaperDetail } from './data/papers';
 import { About, Contact } from './components/home/AboutContact';
+import { AIWork } from './components/home/AIWork';
 import { Dock, Footer, Nav } from './components/home/chrome';
 import { NotFound, PaperPage, ProjectPage, WorkPage } from './components/home/Detail';
 import { OpenSource } from './components/home/OpenSource';
@@ -63,12 +64,15 @@ function App(props: Props) {
               // Each block fades and rises in on load, 70ms apart (.enter in index.css);
               // blocks below the fold wait and reveal as they scroll in (useReveal).
               [
+                // Order read against an AI-engineering role (the hiring-bar review): shipped AI work
+                // and roles come before the websites.
                 <Profile key="profile" />,
                 <About key="about" />,
+                <AIWork key="ai" repos={props.openSource} />,
                 <Contact key="contact" />,
+                <Experience key="exp" />,
                 <Shipped key="shipped" />,
                 <OpenSource key="oss" repos={props.openSource} />,
-                <Experience key="exp" />,
                 <Research key="research" />,
                 <Stack key="stack" />,
                 <Activity key="activity" />,
