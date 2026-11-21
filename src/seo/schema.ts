@@ -37,7 +37,7 @@ const WEBSITE_ID = `${SITE.url}/#website`;
 
 /** Known org homepages (kept here so schema URLs stay accurate). */
 const ORG_URLS: Record<string, string> = {
-  'Arché Intelligence Lab': 'https://www.arche-lab.org/',
+  'Arché Intelligence Lab': 'https://www.archelab.org/',
   'Deepchain Labs': 'https://deepchainlabs.com',
   'BetaScript LLC': 'https://betascript.online',
   BDTracks: 'https://bdtracks.com',
