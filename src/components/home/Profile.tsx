@@ -8,7 +8,7 @@ import { Brand, T3Mark } from './icons';
 
 const TILTS = ['-8deg', '5deg', '-4deg', '7deg'];
 const TILE: Record<(typeof stickers)[number]['mark'], { cls: string; mark: ReactNode }> = {
-  t3: { cls: '', mark: <T3Mark className="h-full w-full text-[11px]" /> },
+  t3: { cls: '', mark: <T3Mark className="h-full w-full" /> },
   betterAuth: { cls: 'bg-white text-black', mark: <Brand name="betterAuth" className="h-3.5 w-3.5" /> },
   neovim: { cls: 'bg-[#0f1a12] text-[#57a143]', mark: <Brand name="neovim" className="h-3.5 w-3.5" /> },
   linux: { cls: 'bg-[#1a1a1a] text-[#f4f4f1]', mark: <Brand name="linux" className="h-3.5 w-3.5" /> },

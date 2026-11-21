@@ -66,14 +66,7 @@ export function MergeIcon(p: P) {
   );
 }
 
-/** The T3 tile: no Simple Icons mark exists, so it is drawn as text. */
+/** T3 Code's app icon (assets/prod in pingdotgg/t3code), at 2x for the 40px tile. */
 export function T3Mark({ className = '' }: { className?: string }) {
-  return (
-    <span
-      aria-hidden="true"
-      className={`grid place-items-center rounded-[22%] bg-[#3b2683] font-sans font-bold text-white ${className}`}
-    >
-      T3
-    </span>
-  );
+  return <img src="/images/icons/t3code.webp" alt="" width={48} height={48} className={`object-cover ${className}`} />;
 }

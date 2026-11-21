@@ -28,7 +28,7 @@ function RepoCard({ r, defaultOpen }: { r: OpenSourceRepo; defaultOpen: boolean 
         className="group -mx-2 flex w-[calc(100%+1rem)] items-center gap-3 rounded-lg px-2 py-3 text-left transition-colors hover:bg-secondary/60"
       >
         <span className="grid h-10 w-10 shrink-0 place-items-center overflow-hidden rounded-[10px] border border-border bg-card">
-          {r.logo === 't3' ? <T3Mark className="h-full w-full text-[14px]" /> : <Brand name="betterAuth" className="icon-pop h-5 w-5" />}
+          {r.logo === 't3' ? <T3Mark className="h-full w-full" /> : <Brand name="betterAuth" className="icon-pop h-5 w-5" />}
         </span>
         <span className="min-w-0 flex-1">
           <span className="block text-[15px] font-medium">{r.name}</span>
