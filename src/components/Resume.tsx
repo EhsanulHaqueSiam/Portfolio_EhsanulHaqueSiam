@@ -99,8 +99,20 @@ export function Resume() {
       setView(next);
     };
     sync();
+    // Astro's client router takes over same-page "#resume" links and updates the URL with
+    // pushState, which fires no hashchange; so re-read the hash right after any such click,
+    // and on back/forward (popstate) too.
+    const onClick = (e: MouseEvent) => {
+      if (e.target instanceof Element && e.target.closest('a[href$="#resume"]')) requestAnimationFrame(sync);
+    };
     window.addEventListener('hashchange', sync);
-    return () => window.removeEventListener('hashchange', sync);
+    window.addEventListener('popstate', sync);
+    document.addEventListener('click', onClick, true);
+    return () => {
+      window.removeEventListener('hashchange', sync);
+      window.removeEventListener('popstate', sync);
+      document.removeEventListener('click', onClick, true);
+    };
   }, []);
 
   /* ── lock body + <html> (the real scroller); the print view also scopes the print rules ── */
