@@ -4,8 +4,8 @@
   "description": "AI Engineer & Full-Stack Developer portfolio: projects, publications and skills",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#f5f1e8",
-  "theme_color": "#f5f1e8",
+  "background_color": "#000000",
+  "theme_color": "#000000",
   "orientation": "portrait-primary",
   "categories": ["portfolio", "technology", "education"],
   "lang": "en",
@@ -15,6 +15,6 @@
     { "src": "/images/icon-192.png", "type": "image/png", "sizes": "192x192", "purpose": "any" },
     { "src": "/images/apple-touch-icon.png", "type": "image/png", "sizes": "180x180" },
     { "src": "/images/icon-512.png", "type": "image/png", "sizes": "512x512", "purpose": "any" },
-    { "src": "/images/icon-512.png", "type": "image/png", "sizes": "512x512", "purpose": "maskable" }
+    { "src": "/images/icon-maskable-512.png", "type": "image/png", "sizes": "512x512", "purpose": "maskable" }
   ]
 }

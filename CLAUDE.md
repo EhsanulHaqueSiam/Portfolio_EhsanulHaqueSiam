@@ -37,7 +37,7 @@ Uses Bun locally; Netlify runs `npm run build` with `NODE_VERSION=24` (see netli
 
 Work directly in this repo. Netlify auto-deploys the `main` branch of the GitHub remote.
 
-1. **Images**: WebP only — no PNG/JPG/JPEG (favicons `favicon-32x32.png` / `apple-touch-icon.png` excepted).
+1. **Images**: WebP only — no PNG/JPG/JPEG (the favicon and app icon PNGs in `public/images/` excepted).
 2. **Commit messages**: clean, no `Co-Authored-By: Claude` attribution.
 3. `git add -A && git commit -m "…" && git push`.
 
