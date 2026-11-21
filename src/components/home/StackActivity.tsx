@@ -253,7 +253,17 @@ export function Quote() {
       </svg>
       {quotes.map((q, i) => (
         <figure key={q.by} className={i > 0 ? 'mt-10' : 'mt-4'}>
-          <blockquote className="mx-auto max-w-[28ch] text-balance font-serif text-[30px] italic leading-[1.2]">“{q.text}”</blockquote>
+          <blockquote className="mx-auto max-w-[28ch] text-balance font-serif text-[30px] italic leading-[1.2]">
+            {/* Words stagger in when the block reveals (motion-primitives' TextEffect, see .qw in index.css). */}
+            {`“${q.text}”`.split(' ').map((w, j, all) => (
+              <span key={`${w}-${j}`}>
+                <span className="qw" style={{ '--w': j + (i ? 8 : 0) } as React.CSSProperties}>
+                  {w}
+                </span>
+                {j < all.length - 1 && ' '}
+              </span>
+            ))}
+          </blockquote>
           <figcaption className="mt-5 flex items-center justify-center gap-3 font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
             <span className="h-px w-10 bg-border" aria-hidden="true" />
             {q.by}

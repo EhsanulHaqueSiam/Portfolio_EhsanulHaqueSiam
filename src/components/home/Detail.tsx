@@ -198,7 +198,8 @@ export function PaperPage({ paper }: { paper: PaperDetail }) {
         </Block>
       )}
 
-      {!bibtex && kind !== 'Talk' && (
+      {/* Only a paper without a DOI is still waiting to be indexed; a DOI whose BibTeX lookup failed just skips the block. */}
+      {!bibtex && !doi && kind !== 'Talk' && (
         <Block title="Cite it" n={5}>
           <p className="text-[14px] text-muted-foreground">A citation will appear here once the {kind.toLowerCase()} is indexed with a DOI.</p>
         </Block>

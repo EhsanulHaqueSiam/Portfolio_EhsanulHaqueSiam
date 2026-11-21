@@ -1,5 +1,5 @@
 import { type ReactNode, useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { type MotionValue, m, useMotionValue, useMotionValueEvent, useReducedMotion, useSpring, useTransform } from 'framer-motion';
+import { type MotionValue, m, useMotionValue, useMotionValueEvent, useReducedMotion, useScroll, useSpring, useTransform } from 'framer-motion';
 import { profile } from '../../data/content';
 import { haptic } from '../../lib/haptics';
 import { sound, toggleSound, useSoundOn } from '../../lib/sound';
@@ -74,6 +74,12 @@ export function SoundToggle() {
   );
 }
 
+/** A 1px bar on the header's bottom edge that fills as a paper page is read (motion-primitives' Scroll Progress). */
+function ReadingProgress() {
+  const { scrollYProgress } = useScroll();
+  return <m.div aria-hidden="true" className="absolute inset-x-0 -bottom-px h-px origin-left bg-foreground" style={{ scaleX: scrollYProgress }} />;
+}
+
 export type Page = 'home' | 'publications' | 'work' | 'paper' | 'notfound';
 
 const NAV = [
@@ -134,6 +140,7 @@ export function Nav({ current }: { current: Page }) {
 
   return (
     <header className="sticky top-0 z-40 border-b border-border bg-background">
+      {current === 'paper' && <ReadingProgress />}
       <nav aria-label="Primary" className="flex items-center justify-between gap-3 px-4 py-2.5">
         <a href="/" className="font-serif text-[26px] leading-none" onMouseEnter={sound.tick}>
           Siam

@@ -60,8 +60,16 @@ export async function loadPapers(): Promise<PaperDetail[]> {
       const base: PaperDetail = { slug: paperSlug(pub), pub, doi, authors: [], venue: null, publisher: null, pages: null, bibtex: null };
       if (!doi) return base;
       try {
-        const [meta, bib] = await Promise.all([crossref(doi), bibtex(doi).catch(() => null)]);
-        return { ...base, ...meta, bibtex: bib };
+        // doi.org is occasionally slow: one retry, then build without BibTeX and say so.
+        const bib = (d: string) => bibtex(d).catch(() => bibtex(d));
+        const [meta, cite] = await Promise.all([
+          crossref(doi),
+          bib(doi).catch((err: Error) => {
+            console.warn(`[papers] BibTeX lookup failed for ${doi}: ${err.message}`);
+            return null;
+          }),
+        ]);
+        return { ...base, ...meta, bibtex: cite };
       } catch (err) {
         console.warn(`[papers] DOI lookup failed for ${doi}: ${(err as Error).message}`);
         return base;

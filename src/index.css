@@ -298,6 +298,31 @@
   }
 }
 
+/* Scroll-in reveal (lib/reveal.ts): set only on blocks that start below the fold, after hydration. */
+[data-reveal='wait'] {
+  opacity: 0;
+  transform: translateY(12px);
+}
+[data-reveal='in'] {
+  transition:
+    opacity 600ms var(--ease-out-strong),
+    transform 600ms var(--ease-out-strong);
+}
+/* The closing quotes' words follow their block in, 30ms apart. */
+.qw {
+  display: inline-block;
+}
+[data-reveal='wait'] .qw {
+  opacity: 0;
+  transform: translateY(6px);
+}
+[data-reveal='in'] .qw {
+  transition:
+    opacity 500ms var(--ease-out-strong),
+    transform 500ms var(--ease-out-strong);
+  transition-delay: calc(120ms + var(--w, 0) * 30ms);
+}
+
 /* Theme cross-fade via the View Transitions API (toggle only) */
 @media (prefers-reduced-motion: no-preference) {
   ::view-transition-old(root),
@@ -345,6 +370,12 @@
 
 /* ===== Print styles for resume PDF download ===== */
 @media print {
+  [data-reveal],
+  [data-reveal] .qw {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
   html.resume-printing *,
   html.resume-printing *::before,
   html.resume-printing *::after {

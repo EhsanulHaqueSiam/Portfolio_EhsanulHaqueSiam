@@ -1,4 +1,4 @@
-import type { CSSProperties } from 'react';
+import { type CSSProperties, useRef } from 'react';
 import { domAnimation, LazyMotion, MotionConfig } from 'framer-motion';
 import { experience, workSlug } from './data/content';
 import type { OpenSourceRepo } from './data/opensource';
@@ -13,6 +13,7 @@ import { Education, Experience, Research } from './components/home/Rows';
 import { Shipped } from './components/home/Shipped';
 import { Activity, Outro, Quote, Stack } from './components/home/StackActivity';
 import { Resume } from './components/Resume';
+import { useReveal } from './lib/reveal';
 
 type Props =
   | { page: 'home'; openSource: OpenSourceRepo[] }
@@ -35,18 +36,21 @@ function findWork(slug: string) {
 }
 
 function App(props: Props) {
+  const main = useRef<HTMLElement>(null);
+  useReveal(main);
   return (
     <LazyMotion features={domAnimation} strict>
       <MotionConfig reducedMotion="user">
         <div className="rails min-h-screen bg-background">
           <Nav current={props.page} />
-          <main id="main-content">
+          <main id="main-content" ref={main}>
             {props.page === 'work' ? (
               <WorkPage e={findWork(props.slug)} />
             ) : props.page === 'paper' ? (
               <PaperPage paper={props.paper} />
             ) : props.page === 'home' ? (
-              // Each block fades and rises in on load, 70ms apart (.enter in index.css).
+              // Each block fades and rises in on load, 70ms apart (.enter in index.css);
+              // blocks below the fold wait and reveal as they scroll in (useReveal).
               [
                 <Profile key="profile" />,
                 <About key="about" />,
@@ -61,7 +65,7 @@ function App(props: Props) {
                 <Outro key="outro" />,
                 <Quote key="quote" />,
               ].map((block, n) => (
-                <div key={block.key} className="enter" style={{ '--n': Math.min(n, 6) } as CSSProperties}>
+                <div key={block.key} className="enter" data-reveal="" style={{ '--n': Math.min(n, 6) } as CSSProperties}>
                   {block}
                 </div>
               ))
