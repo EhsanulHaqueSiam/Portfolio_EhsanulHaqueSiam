@@ -72,7 +72,9 @@
           "value": "5"
         }
       ]
-    }
+    },
+    "myPart": "Solo build: all 508 commits.",
+    "years": "2026"
   },
   {
     "name": "TTT Autos",
@@ -366,7 +368,9 @@
           "value": "Production"
         }
       ]
-    }
+    },
+    "myPart": "Solo developer for BetaScript LLC, from design to Netlify deployment.",
+    "years": "2026"
   },
   {
     "name": "BetaScript",
@@ -474,7 +478,9 @@
         "Served 45+ active university users with centralized admin and student dashboards"
       ],
       "badge": "17 Stars"
-    }
+    },
+    "myPart": "Main author: 65 of 67 commits.",
+    "years": "2023"
   },
   {
     "name": "Spotify Sentiment Analysis",
@@ -566,7 +572,9 @@
           "value": "2"
         }
       ]
-    }
+    },
+    "myPart": "Team lead of 5 developers; 61 of 62 commits.",
+    "years": "2024"
   },
   {
     "name": "BD News Scraper & Analytics",
@@ -649,7 +657,9 @@
         "Automated daily scraping of 95+ English and Bangla news sources with Scrapy and Playwright spiders",
         "Built ML sentiment analysis with TF-IDF clustering and GitHub Actions CI/CD pipeline"
       ]
-    }
+    },
+    "myPart": "Main author: 102 of 107 commits by people.",
+    "years": "2024–2026"
   },
   {
     "name": "Hotel Management System",
@@ -715,7 +725,9 @@
         "before": "assets/images/projects/hotelmanagement.png",
         "after": "assets/images/projects/hotelmanagement.png"
       }
-    }
+    },
+    "myPart": "Built with a teammate: 109 of 171 commits.",
+    "years": "2023"
   },
   {
     "name": "Android Development Journey",
