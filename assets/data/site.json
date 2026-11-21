@@ -59,16 +59,10 @@
       }
     }
   },
-  "quotes": [
-    {
-      "text": "Simplicity is prerequisite for reliability.",
-      "by": "Edsger W. Dijkstra"
-    },
-    {
-      "text": "As long as I’m alive, there are infinite chances!",
-      "by": "Monkey D. Luffy"
-    }
-  ],
+  "quote": {
+    "text": "As long as I’m alive, there are infinite chances!",
+    "by": "Monkey D. Luffy"
+  },
   "roles": [
     "AI Engineer.",
     "Full-Stack Developer.",

@@ -113,7 +113,7 @@ Tokens live in `src/index.css` as HSL triplets (`:root` light, `.dark` dark). Da
 - **GitHub grid:** a static empty grid at the loaded size while it fetches; on hover one ring
   and one tooltip travel to the day (moved by hand, no re-render), with a pitched note.
 - **Scroll-in:** home blocks that start below the fold fade and rise in once as they scroll
-  into view (600ms); the closing quotes' words follow 30ms apart. Never hidden before
+  into view (600ms); the closing quote's words follow 30ms apart. Never hidden before
   hydration, in print, or with reduced motion.
 - **Paper pages:** a 1px reading-progress bar on the header's bottom edge.
 - **Dock:** magnifies under the cursor (spring); one label slides between items and resizes

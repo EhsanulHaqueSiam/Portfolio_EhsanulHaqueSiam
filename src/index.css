@@ -308,7 +308,7 @@
     opacity 600ms var(--ease-out-strong),
     transform 600ms var(--ease-out-strong);
 }
-/* The closing quotes' words follow their block in, 30ms apart. */
+/* The closing quote's words follow their block in, 30ms apart. */
 .qw {
   display: inline-block;
 }
