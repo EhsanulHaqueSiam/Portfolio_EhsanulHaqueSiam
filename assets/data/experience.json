@@ -8,7 +8,7 @@
     "showInHome": true,
     "highlights": [
       "Built InvoicePilot, audit-ready invoice operations sealed on-chain: React 19, Fastify, PostgreSQL, a FastAPI OCR service and Solidity contracts, with a 700-test backend suite and QuickBooks, Xero, NetSuite and Sage integrations",
-      "Rebuilt Veritas (KYC-as-a-service) on serverless GCP (Cloud Run, Document AI + Gemini, Terraform) with a three-tier extraction ladder that sends only disagreements to expensive processors"
+      "Rebuilt Veritas (KYC-as-a-service) on serverless GCP (Cloud Run, Document AI + Gemini, Terraform) with a three-tier extraction ladder that sends only disagreements to expensive processors: 107 merged PRs in 3 weeks"
     ]
   },
   {
@@ -39,7 +39,7 @@
   },
   {
     "company": "BetaScript LLC",
-    "role": "Solo Developer (Part-time, ~20 hrs/week)",
+    "role": "Software Developer (Part-time, ~20 hrs/week)",
     "date": "Jan 2026–May 2026",
     "desc": "Shipped 4 production React websites for this US-based digital agency, driving 1.5x client revenue growth measured by post-launch analytics and client billing. Full lifecycle ownership spanning design, React 19 + TanStack Start architecture, and Netlify deployment across restaurant, e-commerce, and agency platforms serving 50,000+ end users.",
     "alignment": "right",

@@ -1,7 +1,7 @@
 # Ehsanul Haque Siam: Full Profile
 
 > AI Engineer & Full-Stack Developer, Dhaka, Bangladesh. Published researcher who ships production systems, from blockchain R&D and RAG pipelines to e-commerce platforms serving 50,000+ users
-> Last updated: 2026-11-21. Contact: ehsanul.siamdev@gmail.com
+> Last updated: 2026-11-22. Contact: ehsanul.siamdev@gmail.com
 
 I bridge research and production. Software Engineer at Ledgercross, building across the stack: backend services, React Native and Flutter apps, AI features, and the CI/CD and cloud infrastructure that ship them. Published peer-reviewed research (a Taylor & Francis book chapter and an IEEE QPAIN 2026 paper in IEEE Xplore). Previously drove 1.5x client revenue shipping 4 production websites at BetaScript LLC and built 15+ web scrapers with Gemini-powered AI pipelines at BDTracks. Obsessed with turning complex problems into systems that scale.
 
@@ -16,7 +16,7 @@ Leading NLP and LLM research at Arché (archelab.org), a student-led AI research
 ### Research Assistant (Full-time, Remote) at Deepchain Labs (Apr 2026–May 2026)
 Researching blockchain, cybersecurity, and quantum cryptography at Deepchain Labs (deepchainlabs.com), producing peer-review-ready papers, threat analyses, and technical documentation across multiple security domains.
 
-### Solo Developer (Part-time, ~20 hrs/week) at BetaScript LLC (Jan 2026–May 2026)
+### Software Developer (Part-time, ~20 hrs/week) at BetaScript LLC (Jan 2026–May 2026)
 Shipped 4 production React websites for this US-based digital agency, driving 1.5x client revenue growth measured by post-launch analytics and client billing. Full lifecycle ownership spanning design, React 19 + TanStack Start architecture, and Netlify deployment across restaurant, e-commerce, and agency platforms serving 50,000+ end users.
 
 ### AI & Data Engineer (Part-time, ~15 hrs/week) at BDTracks (Aug 2025–May 2026)
@@ -35,6 +35,49 @@ Students waste 20+ hours searching fragmented scholarship sources before deadlin
 Tech: React, TypeScript, TailwindCSS, TanStack Start, Convex, Python, Web Scraping
 Live: https://thescholarhub.netlify.app/
 Code: https://github.com/EhsanulHaqueSiam/ScholarHub
+
+### Is BD banned here?
+Bangladeshis find out the hard way which universities, companies, countries and online services stopped taking them. Is BD banned here? lists every ban with receipts: six categories, a world map of bans, country hubs, reader-submitted receipts reviewed on arrival and a daily news watcher. Live on Cloudflare Workers, WCAG AAA on every page.
+Tech: TypeScript, Cloudflare Workers
+Live: https://isbdbannedhere.site
+Code: https://github.com/EhsanulHaqueSiam/isbdbannedhere
+
+### Keptcash
+Overdue invoices sit unpaid because nobody knows what is blocking each one. Keptcash, Ledgercross's AI accounts-receivable agent, diagnoses the blocker behind every overdue invoice with evidence, drafts grounded collection emails that a human sends, matches payments and reports dollars recovered. Python/FastAPI + PostgreSQL + Gemini on Vertex AI, deployed with Dokploy.
+Tech: Python, FastAPI, Gemini, PostgreSQL, Vertex AI, Next.js, Playwright, Dokploy
+
+### Motamot
+Rank anything on the map of Bangladesh together: people paint zillas and upazilas red to green, and the map shows the live average of every painter. One Node process holds every topic on a 54,951-cell grid in memory and sends only the cells that changed, as binary diffs over WebSocket. React + MapLibre + Hono + SQLite, in Docker on Dokploy.
+Tech: TypeScript, React, MapLibre, Hono, WebSocket, SQLite, Docker
+Live: https://motamot.tuiber.com
+
+### Onlistly
+At a busy gate the same QR ticket can be scanned twice. Onlistly is a multi-tenant event ticketing and access-control platform built entirely on Cloudflare, where one Durable Object per ticket makes every redemption exactly-once, verified under a 10,000-concurrent-scan load test. Workers, Durable Objects, Queues, D1 and R2, with a TanStack Start frontend and a passwordless scanner PWA.
+Tech: Cloudflare Workers, Durable Objects, TypeScript, Hono, TanStack Start, Better Auth, Prisma
+
+### ledgercross.com
+Ledgercross's company site, rewritten from Next.js to a static Astro 7 site with a Supabase-backed blog CMS, an SEO suite (RSS, build-time OG images, llms.txt) and rebuilds triggered on publish, then cut over to production. Also built the team roster and member profile pages.
+Tech: Astro, TypeScript, Supabase, React, PostgreSQL, Vercel
+Live: https://ledgercross.com
+
+### getmyprof
+Finding a funded PhD position means reading faculty pages and grant databases by hand. getmyprof is a desktop app whose agent finds professors who can fund you and the grants behind them, rates your chances for each program, and drafts and threads the outreach from your Gmail or Outlook. Ships for Mac, Linux and Windows, plus npm and a Homebrew cask.
+Tech: TypeScript, AI agents, OpenAlex, Homebrew
+Code: https://github.com/EhsanulHaqueSiam/getmyprof
+
+### APRON
+Procurement teams negotiate supplier quotes by hand, and an AI alone can't be trusted with money. APRON, Ledgercross's AI procurement negotiator, lets the AI propose while deterministic code verifies, policy decides and humans approve, so money, dates and savings never come from the model. Python/FastAPI + PostgreSQL with pgvector, React and a self-hosted Better Auth service.
+Tech: Python, FastAPI, PostgreSQL, pgvector, React, Better Auth, Nylas, Dokploy
+
+### xtend
+A desktop app around X (Twitter) that acts through your own X session, so everyday actions stay free. It adds a library of saved posts, AI reply drafts on your own Claude or Codex login, analytics, and automation rules that read as sentences, with X's Chat, Grok, Spaces and Communities drawn natively. Desktop builds for every OS, plus npm and the AUR.
+Tech: TypeScript, Claude, Codex
+Code: https://github.com/EhsanulHaqueSiam/xtend
+
+### tastebase
+Curated UI component libraries and design inspiration, served through a CLI and an MCP server so coding agents pick good UI. Recurring evals catch wrong picks, a design eval judges three builds per brief, and the site has library directory pages, sign-in with synced favourites and agent-skill discovery.
+Tech: TypeScript, MCP, CLI
+Code: https://github.com/EhsanulHaqueSiam/tastebase
 
 ### TTT Autos
 Dealership websites lack trust: generic templates with FOMO-driven tactics. Built a cinematic 'Velocity Noir' platform with interactive 3D vehicle showcases, transparent pricing, and a 17-page admin dashboard supporting cars, motorcycles, and bicycles. Polymorphic inventory with 7 indexed tables and 12+ filter facets. React 19 + TanStack Start + Drizzle ORM + Spline 3D.
@@ -74,6 +117,40 @@ A US-based digital agency needed a web presence that matched their premium posit
 Tech: React, TypeScript, TailwindCSS, Framer Motion
 Live: https://betascript.online/
 
+### Ledgercross Blog Studio
+A team-only Claude Code plugin that researches, writes, illustrates, scores and drafts on-brand blog posts for ledgercross.com. 15 MCP tools, a skill and 12 slash commands, a blocking quality gate, and drafts saved for human approval before publishing. Runs on Linux, macOS and native Windows.
+Tech: MCP, Claude Code, TypeScript, Node.js, Supabase
+
+### LedgerScan
+LedgerScan verifies product authenticity and logistics with a counterfeit-risk AI engine and an Ethereum product registry. Built its front door: an SEO-first marketing landing page, a branded Keycloak login theme, GA4 and Clarity analytics, and a manufacturer first-run activation flow with a live verdict preview.
+Tech: TypeScript, Keycloak, Google Analytics, Render
+
+### FlowCV MCP
+FlowCV has no public API, so AI assistants can't work on a resume there. FlowCV MCP drives the web app's private API with your own session: 50 MCP tools and a CLI cover resume content, design, cover letters, the job-tracker kanban and publishing, with Claude Code skills and a one-line installer.
+Tech: TypeScript, MCP, Node.js, Zod
+Code: https://github.com/EhsanulHaqueSiam/flowcv-mcp
+
+### Arché Intelligence Lab website
+Arché Intelligence Lab's public website. An SEO, AEO/GEO, performance and accessibility overhaul added a linked JSON-LD graph, put all 24 publications into the static HTML (17 had rendered only on tab click), and added per-route OpenGraph images and llms.txt; later PRs added paper, dataset and research-area pages and a canonical domain.
+Tech: Astro, TypeScript, JSON-LD, Next.js
+Live: https://www.archelab.org
+
+### Arché NeuroAI (SULCI)
+Landing page for Arché's NeuroAI neuroimaging initiative, drawn from a real reconstructed cortical surface: the hero draws 46 sagittal sections on Canvas 2D and a react-three-fiber viewer renders the surface live. Performance work cut the cortex mesh from 887 kB to 287 kB and took the hero from 12 fps to holding the refresh rate.
+Tech: React, three.js, react-three-fiber, TypeScript, Vite
+Live: https://neuroai-zeta.vercel.app
+
+### iosrank.lol
+A public leaderboard of iOS App Store apps ranked only by what their makers bid. Rewrote it on TanStack Start and Convex: live listings from Apple's iTunes Lookup API, whole-dollar bids through Stripe Checkout settled in a Convex webhook, and new ranks pushed to every open board over WebSocket.
+Tech: TanStack Start, Convex, Stripe, TypeScript, Playwright
+Live: https://iosrank.lol
+Code: https://github.com/MIMohit/ios-bid
+
+### whostolemyname.mom
+Checks a business name against domains, social handles and the web at once. Rebuilt its whole look as an illustrated cartoon in one PR: a hand-drawn SVG scene that recolours from CSS, an ink-outline design system mapped onto shadcn, and results shown as notes on a fridge.
+Tech: Next.js, TypeScript, Tailwind CSS, shadcn/ui, SVG
+Live: https://whostolemyname.mom
+
 ### Student Management System
 Reduced university data retrieval time from 50ms to 7ms, a 7x performance improvement validated by load testing with 45+ active users, by redesigning the database to 3NF normalization with Singleton connection pooling in Java. Earned 17 GitHub stars.
 Tech: Java, MySQL, JDBC, Design Patterns, 3NF
@@ -92,9 +169,8 @@ Live: https://www.youtube.com/watch?v=wK7qjTRkStg
 Code: https://github.com/EhsanulHaqueSiam/MarioMultiverseAdventures
 
 ### BD News Scraper & Analytics
-Automated daily scraping of 95+ Bangladeshi and international news sources (English and Bangla) by engineering an open-source Scrapy and Playwright pipeline with ML-powered sentiment analysis, GitHub Actions scheduling and Docker deployment.
+Automated daily scraping of 95+ Bangladeshi and international news sources (English and Bangla) by engineering a Scrapy and Playwright pipeline with ML-powered sentiment analysis, GitHub Actions scheduling and Docker deployment.
 Tech: Python, Scrapy, FastAPI, Docker, GitHub Actions, scikit-learn
-Code: https://github.com/EhsanulHaqueSiam/BDNewsPaperScraper
 
 ### Hotel Management System
 Built a hotel operations platform with Bkash/Nagad payment integration earning 15 GitHub stars across 171 commits and 4 releases by developing a modular Java Swing application with secure authentication and admin/user dashboards.
@@ -120,6 +196,24 @@ Code: https://github.com/EhsanulHaqueSiam/PharmacyManagementSystem
 **Process:** Scraping Pipeline: Engineered 272 spiders across 7 scraping methods (HTML, API, RSS, JSON-LD, Scrapling, AJAX, Inertia.js) with wave-based scheduling, automatic deduplication, and source health monitoring. | Discovery Engine: Implemented full-text search with autocomplete, filtering by country, degree level, field of study, funding type, and prestige tier, plus nationality-aware recommendations. | Admin Dashboard: Built a review queue for pending scholarships, source trust manager for auto-publish vs manual review, collections manager, and tags manager with status-based stats. | SEO & Performance: Implemented dynamic OG image generation with Satori, XML sitemaps, JSON-LD structured data, country and degree landing pages, and SSR with TanStack Start on Netlify.
 **Measured results:** Scholarships: 12,000+, Sources: 272, Scraping Methods: 7, Source Categories: 5
 
+### Keptcash
+**Problem:** Overdue invoices stall a company's cash, and the reason each one is unpaid is scattered across the accounting system and email threads, so collection emails are guesses.
+**Approach:** Keptcash syncs QuickBooks and Gmail, diagnoses the blocker behind each overdue invoice with evidence, drafts a targeted collection email that a human approves and sends, tracks promises and disputes, matches incoming payments and reports the dollars it recovered, with an append-only audit trail.
+**Process:** Collection case engine: A case state machine and case opener for every overdue invoice, with rule-based blocker diagnosis and an LLM fallback. | Grounded AI drafts: An LLM provider layer on Gemini in Vertex AI, hybrid retrieval over invoice documents, and a deterministic grounding checker that hard-fails any draft the evidence doesn't support; drafts wait in an approval queue. | Payments and attribution: Exact payment auto-match, an unmatched-payments queue with manual match, and dollars-recovered attribution with analytics. | Evals, tests and deploy: An eval runner with classification and diagnosis golden sets and an injection-resistance suite, Playwright e2e over every screen, role and worker loop, and production images deployed with Dokploy.
+**Measured results:** Merged PRs: 56, Days: 9, My commits: 78, Live: Sep 2026
+
+### Onlistly
+**Problem:** At a busy event gate, scanners race each other and the same QR ticket can be redeemed twice, while organizers need limits per stall (entry, food, games) and live counts.
+**Approach:** A multi-tenant ticketing and access-control platform built entirely on Cloudflare: organizers design branded QR tickets and email them, staff redeem from a passwordless scanner PWA in under three taps, and one Durable Object per ticket makes each redemption exactly-once.
+**Process:** Exactly-once redemption: One SQLite-backed Durable Object per ticket acts as the mutex, verified under a 10,000-concurrent-scan load test. | Off the hot path: Scan logs and live stats go through Cloudflare Queues, and a per-event Durable Object coalesces dashboard broadcasts over hibernatable WebSockets. | Ticket security: HMAC-SHA256 signed QR tickets with an optional rotating code, stall-scoped revocable scanner tokens, and revoke, transfer and eject. | Billing and operations: SSLCommerz billing with credit packs, per-segment SMS billing, tiers and time windows, plus-ones and capacity limits, rate limits and dead-letter alerts.
+**Measured results:** Concurrent scans: 10,000, Commits: 296, Taps to redeem: <3, Cloudflare services: 5
+
+### APRON
+**Problem:** Buyers compare supplier quotes and negotiate by hand, and letting an AI decide prices, dates or savings directly is too risky for a procurement team.
+**Approach:** An AI procurement negotiator built around an evidence-backed Procurement Ledger: buyers upload quotes, the AI returns typed candidate facts, deterministic rules verify and compare them, policy decides and a human approves. Money, dates and savings never come from the model.
+**Process:** Auth and tenant isolation: Moved auth from Clerk to a self-hosted Better Auth service with organizations and JWTs, and added Postgres row-level security for every tenant. | Reading supplier email: Buyer mailboxes through Nylas with a connect flow and folder picker, and quote line extraction (tax, units, tiers, currency, incoterms, freight, terms) with evidence spans. | AI under control: An AI provider layer with structured outputs, retries and cost logging, autonomy levels 0 to 2 with level 3 behind a production gate, and a tool permission matrix. | Deploy and recovery: A Dokploy pipeline on Postgres 18 with pgvector and pgbouncer, Doppler secrets, the full e2e suite in CI, and a backup and restore drill with a runbook.
+**Measured results:** Merged PRs: 39, Weeks: 3, My commits: 60, Autonomy levels: 4
+
 ### TTT Autos
 **Problem:** Traditional dealership websites rely on generic templates with FOMO-driven sales tactics, lacking a premium browsing experience that builds trust through transparency and visual immersion.
 **Approach:** Built a cinematic 'Velocity Noir' dealership platform with interactive 3D models, headlight-effect UI, multi-angle photo galleries, and a comprehensive admin dashboard, all architected for trust-first positioning with transparent pricing and verified quality badges.
@@ -131,6 +225,18 @@ Code: https://github.com/EhsanulHaqueSiam/PharmacyManagementSystem
 **Approach:** Built a full-stack restaurant platform with seamless online ordering, real-time order tracking, event booking for private dining, and catering integration, maintaining the warmth of their brand while scaling digitally.
 **Process:** Ordering Experience: Designed an intuitive menu browsing and cart system with real-time availability, dietary filters, and frictionless checkout optimized for mobile-first customers. | Backend & Processing: Built order processing pipeline handling real-time submissions, kitchen notifications, and order status tracking from placement to delivery. | Event & Catering: Integrated event booking for private dining and large-scale catering requests with custom menu selection and automated quote generation. | Performance & SEO: Optimized for Core Web Vitals with lazy loading, image optimization, and local SEO to capture nearby customer searches.
 **Measured results:** Customers: 50,000+, Rating: 4.9★, Reviews: 2,847, Platform: Production
+
+### Ledgercross Blog Studio
+**Problem:** Every ledgercross.com post needs keyword research, an outline, writing, images and an SEO check before a human approves it.
+**Approach:** One Claude Code plugin install gives teammates 15 MCP tools, a skill and 12 slash commands that research, write, illustrate, score and draft on-brand posts, saved to the site's Supabase backend for human approval.
+**Process:** Research and outline: Keyword and competitor research, then an outline gate before any writing starts. | Writing: Plain-language writing in three section agents, following the site's full content block model. | Visuals: Branded covers, stat and quote cards and memes rendered with headless Chromium. | Quality gate: An SEO, GEO and AEO audit score plus a blocking gate (link checks, structure limits, banned phrases) before a draft is saved.
+**Measured results:** MCP tools: 15, Commands: 12, Platforms: 3, Version: 0.5
+
+### LedgerScan
+**Problem:** LedgerScan's counterfeit-risk engine and product registry needed a front door: a page that explains the product, a sign-in under its own brand, and a first-run path for manufacturers.
+**Approach:** Built the SEO-first marketing landing page, a branded Keycloak login theme applied automatically, GA4 and Clarity analytics, and a manufacturer first-run activation flow with a live verdict preview, then a chaptered product film below the hero.
+**Process:** Landing page: A standalone page served on Render with AVIF and WebP images, an OG card, self-hosted fonts and an LCP fix. | Branded sign-in: A Keycloak login theme in LedgerScan's brand, applied automatically, and a new LS logo. | First-run activation: Manufacturers activate with a live preview of the verdict their products will get. | Every screen size: A responsive pass from 280px phones to 4K screens.
+**Measured results:** Merged PRs: 8, My commits: 31, Smallest width: 280px, Largest: 4K
 
 ### Student Management System
 **Problem:** University administration struggled with scattered excel sheets and slow manual data retrieval, leading to administrative bottlenecks.
@@ -146,7 +252,7 @@ Code: https://github.com/EhsanulHaqueSiam/PharmacyManagementSystem
 
 ### BD News Scraper & Analytics
 **Problem:** Bangladesh lacks a comprehensive, up-to-date news dataset for research and NLP applications, with no automated pipeline for continuous data collection and analysis.
-**Approach:** Built a production-grade news aggregation platform with 95+ spiders, automated daily scraping via GitHub Actions, ML-powered analytics, and an open-source codebase for the research community.
+**Approach:** Built a production-grade news aggregation platform with 95+ spiders, automated daily scraping via GitHub Actions and ML-powered analytics.
 **Process:** Enterprise Scraping: Developed 95+ spider files with Playwright integration, Cloudflare bypass, rotating proxies, and smart fallback architecture. | ML Analytics Pipeline: Implemented sentiment analysis, TF-IDF topic clustering, breaking news detection via spike analysis, and duplicate detection. | Automated Infrastructure: GitHub Actions daily scraping at 12:00 PM BDT, Docker/Kubernetes deployment, multi-format exports. | API & Dashboards: FastAPI REST + GraphQL endpoints, Streamlit dashboards, Leaflet.js geo-visualization, real-time notifications (Telegram/Slack/Discord).
 **Measured results:** Sources: 95+, Languages: EN + BN, Daily Auto: ✓
 
@@ -268,5 +374,4 @@ Presented a historical and statistical analysis of cyclone losses in Bangladesh 
 - Google Scholar: https://scholar.google.com/citations?user=oX8D-pEAAAAJ&hl=en
 - IEEE Xplore: https://ieeexplore.ieee.org/author/37089519186
 - ResearchGate: https://www.researchgate.net/profile/Ehsanul-Haque-13
-- Kaggle: https://www.kaggle.com/ehsanulhaquesiam
 - X: https://x.com/siamships

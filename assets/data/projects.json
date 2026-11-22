@@ -77,6 +77,399 @@
     "years": "2026"
   },
   {
+    "name": "Is BD banned here?",
+    "desc": "Bangladeshis find out the hard way which universities, companies, countries and online services stopped taking them. Is BD banned here? lists every ban with receipts: six categories, a world map of bans, country hubs, reader-submitted receipts reviewed on arrival and a daily news watcher. Live on Cloudflare Workers, WCAG AAA on every page.",
+    "metrics": [
+      "Live on Cloudflare Workers",
+      "WCAG AAA on every page",
+      "Daily news watcher",
+      "17 merged PRs in 3 days"
+    ],
+    "images": [
+      "isbdbannedhere"
+    ],
+    "showInHome": true,
+    "categories": [
+      "web",
+      "fullstack"
+    ],
+    "tags": [
+      "TypeScript",
+      "Cloudflare Workers"
+    ],
+    "links": {
+      "view": "https://isbdbannedhere.site",
+      "code": "https://github.com/EhsanulHaqueSiam/isbdbannedhere"
+    },
+    "myPart": "Own project.",
+    "years": "2026"
+  },
+  {
+    "name": "Keptcash",
+    "desc": "Overdue invoices sit unpaid because nobody knows what is blocking each one. Keptcash, Ledgercross's AI accounts-receivable agent, diagnoses the blocker behind every overdue invoice with evidence, drafts grounded collection emails that a human sends, matches payments and reports dollars recovered. Python/FastAPI + PostgreSQL + Gemini on Vertex AI, deployed with Dokploy.",
+    "metrics": [
+      "56 merged PRs in 9 days",
+      "Live in production on 2026-09-08",
+      "Grounding checker hard-fails unsupported drafts",
+      "Playwright e2e on every screen and role"
+    ],
+    "images": [],
+    "showInHome": true,
+    "categories": [
+      "web",
+      "fullstack",
+      "machine_learning"
+    ],
+    "tags": [
+      "Python",
+      "FastAPI",
+      "Gemini",
+      "PostgreSQL",
+      "Vertex AI",
+      "Next.js",
+      "Playwright",
+      "Dokploy"
+    ],
+    "links": {},
+    "caseStudy": {
+      "problem": "Overdue invoices stall a company's cash, and the reason each one is unpaid is scattered across the accounting system and email threads, so collection emails are guesses.",
+      "solution": "Keptcash syncs QuickBooks and Gmail, diagnoses the blocker behind each overdue invoice with evidence, drafts a targeted collection email that a human approves and sends, tracks promises and disputes, matches incoming payments and reports the dollars it recovered, with an append-only audit trail.",
+      "process": [
+        {
+          "title": "Collection case engine",
+          "desc": "A case state machine and case opener for every overdue invoice, with rule-based blocker diagnosis and an LLM fallback.",
+          "icon": "fas fa-diagram-project"
+        },
+        {
+          "title": "Grounded AI drafts",
+          "desc": "An LLM provider layer on Gemini in Vertex AI, hybrid retrieval over invoice documents, and a deterministic grounding checker that hard-fails any draft the evidence doesn't support; drafts wait in an approval queue.",
+          "icon": "fas fa-brain"
+        },
+        {
+          "title": "Payments and attribution",
+          "desc": "Exact payment auto-match, an unmatched-payments queue with manual match, and dollars-recovered attribution with analytics.",
+          "icon": "fas fa-money-bill"
+        },
+        {
+          "title": "Evals, tests and deploy",
+          "desc": "An eval runner with classification and diagnosis golden sets and an injection-resistance suite, Playwright e2e over every screen, role and worker loop, and production images deployed with Dokploy.",
+          "icon": "fas fa-vial"
+        }
+      ],
+      "results": [
+        {
+          "label": "Merged PRs",
+          "value": "56"
+        },
+        {
+          "label": "Days",
+          "value": "9"
+        },
+        {
+          "label": "My commits",
+          "value": "78"
+        },
+        {
+          "label": "Live",
+          "value": "Sep 2026"
+        }
+      ]
+    },
+    "myPart": "Core engineer for Ledgercross: 78 of 185 commits and 56 merged PRs (case engine, AI pipeline, payment matching, evals, deploy).",
+    "years": "2026"
+  },
+  {
+    "name": "Motamot",
+    "desc": "Rank anything on the map of Bangladesh together: people paint zillas and upazilas red to green, and the map shows the live average of every painter. One Node process holds every topic on a 54,951-cell grid in memory and sends only the cells that changed, as binary diffs over WebSocket. React + MapLibre + Hono + SQLite, in Docker on Dokploy.",
+    "metrics": [
+      "54,951 live grid cells over Bangladesh",
+      "Binary diffs over WebSocket",
+      "Share cards and 8 s MP4 replays",
+      "Per-zilla and per-upazila comments"
+    ],
+    "images": [
+      "motamot"
+    ],
+    "showInHome": true,
+    "categories": [
+      "web",
+      "fullstack"
+    ],
+    "tags": [
+      "TypeScript",
+      "React",
+      "MapLibre",
+      "Hono",
+      "WebSocket",
+      "SQLite",
+      "Docker"
+    ],
+    "links": {
+      "view": "https://motamot.tuiber.com"
+    },
+    "myPart": "Own project.",
+    "years": "2026"
+  },
+  {
+    "name": "Onlistly",
+    "desc": "At a busy gate the same QR ticket can be scanned twice. Onlistly is a multi-tenant event ticketing and access-control platform built entirely on Cloudflare, where one Durable Object per ticket makes every redemption exactly-once, verified under a 10,000-concurrent-scan load test. Workers, Durable Objects, Queues, D1 and R2, with a TanStack Start frontend and a passwordless scanner PWA.",
+    "metrics": [
+      "Exactly-once QR redemption",
+      "10,000-concurrent-scan load test",
+      "Sole author of all 296 commits",
+      "Scanner PWA redeems in under 3 taps"
+    ],
+    "images": [],
+    "showInHome": true,
+    "categories": [
+      "web",
+      "fullstack",
+      "backend"
+    ],
+    "tags": [
+      "Cloudflare Workers",
+      "Durable Objects",
+      "TypeScript",
+      "Hono",
+      "TanStack Start",
+      "Better Auth",
+      "Prisma"
+    ],
+    "links": {},
+    "caseStudy": {
+      "problem": "At a busy event gate, scanners race each other and the same QR ticket can be redeemed twice, while organizers need limits per stall (entry, food, games) and live counts.",
+      "solution": "A multi-tenant ticketing and access-control platform built entirely on Cloudflare: organizers design branded QR tickets and email them, staff redeem from a passwordless scanner PWA in under three taps, and one Durable Object per ticket makes each redemption exactly-once.",
+      "process": [
+        {
+          "title": "Exactly-once redemption",
+          "desc": "One SQLite-backed Durable Object per ticket acts as the mutex, verified under a 10,000-concurrent-scan load test.",
+          "icon": "fas fa-lock"
+        },
+        {
+          "title": "Off the hot path",
+          "desc": "Scan logs and live stats go through Cloudflare Queues, and a per-event Durable Object coalesces dashboard broadcasts over hibernatable WebSockets.",
+          "icon": "fas fa-bolt"
+        },
+        {
+          "title": "Ticket security",
+          "desc": "HMAC-SHA256 signed QR tickets with an optional rotating code, stall-scoped revocable scanner tokens, and revoke, transfer and eject.",
+          "icon": "fas fa-qrcode"
+        },
+        {
+          "title": "Billing and operations",
+          "desc": "SSLCommerz billing with credit packs, per-segment SMS billing, tiers and time windows, plus-ones and capacity limits, rate limits and dead-letter alerts.",
+          "icon": "fas fa-credit-card"
+        }
+      ],
+      "results": [
+        {
+          "label": "Concurrent scans",
+          "value": "10,000"
+        },
+        {
+          "label": "Commits",
+          "value": "296"
+        },
+        {
+          "label": "Taps to redeem",
+          "value": "<3"
+        },
+        {
+          "label": "Cloudflare services",
+          "value": "5"
+        }
+      ]
+    },
+    "myPart": "Solo build for Ledgercross: all 296 commits.",
+    "years": "2026"
+  },
+  {
+    "name": "ledgercross.com",
+    "desc": "Ledgercross's company site, rewritten from Next.js to a static Astro 7 site with a Supabase-backed blog CMS, an SEO suite (RSS, build-time OG images, llms.txt) and rebuilds triggered on publish, then cut over to production. Also built the team roster and member profile pages.",
+    "metrics": [
+      "Astro rewrite cut over in one PR (244 files)",
+      "Blog CMS with 8 new content block types",
+      "Rebuilds on publish via Postgres triggers",
+      "25 merged PRs"
+    ],
+    "images": [
+      "ledgercross"
+    ],
+    "showInHome": true,
+    "categories": [
+      "web",
+      "frontend"
+    ],
+    "tags": [
+      "Astro",
+      "TypeScript",
+      "Supabase",
+      "React",
+      "PostgreSQL",
+      "Vercel"
+    ],
+    "links": {
+      "view": "https://ledgercross.com"
+    },
+    "myPart": "For Ledgercross: 44 of 236 commits and 25 merged PRs, including the Astro rewrite.",
+    "years": "2026"
+  },
+  {
+    "name": "getmyprof",
+    "desc": "Finding a funded PhD position means reading faculty pages and grant databases by hand. getmyprof is a desktop app whose agent finds professors who can fund you and the grants behind them, rates your chances for each program, and drafts and threads the outreach from your Gmail or Outlook. Ships for Mac, Linux and Windows, plus npm and a Homebrew cask.",
+    "metrics": [
+      "Mac, Linux and Windows releases",
+      "Grants via OpenAlex and 6 national funders",
+      "v0.1.0 to v0.6.0 in 10 days",
+      "Every professor fact cites its source"
+    ],
+    "images": [],
+    "showInHome": true,
+    "categories": [
+      "desktop_app",
+      "fullstack",
+      "automation"
+    ],
+    "tags": [
+      "TypeScript",
+      "AI agents",
+      "OpenAlex",
+      "Homebrew"
+    ],
+    "links": {
+      "code": "https://github.com/EhsanulHaqueSiam/getmyprof"
+    },
+    "myPart": "Own project.",
+    "years": "2026"
+  },
+  {
+    "name": "APRON",
+    "desc": "Procurement teams negotiate supplier quotes by hand, and an AI alone can't be trusted with money. APRON, Ledgercross's AI procurement negotiator, lets the AI propose while deterministic code verifies, policy decides and humans approve, so money, dates and savings never come from the model. Python/FastAPI + PostgreSQL with pgvector, React and a self-hosted Better Auth service.",
+    "metrics": [
+      "39 merged PRs in 3 weeks",
+      "Tenant row-level security in Postgres",
+      "Autonomy levels behind a production gate",
+      "Backup and restore drill with a runbook"
+    ],
+    "images": [],
+    "showInHome": true,
+    "categories": [
+      "web",
+      "fullstack",
+      "machine_learning"
+    ],
+    "tags": [
+      "Python",
+      "FastAPI",
+      "PostgreSQL",
+      "pgvector",
+      "React",
+      "Better Auth",
+      "Nylas",
+      "Dokploy"
+    ],
+    "links": {},
+    "caseStudy": {
+      "problem": "Buyers compare supplier quotes and negotiate by hand, and letting an AI decide prices, dates or savings directly is too risky for a procurement team.",
+      "solution": "An AI procurement negotiator built around an evidence-backed Procurement Ledger: buyers upload quotes, the AI returns typed candidate facts, deterministic rules verify and compare them, policy decides and a human approves. Money, dates and savings never come from the model.",
+      "process": [
+        {
+          "title": "Auth and tenant isolation",
+          "desc": "Moved auth from Clerk to a self-hosted Better Auth service with organizations and JWTs, and added Postgres row-level security for every tenant.",
+          "icon": "fas fa-shield-halved"
+        },
+        {
+          "title": "Reading supplier email",
+          "desc": "Buyer mailboxes through Nylas with a connect flow and folder picker, and quote line extraction (tax, units, tiers, currency, incoterms, freight, terms) with evidence spans.",
+          "icon": "fas fa-envelope"
+        },
+        {
+          "title": "AI under control",
+          "desc": "An AI provider layer with structured outputs, retries and cost logging, autonomy levels 0 to 2 with level 3 behind a production gate, and a tool permission matrix.",
+          "icon": "fas fa-sliders"
+        },
+        {
+          "title": "Deploy and recovery",
+          "desc": "A Dokploy pipeline on Postgres 18 with pgvector and pgbouncer, Doppler secrets, the full e2e suite in CI, and a backup and restore drill with a runbook.",
+          "icon": "fas fa-server"
+        }
+      ],
+      "results": [
+        {
+          "label": "Merged PRs",
+          "value": "39"
+        },
+        {
+          "label": "Weeks",
+          "value": "3"
+        },
+        {
+          "label": "My commits",
+          "value": "60"
+        },
+        {
+          "label": "Autonomy levels",
+          "value": "4"
+        }
+      ]
+    },
+    "myPart": "Engineer for Ledgercross: 60 of 373 commits and 39 merged PRs (auth, tenant isolation, AI layer, deploy).",
+    "years": "2026"
+  },
+  {
+    "name": "xtend",
+    "desc": "A desktop app around X (Twitter) that acts through your own X session, so everyday actions stay free. It adds a library of saved posts, AI reply drafts on your own Claude or Codex login, analytics, and automation rules that read as sentences, with X's Chat, Grok, Spaces and Communities drawn natively. Desktop builds for every OS, plus npm and the AUR.",
+    "metrics": [
+      "Desktop builds on every OS",
+      "Published to npm and the AUR",
+      "X's Chat, Grok and Spaces drawn natively",
+      "AI drafts on your own Claude or Codex login"
+    ],
+    "images": [],
+    "showInHome": true,
+    "categories": [
+      "desktop_app",
+      "fullstack",
+      "automation"
+    ],
+    "tags": [
+      "TypeScript",
+      "Claude",
+      "Codex"
+    ],
+    "links": {
+      "code": "https://github.com/EhsanulHaqueSiam/xtend"
+    },
+    "myPart": "Own project.",
+    "years": "2026"
+  },
+  {
+    "name": "tastebase",
+    "desc": "Curated UI component libraries and design inspiration, served through a CLI and an MCP server so coding agents pick good UI. Recurring evals catch wrong picks, a design eval judges three builds per brief, and the site has library directory pages, sign-in with synced favourites and agent-skill discovery.",
+    "metrics": [
+      "CLI and MCP server for coding agents",
+      "Design eval judges 3 builds per brief",
+      "94 curated looks",
+      "46 merged PRs in 2 weeks"
+    ],
+    "images": [],
+    "showInHome": true,
+    "categories": [
+      "web",
+      "automation"
+    ],
+    "tags": [
+      "TypeScript",
+      "MCP",
+      "CLI"
+    ],
+    "links": {
+      "code": "https://github.com/EhsanulHaqueSiam/tastebase"
+    },
+    "myPart": "Own project.",
+    "years": "2026"
+  },
+  {
     "name": "TTT Autos",
     "desc": "Dealership websites lack trust: generic templates with FOMO-driven tactics. Built a cinematic 'Velocity Noir' platform with interactive 3D vehicle showcases, transparent pricing, and a 17-page admin dashboard supporting cars, motorcycles, and bicycles. Polymorphic inventory with 7 indexed tables and 12+ filter facets. React 19 + TanStack Start + Drizzle ORM + Spline 3D.",
     "metrics": [
@@ -163,7 +556,9 @@
         "Shipped dealership platform with 3D Spline showcases, admin CRUD dashboard, and 7 indexed database tables",
         "Designed polymorphic inventory supporting 3 vehicle types with multi-filter search across 12+ facets"
       ]
-    }
+    },
+    "myPart": "Solo build for a BetaScript LLC client.",
+    "years": "2026"
   },
   {
     "name": "KaajKormo",
@@ -400,6 +795,293 @@
     }
   },
   {
+    "name": "Ledgercross Blog Studio",
+    "desc": "A team-only Claude Code plugin that researches, writes, illustrates, scores and drafts on-brand blog posts for ledgercross.com. 15 MCP tools, a skill and 12 slash commands, a blocking quality gate, and drafts saved for human approval before publishing. Runs on Linux, macOS and native Windows.",
+    "metrics": [
+      "15 MCP tools and 12 commands",
+      "SEO, GEO and AEO audit score",
+      "Blocking quality gate before publish",
+      "Linux, macOS and Windows"
+    ],
+    "images": [],
+    "showInHome": true,
+    "categories": [
+      "automation",
+      "machine_learning"
+    ],
+    "tags": [
+      "MCP",
+      "Claude Code",
+      "TypeScript",
+      "Node.js",
+      "Supabase"
+    ],
+    "links": {},
+    "caseStudy": {
+      "problem": "Every ledgercross.com post needs keyword research, an outline, writing, images and an SEO check before a human approves it.",
+      "solution": "One Claude Code plugin install gives teammates 15 MCP tools, a skill and 12 slash commands that research, write, illustrate, score and draft on-brand posts, saved to the site's Supabase backend for human approval.",
+      "process": [
+        {
+          "title": "Research and outline",
+          "desc": "Keyword and competitor research, then an outline gate before any writing starts.",
+          "icon": "fas fa-magnifying-glass"
+        },
+        {
+          "title": "Writing",
+          "desc": "Plain-language writing in three section agents, following the site's full content block model.",
+          "icon": "fas fa-pen"
+        },
+        {
+          "title": "Visuals",
+          "desc": "Branded covers, stat and quote cards and memes rendered with headless Chromium.",
+          "icon": "fas fa-image"
+        },
+        {
+          "title": "Quality gate",
+          "desc": "An SEO, GEO and AEO audit score plus a blocking gate (link checks, structure limits, banned phrases) before a draft is saved.",
+          "icon": "fas fa-check"
+        }
+      ],
+      "results": [
+        {
+          "label": "MCP tools",
+          "value": "15"
+        },
+        {
+          "label": "Commands",
+          "value": "12"
+        },
+        {
+          "label": "Platforms",
+          "value": "3"
+        },
+        {
+          "label": "Version",
+          "value": "0.5"
+        }
+      ]
+    },
+    "myPart": "Built for Ledgercross.",
+    "years": "2026"
+  },
+  {
+    "name": "LedgerScan",
+    "desc": "LedgerScan verifies product authenticity and logistics with a counterfeit-risk AI engine and an Ethereum product registry. Built its front door: an SEO-first marketing landing page, a branded Keycloak login theme, GA4 and Clarity analytics, and a manufacturer first-run activation flow with a live verdict preview.",
+    "metrics": [
+      "Responsive from 280px to 4K",
+      "Branded Keycloak login theme",
+      "Manufacturer first-run activation",
+      "8 merged PRs"
+    ],
+    "images": [],
+    "showInHome": true,
+    "categories": [
+      "web",
+      "frontend"
+    ],
+    "tags": [
+      "TypeScript",
+      "Keycloak",
+      "Google Analytics",
+      "Render"
+    ],
+    "links": {},
+    "caseStudy": {
+      "problem": "LedgerScan's counterfeit-risk engine and product registry needed a front door: a page that explains the product, a sign-in under its own brand, and a first-run path for manufacturers.",
+      "solution": "Built the SEO-first marketing landing page, a branded Keycloak login theme applied automatically, GA4 and Clarity analytics, and a manufacturer first-run activation flow with a live verdict preview, then a chaptered product film below the hero.",
+      "process": [
+        {
+          "title": "Landing page",
+          "desc": "A standalone page served on Render with AVIF and WebP images, an OG card, self-hosted fonts and an LCP fix.",
+          "icon": "fas fa-window-maximize"
+        },
+        {
+          "title": "Branded sign-in",
+          "desc": "A Keycloak login theme in LedgerScan's brand, applied automatically, and a new LS logo.",
+          "icon": "fas fa-right-to-bracket"
+        },
+        {
+          "title": "First-run activation",
+          "desc": "Manufacturers activate with a live preview of the verdict their products will get.",
+          "icon": "fas fa-play"
+        },
+        {
+          "title": "Every screen size",
+          "desc": "A responsive pass from 280px phones to 4K screens.",
+          "icon": "fas fa-display"
+        }
+      ],
+      "results": [
+        {
+          "label": "Merged PRs",
+          "value": "8"
+        },
+        {
+          "label": "My commits",
+          "value": "31"
+        },
+        {
+          "label": "Smallest width",
+          "value": "280px"
+        },
+        {
+          "label": "Largest",
+          "value": "4K"
+        }
+      ]
+    },
+    "myPart": "Front door for Ledgercross: 31 of 332 commits (landing page, login theme, analytics, activation).",
+    "years": "2026"
+  },
+  {
+    "name": "FlowCV MCP",
+    "desc": "FlowCV has no public API, so AI assistants can't work on a resume there. FlowCV MCP drives the web app's private API with your own session: 50 MCP tools and a CLI cover resume content, design, cover letters, the job-tracker kanban and publishing, with Claude Code skills and a one-line installer.",
+    "metrics": [
+      "50 MCP tools",
+      "CLI and one-line installer",
+      "Session login over Chrome DevTools Protocol",
+      "Claude Code skills included"
+    ],
+    "images": [],
+    "showInHome": true,
+    "categories": [
+      "automation",
+      "backend"
+    ],
+    "tags": [
+      "TypeScript",
+      "MCP",
+      "Node.js",
+      "Zod"
+    ],
+    "links": {
+      "code": "https://github.com/EhsanulHaqueSiam/flowcv-mcp"
+    },
+    "myPart": "Own project.",
+    "years": "2026"
+  },
+  {
+    "name": "Arché Intelligence Lab website",
+    "desc": "Arché Intelligence Lab's public website. An SEO, AEO/GEO, performance and accessibility overhaul added a linked JSON-LD graph, put all 24 publications into the static HTML (17 had rendered only on tab click), and added per-route OpenGraph images and llms.txt; later PRs added paper, dataset and research-area pages and a canonical domain.",
+    "metrics": [
+      "All 24 publications in the static HTML",
+      "Linked JSON-LD graph",
+      "Per-route OpenGraph images",
+      "9 merged PRs"
+    ],
+    "images": [
+      "archelab"
+    ],
+    "showInHome": true,
+    "categories": [
+      "web",
+      "frontend"
+    ],
+    "tags": [
+      "Astro",
+      "TypeScript",
+      "JSON-LD",
+      "Next.js"
+    ],
+    "links": {
+      "view": "https://www.archelab.org"
+    },
+    "myPart": "Contributor as a lab member: SEO, AEO/GEO, performance and accessibility.",
+    "years": "2026"
+  },
+  {
+    "name": "Arché NeuroAI (SULCI)",
+    "desc": "Landing page for Arché's NeuroAI neuroimaging initiative, drawn from a real reconstructed cortical surface: the hero draws 46 sagittal sections on Canvas 2D and a react-three-fiber viewer renders the surface live. Performance work cut the cortex mesh from 887 kB to 287 kB and took the hero from 12 fps to holding the refresh rate.",
+    "metrics": [
+      "Cortex mesh 887 kB to 287 kB",
+      "Hero from 12 fps to full refresh rate",
+      "LCP about 2.0 s on throttled 3G",
+      "Original page in one commit (+7,409 lines)"
+    ],
+    "images": [
+      "neuroai"
+    ],
+    "showInHome": true,
+    "categories": [
+      "web",
+      "frontend",
+      "graphics"
+    ],
+    "tags": [
+      "React",
+      "three.js",
+      "react-three-fiber",
+      "TypeScript",
+      "Vite"
+    ],
+    "links": {
+      "view": "https://neuroai-zeta.vercel.app"
+    },
+    "myPart": "Built the original page as a lab member: 4 of 14 commits, including the first (+7,409 lines).",
+    "years": "2026"
+  },
+  {
+    "name": "iosrank.lol",
+    "desc": "A public leaderboard of iOS App Store apps ranked only by what their makers bid. Rewrote it on TanStack Start and Convex: live listings from Apple's iTunes Lookup API, whole-dollar bids through Stripe Checkout settled in a Convex webhook, and new ranks pushed to every open board over WebSocket.",
+    "metrics": [
+      "Live ranks over WebSocket",
+      "Stripe Checkout bids",
+      "Playwright e2e gate",
+      "10 merged PRs"
+    ],
+    "images": [
+      "iosrank"
+    ],
+    "showInHome": true,
+    "categories": [
+      "web",
+      "fullstack"
+    ],
+    "tags": [
+      "TanStack Start",
+      "Convex",
+      "Stripe",
+      "TypeScript",
+      "Playwright"
+    ],
+    "links": {
+      "view": "https://iosrank.lol",
+      "code": "https://github.com/MIMohit/ios-bid"
+    },
+    "myPart": "Author of all 10 merged PRs in MIMohit's repo, starting with the rewrite.",
+    "years": "2026"
+  },
+  {
+    "name": "whostolemyname.mom",
+    "desc": "Checks a business name against domains, social handles and the web at once. Rebuilt its whole look as an illustrated cartoon in one PR: a hand-drawn SVG scene that recolours from CSS, an ink-outline design system mapped onto shadcn, and results shown as notes on a fridge.",
+    "metrics": [
+      "Whole redesign in one merged PR",
+      "Hand-authored SVG illustration",
+      "Ink-outline design system on shadcn",
+      "Three directions mocked first"
+    ],
+    "images": [
+      "whostolemyname"
+    ],
+    "showInHome": true,
+    "categories": [
+      "web",
+      "frontend"
+    ],
+    "tags": [
+      "Next.js",
+      "TypeScript",
+      "Tailwind CSS",
+      "shadcn/ui",
+      "SVG"
+    ],
+    "links": {
+      "view": "https://whostolemyname.mom"
+    },
+    "myPart": "Redesign in one merged PR (+1,548/-840).",
+    "years": "2026"
+  },
+  {
     "name": "Student Management System",
     "desc": "Reduced university data retrieval time from 50ms to 7ms, a 7x performance improvement validated by load testing with 45+ active users, by redesigning the database to 3NF normalization with Singleton connection pooling in Java. Earned 17 GitHub stars.",
     "metrics": [
@@ -578,7 +1260,7 @@
   },
   {
     "name": "BD News Scraper & Analytics",
-    "desc": "Automated daily scraping of 95+ Bangladeshi and international news sources (English and Bangla) by engineering an open-source Scrapy and Playwright pipeline with ML-powered sentiment analysis, GitHub Actions scheduling and Docker deployment.",
+    "desc": "Automated daily scraping of 95+ Bangladeshi and international news sources (English and Bangla) by engineering a Scrapy and Playwright pipeline with ML-powered sentiment analysis, GitHub Actions scheduling and Docker deployment.",
     "metrics": [
       "95+ newspaper spiders",
       "English, Bangla and international sources",
@@ -602,12 +1284,10 @@
       "GitHub Actions",
       "scikit-learn"
     ],
-    "links": {
-      "code": "https://github.com/EhsanulHaqueSiam/BDNewsPaperScraper"
-    },
+    "links": {},
     "caseStudy": {
       "problem": "Bangladesh lacks a comprehensive, up-to-date news dataset for research and NLP applications, with no automated pipeline for continuous data collection and analysis.",
-      "solution": "Built a production-grade news aggregation platform with 95+ spiders, automated daily scraping via GitHub Actions, ML-powered analytics, and an open-source codebase for the research community.",
+      "solution": "Built a production-grade news aggregation platform with 95+ spiders, automated daily scraping via GitHub Actions and ML-powered analytics.",
       "process": [
         {
           "title": "Enterprise Scraping",
