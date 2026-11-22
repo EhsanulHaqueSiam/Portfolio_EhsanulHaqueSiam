@@ -10,7 +10,8 @@ import { NotFound, PaperPage, ProjectPage, WorkPage } from './components/home/De
 import { OpenSource } from './components/home/OpenSource';
 import { Profile } from './components/home/Profile';
 import { PublicationsList } from './components/home/Publications';
-import { Education, Experience, Research } from './components/home/Rows';
+import { Education, Research } from './components/home/Rows';
+import { Journey } from './components/home/Journey';
 import { Shipped } from './components/home/Shipped';
 import { Activity, Outro, Quote, Stack } from './components/home/StackActivity';
 import { CatToast, PeekingCat, useConsoleCat } from './components/home/PixelCat';
@@ -70,7 +71,7 @@ function App(props: Props) {
                 <About key="about" />,
                 <AIWork key="ai" repos={props.openSource} />,
                 <Contact key="contact" />,
-                <Experience key="exp" />,
+                <Journey key="exp" repos={props.openSource} />,
                 <Shipped key="shipped" />,
                 <OpenSource key="oss" repos={props.openSource} />,
                 <Research key="research" />,

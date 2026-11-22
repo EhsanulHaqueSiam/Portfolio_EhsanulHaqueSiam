@@ -8,6 +8,7 @@ import { featuredProjects } from '../../data/content';
 import type { OpenSourceRepo } from '../../data/opensource';
 import { GlideList } from '../../lib/useGlide';
 import { Nav } from './chrome';
+import { Journey } from './Journey';
 import { OpenSource } from './OpenSource';
 import { shortRange } from './Rows';
 import { formatBibtex } from '../../data/papers';
@@ -46,6 +47,17 @@ describe('projects', () => {
     await user.click(more);
     expect(screen.getAllByRole('heading', { level: 3 })).toHaveLength(featuredProjects.length);
     expect(screen.getByRole('button', { name: 'Show fewer' })).toHaveAttribute('aria-expanded', 'true');
+  });
+});
+
+describe('journey', () => {
+  test('eras link roles to their work pages and fill repo cards from GitHub data', () => {
+    wrap(<Journey repos={repos} />);
+    expect(screen.getByRole('link', { name: 'Ledgercross' })).toHaveAttribute('href', '/work/ledgercross/');
+    expect(screen.getByRole('link', { name: /T3 Code.*1 merged pull request$/ })).toHaveAttribute('href', '/#open-source');
+    expect(screen.getByRole('link', { name: /Better Auth.*co-author/ })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: /ScholarHub/ })).toHaveAttribute('href', '/projects/scholarhub/');
+    expect(screen.getByText('CS Fest 1st runner-up').closest('a')).toBeNull(); // no reference, so no link
   });
 });
 

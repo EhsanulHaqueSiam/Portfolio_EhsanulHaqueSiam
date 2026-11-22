@@ -88,7 +88,7 @@ scripts/generate-seo.mjs      # prebuild: regenerates public/{robots.txt,sitemap
   version). Its components are unstyled; their CSS is in `index.css` under `[data-slot=...]`,
   and `@layer ui-sdk;` is declared at the top of that file.
 - `assets/data/site.json` is hand-kept presentation data: project icons, employer logos and
-  links, the role-line phrases and the closing quote. Facts stay in the hq-generated JSON.
+  links, the role-line phrases, the closing quote and the home Journey eras (`journey`). Facts stay in the hq-generated JSON.
 - **Astro 7** static output with `@astrojs/react`. **Framer Motion 11** via `LazyMotion` + `m`
   (strict mode: import `m`, never `motion`).
 - **TailwindCSS v3**, shadcn-style HSL tokens in `src/index.css` (`:root` light, `.dark` true

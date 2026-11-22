@@ -58,7 +58,22 @@ type Site = {
   /** Highlights picked for "AI in Production": the role's highlights whose text starts with or contains `match`. */
   aiWork: Array<{ title: string; company: string; match: string[] }>;
   stickers: Array<{ label: string; mark: 't3' | 'betterAuth' | 'neovim' | 'linux'; href?: string }>;
+  /** The home Journey timeline, newest era first. */
+  journey: Array<{
+    when: string;
+    title: string;
+    icon: string;
+    /** Experience companies, linked to their /work pages under the title. */
+    roles?: string[];
+    /** Shown instead of roles when the era has none. */
+    sub?: string;
+    text?: string;
+    cards?: JourneyItemData[];
+    chips?: JourneyItemData[];
+  }>;
 };
+/** One card or chip. A reference (`project` name, `paper` title prefix, `role` company, `repo` logo) supplies the link and icon. */
+type JourneyItemData = { title?: string; desc?: string; meta?: string; project?: string; paper?: string; role?: string; repo?: 't3' | 'betterAuth' };
 const site = siteData as Site;
 export const quote = site.quote;
 /** The AI work rows, each resolved to its role (for the link and dates) and the quoted highlights. */
@@ -78,3 +93,33 @@ export const companyLogo = (e: Experience) => {
 };
 /** Public page for an employer, shown on its /work page. */
 export const companyLink = (e: Experience) => site.companies[e.company]?.link ?? null;
+
+// A reference that matches nothing is a typo in site.json: fail the build rather than drop the item.
+function must<T>(found: T | undefined, what: string): T {
+  if (found === undefined) throw new Error(`site.json journey: no ${what}`);
+  return found;
+}
+const findRole = (company: string) => must(experience.find((e) => e.company === company), `experience entry "${company}"`);
+
+function journeyItem({ project, paper, role, ...i }: JourneyItemData) {
+  if (project) {
+    const p = must(projects.find((x) => x.name === project), `project "${project}"`);
+    return { ...i, title: i.title ?? p.name, href: projectHref(p), icon: projectIcon(p.name), kind: 'project' as const };
+  }
+  if (paper) {
+    const p = must(publications.find((x) => x.title.startsWith(paper)), `paper "${paper}"`);
+    return { ...i, title: i.title ?? p.title, href: `/publications/${paperSlug(p)}/`, icon: null, kind: 'paper' as const };
+  }
+  if (role) return { ...i, title: i.title ?? role, href: `/work/${workSlug(findRole(role))}/`, icon: null, kind: 'role' as const };
+  return { ...i, title: i.title ?? i.repo ?? '', href: i.repo ? '/#open-source' : null, icon: null, kind: 'plain' as const };
+}
+export type JourneyItem = ReturnType<typeof journeyItem>;
+
+/** Journey eras with every reference resolved. Repo stars and PR counts are filled in by the component from build-time GitHub data. */
+export const journey = site.journey.map((era) => ({
+  ...era,
+  icon: `/images/icons/${era.icon}`,
+  roles: (era.roles ?? []).map(findRole),
+  cards: (era.cards ?? []).map(journeyItem),
+  chips: (era.chips ?? []).map(journeyItem),
+}));
