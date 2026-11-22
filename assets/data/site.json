@@ -106,5 +106,128 @@
         "LLM evaluation"
       ]
     }
+  ],
+  "journey": [
+    {
+      "when": "Now",
+      "title": "Ledgercross & Arché",
+      "icon": "ledgercross.webp",
+      "roles": [
+        "Ledgercross",
+        "Arché Intelligence Lab"
+      ],
+      "text": "Full-stack and platform work at Ledgercross: backend services, React Native and Flutter apps, AI features and the CI/CD that ships them. At Arché I lead Bengali NLP and LLM research. On the side I fix things in the tools I use daily.",
+      "cards": [
+        {
+          "title": "InvoicePilot",
+          "desc": "Invoice operations sealed on-chain, 700-test backend",
+          "role": "Ledgercross"
+        },
+        {
+          "title": "Veritas",
+          "desc": "KYC on serverless GCP, Document AI + Gemini",
+          "role": "Ledgercross"
+        },
+        {
+          "repo": "t3"
+        },
+        {
+          "repo": "betterAuth"
+        }
+      ]
+    },
+    {
+      "when": "Spring '26",
+      "title": "BetaScript, Unies & Deepchain",
+      "icon": "betascript.webp",
+      "roles": [
+        "BetaScript LLC",
+        "Unies",
+        "Deepchain Labs"
+      ],
+      "text": "Shipped 4 production React sites for a US agency (1.5x client revenue, 50,000+ users), built RAG pipelines and LLM evals at Unies, and researched blockchain security at Deepchain.",
+      "cards": [
+        {
+          "project": "Indian Claypit",
+          "desc": "A restaurant moves from phone orders to the web"
+        },
+        {
+          "project": "ScholarHub",
+          "desc": "Scholarships in one place, solo, 508 commits"
+        }
+      ],
+      "chips": [
+        {
+          "project": "BetaScript",
+          "title": "BetaScript site"
+        },
+        {
+          "paper": "Decoding Research Trends",
+          "title": "IEEE QPAIN 2026 paper",
+          "meta": "Apr"
+        }
+      ]
+    },
+    {
+      "when": "2025",
+      "title": "BDTracks",
+      "icon": "bdtracks.webp",
+      "roles": [
+        "BDTracks"
+      ],
+      "text": "Built 15+ scrapers for Bangladesh's commodity and accident tracker and fine-tuned Gemini 2.5 on Vertex AI to classify the daily national feeds.",
+      "chips": [
+        {
+          "project": "BD News Scraper & Analytics",
+          "title": "BD News Scraper",
+          "meta": "95+ sources"
+        },
+        {
+          "paper": "Beyond NER",
+          "title": "Taylor & Francis chapter",
+          "meta": "Dec"
+        }
+      ]
+    },
+    {
+      "when": "2024",
+      "title": "Mario's Multiverse",
+      "icon": "mario-multiverse.webp",
+      "roles": [
+        "AIUB"
+      ],
+      "text": "Led 5 developers to ship a 2D platformer on a custom OpenGL engine in 3 months.",
+      "chips": [
+        {
+          "project": "Mario's Multiverse Adventure",
+          "title": "Mario's Multiverse"
+        },
+        {
+          "title": "CS Fest 1st runner-up"
+        },
+        {
+          "paper": "Cyclones and Calamity",
+          "title": "Climate conference talk",
+          "meta": "Sep"
+        }
+      ]
+    },
+    {
+      "when": "2022 – 23",
+      "title": "AIUB, CSE",
+      "icon": "aiub.webp",
+      "sub": "BSc Computer Science · CGPA 3.90",
+      "chips": [
+        {
+          "project": "Student Management System",
+          "title": "Student Management",
+          "meta": "7x faster"
+        },
+        {
+          "project": "Hotel Management System",
+          "title": "Hotel Management"
+        }
+      ]
+    }
   ]
 }

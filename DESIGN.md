@@ -110,6 +110,12 @@ Tokens live in `src/index.css` as HSL triplets (`:root` light, `.dark` dark). Da
   then runs Contact, Experience, Shipped, Open Source, Research.
 - **About:** the current company's link carries a hand-drawn wavy underline that draws once on
   load (`.scribble`).
+- **Journey** (replaces the Experience rows, keeps `#experience`): eras from site.json
+  `journey`, newest first, on a dashed rail. Each has a dot (green for the current era), a
+  sans title with its icon, roles linking to /work pages, a short paragraph, then 2-column
+  cards (big eras) or chips (small ones). Cards and chips reference projects, papers, roles
+  or repos by name; a bad reference fails the build. Repo cards take stars and merged PR
+  counts from the build-time GitHub data.
 - **Rows:** mark tile, title, sub, right meta. One highlight glides under the hovered or
   focused row (`GlideList`, after motion-primitives' Animated Background).
 - **Project cards (default view):** hairline-bordered card, gradient corner with the inset

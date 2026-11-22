@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { companyLogo, education, featuredExperience, featuredPublications, paperSlug, workSlug } from '../../data/content';
+import { companyLogo, education, featuredPublications, paperSlug } from '../../data/content';
 import type { Experience as Exp, Publication } from '../../data/types';
 import { haptic } from '../../lib/haptics';
 import { sound } from '../../lib/sound';
@@ -60,20 +60,6 @@ export function LinkRow({ href, mark, title, sub, right }: { href: string; mark:
         <ChevronIcon className="icon-nudge h-3.5 w-3.5 -rotate-90 opacity-0 transition-opacity group-hover:opacity-100" />
       </span>
     </a>
-  );
-}
-
-export function Experience() {
-  return (
-    <Section id="experience" title="Experience" aside={<HeaderLink href="#resume">CV</HeaderLink>}>
-      <GlideList className="divide-y divide-border">
-        {featuredExperience.map((e) => (
-          <li key={e.company}>
-            <LinkRow href={`/work/${workSlug(e)}/`} mark={<CompanyMark e={e} />} title={e.company} sub={shortRole(e)} right={shortRange(e.date)} />
-          </li>
-        ))}
-      </GlideList>
-    </Section>
   );
 }
 
