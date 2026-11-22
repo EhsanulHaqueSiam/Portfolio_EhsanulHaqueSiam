@@ -68,7 +68,7 @@ export function About() {
           Lead Researcher (NLP &amp; LLMs) at <U href="https://www.archelab.org">Arché Intelligence Lab</U>. Papers in <U href="/publications/">IEEE Xplore and Taylor &amp; Francis</U>.
         </li>
         <li className="relative pl-4 before:absolute before:left-0 before:top-[0.7em] before:h-1 before:w-1 before:rounded-full before:bg-muted-foreground">
-          Contributor to <U href="#open-source">T3 Code and Better Auth</U>. CSE at AIUB{cgpa ? `, ${cgpa}` : ''}.
+          Contributor to <U href="#open-source">T3 Code, Better Auth and Ardia</U>. CSE at AIUB{cgpa ? `, ${cgpa}` : ''}.
         </li>
       </ul>
       <Stats />

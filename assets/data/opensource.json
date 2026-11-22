@@ -3,14 +3,14 @@
     "name": "T3 Code",
     "repo": "pingdotgg/t3code",
     "logo": "t3",
-    "stars": 67579,
+    "stars": 70257,
     "prs": [
       { "number": 32188, "title": "fix(server): proxied Codex usage limits keep their reset time", "state": "merged" },
       { "number": 28360, "title": "fix(server): settling a usage-limited thread disarms recovery and names the refusal", "state": "merged" },
       { "number": 31030, "title": "fix(mobile): Android dictation works with regional preferences set", "state": "merged" },
       { "number": 26937, "title": "fix(server): recognize a Claude proxy set in Claude's settings.json", "state": "merged" },
-      { "number": 29978, "title": "feat(usage): thread details card shows the hub account each thread was routed to", "state": "open" },
-      { "number": 28359, "title": "fix(server): a usage-limited thread no longer auto-settles", "state": "open" }
+      { "number": 28359, "title": "fix(server): a usage-limited thread no longer auto-settles", "state": "open" },
+      { "number": 40380, "title": "fix(mobile): Android keyboard state resyncs when the activity is recreated", "state": "open" }
     ]
   },
   {
@@ -20,6 +20,15 @@
     "stars": 30798,
     "prs": [
       { "number": 12733, "title": "feat(oauth-provider): add resourceSeedScope for per-request instances", "state": "merged", "note": "co-author" }
+    ]
+  },
+  {
+    "name": "Ardia",
+    "repo": "ardia-browser/ardia",
+    "logo": "ardia",
+    "stars": 2786,
+    "prs": [
+      { "number": 3375, "title": "Linux: `ardia <command>` reaches the command when ~/.local/bin comes after /usr/bin", "state": "merged" }
     ]
   }
 ]

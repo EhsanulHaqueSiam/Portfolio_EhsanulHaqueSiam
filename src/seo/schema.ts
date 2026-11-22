@@ -58,7 +58,7 @@ const papers = publications.filter((p) => /published|chapter/i.test(p.date)).len
 export const META = {
   title: 'Ehsanul Haque Siam: AI Engineer & Full-Stack Developer',
   description: `${profile.title} in Dhaka. ${nowRoles.join('; ')}. ${papers} peer-reviewed publications.`,
-  ogDescription: `${profile.title}. ${nowRoles.join('; ')}. ${papers} peer-reviewed publications and upstream contributions to T3 Code and Better Auth.`,
+  ogDescription: `${profile.title}. ${nowRoles.join('; ')}. ${papers} peer-reviewed publications and upstream contributions to T3 Code, Better Auth and Ardia.`,
   keywords: [
     'Ehsanul Haque Siam',
     'AI Engineer',

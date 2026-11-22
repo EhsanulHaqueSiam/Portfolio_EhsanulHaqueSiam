@@ -4,7 +4,7 @@ export type PrState = 'merged' | 'open' | 'closed';
 export type OpenSourceRepo = {
   name: string;
   repo: string;
-  logo: 't3' | 'betterAuth';
+  logo: 't3' | 'betterAuth' | 'ardia';
   stars: number;
   prs: Array<{ number: number; title: string; state: PrState; note?: string }>;
 };
