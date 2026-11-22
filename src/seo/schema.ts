@@ -263,7 +263,6 @@ export function buildJsonLd() {
           profile.scholar,
           profile.ieeeXplore,
           profile.researchgate,
-          profile.kaggle,
           profile.x,
         ],
         subjectOf: publicationArticles.map((p) => ({ '@id': p['@id'] })),

@@ -207,7 +207,7 @@ ${section(
       : ''
   }${section(
     'Links',
-    `- Portfolio: ${SITE}/\n- Résumé: ${SITE}/resume.pdf\n- GitHub: ${profile.github}\n- LinkedIn: ${profile.linkedin}\n- ORCID: ${profile.orcid}\n- Google Scholar: ${profile.scholar}\n- IEEE Xplore: ${profile.ieeeXplore}\n- ResearchGate: ${profile.researchgate}\n- Kaggle: ${profile.kaggle}\n- X: ${profile.x}`,
+    `- Portfolio: ${SITE}/\n- Résumé: ${SITE}/resume.pdf\n- GitHub: ${profile.github}\n- LinkedIn: ${profile.linkedin}\n- ORCID: ${profile.orcid}\n- Google Scholar: ${profile.scholar}\n- IEEE Xplore: ${profile.ieeeXplore}\n- ResearchGate: ${profile.researchgate}\n- X: ${profile.x}`,
   )}`,
 );
 

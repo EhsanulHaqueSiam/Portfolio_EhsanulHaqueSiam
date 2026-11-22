@@ -138,7 +138,6 @@ export interface Profile {
   scholar: string;
   ieeeXplore: string;
   researchgate: string;
-  kaggle: string;
   x: string;
   resume: string;
   location: string;
