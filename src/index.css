@@ -268,6 +268,8 @@
 /* RollNumber (RollNumber.tsx): each digit is a 0-9 strip one line tall, moved by transform. */
 .odo {
   font-variant-numeric: tabular-nums;
+  /* Whole-pixel line: at 19.5px an odd digit's strip offset lands on a half pixel and blurs on 1x screens. */
+  line-height: round(1lh, 1px);
 }
 .odo-digit {
   display: inline-block;
