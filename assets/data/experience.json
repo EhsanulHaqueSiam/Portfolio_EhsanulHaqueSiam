@@ -7,10 +7,12 @@
     "alignment": "left",
     "showInHome": true,
     "highlights": [
-      "Shipped Keptcash's AI collections agent: hybrid RAG, **golden-set + injection-resistance evals**, grounding gate",
+      "Built Keptcash's AI collections agent: hybrid RAG, **golden-set + injection-resistance evals**, grounding gate",
       "Built APRON's LLM quote extraction: typed output checked by deterministic rules, with tenant row-level security",
       "Rebuilt Veritas KYC serverless on GCP with OFAC/UN/EU watchlist screening and IDs from 20 more countries",
-      "Built Onlistly solo: per-ticket Durable Objects keep check-in exactly-once in a 10,000-concurrent-scan load test"
+      "Built Onlistly solo: per-ticket Durable Objects keep check-in exactly-once in a 10,000-concurrent-scan load test",
+      "Built Blog Studio, a team MCP plugin (15 tools, 12 commands) that researches, writes and drafts blog posts",
+      "Took Office Ledger to production: server-side paywall, Dokploy deploy and an 80-test Playwright suite"
     ],
     "earlier": {
       "role": "Software Engineer Intern",

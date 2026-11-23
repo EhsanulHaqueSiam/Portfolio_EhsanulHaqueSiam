@@ -27,7 +27,11 @@ export const featuredProjects = projects.filter((p) => p.showInHome);
 // and a private repo's link is left off (it 404s for recruiters)
 const cvLinks = ({ view, code }: Project['links'], repoPrivate?: boolean) =>
   [view && !view.includes('github.com') ? view : undefined, repoPrivate ? undefined : code ?? (view?.includes('github.com') ? view : undefined)].filter((l) => l !== undefined);
-export const cvProjects = projects.flatMap(({ name, cv, links, repoPrivate }) => (cv ? [{ name, links: cvLinks(links, repoPrivate), ...cv }] : []));
+// projects with a working live site come first (Siam: live links are what a reader clicks); order is stable otherwise
+const isLive = ({ view }: Project['links']) => !!view && !view.includes('github.com');
+export const cvProjects = projects
+  .flatMap(({ name, cv, links, repoPrivate }) => (cv ? [{ name, live: isLive(links), links: cvLinks(links, repoPrivate), ...cv }] : []))
+  .sort((a, b) => Number(b.live) - Number(a.live));
 export const featuredPublications = publications.filter((p) => p.showInHome);
 export const featuredExperience = experience.filter((e) => e.showInHome);
 

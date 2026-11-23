@@ -154,6 +154,15 @@
       "view": "https://isbdbannedhere.site",
       "code": "https://github.com/EhsanulHaqueSiam/isbdbannedhere"
     },
+    "cv": {
+      "tech": [
+        "TypeScript",
+        "Cloudflare Workers"
+      ],
+      "highlights": [
+        "Built a receipts-backed directory of bans on Bangladeshis with WCAG AAA pages (17 merged PRs in 3 days)"
+      ]
+    },
     "myPart": "Own project.",
     "years": "2026"
   },
@@ -346,6 +355,18 @@
     ],
     "links": {
       "view": "https://motamot.tuiber.com"
+    },
+    "cv": {
+      "tech": [
+        "TypeScript",
+        "React",
+        "MapLibre",
+        "Hono",
+        "WebSocket"
+      ],
+      "highlights": [
+        "Built a live map ranking Bangladesh's districts: a 54,951-cell in-memory grid sent as binary WebSocket diffs"
+      ]
     },
     "myPart": "Own project.",
     "years": "2026"
@@ -579,6 +600,16 @@
     ],
     "links": {
       "code": "https://github.com/EhsanulHaqueSiam/xtend"
+    },
+    "cv": {
+      "tech": [
+        "TypeScript",
+        "Claude",
+        "Codex"
+      ],
+      "highlights": [
+        "Built a desktop X client that acts through the user's own session, with AI drafts on their Claude or Codex login"
+      ]
     },
     "myPart": "Own project.",
     "years": "2026"
@@ -1123,6 +1154,16 @@
       "view": "https://www.archelab.org",
       "code": "https://github.com/devsouhardo/Arche"
     },
+    "cv": {
+      "tech": [
+        "Astro",
+        "TypeScript",
+        "JSON-LD"
+      ],
+      "highlights": [
+        "Overhauled the lab site's SEO and accessibility, putting all 24 publications in the static HTML"
+      ]
+    },
     "myPart": "Contributor as a lab member: SEO, AEO/GEO, performance and accessibility.",
     "years": "2026",
     "repoPrivate": true
@@ -1187,6 +1228,16 @@
     "links": {
       "view": "https://iosrank.lol",
       "code": "https://github.com/MIMohit/ios-bid"
+    },
+    "cv": {
+      "tech": [
+        "TanStack Start",
+        "Convex",
+        "Stripe"
+      ],
+      "highlights": [
+        "Rewrote an App Store leaderboard ranked by Stripe-paid bids, with live ranks over WebSocket (10 merged PRs)"
+      ]
     },
     "myPart": "Author of all 10 merged PRs in MIMohit's repo, starting with the rewrite.",
     "years": "2026"

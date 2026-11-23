@@ -38,8 +38,13 @@ const openSource = repos.flatMap(({ name, repo, stars, prs, cv }) => {
   if (!merged.length) return [];
   const count = `${merged.length} merged PR${merged.length > 1 ? 's' : ''}`;
   const coauthor = merged.some((p) => p.note === 'co-author') ? ', co-author' : '';
-  return [{ repo, line: <><b>{name}</b> ({kStars(stars)}) · {merged.length > 1 ? <strong>{count}</strong> : count}{coauthor}: {cv}</> }];
+  return [{ repo, name, stars, merged, line: <><b>{name}</b> ({kStars(stars)}) · {merged.length > 1 ? <strong>{count}</strong> : count}{coauthor}: {cv}</> }];
 });
+/** "fix(server): proxied Codex…" -> "Proxied Codex…" */
+const prTitle = (t: string) => {
+  const s = t.replace(/^[a-z]+(\([^)]*\))?: /, '').replaceAll('`', '');
+  return s[0].toUpperCase() + s.slice(1);
+};
 
 function Section({ title, children }: { title: string; children: ReactNode }) {
   return (
@@ -147,10 +152,18 @@ function Projects({ list, title = 'Projects', max }: { list: typeof cvProjects; 
   );
 }
 
-function OpenSource() {
+/** One line per repo; `detailed` (the CV) lists each merged PR by title under its repo. */
+function OpenSource({ detailed = false }: { detailed?: boolean }) {
   return (
     <Section title="Open Source">
-      <Bullets items={openSource.map((r) => r.line)} />
+      {detailed
+        ? openSource.map(({ repo, name, stars, merged }) => (
+            <Item key={repo}>
+              <Row left={<><b>{name}</b> | <i>{repo}</i></>} right={kStars(stars)} />
+              <Bullets items={merged.map((p) => `${prTitle(p.title)} (#${p.number}${p.note ? `, ${p.note}` : ''})`)} />
+            </Item>
+          ))
+        : <Bullets items={openSource.map((r) => r.line)} />}
     </Section>
   );
 }
@@ -190,7 +203,7 @@ function ResumeSheet() {
     <>
       <Header />
       <Section title="Experience">
-        {listed.map((e) => (isResearch(e) ? <Quiet key={e.company}><Entry e={e} max={2} /></Quiet> : <Entry key={e.company} e={e} />))}
+        {listed.map((e) => (isResearch(e) ? <Quiet key={e.company}><Entry e={e} max={2} /></Quiet> : <Entry key={e.company} e={e} max={4} />))}
       </Section>
       <Skills />
       <OpenSource />
@@ -240,7 +253,7 @@ function Citation({ p }: { p: Publication }) {
 
 /**
  * The 2-page academic CV for a professor's read: Education, papers, research roles, research projects,
- * then industry (two bullets per role), other projects, open source, skills and referees. Blue marks
+ * then industry, other projects, open source by PR, skills, honors, languages and referees. Blue marks
  * only research signal (CGPA, research roles and projects).
  */
 function CvSheet() {
@@ -266,10 +279,10 @@ function CvSheet() {
       <Projects title="Research Projects" list={cvProjects.filter((p) => p.research)} />
       <Quiet>
         <Section title="Industry Experience">
-          {listed.filter((e) => !isResearch(e)).map((e) => <Entry key={e.company} e={e} max={2} />)}
+          {listed.filter((e) => !isResearch(e)).map((e) => <Entry key={e.company} e={e} />)}
         </Section>
         <Projects list={cvProjects.filter((p) => !p.research)} max={1} />
-        <OpenSource />
+        <OpenSource detailed />
       </Quiet>
       <Skills />
       {education.some((ed) => ed.honors) && (
