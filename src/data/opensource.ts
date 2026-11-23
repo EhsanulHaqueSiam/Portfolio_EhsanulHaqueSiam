@@ -9,7 +9,8 @@ export type OpenSourceRepo = {
   prs: Array<{ number: number; title: string; state: PrState; note?: string }>;
 };
 
-const repos = data as OpenSourceRepo[];
+/** The JSON values as committed; the CV reads these directly (no build-time refresh). */
+export const repos = data as OpenSourceRepo[];
 
 /**
  * Upstream PRs for the Open source section. The JSON is the fallback; at build

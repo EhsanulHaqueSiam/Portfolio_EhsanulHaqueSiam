@@ -7,8 +7,10 @@
     "alignment": "left",
     "showInHome": true,
     "highlights": [
-      "Built InvoicePilot, audit-ready invoice operations sealed on-chain: React 19, Fastify, PostgreSQL, a FastAPI OCR service and Solidity contracts, with a 700-test backend suite and QuickBooks, Xero, NetSuite and Sage integrations",
-      "Rebuilt Veritas (KYC-as-a-service) on serverless GCP (Cloud Run, Document AI + Gemini, Terraform) with a three-tier extraction ladder that sends only disagreements to expensive processors: 107 merged PRs in 3 weeks"
+      "Rebuilt Veritas (KYC-as-a-service) on serverless GCP (Cloud Run, Document AI + Gemini, Terraform) with a three-tier extraction ladder that sends only disagreements to expensive processors: 107 merged PRs in 3 weeks",
+      "Sole engineer of Onlistly, event ticketing built entirely on Cloudflare (Workers, Durable Objects, Queues, D1): one Durable Object per ticket makes QR redemption exactly-once, verified under a 10,000-concurrent-scan load test",
+      "Core engineer on Keptcash, an AI accounts-receivable agent (FastAPI, PostgreSQL, Gemini on Vertex AI): 56 merged PRs in 9 days to a live production deploy, with a grounding checker that hard-fails unsupported drafts",
+      "Built tenant row-level security, self-hosted Better Auth and the AI layer of APRON, a procurement negotiator where the model proposes and deterministic code verifies: 39 merged PRs in 3 weeks"
     ]
   },
   {
@@ -20,6 +22,7 @@
     "showInHome": true,
     "highlights": [
       "Leading NLP and LLM research, including Bengali NLP, toward peer-reviewed publications",
+      "Built a 249,398-question English Stack Exchange dataset for an ELL question-drift study, with control-site event study, counterfactual and placebo analyses",
       "Coordinating a distributed team of researchers across AIUB, BUET, BRAC and RUET"
     ]
   },
@@ -32,8 +35,8 @@
     "showInHome": true,
     "logo": "deepchain",
     "highlights": [
-      "Driving R&D initiatives in blockchain, cybersecurity, and quantum cryptography",
-      "Producing academic papers and technical documentation across multiple security domains"
+      "Built Relay, a delivery pipeline of 31 Agent SDK agents (12 operators, 19 sub-agents) that takes a meeting transcript through spec, design, code, tests and release behind 5 human gates",
+      "Researched blockchain, cybersecurity and quantum cryptography, producing papers and technical documentation"
     ],
     "location": "Remote"
   },

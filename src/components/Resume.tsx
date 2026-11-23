@@ -3,6 +3,23 @@ import { m, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { DownloadIcon, ExternalLinkIcon } from './ui/Icons';
 import { profile, experience, cvProjects, education, publications, skills } from '../data/content';
 import type { Experience, SkillsData } from '../data/types';
+import { repos } from '../data/opensource';
+
+/** CV rows for upstream work: merged PRs only, titles without the "fix(scope): " prefix. */
+const openSource = repos.flatMap(({ name, repo, stars, prs }) => {
+  const merged = prs.filter((p) => p.state === 'merged');
+  if (!merged.length) return [];
+  const title = (t: string) => {
+    const s = t.replace(/^[a-z]+(\([^)]*\))?: /, '').replaceAll('`', '');
+    return s[0].toUpperCase() + s.slice(1);
+  };
+  return [{
+    name,
+    tech: [repo],
+    badge: `${Math.round(stars / 1000)}k stars`,
+    highlights: merged.map((p) => `${title(p.title)} (#${p.number}${p.note ? `, ${p.note}` : ''})`),
+  }];
+});
 
 /* ------------------------------------------------------------------ */
 /*  Typographic sub-components                                         */
@@ -11,7 +28,8 @@ import type { Experience, SkillsData } from '../data/types';
 function Section({ title, children }: { title: string; children: ReactNode }) {
   return (
     <div className="mb-5 last:mb-0">
-      <div className="flex items-center gap-3 mb-2">
+      {/* break-after-avoid: a section title never ends a printed page alone */}
+      <div className="flex items-center gap-3 mb-2 break-after-avoid">
         <h2 className="resume-section-title text-[11px] font-mono font-semibold uppercase tracking-[0.22em] text-[#171412] whitespace-nowrap">
           {title}
         </h2>
@@ -299,6 +317,11 @@ export function Resume() {
                 {/* ── Projects ── */}
                 <Section title="Projects">
                   {cvProjects.map((project) => <Project key={project.name} {...project} />)}
+                </Section>
+
+                {/* ── Open Source (opensource.json, merged PRs) ── */}
+                <Section title="Open Source">
+                  {openSource.map((repo) => <Project key={repo.name} {...repo} />)}
                 </Section>
 
                 {/* ── Education ── */}

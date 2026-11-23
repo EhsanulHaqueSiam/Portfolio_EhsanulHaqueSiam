@@ -308,64 +308,66 @@
     {
       "label": "Languages",
       "skills": [
-        "Java",
-        "Python",
-        "C++",
-        "JavaScript",
         "TypeScript",
+        "Python",
+        "Java",
+        "C++",
+        "Rust",
         "Kotlin",
-        "C#",
-        "SQL"
+        "SQL",
+        "Solidity"
       ]
     },
     {
-      "label": "AI/ML",
+      "label": "AI & LLMs",
       "skills": [
-        "scikit-learn",
-        "TensorFlow",
-        "PyTorch",
-        "LLMs",
-        "BERT",
-        "NLP",
+        "LLM agents",
         "RAG",
+        "MCP",
+        "LLM evals",
+        "Gemini / Vertex AI",
         "LangChain",
         "LlamaIndex",
-        "Computer Vision"
+        "PyTorch",
+        "scikit-learn",
+        "BERT",
+        "NLP"
       ]
     },
     {
-      "label": "Web & Mobile",
+      "label": "Web & Backend",
       "skills": [
-        "React",
+        "React 19",
+        "TanStack Start",
+        "Next.js",
         "TailwindCSS",
         "FastAPI",
-        "TanStack Start/Router",
-        "REST APIs",
-        "Android SDK",
-        "Firebase"
+        "Fastify",
+        "Hono",
+        "WebSocket",
+        "Better Auth"
       ]
     },
     {
-      "label": "Databases",
+      "label": "Data",
       "skills": [
-        "MySQL",
-        "PostgreSQL",
+        "PostgreSQL (row-level security, pgvector)",
         "SQLite",
-        "SQL Server",
+        "MySQL",
         "Drizzle ORM",
-        "Room Database"
+        "Prisma",
+        "Scrapy"
       ]
     },
     {
-      "label": "DevOps & Tools",
+      "label": "Cloud & DevOps",
       "skills": [
-        "Git",
+        "GCP (Cloud Run, Document AI)",
+        "Cloudflare (Workers, Durable Objects)",
+        "Terraform",
         "Docker",
-        "Linux",
-        "Vertex AI",
         "GitHub Actions",
-        "Scrapy",
-        "Jupyter"
+        "Playwright"
       ]
     }
   ]
