@@ -8,6 +8,12 @@
         "value": "charis sil",
         "createdAt": "2026-11-23T11:56:52.523Z",
         "reason": "Résumé/CV print sheet only: Siam chose the classic serif direction in chat on 2026-11-23 (B over sans); Charis SIL is the bundled open Charter so PDFs print identically"
+      },
+      {
+        "rule": "design-system-font",
+        "value": "resume plus",
+        "createdAt": "2026-11-23T13:04:56.480Z",
+        "reason": "Résumé/CV print sheet only: a unicode-range face that lends just the '+' glyph from the bundled Geist (Siam asked to fix the '15 +' gap, 2026-11-23)"
       }
     ]
   }
