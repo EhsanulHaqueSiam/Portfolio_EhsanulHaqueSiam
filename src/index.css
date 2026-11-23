@@ -1084,7 +1084,13 @@ html[data-plain] [data-pull] {
 
 /* Résumé and CV sheet: Charis serif; one blue accent only on the AI-signal numbers (hq `**x**`).
    Links stay black with a light underline so they don't compete with the accent. */
-.resume-paper { font-family: "Charis SIL", Charter, Georgia, serif; --resume-accent: #1d4f9c; }
+/* Charis spaces "+" wide ("15 +"); this face lends only the "+" glyph from the bundled Geist */
+@font-face {
+  font-family: "Resume Plus";
+  src: url("@fontsource-variable/geist/files/geist-latin-wght-normal.woff2") format("woff2");
+  unicode-range: U+002B;
+}
+.resume-paper { font-family: "Resume Plus", "Charis SIL", Charter, Georgia, serif; --resume-accent: #1d4f9c; }
 .resume-paper strong { color: var(--resume-accent); font-weight: 400; }
 .resume-paper a { color: inherit; text-decoration-color: rgb(0 0 0 / 0.3); }
 .resume-quiet strong { color: inherit; }

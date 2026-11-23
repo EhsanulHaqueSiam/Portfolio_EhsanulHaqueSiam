@@ -8,7 +8,9 @@
       "Deterministic, replayable games",
       "267 tests"
     ],
-    "images": [],
+    "images": [
+      "polashi"
+    ],
     "showInHome": true,
     "categories": [
       "machine_learning",
@@ -175,7 +177,9 @@
       "Cloudflare Stream video with signed playback",
       "225 merged PRs by Siam"
     ],
-    "images": [],
+    "images": [
+      "wiqlo"
+    ],
     "showInHome": true,
     "categories": [
       "web",
@@ -294,7 +298,9 @@
       "Search fusing FTS5 with bge-m3 vectors",
       "58 merged PRs by Siam"
     ],
-    "images": [],
+    "images": [
+      "brainiac"
+    ],
     "showInHome": true,
     "categories": [
       "web",

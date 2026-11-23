@@ -119,9 +119,8 @@
       "text": "Full-stack and platform work at Ledgercross: backend services, React Native and Flutter apps, AI features and the CI/CD that ships them. At Arché I lead Bengali NLP and LLM research. On the side I fix things in the tools I use daily.",
       "cards": [
         {
-          "title": "InvoicePilot",
-          "desc": "Invoice operations sealed on-chain, 700-test backend",
-          "role": "Ledgercross"
+          "project": "Keptcash",
+          "desc": "AI collections agent with golden-set and injection-resistance evals"
         },
         {
           "title": "Veritas",
