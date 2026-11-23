@@ -1,5 +1,45 @@
 [
   {
+    "name": "Polashi",
+    "desc": "Most LLM game benchmarks leak secret roles between seats, so their numbers mean little. Polashi, themed on the 1757 Battle of Plassey, gives every model seat only a whitelist-projected view, enforced by import contracts and a canary leak test in CI, and scores seven behavioral axes from a replayable event log with bootstrap confidence intervals.",
+    "metrics": [
+      "Secret leakage blocked in CI",
+      "7 behavioral axes with bootstrap CIs",
+      "Deterministic, replayable games",
+      "267 tests"
+    ],
+    "images": [],
+    "showInHome": true,
+    "categories": [
+      "machine_learning",
+      "nlp"
+    ],
+    "tags": [
+      "Python",
+      "FastAPI",
+      "HTMX",
+      "Pydantic",
+      "LiteLLM"
+    ],
+    "links": {
+      "code": "https://github.com/EhsanulHaqueSiam/polashi"
+    },
+    "cv": {
+      "tech": [
+        "Python",
+        "FastAPI",
+        "LiteLLM",
+        "Pydantic"
+      ],
+      "highlights": [
+        "Built a replayable LLM benchmark scoring **7 behavioral axes** with bootstrap CIs and CI-enforced secret isolation"
+      ],
+      "resume": true
+    },
+    "myPart": "Own project: all 76 commits.",
+    "years": "2026"
+  },
+  {
     "name": "ScholarHub",
     "desc": "Students waste 20+ hours searching fragmented scholarship sources before deadlines pass. Built a unified discovery platform that indexes 12,000+ opportunities daily from 272 automated spiders, reducing search time to minutes. Full-text search with multi-facet filtering, admin review dashboard, and dynamic SEO. React 19 + TanStack Start SSR + Convex + Python scraping pipeline.",
     "metrics": [
@@ -112,15 +152,6 @@
       "view": "https://isbdbannedhere.site",
       "code": "https://github.com/EhsanulHaqueSiam/isbdbannedhere"
     },
-    "cv": {
-      "tech": [
-        "TypeScript",
-        "Cloudflare Workers"
-      ],
-      "highlights": [
-        "Built a receipts-backed directory of bans on Bangladeshis with WCAG AAA pages (**17 merged PRs in 3 days**)"
-      ]
-    },
     "myPart": "Own project.",
     "years": "2026"
   },
@@ -161,12 +192,13 @@
         "bKash"
       ],
       "highlights": [
-        "Co-built a paid video platform for Bangladeshi creators, owning bKash payments and video (**225 merged PRs**)"
+        "Built exactly-once bKash payments, refunds, payouts and signed Stream video for a live paid creator platform"
       ],
       "resume": true
     },
     "myPart": "Co-built with Souhardo Rahman and Nasif Safwan: 252 of 548 commits and 225 of 551 merged PRs (bKash payments, Cloudflare Stream video, the app scaffold and agent harness).",
-    "years": "2026"
+    "years": "2026",
+    "repoPrivate": true
   },
   {
     "name": "Keptcash",
@@ -277,7 +309,7 @@
         "Neon"
       ],
       "highlights": [
-        "Co-built an MCP-managed application record on Durable Objects with FTS5 + vector search (**58 merged PRs**)"
+        "Co-built an AI-managed record of grades, papers and IDs over MCP, with FTS5 + vector search on Durable Objects"
       ],
       "resume": true
     },
@@ -312,18 +344,6 @@
     ],
     "links": {
       "view": "https://motamot.tuiber.com"
-    },
-    "cv": {
-      "tech": [
-        "TypeScript",
-        "React",
-        "MapLibre",
-        "Hono",
-        "WebSocket"
-      ],
-      "highlights": [
-        "Built a live map ranking Bangladesh's districts: a **54,951-cell** in-memory grid sent as binary WebSocket diffs"
-      ]
     },
     "myPart": "Own project.",
     "years": "2026"
@@ -402,46 +422,6 @@
     "years": "2026"
   },
   {
-    "name": "Polashi",
-    "desc": "Most LLM game benchmarks leak secret roles between seats, so their numbers mean little. Polashi, themed on the 1757 Battle of Plassey, gives every model seat only a whitelist-projected view, enforced by import contracts and a canary leak test in CI, and scores seven behavioral axes from a replayable event log with bootstrap confidence intervals.",
-    "metrics": [
-      "Secret leakage blocked in CI",
-      "7 behavioral axes with bootstrap CIs",
-      "Deterministic, replayable games",
-      "267 tests"
-    ],
-    "images": [],
-    "showInHome": true,
-    "categories": [
-      "machine_learning",
-      "nlp"
-    ],
-    "tags": [
-      "Python",
-      "FastAPI",
-      "HTMX",
-      "Pydantic",
-      "LiteLLM"
-    ],
-    "links": {
-      "code": "https://github.com/EhsanulHaqueSiam/polashi"
-    },
-    "cv": {
-      "tech": [
-        "Python",
-        "FastAPI",
-        "LiteLLM",
-        "Pydantic"
-      ],
-      "highlights": [
-        "Built a leak-proof LLM social-deduction benchmark scoring 7 behavioral axes from replayable games (**267 tests**)"
-      ],
-      "resume": true
-    },
-    "myPart": "Own project: all 76 commits.",
-    "years": "2026"
-  },
-  {
     "name": "ledgercross.com",
     "desc": "Ledgercross's company site, rewritten from Next.js to a static Astro 7 site with a Supabase-backed blog CMS, an SEO suite (RSS, build-time OG images, llms.txt) and rebuilds triggered on publish, then cut over to production. Also built the team roster and member profile pages.",
     "metrics": [
@@ -496,16 +476,6 @@
     ],
     "links": {
       "code": "https://github.com/EhsanulHaqueSiam/getmyprof"
-    },
-    "cv": {
-      "tech": [
-        "TypeScript",
-        "AI agents",
-        "OpenAlex"
-      ],
-      "highlights": [
-        "Built a desktop agent that finds professors who can fund a PhD and drafts the outreach (**v0.1 to v0.6 in 10 days**)"
-      ]
     },
     "myPart": "Own project.",
     "years": "2026"
@@ -608,16 +578,6 @@
     "links": {
       "code": "https://github.com/EhsanulHaqueSiam/xtend"
     },
-    "cv": {
-      "tech": [
-        "TypeScript",
-        "Claude",
-        "Codex"
-      ],
-      "highlights": [
-        "Built a desktop X client that acts through the user's own session, with AI drafts on their Claude or Codex login"
-      ]
-    },
     "myPart": "Own project.",
     "years": "2026"
   },
@@ -643,16 +603,6 @@
     ],
     "links": {
       "code": "https://github.com/EhsanulHaqueSiam/tastebase"
-    },
-    "cv": {
-      "tech": [
-        "TypeScript",
-        "MCP",
-        "CLI"
-      ],
-      "highlights": [
-        "Built a UI library registry served over CLI and MCP so coding agents pick good UI (**46 merged PRs in 2 weeks**)"
-      ]
     },
     "myPart": "Own project.",
     "years": "2026"
@@ -729,19 +679,6 @@
           "label": "Animation Variants",
           "value": "10+"
         }
-      ]
-    },
-    "cv": {
-      "tech": [
-        "React",
-        "TypeScript",
-        "TanStack Start",
-        "Drizzle ORM",
-        "SQLite",
-        "Spline 3D"
-      ],
-      "highlights": [
-        "Shipped a dealership platform with 3D Spline showcases, a 17-page admin dashboard and 12+ filter facets"
       ]
     },
     "myPart": "Solo build for a BetaScript LLC client.",
@@ -940,7 +877,8 @@
       ]
     },
     "myPart": "Solo developer for BetaScript LLC, from design to Netlify deployment.",
-    "years": "2026"
+    "years": "2026",
+    "repoPrivate": true
   },
   {
     "name": "BetaScript",
@@ -1132,17 +1070,6 @@
     "links": {
       "code": "https://github.com/EhsanulHaqueSiam/flowcv-mcp"
     },
-    "cv": {
-      "tech": [
-        "TypeScript",
-        "MCP",
-        "Node.js",
-        "Zod"
-      ],
-      "highlights": [
-        "Built **50 MCP tools** and a CLI over FlowCV's private API so AI assistants can edit resumes and job trackers"
-      ]
-    },
     "myPart": "Own project.",
     "years": "2026"
   },
@@ -1173,18 +1100,9 @@
       "view": "https://www.archelab.org",
       "code": "https://github.com/devsouhardo/Arche"
     },
-    "cv": {
-      "tech": [
-        "Astro",
-        "TypeScript",
-        "JSON-LD"
-      ],
-      "highlights": [
-        "Overhauled the lab site's SEO and accessibility, putting all **24 publications** in the static HTML"
-      ]
-    },
     "myPart": "Contributor as a lab member: SEO, AEO/GEO, performance and accessibility.",
-    "years": "2026"
+    "years": "2026",
+    "repoPrivate": true
   },
   {
     "name": "Arché NeuroAI (SULCI)",
@@ -1216,7 +1134,8 @@
       "code": "https://github.com/devsouhardo/neuroai-website"
     },
     "myPart": "Built the original page as a lab member: 4 of 14 commits, including the first (+7,409 lines).",
-    "years": "2026"
+    "years": "2026",
+    "repoPrivate": true
   },
   {
     "name": "iosrank.lol",
@@ -1245,16 +1164,6 @@
     "links": {
       "view": "https://iosrank.lol",
       "code": "https://github.com/MIMohit/ios-bid"
-    },
-    "cv": {
-      "tech": [
-        "TanStack Start",
-        "Convex",
-        "Stripe"
-      ],
-      "highlights": [
-        "Rewrote an App Store leaderboard ranked by Stripe-paid bids, with live ranks over WebSocket (**10 merged PRs**)"
-      ]
     },
     "myPart": "Author of all 10 merged PRs in MIMohit's repo, starting with the rewrite.",
     "years": "2026"
@@ -1288,7 +1197,8 @@
       "code": "https://github.com/MIMohit/whostolemyname"
     },
     "myPart": "Redesign in one merged PR (+1,548/-840).",
-    "years": "2026"
+    "years": "2026",
+    "repoPrivate": true
   },
   {
     "name": "Student Management System",
@@ -1356,17 +1266,6 @@
         "before": "assets/images/projects/sms-1.png",
         "after": "assets/images/projects/sms-2.png"
       }
-    },
-    "cv": {
-      "tech": [
-        "Java",
-        "MySQL",
-        "JDBC"
-      ],
-      "highlights": [
-        "Cut query time from 50ms to 7ms (7x) for 45+ users with 3NF normalization and connection pooling"
-      ],
-      "badge": "17 Stars"
     },
     "myPart": "Main author: 65 of 67 commits.",
     "years": "2023"

@@ -2,16 +2,20 @@
   {
     "company": "Ledgercross",
     "role": "Software Engineer",
-    "date": "Jun 2026–Present",
+    "date": "Sep 2026–Present",
     "desc": "Full-stack + platform engineer at an early-stage software firm, owning work across the whole stack: backend services, React Native and Flutter apps, AI-powered features, and the CI/CD pipelines and cloud infrastructure that ship them. Startup-wide surface area with end-to-end ownership.",
     "alignment": "left",
     "showInHome": true,
     "highlights": [
-      "Rebuilt Veritas KYC on serverless GCP (Cloud Run, Document AI, Terraform) in **107 merged PRs over 3 weeks**",
-      "Built Onlistly solo, Cloudflare ticketing whose QR redemption stays exactly-once at **10,000 concurrent scans**",
-      "Shipped **56 merged PRs in 9 days** on Keptcash, an AI receivables agent, through its production launch",
-      "Built row-level tenant isolation, auth and the AI layer of APRON, an AI procurement negotiator (**67 merged PRs**)"
-    ]
+      "Shipped Keptcash's AI core to production: hybrid retrieval, **2 golden-set eval suites**, a gate on ungrounded drafts",
+      "Built APRON's LLM quote extraction: typed output checked by deterministic rules, with tenant row-level security",
+      "Rebuilt Veritas KYC serverless on GCP with OFAC/UN/EU watchlist screening and IDs from 20 more countries",
+      "Built Onlistly solo: per-ticket Durable Objects keep check-in exactly-once in a 10,000-concurrent-scan load test"
+    ],
+    "earlier": {
+      "role": "Software Engineer Intern",
+      "date": "Jun 2026–Aug 2026"
+    }
   },
   {
     "company": "Arché Intelligence Lab",
@@ -21,56 +25,58 @@
     "alignment": "right",
     "showInHome": true,
     "highlights": [
-      "Built a **249,398-question** Stack Exchange dataset and event-study analyses for an ELL question-drift study"
-    ]
+      "Built a **249,398-question** dataset from the English Language Learners Stack Exchange dump",
+      "Measured question drift after ChatGPT with a control-site event study, counterfactual and placebo analyses"
+    ],
+    "location": "Student-led lab, AIUB"
   },
   {
     "company": "Deepchain Labs",
-    "role": "Research Assistant (Full-time, Remote)",
-    "date": "Apr 2026–May 2026",
+    "role": "Research Assistant",
+    "date": "Apr 2026–Aug 2026",
     "desc": "Researching blockchain, cybersecurity, and quantum cryptography at Deepchain Labs (deepchainlabs.com), producing peer-review-ready papers, threat analyses, and technical documentation across multiple security domains.",
     "alignment": "left",
     "showInHome": true,
     "logo": "deepchain",
     "highlights": [
-      "Built Relay: **31 Agent SDK agents** take a meeting transcript to a tested release behind 5 human approval gates"
+      "Built Relay: **31 Claude Agent SDK agents** take a meeting transcript to a tested release behind 5 human gates"
     ],
     "location": "Remote"
   },
   {
     "company": "Unies",
     "role": "AI Engineering Intern",
-    "date": "Feb 2026–May 2026",
+    "date": "Feb 2026–Mar 2026",
     "desc": "Built production RAG pipelines for academic resource retrieval using Pinecone, ChromaDB, LangChain, and LlamaIndex. Engineered automated LLM evaluation pipelines and FastAPI backends powering curriculum-aligned tutoring systems. Benchmarked embedding quality across vector databases to optimize retrieval accuracy.",
     "alignment": "right",
     "showInHome": true,
     "logo": "unies",
     "highlights": [
-      "Built RAG and LLM evaluation pipelines (Pinecone, LangChain, LlamaIndex) for FastAPI tutoring backends"
+      "Built RAG over course content (LangChain, LlamaIndex), benchmarking embeddings on Pinecone and ChromaDB"
     ],
     "location": "Remote"
   },
   {
     "company": "BetaScript LLC",
-    "role": "Software Developer (Part-time, ~20 hrs/week)",
-    "date": "Jan 2026–May 2026",
+    "role": "Software Developer (Part-time)",
+    "date": "Jan 2026–Aug 2026",
     "desc": "Shipped 4 production React websites for this US-based digital agency, driving 1.5x client revenue growth measured by post-launch analytics and client billing. Full lifecycle ownership spanning design, React 19 + TanStack Start architecture, and Netlify deployment across restaurant, e-commerce, and agency platforms serving 50,000+ end users.",
     "alignment": "left",
     "showInHome": true,
     "highlights": [
-      "Shipped 4 production React sites that drove **1.5x client revenue growth** for 50,000+ users across 3 industries"
+      "Shipped 4 production React sites for US agency clients serving 50,000+ customers; client revenue grew 1.5x"
     ],
     "location": "Remote"
   },
   {
     "company": "BDTracks",
-    "role": "AI & Data Engineer (Part-time, ~15 hrs/week)",
+    "role": "AI & Data Engineer (Part-time)",
     "date": "Aug 2025–May 2026",
     "desc": "Powering Bangladesh's commodity and accident tracking platform (bdtracks.com). Built 15+ web scrapers and fine-tuned Google Gemini 2.5 Flash/Pro via Vertex AI for automated data classification. Engineered production pipelines processing daily feeds from multiple national sources into structured datasets serving live dashboards.",
     "alignment": "right",
     "showInHome": true,
     "highlights": [
-      "Fine-tuned Gemini 2.5 on Vertex AI to classify daily national feeds from **15+ web scrapers** at bdtracks.com"
+      "Built 15+ scrapers and fine-tuned Gemini 2.5 on Vertex AI to classify their daily feeds for live dashboards"
     ],
     "location": "Dhaka, Bangladesh"
   },

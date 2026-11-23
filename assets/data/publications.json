@@ -6,7 +6,13 @@
     "desc": "Compared K-Means, hierarchical clustering and DBSCAN for unsupervised topic modeling on 10,000 arXiv \"Artificial Intelligence\" abstracts (TF-IDF + PCA), finding the AI literature skews toward societal issues such as ethics and security, and that no single method fits all: K-Means suits broad summaries while DBSCAN surfaces the core-periphery structure of emerging research. With A. P. Neteish and A. Salam.",
     "images": [],
     "showInHome": true,
-    "paperLink": "https://doi.org/10.1109/QPAIN69676.2026.11545814"
+    "paperLink": "https://doi.org/10.1109/QPAIN69676.2026.11545814",
+    "authors": [
+      "Aonyendo Paul Neteish",
+      "Md Ehsanul Haque",
+      "Abdus Salam"
+    ],
+    "doi": "10.1109/QPAIN69676.2026.11545814"
   },
   {
     "title": "Beyond NER: A Comparative Benchmark of Medical BERTS for Multi-Label Adverse Drug Reaction Classification",
@@ -17,7 +23,12 @@
       "pub1.png"
     ],
     "showInHome": true,
-    "paperLink": null
+    "paperLink": null,
+    "authors": [
+      "Aonyendo Paul Neteish",
+      "Md Ehsanul Haque",
+      "Abdus Salam"
+    ]
   },
   {
     "title": "Cyclones and Calamity: A Historical and Statistical Unmasking of Losses in Bangladesh",
@@ -28,6 +39,7 @@
       "cpecertificate.png"
     ],
     "showInHome": true,
-    "paperLink": null
+    "paperLink": null,
+    "authors": []
   }
 ]

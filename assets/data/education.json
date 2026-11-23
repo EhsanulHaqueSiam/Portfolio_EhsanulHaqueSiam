@@ -7,9 +7,20 @@
     "end": "2026 (expected)",
     "details": [
       "Cumulative CGPA 3.90 / 4.00",
-      "3x Dean's List (semester GPA 3.75, 3.89 and 4.00)",
-      "1st Runner-Up, AIUB CS Fest 2024 App Showcase (20+ teams)",
-      "Team Matrix offensive security program (29 modules)"
+      "3x Dean's List",
+      "1st Runner-Up, App Showcasing, AIUB CS Fest 2024"
+    ],
+    "coursework": [
+      "Natural Language Processing",
+      "Data Science",
+      "AI and Expert Systems",
+      "Data Warehouse and Data Mining",
+      "Computer Vision and Pattern Recognition",
+      "Algorithms"
+    ],
+    "referees": [
+      "Nuzhat Tabassum, Assistant Professor, Computer Science, AIUB · nuzhat.tabassum@aiub.edu",
+      "Shaikat Das Joy, Lecturer, Computer Science, AIUB · skdas@aiub.edu"
     ]
   }
 ]

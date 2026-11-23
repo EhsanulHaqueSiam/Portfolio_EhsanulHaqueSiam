@@ -7,28 +7,33 @@ I bridge research and production. Software Engineer at Ledgercross, building acr
 
 ## Experience
 
-### Software Engineer at Ledgercross (Jun 2026–Present)
+### Software Engineer at Ledgercross (Sep 2026–Present)
 Full-stack + platform engineer at an early-stage software firm, owning work across the whole stack: backend services, React Native and Flutter apps, AI-powered features, and the CI/CD pipelines and cloud infrastructure that ship them. Startup-wide surface area with end-to-end ownership.
 
 ### Lead Researcher (NLP & LLMs) at Arché Intelligence Lab (Jun 2026–Present)
 Leading NLP and LLM research at Arché (archelab.org), a student-led AI research group at AIUB. Driving work on large language models and natural language processing, including Bengali NLP, toward peer-reviewed publications alongside a distributed team of researchers across AIUB, BUET, BRAC, and RUET.
 
-### Research Assistant (Full-time, Remote) at Deepchain Labs (Apr 2026–May 2026)
+### Research Assistant at Deepchain Labs (Apr 2026–Aug 2026)
 Researching blockchain, cybersecurity, and quantum cryptography at Deepchain Labs (deepchainlabs.com), producing peer-review-ready papers, threat analyses, and technical documentation across multiple security domains.
 
-### AI Engineering Intern at Unies (Feb 2026–May 2026)
+### AI Engineering Intern at Unies (Feb 2026–Mar 2026)
 Built production RAG pipelines for academic resource retrieval using Pinecone, ChromaDB, LangChain, and LlamaIndex. Engineered automated LLM evaluation pipelines and FastAPI backends powering curriculum-aligned tutoring systems. Benchmarked embedding quality across vector databases to optimize retrieval accuracy.
 
-### Software Developer (Part-time, ~20 hrs/week) at BetaScript LLC (Jan 2026–May 2026)
+### Software Developer (Part-time) at BetaScript LLC (Jan 2026–Aug 2026)
 Shipped 4 production React websites for this US-based digital agency, driving 1.5x client revenue growth measured by post-launch analytics and client billing. Full lifecycle ownership spanning design, React 19 + TanStack Start architecture, and Netlify deployment across restaurant, e-commerce, and agency platforms serving 50,000+ end users.
 
-### AI & Data Engineer (Part-time, ~15 hrs/week) at BDTracks (Aug 2025–May 2026)
+### AI & Data Engineer (Part-time) at BDTracks (Aug 2025–May 2026)
 Powering Bangladesh's commodity and accident tracking platform (bdtracks.com). Built 15+ web scrapers and fine-tuned Google Gemini 2.5 Flash/Pro via Vertex AI for automated data classification. Engineered production pipelines processing daily feeds from multiple national sources into structured datasets serving live dashboards.
 
 ### Team Lead - Game Development at AIUB (Oct 2024–Dec 2024)
 Led a team of 5 developers to ship a 2D platformer with 3 levels, a custom OpenGL rendering engine, SFML audio, and SQLite persistence, all within a 3-month deadline. Earned 4 GitHub forks and a YouTube demo.
 
 ## Featured Projects
+
+### Polashi
+Most LLM game benchmarks leak secret roles between seats, so their numbers mean little. Polashi, themed on the 1757 Battle of Plassey, gives every model seat only a whitelist-projected view, enforced by import contracts and a canary leak test in CI, and scores seven behavioral axes from a replayable event log with bootstrap confidence intervals.
+Tech: Python, FastAPI, HTMX, Pydantic, LiteLLM
+Code: https://github.com/EhsanulHaqueSiam/polashi
 
 ### ScholarHub
 Students waste 20+ hours searching fragmented scholarship sources before deadlines pass. Built a unified discovery platform that indexes 12,000+ opportunities daily from 272 automated spiders, reducing search time to minutes. Full-text search with multi-facet filtering, admin review dashboard, and dynamic SEO. React 19 + TanStack Start SSR + Convex + Python scraping pipeline.
@@ -66,11 +71,6 @@ Live: https://motamot.tuiber.com
 ### Onlistly
 At a busy gate the same QR ticket can be scanned twice. Onlistly is a multi-tenant event ticketing and access-control platform built entirely on Cloudflare, where one Durable Object per ticket makes every redemption exactly-once, verified under a 10,000-concurrent-scan load test. Workers, Durable Objects, Queues, D1 and R2, with a TanStack Start frontend and a passwordless scanner PWA.
 Tech: Cloudflare Workers, Durable Objects, TypeScript, Hono, TanStack Start, Better Auth, Prisma
-
-### Polashi
-Most LLM game benchmarks leak secret roles between seats, so their numbers mean little. Polashi, themed on the 1757 Battle of Plassey, gives every model seat only a whitelist-projected view, enforced by import contracts and a canary leak test in CI, and scores seven behavioral axes from a replayable event log with bootstrap confidence intervals.
-Tech: Python, FastAPI, HTMX, Pydantic, LiteLLM
-Code: https://github.com/EhsanulHaqueSiam/polashi
 
 ### ledgercross.com
 Ledgercross's company site, rewritten from Next.js to a static Astro 7 site with a Supabase-backed blog CMS, an SEO suite (RSS, build-time OG images, llms.txt) and rebuilds triggered on publish, then cut over to production. Also built the team roster and member profile pages.

@@ -618,7 +618,7 @@
   html.resume-printing .resume-paper .resume-bullets li,
   html.resume-printing .resume-paper .resume-detail {
     font-size: 10pt !important;
-    line-height: 1.22 !important;
+    line-height: 1.2 !important;
     margin-bottom: 1px !important;
   }
 
@@ -1079,4 +1079,15 @@ html[data-plain] [data-playful] {
 }
 html[data-plain] [data-pull] {
   pointer-events: none;
+}
+
+
+/* Résumé and CV sheet: Charis serif; one blue accent only on the AI-signal numbers (hq `**x**`).
+   Links stay black with a light underline so they don't compete with the accent. */
+.resume-paper { font-family: "Charis SIL", Charter, Georgia, serif; --resume-accent: #1d4f9c; }
+.resume-paper strong { color: var(--resume-accent); font-weight: 400; }
+.resume-paper a { color: inherit; text-decoration-color: rgb(0 0 0 / 0.3); }
+@media print {
+  html.resume-printing .resume-paper strong { color: #1d4f9c !important; }
+  html.resume-printing .resume-paper a { text-decoration-color: rgb(0 0 0 / 0.3) !important; }
 }

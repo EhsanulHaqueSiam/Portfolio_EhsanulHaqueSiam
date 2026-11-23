@@ -2,43 +2,50 @@ import { useState, useEffect, useCallback, useRef, type ReactNode } from 'react'
 import { m, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { DownloadIcon, ExternalLinkIcon } from './ui/Icons';
 import { Marked } from './ui/Marked';
+// Charis SIL: an open Charter, so the PDF prints the same on any machine
+import '@fontsource/charis-sil/400.css';
+import '@fontsource/charis-sil/400-italic.css';
+import '@fontsource/charis-sil/700.css';
 import { profile, experience, cvProjects, education, publications, skills } from '../data/content';
-import type { Experience } from '../data/types';
+import type { Experience, Publication } from '../data/types';
 import { repos } from '../data/opensource';
 
 /* ------------------------------------------------------------------ */
-/*  Two documents from the same hq facts, both in Jake's Resume style  */
-/*  (one column, one font, bold names and one bold number per bullet): */
-/*  the one-page résumé for jobs, and the 2-3 page CV for academia.    */
+/*  Two documents from the same hq facts, in a Jake's Resume layout:   */
+/*  one column, Charis serif, bold titles, and one blue accent only on */
+/*  the AI-signal numbers (hq `**x**`, .resume-paper strong):          */
+/*  the one-page résumé for jobs, and the 2-page CV for academia.      */
 /* ------------------------------------------------------------------ */
 
 /** "https://www.github.com/x/" -> "github.com/x": links print as readable text. */
 const bare = (url: string) => url.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '');
-const kStars = (n: number) => `${Math.round(n / 1000)}k stars`;
+/** 70257 -> "70k stars", 2786 -> "2.8k stars" */
+const kStars = (n: number) => `${n >= 10_000 ? Math.round(n / 1000) : (n / 1000).toFixed(1)}k stars`;
 /** publications.json `date` is "<when> | <status note>". */
 const pubParts = (date: string) => {
   const [when, note] = date.split(' | ');
   return { when, note };
 };
 /** Like the site's paper pages: a "presentation" or "talk" status is a talk, not a publication. */
-const isTalk = (date: string) => /presentation|talk/i.test(date);
+const isTalk = (p: Publication) => /presentation|talk/i.test(p.date);
+/** Research roles get their own CV section: a "Researcher" title (Arché), not engineering at a research company. */
+const isResearch = (e: Experience) => /researcher/i.test(e.role);
+const listed = experience.filter((e) => e.cv !== false);
 
-/** Upstream repos with merged PRs only; the site shows the open ones too. */
-const merged = repos.flatMap((r) => {
-  const prs = r.prs.filter((p) => p.state === 'merged');
-  return prs.length ? [{ ...r, prs }] : [];
+/** Upstream repos with merged PRs only (the site also shows open ones), one line each; the accent marks repeat merges. */
+const openSource = repos.flatMap(({ name, repo, stars, prs, cv }) => {
+  const merged = prs.filter((p) => p.state === 'merged');
+  if (!merged.length) return [];
+  const count = `${merged.length} merged PR${merged.length > 1 ? 's' : ''}`;
+  const coauthor = merged.some((p) => p.note === 'co-author') ? ', co-author' : '';
+  return [{ repo, line: <><b>{name}</b> ({kStars(stars)}) · {merged.length > 1 ? <strong>{count}</strong> : count}{coauthor}: {cv}</> }];
 });
-/** "fix(server): proxied Codex…" -> "Proxied Codex…" */
-const prTitle = (t: string) => {
-  const s = t.replace(/^[a-z]+(\([^)]*\))?: /, '').replaceAll('`', '');
-  return s[0].toUpperCase() + s.slice(1);
-};
 
 function Section({ title, children }: { title: string; children: ReactNode }) {
   return (
-    <section className="mt-2.5 first:mt-0">
+    <section className="mt-2 first:mt-0">
       {/* break-after-avoid: a section title never ends a printed page alone */}
-      <h2 className="resume-section-title break-after-avoid mb-1.5 border-b border-black pb-0.5 text-[12px] font-bold uppercase tracking-[0.06em] text-black">
+      <h2 className="resume-section-title break-after-avoid mb-1.5 border-b border-black pb-0.5 text-[12px] font-bold uppercase tracking-[0.08em] text-black">
         {title}
       </h2>
       {children}
@@ -46,7 +53,7 @@ function Section({ title, children }: { title: string; children: ReactNode }) {
   );
 }
 
-/** Bold left, plain right: the head line of every role, project and repo. */
+/** Bold left, plain right: the head line of every role, project and degree. */
 function Row({ left, right }: { left: ReactNode; right?: ReactNode }) {
   return (
     <div className="flex items-baseline justify-between gap-3 text-[12.5px] leading-snug text-black">
@@ -72,7 +79,7 @@ const Link = ({ href, children }: { href: string; children: ReactNode }) => (
   <a href={href} className="underline decoration-black/30 underline-offset-2">{children}</a>
 );
 
-/** Name, title line and contact as plain text (parsers skip page headers and icons). */
+/** Name, positioning line and contact as plain text (parsers skip page headers and icons). */
 function Header({ academic = false }: { academic?: boolean }) {
   const lines: [string, string][][] = [
     [
@@ -84,12 +91,15 @@ function Header({ academic = false }: { academic?: boolean }) {
     // research identities get their own line so neither line wraps
     ...(academic ? [[[bare(profile.orcid), profile.orcid], ['Google Scholar', profile.scholar]] as [string, string][]] : []),
   ];
+  const tagline = academic
+    ? `Research interests: ${profile.researchInterests ?? ''} · ${profile.location}`
+    : `${profile.cvHeadline ?? profile.title} · ${profile.location}`;
   return (
     <header className="resume-header-border mb-2 text-center">
-      <h2 className="resume-name text-[1.6rem] sm:text-[1.9rem] font-bold uppercase tracking-[0.03em] leading-none text-black">
+      <h2 className="resume-name text-[1.6rem] sm:text-[1.9rem] font-bold uppercase tracking-[0.04em] leading-none text-black">
         {profile.name}
       </h2>
-      <p className="mt-1 text-[13px] text-black">{profile.title} · {profile.location}</p>
+      <p className="mt-1 text-[14px] text-black">{tagline}</p>
       {lines.map((line) => (
         <p key={line[0][0]} className="resume-contact mt-0.5 flex flex-wrap justify-center gap-x-2 text-[11.5px] text-black">
           {line.map(([text, href], i) => (
@@ -100,24 +110,20 @@ function Header({ academic = false }: { academic?: boolean }) {
           ))}
         </p>
       ))}
+      {academic && profile.publishesAs && (
+        <p className="resume-contact mt-0.5 text-[11.5px] italic text-black">Publishes as {profile.publishesAs}</p>
+      )}
     </header>
   );
 }
 
-/** CV: a bullet adds nothing when the summary already states its bold number, or it has none. */
-export const addsToSummary = (bullet: string, summary: string) => {
-  const n = bullet.match(/\*\*[^*\d]*(\d[\d,.]*)/)?.[1];
-  return !!n && !summary.includes(n);
-};
-
-/** One role: "**Role**, Company" left, "Location · dates" right; the CV adds the role summary. */
-function Entry({ e, full = false }: { e: Experience; full?: boolean }) {
-  const bullets = e.highlights ?? [e.desc];
+/** One role: "**Role**, Company" left, "Location · dates" right, an earlier title under it, then bullets. */
+function Entry({ e }: { e: Experience }) {
   return (
     <Item>
-      <Row left={<><b>{e.role}</b>, {e.company}</>} right={[e.location, e.date.replace('–', ' – ')].filter(Boolean).join(' · ')} />
-      {full && <p className="resume-detail mt-0.5 text-[12px] leading-snug text-black">{e.desc}</p>}
-      <Bullets items={full ? bullets.filter((b) => addsToSummary(b, e.desc)) : bullets} />
+      <Row left={<><b className="text-[13px]">{e.role}</b>, {e.company}</>} right={[e.location, e.date.replace('–', ' – ')].filter(Boolean).join(' · ')} />
+      {e.earlier && <Row left={<i>{e.earlier.role}</i>} right={<i>{e.earlier.date.replace('–', ' – ')}</i>} />}
+      <Bullets items={e.highlights ?? [e.desc]} />
     </Item>
   );
 }
@@ -138,6 +144,14 @@ function Projects({ list }: { list: typeof cvProjects }) {
   );
 }
 
+function OpenSource() {
+  return (
+    <Section title="Open Source">
+      <Bullets items={openSource.map((r) => r.line)} />
+    </Section>
+  );
+}
+
 function Skills() {
   return (
     <Section title="Technical Skills">
@@ -150,6 +164,16 @@ function Skills() {
   );
 }
 
+/** "B.Sc." keeps degree, school and dates on one row; parsers read it as a bachelor's. */
+const Degree = ({ degree, institution, start, end }: (typeof education)[number]) => (
+  <Row left={<><b>{degree.replace('Bachelor of Science', 'B.Sc.')}</b>, {institution}</>} right={`${start} – ${end}`} />
+);
+/** Education details with the CGPA value in the accent. */
+const details = (ds: string[]) => <Marked text={ds.join(' · ').replace(/(CGPA )([\d.]+ \/ [\d.]+)/, '$1**$2**')} />;
+const Detail = ({ children }: { children: ReactNode }) => (
+  <div className="resume-detail text-[12px] leading-snug text-black">{children}</div>
+);
+
 /**
  * The one-page résumé (2026 hiring norms, hq research/resume-format-2026.md): Experience, Skills,
  * Projects, Open Source, Education, Publications; talks are left off.
@@ -159,33 +183,27 @@ function ResumeSheet() {
     <>
       <Header />
       <Section title="Experience">
-        {experience.filter((e) => e.cv !== false).map((e) => <Entry key={e.company} e={e} />)}
+        {listed.map((e) => <Entry key={e.company} e={e} />)}
       </Section>
       <Skills />
+      <OpenSource />
       <Projects list={cvProjects.filter((p) => p.resume)} />
-      <Section title="Open Source">
-        <Bullets
-          items={merged.map(({ name, stars, prs, cv }) => {
-            const coauthor = prs.some((p) => p.note === 'co-author') ? ', co-author' : '';
-            return `**${name}** (${kStars(stars)}): ${prs.length} merged PR${prs.length > 1 ? 's' : ''}${coauthor}: ${cv}`;
-          })}
-        />
-      </Section>
       <Section title="Education">
-        {education.map(({ institution, degree, start, end, details }) => (
-          <Item key={institution}>
-            {/* "B.Sc." keeps degree, school and dates on one row; parsers read it as a bachelor's */}
-            <Row left={<><b>{degree.replace('Bachelor of Science', 'B.Sc.')}</b>, {institution}</>} right={`${start} – ${end}`} />
-            <div className="resume-detail text-[12px] leading-snug text-black">{details.join(' · ')}</div>
+        {education.map((ed) => (
+          <Item key={ed.institution}>
+            <Degree {...ed} />
+            <Detail>{details(ed.details)}</Detail>
           </Item>
         ))}
       </Section>
       <Section title="Publications">
         <Bullets
-          items={publications.filter((p) => !isTalk(p.date)).map(({ title, conference, date }) => {
-            const { note } = pubParts(date);
+          items={publications.filter((p) => !isTalk(p)).map(({ title, conference, date, doi }) => {
             const venue = conference.match(/\(([^)]+)\)$/)?.[1] ?? conference; // "(IDAA 2025)"
-            return <><i>{title}</i>. {venue}{note ? `, ${note}` : ''}</>;
+            // "Published (IEEE Xplore, …)" -> "IEEE Xplore"; "Book Chapter (Taylor & Francis)" -> "Taylor & Francis book chapter"
+            const where = (pubParts(date).note ?? '').replace(/^Published \(([^,)]+).*$/, '$1').replace(/^Book Chapter \((.+)\)$/, '$1 book chapter');
+            const t = <i>{title}</i>;
+            return <>{doi ? <Link href={`https://doi.org/${doi}`}>{t}</Link> : t}. {venue}{where && `, ${where}`}</>;
           })}
         />
       </Section>
@@ -193,43 +211,59 @@ function ResumeSheet() {
   );
 }
 
+/** Full citation: authors (his name bold), title, venue, date, status, DOI. */
+function Citation({ p }: { p: Publication }) {
+  const { when, note } = pubParts(p.date);
+  return (
+    <>
+      {p.authors?.length ? (
+        <>
+          {p.authors.map((a, i) => (
+            <span key={a}>{i > 0 && ', '}{a === profile.publishesAs ? <b>{a}</b> : a}</span>
+          ))}
+          .{' '}
+        </>
+      ) : null}
+      <i>{p.title}</i>. {p.conference}, {when}{note ? `. ${note}` : ''}
+      {p.doi && <>. DOI <Link href={`https://doi.org/${p.doi}`}>{p.doi}</Link></>}
+    </>
+  );
+}
+
 /**
- * The 2-3 page academic CV: Education and research first, every role with its summary, every
- * project with a `cv` block, and each merged upstream PR by title.
+ * The 2-page academic CV: Education, papers (talks left off), then research before industry experience,
+ * selected projects (every project with a `cv` block), open source, skills and referees.
  */
 function CvSheet() {
   return (
     <>
       <Header academic />
       <Section title="Education">
-        {education.map(({ institution, degree, start, end, details }) => (
-          <Item key={institution}>
-            <Row left={<><b>{degree.replace('Bachelor of Science', 'B.Sc.')}</b>, {institution}</>} right={`${start} – ${end}`} />
-            <div className="resume-detail text-[12px] leading-snug text-black">{details.join(' · ')}</div>
+        {education.map((ed) => (
+          <Item key={ed.institution}>
+            <Degree {...ed} />
+            <Detail>{details(ed.details)}</Detail>
+            {ed.coursework && <Detail><b>Coursework:</b> {ed.coursework.join(', ')}</Detail>}
           </Item>
         ))}
       </Section>
-      <Section title="Publications and Presentations">
-        <Bullets
-          items={publications.map(({ title, conference, date }) => {
-            const { when, note } = pubParts(date);
-            return <><i>{title}</i>. {conference}, {when}{note ? `. ${note}` : ''}</>;
-          })}
-        />
+      <Section title="Publications">
+        <Bullets items={publications.filter((p) => !isTalk(p)).map((p) => <Citation p={p} />)} />
       </Section>
-      <Section title="Experience">
-        {experience.filter((e) => e.cv !== false).map((e) => <Entry key={e.company} e={e} full />)}
+      <Section title="Research Experience">
+        {listed.filter(isResearch).map((e) => <Entry key={e.company} e={e} />)}
+      </Section>
+      <Section title="Industry Experience">
+        {listed.filter((e) => !isResearch(e)).map((e) => <Entry key={e.company} e={e} />)}
       </Section>
       <Projects list={cvProjects} />
-      <Section title="Open Source">
-        {merged.map(({ name, repo, stars, prs }) => (
-          <Item key={repo}>
-            <Row left={<><b>{name}</b> | <i>{repo}</i></>} right={kStars(stars)} />
-            <Bullets items={prs.map((p) => `${prTitle(p.title)} (#${p.number}${p.note ? `, ${p.note}` : ''})`)} />
-          </Item>
-        ))}
-      </Section>
+      <OpenSource />
       <Skills />
+      {education.some((ed) => ed.referees) && (
+        <Section title="References">
+          <Bullets items={education.flatMap((ed) => ed.referees ?? [])} />
+        </Section>
+      )}
     </>
   );
 }

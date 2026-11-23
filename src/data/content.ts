@@ -23,10 +23,11 @@ export const publications = publicationsData as Publication[];
 
 export const featuredProjects = projects.filter((p) => p.showInHome);
 // CV projects: the ones with a `cv` block, flattened for the Resume overlay
-// the live site and the repo; a "view" link that is only a GitHub page is dropped for the repo
-const cvLinks = ({ view, code }: Project['links']) =>
-  [view && !view.includes('github.com') ? view : undefined, code ?? (view?.includes('github.com') ? view : undefined)].filter((l) => l !== undefined);
-export const cvProjects = projects.flatMap(({ name, cv, links }) => (cv ? [{ name, links: cvLinks(links), ...cv }] : []));
+// the live site and the repo; a "view" link that is only a GitHub page is dropped for the repo,
+// and a private repo's link is left off (it 404s for recruiters)
+const cvLinks = ({ view, code }: Project['links'], repoPrivate?: boolean) =>
+  [view && !view.includes('github.com') ? view : undefined, repoPrivate ? undefined : code ?? (view?.includes('github.com') ? view : undefined)].filter((l) => l !== undefined);
+export const cvProjects = projects.flatMap(({ name, cv, links, repoPrivate }) => (cv ? [{ name, links: cvLinks(links, repoPrivate), ...cv }] : []));
 export const featuredPublications = publications.filter((p) => p.showInHome);
 export const featuredExperience = experience.filter((e) => e.showInHome);
 

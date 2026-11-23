@@ -95,14 +95,14 @@
       "title": "Gemini fine-tuning",
       "company": "BDTracks",
       "match": [
-        "Fine-tuned Gemini"
+        "fine-tuned Gemini"
       ]
     },
     {
       "title": "RAG and LLM evaluation",
       "company": "Unies",
       "match": [
-        "RAG pipelines",
+        "RAG over",
         "LLM evaluation"
       ]
     }

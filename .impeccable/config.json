@@ -1,0 +1,14 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "design-system-font",
+        "value": "charis sil",
+        "createdAt": "2026-11-23T11:56:52.523Z",
+        "reason": "Résumé/CV print sheet only: Siam chose the classic serif direction in chat on 2026-11-23 (B over sans); Charis SIL is the bundled open Charter so PDFs print identically"
+      }
+    ]
+  }
+}

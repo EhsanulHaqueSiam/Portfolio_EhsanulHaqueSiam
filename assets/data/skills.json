@@ -310,12 +310,9 @@
       "skills": [
         "TypeScript",
         "Python",
-        "Java",
-        "C++",
-        "Rust",
-        "Kotlin",
         "SQL",
-        "Solidity"
+        "Java",
+        "C++"
       ]
     },
     {
@@ -330,21 +327,19 @@
         "LlamaIndex",
         "PyTorch",
         "scikit-learn",
-        "BERT",
-        "NLP"
+        "BERT"
       ]
     },
     {
       "label": "Web & Backend",
       "skills": [
-        "React 19",
+        "React",
         "TanStack Start",
         "Next.js",
-        "TailwindCSS",
         "FastAPI",
         "Fastify",
         "Hono",
-        "WebSocket",
+        "Convex",
         "Better Auth"
       ]
     },
@@ -352,8 +347,8 @@
       "label": "Data & Cloud",
       "skills": [
         "PostgreSQL (RLS, pgvector)",
-        "GCP (Cloud Run, Document AI)",
         "Cloudflare (Workers, Durable Objects)",
+        "GCP (Cloud Run)",
         "Terraform",
         "Docker"
       ]
