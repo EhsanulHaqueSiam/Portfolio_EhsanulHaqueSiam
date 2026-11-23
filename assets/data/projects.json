@@ -76,7 +76,6 @@
     "cv": {
       "tech": [
         "React",
-        "TypeScript",
         "TanStack Start",
         "Convex",
         "Python"
@@ -151,7 +150,8 @@
       "Playwright"
     ],
     "links": {
-      "view": "https://wiqlo.com"
+      "view": "https://wiqlo.com",
+      "code": "https://github.com/arkieforge/snuggycat"
     },
     "cv": {
       "tech": [
@@ -514,7 +514,7 @@
     "name": "APRON",
     "desc": "Procurement teams negotiate supplier quotes by hand, and an AI alone can't be trusted with money. APRON, Ledgercross's AI procurement negotiator, lets the AI propose while deterministic code verifies, policy decides and humans approve, so money, dates and savings never come from the model. Python/FastAPI + PostgreSQL with pgvector, React and a self-hosted Better Auth service.",
     "metrics": [
-      "39 merged PRs in 3 weeks",
+      "67 merged PRs in 5 weeks",
       "Tenant row-level security in Postgres",
       "Autonomy levels behind a production gate",
       "Backup and restore drill with a runbook"
@@ -581,7 +581,7 @@
         }
       ]
     },
-    "myPart": "Engineer for Ledgercross: 60 of 373 commits and 39 merged PRs (auth, tenant isolation, AI layer, deploy).",
+    "myPart": "Engineer for Ledgercross: 221 of 644 commits and 67 merged PRs, 2026-09-09 to 2026-10-13 (auth, tenant isolation, AI layer, deploy).",
     "years": "2026"
   },
   {
@@ -774,18 +774,6 @@
     ],
     "links": {
       "code": "https://github.com/EhsanulHaqueSiam/kaajkormo"
-    },
-    "cv": {
-      "tech": [
-        "React",
-        "TypeScript",
-        "Rust/Axum",
-        "PostgreSQL",
-        "Clerk Auth"
-      ],
-      "highlights": [
-        "Created a job portal with swipe-to-apply, AI CV parsing with skill-match scoring and a Rust/Axum backend"
-      ]
     }
   },
   {
@@ -904,7 +892,8 @@
       "E-commerce"
     ],
     "links": {
-      "view": "https://indianclaypit.com/"
+      "view": "https://indianclaypit.com/",
+      "code": "https://github.com/BetaScript-info/IndianClaypit"
     },
     "caseStudy": {
       "problem": "Indian Claypit relied on phone-only ordering, losing potential customers who expected digital convenience. Their excellent food and service (reflected in 2,847 Google Reviews) wasn't translating to online reach.",
@@ -1181,7 +1170,18 @@
       "Next.js"
     ],
     "links": {
-      "view": "https://www.archelab.org"
+      "view": "https://www.archelab.org",
+      "code": "https://github.com/devsouhardo/Arche"
+    },
+    "cv": {
+      "tech": [
+        "Astro",
+        "TypeScript",
+        "JSON-LD"
+      ],
+      "highlights": [
+        "Overhauled the lab site's SEO and accessibility, putting all **24 publications** in the static HTML"
+      ]
     },
     "myPart": "Contributor as a lab member: SEO, AEO/GEO, performance and accessibility.",
     "years": "2026"
@@ -1212,7 +1212,8 @@
       "Vite"
     ],
     "links": {
-      "view": "https://neuroai-zeta.vercel.app"
+      "view": "https://neuroai-zeta.vercel.app",
+      "code": "https://github.com/devsouhardo/neuroai-website"
     },
     "myPart": "Built the original page as a lab member: 4 of 14 commits, including the first (+7,409 lines).",
     "years": "2026"
@@ -1245,6 +1246,16 @@
       "view": "https://iosrank.lol",
       "code": "https://github.com/MIMohit/ios-bid"
     },
+    "cv": {
+      "tech": [
+        "TanStack Start",
+        "Convex",
+        "Stripe"
+      ],
+      "highlights": [
+        "Rewrote an App Store leaderboard ranked by Stripe-paid bids, with live ranks over WebSocket (**10 merged PRs**)"
+      ]
+    },
     "myPart": "Author of all 10 merged PRs in MIMohit's repo, starting with the rewrite.",
     "years": "2026"
   },
@@ -1273,7 +1284,8 @@
       "SVG"
     ],
     "links": {
-      "view": "https://whostolemyname.mom"
+      "view": "https://whostolemyname.mom",
+      "code": "https://github.com/MIMohit/whostolemyname"
     },
     "myPart": "Redesign in one merged PR (+1,548/-840).",
     "years": "2026"
@@ -1352,8 +1364,7 @@
         "JDBC"
       ],
       "highlights": [
-        "Reduced query time from 50ms to 7ms (7x faster) via 3NF normalization and connection pooling",
-        "Served 45+ active university users with centralized admin and student dashboards"
+        "Cut query time from 50ms to 7ms (7x) for 45+ users with 3NF normalization and connection pooling"
       ],
       "badge": "17 Stars"
     },
@@ -1530,8 +1541,7 @@
         "GitHub Actions"
       ],
       "highlights": [
-        "Automated daily scraping of 95+ English and Bangla news sources with Scrapy and Playwright spiders",
-        "Built ML sentiment analysis with TF-IDF clustering and GitHub Actions CI/CD pipeline"
+        "Scraped 95+ English and Bangla news sources daily with Scrapy and Playwright, with ML sentiment analysis"
       ]
     },
     "myPart": "Main author: 102 of 107 commits by people.",

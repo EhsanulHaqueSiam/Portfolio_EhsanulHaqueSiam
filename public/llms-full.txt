@@ -46,6 +46,7 @@ Code: https://github.com/EhsanulHaqueSiam/isbdbannedhere
 Videos land on wiqlo first and on YouTube later: fans pay one Bangladeshi creator in taka for early access, and creators sell courses, packs and templates once. TanStack Start and Convex on Cloudflare Workers, with bKash Tokenized Checkout payments and Cloudflare Stream video, live at wiqlo.com.
 Tech: TypeScript, TanStack Start, Convex, Cloudflare Workers, bKash, Cloudflare Stream, Clerk, Playwright
 Live: https://wiqlo.com
+Code: https://github.com/arkieforge/snuggycat
 
 ### Keptcash
 Overdue invoices sit unpaid because nobody knows what is blocking each one. Keptcash, Ledgercross's AI accounts-receivable agent, diagnoses the blocker behind every overdue invoice with evidence, drafts grounded collection emails that a human sends, matches payments and reports dollars recovered. Python/FastAPI + PostgreSQL + Gemini on Vertex AI, deployed with Dokploy.
@@ -127,6 +128,7 @@ Code: https://github.com/EhsanulHaqueSiam/void-threads
 A restaurant needed to move from phone-only orders to a digital platform without losing the personal touch that earned their reputation. Built the full-stack solution: frontend ordering experience, backend order processing, event booking, and catering integration, now serving 50,000+ customers with a 4.9★ rating from 2,847 Google Reviews.
 Tech: React, TypeScript, TailwindCSS, Framer Motion, Node.js, E-commerce
 Live: https://indianclaypit.com/
+Code: https://github.com/BetaScript-info/IndianClaypit
 
 ### BetaScript
 A US-based digital agency needed a web presence that matched their premium positioning and 24-hour response promise. Designed and shipped an animated React site with service showcases, client testimonials, and conversion-optimized contact flows, now representing a BD-USA partnership serving 150+ clients with 100% satisfaction.
@@ -150,11 +152,13 @@ Code: https://github.com/EhsanulHaqueSiam/flowcv-mcp
 Arché Intelligence Lab's public website. An SEO, AEO/GEO, performance and accessibility overhaul added a linked JSON-LD graph, put all 24 publications into the static HTML (17 had rendered only on tab click), and added per-route OpenGraph images and llms.txt; later PRs added paper, dataset and research-area pages and a canonical domain.
 Tech: Astro, TypeScript, JSON-LD, Next.js
 Live: https://www.archelab.org
+Code: https://github.com/devsouhardo/Arche
 
 ### Arché NeuroAI (SULCI)
 Landing page for Arché's NeuroAI neuroimaging initiative, drawn from a real reconstructed cortical surface: the hero draws 46 sagittal sections on Canvas 2D and a react-three-fiber viewer renders the surface live. Performance work cut the cortex mesh from 887 kB to 287 kB and took the hero from 12 fps to holding the refresh rate.
 Tech: React, three.js, react-three-fiber, TypeScript, Vite
 Live: https://neuroai-zeta.vercel.app
+Code: https://github.com/devsouhardo/neuroai-website
 
 ### iosrank.lol
 A public leaderboard of iOS App Store apps ranked only by what their makers bid. Rewrote it on TanStack Start and Convex: live listings from Apple's iTunes Lookup API, whole-dollar bids through Stripe Checkout settled in a Convex webhook, and new ranks pushed to every open board over WebSocket.
@@ -166,6 +170,7 @@ Code: https://github.com/MIMohit/ios-bid
 Checks a business name against domains, social handles and the web at once. Rebuilt its whole look as an illustrated cartoon in one PR: a hand-drawn SVG scene that recolours from CSS, an ink-outline design system mapped onto shadcn, and results shown as notes on a fridge.
 Tech: Next.js, TypeScript, Tailwind CSS, shadcn/ui, SVG
 Live: https://whostolemyname.mom
+Code: https://github.com/MIMohit/whostolemyname
 
 ### Student Management System
 Reduced university data retrieval time from 50ms to 7ms, a 7x performance improvement validated by load testing with 45+ active users, by redesigning the database to 3NF normalization with Singleton connection pooling in Java. Earned 17 GitHub stars.

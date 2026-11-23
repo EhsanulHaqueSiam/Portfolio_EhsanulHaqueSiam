@@ -125,11 +125,11 @@ function Entry({ e, full = false }: { e: Experience; full?: boolean }) {
 function Projects({ list }: { list: typeof cvProjects }) {
   return (
     <Section title="Projects">
-      {list.map(({ name, tech, link, badge, highlights }) => (
+      {list.map(({ name, tech, links, badge, highlights }) => (
         <Item key={name}>
           <Row
             left={<><b>{name}</b> | <i>{tech.join(', ')}</i>{badge && ` | ${badge}`}</>}
-            right={link && <Link href={link}>{bare(link)}</Link>}
+            right={links.map((l, i) => <span key={l}>{i > 0 && ' · '}<Link href={l}>{bare(l)}</Link></span>)}
           />
           <Bullets items={highlights} />
         </Item>
@@ -202,10 +202,9 @@ function CvSheet() {
     <>
       <Header academic />
       <Section title="Education">
-        {education.map(({ institution, degree, location, start, end, details }) => (
+        {education.map(({ institution, degree, start, end, details }) => (
           <Item key={institution}>
-            <Row left={<><b>{institution}</b>{location && `, ${location}`}</>} right={`${start} – ${end}`} />
-            <div className="text-[12px] italic text-black">{degree}</div>
+            <Row left={<><b>{degree.replace('Bachelor of Science', 'B.Sc.')}</b>, {institution}</>} right={`${start} – ${end}`} />
             <div className="resume-detail text-[12px] leading-snug text-black">{details.join(' · ')}</div>
           </Item>
         ))}

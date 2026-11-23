@@ -10,7 +10,7 @@
       "Rebuilt Veritas KYC on serverless GCP (Cloud Run, Document AI, Terraform) in **107 merged PRs over 3 weeks**",
       "Built Onlistly solo, Cloudflare ticketing whose QR redemption stays exactly-once at **10,000 concurrent scans**",
       "Shipped **56 merged PRs in 9 days** on Keptcash, an AI receivables agent, through its production launch",
-      "Built row-level tenant isolation, auth and the AI layer of APRON, an AI procurement negotiator (**39 merged PRs**)"
+      "Built row-level tenant isolation, auth and the AI layer of APRON, an AI procurement negotiator (**67 merged PRs**)"
     ]
   },
   {
