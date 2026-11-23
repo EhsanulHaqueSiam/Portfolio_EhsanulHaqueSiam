@@ -126,6 +126,49 @@
     "years": "2026"
   },
   {
+    "name": "wiqlo",
+    "desc": "Videos land on wiqlo first and on YouTube later: fans pay one Bangladeshi creator in taka for early access, and creators sell courses, packs and templates once. TanStack Start and Convex on Cloudflare Workers, with bKash Tokenized Checkout payments and Cloudflare Stream video, live at wiqlo.com.",
+    "metrics": [
+      "Live at wiqlo.com",
+      "bKash payments confirmed exactly once",
+      "Cloudflare Stream video with signed playback",
+      "225 merged PRs by Siam"
+    ],
+    "images": [],
+    "showInHome": true,
+    "categories": [
+      "web",
+      "fullstack"
+    ],
+    "tags": [
+      "TypeScript",
+      "TanStack Start",
+      "Convex",
+      "Cloudflare Workers",
+      "bKash",
+      "Cloudflare Stream",
+      "Clerk",
+      "Playwright"
+    ],
+    "links": {
+      "view": "https://wiqlo.com"
+    },
+    "cv": {
+      "tech": [
+        "TanStack Start",
+        "Convex",
+        "Cloudflare Workers",
+        "bKash"
+      ],
+      "highlights": [
+        "Co-built a paid video platform for Bangladeshi creators, owning bKash payments and video (**225 merged PRs**)"
+      ],
+      "resume": true
+    },
+    "myPart": "Co-built with Souhardo Rahman and Nasif Safwan: 252 of 548 commits and 225 of 551 merged PRs (bKash payments, Cloudflare Stream video, the app scaffold and agent harness).",
+    "years": "2026"
+  },
+  {
     "name": "Keptcash",
     "desc": "Overdue invoices sit unpaid because nobody knows what is blocking each one. Keptcash, Ledgercross's AI accounts-receivable agent, diagnoses the blocker behind every overdue invoice with evidence, drafts grounded collection emails that a human sends, matches payments and reports dollars recovered. Python/FastAPI + PostgreSQL + Gemini on Vertex AI, deployed with Dokploy.",
     "metrics": [
@@ -200,6 +243,48 @@
     "years": "2026"
   },
   {
+    "name": "Brainiac",
+    "desc": "An application asks for grades, papers, test scores, letters and IDs scattered across folders. Brainiac keeps a person's whole record as typed markdown notes with sources, synced live to the web, phones and laptops, and managed through MCP with the AI assistant they already use. Cloudflare Workers with one Durable Object per record, R2, Queues and Neon; live at brainiac.sou-hardo.com.",
+    "metrics": [
+      "One SQLite Durable Object per record",
+      "MCP over remote and stdio",
+      "Search fusing FTS5 with bge-m3 vectors",
+      "58 merged PRs by Siam"
+    ],
+    "images": [],
+    "showInHome": true,
+    "categories": [
+      "web",
+      "backend"
+    ],
+    "tags": [
+      "TypeScript",
+      "Cloudflare Workers",
+      "Durable Objects",
+      "MCP",
+      "Neon",
+      "Better Auth"
+    ],
+    "links": {
+      "view": "https://brainiac.sou-hardo.com",
+      "code": "https://github.com/arkieforge/brainiac"
+    },
+    "cv": {
+      "tech": [
+        "TypeScript",
+        "Cloudflare Durable Objects",
+        "MCP",
+        "Neon"
+      ],
+      "highlights": [
+        "Co-built an MCP-managed application record on Durable Objects with FTS5 + vector search (**58 merged PRs**)"
+      ],
+      "resume": true
+    },
+    "myPart": "Co-built with Souhardo Rahman: 68 of 118 commits and 58 of 108 merged PRs.",
+    "years": "2026"
+  },
+  {
     "name": "Motamot",
     "desc": "Rank anything on the map of Bangladesh together: people paint zillas and upazilas red to green, and the map shows the live average of every painter. One Node process holds every topic on a 54,951-cell grid in memory and sends only the cells that changed, as binary diffs over WebSocket. React + MapLibre + Hono + SQLite, in Docker on Dokploy.",
     "metrics": [
@@ -238,8 +323,7 @@
       ],
       "highlights": [
         "Built a live map ranking Bangladesh's districts: a **54,951-cell** in-memory grid sent as binary WebSocket diffs"
-      ],
-      "resume": true
+      ]
     },
     "myPart": "Own project.",
     "years": "2026"
@@ -318,6 +402,46 @@
     "years": "2026"
   },
   {
+    "name": "Polashi",
+    "desc": "Most LLM game benchmarks leak secret roles between seats, so their numbers mean little. Polashi, themed on the 1757 Battle of Plassey, gives every model seat only a whitelist-projected view, enforced by import contracts and a canary leak test in CI, and scores seven behavioral axes from a replayable event log with bootstrap confidence intervals.",
+    "metrics": [
+      "Secret leakage blocked in CI",
+      "7 behavioral axes with bootstrap CIs",
+      "Deterministic, replayable games",
+      "267 tests"
+    ],
+    "images": [],
+    "showInHome": true,
+    "categories": [
+      "machine_learning",
+      "nlp"
+    ],
+    "tags": [
+      "Python",
+      "FastAPI",
+      "HTMX",
+      "Pydantic",
+      "LiteLLM"
+    ],
+    "links": {
+      "code": "https://github.com/EhsanulHaqueSiam/polashi"
+    },
+    "cv": {
+      "tech": [
+        "Python",
+        "FastAPI",
+        "LiteLLM",
+        "Pydantic"
+      ],
+      "highlights": [
+        "Built a leak-proof LLM social-deduction benchmark scoring 7 behavioral axes from replayable games (**267 tests**)"
+      ],
+      "resume": true
+    },
+    "myPart": "Own project: all 76 commits.",
+    "years": "2026"
+  },
+  {
     "name": "ledgercross.com",
     "desc": "Ledgercross's company site, rewritten from Next.js to a static Astro 7 site with a Supabase-backed blog CMS, an SEO suite (RSS, build-time OG images, llms.txt) and rebuilds triggered on publish, then cut over to production. Also built the team roster and member profile pages.",
     "metrics": [
@@ -381,8 +505,7 @@
       ],
       "highlights": [
         "Built a desktop agent that finds professors who can fund a PhD and drafts the outreach (**v0.1 to v0.6 in 10 days**)"
-      ],
-      "resume": true
+      ]
     },
     "myPart": "Own project.",
     "years": "2026"
@@ -529,8 +652,7 @@
       ],
       "highlights": [
         "Built a UI library registry served over CLI and MCP so coding agents pick good UI (**46 merged PRs in 2 weeks**)"
-      ],
-      "resume": true
+      ]
     },
     "myPart": "Own project.",
     "years": "2026"
@@ -619,8 +741,7 @@
         "Spline 3D"
       ],
       "highlights": [
-        "Shipped dealership platform with 3D Spline showcases, admin CRUD dashboard, and 7 indexed database tables",
-        "Designed polymorphic inventory supporting 3 vehicle types with multi-filter search across 12+ facets"
+        "Shipped a dealership platform with 3D Spline showcases, a 17-page admin dashboard and 12+ filter facets"
       ]
     },
     "myPart": "Solo build for a BetaScript LLC client.",
@@ -663,8 +784,7 @@
         "Clerk Auth"
       ],
       "highlights": [
-        "Created job portal with swipe-to-apply UX and AI-powered CV parsing with skill-match scoring",
-        "Architected full-stack with React 19 frontend and Rust Axum backend serving PostgreSQL 17"
+        "Created a job portal with swipe-to-apply, AI CV parsing with skill-match scoring and a Rust/Axum backend"
       ]
     }
   },
@@ -1229,8 +1349,7 @@
       "tech": [
         "Java",
         "MySQL",
-        "JDBC",
-        "Design Patterns"
+        "JDBC"
       ],
       "highlights": [
         "Reduced query time from 50ms to 7ms (7x faster) via 3NF normalization and connection pooling",

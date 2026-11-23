@@ -152,7 +152,7 @@ function Skills() {
 
 /**
  * The one-page résumé (2026 hiring norms, hq research/resume-format-2026.md): Experience, Skills,
- * Projects, Open Source, Education, Publications; roles with `cv: false` and talks are left off.
+ * Projects, Open Source, Education, Publications; talks are left off.
  */
 function ResumeSheet() {
   return (
@@ -219,7 +219,7 @@ function CvSheet() {
         />
       </Section>
       <Section title="Experience">
-        {experience.map((e) => <Entry key={e.company} e={e} full />)}
+        {experience.filter((e) => e.cv !== false).map((e) => <Entry key={e.company} e={e} full />)}
       </Section>
       <Projects list={cvProjects} />
       <Section title="Open Source">

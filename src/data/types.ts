@@ -78,7 +78,7 @@ export interface Experience {
   /** CV bullets; the CV falls back to `desc` as a single bullet when absent. */
   highlights?: string[];
   location?: string;
-  /** false: left off the one-page résumé; the long CV keeps it (hq Role `cv: false`). */
+  /** false: shown on the site, left off the résumé and the CV (hq Role `cv: false`). */
   cv?: false;
 }
 

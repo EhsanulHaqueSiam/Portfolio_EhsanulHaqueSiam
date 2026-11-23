@@ -42,9 +42,20 @@ Tech: TypeScript, Cloudflare Workers
 Live: https://isbdbannedhere.site
 Code: https://github.com/EhsanulHaqueSiam/isbdbannedhere
 
+### wiqlo
+Videos land on wiqlo first and on YouTube later: fans pay one Bangladeshi creator in taka for early access, and creators sell courses, packs and templates once. TanStack Start and Convex on Cloudflare Workers, with bKash Tokenized Checkout payments and Cloudflare Stream video, live at wiqlo.com.
+Tech: TypeScript, TanStack Start, Convex, Cloudflare Workers, bKash, Cloudflare Stream, Clerk, Playwright
+Live: https://wiqlo.com
+
 ### Keptcash
 Overdue invoices sit unpaid because nobody knows what is blocking each one. Keptcash, Ledgercross's AI accounts-receivable agent, diagnoses the blocker behind every overdue invoice with evidence, drafts grounded collection emails that a human sends, matches payments and reports dollars recovered. Python/FastAPI + PostgreSQL + Gemini on Vertex AI, deployed with Dokploy.
 Tech: Python, FastAPI, Gemini, PostgreSQL, Vertex AI, Next.js, Playwright, Dokploy
+
+### Brainiac
+An application asks for grades, papers, test scores, letters and IDs scattered across folders. Brainiac keeps a person's whole record as typed markdown notes with sources, synced live to the web, phones and laptops, and managed through MCP with the AI assistant they already use. Cloudflare Workers with one Durable Object per record, R2, Queues and Neon; live at brainiac.sou-hardo.com.
+Tech: TypeScript, Cloudflare Workers, Durable Objects, MCP, Neon, Better Auth
+Live: https://brainiac.sou-hardo.com
+Code: https://github.com/arkieforge/brainiac
 
 ### Motamot
 Rank anything on the map of Bangladesh together: people paint zillas and upazilas red to green, and the map shows the live average of every painter. One Node process holds every topic on a 54,951-cell grid in memory and sends only the cells that changed, as binary diffs over WebSocket. React + MapLibre + Hono + SQLite, in Docker on Dokploy.
@@ -54,6 +65,11 @@ Live: https://motamot.tuiber.com
 ### Onlistly
 At a busy gate the same QR ticket can be scanned twice. Onlistly is a multi-tenant event ticketing and access-control platform built entirely on Cloudflare, where one Durable Object per ticket makes every redemption exactly-once, verified under a 10,000-concurrent-scan load test. Workers, Durable Objects, Queues, D1 and R2, with a TanStack Start frontend and a passwordless scanner PWA.
 Tech: Cloudflare Workers, Durable Objects, TypeScript, Hono, TanStack Start, Better Auth, Prisma
+
+### Polashi
+Most LLM game benchmarks leak secret roles between seats, so their numbers mean little. Polashi, themed on the 1757 Battle of Plassey, gives every model seat only a whitelist-projected view, enforced by import contracts and a canary leak test in CI, and scores seven behavioral axes from a replayable event log with bootstrap confidence intervals.
+Tech: Python, FastAPI, HTMX, Pydantic, LiteLLM
+Code: https://github.com/EhsanulHaqueSiam/polashi
 
 ### ledgercross.com
 Ledgercross's company site, rewritten from Next.js to a static Astro 7 site with a Supabase-backed blog CMS, an SEO suite (RSS, build-time OG images, llms.txt) and rebuilds triggered on publish, then cut over to production. Also built the team roster and member profile pages.
