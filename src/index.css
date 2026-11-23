@@ -1087,7 +1087,9 @@ html[data-plain] [data-pull] {
 .resume-paper { font-family: "Charis SIL", Charter, Georgia, serif; --resume-accent: #1d4f9c; }
 .resume-paper strong { color: var(--resume-accent); font-weight: 400; }
 .resume-paper a { color: inherit; text-decoration-color: rgb(0 0 0 / 0.3); }
+.resume-quiet strong { color: inherit; }
 @media print {
   html.resume-printing .resume-paper strong { color: #1d4f9c !important; }
+  html.resume-printing .resume-paper .resume-quiet strong { color: #000 !important; }
   html.resume-printing .resume-paper a { text-decoration-color: rgb(0 0 0 / 0.3) !important; }
 }

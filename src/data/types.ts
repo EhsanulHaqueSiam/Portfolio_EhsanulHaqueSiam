@@ -62,8 +62,10 @@ export interface Project {
     tech: string[];
     highlights: string[];
     badge?: string;
-    /** Also on the one-page résumé. */
+    /** Also on the one-page résumé (first bullet only). */
     resume?: boolean;
+    /** The CV lists it under Research Projects, after the research roles. */
+    research?: boolean;
   };
   /** Private repo: the PDFs show only the live site (the code link 404s for recruiters). */
   repoPrivate?: boolean;
@@ -97,6 +99,8 @@ export interface Education {
   /** CV only. */
   coursework?: string[];
   referees?: string[];
+  honors?: string[];
+  languages?: string;
 }
 
 export interface Achievement {
@@ -118,6 +122,8 @@ export interface Publication {
   /** In paper order, as printed; the CV bolds `profile.publishesAs`. */
   authors?: string[];
   doi?: string;
+  /** One-line study description, printed under the CV citation. */
+  method?: string;
 }
 
 export interface Testimonial {

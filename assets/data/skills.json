@@ -306,16 +306,6 @@
   ],
   "cv": [
     {
-      "label": "Languages",
-      "skills": [
-        "TypeScript",
-        "Python",
-        "SQL",
-        "Java",
-        "C++"
-      ]
-    },
-    {
       "label": "AI & LLMs",
       "skills": [
         "LLM agents",
@@ -328,6 +318,16 @@
         "PyTorch",
         "scikit-learn",
         "BERT"
+      ]
+    },
+    {
+      "label": "Languages",
+      "skills": [
+        "TypeScript",
+        "Python",
+        "SQL",
+        "Java",
+        "C++"
       ]
     },
     {

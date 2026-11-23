@@ -12,7 +12,8 @@
       "Md Ehsanul Haque",
       "Abdus Salam"
     ],
-    "doi": "10.1109/QPAIN69676.2026.11545814"
+    "doi": "10.1109/QPAIN69676.2026.11545814",
+    "method": "Compared K-Means, hierarchical clustering and DBSCAN on 10,000 arXiv AI abstracts (TF-IDF + PCA)"
   },
   {
     "title": "Beyond NER: A Comparative Benchmark of Medical BERTS for Multi-Label Adverse Drug Reaction Classification",
@@ -28,7 +29,8 @@
       "Aonyendo Paul Neteish",
       "Md Ehsanul Haque",
       "Abdus Salam"
-    ]
+    ],
+    "method": "Benchmarked BioBERT and PubMedBERT against general BERT for multi-label ADR classification on PsyTAR"
   },
   {
     "title": "Cyclones and Calamity: A Historical and Statistical Unmasking of Losses in Bangladesh",

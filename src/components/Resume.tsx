@@ -43,7 +43,7 @@ const openSource = repos.flatMap(({ name, repo, stars, prs, cv }) => {
 
 function Section({ title, children }: { title: string; children: ReactNode }) {
   return (
-    <section className="mt-2 first:mt-0">
+    <section className="mt-2">
       {/* break-after-avoid: a section title never ends a printed page alone */}
       <h2 className="resume-section-title break-after-avoid mb-1.5 border-b border-black pb-0.5 text-[12px] font-bold uppercase tracking-[0.08em] text-black">
         {title}
@@ -70,6 +70,9 @@ function Bullets({ items }: { items: ReactNode[] }) {
     </ul>
   );
 }
+
+/** Keeps a block's key numbers black: each document puts the blue only on its reader's signal. */
+const Quiet = ({ children }: { children: ReactNode }) => <div className="resume-quiet">{children}</div>;
 
 function Item({ children }: { children: ReactNode }) {
   return <div className="mb-1 last:mb-0 break-inside-avoid">{children}</div>;
@@ -117,27 +120,27 @@ function Header({ academic = false }: { academic?: boolean }) {
   );
 }
 
-/** One role: "**Role**, Company" left, "Location · dates" right, an earlier title under it, then bullets. */
-function Entry({ e }: { e: Experience }) {
+/** One role: "**Role**, Company" left, "Location · dates" right, an earlier title under it, then up to `max` bullets. */
+function Entry({ e, max }: { e: Experience; max?: number }) {
   return (
     <Item>
       <Row left={<><b className="text-[13px]">{e.role}</b>, {e.company}</>} right={[e.location, e.date.replace('–', ' – ')].filter(Boolean).join(' · ')} />
       {e.earlier && <Row left={<i>{e.earlier.role}</i>} right={<i>{e.earlier.date.replace('–', ' – ')}</i>} />}
-      <Bullets items={e.highlights ?? [e.desc]} />
+      <Bullets items={(e.highlights ?? [e.desc]).slice(0, max)} />
     </Item>
   );
 }
 
-function Projects({ list }: { list: typeof cvProjects }) {
+function Projects({ list, title = 'Projects', max }: { list: typeof cvProjects; title?: string; max?: number }) {
   return (
-    <Section title="Projects">
+    <Section title={title}>
       {list.map(({ name, tech, links, badge, highlights }) => (
         <Item key={name}>
           <Row
             left={<><b>{name}</b> | <i>{tech.join(', ')}</i>{badge && ` | ${badge}`}</>}
             right={links.map((l, i) => <span key={l}>{i > 0 && ' · '}<Link href={l}>{bare(l)}</Link></span>)}
           />
-          <Bullets items={highlights} />
+          <Bullets items={highlights.slice(0, max)} />
         </Item>
       ))}
     </Section>
@@ -168,26 +171,30 @@ function Skills() {
 const Degree = ({ degree, institution, start, end }: (typeof education)[number]) => (
   <Row left={<><b>{degree.replace('Bachelor of Science', 'B.Sc.')}</b>, {institution}</>} right={`${start} – ${end}`} />
 );
-/** Education details with the CGPA value in the accent. */
-const details = (ds: string[]) => <Marked text={ds.join(' · ').replace(/(CGPA )([\d.]+ \/ [\d.]+)/, '$1**$2**')} />;
+/** Education details; `accent` puts the CGPA value in the blue (the CV's signal, not the résumé's). */
+const details = (ds: string[], accent = false) => {
+  const line = ds.join(' · ');
+  return <Marked text={accent ? line.replace(/(CGPA )([\d.]+ \/ [\d.]+)/, '$1**$2**') : line} />;
+};
 const Detail = ({ children }: { children: ReactNode }) => (
   <div className="resume-detail text-[12px] leading-snug text-black">{children}</div>
 );
 
 /**
  * The one-page résumé (2026 hiring norms, hq research/resume-format-2026.md): Experience, Skills,
- * Projects, Open Source, Education, Publications; talks are left off.
+ * Open Source, Projects, Education, Publications; talks are left off. Blue marks only production and
+ * open-source AI signal, so research roles stay quiet here.
  */
 function ResumeSheet() {
   return (
     <>
       <Header />
       <Section title="Experience">
-        {listed.map((e) => <Entry key={e.company} e={e} />)}
+        {listed.map((e) => (isResearch(e) ? <Quiet key={e.company}><Entry e={e} max={2} /></Quiet> : <Entry key={e.company} e={e} />))}
       </Section>
       <Skills />
       <OpenSource />
-      <Projects list={cvProjects.filter((p) => p.resume)} />
+      <Projects list={cvProjects.filter((p) => p.resume)} max={1} />
       <Section title="Education">
         {education.map((ed) => (
           <Item key={ed.institution}>
@@ -226,13 +233,15 @@ function Citation({ p }: { p: Publication }) {
       ) : null}
       <i>{p.title}</i>. {p.conference}, {when}{note ? `. ${note}` : ''}
       {p.doi && <>. DOI <Link href={`https://doi.org/${p.doi}`}>{p.doi}</Link></>}
+      {p.method && <span className="block text-[11.5px] italic">{p.method}.</span>}
     </>
   );
 }
 
 /**
- * The 2-page academic CV: Education, papers (talks left off), then research before industry experience,
- * selected projects (every project with a `cv` block), open source, skills and referees.
+ * The 2-page academic CV for a professor's read: Education, papers, research roles, research projects,
+ * then industry (two bullets per role), other projects, open source, skills and referees. Blue marks
+ * only research signal (CGPA, research roles and projects).
  */
 function CvSheet() {
   return (
@@ -242,7 +251,8 @@ function CvSheet() {
         {education.map((ed) => (
           <Item key={ed.institution}>
             <Degree {...ed} />
-            <Detail>{details(ed.details)}</Detail>
+            {/* with an Honors section, the CV's education line keeps only the CGPA */}
+            <Detail>{details(ed.honors ? ed.details.filter((d) => /CGPA/.test(d)) : ed.details, true)}</Detail>
             {ed.coursework && <Detail><b>Coursework:</b> {ed.coursework.join(', ')}</Detail>}
           </Item>
         ))}
@@ -253,12 +263,25 @@ function CvSheet() {
       <Section title="Research Experience">
         {listed.filter(isResearch).map((e) => <Entry key={e.company} e={e} />)}
       </Section>
-      <Section title="Industry Experience">
-        {listed.filter((e) => !isResearch(e)).map((e) => <Entry key={e.company} e={e} />)}
-      </Section>
-      <Projects list={cvProjects} />
-      <OpenSource />
+      <Projects title="Research Projects" list={cvProjects.filter((p) => p.research)} />
+      <Quiet>
+        <Section title="Industry Experience">
+          {listed.filter((e) => !isResearch(e)).map((e) => <Entry key={e.company} e={e} max={2} />)}
+        </Section>
+        <Projects list={cvProjects.filter((p) => !p.research)} max={1} />
+        <OpenSource />
+      </Quiet>
       <Skills />
+      {education.some((ed) => ed.honors) && (
+        <Section title="Honors & Awards">
+          <Bullets items={education.flatMap((ed) => ed.honors ?? [])} />
+        </Section>
+      )}
+      {education.find((ed) => ed.languages) && (
+        <Section title="Languages">
+          <Detail>{education.find((ed) => ed.languages)?.languages}</Detail>
+        </Section>
+      )}
       {education.some((ed) => ed.referees) && (
         <Section title="References">
           <Bullets items={education.flatMap((ed) => ed.referees ?? [])} />

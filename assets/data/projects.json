@@ -32,9 +32,11 @@
         "Pydantic"
       ],
       "highlights": [
-        "Built a replayable LLM benchmark scoring **7 behavioral axes** with bootstrap CIs and CI-enforced secret isolation"
+        "Built a replayable LLM social-deduction benchmark scoring **7 behavioral axes** with cluster-bootstrap CIs",
+        "Made secret-role leakage structurally impossible: per-seat projected views, import contracts, a CI canary test"
       ],
-      "resume": true
+      "resume": true,
+      "research": true
     },
     "myPart": "Own project: all 76 commits.",
     "years": "2026"
@@ -604,6 +606,16 @@
     "links": {
       "code": "https://github.com/EhsanulHaqueSiam/tastebase"
     },
+    "cv": {
+      "tech": [
+        "TypeScript",
+        "MCP",
+        "CLI"
+      ],
+      "highlights": [
+        "Built a UI library registry served over CLI and MCP so coding agents pick good UI, with design evals"
+      ]
+    },
     "myPart": "Own project.",
     "years": "2026"
   },
@@ -1070,6 +1082,17 @@
     "links": {
       "code": "https://github.com/EhsanulHaqueSiam/flowcv-mcp"
     },
+    "cv": {
+      "tech": [
+        "TypeScript",
+        "MCP",
+        "Node.js",
+        "Zod"
+      ],
+      "highlights": [
+        "Built **50 MCP tools** and a CLI over FlowCV's private API so AI assistants can edit resumes and job trackers"
+      ]
+    },
     "myPart": "Own project.",
     "years": "2026"
   },
@@ -1441,7 +1464,8 @@
       ],
       "highlights": [
         "Scraped 95+ English and Bangla news sources daily with Scrapy and Playwright, with ML sentiment analysis"
-      ]
+      ],
+      "research": true
     },
     "myPart": "Main author: 102 of 107 commits by people.",
     "years": "2024–2026"
