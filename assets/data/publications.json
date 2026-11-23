@@ -16,7 +16,7 @@
     "method": "Compared K-Means, hierarchical clustering and DBSCAN on 10,000 arXiv AI abstracts (TF-IDF + PCA)"
   },
   {
-    "title": "Beyond NER: A Comparative Benchmark of Medical BERTS for Multi-Label Adverse Drug Reaction Classification",
+    "title": "Beyond NER: A Comparative Benchmark of Medical BERTs for Multi-Label Adverse Drug Reaction Classification",
     "conference": "International Conference on Intelligent Data Analysis and Applications (IDAA 2025)",
     "date": "Dec 2025 | Book Chapter (Taylor & Francis)",
     "desc": "Benchmarked domain-specific Medical BERT models for multi-label adverse drug reaction classification demonstrating improved performance over general BERT on the PsyTAR dataset by fine-tuning BioBERT and PubMedBERT architectures with multi-label classification heads.",

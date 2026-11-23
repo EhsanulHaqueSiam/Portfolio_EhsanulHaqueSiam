@@ -32,13 +32,19 @@ const isTalk = (p: Publication) => /presentation|talk/i.test(p.date);
 const isResearch = (e: Experience) => /researcher/i.test(e.role);
 const listed = experience.filter((e) => e.cv !== false);
 
+// before `openSource`, which builds its JSX at module load
+const Link = ({ href, children }: { href: string; children: ReactNode }) => (
+  <a href={href} className="underline decoration-black/30 underline-offset-2">{children}</a>
+);
+
 /** Upstream repos with merged PRs only (the site also shows open ones), one line each; the accent marks repeat merges. */
 const openSource = repos.flatMap(({ name, repo, stars, prs, cv }) => {
   const merged = prs.filter((p) => p.state === 'merged');
   if (!merged.length) return [];
   const count = `${merged.length} merged PR${merged.length > 1 ? 's' : ''}`;
   const coauthor = merged.some((p) => p.note === 'co-author') ? ', co-author' : '';
-  return [{ repo, name, stars, merged, line: <><b>{name}</b> ({kStars(stars)}) · {merged.length > 1 ? <strong>{count}</strong> : count}{coauthor}: {cv}</> }];
+  const prsUrl = `https://github.com/${repo}/pulls?q=is%3Apr+is%3Amerged+author%3AEhsanulHaqueSiam`;
+  return [{ repo, name, stars, merged, line: <><Link href={prsUrl}><b>{name}</b></Link> ({kStars(stars)}) · {merged.length > 1 ? <strong>{count}</strong> : count}{coauthor}: {cv}</> }];
 });
 /** "fix(server): proxied Codex…" -> "Proxied Codex…" */
 const prTitle = (t: string) => {
@@ -83,9 +89,6 @@ function Item({ children }: { children: ReactNode }) {
   return <div className="mb-1 last:mb-0 break-inside-avoid">{children}</div>;
 }
 
-const Link = ({ href, children }: { href: string; children: ReactNode }) => (
-  <a href={href} className="underline decoration-black/30 underline-offset-2">{children}</a>
-);
 
 /** Name, positioning line and contact as plain text (parsers skip page headers and icons). */
 function Header({ academic = false }: { academic?: boolean }) {
@@ -160,7 +163,7 @@ function OpenSource({ detailed = false }: { detailed?: boolean }) {
         ? openSource.map(({ repo, name, stars, merged }) => (
             <Item key={repo}>
               <Row left={<><b>{name}</b> | <i>{repo}</i></>} right={kStars(stars)} />
-              <Bullets items={merged.map((p) => `${prTitle(p.title)} (#${p.number}${p.note ? `, ${p.note}` : ''})`)} />
+              <Bullets items={merged.map((p) => <Link href={`https://github.com/${repo}/pull/${p.number}`}>{prTitle(p.title)} (#{p.number}{p.note ? `, ${p.note}` : ''})</Link>)} />
             </Item>
           ))
         : <Bullets items={openSource.map((r) => r.line)} />}
@@ -218,12 +221,14 @@ function ResumeSheet() {
       </Section>
       <Section title="Publications">
         <Bullets
-          items={publications.filter((p) => !isTalk(p)).map(({ title, conference, date, doi }) => {
+          items={publications.filter((p) => !isTalk(p)).map(({ title, conference, date, doi, authors }) => {
             const venue = conference.match(/\(([^)]+)\)$/)?.[1] ?? conference; // "(IDAA 2025)"
             // "Published (IEEE Xplore, …)" -> "IEEE Xplore"; "Book Chapter (Taylor & Francis)" -> "Taylor & Francis book chapter"
             const where = (pubParts(date).note ?? '').replace(/^Published \(([^,)]+).*$/, '$1').replace(/^Book Chapter \((.+)\)$/, '$1 book chapter');
             const t = <i>{title}</i>;
-            return <>{doi ? <Link href={`https://doi.org/${doi}`}>{t}</Link> : t}. {venue}{where && `, ${where}`}</>;
+            const pos = authors?.indexOf(profile.publishesAs ?? '') ?? -1;
+            const nth = pos >= 0 ? `, ${['1st', '2nd', '3rd'][pos] ?? `${pos + 1}th`} author` : '';
+            return <>{doi ? <Link href={`https://doi.org/${doi}`}>{t}</Link> : t}. {venue}{where && `, ${where}`}{nth}</>;
           })}
         />
       </Section>

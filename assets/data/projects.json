@@ -35,7 +35,7 @@
       ],
       "highlights": [
         "Built a replayable LLM social-deduction benchmark scoring **7 behavioral axes** with cluster-bootstrap CIs",
-        "Made secret-role leakage structurally impossible: per-seat projected views, import contracts, a CI canary test"
+        "Isolated each seat's view with import contracts and a CI canary test that fails on any secret-role leak"
       ],
       "resume": true,
       "research": true
@@ -207,7 +207,7 @@
         "bKash"
       ],
       "highlights": [
-        "Built exactly-once bKash payments, refunds, payouts and signed Stream video for a live paid creator platform"
+        "Built bKash payments (confirmed exactly once), refunds, payouts and signed Stream video for a live creator platform"
       ],
       "resume": true
     },
@@ -1167,7 +1167,7 @@
         "JSON-LD"
       ],
       "highlights": [
-        "Overhauled the lab site's SEO and accessibility, putting all 24 publications in the static HTML"
+        "Overhauled the lab site's SEO and accessibility, putting the lab's 24 publications in the static HTML"
       ]
     },
     "myPart": "Contributor as a lab member: SEO, AEO/GEO, performance and accessibility.",

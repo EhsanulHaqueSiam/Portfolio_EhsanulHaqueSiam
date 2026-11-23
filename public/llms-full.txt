@@ -289,7 +289,7 @@ Code: https://github.com/EhsanulHaqueSiam/PharmacyManagementSystem
 IEEE QPAIN 2026, Apr 2026 | Published (IEEE Xplore, Scopus Indexed)
 Compared K-Means, hierarchical clustering and DBSCAN for unsupervised topic modeling on 10,000 arXiv "Artificial Intelligence" abstracts (TF-IDF + PCA), finding the AI literature skews toward societal issues such as ethics and security, and that no single method fits all: K-Means suits broad summaries while DBSCAN surfaces the core-periphery structure of emerging research. With A. P. Neteish and A. Salam.
 
-### Beyond NER: A Comparative Benchmark of Medical BERTS for Multi-Label Adverse Drug Reaction Classification
+### Beyond NER: A Comparative Benchmark of Medical BERTs for Multi-Label Adverse Drug Reaction Classification
 International Conference on Intelligent Data Analysis and Applications (IDAA 2025), Dec 2025 | Book Chapter (Taylor & Francis)
 Benchmarked domain-specific Medical BERT models for multi-label adverse drug reaction classification demonstrating improved performance over general BERT on the PsyTAR dataset by fine-tuning BioBERT and PubMedBERT architectures with multi-label classification heads.
 
