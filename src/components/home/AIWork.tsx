@@ -3,6 +3,7 @@ import type { OpenSourceRepo } from '../../data/opensource';
 import { haptic } from '../../lib/haptics';
 import { sound } from '../../lib/sound';
 import { GlideList } from '../../lib/useGlide';
+import { Marked } from '../ui/Marked';
 import { Section } from './chrome';
 import { T3Mark } from './icons';
 import { CompanyMark, shortRange } from './Rows';
@@ -29,7 +30,7 @@ export function AIWork({ repos }: { repos: OpenSourceRepo[] }) {
                 </span>
                 {lines.map((l) => (
                   <span key={l} className="mt-1 block text-[13.5px] leading-relaxed text-muted-foreground">
-                    {l}
+                    <Marked text={l} />
                   </span>
                 ))}
               </span>

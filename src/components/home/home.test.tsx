@@ -19,8 +19,8 @@ import { Stack } from './StackActivity';
 const wrap = (ui: ReactNode) => render(<LazyMotion features={domAnimation}>{ui}</LazyMotion>);
 
 const repos: OpenSourceRepo[] = [
-  { name: 'T3 Code', repo: 'pingdotgg/t3code', logo: 't3', stars: 1, prs: [{ number: 1, title: 'fix: one', state: 'merged' }] },
-  { name: 'Better Auth', repo: 'better-auth/better-auth', logo: 'betterAuth', stars: 1, prs: [{ number: 2, title: 'feat: two', state: 'merged', note: 'co-author' }] },
+  { name: 'T3 Code', repo: 'pingdotgg/t3code', logo: 't3', stars: 1, cv: 'one', prs: [{ number: 1, title: 'fix: one', state: 'merged' }] },
+  { name: 'Better Auth', repo: 'better-auth/better-auth', logo: 'betterAuth', stars: 1, cv: 'two', prs: [{ number: 2, title: 'feat: two', state: 'merged', note: 'co-author' }] },
 ];
 
 describe('projects', () => {

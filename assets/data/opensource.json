@@ -4,6 +4,7 @@
     "repo": "pingdotgg/t3code",
     "logo": "t3",
     "stars": 70257,
+    "cv": "Claude proxy support, usage-limit recovery, Android dictation",
     "prs": [
       { "number": 32188, "title": "fix(server): proxied Codex usage limits keep their reset time", "state": "merged" },
       { "number": 28360, "title": "fix(server): settling a usage-limited thread disarms recovery and names the refusal", "state": "merged" },
@@ -18,6 +19,7 @@
     "repo": "better-auth/better-auth",
     "logo": "betterAuth",
     "stars": 30798,
+    "cv": "per-request OAuth resource scopes",
     "prs": [
       { "number": 12733, "title": "feat(oauth-provider): add resourceSeedScope for per-request instances", "state": "merged", "note": "co-author" }
     ]
@@ -27,6 +29,7 @@
     "repo": "ardia-browser/ardia",
     "logo": "ardia",
     "stars": 2786,
+    "cv": "Linux command resolution",
     "prs": [
       { "number": 3375, "title": "Linux: `ardia <command>` reaches the command when ~/.local/bin comes after /usr/bin", "state": "merged" }
     ]

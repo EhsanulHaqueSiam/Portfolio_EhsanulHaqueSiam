@@ -6,6 +6,8 @@ export type OpenSourceRepo = {
   repo: string;
   logo: 't3' | 'betterAuth' | 'ardia';
   stars: number;
+  /** What the merged PRs did, in a few words, for the CV's Open Source line. */
+  cv: string;
   prs: Array<{ number: number; title: string; state: PrState; note?: string }>;
 };
 

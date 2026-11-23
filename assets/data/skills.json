@@ -349,25 +349,13 @@
       ]
     },
     {
-      "label": "Data",
+      "label": "Data & Cloud",
       "skills": [
-        "PostgreSQL (row-level security, pgvector)",
-        "SQLite",
-        "MySQL",
-        "Drizzle ORM",
-        "Prisma",
-        "Scrapy"
-      ]
-    },
-    {
-      "label": "Cloud & DevOps",
-      "skills": [
+        "PostgreSQL (RLS, pgvector)",
         "GCP (Cloud Run, Document AI)",
         "Cloudflare (Workers, Durable Objects)",
         "Terraform",
-        "Docker",
-        "GitHub Actions",
-        "Playwright"
+        "Docker"
       ]
     }
   ]

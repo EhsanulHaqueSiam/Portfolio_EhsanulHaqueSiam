@@ -6,6 +6,7 @@ import { haptic } from '../../lib/haptics';
 import { sound } from '../../lib/sound';
 import { GlideList } from '../../lib/useGlide';
 import { ArrowUpRightIcon, CheckIcon, CopyIcon } from '../ui/Icons';
+import { Marked } from '../ui/Marked';
 import { ext } from './chrome';
 import { HiddenCat } from './PixelCat';
 import { CompanyMark, LinkRow, PaperMark, pubMeta, shortRange, shortRole } from './Rows';
@@ -90,7 +91,7 @@ export function WorkPage({ e }: { e: Experience }) {
           <ul className="grid gap-2.5 text-[14.5px] leading-relaxed text-foreground/85">
             {e.highlights.map((h) => (
               <li key={h} className="relative pl-4 before:absolute before:left-0 before:top-[0.7em] before:h-1 before:w-1 before:rounded-full before:bg-muted-foreground">
-                {h}
+                <Marked text={h} />
               </li>
             ))}
           </ul>

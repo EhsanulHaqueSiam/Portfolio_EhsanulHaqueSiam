@@ -73,6 +73,18 @@
         }
       ]
     },
+    "cv": {
+      "tech": [
+        "React",
+        "TypeScript",
+        "TanStack Start",
+        "Convex",
+        "Python"
+      ],
+      "highlights": [
+        "Built solo (all 508 commits) a search engine indexing **12,000+ scholarships daily** from 272 spiders"
+      ]
+    },
     "myPart": "Solo build: all 508 commits.",
     "years": "2026"
   },
@@ -100,6 +112,15 @@
     "links": {
       "view": "https://isbdbannedhere.site",
       "code": "https://github.com/EhsanulHaqueSiam/isbdbannedhere"
+    },
+    "cv": {
+      "tech": [
+        "TypeScript",
+        "Cloudflare Workers"
+      ],
+      "highlights": [
+        "Built a receipts-backed directory of bans on Bangladeshis with WCAG AAA pages (**17 merged PRs in 3 days**)"
+      ]
     },
     "myPart": "Own project.",
     "years": "2026"
@@ -213,13 +234,12 @@
         "React",
         "MapLibre",
         "Hono",
-        "WebSocket",
-        "SQLite"
+        "WebSocket"
       ],
       "highlights": [
-        "Live map where people rank Bangladesh's zillas and upazilas together, on a 54,951-cell in-memory grid",
-        "Sends only changed cells as binary diffs over WebSocket; Docker on Dokploy, share cards and MP4 replays"
-      ]
+        "Built a live map ranking Bangladesh's districts: a **54,951-cell** in-memory grid sent as binary WebSocket diffs"
+      ],
+      "resume": true
     },
     "myPart": "Own project.",
     "years": "2026"
@@ -360,9 +380,9 @@
         "OpenAlex"
       ],
       "highlights": [
-        "Desktop agent that finds professors who can fund a PhD and their grants, then drafts and threads the outreach",
-        "v0.1.0 to v0.6.0 in 10 days for Mac, Linux and Windows, plus npm and Homebrew; every fact cites its source"
-      ]
+        "Built a desktop agent that finds professors who can fund a PhD and drafts the outreach (**v0.1 to v0.6 in 10 days**)"
+      ],
+      "resume": true
     },
     "myPart": "Own project.",
     "years": "2026"
@@ -465,6 +485,16 @@
     "links": {
       "code": "https://github.com/EhsanulHaqueSiam/xtend"
     },
+    "cv": {
+      "tech": [
+        "TypeScript",
+        "Claude",
+        "Codex"
+      ],
+      "highlights": [
+        "Built a desktop X client that acts through the user's own session, with AI drafts on their Claude or Codex login"
+      ]
+    },
     "myPart": "Own project.",
     "years": "2026"
   },
@@ -498,9 +528,9 @@
         "CLI"
       ],
       "highlights": [
-        "Registry of curated UI libraries served through a CLI and an MCP server so coding agents pick good UI",
-        "Recurring evals catch wrong picks and a design eval judges three builds per brief: 46 merged PRs in 2 weeks"
-      ]
+        "Built a UI library registry served over CLI and MCP so coding agents pick good UI (**46 merged PRs in 2 weeks**)"
+      ],
+      "resume": true
     },
     "myPart": "Own project.",
     "years": "2026"
@@ -579,6 +609,20 @@
         }
       ]
     },
+    "cv": {
+      "tech": [
+        "React",
+        "TypeScript",
+        "TanStack Start",
+        "Drizzle ORM",
+        "SQLite",
+        "Spline 3D"
+      ],
+      "highlights": [
+        "Shipped dealership platform with 3D Spline showcases, admin CRUD dashboard, and 7 indexed database tables",
+        "Designed polymorphic inventory supporting 3 vehicle types with multi-filter search across 12+ facets"
+      ]
+    },
     "myPart": "Solo build for a BetaScript LLC client.",
     "years": "2026"
   },
@@ -609,6 +653,19 @@
     ],
     "links": {
       "code": "https://github.com/EhsanulHaqueSiam/kaajkormo"
+    },
+    "cv": {
+      "tech": [
+        "React",
+        "TypeScript",
+        "Rust/Axum",
+        "PostgreSQL",
+        "Clerk Auth"
+      ],
+      "highlights": [
+        "Created job portal with swipe-to-apply UX and AI-powered CV parsing with skill-match scoring",
+        "Architected full-stack with React 19 frontend and Rust Axum backend serving PostgreSQL 17"
+      ]
     }
   },
   {
@@ -966,6 +1023,17 @@
     "links": {
       "code": "https://github.com/EhsanulHaqueSiam/flowcv-mcp"
     },
+    "cv": {
+      "tech": [
+        "TypeScript",
+        "MCP",
+        "Node.js",
+        "Zod"
+      ],
+      "highlights": [
+        "Built **50 MCP tools** and a CLI over FlowCV's private API so AI assistants can edit resumes and job trackers"
+      ]
+    },
     "myPart": "Own project.",
     "years": "2026"
   },
@@ -1157,6 +1225,19 @@
         "after": "assets/images/projects/sms-2.png"
       }
     },
+    "cv": {
+      "tech": [
+        "Java",
+        "MySQL",
+        "JDBC",
+        "Design Patterns"
+      ],
+      "highlights": [
+        "Reduced query time from 50ms to 7ms (7x faster) via 3NF normalization and connection pooling",
+        "Served 45+ active university users with centralized admin and student dashboards"
+      ],
+      "badge": "17 Stars"
+    },
     "myPart": "Main author: 65 of 67 commits.",
     "years": "2023"
   },
@@ -1319,6 +1400,19 @@
           "label": "Daily Auto",
           "value": "✓"
         }
+      ]
+    },
+    "cv": {
+      "tech": [
+        "Python",
+        "Scrapy",
+        "FastAPI",
+        "Docker",
+        "GitHub Actions"
+      ],
+      "highlights": [
+        "Automated daily scraping of 95+ English and Bangla news sources with Scrapy and Playwright spiders",
+        "Built ML sentiment analysis with TF-IDF clustering and GitHub Actions CI/CD pipeline"
       ]
     },
     "myPart": "Main author: 102 of 107 commits by people.",

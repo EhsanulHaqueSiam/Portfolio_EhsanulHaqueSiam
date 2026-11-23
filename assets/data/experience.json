@@ -7,10 +7,10 @@
     "alignment": "left",
     "showInHome": true,
     "highlights": [
-      "Rebuilt Veritas (KYC-as-a-service) on serverless GCP (Cloud Run, Document AI + Gemini, Terraform) with a three-tier extraction ladder that sends only disagreements to expensive processors: 107 merged PRs in 3 weeks",
-      "Sole engineer of Onlistly, event ticketing built entirely on Cloudflare (Workers, Durable Objects, Queues, D1): one Durable Object per ticket makes QR redemption exactly-once, verified under a 10,000-concurrent-scan load test",
-      "Core engineer on Keptcash, an AI accounts-receivable agent (FastAPI, PostgreSQL, Gemini on Vertex AI): 56 merged PRs in 9 days to a live production deploy, with a grounding checker that hard-fails unsupported drafts",
-      "Built tenant row-level security, self-hosted Better Auth and the AI layer of APRON, a procurement negotiator where the model proposes and deterministic code verifies: 39 merged PRs in 3 weeks"
+      "Rebuilt Veritas KYC on serverless GCP (Cloud Run, Document AI, Terraform) in **107 merged PRs over 3 weeks**",
+      "Built Onlistly solo, Cloudflare ticketing whose QR redemption stays exactly-once at **10,000 concurrent scans**",
+      "Shipped **56 merged PRs in 9 days** on Keptcash, an AI receivables agent, through its production launch",
+      "Built row-level tenant isolation, auth and the AI layer of APRON, an AI procurement negotiator (**39 merged PRs**)"
     ]
   },
   {
@@ -21,9 +21,7 @@
     "alignment": "right",
     "showInHome": true,
     "highlights": [
-      "Leading NLP and LLM research, including Bengali NLP, toward peer-reviewed publications",
-      "Built a 249,398-question English Stack Exchange dataset for an ELL question-drift study, with control-site event study, counterfactual and placebo analyses",
-      "Coordinating a distributed team of researchers across AIUB, BUET, BRAC and RUET"
+      "Built a **249,398-question** Stack Exchange dataset and event-study analyses for an ELL question-drift study"
     ]
   },
   {
@@ -35,36 +33,9 @@
     "showInHome": true,
     "logo": "deepchain",
     "highlights": [
-      "Built Relay, a delivery pipeline of 31 Agent SDK agents (12 operators, 19 sub-agents) that takes a meeting transcript through spec, design, code, tests and release behind 5 human gates",
-      "Researched blockchain, cybersecurity and quantum cryptography, producing papers and technical documentation"
+      "Built Relay: **31 Agent SDK agents** take a meeting transcript to a tested release behind 5 human approval gates"
     ],
     "location": "Remote"
-  },
-  {
-    "company": "BetaScript LLC",
-    "role": "Software Developer (Part-time, ~20 hrs/week)",
-    "date": "Jan 2026–May 2026",
-    "desc": "Shipped 4 production React websites for this US-based digital agency, driving 1.5x client revenue growth measured by post-launch analytics and client billing. Full lifecycle ownership spanning design, React 19 + TanStack Start architecture, and Netlify deployment across restaurant, e-commerce, and agency platforms serving 50,000+ end users.",
-    "alignment": "right",
-    "showInHome": true,
-    "highlights": [
-      "Shipped 4 production React websites driving 1.5x revenue growth, serving 50,000+ users across 3 industries",
-      "Owned full lifecycle with React 19, TanStack Start, and TailwindCSS from design to Netlify deployment"
-    ],
-    "location": "Remote"
-  },
-  {
-    "company": "BDTracks",
-    "role": "AI & Data Engineer (Part-time, ~15 hrs/week)",
-    "date": "Aug 2025–May 2026",
-    "desc": "Powering Bangladesh's commodity and accident tracking platform (bdtracks.com). Built 15+ web scrapers and fine-tuned Google Gemini 2.5 Flash/Pro via Vertex AI for automated data classification. Engineered production pipelines processing daily feeds from multiple national sources into structured datasets serving live dashboards.",
-    "alignment": "left",
-    "showInHome": true,
-    "highlights": [
-      "Developed 15+ web scrapers powering Bangladesh's commodity and accident tracking platform",
-      "Fine-tuned Gemini 2.5 Flash/Pro via Vertex AI for automated data classification across daily national feeds"
-    ],
-    "location": "Dhaka, Bangladesh"
   },
   {
     "company": "Unies",
@@ -75,10 +46,33 @@
     "showInHome": true,
     "logo": "unies",
     "highlights": [
-      "Developed RAG pipelines with Pinecone, ChromaDB, LangChain, and LlamaIndex for academic retrieval",
-      "Implemented LLM evaluation pipelines and FastAPI backends for curriculum-aligned tutoring systems"
+      "Built RAG and LLM evaluation pipelines (Pinecone, LangChain, LlamaIndex) for FastAPI tutoring backends"
     ],
     "location": "Remote"
+  },
+  {
+    "company": "BetaScript LLC",
+    "role": "Software Developer (Part-time, ~20 hrs/week)",
+    "date": "Jan 2026–May 2026",
+    "desc": "Shipped 4 production React websites for this US-based digital agency, driving 1.5x client revenue growth measured by post-launch analytics and client billing. Full lifecycle ownership spanning design, React 19 + TanStack Start architecture, and Netlify deployment across restaurant, e-commerce, and agency platforms serving 50,000+ end users.",
+    "alignment": "left",
+    "showInHome": true,
+    "highlights": [
+      "Shipped 4 production React sites that drove **1.5x client revenue growth** for 50,000+ users across 3 industries"
+    ],
+    "location": "Remote"
+  },
+  {
+    "company": "BDTracks",
+    "role": "AI & Data Engineer (Part-time, ~15 hrs/week)",
+    "date": "Aug 2025–May 2026",
+    "desc": "Powering Bangladesh's commodity and accident tracking platform (bdtracks.com). Built 15+ web scrapers and fine-tuned Google Gemini 2.5 Flash/Pro via Vertex AI for automated data classification. Engineered production pipelines processing daily feeds from multiple national sources into structured datasets serving live dashboards.",
+    "alignment": "right",
+    "showInHome": true,
+    "highlights": [
+      "Fine-tuned Gemini 2.5 on Vertex AI to classify daily national feeds from **15+ web scrapers** at bdtracks.com"
+    ],
+    "location": "Dhaka, Bangladesh"
   },
   {
     "company": "AIUB",
@@ -88,9 +82,9 @@
     "alignment": "left",
     "showInHome": true,
     "highlights": [
-      "Led 5-developer team shipping a 2D platformer with 3 levels and 4 GitHub forks in 3 months",
-      "Built custom OpenGL rendering engine with SFML audio and SQLite persistence in C++"
+      "Led a **5-developer** team to ship a C++ OpenGL 2D platformer with SFML audio and SQLite saves in 3 months"
     ],
-    "location": "Dhaka, Bangladesh"
+    "location": "Dhaka, Bangladesh",
+    "cv": false
   }
 ]

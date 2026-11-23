@@ -16,14 +16,14 @@ Leading NLP and LLM research at Arché (archelab.org), a student-led AI research
 ### Research Assistant (Full-time, Remote) at Deepchain Labs (Apr 2026–May 2026)
 Researching blockchain, cybersecurity, and quantum cryptography at Deepchain Labs (deepchainlabs.com), producing peer-review-ready papers, threat analyses, and technical documentation across multiple security domains.
 
+### AI Engineering Intern at Unies (Feb 2026–May 2026)
+Built production RAG pipelines for academic resource retrieval using Pinecone, ChromaDB, LangChain, and LlamaIndex. Engineered automated LLM evaluation pipelines and FastAPI backends powering curriculum-aligned tutoring systems. Benchmarked embedding quality across vector databases to optimize retrieval accuracy.
+
 ### Software Developer (Part-time, ~20 hrs/week) at BetaScript LLC (Jan 2026–May 2026)
 Shipped 4 production React websites for this US-based digital agency, driving 1.5x client revenue growth measured by post-launch analytics and client billing. Full lifecycle ownership spanning design, React 19 + TanStack Start architecture, and Netlify deployment across restaurant, e-commerce, and agency platforms serving 50,000+ end users.
 
 ### AI & Data Engineer (Part-time, ~15 hrs/week) at BDTracks (Aug 2025–May 2026)
 Powering Bangladesh's commodity and accident tracking platform (bdtracks.com). Built 15+ web scrapers and fine-tuned Google Gemini 2.5 Flash/Pro via Vertex AI for automated data classification. Engineered production pipelines processing daily feeds from multiple national sources into structured datasets serving live dashboards.
-
-### AI Engineering Intern at Unies (Feb 2026–May 2026)
-Built production RAG pipelines for academic resource retrieval using Pinecone, ChromaDB, LangChain, and LlamaIndex. Engineered automated LLM evaluation pipelines and FastAPI backends powering curriculum-aligned tutoring systems. Benchmarked embedding quality across vector databases to optimize retrieval accuracy.
 
 ### Team Lead - Game Development at AIUB (Oct 2024–Dec 2024)
 Led a team of 5 developers to ship a 2D platformer with 3 levels, a custom OpenGL rendering engine, SFML audio, and SQLite persistence, all within a 3-month deadline. Earned 4 GitHub forks and a YouTube demo.
