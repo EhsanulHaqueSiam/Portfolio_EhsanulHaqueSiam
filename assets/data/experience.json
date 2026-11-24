@@ -7,15 +7,15 @@
     "alignment": "left",
     "showInHome": true,
     "highlights": [
-      "Built Keptcash's AI agent for human-approved collection drafts: hybrid RAG, **golden-set + injection-resistance evals**",
-      "Built APRON's LLM quote extraction: typed output checked by deterministic rules, with tenant row-level security",
-      "Rebuilt Veritas KYC serverless on GCP with OFAC/UN/EU watchlist screening and IDs from 20 more countries",
+      "Took Keptcash's AI collections agent to production in 9 days: hybrid RAG, **golden-set + injection-resistance evals**",
+      "Wrote 34% of APRON's commits: LLM quote extraction with typed output checked by deterministic rules, tenant RLS",
+      "Rebuilt Veritas KYC serverless in 107 PRs over 3 weeks: OFAC/UN/EU screening, national IDs for 20 more countries",
       "Built Onlistly solo: per-ticket Durable Objects keep check-in exactly-once in a 10,000-concurrent-scan load test",
       "Built Blog Studio, a team MCP plugin (15 tools, 12 commands) that researches, writes and drafts blog posts",
-      "Took Office Ledger to production: server-side paywall, Dokploy deploy and an 80-test Playwright suite"
+      "Designed Veritas to scale to zero on Cloud Run, modeled at about $0.009 per verification and $1/month idle"
     ],
     "earlier": {
-      "role": "Software Engineer Intern",
+      "role": "Software Engineer Intern, converted to full-time · 302 merged PRs across 11 products (132 as intern)",
       "date": "Jun 2026–Aug 2026"
     }
   },
