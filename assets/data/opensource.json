@@ -3,15 +3,15 @@
     "name": "T3 Code",
     "repo": "pingdotgg/t3code",
     "logo": "t3",
-    "stars": 70257,
-    "cv": "Claude proxy support, usage-limit recovery, Android dictation",
+    "stars": 79624,
+    "cv": "Claude proxy support, usage-limit recovery, Android dictation and keyboard state",
     "prs": [
+      { "number": 40380, "title": "fix(mobile): Android keyboard state resyncs when the activity is recreated", "state": "merged" },
       { "number": 32188, "title": "fix(server): proxied Codex usage limits keep their reset time", "state": "merged" },
       { "number": 28360, "title": "fix(server): settling a usage-limited thread disarms recovery and names the refusal", "state": "merged" },
       { "number": 31030, "title": "fix(mobile): Android dictation works with regional preferences set", "state": "merged" },
       { "number": 26937, "title": "fix(server): recognize a Claude proxy set in Claude's settings.json", "state": "merged" },
-      { "number": 28359, "title": "fix(server): a usage-limited thread no longer auto-settles", "state": "open" },
-      { "number": 40380, "title": "fix(mobile): Android keyboard state resyncs when the activity is recreated", "state": "open" }
+      { "number": 28359, "title": "fix(server): a usage-limited thread no longer auto-settles", "state": "open" }
     ]
   },
   {
