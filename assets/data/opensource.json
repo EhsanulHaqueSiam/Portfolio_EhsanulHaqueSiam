@@ -4,7 +4,7 @@
     "repo": "pingdotgg/t3code",
     "logo": "t3",
     "stars": 79624,
-    "cv": "Claude proxy support, usage-limit recovery, Android dictation and keyboard state",
+    "cv": "Claude proxy support, usage-limit recovery, Android dictation",
     "prs": [
       { "number": 40380, "title": "fix(mobile): Android keyboard state resyncs when the activity is recreated", "state": "merged" },
       { "number": 32188, "title": "fix(server): proxied Codex usage limits keep their reset time", "state": "merged" },
